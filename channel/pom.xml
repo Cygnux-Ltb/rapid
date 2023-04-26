@@ -2,38 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.cygnuxltb</groupId>
+        <artifactId>jcts</artifactId>
+        <version>1.0</version>
+    </parent>
 
-    <!-- This is parent cygnux pom.xml -->
-    <groupId>io.cygnuxltb</groupId>
-    <artifactId>jcts</artifactId>
-    <version>1.0</version>
-
+    <artifactId>channel</artifactId>
+    <name>channel</name>
     <packaging>pom</packaging>
-    <name>jcts</name>
-
-    <url>https://cygnuxltb.io</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>yellow013</name>
-        </developer>
-    </developers>
 
     <modules>
-        <module>channel</module>
-        <module>console</module>
-        <module>display</module>
-        <module>engine</module>
-        <module>example</module>
-        <module>market-api</module>
-        <module>protocol</module>
-        <module>trader-api</module>
+        <module>channel-ctp</module>
+        <module>channel-fix</module>
+        <module>channel-ib</module>
+        <module>channel-mt5</module>
     </modules>
 
     <properties>
@@ -70,15 +53,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>

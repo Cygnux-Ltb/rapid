@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.cygnuxltb</groupId>
+        <artifactId>channel</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>channel-ctp</artifactId>
+    <name>channel-ctp</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>io.cygnuxltb.channel.ctp.launch.CtpAdaptorStartup</mainClass>
+                            <arguments>
+                                <argument>--add-opens</argument>
+                                <argument>java.base/java.lang.reflect=ALL-UNNAMED</argument>
+                                <argument>java.base/sun.nio.ch=ALL-UNNAMED</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>io.cygnuxltb.channel.ctp.launch.CtpAdaptorStartup</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-rabbitmq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-zmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cygnuxltb</groupId>
+            <artifactId>trader-api</artifactId>
+        </dependency>
+
+        <!-- Jakarta Annotations API -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <!-- Spring Boot autoconfiguration attempts to automatically configure your Spring application
+             based on the jar dependencies that you have added. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <!-- Starter for using Log4j2 for logging. An alternative to spring-boot-starter-logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-jul</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-core</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-slf4j2-impl</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- PROD CTP JNI API -->
+        <!-- The /install/install.sh must be run first -->
+        <!-- <dependency> <groupId>ctp</groupId> <artifactId>thostapi</artifactId>
+            <version>6.3.15</version> </dependency> -->
+
+        <!-- SIMNOW CTP JNI API -->
+        <!-- The /install/install.sh must be run first -->
+        <dependency>
+            <groupId>ctp</groupId>
+            <artifactId>thostapi</artifactId>
+            <version>6.3.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+</project>
