@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.cygnuxltb</groupId>
+        <artifactId>console</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>console-service</artifactId>
+    <name>console-service</name>
+
+    <properties>
+    </properties>
+
+    <build>
+        <finalName>jcts-console</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.shalousun</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>2.6.7</version>
+                <configuration>
+                    <!--指定生成文档的使用的配置文件, 配置文件放在自己的项目中-->
+                    <configFile>./src/main/resources/smart-doc.json</configFile>
+                    <!--指定项目名称-->
+                    <projectName>Cytrader-Console</projectName>
+                    <!--smart-doc实现自动分析依赖树加载第三方依赖的源码, 如果一些框架依赖库加载不到导致报错, 这时请使用excludes排除掉-->
+                    <excludes>
+                        <!--格式为: groupId:artifactId;参考如下-->
+                        <!--也可以支持正则式如：com.alibaba:.* -->
+                        <exclude>com.alibaba:fastjson</exclude>
+                    </excludes>
+                    <!--includes配置用于配置加载外部依赖源码, 配置后插件会按照配置项加载外部源代码而不是自动加载所有，因此使用时需要注意-->
+                    <!--smart-doc能自动分析依赖树加载所有依赖源码, 原则上会影响文档构建效率, 因此你可以使用includes来让插件加载你配置的组件-->
+                    <includes>
+                        <!-- 使用了mybatis-plus的Page分页需要include所使用的源码包 -->
+                        <include>com.baomidou:mybatis-plus-extension</include>
+                        <!-- 使用了mybatis-plus的IPage分页需要include mybatis-plus-core-->
+                        <include>com.baomidou:mybatis-plus-core</include>
+                        <!-- 如果配置了includes的情况下, 使用了jpa的分页需要include所使用的源码包 -->
+                        <include>org.springframework.data:spring-data-commons</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>document</id>
+                        <!-- 如果不需要在执行编译时启动smart-doc, 则将phase注释掉 -->
+                        <phase>compile</phase>
+                        <goals>
+                            <!-- smart-doc提供了html, openapi, markdown等goal, 可按需配置 -->
+                            <goal>html</goal>
+                            <goal>markdown</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+            <version>4.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-core</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-rabbitmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>persistence-h2</artifactId>
+        </dependency>
+
+        <!-- Jakarta XML Binding API -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- Jakarta Restful Web Services -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!-- YAML 1.1 parser and emitter for Java -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cygnuxltb</groupId>
+            <artifactId>protocol</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Starter for using Log4j2 for logging. -->
+        <!-- An alternative to spring-boot-starter-logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-jul</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j2-impl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Starter for building web, including Restful, applications using Spring MVC. -->
+        <!-- Uses Tomcat as the default embedded container -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- The AspectJ weaver applies aspects to Java classes.
+             It can be used as a Java agent in order to apply load-time weaving
+             (LTW) during class-loading and also contains the AspectJ runtime classes. -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.19</version>
+        </dependency>
+
+        <!-- Starter for using Spring Data JPA with Hibernate -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.persistence</groupId>
+                    <artifactId>jakarta.persistence-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.transaction</groupId>
+                    <artifactId>jakarta.transaction-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.xml.bind</groupId>
+                    <artifactId>jakarta.xml.bind-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+</project>

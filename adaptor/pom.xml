@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.cygnuxltb</groupId>
+        <artifactId>jcts</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>adaptor</artifactId>
+    <name>adaptor</name>
+    <packaging>pom</packaging>
+
+    <url>https://cygnuxltb.io</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>yellow013</name>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>adaptor-ctp</module>
+        <module>adaptor-fix4j</module>
+        <module>adaptor-ib</module>
+        <module>adaptor-mt5</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <spring-boot.version>3.0.6</spring-boot.version>
+        <mercury.version>1.0-SNAPSHOT</mercury.version>
+        <avro.version>1.11.1</avro.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.26</version>
+            </dependency>
+            <!-- see https://github.com/yellow013/mercury.git -->
+            <!-- mercury commons -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>commons-core</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>commons-config</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>commons-concurrent</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- mercury persistence -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>persistence-h2</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- mercury serialization -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-json</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-avro</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- mercury transport -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-zmq</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-rabbitmq</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+
+            <!-- API -->
+            <dependency>
+                <groupId>io.cygnuxltb</groupId>
+                <artifactId>market-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.cygnuxltb</groupId>
+                <artifactId>trader-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
