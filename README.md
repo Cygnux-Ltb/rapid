@@ -1,2 +1,2 @@
-# jcts
+# JCTS
 Java Comprehensive Trade System
