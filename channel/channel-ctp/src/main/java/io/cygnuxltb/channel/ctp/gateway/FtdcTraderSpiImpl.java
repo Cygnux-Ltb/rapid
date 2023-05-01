@@ -115,11 +115,10 @@ public final class FtdcTraderSpiImpl extends CThostFtdcTraderSpi {
                                          int nRequestID, boolean bIsLast) {
         log.info("FtdcTraderSpi::OnRspQryInvestorPosition, nRequestID==[{}], bIsLast==[{}]", nRequestID, bIsLast);
         FtdcRspInfoHandler.hasError("FtdcTraderSpi::OnRspQryInvestorPosition", pRspInfo);
-        if (pInvestorPosition != null) {
+        if (pInvestorPosition != null)
             callback.onRspQryInvestorPosition(pInvestorPosition, bIsLast);
-        } else {
+        else
             log.error("FtdcTraderSpi::OnRspQryInvestorPosition return null");
-        }
     }
 
     @Override
@@ -131,11 +130,10 @@ public final class FtdcTraderSpiImpl extends CThostFtdcTraderSpi {
             if (pSettlementInfo != null) {
                 log.info(
                         """
-                                Output :: OnRspQrySettlementInfo -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
+                                OnRspQrySettlementInfo -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
                                 SettlementID==[{}], TradingDay==[{}], CurrencyID==[{}]
                                 <<<<<<<<<<<<<<<< CONTENT TEXT >>>>>>>>>>>>>>>>
                                 {}
-                                                                        
                                 """,
                         pSettlementInfo.getBrokerID(), pSettlementInfo.getAccountID(), pSettlementInfo.getInvestorID(),
                         pSettlementInfo.getSettlementID(), pSettlementInfo.getTradingDay(),

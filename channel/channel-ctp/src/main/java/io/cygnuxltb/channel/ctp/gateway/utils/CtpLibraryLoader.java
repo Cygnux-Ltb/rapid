@@ -19,10 +19,10 @@ public final class CtpLibraryLoader {
 
     private static final AtomicBoolean isLoaded = new AtomicBoolean(false);
 
-    public static void loadLibrary(Class<?> clazz) throws NativeLibraryLoadException {
+    public static void startLoad(Class<?> loadSource) throws NativeLibraryLoadException {
         if (isLoaded.compareAndSet(false, true)) {
             try {
-                log.info("Trying to load library by {}", clazz);
+                log.info("Trying to load library by class -> {}", loadSource);
                 // 根据操作系统选择加载不同库文件
                 if (OS_NAME.toLowerCase().startsWith("windows")) {
                     log.info("Copy win64 library file to java.library.path -> {}", JAVA_LIBRARY_PATH);
@@ -51,15 +51,15 @@ public final class CtpLibraryLoader {
                     log.error("Unsupported operating system : {}", OS_NAME);
                     throw new UnsupportedOperationException("Unsupported operating system : " + OS_NAME);
                 }
-                log.info("Load library success by {}", clazz);
+                log.info("Load library success by class -> {}", loadSource);
             } catch (SecurityException | UnsatisfiedLinkError | NullPointerException e) {
                 isLoaded.set(false);
-                log.info("Load library failure by {}", clazz);
+                log.info("Load library failure by class -> {}", loadSource);
                 throw new NativeLibraryLoadException("Load native library failure, Throw by -> " + e.getClass(), e);
             }
         } else {
-            log.warn("Library already loaded, CtpLibraryLoader::loadLibrary() func cannot be called repeatedly by {}",
-                    clazz);
+            log.warn("Library already loaded, CtpLibraryLoader::startLoad() cannot be called repeatedly by class {}",
+                    loadSource);
         }
     }
 

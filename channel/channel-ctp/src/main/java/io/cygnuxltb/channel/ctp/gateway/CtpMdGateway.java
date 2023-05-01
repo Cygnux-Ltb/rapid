@@ -39,7 +39,7 @@ public class CtpMdGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryLoader.loadLibrary(CtpMdGateway.class);
+            CtpLibraryLoader.startLoad(CtpMdGateway.class);
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");

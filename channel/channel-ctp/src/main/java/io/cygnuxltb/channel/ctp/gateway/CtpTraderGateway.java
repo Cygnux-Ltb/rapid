@@ -25,9 +25,9 @@ import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInvestorPositionConv
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcOrderActionConverter;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcOrderConverter;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcTradeConverter;
+import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTraderConnect;
 import io.cygnuxltb.channel.ctp.gateway.utils.CtpLibraryLoader;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
@@ -58,7 +58,7 @@ public class CtpTraderGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryLoader.loadLibrary(CtpTraderGateway.class);
+            CtpLibraryLoader.startLoad(CtpTraderGateway.class);
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");

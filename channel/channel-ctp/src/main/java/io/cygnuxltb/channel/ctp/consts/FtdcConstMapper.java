@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp;
+package io.cygnuxltb.channel.ctp.consts;
 
 import io.horizon.trader.order.enums.OrdStatus;
 import io.horizon.trader.order.enums.TrdAction;
@@ -6,18 +6,18 @@ import io.horizon.trader.order.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcDirection.BUY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcDirection.SELL;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOffsetFlag.CLOSE;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOffsetFlag.CLOSE_TODAY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOffsetFlag.CLOSE_YESTERDAY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOffsetFlag.OPEN;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.ALL_TRADED;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.CANCELED;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.NO_TRADE_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConstants.FtdcOrderStatus.PART_TRADED_QUEUEING;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.BUY;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.SELL;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_TODAY;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.OPEN;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.ALL_TRADED;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.CANCELED;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_QUEUEING;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_QUEUEING;
 
 /**
  * @author yellow013
@@ -31,7 +31,7 @@ public final class FtdcConstMapper {
      * @return OrdStatus
      */
     @Nonnull
-    public static OrdStatus byOrderStatus(char orderStatus) {
+    public static OrdStatus withOrderStatus(char orderStatus) {
         return  // 未成交不在队列中 or 未成交还在队列中 return [OrdStatus.New]
                 NO_TRADE_NOT_QUEUEING == orderStatus || NO_TRADE_QUEUEING == orderStatus
                         ? OrdStatus.New
@@ -55,8 +55,8 @@ public final class FtdcConstMapper {
      * @return TrdAction
      */
     @Nonnull
-    public static TrdAction byOffsetFlag(@Nonnull String combOffsetFlag) {
-        return byOffsetFlag(combOffsetFlag.charAt(0));
+    public static TrdAction withOffsetFlag(@Nonnull String combOffsetFlag) {
+        return withOffsetFlag(combOffsetFlag.charAt(0));
     }
 
     /**
@@ -66,7 +66,7 @@ public final class FtdcConstMapper {
      * @return TrdAction
      */
     @Nonnull
-    public static TrdAction byOffsetFlag(char offsetFlag) {
+    public static TrdAction withOffsetFlag(char offsetFlag) {
         return  // 开仓
                 OPEN == offsetFlag ? TrdAction.Open
                         // 平仓
@@ -85,7 +85,7 @@ public final class FtdcConstMapper {
      * @param direction char
      * @return TrdDirection
      */
-    public static TrdDirection byDirection(char direction) {
+    public static TrdDirection withDirection(char direction) {
         return  // 买
                 BUY == direction ? TrdDirection.Long
                         // 卖

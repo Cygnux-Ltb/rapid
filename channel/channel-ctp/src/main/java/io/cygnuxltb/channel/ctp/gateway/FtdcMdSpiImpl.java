@@ -6,8 +6,8 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.channel.ctp.gateway.handler.FtdcRspInfoHandler;
 import io.cygnuxltb.channel.ctp.gateway.CtpMdGateway.FtdcMdCallback;
+import io.cygnuxltb.channel.ctp.gateway.handler.FtdcRspInfoHandler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -87,8 +87,7 @@ public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
      * 错误回调
      */
     @Override
-    public void OnRspError(CThostFtdcRspInfoField pRspInfo,
-                           int nRequestID, boolean bIsLast) {
+    public void OnRspError(CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
         log.error("FtdcMdSpi::OnRspError, nRequestID==[{}], bIsLast==[{}]", nRequestID, bIsLast);
         callback.onRspError(pRspInfo, nRequestID, bIsLast);
     }

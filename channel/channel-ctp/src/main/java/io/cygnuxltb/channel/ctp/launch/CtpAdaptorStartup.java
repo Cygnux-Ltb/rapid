@@ -2,7 +2,7 @@ package io.cygnuxltb.channel.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.cygnuxltb.channel.ctp.CtpAdaptor;
+import io.cygnuxltb.channel.ctp.adaptor.CtpAdaptor;
 import io.cygnuxltb.channel.ctp.CtpConfig;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.InstrumentKeeper;

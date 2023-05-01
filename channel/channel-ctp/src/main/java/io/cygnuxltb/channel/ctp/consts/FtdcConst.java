@@ -2,7 +2,7 @@ package io.cygnuxltb.channel.ctp.consts;
 
 import static ctp.thostapi.thosttraderapiConstants.*;
 
-public interface FtdcConstants {
+public interface FtdcConst {
 
 
     /**

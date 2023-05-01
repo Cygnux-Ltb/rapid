@@ -29,7 +29,7 @@ public final class CtpGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryLoader.loadLibrary(CtpGateway.class);
+            CtpLibraryLoader.startLoad(CtpGateway.class);
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");

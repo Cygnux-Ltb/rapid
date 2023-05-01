@@ -1,6 +1,7 @@
-package io.cygnuxltb.channel.ctp;
+package io.cygnuxltb.channel.ctp.adaptor;
 
 import com.typesafe.config.Config;
+import io.cygnuxltb.channel.ctp.CtpConfig;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;

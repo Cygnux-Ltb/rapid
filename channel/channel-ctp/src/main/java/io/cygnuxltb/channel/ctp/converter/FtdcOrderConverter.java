@@ -3,24 +3,24 @@ package io.cygnuxltb.channel.ctp.converter;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.channel.ctp.CtpConfig;
-import io.cygnuxltb.channel.ctp.consts.FtdcActionFlag;
-import io.cygnuxltb.channel.ctp.consts.FtdcForceCloseReason;
-import io.cygnuxltb.channel.ctp.consts.FtdcVolumeCondition;
+import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcActionFlag;
+import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcForceCloseReason;
+import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcVolumeCondition;
 import io.horizon.trader.transport.inbound.TdxCancelOrder;
 import io.horizon.trader.transport.inbound.TdxNewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.cygnuxltb.channel.ctp.consts.FtdcContingentCondition.IMMEDIATELY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcDirection.BUY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcDirection.SELL;
-import static io.cygnuxltb.channel.ctp.consts.FtdcHedgeFlag.SPECULATION_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcOffsetFlag.CLOSE_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcOffsetFlag.CLOSE_TODAY_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcOffsetFlag.CLOSE_YESTERDAY_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcOffsetFlag.OPEN_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcOrderPrice.LIMIT_PRICE;
-import static io.cygnuxltb.channel.ctp.consts.FtdcTimeCondition.GFD;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcContingentCondition.IMMEDIATELY;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.BUY;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.SELL;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcHedgeFlag.SPECULATION_STR;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_STR;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_TODAY_STR;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY_STR;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.OPEN_STR;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderPrice.LIMIT_PRICE;
+import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcTimeCondition.GFD;
 
 /**
  * FtdcOrderConverter

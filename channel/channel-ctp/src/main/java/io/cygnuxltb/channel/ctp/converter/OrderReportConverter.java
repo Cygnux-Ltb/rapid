@@ -1,6 +1,6 @@
 package io.cygnuxltb.channel.ctp.converter;
 
-import io.cygnuxltb.channel.ctp.FtdcConstMapper;
+import io.cygnuxltb.channel.ctp.consts.FtdcConstMapper;
 import io.cygnuxltb.channel.ctp.OrderRefKeeper;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrder;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
@@ -11,7 +11,6 @@ import io.horizon.trader.transport.outbound.TdxOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.cygnuxltb.channel.ctp.FtdcConstMapper.byOffsetFlag;
 import static io.horizon.market.instrument.futures.ChinaFutures.FixedMultiplier;
 import static io.horizon.trader.order.enums.OrdStatus.NewRejected;
 import static io.horizon.trader.order.enums.OrdStatus.Unprovided;
@@ -38,33 +37,30 @@ public final class OrderReportConverter {
     public TdxOrderReport withFtdcInputOrder(FtdcInputOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var builder = TdxOrderReport.newBuilder();
-        // 时间戳
-        builder.setEpochMicros(getEpochMicros());
-        // OrdSysId
-        builder.setOrdSysId(ordSysId);
-        // 投资者ID
-        builder.setInvestorId(order.getInvestorID());
-        // 报单引用
-        builder.setOrderRef(orderRef);
-        // 交易所
-        builder.setExchangeCode(order.getExchangeID());
-        // 合约代码
-        builder.setInstrumentCode(order.getInstrumentID());
-        // 报单状态
-        builder.setStatus(NewRejected.getTdxValue());
-        // 买卖方向
-        var direction = FtdcConstMapper.byDirection(order.getDirection());
-        builder.setDirection(direction.getTdxValue());
-        // 组合开平标志
-        var action = FtdcConstMapper.byOffsetFlag(order.getCombOffsetFlag());
-        builder.setAction(action.getTdxValue());
-        // 委托数量
-        builder.setOfferQty(order.getVolumeTotalOriginal());
-        // 委托价格
-        builder.setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()));
-
-        TdxOrderReport report = builder.build();
+        TdxOrderReport report = TdxOrderReport.newBuilder()
+                // 时间戳
+                .setEpochMicros(getEpochMicros())
+                // OrdSysId
+                .setOrdSysId(ordSysId)
+                // 投资者ID
+                .setInvestorId(order.getInvestorID())
+                // 报单引用
+                .setOrderRef(orderRef)
+                // 交易所
+                .setExchangeCode(order.getExchangeID())
+                // 合约代码
+                .setInstrumentCode(order.getInstrumentID())
+                // 报单状态
+                .setStatus(NewRejected.getTdxValue())
+                // 买卖方向
+                .setDirection(FtdcConstMapper.withDirection(order.getDirection()).getTdxValue())
+                // 组合开平标志
+                .setAction(FtdcConstMapper.withOffsetFlag(order.getCombOffsetFlag()).getTdxValue())
+                // 委托数量
+                .setOfferQty(order.getVolumeTotalOriginal())
+                // 委托价格
+                .setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()))
+                .build();
         log.info("FtdcInputOrder conversion to OrderReport -> {}", report);
         return report;
     }
@@ -78,46 +74,42 @@ public final class OrderReportConverter {
      * @return OrderReport
      */
     public TdxOrderReport withFtdcOrder(FtdcOrder order) {
-        var orderRef = order.getOrderRef();
+        String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var builder = TdxOrderReport.newBuilder();
-        // 时间戳
-        builder.setEpochMicros(getEpochMicros());
-        // OrdSysId
-        builder.setOrdSysId(ordSysId);
-        // 交易日
-        builder.setTradingDay(order.getTradingDay());
-        // 投资者ID
-        builder.setInvestorId(order.getInvestorID());
-        // 报单引用
-        builder.setOrderRef(orderRef);
-        // 报单编号
-        builder.setBrokerOrdSysId(order.getOrderSysID());
-        // 交易所
-        builder.setExchangeCode(order.getExchangeID());
-        // 合约代码
-        builder.setInstrumentCode(order.getInstrumentID());
-        // 报单状态
-        var ordStatus = FtdcConstMapper.byOrderStatus(order.getOrderStatus());
-        builder.setStatus(ordStatus.getTdxValue());
-        // 买卖方向
-        var direction = FtdcConstMapper.byDirection(order.getDirection());
-        builder.setDirection(direction.getTdxValue());
-        // 组合开平标志
-        var action = FtdcConstMapper.byOffsetFlag(order.getCombOffsetFlag());
-        builder.setAction(action.getTdxValue());
-        // 委托数量
-        builder.setOfferQty(order.getVolumeTotalOriginal());
-        // 完成数量
-        builder.setFilledQty(order.getVolumeTraded());
-        // 委托价格
-        builder.setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()));
-        // 报单日期 + 委托时间
-        builder.setOfferTime(removeNonDigits(order.getInsertDate()) + removeNonDigits(order.getInsertTime()));
-        // 更新时间
-        builder.setUpdateTime(order.getUpdateTime());
-
-        var report = builder.build();
+        TdxOrderReport report = TdxOrderReport.newBuilder()
+                // 时间戳
+                .setEpochMicros(getEpochMicros())
+                // OrdSysId
+                .setOrdSysId(ordSysId)
+                // 交易日
+                .setTradingDay(order.getTradingDay())
+                // 投资者ID
+                .setInvestorId(order.getInvestorID())
+                // 报单引用
+                .setOrderRef(orderRef)
+                // 报单编号
+                .setBrokerOrdSysId(order.getOrderSysID())
+                // 交易所
+                .setExchangeCode(order.getExchangeID())
+                // 合约代码
+                .setInstrumentCode(order.getInstrumentID())
+                // 报单状态
+                .setStatus(FtdcConstMapper.withOrderStatus(order.getOrderStatus()).getTdxValue())
+                // 买卖方向
+                .setDirection(FtdcConstMapper.withDirection(order.getDirection()).getTdxValue())
+                // 组合开平标志
+                .setAction(FtdcConstMapper.withOffsetFlag(order.getCombOffsetFlag()).getTdxValue())
+                // 委托数量
+                .setOfferQty(order.getVolumeTotalOriginal())
+                // 完成数量
+                .setFilledQty(order.getVolumeTraded())
+                // 委托价格
+                .setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()))
+                // 报单日期 + 委托时间
+                .setOfferTime(removeNonDigits(order.getInsertDate()) + removeNonDigits(order.getInsertTime()))
+                // 更新时间
+                .setUpdateTime(order.getUpdateTime())
+                .build();
         log.info("FtdcOrder conversion to OrderReport -> {}", report);
         return report;
     }
@@ -153,10 +145,10 @@ public final class OrderReportConverter {
         // 报单状态
         builder.setStatus(Unprovided.getTdxValue());
         // 买卖方向
-        var direction = FtdcConstMapper.byDirection(trade.getDirection());
+        var direction = FtdcConstMapper.withDirection(trade.getDirection());
         builder.setDirection(direction.getTdxValue());
         // 组合开平标志
-        var action = FtdcConstMapper.byOffsetFlag(trade.getOffsetFlag());
+        var action = FtdcConstMapper.withOffsetFlag(trade.getOffsetFlag());
         builder.setAction(action.getTdxValue());
         // 完成数量
         builder.setFilledQty(trade.getVolume());

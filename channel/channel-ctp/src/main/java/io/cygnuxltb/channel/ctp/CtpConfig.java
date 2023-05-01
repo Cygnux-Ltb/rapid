@@ -1,6 +1,7 @@
 package io.cygnuxltb.channel.ctp;
 
 import com.typesafe.config.Config;
+import io.cygnuxltb.channel.ctp.adaptor.CtpAdaptorParamKey;
 import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +20,8 @@ import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
 @Getter
 @Setter
 @Accessors(chain = true)
-public final class CtpConfig {
+@Configuration
+public class CtpConfig {
 
     @Value("traderAddr")
     private String traderAddr;
