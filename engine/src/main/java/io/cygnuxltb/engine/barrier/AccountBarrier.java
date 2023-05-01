@@ -9,7 +9,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public class AccountBarrier implements OrderBarrier {
 
-
 	@Override
 	public boolean filter(ChildOrder order) {
 		// TODO Auto-generated method stub

@@ -275,9 +275,9 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
 
     }
 
-    /**
-     * 将StrategyOrder转换为需要执行的实际订单
-     */
+//    /**
+//     * 将StrategyOrder转换为需要执行的实际订单
+//     */
 //	private Function<StrategyOrder, MutableList<ActParentOrder>> strategyOrderConverter = strategyOrder -> {
 //		MutableList<ActParentOrder> parentOrders = MutableLists.newFastList();
 //		OrderBook instrumentOrderBook = OrderKeeper.getInstrumentOrderBook(strategyOrder.instrument());
