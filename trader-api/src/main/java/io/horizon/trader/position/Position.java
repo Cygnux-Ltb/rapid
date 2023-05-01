@@ -1,9 +1,9 @@
 package io.horizon.trader.position;
 
-import java.io.Serializable;
-
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.order.Order;
+
+import java.io.Serializable;
 
 public interface Position extends Comparable<Position>, Serializable {
 
@@ -60,7 +60,8 @@ public interface Position extends Comparable<Position>, Serializable {
     default int compareTo(Position o) {
         return this.getAccountId() < o.getAccountId() ? -1
                 : this.getAccountId() > o.getAccountId() ? 1
-                : Integer.compare(this.getInstrument().getInstrumentId(), o.getInstrument().getInstrumentId());
+                : Integer.compare(this.getInstrument().getInstrumentId(),
+                o.getInstrument().getInstrumentId());
     }
 
 }

@@ -83,8 +83,8 @@ public final class AccountFinder implements Serializable {
     static void putSubAccount(SubAccount subAccount) {
         SubAccounts.put(subAccount.getSubAccountId(), subAccount);
         AccountsBySubAccountId.put(subAccount.getSubAccountId(), subAccount.getAccount());
-        log.info("Put subAccount, subAccountId==[{}], accountId==[{}]", subAccount.getSubAccountId(),
-                subAccount.getAccount().getAccountId());
+        log.info("Put subAccount, subAccountId==[{}], accountId==[{}]",
+                subAccount.getSubAccountId(), subAccount.getAccount().getAccountId());
         putAccount(subAccount.getAccount());
     }
 
@@ -95,7 +95,7 @@ public final class AccountFinder implements Serializable {
 
     @Nonnull
     public static Account getAccount(int accountId) throws AccountException {
-        Account account = Accounts.get(accountId);
+        var account = Accounts.get(accountId);
         if (account == null)
             throw new AccountException("Account error in mapping : accountId[" + accountId + "] no mapped instance");
         return account;
@@ -103,7 +103,7 @@ public final class AccountFinder implements Serializable {
 
     @Nonnull
     public static Account getAccountBySubAccountId(int subAccountId) throws AccountException {
-        Account account = AccountsBySubAccountId.get(subAccountId);
+        var account = AccountsBySubAccountId.get(subAccountId);
         if (account == null)
             throw new AccountException(
                     "Account error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
@@ -112,7 +112,7 @@ public final class AccountFinder implements Serializable {
 
     @Nonnull
     public static Account getAccountByInvestorId(String investorId) throws AccountException {
-        Account account = AccountsByInvestorId.get(investorId);
+        var account = AccountsByInvestorId.get(investorId);
         if (account == null)
             throw new AccountException("Account error in mapping : investorId[" + investorId + "] no mapped instance");
         return account;
@@ -120,7 +120,7 @@ public final class AccountFinder implements Serializable {
 
     @Nonnull
     public static SubAccount getSubAccount(int subAccountId) throws SubAccountException {
-        SubAccount subAccount = SubAccounts.get(subAccountId);
+        var subAccount = SubAccounts.get(subAccountId);
         if (subAccount == null)
             throw new SubAccountException(
                     "SubAccount error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
@@ -128,13 +128,13 @@ public final class AccountFinder implements Serializable {
     }
 
     public static void setAccountNotTradable(int accountId) {
-        Account account = getAccount(accountId);
-        account.disable();
+        getAccount(accountId)
+                .disable();
     }
 
     public static void setAccountTradable(int accountId) {
-        Account account = getAccount(accountId);
-        account.enable();
+        getAccount(accountId)
+                .enable();
     }
 
     public static boolean isAccountTradable(int accountId) {
@@ -142,13 +142,13 @@ public final class AccountFinder implements Serializable {
     }
 
     public static SubAccount setSubAccountNotTradable(int subAccountId) {
-        SubAccount subAccount = getSubAccount(subAccountId);
+        var subAccount = getSubAccount(subAccountId);
         subAccount.disable();
         return subAccount;
     }
 
     public static SubAccount setSubAccountTradable(int subAccountId) {
-        SubAccount subAccount = getSubAccount(subAccountId);
+        var subAccount = getSubAccount(subAccountId);
         subAccount.enable();
         return subAccount;
     }

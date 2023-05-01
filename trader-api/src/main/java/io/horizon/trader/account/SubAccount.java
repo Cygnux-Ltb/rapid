@@ -119,9 +119,6 @@ public final class SubAccount extends EnableableComponent implements Comparable<
 
     public static class SubAccountException extends RuntimeException {
 
-        /**
-         *
-         */
         @Serial
         private static final long serialVersionUID = -8903289183998546839L;
 

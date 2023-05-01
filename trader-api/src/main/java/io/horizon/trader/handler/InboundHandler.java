@@ -39,9 +39,6 @@ public interface InboundHandler<M extends MarketData> extends
         private final OrderReportHandler orderReportHandler;
         private final AdaptorReportHandler adaptorReportHandler;
 
-        private final boolean hasMarketDataHandler;
-        private final boolean hasOrderReportHandler;
-        private final boolean hasAdaptorReportHandler;
 
         private final Logger logger;
 
@@ -50,30 +47,27 @@ public interface InboundHandler<M extends MarketData> extends
                                        @Nullable AdaptorReportHandler adaptorReportHandler,
                                        @Nullable Logger logger) {
             this.marketDataHandler = marketDataHandler;
-            this.hasMarketDataHandler = marketDataHandler != null;
             this.orderReportHandler = orderReportHandler;
-            this.hasOrderReportHandler = orderReportHandler != null;
             this.adaptorReportHandler = adaptorReportHandler;
-            this.hasAdaptorReportHandler = adaptorReportHandler != null;
             this.logger = logger;
         }
 
         @Override
         public void onMarketData(@Nonnull M marketData) {
-            if (hasMarketDataHandler) {
+            if (marketDataHandler != null) {
                 marketDataHandler.onMarketData(marketData);
             }
         }
 
         @Override
         public void onOrderReport(@Nonnull TdxOrderReport report) {
-            if (hasOrderReportHandler)
+            if (orderReportHandler != null)
                 orderReportHandler.onOrderReport(report);
         }
 
         @Override
         public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
-            if (hasAdaptorReportHandler)
+            if (adaptorReportHandler != null)
                 adaptorReportHandler.onAdaptorReport(report);
         }
 
@@ -82,7 +76,7 @@ public interface InboundHandler<M extends MarketData> extends
             try {
                 ResourceUtil.close(marketDataHandler);
             } catch (Exception e) {
-                if (hasMarketDataHandler) {
+                if (marketDataHandler != null) {
                     if (logger != null) {
                         logger.error("Close MarketDataHandler -> {} throw {}",
                                 marketDataHandler.getClass().getSimpleName(),
@@ -90,7 +84,7 @@ public interface InboundHandler<M extends MarketData> extends
                     }
                 }
             }
-            if (hasOrderReportHandler) {
+            if (orderReportHandler != null) {
                 try {
                     ResourceUtil.close(orderReportHandler);
                 } catch (Exception e) {
@@ -100,7 +94,7 @@ public interface InboundHandler<M extends MarketData> extends
                                 e.getClass().getSimpleName(), e);
                 }
             }
-            if (hasAdaptorReportHandler) {
+            if (adaptorReportHandler != null) {
                 try {
                     ResourceUtil.close(adaptorReportHandler);
                 } catch (Exception e) {

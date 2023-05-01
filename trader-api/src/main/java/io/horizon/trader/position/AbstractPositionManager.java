@@ -1,12 +1,11 @@
 package io.horizon.trader.position;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
-
 import io.horizon.trader.account.AccountPosition;
 import io.mercury.common.collections.MutableMaps;
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public abstract class AbstractPositionManager<P extends Position> implements PositionManager<P> {
@@ -21,7 +20,8 @@ public abstract class AbstractPositionManager<P extends Position> implements Pos
 
     @Override
     public AccountPosition<P> getAccountPosition(int accountId) {
-        return accountPositionMap.getIfAbsentPut(accountId, () -> new AccountPosition<>(accountId, producer));
+        return accountPositionMap.getIfAbsentPut(accountId,
+                () -> new AccountPosition<>(accountId, producer));
     }
 
 }

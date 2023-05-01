@@ -125,10 +125,10 @@ public class ChildOrder extends AbstractOrder {
      * @return ChildOrder
      */
     public static ChildOrder newExternalOrder(TdxOrderReport report) {
-        Account account = AccountFinder.getAccountByInvestorId(report.getInvestorId());
-        Instrument instrument = InstrumentKeeper.getInstrument(report.getInstrumentCode());
-        TrdDirection direction = TrdDirection.valueOf(report.getDirection());
-        TrdAction action = TrdAction.valueOf(report.getAction());
+        var account = AccountFinder.getAccountByInvestorId(report.getInvestorId());
+        var instrument = InstrumentKeeper.getInstrument(report.getInstrumentCode());
+        var direction = TrdDirection.valueOf(report.getDirection());
+        var action = TrdAction.valueOf(report.getAction());
         return new ChildOrder(report.getOrdSysId(),
                 // -------------------------------
                 // 外部订单使用的策略ID
@@ -231,7 +231,8 @@ public class ChildOrder extends AbstractOrder {
      * @param tradeQty    int
      */
     public void addRecord(long epochMicros, long tradePrice, int tradeQty) {
-        records.add(new TradeRecord(ordSysId, records.size() + 1, epochMicros, tradePrice, tradeQty));
+        records.add(new TradeRecord(ordSysId, records.size() + 1,
+                epochMicros, tradePrice, tradeQty));
     }
 
     /**
