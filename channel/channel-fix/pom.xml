@@ -42,7 +42,7 @@
         </dependency>
 
         <!-- FIX Protocol lib -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.paritytrading.philadelphia</groupId>
             <artifactId>philadelphia-core</artifactId>
             <version>${philadelphia.version}</version>
@@ -86,7 +86,7 @@
             <groupId>com.paritytrading.philadelphia</groupId>
             <artifactId>philadelphia-fixlatest</artifactId>
             <version>${philadelphia.version}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 </project>

@@ -1,4 +1,0 @@
-rm -rf /dev/shm/fix-*
-rm -rf /dev/shm/aeron-$USER*
-rm -rf /dev/shm/log
-ls /dev/shm
