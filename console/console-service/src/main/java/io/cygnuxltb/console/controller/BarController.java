@@ -4,7 +4,7 @@ import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.BarEntity;
 import io.cygnuxltb.console.service.BarService;
-import io.cygnuxltb.protocol.http.outbound.BarM1DTO;
+import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -42,8 +42,8 @@ public final class BarController {
      * @apiNote 获取行情Bar
      */
     @GetMapping
-    public List<BarM1DTO> getBars(@RequestParam("tradingDay") int tradingDay,
-                                  @RequestParam("instrumentCode") String instrumentCode) {
+    public List<BarDTO> getBars(@RequestParam("tradingDay") int tradingDay,
+                                @RequestParam("instrumentCode") String instrumentCode) {
         log.info("get bars with : tradingDay -> {}, instrumentCode -> {}", tradingDay, instrumentCode);
         return service.getBars(instrumentCode, tradingDay);
     }

@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class SysInit {
+public class Init {
     private int sysId;
     private int tradingDay;
 }

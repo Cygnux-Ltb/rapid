@@ -3,7 +3,7 @@ package io.cygnuxltb.console.service;
 import io.cygnuxltb.console.persistence.dao.BarDao;
 import io.cygnuxltb.console.persistence.entity.BarEntity;
 import io.cygnuxltb.console.service.bean.OutboundConverter;
-import io.cygnuxltb.protocol.http.outbound.BarM1DTO;
+import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class BarService {
      * @param tradingDay     int
      * @return List<BarEntity>
      */
-    public List<BarM1DTO> getBars(@Nonnull String instrumentCode, int tradingDay) {
+    public List<BarDTO> getBars(@Nonnull String instrumentCode, int tradingDay) {
         return getBars(instrumentCode, tradingDay, tradingDay);
     }
 
@@ -37,7 +37,7 @@ public class BarService {
      * @param endTradingDay   int
      * @return List<BarEntity>
      */
-    public List<BarM1DTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
+    public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
         return select(BarEntity.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()

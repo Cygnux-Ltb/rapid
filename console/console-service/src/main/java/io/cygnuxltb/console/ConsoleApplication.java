@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ConsoleApplication {
 
     static {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[S T A R T]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CONSOLE START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         Log4j2Configurator.setLogFolder("cytrader");
         Log4j2Configurator.setLogFilename("console");
         Log4j2Configurator.setLogLevel(LogLevel.INFO);

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 用户自选标的
  */
@@ -12,7 +14,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PortfolioDTO {
 
+    private int userId;
 
+    private int groupId;
 
+    private String groupName;
+
+    private List<String> instrumentCodes;
 
 }

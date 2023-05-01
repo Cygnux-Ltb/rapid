@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.hc;
 
-import io.cygnuxltb.protocol.http.outbound.BarM1DTO;
+import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import io.cygnuxltb.protocol.http.outbound.OrderDTO;
 import io.cygnuxltb.protocol.http.outbound.ParamDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
@@ -48,8 +48,8 @@ public final class JctsHttpClient extends BaseHttpClient {
         }
     }
 
-    public List<BarM1DTO> getBars(int sysId, String instrumentCode, int tradingDay) {
-        return sendGetRequest(BarM1DTO.class, barUri,
+    public List<BarDTO> getBars(int sysId, String instrumentCode, int tradingDay) {
+        return sendGetRequest(BarDTO.class, barUri,
                 new PathParam("sysId", sysId),
                 new PathParam("instrumentId", instrumentCode),
                 new PathParam("tradingDay", tradingDay));

@@ -6,14 +6,14 @@ import io.cygnuxltb.console.persistence.entity.BarEntity;
 import io.cygnuxltb.console.persistence.entity.InstrumentEntity;
 import io.cygnuxltb.console.persistence.entity.InstrumentSettlementEntity;
 import io.cygnuxltb.protocol.http.outbound.AccountDTO;
-import io.cygnuxltb.protocol.http.outbound.BarM1DTO;
+import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
 import io.cygnuxltb.protocol.http.outbound.InstrumentSettlementDTO;
 
 public class OutboundConverter {
 
-    public static BarM1DTO toBarDTO(BarEntity entity) {
-        return new BarM1DTO().setInstrumentCode(entity.getInstrumentCode())
+    public static BarDTO toBarDTO(BarEntity entity) {
+        return new BarDTO().setInstrumentCode(entity.getInstrumentCode())
                 .setTradingDay(entity.getTradingDay())
                 .setActualDate(entity.getActualDate())
                 .setTimePoint(entity.getTimePoint())

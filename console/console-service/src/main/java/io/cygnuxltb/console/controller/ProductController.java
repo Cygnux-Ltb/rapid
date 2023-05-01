@@ -4,7 +4,7 @@ import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.ProductEntity;
 import io.cygnuxltb.console.service.ProductService;
-import io.cygnuxltb.protocol.http.inbound.ControlCommand.InitFinish;
+import io.cygnuxltb.protocol.http.inbound.command.InitFinish;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;

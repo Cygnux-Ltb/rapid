@@ -2,7 +2,7 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.protocol.http.inbound.StrategySwitch;
+import io.cygnuxltb.protocol.http.inbound.command.StrategySwitch;
 import io.cygnuxltb.protocol.http.pack.OutboxMessage;
 import io.cygnuxltb.protocol.http.pack.OutboxTitle;
 import io.mercury.common.collections.MutableMaps;
