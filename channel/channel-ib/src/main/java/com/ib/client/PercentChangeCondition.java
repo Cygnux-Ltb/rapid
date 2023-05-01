@@ -32,7 +32,7 @@ public class PercentChangeCondition extends ContractCondition {
 
     @Override
     protected String valueToString() {
-        return "" + m_changePercent;
+        return String.valueOf(m_changePercent);
     }
 
     @Override

@@ -6,10 +6,12 @@ package com.ib.gui;
 import com.ib.apidemo.util.UpperField;
 import com.ib.apidemo.util.VerticalPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import java.awt.BorderLayout;
 
 public class SecDefOptParamsReqDlg extends JDialog {
+
 	private final UpperField m_idFld = new UpperField("0");
 	private final UpperField m_underlyingSymbolFld = new UpperField();
 	private final UpperField m_futFopExchangeFld = new UpperField();

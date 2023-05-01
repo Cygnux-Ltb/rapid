@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,9 @@ public class TradesPanel extends JPanel implements ITradeReportHandler {
     }
 
     private class Model extends AbstractTableModel {
+        @Serial
+        private static final long serialVersionUID = -29080193632420015L;
+
         @Override
         public int getRowCount() {
             return m_trades.size();

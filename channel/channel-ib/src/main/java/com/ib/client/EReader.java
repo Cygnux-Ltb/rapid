@@ -16,7 +16,7 @@ import java.util.LinkedList;
  * EWrapper.
  * <p>
  * This class is initialized with a DataInputStream that is connected to the
- * TWS. Messages begin with an ID and any relevant data are passed afterwards.
+ * TWS. Messages begin with an ID and any relevant data are passed afterward.
  */
 public class EReader extends Thread {
     private final EClientSocket m_clientSocket;

@@ -42,32 +42,15 @@ public abstract class OrderCondition {
     public static OrderCondition create(OrderConditionType type) {
         OrderCondition orderCondition;
         switch (type) {
-            case Execution:
-                orderCondition = new ExecutionCondition();
-                break;
-
-            case Margin:
-                orderCondition = new MarginCondition();
-                break;
-
-            case PercentChange:
-                orderCondition = new PercentChangeCondition();
-                break;
-
-            case Price:
-                orderCondition = new PriceCondition();
-                break;
-
-            case Time:
-                orderCondition = new TimeCondition();
-                break;
-
-            case Volume:
-                orderCondition = new VolumeCondition();
-                break;
-
-            default:
+            case Execution -> orderCondition = new ExecutionCondition();
+            case Margin -> orderCondition = new MarginCondition();
+            case PercentChange -> orderCondition = new PercentChangeCondition();
+            case Price -> orderCondition = new PriceCondition();
+            case Time -> orderCondition = new TimeCondition();
+            case Volume -> orderCondition = new VolumeCondition();
+            default -> {
                 return null;
+            }
         }
         orderCondition.m_type = type;
         return orderCondition;

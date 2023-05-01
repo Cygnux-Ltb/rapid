@@ -3,15 +3,18 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
 
 class FinancialAdvisorDlg extends JDialog {
     private static final int DIALOG_WIDTH = 500;
     private static final int EDITOR_HEIGHT = 240;
-    private IBTextPanel groupTextEditor = new IBTextPanel("Groups", true);
-    private IBTextPanel profileTextEditor = new IBTextPanel("Allocation Profiles", true);
-    private IBTextPanel aliasTextEditor = new IBTextPanel("Aliases", true);
+    private final IBTextPanel groupTextEditor = new IBTextPanel("Groups", true);
+    private final IBTextPanel profileTextEditor = new IBTextPanel("Allocation Profiles", true);
+    private final IBTextPanel aliasTextEditor = new IBTextPanel("Aliases", true);
     String groupsXML;
     String profilesXML;
     String aliasesXML;

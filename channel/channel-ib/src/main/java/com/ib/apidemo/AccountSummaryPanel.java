@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.awt.BorderLayout;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,8 @@ public class AccountSummaryPanel extends NewTabPanel {
     }
 
     private static class SummaryModel extends AbstractTableModel implements IAccountSummaryHandler {
+        @Serial
+        private static final long serialVersionUID = 4600142676839296573L;
         List<SummaryRow> m_rows = new ArrayList<>();
         Map<String, SummaryRow> m_map = new HashMap<>();
         boolean m_complete;

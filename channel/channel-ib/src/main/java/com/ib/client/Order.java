@@ -3,9 +3,6 @@
 
 package com.ib.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ib.client.Types.Action;
 import com.ib.client.Types.AlgoStrategy;
 import com.ib.client.Types.HedgeType;
@@ -16,6 +13,9 @@ import com.ib.client.Types.Rule80A;
 import com.ib.client.Types.TimeInForce;
 import com.ib.client.Types.TriggerMethod;
 import com.ib.client.Types.VolatilityType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     final public static int CUSTOMER = 0;
@@ -59,7 +59,7 @@ public class Order {
     private boolean m_hidden;
     private boolean m_outsideRth;
     private boolean m_sweepToFill;
-    private double m_percentOffset = Double.MAX_VALUE;   // for Relative orders; specify the decimal, e.g. .04 not 4
+    private double m_percentOffset = Double.MAX_VALUE;   // for Relative orders; specify the decimal, e.g.04 not 4
     private double m_trailingPercent = Double.MAX_VALUE; // for Trailing Stop orders; specify the percentage, e.g. 3, not .03
     private double m_trailStopPrice = Double.MAX_VALUE;  // stop price for Trailing Stop orders
     private int m_minQty = Integer.MAX_VALUE;
@@ -1413,10 +1413,9 @@ public class Order {
         if (this == p_other) {
             return true;
         }
-        if (!(p_other instanceof Order)) {
+        if (!(p_other instanceof Order l_theOther)) {
             return false;
         }
-        Order l_theOther = (Order) p_other;
 
         if (m_permId == l_theOther.m_permId) {
             return true;
@@ -1570,7 +1569,7 @@ public class Order {
     @Override
     public int hashCode() {
         // Use m_permId only due to the definition of equals.
-        return (int) (m_permId ^ (m_permId >>> 32));
+        return m_permId ^ (m_permId >>> 32);
     }
 
 }

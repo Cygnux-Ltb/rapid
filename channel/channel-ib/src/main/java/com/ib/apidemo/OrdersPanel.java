@@ -20,6 +20,7 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -178,6 +179,8 @@ public class OrdersPanel extends JPanel {
 
     static class OrdersModel extends AbstractTableModel implements ILiveOrderHandler {
 
+        @Serial
+        private static final long serialVersionUID = 9097402234359551282L;
         private final Map<Integer, OrderRow> m_map = new HashMap<>();
         private final List<OrderRow> m_orders = new ArrayList<>();
 

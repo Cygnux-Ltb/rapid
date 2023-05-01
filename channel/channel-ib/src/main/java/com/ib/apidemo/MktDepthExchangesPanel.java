@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class MktDepthExchangesPanel extends NewTabPanel {
     }
 
     private class MktDepthExchangesModel extends AbstractTableModel implements IMktDepthExchangesHandler {
+        @Serial
+        private static final long serialVersionUID = -226875597416658708L;
         List<DepthMktDataDescriptionRow> m_list = new ArrayList<>();
 
         @Override

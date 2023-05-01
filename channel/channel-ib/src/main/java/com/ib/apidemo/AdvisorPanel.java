@@ -29,6 +29,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +116,8 @@ public class AdvisorPanel extends NewTabPanel implements IAdvisorHandler {
     }
 
     private static class AliasModel extends AbstractTableModel {
+        @Serial
+        private static final long serialVersionUID = 1689639805702103023L;
         List<Alias> m_list = new ArrayList<>();
 
         @Override
@@ -145,14 +148,11 @@ public class AdvisorPanel extends NewTabPanel implements IAdvisorHandler {
         @Override
         public Object getValueAt(int rowIn, int col) {
             Alias row = m_list.get(rowIn);
-            switch (col) {
-                case 0:
-                    return row.account();
-                case 1:
-                    return row.alias();
-                default:
-                    return null;
-            }
+            return switch (col) {
+                case 0 -> row.account();
+                case 1 -> row.alias();
+                default -> null;
+            };
         }
     }
 
@@ -200,6 +200,8 @@ public class AdvisorPanel extends NewTabPanel implements IAdvisorHandler {
     }
 
     private static class GroupModel extends AbstractTableModel {
+        @Serial
+        private static final long serialVersionUID = 7510748206954229670L;
         TCombo<Method> combo = new TCombo<>(Method.values());
         DefaultCellEditor EDITOR = new DefaultCellEditor(combo);
         List<Group> m_groups = new ArrayList<>();
@@ -322,6 +324,8 @@ public class AdvisorPanel extends NewTabPanel implements IAdvisorHandler {
     }
 
     private static class ProfileModel extends AbstractTableModel {
+        @Serial
+        private static final long serialVersionUID = 5526239733119883096L;
         TCombo<Type> combo = new TCombo<>(Type.values());
         DefaultCellEditor EDITOR = new DefaultCellEditor(combo);
         List<Profile> m_profiles = new ArrayList<>();

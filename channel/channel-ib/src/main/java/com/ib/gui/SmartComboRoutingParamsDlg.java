@@ -5,9 +5,20 @@ package com.ib.gui;
 
 import com.ib.client.TagValue;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Window;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +148,8 @@ public class SmartComboRoutingParamsDlg extends JDialog {
 }
 
 class SmartComboRoutingParamModel extends AbstractTableModel {
+    @Serial
+    private static final long serialVersionUID = -6927433275554270333L;
     private final List<TagValue> m_allData = new ArrayList<>();
 
     synchronized void addParam(TagValue tagValue) {

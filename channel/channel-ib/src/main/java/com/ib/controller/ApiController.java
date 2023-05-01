@@ -3,17 +3,6 @@
 
 package com.ib.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.StringTokenizer;
-
 import com.ib.client.*;
 import com.ib.client.Types.BarSize;
 import com.ib.client.Types.DeepSide;
@@ -25,6 +14,17 @@ import com.ib.client.Types.FundamentalType;
 import com.ib.client.Types.NewsType;
 import com.ib.client.Types.WhatToShow;
 import com.ib.controller.ApiConnection.ILogger;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class ApiController implements EWrapper {
     private final ApiConnection m_client;
@@ -759,7 +759,7 @@ public class ApiController implements EWrapper {
         if (handler != null) {
             handler.tickOptionComputation(TickType.get(tickType), tickAttrib, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice);
         } else {
-            System.out.println(String.format("not handled %s %s %s %s %s %s %s %s %s %s", tickType, tickAttrib, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice));
+            System.out.printf("not handled %s %s %s %s %s %s %s %s %s %s%n", tickType, tickAttrib, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice);
         }
         recEOM();
     }

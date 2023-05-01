@@ -3,9 +3,6 @@
 
 package com.ib.gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -13,16 +10,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 
 public class PositionsDlg extends JDialog {
 
     public boolean m_rc;
 
-    private JTextField m_id = new JTextField("0");
-    private JTextField m_account = new JTextField();
-    private JTextField m_modelCode = new JTextField();
-    private JCheckBox m_ledgerAndNLV = new JCheckBox("LedgerAndNLV", false);
+    private final JTextField m_id = new JTextField("0");
+    private final JTextField m_account = new JTextField();
+    private final JTextField m_modelCode = new JTextField();
+    private final JCheckBox m_ledgerAndNLV = new JCheckBox("LedgerAndNLV", false);
 
     int m_retId;
     String m_retAccount;

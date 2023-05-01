@@ -6,6 +6,7 @@ package com.ib.apidemo.util;
 import javax.swing.JComboBox;
 
 public class TCombo<T> extends JComboBox<T> {
+
     @SafeVarargs
     public TCombo(T... items) {
         super(items);

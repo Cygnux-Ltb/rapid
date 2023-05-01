@@ -683,7 +683,7 @@ public abstract class EClient {
                  *       starting server version 33 it would be relatively
                  *       expensive to expose this restriction here.
                  *
-                 *       Therefore we are relying on TWS doing validation.
+                 *       Therefore, we are relying on TWS doing validation.
                  */
                 b.send(genericTickList);
             }
@@ -771,7 +771,7 @@ public abstract class EClient {
     }
 
     /**
-     * Note that formatData parameter affects intra-day bars only; 1-day bars always return with date in YYYYMMDD format.
+     * Note that formatData parameter affects intraday bars only; 1-day bars always return with date in YYYYMMDD format.
      */
     public synchronized void reqHistoricalData(int tickerId, Contract contract,
                                                String endDateTime, String durationStr,
@@ -885,7 +885,7 @@ public abstract class EClient {
     }
 
     /**
-     * Note that formatData parameter affects intra-day bars only; 1-day bars always return with date in YYYYMMDD format.
+     * Note that formatData parameter affects intraday bars only; 1-day bars always return with date in YYYYMMDD format.
      */
     public synchronized void reqHeadTimestamp(int tickerId, Contract contract,
                                               String whatToShow, int useRTH, int formatDate) {

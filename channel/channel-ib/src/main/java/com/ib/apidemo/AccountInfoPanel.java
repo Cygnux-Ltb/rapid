@@ -419,7 +419,7 @@ public class AccountInfoPanel extends JPanel implements INewTab, IAccountHandler
                 case 0 -> pos.contract().description();
                 case 1 -> pos.position();
                 case 2 -> pos.marketPrice();
-                case 3 -> format("" + pos.marketValue(), null);
+                case 3 -> format(String.valueOf(pos.marketValue()), null);
                 case 4 -> pos.averageCost();
                 case 5 -> pos.unrealPnl();
                 case 6 -> pos.realPnl();

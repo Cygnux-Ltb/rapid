@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.awt.BorderLayout;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,8 @@ public class PositionsPanel extends NewTabPanel {
     }
 
     private class PositionModel extends AbstractTableModel implements IPositionHandler {
+        @Serial
+        private static final long serialVersionUID = 3089051854652057867L;
         Map<PositionKey, PositionRow> m_map = new HashMap<>();
         List<PositionRow> m_list = new ArrayList<>();
 

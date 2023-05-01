@@ -46,7 +46,7 @@ public class ContractPanel extends JPanel {
             m_symbol.setText(m_contract.symbol());
             m_secType.setSelectedItem(m_contract.secType());
             m_lastTradeDateOrContractMonth.setText(m_contract.lastTradeDateOrContractMonth());
-            m_strike.setText("" + m_contract.strike());
+            m_strike.setText(String.valueOf(m_contract.strike()));
             m_right.setSelectedItem(m_contract.right());
             m_multiplier.setText(m_contract.multiplier());
             m_exchange.setText(m_contract.exchange());

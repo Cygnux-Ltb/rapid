@@ -3,25 +3,24 @@
 
 package com.ib.gui;
 
+import javax.swing.JPanel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JPanel;
-
 class IBGridBagPanel extends JPanel {
 
     private static final Insets oneInsets = new Insets(1, 1, 1, 1);
 
-    private GridBagLayout m_layout = new GridBagLayout();
+    private final GridBagLayout m_layout = new GridBagLayout();
 
     IBGridBagPanel() {
         setLayout(m_layout);
     }
 
-    public void addGBComponent(Component comp,
-                               GridBagConstraints gbc, int weightx, int gridwidth) {
+    public void addGBComponent(Component comp, GridBagConstraints gbc,
+                               int weightx, int gridwidth) {
         gbc.weightx = weightx;
         gbc.gridwidth = gridwidth;
 

@@ -3,8 +3,14 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 class MarketRuleDlg extends JDialog {
     private final JTextField m_marketRuleId = new JTextField("0");
@@ -30,7 +36,7 @@ class MarketRuleDlg extends JDialog {
         btnOk.addActionListener(e -> onOk());
         btnCancel.addActionListener(e -> onCancel());
 
-        // create mid summary panel
+        // create mid-summary panel
         JPanel midPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         midPanel.add(new JLabel("Market Rule Id"));
         midPanel.add(m_marketRuleId);

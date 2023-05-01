@@ -3,14 +3,16 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 
 public class PnLSingleDlg extends PnLDlg {
 
     int m_conId;
 
-    private JTextField m_conIdField = new JTextField();
+    private final JTextField m_conIdField = new JTextField();
 
     public PnLSingleDlg(JFrame parent) {
         super(parent);

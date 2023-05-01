@@ -20,8 +20,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.Serial;
 
 public class NewLookAndFeel extends MetalLookAndFeel {
+
+    @Serial
+    private static final long serialVersionUID = -3090433003399699972L;
 
     @Override
     protected void initClassDefaults(UIDefaults table) {

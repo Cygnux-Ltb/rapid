@@ -8,11 +8,25 @@ import com.ib.apidemo.ConditionsPanel;
 import com.ib.apidemo.OnOKPanel;
 import com.ib.apidemo.PegBenchPanel;
 import com.ib.apidemo.util.TCombo;
-import com.ib.client.*;
+import com.ib.client.Contract;
+import com.ib.client.DeltaNeutralContract;
+import com.ib.client.MarketDataType;
+import com.ib.client.Order;
+import com.ib.client.TagValue;
 import com.ib.client.Types.UsePriceMgmtAlgo;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +42,7 @@ public class OrderDlg extends JDialog {
     public boolean m_rc;
     private int m_id;
     public int m_marketDepthRows;
-    private Contract m_contract = new Contract();
+    private final Contract m_contract = new Contract();
     public Order m_order = new Order();
     public DeltaNeutralContract m_deltaNeutralContract = new DeltaNeutralContract();
     public int m_exerciseAction;
@@ -38,56 +52,56 @@ public class OrderDlg extends JDialog {
     private String m_optionsDlgTitle;
     private List<TagValue> m_options = new ArrayList<>();
 
-    private JTextField m_Id = new JTextField("0");
-    private JTextField m_conId = new JTextField();
-    private JTextField m_symbol = new JTextField("QQQQ");
-    private JTextField m_secType = new JTextField("STK");
-    private JTextField m_lastTradeDateOrContractMonth = new JTextField();
-    private JTextField m_strike = new JTextField("0");
-    private JTextField m_right = new JTextField();
-    private JTextField m_multiplier = new JTextField("");
-    private JTextField m_exchange = new JTextField("SMART");
-    private JTextField m_primaryExch = new JTextField("ISLAND");
-    private JTextField m_currency = new JTextField("USD");
-    private JTextField m_localSymbol = new JTextField();
-    private JTextField m_tradingClass = new JTextField();
-    private JTextField m_includeExpired = new JTextField("0");
-    private JTextField m_secIdType = new JTextField();
-    private JTextField m_secId = new JTextField();
-    private JTextField m_action = new JTextField("BUY");
-    private JTextField m_totalQuantity = new JTextField("10");
-    private JTextField m_orderType = new JTextField("LMT");
-    private JTextField m_lmtPrice = new JTextField("40");
-    private JTextField m_auxPrice = new JTextField("0");
-    private JTextField m_goodAfterTime = new JTextField();
-    private JTextField m_goodTillDate = new JTextField();
-    private JTextField m_cashQty = new JTextField();
-    private JTextField m_marketDepthRowTextField = new JTextField("20");
-    private JCheckBox m_smartDepth = new JCheckBox("SMART Depth", true);
-    private JTextField m_genericTicksTextField = new JTextField(ALL_GENERIC_TICK_TAGS);
-    private JCheckBox m_snapshotMktDataTextField = new JCheckBox("Snapshot", false);
-    private JCheckBox m_regSnapshotMktDataTextField = new JCheckBox("Regulatory Snapshot", false);
-    private JTextField m_exerciseActionTextField = new JTextField("1");
-    private JTextField m_exerciseQuantityTextField = new JTextField("1");
-    private JTextField m_overrideTextField = new JTextField("0");
-    private JComboBox<String> m_marketDataTypeCombo = new JComboBox<>(MarketDataType.getFields());
-    private TCombo<UsePriceMgmtAlgo> m_usePriceMgmtAlgo = new TCombo<>(UsePriceMgmtAlgo.values());
+    private final JTextField m_Id = new JTextField("0");
+    private final JTextField m_conId = new JTextField();
+    private final JTextField m_symbol = new JTextField("QQQQ");
+    private final JTextField m_secType = new JTextField("STK");
+    private final JTextField m_lastTradeDateOrContractMonth = new JTextField();
+    private final JTextField m_strike = new JTextField("0");
+    private final JTextField m_right = new JTextField();
+    private final JTextField m_multiplier = new JTextField("");
+    private final JTextField m_exchange = new JTextField("SMART");
+    private final JTextField m_primaryExch = new JTextField("ISLAND");
+    private final JTextField m_currency = new JTextField("USD");
+    private final JTextField m_localSymbol = new JTextField();
+    private final JTextField m_tradingClass = new JTextField();
+    private final JTextField m_includeExpired = new JTextField("0");
+    private final JTextField m_secIdType = new JTextField();
+    private final JTextField m_secId = new JTextField();
+    private final JTextField m_action = new JTextField("BUY");
+    private final JTextField m_totalQuantity = new JTextField("10");
+    private final JTextField m_orderType = new JTextField("LMT");
+    private final JTextField m_lmtPrice = new JTextField("40");
+    private final JTextField m_auxPrice = new JTextField("0");
+    private final JTextField m_goodAfterTime = new JTextField();
+    private final JTextField m_goodTillDate = new JTextField();
+    private final JTextField m_cashQty = new JTextField();
+    private final JTextField m_marketDepthRowTextField = new JTextField("20");
+    private final JCheckBox m_smartDepth = new JCheckBox("SMART Depth", true);
+    private final JTextField m_genericTicksTextField = new JTextField(ALL_GENERIC_TICK_TAGS);
+    private final JCheckBox m_snapshotMktDataTextField = new JCheckBox("Snapshot", false);
+    private final JCheckBox m_regSnapshotMktDataTextField = new JCheckBox("Regulatory Snapshot", false);
+    private final JTextField m_exerciseActionTextField = new JTextField("1");
+    private final JTextField m_exerciseQuantityTextField = new JTextField("1");
+    private final JTextField m_overrideTextField = new JTextField("0");
+    private final JComboBox<String> m_marketDataTypeCombo = new JComboBox<>(MarketDataType.getFields());
+    private final TCombo<UsePriceMgmtAlgo> m_usePriceMgmtAlgo = new TCombo<>(UsePriceMgmtAlgo.values());
 
-    private JButton m_sharesAlloc = new JButton("FA Allocation Info...");
-    private JButton m_comboLegs = new JButton("Combo Legs");
-    private JButton m_btnDeltaNeutralContract = new JButton("Delta Neutral");
-    private JButton m_btnAlgoParams = new JButton("Algo Params");
-    private JButton m_btnSmartComboRoutingParams = new JButton("Smart Combo Routing Params");
-    private JButton m_btnOptions = new JButton("Options");
-    private JButton m_btnConditions = new JButton("Conditions");
-    private JButton m_btnPeg2Bench = new JButton("Pegged to benchmark");
-    private JButton m_btnAdjStop = new JButton("Adjustable stops");
-    private JButton m_btnHistoricalData = new JButton("Historical Data Query");
-    private HistoricalDataDlg m_historicalDataDlg = new HistoricalDataDlg(this);
+    private final JButton m_sharesAlloc = new JButton("FA Allocation Info...");
+    private final JButton m_comboLegs = new JButton("Combo Legs");
+    private final JButton m_btnDeltaNeutralContract = new JButton("Delta Neutral");
+    private final JButton m_btnAlgoParams = new JButton("Algo Params");
+    private final JButton m_btnSmartComboRoutingParams = new JButton("Smart Combo Routing Params");
+    private final JButton m_btnOptions = new JButton("Options");
+    private final JButton m_btnConditions = new JButton("Conditions");
+    private final JButton m_btnPeg2Bench = new JButton("Pegged to benchmark");
+    private final JButton m_btnAdjStop = new JButton("Adjustable stops");
+    private final JButton m_btnHistoricalData = new JButton("Historical Data Query");
+    private final HistoricalDataDlg m_historicalDataDlg = new HistoricalDataDlg(this);
 
-    private JButton m_ok = new JButton("OK");
-    private JButton m_cancel = new JButton("Cancel");
-    private SampleFrame m_parent;
+    private final JButton m_ok = new JButton("OK");
+    private final JButton m_cancel = new JButton("Cancel");
+    private final SampleFrame m_parent;
 
     private String m_faGroup;
     private String m_faProfile;
@@ -339,7 +353,7 @@ public class OrderDlg extends JDialog {
     }
 
     private static String pad(int val) {
-        return val < 10 ? "0" + val : "" + val;
+        return val < 10 ? "0" + val : String.valueOf(val);
     }
 
     void onSharesAlloc() {

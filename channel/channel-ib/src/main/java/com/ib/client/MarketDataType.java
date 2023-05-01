@@ -5,9 +5,9 @@ package com.ib.client;
 
 public class MarketDataType {
     // constants - market data types
-    public static final int REALTIME   = 1;
-    public static final int FROZEN     = 2;
-    public static final int DELAYED    = 3;
+    public static final int REALTIME = 1;
+    public static final int FROZEN = 2;
+    public static final int DELAYED = 3;
     public static final int DELAYED_FROZEN = 4;
 
     private static final String REALTIME_STR = "Real-Time";
@@ -16,7 +16,7 @@ public class MarketDataType {
     private static final String DELAYED_FROZEN_STR = "Delayed-Frozen";
     private static final String UNKNOWN_STR = "Unknown";
 
-    public static String getField( int marketDataType) {
+    public static String getField(int marketDataType) {
         return switch (marketDataType) {
             case REALTIME -> REALTIME_STR;
             case FROZEN -> FROZEN_STR;
@@ -26,7 +26,7 @@ public class MarketDataType {
         };
     }
 
-    public static int getField( String marketDataTypeStr) {
+    public static int getField(String marketDataTypeStr) {
         return switch (marketDataTypeStr) {
             case REALTIME_STR -> REALTIME;
             case FROZEN_STR -> FROZEN;
@@ -36,12 +36,12 @@ public class MarketDataType {
         };
     }
 
-    public static String[] getFields(){
-    	int totalFields = MarketDataType.class.getFields().length;
-    	String [] fields = new String[totalFields];
-    	for (int i = 0; i < totalFields; i++){
-    		fields[i] = MarketDataType.getField(i + 1);
-    	}
-    	return fields;
+    public static String[] getFields() {
+        int totalFields = MarketDataType.class.getFields().length;
+        String[] fields = new String[totalFields];
+        for (int i = 0; i < totalFields; i++) {
+            fields[i] = MarketDataType.getField(i + 1);
+        }
+        return fields;
     }
 }

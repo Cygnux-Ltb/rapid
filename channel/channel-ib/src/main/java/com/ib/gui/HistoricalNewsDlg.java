@@ -5,8 +5,14 @@ package com.ib.gui;
 
 import com.ib.client.TagValue;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,12 +23,12 @@ public class HistoricalNewsDlg extends JDialog {
 
     public boolean m_rc;
 
-    private JTextField m_requestId = new JTextField("0");
-    private JTextField m_conId = new JTextField("8314");
-    private JTextField m_providerCodes = new JTextField("BZ+FLY");
-    private JTextField m_startDateTime = new JTextField();
-    private JTextField m_endDateTime = new JTextField();
-    private JTextField m_totalResults = new JTextField("10");
+    private final JTextField m_requestId = new JTextField("0");
+    private final JTextField m_conId = new JTextField("8314");
+    private final JTextField m_providerCodes = new JTextField("BZ+FLY");
+    private final JTextField m_startDateTime = new JTextField();
+    private final JTextField m_endDateTime = new JTextField();
+    private final JTextField m_totalResults = new JTextField("10");
     private List<TagValue> m_options = new ArrayList<>();
 
     int m_retRequestId;
@@ -53,7 +59,7 @@ public class HistoricalNewsDlg extends JDialog {
         btnOk.addActionListener(e -> onOk());
         btnCancel.addActionListener(e -> onCancel());
 
-        // create mid summary panel
+        // create mid-summary panel
         JPanel midPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         midPanel.add(new JLabel("Request Id"));
         midPanel.add(m_requestId);

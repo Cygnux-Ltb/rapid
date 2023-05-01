@@ -16,13 +16,10 @@ public abstract class OperatorCondition extends OrderCondition {
 
     protected abstract void valueFromString(String v);
 
-
     @Override
     public void readFrom(ObjectInput in) throws IOException {
         super.readFrom(in);
-
         m_isMore = in.readBoolean();
-
         valueFromString(in.readUTF());
     }
 

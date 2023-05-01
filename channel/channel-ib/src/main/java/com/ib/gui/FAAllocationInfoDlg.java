@@ -3,30 +3,34 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.Color;
 
 class FAAllocationInfoDlg extends JDialog {
-    private IBGridBagPanel mainJPanel = new IBGridBagPanel();
-    private IBGridBagPanel faGroupJPanel = new IBGridBagPanel();
-    private IBGridBagPanel faProfileJPanel = new IBGridBagPanel();
+    private final IBGridBagPanel mainJPanel = new IBGridBagPanel();
+    private final IBGridBagPanel faGroupJPanel = new IBGridBagPanel();
+    private final IBGridBagPanel faProfileJPanel = new IBGridBagPanel();
 
-    private JLabel m_groupLabel = new JLabel("Group");
-    private JLabel m_methodLabel = new JLabel("Method");
-    private JLabel m_percentageLabel = new JLabel("Percentage");
-    private JLabel m_profileLabel = new JLabel("Profile");
+    private final JLabel m_groupLabel = new JLabel("Group");
+    private final JLabel m_methodLabel = new JLabel("Method");
+    private final JLabel m_percentageLabel = new JLabel("Percentage");
+    private final JLabel m_profileLabel = new JLabel("Profile");
 
-    private JTextField m_groupTextField = new JTextField(20);
-    private JTextField m_methodTextField = new JTextField(20);
-    private JTextField m_percentageTextField = new JTextField(20);
-    private JTextField m_profileTextField = new JTextField(20);
+    private final JTextField m_groupTextField = new JTextField(20);
+    private final JTextField m_methodTextField = new JTextField(20);
+    private final JTextField m_percentageTextField = new JTextField(20);
+    private final JTextField m_profileTextField = new JTextField(20);
 
-    private JButton m_okButton = new JButton("OK");
-    private JButton m_closeButton = new JButton("Close");
+    private final JButton m_okButton = new JButton("OK");
+    private final JButton m_closeButton = new JButton("Close");
 
-    private OrderDlg m_parent;
+    private final OrderDlg m_parent;
 
     FAAllocationInfoDlg(OrderDlg dlg) {
         super(dlg, false);

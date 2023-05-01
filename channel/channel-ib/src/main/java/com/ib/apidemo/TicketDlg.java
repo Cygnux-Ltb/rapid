@@ -230,8 +230,8 @@ class TicketDlg extends JDialog {
 		Amnt("amnt", 0),
 		Percent("%", 100);
 		
-		String m_text;
-		int m_val;
+		final String m_text;
+		final int m_val;
 		
 		AmntUnit(String txt, int v) {
 			m_text = txt;

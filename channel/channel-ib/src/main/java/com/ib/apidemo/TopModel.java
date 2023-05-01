@@ -11,6 +11,7 @@ import com.ib.controller.ApiController.TopMktDataAdapter;
 import com.ib.controller.Formats;
 
 import javax.swing.table.AbstractTableModel;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import static com.ib.controller.Formats.fmtTime;
 
 class TopModel extends AbstractTableModel {
 
+    @Serial
+    private static final long serialVersionUID = -7212580740689012343L;
     private final List<TopRow> m_rows = new ArrayList<>();
     private final MarketDataPanel m_parentPanel;
     private static final int CANCEL_CHBX_COL_INDEX = 26;

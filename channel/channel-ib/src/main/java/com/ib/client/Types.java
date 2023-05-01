@@ -88,10 +88,12 @@ public class Types {
         public static Right get(String apiString) {
             if (apiString != null && apiString.length() > 0) {
                 switch (apiString.charAt(0)) {
-                    case 'P':
+                    case 'P' -> {
                         return Put;
-                    case 'C':
+                    }
+                    case 'C' -> {
                         return Call;
+                    }
                 }
             }
             return None;

@@ -38,6 +38,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,9 @@ import java.util.List;
 public class ComboPanel extends JPanel implements INewTab {
 
     private final OrdersModel m_ordersModel = new OrdersModel() {
+        @Serial
+        private static final long serialVersionUID = -6026685865705817889L;
+
         @Override
         protected boolean shouldAdd(Contract contract, Order order, OrderState orderState) {
             return contract.isCombo();
@@ -503,6 +507,8 @@ public class ComboPanel extends JPanel implements INewTab {
         }
 
         static class EfpModel extends AbstractTableModel {
+            @Serial
+            private static final long serialVersionUID = -2542674072339659064L;
             List<EfpRow> m_rows = new ArrayList<>();
             MarketDataPanel m_parentPanel;
 
@@ -603,6 +609,8 @@ public class ComboPanel extends JPanel implements INewTab {
 
     static class LegModel extends AbstractTableModel {
 
+        @Serial
+        private static final long serialVersionUID = 1769615432224400289L;
         List<LegRow> m_legRows;
 
         LegModel(List<LegRow> legRows) {

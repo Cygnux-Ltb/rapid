@@ -4,16 +4,26 @@
 package com.ib.client;
 
 public class NewsProvider {
-    private String 	m_providerCode;
-    private String 	m_providerName;
+    private String m_providerCode;
+    private String m_providerName;
 
     // Get
-    public String providerCode() { return m_providerCode; }
-    public String providerName() { return m_providerName; }
+    public String providerCode() {
+        return m_providerCode;
+    }
+
+    public String providerName() {
+        return m_providerName;
+    }
 
     // Set 
-    public void providerCode(String providerCode) { m_providerCode = providerCode; }
-    public void providerName(String providerName) { m_providerName = providerName; }
+    public void providerCode(String providerCode) {
+        m_providerCode = providerCode;
+    }
+
+    public void providerName(String providerName) {
+        m_providerName = providerName;
+    }
 
     public NewsProvider() {
     }

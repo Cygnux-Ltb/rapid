@@ -26,7 +26,7 @@ public class MarginCondition extends OperatorCondition {
 
 	@Override
 	protected String valueToString() {
-		return "" + m_percent;
+		return String.valueOf(m_percent);
 	}
 
 	@Override
