@@ -6,7 +6,6 @@ import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.serialization.json.JsonWrapper;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public abstract class BaseInstrument extends EnableableComponent implements Instrument {
 
@@ -55,12 +54,12 @@ public abstract class BaseInstrument extends EnableableComponent implements Inst
     @Override
     public String format() {
         if (formatText == null) {
-            Map<String, Object> tempMap = new HashMap<>();
-            tempMap.put("type", getType());
-            tempMap.put("instrumentId", getInstrumentId());
-            tempMap.put("instrumentCode", getInstrumentCode());
-            tempMap.put("symbol", getSymbol());
-            this.formatText = JsonWrapper.toJson(tempMap);
+            var map = new HashMap<>();
+            map.put("type", getType());
+            map.put("instrumentId", getInstrumentId());
+            map.put("instrumentCode", getInstrumentCode());
+            map.put("symbol", getSymbol());
+            this.formatText = JsonWrapper.toJson(map);
         }
         return formatText;
     }

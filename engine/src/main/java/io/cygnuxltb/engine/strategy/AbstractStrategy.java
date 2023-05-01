@@ -8,7 +8,6 @@ import io.horizon.market.data.MarketDataKeeper.MarketDataSnapshot;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.InstrumentKeeper;
 import io.horizon.trader.account.Account;
-import io.horizon.trader.account.Account.AccountException;
 import io.horizon.trader.account.AccountFinder;
 import io.horizon.trader.account.SubAccount;
 import io.horizon.trader.adaptor.Adaptor;
@@ -35,7 +34,6 @@ import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 import static java.lang.Math.abs;
@@ -76,19 +74,16 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
 
     private final OrdSysIdAllocator allocator;
 
-    protected AbstractStrategy(int strategyId, @Nonnull String strategyName, @Nonnull SubAccount subAccount,
-                               @Nullable Params<K> params) {
-        Asserter.nonNull(subAccount, "subAccount");
+    protected AbstractStrategy(int strategyId, String strategyName,
+                               SubAccount subAccount, Params<K> params) {
         Asserter.atWithinRange(strategyId, 1, Strategy.MAX_STRATEGY_ID, "strategyId");
+        Asserter.nonNull(subAccount, "subAccount");
         Asserter.nonEmpty(strategyName, "strategyName");
         this.strategyId = strategyId;
         this.strategyName = strategyName;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
-        final Account account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
-        if (account == null)
-            throw new AccountException(subAccount.getSubAccountName() + " is not found Account");
-        this.account = account;
+        this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
         this.queryPositionsReq = TdxQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())

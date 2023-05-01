@@ -54,8 +54,8 @@ public final class MarketDataKeeper implements Serializable {
      * @param marketData MarketData
      */
     public static void onMarketDate(@Nonnull final MarketData marketData) {
-        String instrumentCode = marketData.getInstrumentCode();
-        MarketDataSnapshot snapshot = getSnapshot(instrumentCode);
+        var instrumentCode = marketData.getInstrumentCode();
+        var snapshot = getSnapshot(instrumentCode);
         if (snapshot == null) {
             log.warn("Instrument unregistered, instrumentCode -> {}", instrumentCode);
         } else {

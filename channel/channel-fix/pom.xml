@@ -38,13 +38,7 @@
         <dependency>
             <groupId>uk.co.real-logic</groupId>
             <artifactId>artio-core</artifactId>
-            <version>0.139</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.agrona</groupId>
-                    <artifactId>agrona</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>0.142</version>
         </dependency>
 
         <!-- FIX Protocol lib -->

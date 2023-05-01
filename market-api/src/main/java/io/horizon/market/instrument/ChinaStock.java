@@ -36,12 +36,6 @@ public final class ChinaStock {
         }
 
         @Override
-        public PriceMultiplier getMultiplier() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        @Override
         public boolean isSymbolCode(String code) {
             // TODO Auto-generated method stub
             return false;

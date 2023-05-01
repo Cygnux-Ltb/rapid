@@ -715,11 +715,6 @@ public final class ChinaFutures {
         }
 
         @Override
-        public boolean isAvailableImmediately() {
-            return true;
-        }
-
-        @Override
         public int getTickSize() {
             return 1;
         }

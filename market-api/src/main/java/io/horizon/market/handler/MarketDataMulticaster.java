@@ -72,7 +72,7 @@ public final class MarketDataMulticaster<I, E extends MarketData>
     }
 
     public void startup() {
-
+        super.start();
     }
 
     @Override

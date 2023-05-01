@@ -7,7 +7,6 @@ import io.mercury.common.lang.Asserter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonWrapper;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
@@ -58,7 +56,7 @@ public final class InstrumentKeeper {
                 InstrumentKeeper.instruments = InstrumentById.toList().toImmutable();
                 log.info("InstrumentKeeper is initialized");
             } catch (Exception e) {
-                RuntimeException re = new RuntimeException("InstrumentManager initialization failed", e);
+                var re = new RuntimeException("InstrumentManager initialization failed", e);
                 log.error("InstrumentManager initialization failed", re);
                 throw re;
             }
@@ -158,7 +156,7 @@ public final class InstrumentKeeper {
     public static Instrument[] getInstrument(String[] instrumentCodes) {
         if (isInitialized()) {
             Asserter.requiredLength(instrumentCodes, 1, "instrumentCodes");
-            MutableList<Instrument> list = MutableLists.newFastList();
+            var list = MutableLists.<Instrument>newFastList();
             for (String instrumentCode : instrumentCodes) {
                 Instrument instrument = null;
                 try {
@@ -197,7 +195,7 @@ public final class InstrumentKeeper {
      * @return Pretty Json String
      */
     public static String showStatus() {
-        Map<String, Object> map = new HashMap<>();
+        var map = new HashMap<>();
         map.put("isInitialized", isInitialized);
         map.put("instruments", getInstruments());
         return JsonWrapper.toPrettyJson(map);

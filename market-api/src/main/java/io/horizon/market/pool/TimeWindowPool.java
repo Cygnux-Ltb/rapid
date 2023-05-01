@@ -9,7 +9,6 @@ import io.mercury.common.sequence.TimeWindow;
 import org.eclipse.collections.api.map.primitive.ImmutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
-import org.eclipse.collections.api.set.sorted.MutableSortedSet;
 import org.eclipse.collections.impl.collector.Collectors2;
 
 import javax.annotation.CheckForNull;
@@ -33,16 +32,16 @@ public final class TimeWindowPool {
      * 可变的Pool,最终元素为Set <br>
      * Map<(period + symbolId), Set<TimePeriod>>
      */
-    private final MutableLongObjectMap<ImmutableSortedSet<TimeWindow>> timeWindowPool =
-            MutableMaps.newLongObjectHashMap();
+    private final MutableLongObjectMap<ImmutableSortedSet<TimeWindow>>
+            timeWindowPool = MutableMaps.newLongObjectHashMap();
 
     /**
      * 使用联合主键进行索引,高位为symbolId, 低位为period <br>
      * 可变的Pool,最终元素为Map <br>
      * Map<(period + symbolId), Map<SerialNumber,TimePeriod>>
      */
-    private final MutableLongObjectMap<ImmutableLongObjectMap<TimeWindow>> timePeriodMapPool =
-            MutableMaps.newLongObjectHashMap();
+    private final MutableLongObjectMap<ImmutableLongObjectMap<TimeWindow>>
+            timePeriodMapPool = MutableMaps.newLongObjectHashMap();
 
     /**
      * @param date      LocalDate
@@ -61,14 +60,14 @@ public final class TimeWindowPool {
     public void register(@Nonnull LocalDate date, @Nonnull Symbol[] symbols, Duration... durations) {
         requiredLength(symbols, 1, "symbols");
         requiredLength(durations, 1, "durations");
-        for (Duration duration : durations)
+        for (var duration : durations)
             generateTimePeriod(date, symbols, duration);
     }
 
     private void generateTimePeriod(@Nonnull LocalDate date, @Nonnull Symbol[] symbols, Duration duration) {
-        for (Symbol symbol : symbols) {
-            MutableSortedSet<TimeWindow> timePeriodSet = MutableSets.newTreeSortedSet();
-            MutableLongObjectMap<TimeWindow> timePeriodMap = MutableMaps.newLongObjectHashMap();
+        for (var symbol : symbols) {
+            var timePeriodSet = MutableSets.<TimeWindow>newTreeSortedSet();
+            var timePeriodMap = MutableMaps.<TimeWindow>newLongObjectHashMap();
             // 获取指定品种下的全部交易时段,将交易时段按照指定指标周期切分
             symbol.getTradablePeriods().stream()
                     .flatMap(tradingPeriod -> tradingPeriod

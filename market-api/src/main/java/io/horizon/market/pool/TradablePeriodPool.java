@@ -1,19 +1,16 @@
 package io.horizon.market.pool;
 
-import static io.mercury.common.lang.Asserter.requiredLength;
-
-import java.time.LocalTime;
-
-import javax.annotation.concurrent.ThreadSafe;
-
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
-import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
-
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.Symbol;
 import io.horizon.market.instrument.attr.TradablePeriod;
 import io.mercury.common.collections.MutableMaps;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+
+import javax.annotation.concurrent.ThreadSafe;
+import java.time.LocalTime;
+
+import static io.mercury.common.lang.Asserter.requiredLength;
 
 @ThreadSafe
 public final class TradablePeriodPool {
@@ -26,10 +23,10 @@ public final class TradablePeriodPool {
 
     public synchronized static void register(Symbol[] symbols) {
         requiredLength(symbols, 1, "symbols");
-        MutableIntObjectMap<ImmutableList<TradablePeriod>> map = MutableMaps.newIntObjectHashMap();
+        var map = MutableMaps.<ImmutableList<TradablePeriod>>newIntObjectHashMap();
         if (Pool != null)
             Pool.forEachKeyValue(map::put);
-        for (Symbol symbol : symbols) {
+        for (var symbol : symbols) {
             if (!map.containsKey(symbol.getSymbolId()))
                 map.put(symbol.getSymbolId(), symbol.getTradablePeriods());
         }
@@ -73,11 +70,11 @@ public final class TradablePeriodPool {
      * @return TradablePeriod
      */
     public static synchronized TradablePeriod nextTradingPeriod(Symbol symbol, LocalTime time) {
-        ImmutableList<TradablePeriod> tradingPeriodSet = getTradingPeriods(symbol);
+        var tradingPeriods = getTradingPeriods(symbol);
         TradablePeriod result = null;
         int baseTime = time.toSecondOfDay();
         int baseDiff = Integer.MAX_VALUE;
-        for (TradablePeriod period : tradingPeriodSet) {
+        for (var period : tradingPeriods) {
             int start = period.getStart().toSecondOfDay();
             int diff = Math.abs(start - baseTime);
             if (diff < baseDiff) {
