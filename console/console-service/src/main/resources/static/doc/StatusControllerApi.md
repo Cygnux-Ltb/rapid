@@ -33,9 +33,9 @@ curl -X GET -i /status
 ```
 [
   {
-    "productId": 454,
-    "strategyId": 360,
-    "instrumentCode": "96385",
+    "productId": 587,
+    "strategyId": 698,
+    "instrumentCode": "38827",
     "tradable": true
   }
 ]
@@ -88,7 +88,7 @@ OK
 
 **Request-example:**
 ```
-curl -X PUT -i /status/update --data 'productId=112'
+curl -X PUT -i /status/update --data 'productId=862'
 ```
 
 **Response-example:**

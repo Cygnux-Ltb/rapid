@@ -35,12 +35,12 @@ curl -X GET -i /product/all
 ```
 [
   {
-    "uid": 2,
-    "productId": 21,
-    "productName": "janetta.rippin",
-    "subAccountId": "19",
-    "userId": "19",
-    "interfaceType": "6jxu5g"
+    "uid": 261,
+    "productId": 103,
+    "productName": "sona.kuhic",
+    "subAccountId": "172",
+    "userId": "172",
+    "interfaceType": "xmf4zk"
   }
 ]
 ```
@@ -67,7 +67,7 @@ curl -X GET -i /product/all
 
 **Request-example:**
 ```
-curl -X GET -i /product?productId=526 --data '&526'
+curl -X GET -i /product?productId=752 --data '&752'
 ```
 
 **Response-fields:**
@@ -84,12 +84,12 @@ curl -X GET -i /product?productId=526 --data '&526'
 **Response-example:**
 ```
 {
-  "uid": 493,
-  "productId": 505,
-  "productName": "janetta.rippin",
-  "subAccountId": "19",
-  "userId": "19",
-  "interfaceType": "5m964t"
+  "uid": 392,
+  "productId": 152,
+  "productName": "sona.kuhic",
+  "subAccountId": "172",
+  "userId": "172",
+  "interfaceType": "k1kl6g"
 }
 ```
 

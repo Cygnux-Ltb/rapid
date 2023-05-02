@@ -34,11 +34,11 @@ curl -X GET -i /strategy
 ```
 [
   {
-    "uid": 110,
-    "strategyId": 981,
-    "strategyName": "janetta.rippin",
-    "strategyOwner": "f6p0yf",
-    "strategyInfo": "458fy1"
+    "uid": 95,
+    "strategyId": 66,
+    "strategyName": "sona.kuhic",
+    "strategyOwner": "d81lw0",
+    "strategyInfo": "rvbirk"
   }
 ]
 ```
@@ -65,7 +65,7 @@ curl -X GET -i /strategy
 
 **Request-example:**
 ```
-curl -X GET -i /strategy/258
+curl -X GET -i /strategy/565
 ```
 
 **Response-fields:**
@@ -81,11 +81,11 @@ curl -X GET -i /strategy/258
 **Response-example:**
 ```
 {
-  "uid": 810,
-  "strategyId": 995,
-  "strategyName": "janetta.rippin",
-  "strategyOwner": "7kq2v3",
-  "strategyInfo": "k7iyr7"
+  "uid": 152,
+  "strategyId": 690,
+  "strategyName": "sona.kuhic",
+  "strategyOwner": "afp5hh",
+  "strategyInfo": "pr3t5h"
 }
 ```
 
@@ -111,7 +111,7 @@ curl -X GET -i /strategy/258
 
 **Request-example:**
 ```
-curl -X GET -i /strategy/33/param
+curl -X GET -i /strategy/431/param
 ```
 
 **Response-fields:**
@@ -131,14 +131,14 @@ curl -X GET -i /strategy/33/param
 ```
 [
   {
-    "uid": 49,
-    "strategyId": 387,
-    "strategyName": "janetta.rippin",
-    "ownerType": "kf7mea",
-    "owner": "8nl73i",
-    "paramName": "janetta.rippin",
-    "paramType": "ss3j7y",
-    "paramValue": "o5095a"
+    "uid": 88,
+    "strategyId": 115,
+    "strategyName": "sona.kuhic",
+    "ownerType": "gqqc8c",
+    "owner": "vbjnos",
+    "paramName": "sona.kuhic",
+    "paramType": "m6pj0a",
+    "paramValue": "kje42c"
   }
 ]
 ```
@@ -165,7 +165,7 @@ curl -X GET -i /strategy/33/param
 
 **Request-example:**
 ```
-curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/23/param
+curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/229/param
 ```
 
 **Response-example:**

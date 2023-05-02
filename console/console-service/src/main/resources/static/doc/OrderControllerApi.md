@@ -29,7 +29,7 @@
 
 **Request-example:**
 ```
-curl -X GET -i /order/594?strategyId=268&investorId=19&instrumentCode=96385 --data '&268&19&96385'
+curl -X GET -i /order/853?strategyId=204&investorId=172&instrumentCode=38827 --data '&204&172&38827'
 ```
 
 **Response-fields:**
@@ -65,30 +65,30 @@ curl -X GET -i /order/594?strategyId=268&investorId=19&instrumentCode=96385 --da
 ```
 [
   {
-    "uid": 843,
-    "tradingDay": 460,
-    "strategyId": 690,
-    "instrumentCode": "96385",
-    "investorId": "19",
-    "brokerId": "19",
-    "accountId": 862,
-    "subAccountId": 27,
-    "userId": 385,
-    "ordSysId": 616,
-    "ordType": "zw7fvg",
-    "ordRef": "ngy939",
-    "direction": "c",
-    "side": "9",
-    "offerPrice": 87.91,
-    "offerQty": 132,
-    "insertTime": "2023-04-26 16:44:29",
-    "updateTime": "2023-04-26 16:44:29",
-    "cancelTime": "2023-04-26 16:44:29",
-    "frontId": 335,
-    "sessionId": 45,
-    "fee": 23.80,
-    "adaptorType": "x6g34o",
-    "remark": "3op9cv"
+    "uid": 147,
+    "tradingDay": 963,
+    "strategyId": 639,
+    "instrumentCode": "38827",
+    "investorId": "172",
+    "brokerId": "172",
+    "accountId": 98,
+    "subAccountId": 297,
+    "userId": 558,
+    "ordSysId": 824,
+    "ordType": "3cn34e",
+    "ordRef": "x2h0xo",
+    "direction": "x",
+    "side": "t",
+    "offerPrice": 36.94,
+    "offerQty": 853,
+    "insertTime": "2023-05-02 01:00:50",
+    "updateTime": "2023-05-02 01:00:50",
+    "cancelTime": "2023-05-02 01:00:50",
+    "frontId": 43,
+    "sessionId": 783,
+    "fee": 9.64,
+    "adaptorType": "kyygud",
+    "remark": "wvhnz0"
   }
 ]
 ```
@@ -116,7 +116,7 @@ curl -X GET -i /order/594?strategyId=268&investorId=19&instrumentCode=96385 --da
 
 **Request-example:**
 ```
-curl -X GET -i /order/status?tradingDay=792&strategyId=751 --data '&792&751'
+curl -X GET -i /order/status?tradingDay=335&strategyId=275 --data '&335&275'
 ```
 
 **Response-fields:**
@@ -156,34 +156,34 @@ curl -X GET -i /order/status?tradingDay=792&strategyId=751 --data '&792&751'
 ```
 [
   {
-    "uid": 357,
-    "tradingDay": 919,
-    "strategyId": 398,
-    "instrumentCode": "96385",
-    "investorId": "19",
-    "brokerId": "19",
-    "accountId": 92,
-    "subAccountId": 253,
-    "userId": 73,
-    "ordSysId": 822,
-    "ordRef": "b1fgxp",
-    "ordMsgType": 526,
-    "ordOffset": "0",
-    "direction": "m",
-    "limitPrice": 82.05,
-    "status": 801,
-    "statusMsg": "s00mn5",
-    "brokerSysID": 458,
-    "volume": 961,
-    "volumeFilled": 96,
-    "volumeRemained": 774,
-    "price": 82.25,
-    "tradeId": "19",
-    "ordRejReason": 344,
-    "insertTime": 874,
-    "updateTime": 877,
-    "cancelTime": 146,
-    "remark": "x1hzik"
+    "uid": 493,
+    "tradingDay": 104,
+    "strategyId": 590,
+    "instrumentCode": "38827",
+    "investorId": "172",
+    "brokerId": "172",
+    "accountId": 183,
+    "subAccountId": 848,
+    "userId": 992,
+    "ordSysId": 713,
+    "ordRef": "5nze4w",
+    "ordMsgType": 558,
+    "ordOffset": "r",
+    "direction": "r",
+    "limitPrice": 90.92,
+    "status": 55,
+    "statusMsg": "ya9c9p",
+    "brokerSysID": 511,
+    "volume": 167,
+    "volumeFilled": 934,
+    "volumeRemained": 342,
+    "price": 27.74,
+    "tradeId": "172",
+    "ordRejReason": 675,
+    "insertTime": 922,
+    "updateTime": 151,
+    "cancelTime": 435,
+    "remark": "cl6wz2"
   }
 ]
 ```

@@ -23,7 +23,7 @@
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data '&197&96385'
+curl -X GET -i /instrument/settlement?tradingDay=649&instrumentCode=38827 --data '&649&38827'
 ```
 
 **Response-fields:**
@@ -40,11 +40,11 @@ curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data
 ```
 [
   {
-    "instrumentCode": "96385",
-    "tradingDay": 929,
-    "closePrice": 1.24,
-    "openPrice": 79.41,
-    "settlementPrice": 85.58
+    "instrumentCode": "38827",
+    "tradingDay": 312,
+    "closePrice": 50.25,
+    "openPrice": 82.11,
+    "settlementPrice": 15.19
   }
 ]
 ```
@@ -71,7 +71,7 @@ curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/last?instrumentCodes=u2vbta --data '&u2vbta'
+curl -X GET -i /instrument/last?instrumentCodes=eqipgw --data '&eqipgw'
 ```
 
 **Response-fields:**
@@ -85,8 +85,8 @@ curl -X GET -i /instrument/last?instrumentCodes=u2vbta --data '&u2vbta'
 ```
 [
   {
-    "instrumentCode": "96385",
-    "lastPrice": 62.92
+    "instrumentCode": "38827",
+    "lastPrice": 29.61
   }
 ]
 ```
@@ -139,7 +139,7 @@ OK
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/tradable/83/ci7tys
+curl -X GET -i /instrument/tradable/311/4zn1v3
 ```
 
 **Response-example:**

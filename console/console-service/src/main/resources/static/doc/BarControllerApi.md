@@ -23,7 +23,7 @@
 
 **Request-example:**
 ```
-curl -X GET -i /bar?tradingDay=239&instrumentCode=96385 --data '&239&96385'
+curl -X GET -i /bar?tradingDay=298&instrumentCode=38827 --data '&298&38827'
 ```
 
 **Response-fields:**
@@ -45,16 +45,16 @@ curl -X GET -i /bar?tradingDay=239&instrumentCode=96385 --data '&239&96385'
 ```
 [
   {
-    "instrumentCode": "96385",
-    "tradingDay": 638,
-    "actualDate": 426,
-    "timePoint": 662,
-    "open": 57.94,
-    "high": 25.94,
-    "low": 58.41,
-    "close": 68.40,
-    "volume": 48.67,
-    "turnover": 85.16
+    "instrumentCode": "38827",
+    "tradingDay": 728,
+    "actualDate": 318,
+    "timePoint": 35,
+    "open": 54.75,
+    "high": 34.12,
+    "low": 46.58,
+    "close": 89.36,
+    "volume": 95.00,
+    "turnover": 93.03
   }
 ]
 ```
