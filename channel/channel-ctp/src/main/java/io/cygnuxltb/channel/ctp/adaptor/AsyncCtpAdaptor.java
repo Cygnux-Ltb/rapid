@@ -12,8 +12,8 @@ import io.horizon.trader.transport.inbound.TdxNewOrder;
 import io.horizon.trader.transport.inbound.TdxQueryBalance;
 import io.horizon.trader.transport.inbound.TdxQueryOrder;
 import io.horizon.trader.transport.inbound.TdxQueryPositions;
-import io.mercury.common.concurrent.queue.SingleConsumerQueue;
-import io.mercury.common.concurrent.queue.jct.JctSingleConsumerQueue;
+import io.mercury.common.concurrent.queue.ScQueue;
+import io.mercury.common.concurrent.queue.JctQueue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.avro.msg.AvroBinaryMsg;
 import io.mercury.transport.zmq.ZmqConfigurator;
@@ -60,8 +60,8 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
 
         this.target = ZmqConfigurator.withConfig("adaptor.target", config)
                 .newPublisher("", msg -> null);
-        SingleConsumerQueue<FtdcRspMsg> queue = JctSingleConsumerQueue
-                .mpscQueue(ClassName + "-Buf").setCapacity(32)
+        ScQueue<FtdcRspMsg> queue = JctQueue
+                .mpscQueue(ClassName + "-Buf").capacity(32)
                 .process(target::publish);
         this.adaptor = new CtpAdaptor(account, CtpConfig.with(config), queue);
     }

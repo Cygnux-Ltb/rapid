@@ -39,7 +39,7 @@ import io.horizon.trader.transport.outbound.TdxAdaptorReport;
 import io.horizon.trader.transport.outbound.TdxOrderReport;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.jct.JctSingleConsumerQueue;
+import io.mercury.common.concurrent.queue.JctQueue;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
@@ -153,9 +153,9 @@ public class CtpAdaptor extends AbstractAdaptor {
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         // 创建队列缓冲区
-        this.queue = JctSingleConsumerQueue
+        this.queue = JctQueue
                 .mpscQueue(this.getClass().getSimpleName() + "-Buf")
-                .setCapacity(32).process(msg -> {
+                .capacity(32).process(msg -> {
                     switch (msg.getType()) {
                         case MdConnect -> {
                             FtdcMdConnect mdConnect = msg.getMdConnect();

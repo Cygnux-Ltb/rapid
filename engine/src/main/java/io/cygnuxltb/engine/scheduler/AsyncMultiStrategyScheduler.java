@@ -7,11 +7,13 @@ import io.horizon.trader.order.ChildOrder;
 import io.horizon.trader.transport.outbound.TdxAdaptorReport;
 import io.horizon.trader.transport.outbound.TdxOrderReport;
 import io.mercury.common.collections.Capacity;
-import io.mercury.common.concurrent.queue.jct.JctSingleConsumerQueue;
+import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+
+import static io.mercury.common.concurrent.queue.JctQueue.spscQueue;
 
 /**
  * @author yellow013
@@ -20,17 +22,18 @@ import javax.annotation.Nonnull;
  */
 public final class AsyncMultiStrategyScheduler<M extends MarketData> extends AbstractMultiStrategyScheduler<M> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory
+            .getLogger(AsyncMultiStrategyScheduler.class);
 
-    private final JctSingleConsumerQueue<QueueMsg> queue;
+    private final Queue<QueueMsg> queue;
 
     private static final int MarketData = 0;
     private static final int OrderReport = 1;
     private static final int AdaptorEvent = 2;
 
     public AsyncMultiStrategyScheduler(Capacity capacity) {
-        this.queue = JctSingleConsumerQueue.spscQueue("AsyncMultiStrategyScheduler-Queue")
-                .setCapacity(capacity.value()).useSpinStrategy().process(msg -> {
+        this.queue = spscQueue("AsyncMultiStrategyScheduler-Queue")
+                .capacity(capacity.value()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
                         case MarketData -> {
                             M marketData = msg.getMarketData();
