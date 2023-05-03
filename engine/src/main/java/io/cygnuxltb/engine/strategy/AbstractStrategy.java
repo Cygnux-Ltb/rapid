@@ -94,11 +94,11 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
         this.allocator = snowflake::next;
     }
 
-    public int getStrategyId() {
+    public int getId() {
         return strategyId;
     }
 
-    public String getStrategyName() {
+    public String getName() {
         return strategyName;
     }
 
@@ -131,7 +131,7 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
     @Override
     public void onMarketData(@Nonnull M marketData) {
         if (orders.notEmpty()) {
-            log.info("{} :: strategyOrders not empty, doing....", getStrategyName());
+            log.info("{} :: strategyOrders not empty, doing....", getName());
             // TODO
         }
         handleMarketData(marketData);
@@ -152,7 +152,7 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
     @Override
     public void onStrategyEvent(@Nonnull StrategyEvent event) {
         // TODO
-        log.info("{} :: Handle StrategyControlEvent -> {}", getStrategyName(), event);
+        log.info("{} :: Handle StrategyControlEvent -> {}", getName(), event);
     }
 
     @Override
@@ -161,17 +161,17 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
             boolean enable = super.enable();
             if (enable) {
                 log.info("{} :: enable strategy success. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        getStrategyName(), strategyId, initSuccess, isEnabled());
+                        getName(), strategyId, initSuccess, isEnabled());
             } else {
                 log.info(
                         "{} :: enable strategy failure, strategy is enabled. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        getStrategyName(), strategyId, initSuccess, isEnabled());
+                        getName(), strategyId, initSuccess, isEnabled());
             }
             return enable;
         } else {
             log.info(
                     "{} :: enable strategy failure, strategy is not initialized. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                    getStrategyName(), strategyId, initSuccess, isEnabled());
+                    getName(), strategyId, initSuccess, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
     }
@@ -180,11 +180,11 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
     public boolean disable() {
         boolean disable = super.disable();
         if (disable) {
-            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getStrategyName(), strategyId,
+            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getName(), strategyId,
                     isEnabled());
         } else {
             log.info("{} :: disable strategy failure, strategy is disabled. strategyId==[{}], isEnable==[{}]",
-                    getStrategyName(), strategyId, isEnabled());
+                    getName(), strategyId, isEnabled());
         }
         return disable;
     }
@@ -337,7 +337,7 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
     protected int getCurrentPosition(int subAccountId, Instrument instrument) {
         int position = PositionKeeper.getCurrentSubAccountPosition(subAccountId, instrument);
         if (position == 0)
-            log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getStrategyName(), subAccountId,
+            log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getName(), subAccountId,
                     instrument);
         return position;
     }
@@ -367,11 +367,11 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
                                 TrdDirection direction) {
         final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.Open);
-        childOrder.writeLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
+        childOrder.writeLog(log, getName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
 
         getAdaptor(instrument).newOrder(childOrder.toNewOrder());
-        childOrder.writeLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
+        childOrder.writeLog(log, getName() + " :: Open position [ChildOrder] has been sent");
     }
 
     /**
@@ -390,10 +390,10 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
             double offerPrice;
             if (position > 0)
                 offerPrice = getLevel1Price(instrument, TrdDirection.Long);
@@ -412,10 +412,10 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
             closePosition(instrument, position, offerPrice, OrdType.Limited);
         }
     }
@@ -430,10 +430,10 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getName(), subAccountId, instrument.getInstrumentCode(), position);
             closePosition(instrument, position, offerPrice, ordType);
         }
     }

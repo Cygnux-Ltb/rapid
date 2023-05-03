@@ -1,2 +1,17 @@
-package io.cygnuxltb.engine.strategy;public class StrategyDSL {
+package io.cygnuxltb.engine.strategy;
+
+public final class StrategyDSL {
+
+    private StrategyDSL() {
+    }
+
+    public static class StrategyBuilder {
+
+        private String strategyName;
+
+
+
+    }
+
+
 }

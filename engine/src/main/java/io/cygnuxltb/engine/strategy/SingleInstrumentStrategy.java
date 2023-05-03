@@ -78,29 +78,29 @@ public abstract class SingleInstrumentStrategy<M extends MarketData, K extends P
 
     @Override
     public void onAdaptorReport(@Nonnull TdxAdaptorReport event) {
-        log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getStrategyName(),
+        log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getName(),
                 event.getAdaptorId(), event.getStatus());
         switch (event.getStatus()) {
             case MD_ENABLE -> {
-                log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
                 adaptor.subscribeMarketData(new Instrument[]{instrument});
-                log.info("{} :: Call subscribeMarketData, instrument -> {}", getStrategyName(), instrument);
+                log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
             case TRADER_ENABLE -> {
-                log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
                 // TODO
 //			adaptor.queryOrder(null);
 //			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
 //					event.getAdaptorId());
                 adaptor.queryPositions(queryPositionsReq.setExchangeCode(instrument.getExchangeCode())
                         .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getStrategyName(),
+                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
                 adaptor.queryBalance(queryBalanceReq.setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getStrategyName(),
+                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
             }
-            default -> log.warn("{} unhandled event received {}", getStrategyName(), event);
+            default -> log.warn("{} unhandled event received {}", getName(), event);
         }
     }
 

@@ -37,16 +37,16 @@ public abstract class AbstractMultiStrategyScheduler<M extends MarketData>
 
     @Override
     public void addStrategy(Strategy<M> strategy) {
-        log.info("Add strategy -> strategyId==[{}], strategyName==[{}], subAccount==[{}]", strategy.getStrategyId(),
-                strategy.getStrategyName(), strategy.getSubAccount());
-        strategyMap.put(strategy.getStrategyId(), strategy);
+        log.info("Add strategy -> strategyId==[{}], strategyName==[{}], subAccount==[{}]",
+                strategy.getId(), strategy.getName(), strategy.getSubAccount());
+        strategyMap.put(strategy.getId(), strategy);
         strategy.getInstruments().each(instrument -> subscribeInstrument(instrument, strategy));
         strategy.enable();
     }
 
     private void subscribeInstrument(Instrument instrument, Strategy<M> strategy) {
         subscribedMap.getIfAbsentPut(instrument.getInstrumentId(), MutableSets::newUnifiedSet).add(strategy);
-        log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
+        log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getId(),
                 instrument.getInstrumentId());
     }
 
@@ -58,7 +58,7 @@ public abstract class AbstractMultiStrategyScheduler<M extends MarketData>
         strategyMap.each(strategy ->
                 closeQuietly(strategy, e ->
                         log.error("strategy -> {} close exception!",
-                                strategy.getStrategyName(), e)));
+                                strategy.getName(), e)));
         close0();
     }
 

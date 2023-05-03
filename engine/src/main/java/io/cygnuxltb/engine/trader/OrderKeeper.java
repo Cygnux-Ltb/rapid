@@ -10,7 +10,7 @@ import io.horizon.trader.order.Order;
 import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.transport.outbound.TdxOrderReport;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;

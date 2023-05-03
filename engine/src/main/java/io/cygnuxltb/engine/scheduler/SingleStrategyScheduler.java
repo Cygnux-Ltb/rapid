@@ -6,8 +6,8 @@ import io.horizon.market.data.MarketDataKeeper;
 import io.horizon.trader.handler.InboundHandler;
 import io.horizon.trader.order.ChildOrder;
 import io.horizon.trader.strategy.Strategy;
-import io.horizon.trader.transport.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.outbound.TdxOrderReport;
+import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -55,7 +55,7 @@ public class SingleStrategyScheduler<M extends MarketData> implements InboundHan
     @Override
     public void close() throws IOException {
         strategy.close();
-        log.info("Strategy [{}] closed", strategy.getStrategyName());
+        log.info("Strategy [{}] closed", strategy.getName());
     }
 
 }
