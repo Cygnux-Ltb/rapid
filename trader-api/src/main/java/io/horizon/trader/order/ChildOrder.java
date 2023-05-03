@@ -10,9 +10,9 @@ import io.horizon.trader.order.attr.OrdQty;
 import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.transport.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.inbound.TdxNewOrder;
-import io.horizon.trader.transport.outbound.TdxOrderReport;
+import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
+import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 

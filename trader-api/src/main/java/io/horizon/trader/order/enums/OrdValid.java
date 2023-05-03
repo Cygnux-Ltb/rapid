@@ -1,7 +1,7 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.enums.TdxOrdValid;
+import io.horizon.trader.transport.avro.enums.TdxOrdValid;
 
 public enum OrdValid implements TdxProvider<TdxOrdValid> {
 

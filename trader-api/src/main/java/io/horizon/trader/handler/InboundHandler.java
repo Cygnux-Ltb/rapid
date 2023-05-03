@@ -2,8 +2,8 @@ package io.horizon.trader.handler;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.market.handler.MarketDataHandler;
-import io.horizon.trader.transport.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.outbound.TdxOrderReport;
+import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;

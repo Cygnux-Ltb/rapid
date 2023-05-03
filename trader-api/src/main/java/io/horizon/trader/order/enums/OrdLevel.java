@@ -1,7 +1,7 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.enums.TdxOrdLevel;
+import io.horizon.trader.transport.avro.enums.TdxOrdLevel;
 
 public enum OrdLevel implements TdxProvider<TdxOrdLevel> {
 

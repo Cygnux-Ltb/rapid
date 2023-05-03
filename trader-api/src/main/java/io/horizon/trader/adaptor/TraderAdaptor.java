@@ -1,11 +1,11 @@
 package io.horizon.trader.adaptor;
 
 import io.horizon.trader.account.Account;
-import io.horizon.trader.transport.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.inbound.TdxNewOrder;
-import io.horizon.trader.transport.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.inbound.TdxQueryOrder;
-import io.horizon.trader.transport.inbound.TdxQueryPositions;
+import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
+import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
+import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
+import io.horizon.trader.transport.avro.inbound.TdxQueryOrder;
+import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 

@@ -1,6 +1,5 @@
 package io.horizon.trader.strategy;
 
-import io.horizon.market.data.MarketData;
 import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
@@ -15,7 +14,10 @@ import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.util.function.Supplier;
 
-public interface Strategy<M extends MarketData> extends
+/**
+ * @param <M> MarketData type
+ */
+public interface Strategy<M> extends
         // 用于控制可用状态
         Enableable,
         // 用于确定优先级
@@ -34,9 +36,9 @@ public interface Strategy<M extends MarketData> extends
      */
     int MAX_STRATEGY_ID = 1023;
 
-    int getStrategyId();
+    int getId();
 
-    String getStrategyName();
+    String getName();
 
     SubAccount getSubAccount();
 
@@ -54,7 +56,7 @@ public interface Strategy<M extends MarketData> extends
 
     @Override
     default int compareTo(Strategy<M> o) {
-        return Integer.compare(this.getStrategyId(), o.getStrategyId());
+        return Integer.compare(this.getId(), o.getId());
     }
 
 }

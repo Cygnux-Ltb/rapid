@@ -1,7 +1,7 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.enums.TdxOrdType;
+import io.horizon.trader.transport.avro.enums.TdxOrdType;
 
 public enum OrdType implements TdxProvider<TdxOrdType> {
 

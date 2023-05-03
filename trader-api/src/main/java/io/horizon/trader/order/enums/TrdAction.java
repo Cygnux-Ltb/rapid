@@ -1,7 +1,7 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.enums.TdxTrdAction;
+import io.horizon.trader.transport.avro.enums.TdxTrdAction;
 
 public enum TrdAction implements TdxProvider<TdxTrdAction> {
 
