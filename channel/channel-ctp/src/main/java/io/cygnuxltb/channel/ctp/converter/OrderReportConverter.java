@@ -7,7 +7,7 @@ import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrderAction;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
-import io.horizon.trader.transport.outbound.TdxOrderReport;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 

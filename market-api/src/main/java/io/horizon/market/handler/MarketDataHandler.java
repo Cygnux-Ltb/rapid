@@ -8,26 +8,28 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @FunctionalInterface
-public interface MarketDataHandler<M extends MarketData> {
+public interface MarketDataHandler<M> {
 
-    void onMarketData(@Nonnull final M marketData);
+    void onMarketData(@Nonnull final M m);
 
     /**
      * @param <M>
      * @author yellow013
      */
     @NotThreadSafe
-    abstract class BaseMarketDataHandler<M extends MarketData> implements MarketDataHandler<M> {
+    abstract class BaseMarketDataHandler<M> implements MarketDataHandler<M> {
 
-        protected M last;
+        protected M curr;
+        protected M prev;
 
         @Override
         public void onMarketData(@Nonnull M marketData) {
-            onMarketData0(marketData);
-            this.last = marketData;
+            this.curr = marketData;
+            handleMarketData(marketData);
+            this.prev = marketData;
         }
 
-        protected abstract void onMarketData0(M marketData);
+        protected abstract void handleMarketData(M marketData);
 
     }
 

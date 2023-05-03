@@ -6,8 +6,8 @@ import io.cygnuxltb.channel.ctp.CtpConfig;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcActionFlag;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcForceCloseReason;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcVolumeCondition;
-import io.horizon.trader.transport.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.inbound.TdxNewOrder;
+import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
+import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
