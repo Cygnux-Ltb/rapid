@@ -20,8 +20,8 @@ import io.horizon.trader.order.enums.TrdDirection;
 import io.horizon.trader.risk.CircuitBreaker;
 import io.horizon.trader.strategy.Strategy;
 import io.horizon.trader.strategy.StrategyEvent;
-import io.horizon.trader.transport.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.inbound.TdxQueryPositions;
+import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
+import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.fsm.EnableableComponent;
@@ -38,11 +38,11 @@ import java.util.function.Supplier;
 
 import static java.lang.Math.abs;
 
-public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
+public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         extends EnableableComponent
         implements Strategy<M>, CircuitBreaker {
 
-    private final static Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
+    private final static Logger log = Log4j2LoggerFactory.getLogger(BaseStrategy.class);
 
     // 策略ID
     protected final int strategyId;
@@ -68,14 +68,14 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
     protected final Params<K> params;
 
     // TODO
-    protected TdxQueryPositions queryPositionsReq;
+    protected TdxQueryPositions queryPositions;
     // TODO
-    protected TdxQueryBalance queryBalanceReq;
+    protected TdxQueryBalance queryBalance;
 
     private final OrdSysIdAllocator allocator;
 
-    protected AbstractStrategy(int strategyId, String strategyName,
-                               SubAccount subAccount, Params<K> params) {
+    protected BaseStrategy(int strategyId, String strategyName,
+                           SubAccount subAccount, Params<K> params) {
         Asserter.atWithinRange(strategyId, 1, Strategy.MAX_STRATEGY_ID, "strategyId");
         Asserter.nonNull(subAccount, "subAccount");
         Asserter.nonEmpty(strategyName, "strategyName");
@@ -86,9 +86,9 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
         this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositionsReq = TdxQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryPositions = TdxQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
-        this.queryBalanceReq = TdxQueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryBalance = TdxQueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
         var snowflake = new SnowflakeAlgo(strategyId);
         this.allocator = snowflake::next;
@@ -161,11 +161,11 @@ public abstract class AbstractStrategy<M extends MarketData, K extends ParamKey>
             boolean enable = super.enable();
             if (enable) {
                 log.info("{} :: enable strategy success. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        getName(), strategyId, initSuccess, isEnabled());
+                        strategyName, strategyId, initSuccess, isEnabled());
             } else {
                 log.info(
                         "{} :: enable strategy failure, strategy is enabled. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        getName(), strategyId, initSuccess, isEnabled());
+                        strategyName, strategyId, initSuccess, isEnabled());
             }
             return enable;
         } else {

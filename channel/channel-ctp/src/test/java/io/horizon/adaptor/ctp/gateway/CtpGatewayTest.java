@@ -7,7 +7,7 @@ import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcDepthMarketData;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.JctQueue;
+import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.ThreadSupport;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class CtpGatewayTest {
                 .setInvestorId(InvestorId).setUserId(UserId).setAccountId(AccountId).setPassword(Password)
                 .setTradingDay(TradingDay).setCurrencyId(CurrencyId);
 
-        final Queue<FtdcRspMsg> queue = JctQueue.mpscQueue("Simnow-Handle-Queue").capacity(128)
+        final Queue<FtdcRspMsg> queue = ScQueueByJct.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {
                     switch (msg.getType()) {
                         case DepthMarketData -> {

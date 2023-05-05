@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
-import static io.mercury.common.concurrent.queue.JctQueue.spscQueue;
+import static io.mercury.common.concurrent.queue.ScQueueByJct.spscQueue;
 
 /**
  * @author yellow013

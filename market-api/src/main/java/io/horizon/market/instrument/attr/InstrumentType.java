@@ -2,14 +2,16 @@ package io.horizon.market.instrument.attr;
 
 public enum InstrumentType {
 
-	BOND,
+    BOND,
 
-	OPTION,
+    CONVERTIBLE_BOND,
 
-	STOCK,
+    OPTION,
 
-	FUTURES,
+    STOCK,
 
-	FOREX,
+    FUTURES,
+
+    FOREX,
 
 }

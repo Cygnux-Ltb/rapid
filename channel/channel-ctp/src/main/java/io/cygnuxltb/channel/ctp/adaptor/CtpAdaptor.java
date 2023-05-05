@@ -39,7 +39,7 @@ import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
 import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.JctQueue;
+import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
@@ -153,7 +153,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         // 创建队列缓冲区
-        this.queue = JctQueue
+        this.queue = ScQueueByJct
                 .mpscQueue(this.getClass().getSimpleName() + "-Buf")
                 .capacity(32).process(msg -> {
                     switch (msg.getType()) {
@@ -337,7 +337,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * 订阅行情实现
      */
     @Override
-    public boolean subscribeMarketData(@Nonnull Instrument[] instruments) {
+    public boolean subscribeMarketData(@Nonnull Instrument... instruments) {
         try {
             if (mdAvailable) {
                 if (ArrayUtil.isNullOrEmpty(instruments)) {

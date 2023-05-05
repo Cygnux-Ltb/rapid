@@ -9,7 +9,7 @@ import io.horizon.trader.order.Order;
 import io.horizon.trader.strategy.Strategy;
 import io.horizon.trader.strategy.StrategyEvent;
 import io.horizon.trader.strategy.StrategyException;
-import io.horizon.trader.transport.outbound.TdxAdaptorReport;
+import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import javax.annotation.Nonnull;

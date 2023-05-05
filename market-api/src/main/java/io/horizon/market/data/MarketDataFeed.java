@@ -22,6 +22,6 @@ public interface MarketDataFeed extends Closeable, Enableable {
      *
      * @param instruments Instrument[]
      */
-    boolean subscribeMarketData(@Nonnull Instrument[] instruments);
+    boolean subscribeMarketData(@Nonnull Instrument... instruments);
 
 }

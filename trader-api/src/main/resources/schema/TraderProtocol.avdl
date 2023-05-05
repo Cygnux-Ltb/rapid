@@ -241,7 +241,7 @@ protocol TraderProtocol {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
-		string tradingDay = "";
+		int tradingDay;
 		string brokerId;
 		string investorId = "";
 		string orderRef;

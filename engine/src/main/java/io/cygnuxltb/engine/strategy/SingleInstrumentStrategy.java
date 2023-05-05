@@ -5,7 +5,7 @@ import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.SubAccount;
 import io.horizon.trader.adaptor.Adaptor;
 import io.horizon.trader.strategy.Strategy;
-import io.horizon.trader.transport.outbound.TdxAdaptorReport;
+import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.param.ParamKey;
@@ -20,7 +20,7 @@ import static io.mercury.common.collections.ImmutableMaps.getIntObjectMapFactory
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 public abstract class SingleInstrumentStrategy<M extends MarketData, K extends ParamKey>
-        extends AbstractStrategy<M, K> {
+        extends BaseStrategy<M, K> {
 
     private static final Logger log = getLogger(SingleInstrumentStrategy.class);
 
@@ -83,7 +83,7 @@ public abstract class SingleInstrumentStrategy<M extends MarketData, K extends P
         switch (event.getStatus()) {
             case MD_ENABLE -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
-                adaptor.subscribeMarketData(new Instrument[]{instrument});
+                adaptor.subscribeMarketData(instrument);
                 log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
             case TRADER_ENABLE -> {
@@ -92,11 +92,11 @@ public abstract class SingleInstrumentStrategy<M extends MarketData, K extends P
 //			adaptor.queryOrder(null);
 //			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
 //					event.getAdaptorId());
-                adaptor.queryPositions(queryPositionsReq.setExchangeCode(instrument.getExchangeCode())
+                adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
                         .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
-                adaptor.queryBalance(queryBalanceReq.setGenerateTime(EpochTime.getEpochMillis()));
+                adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
             }

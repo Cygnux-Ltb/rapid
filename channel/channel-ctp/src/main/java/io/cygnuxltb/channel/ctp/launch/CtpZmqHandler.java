@@ -3,7 +3,7 @@ package io.cygnuxltb.channel.ctp.launch;
 import com.typesafe.config.Config;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.JctQueue;
+import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.RunnableComponent.StartMode;
@@ -27,7 +27,7 @@ public class CtpZmqHandler implements Closeable, Handler<FtdcRspMsg> {
         String topic = config.getString("zmq.topic");
         log.info("config zmq.topic == [{}]", topic);
         this.publisher = ZmqConfigurator.withConfig(config).newPublisherWithString(topic);
-        this.queue = JctQueue.mpscQueue("CtpZmqHandler-Queue").capacity(32)
+        this.queue = ScQueueByJct.mpscQueue("CtpZmqHandler-Queue").capacity(32)
                 .startMode(StartMode.auto()).process(msg -> {
                     String json = JsonWrapper.toJson(msg);
                     log.info("Received msg -> {}", json);

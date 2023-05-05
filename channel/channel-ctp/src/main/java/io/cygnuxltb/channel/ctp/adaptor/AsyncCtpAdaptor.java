@@ -7,13 +7,13 @@ import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.adaptor.AbstractAdaptor;
 import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.transport.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.inbound.TdxNewOrder;
-import io.horizon.trader.transport.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.inbound.TdxQueryOrder;
-import io.horizon.trader.transport.inbound.TdxQueryPositions;
+import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
+import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
+import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
+import io.horizon.trader.transport.avro.inbound.TdxQueryOrder;
+import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
+import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.concurrent.queue.ScQueue;
-import io.mercury.common.concurrent.queue.JctQueue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.avro.msg.AvroBinaryMsg;
 import io.mercury.transport.zmq.ZmqConfigurator;
@@ -60,7 +60,7 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
 
         this.target = ZmqConfigurator.withConfig("adaptor.target", config)
                 .newPublisher("", msg -> null);
-        ScQueue<FtdcRspMsg> queue = JctQueue
+        ScQueue<FtdcRspMsg> queue = ScQueueByJct
                 .mpscQueue(ClassName + "-Buf").capacity(32)
                 .process(target::publish);
         this.adaptor = new CtpAdaptor(account, CtpConfig.with(config), queue);
@@ -85,7 +85,7 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
      * 订阅行情实现
      */
     @Override
-    public boolean subscribeMarketData(@Nonnull Instrument[] instruments) {
+    public boolean subscribeMarketData(@Nonnull Instrument... instruments) {
         return false;
     }
 

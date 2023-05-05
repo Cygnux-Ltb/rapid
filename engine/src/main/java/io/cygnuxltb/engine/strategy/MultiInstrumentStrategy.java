@@ -20,7 +20,7 @@ import static io.mercury.common.collections.ImmutableMaps.getIntObjectMapFactory
 import static java.util.stream.Collectors.toSet;
 
 public abstract class MultiInstrumentStrategy<M extends MarketData, K extends ParamKey>
-        extends AbstractStrategy<M, K> {
+        extends BaseStrategy<M, K> {
 
     private final static Logger log = Log4j2LoggerFactory.getLogger(MultiInstrumentStrategy.class);
 
@@ -29,7 +29,9 @@ public abstract class MultiInstrumentStrategy<M extends MarketData, K extends Pa
 
     protected Adaptor adaptor;
 
-    protected MultiInstrumentStrategy(int strategyId, @Nonnull String strategyName, SubAccount subAccount,
+    protected MultiInstrumentStrategy(int strategyId,
+                                      @Nonnull String strategyName,
+                                      @Nonnull SubAccount subAccount,
                                       @Nonnull Instrument... instruments) {
         this(strategyId, strategyName, subAccount, null, instruments);
     }
@@ -41,8 +43,11 @@ public abstract class MultiInstrumentStrategy<M extends MarketData, K extends Pa
      * @param params       Params<K>
      * @param instruments  Instrument...
      */
-    protected MultiInstrumentStrategy(int strategyId, @Nonnull String strategyName, SubAccount subAccount,
-                                      @Nullable Params<K> params, @Nonnull Instrument... instruments) {
+    protected MultiInstrumentStrategy(int strategyId,
+                                      @Nonnull String strategyName,
+                                      @Nonnull SubAccount subAccount,
+                                      @Nullable Params<K> params,
+                                      @Nonnull Instrument... instruments) {
         super(strategyId, strategyName, subAccount, params);
         this.instruments = getIntObjectMapFactory().from(Stream.of(instruments).collect(toSet()),
                 Instrument::getInstrumentId, instrument -> instrument);
