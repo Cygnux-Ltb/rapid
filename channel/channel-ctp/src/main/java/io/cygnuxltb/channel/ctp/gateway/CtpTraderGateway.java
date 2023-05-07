@@ -164,8 +164,7 @@ public class CtpTraderGateway implements Closeable {
             // 设置账号信息
             int RequestID = traderRequestId.incrementAndGet();
             traderApi.ReqOrderInsert(field, RequestID);
-            log.info(
-                    "Send TraderApi::ReqOrderInsert OK ->  RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], "
+            log.info("Send TraderApi::ReqOrderInsert OK ->  RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], "
                             + "CombOffsetFlag==[{}], Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
                     RequestID, field.getOrderRef(), field.getInstrumentID(), field.getCombOffsetFlag(),
                     field.getDirection(), field.getVolumeTotalOriginal(), field.getLimitPrice());

@@ -12,7 +12,10 @@
     <name>channel-mt5</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-zmq</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

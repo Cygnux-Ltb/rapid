@@ -1,15 +1,14 @@
 package io.horizon.adaptor.ctp.converter;
 
-import io.horizon.trader.transport.outbound.TdxOrderReport;
-import org.junit.Test;
-
 import io.horizon.trader.order.enums.OrdStatus;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
+import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
 import io.mercury.serialization.json.JsonWrapper;
+import org.junit.Test;
 
 public class OrderReportConverterTest {
 

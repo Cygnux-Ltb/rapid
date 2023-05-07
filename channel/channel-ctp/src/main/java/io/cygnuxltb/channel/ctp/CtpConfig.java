@@ -60,7 +60,7 @@ public class CtpConfig {
     }
 
     public static CtpConfig with(Config config) {
-        ConfigWrapper<CtpAdaptorParamKey> wrapper = new ConfigWrapper<>(config);
+        var wrapper = new ConfigWrapper<CtpAdaptorParamKey>(config);
         return new CtpConfig()
                 // 交易服务器地址
                 .setTraderAddr(wrapper.getStringOrThrows(CtpAdaptorParamKey.TraderAddr))

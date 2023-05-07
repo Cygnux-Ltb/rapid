@@ -12,8 +12,8 @@ import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
 import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
 import io.horizon.trader.transport.avro.inbound.TdxQueryOrder;
 import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
-import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.concurrent.queue.ScQueue;
+import io.mercury.common.concurrent.queue.ScQueueByJct;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.avro.msg.AvroBinaryMsg;
 import io.mercury.transport.zmq.ZmqConfigurator;
@@ -50,13 +50,14 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
      */
     public AsyncCtpAdaptor(@Nonnull Account account, @Nonnull Config config) {
         super(ClassName, account);
-        this.source = ZmqConfigurator.withConfig("adaptor.source", config).newSubscriber((topic, msg) -> {
-            try {
-                AvroBinaryMsg.fromByteBuffer(ByteBuffer.wrap(msg));
-            } catch (IOException e) {
-                log.error("{}", e.getMessage(), e);
-            }
-        });
+        this.source = ZmqConfigurator.withConfig("adaptor.source", config)
+                .newSubscriber((topic, msg) -> {
+                    try {
+                        AvroBinaryMsg.fromByteBuffer(ByteBuffer.wrap(msg));
+                    } catch (IOException e) {
+                        log.error("{}", e.getMessage(), e);
+                    }
+                });
 
         this.target = ZmqConfigurator.withConfig("adaptor.target", config)
                 .newPublisher("", msg -> null);

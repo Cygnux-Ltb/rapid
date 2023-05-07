@@ -45,6 +45,9 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
 import io.mercury.serialization.json.JsonWrapper;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import org.agrona.concurrent.IdleStrategy;
+import org.agrona.concurrent.SleepingIdleStrategy;
 import org.eclipse.collections.api.set.MutableSet;
 import org.slf4j.Logger;
 
@@ -87,6 +90,9 @@ public class CtpAdaptor extends AbstractAdaptor {
     // 队列缓冲区
     private Queue<FtdcRspMsg> queue;
 
+    @Resource
+    private OrderRefKeeper orderRefKeeper;
+
     /**
      * 传入MarketDataHandler, OrderReportHandler, AdaptorReportHandler实现,
      * 由构造函数内部转换为MPSC队列缓冲区
@@ -97,7 +103,8 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param orderReportHandler   OrderReportHandler
      * @param adaptorReportHandler AdaptorReportHandler
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account,
+                      @Nonnull CtpConfig config,
                       @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
                       @Nonnull OrderReportHandler orderReportHandler,
                       @Nonnull AdaptorReportHandler adaptorReportHandler) {
@@ -385,7 +392,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
             // 设置OrderRef
             field.setOrderRef(orderRef);
-            OrderRefKeeper.put(orderRef, order.getOrdSysId());
+            orderRefKeeper.put(orderRef, order.getOrdSysId());
             gateway.ReqOrderInsert(field);
             return true;
         } catch (Exception e) {
@@ -482,13 +489,15 @@ public class CtpAdaptor extends AbstractAdaptor {
         }
     }
 
+    IdleStrategy idleStrategy = new SleepingIdleStrategy(100000);
+
     @Override
     public void close() throws IOException {
         try {
             gateway.close();
             if (queue != null) {
                 while (!queue.isEmpty())
-                    ;
+                    idleStrategy.idle();
             }
             log.info("{} -> already closed", adaptorId);
         } catch (Exception e) {
