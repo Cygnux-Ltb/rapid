@@ -127,8 +127,8 @@ api[6].list.push({
 api.push({
     alias: 'PositionController',
     order: '8',
-    desc: '',
-    link: '',
+    desc: '仓位查询接口',
+    link: '仓位查询接口',
     list: []
 })
 api.push({

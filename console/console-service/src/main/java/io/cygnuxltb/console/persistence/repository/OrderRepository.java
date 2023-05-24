@@ -1,7 +1,7 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.OrderEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Order DAO
+ * Order Repository
  *
  * @author yellow013
  */
 @Repository
-public interface OrderRepository extends BaseJpaRepository<OrderEntity> {
+public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     /**
      * @param strategyId      int

@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +13,16 @@ import lombok.experimental.Accessors;
 
 import java.util.Date;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+import static io.mercury.persistence.rdb.ColumnDefinition.TIME;
+
 /**
  * 订单基本信息表
  * Order Entity 基本信息
@@ -24,7 +33,7 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_order")
+@Table(name = "t_order")
 public final class OrderEntity {
 
     @Id
@@ -35,49 +44,49 @@ public final class OrderEntity {
     /**
      * tradingDay [*]
      */
-    @Column(name = CommonColumn.TRADING_DAY)
+    @Column(name = TRADING_DAY)
     private int tradingDay;
 
     /**
      * strategyId [*]
      */
-    @Column(name = CommonColumn.STRATEGY_ID)
+    @Column(name = STRATEGY_ID)
     private int strategyId;
 
     /**
      * instrumentCode [*]
      */
-    @Column(name = CommonColumn.INSTRUMENT_CODE)
+    @Column(name = INSTRUMENT_CODE)
     private String instrumentCode;
 
     /**
      * investorId [*]
      */
-    @Column(name = CommonColumn.INVESTOR_ID)
+    @Column(name = INVESTOR_ID)
     private String investorId;
 
     /**
      * brokerId [*]
      */
-    @Column(name = CommonColumn.BROKER_ID)
+    @Column(name = BROKER_ID)
     private String brokerId;
 
     /**
      * accountId [*]
      */
-    @Column(name = CommonColumn.ACCOUNT_ID)
+    @Column(name = ACCOUNT_ID)
     private int accountId;
 
     /**
      * subAccountId [*]
      */
-    @Column(name = CommonColumn.SUB_ACCOUNT_ID)
+    @Column(name = SUB_ACCOUNT_ID)
     private int subAccountId;
 
     /**
      * userId [*]
      */
-    @Column(name = CommonColumn.USER_ID)
+    @Column(name = USER_ID)
     private int userId;
 
     /**
@@ -125,19 +134,19 @@ public final class OrderEntity {
     /**
      * insertTime
      */
-    @Column(name = "insert_time", columnDefinition = ColumnDefinition.TIME)
+    @Column(name = "insert_time", columnDefinition = TIME)
     private Date insertTime;
 
     /**
      * updateTime
      */
-    @Column(name = "update_time", columnDefinition = ColumnDefinition.TIME)
+    @Column(name = "update_time", columnDefinition = TIME)
     private Date updateTime;
 
     /**
      * cancelTime
      */
-    @Column(name = "cancel_time", columnDefinition = ColumnDefinition.TIME)
+    @Column(name = "cancel_time", columnDefinition = TIME)
     private Date cancelTime;
 
     /**

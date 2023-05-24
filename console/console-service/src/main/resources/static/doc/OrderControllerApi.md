@@ -29,66 +29,64 @@
 
 **Request-example:**
 ```
-curl -X GET -i /order/853?strategyId=204&investorId=172&instrumentCode=38827 --data '&204&172&38827'
+curl -X GET -i /order/0?strategyId=0&investorId=&instrumentCode=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|tradingDay|int32|tradingDay [*]|-|
-|strategyId|int32|strategyId [*]|-|
-|instrumentCode|string|instrumentCode [*]|-|
-|investorId|string|investorId [*]|-|
-|brokerId|string|brokerId [*]|-|
-|accountId|int32|accountId [*]|-|
-|subAccountId|int32|subAccountId [*]|-|
-|userId|int32|userId [*]|-|
-|ordSysId|int64|ordSysId [*]|-|
-|ordType|string|ordType|-|
-|ordRef|string|orderRef|-|
-|direction|string|direction|-|
-|side|string|side|-|
-|offerPrice|double|offerPrice|-|
-|offerQty|int32|offerQty|-|
-|insertTime|string|insertTime|-|
-|updateTime|string|updateTime|-|
-|cancelTime|string|cancelTime|-|
-|frontId|int32|frontId|-|
-|sessionId|int32|sessionId|-|
-|fee|double|fee double 19_4|-|
-|adaptorType|string|adaptorType|-|
-|remark|string|remark|-|
+|tradingDay|int32|交易日|-|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码|-|
+|investorId|string|投资者ID|-|
+|brokerId|string|经纪商ID|-|
+|accountId|int32|交易账户ID|-|
+|subAccountId|int32|子账户ID|-|
+|userId|int32|用户ID|-|
+|ordSysId|int64|订单系统编号 [*]|-|
+|ordType|string|订单类型|-|
+|orderRef|string|订单引用|-|
+|direction|string|订单方向|-|
+|side|string|订单交易类型|-|
+|offerPrice|double|委托价格|-|
+|offerQty|int32|委托数量|-|
+|insertTime|string|创建时间|-|
+|updateTime|string|更新时间|-|
+|cancelTime|string|取消时间|-|
+|frontId|int32|前置机ID|-|
+|sessionId|int32|会话ID|-|
+|fee|double|交易费用|-|
+|channelType|string|交易通道类型|-|
+|remark|string|备注|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 147,
-    "tradingDay": 963,
-    "strategyId": 639,
-    "instrumentCode": "38827",
-    "investorId": "172",
-    "brokerId": "172",
-    "accountId": 98,
-    "subAccountId": 297,
-    "userId": 558,
-    "ordSysId": 824,
-    "ordType": "3cn34e",
-    "ordRef": "x2h0xo",
-    "direction": "x",
-    "side": "t",
-    "offerPrice": 36.94,
-    "offerQty": 853,
-    "insertTime": "2023-05-02 01:00:50",
-    "updateTime": "2023-05-02 01:00:50",
-    "cancelTime": "2023-05-02 01:00:50",
-    "frontId": 43,
-    "sessionId": 783,
-    "fee": 9.64,
-    "adaptorType": "kyygud",
-    "remark": "wvhnz0"
+    "tradingDay": 0,
+    "strategyId": 0,
+    "instrumentCode": "",
+    "investorId": "",
+    "brokerId": "",
+    "accountId": 0,
+    "subAccountId": 0,
+    "userId": 0,
+    "ordSysId": 0,
+    "ordType": "",
+    "orderRef": "",
+    "direction": "",
+    "side": "",
+    "offerPrice": 0.0,
+    "offerQty": 0,
+    "insertTime": "yyyy-MM-dd HH:mm:ss",
+    "updateTime": "yyyy-MM-dd HH:mm:ss",
+    "cancelTime": "yyyy-MM-dd HH:mm:ss",
+    "frontId": 0,
+    "sessionId": 0,
+    "fee": 0.0,
+    "channelType": "",
+    "remark": ""
   }
 ]
 ```
@@ -116,25 +114,24 @@ curl -X GET -i /order/853?strategyId=204&investorId=172&instrumentCode=38827 --d
 
 **Request-example:**
 ```
-curl -X GET -i /order/status?tradingDay=335&strategyId=275 --data '&335&275'
+curl -X GET -i /order/status?tradingDay=0&strategyId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|tradingDay|int32|tradingDay [*]|-|
+|tradingDay|int32|交易日 [*]|-|
 |strategyId|int32|strategyId [*]|-|
-|instrumentCode|string|instrumentCode [*]|-|
+|instrumentCode|string|交易标的代码 [*]|-|
 |investorId|string|investorId [*]|-|
 |brokerId|string|brokerId [*]|-|
 |accountId|int32|accountId [*]|-|
 |subAccountId|int32|subAccountId [*]|-|
 |userId|int32|userId [*]|-|
 |ordSysId|int64|ord_sys_id [*]|-|
-|ordRef|string|order_ref|-|
-|ordMsgType|int32|order_msg_type|-|
+|orderRef|string|order_ref|-|
+|orderMsgType|int32|order_msg_type|-|
 |ordOffset|string|ord_offset|-|
 |direction|string|direction|-|
 |limitPrice|double|limit_price double 19_4|-|
@@ -156,34 +153,33 @@ curl -X GET -i /order/status?tradingDay=335&strategyId=275 --data '&335&275'
 ```
 [
   {
-    "uid": 493,
-    "tradingDay": 104,
-    "strategyId": 590,
-    "instrumentCode": "38827",
-    "investorId": "172",
-    "brokerId": "172",
-    "accountId": 183,
-    "subAccountId": 848,
-    "userId": 992,
-    "ordSysId": 713,
-    "ordRef": "5nze4w",
-    "ordMsgType": 558,
-    "ordOffset": "r",
-    "direction": "r",
-    "limitPrice": 90.92,
-    "status": 55,
-    "statusMsg": "ya9c9p",
-    "brokerSysID": 511,
-    "volume": 167,
-    "volumeFilled": 934,
-    "volumeRemained": 342,
-    "price": 27.74,
-    "tradeId": "172",
-    "ordRejReason": 675,
-    "insertTime": 922,
-    "updateTime": 151,
-    "cancelTime": 435,
-    "remark": "cl6wz2"
+    "tradingDay": 0,
+    "strategyId": 0,
+    "instrumentCode": "",
+    "investorId": "",
+    "brokerId": "",
+    "accountId": 0,
+    "subAccountId": 0,
+    "userId": 0,
+    "ordSysId": 0,
+    "orderRef": "",
+    "orderMsgType": 0,
+    "ordOffset": "",
+    "direction": "",
+    "limitPrice": 0.0,
+    "status": 0,
+    "statusMsg": "",
+    "brokerSysID": 0,
+    "volume": 0,
+    "volumeFilled": 0,
+    "volumeRemained": 0,
+    "price": 0.0,
+    "tradeId": "",
+    "ordRejReason": 0,
+    "insertTime": 0,
+    "updateTime": 0,
+    "cancelTime": 0,
+    "remark": ""
   }
 ]
 ```

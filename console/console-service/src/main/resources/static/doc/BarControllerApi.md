@@ -23,38 +23,38 @@
 
 **Request-example:**
 ```
-curl -X GET -i /bar?tradingDay=298&instrumentCode=38827 --data '&298&38827'
+curl -X GET -i /bar?tradingDay=0&instrumentCode=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|交易标的代码 [*]|-|
-|tradingDay|int32|交易日 [*]|-|
-|actualDate|int32|实际日期 [*]|-|
-|timePoint|int32|时间点 [*]|-|
-|open|double|开盘价 [*]|-|
-|high|double|最高价 [*]|-|
-|low|double|最低价 [*]|-|
-|close|double|收盘价 [*]|-|
-|volume|double|成交量 [*]|-|
-|turnover|double|成交额 [*]|-|
+|instrumentCode|string|交易标的代码|-|
+|tradingDay|int32|交易日|-|
+|actualDate|int32|实际日期|-|
+|timePoint|int32|时间点|-|
+|open|double|开盘价|-|
+|high|double|最高价|-|
+|low|double|最低价|-|
+|close|double|收盘价|-|
+|volume|double|成交量|-|
+|turnover|double|成交额|-|
 
 **Response-example:**
 ```
 [
   {
-    "instrumentCode": "38827",
-    "tradingDay": 728,
-    "actualDate": 318,
-    "timePoint": 35,
-    "open": 54.75,
-    "high": 34.12,
-    "low": 46.58,
-    "close": 89.36,
-    "volume": 95.00,
-    "turnover": 93.03
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "actualDate": 0,
+    "timePoint": 0,
+    "open": 0.0,
+    "high": 0.0,
+    "low": 0.0,
+    "close": 0.0,
+    "volume": 0.0,
+    "turnover": 0.0
   }
 ]
 ```

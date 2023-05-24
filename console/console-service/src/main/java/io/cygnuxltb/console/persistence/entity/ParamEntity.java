@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_param")
+@Table(name = "s_param")
 public final class ParamEntity {
 
     @Id
@@ -30,17 +29,11 @@ public final class ParamEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = CommonColumn.STRATEGY_ID)
-    private int strategyId;
+    @Column(name = "owner_group")
+    private String group;
 
-    @Column(name = CommonColumn.STRATEGY_NAME)
-    private String strategyName;
-
-    @Column(name = "owner_type")
-    private String ownerType;
-
-    @Column(name = "owner")
-    private String owner;
+    @Column(name = "owner_name")
+    private String name;
 
     @Column(name = "param_name")
     private String paramName;

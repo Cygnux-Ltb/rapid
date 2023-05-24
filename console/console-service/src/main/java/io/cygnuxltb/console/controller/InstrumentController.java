@@ -35,7 +35,6 @@ public final class InstrumentController {
     @Resource
     private InstrumentService service;
 
-
     /**
      * 获取结算价格
      *
@@ -47,9 +46,8 @@ public final class InstrumentController {
     public List<InstrumentSettlementDTO> getSettlementPrice(
             @RequestParam("tradingDay") int tradingDay,
             @RequestParam("instrumentCode") String instrumentCode) {
-        if (ControllerUtil.paramIsNull(instrumentCode, tradingDay)) {
+        if (ControllerUtil.paramIsNull(instrumentCode, tradingDay))
             return null;
-        }
         return service.getInstrumentSettlement(tradingDay, instrumentCode);
     }
 

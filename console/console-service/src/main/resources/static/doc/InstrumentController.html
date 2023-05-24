@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="smart-doc">
-    <title>Cytrader-Console</title>
+    <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1682956841805"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1684928827162"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -19,7 +19,7 @@
     <script src="jquery.min.js"></script>
 </head>
 <body class="book toc2 toc-left">
-<div id="header"><h1>Cytrader-Console</h1>
+<div id="header"><h1>console-service</h1>
     <div id="toc" class="toc2">
         <div id="book-search-input"><input id="search" type="text" placeholder="Type to search"></div>
         <div id="toctitle"><span>API Reference</span></div>
@@ -121,7 +121,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="PositionController.html#header">8.&nbsp;</a>
+            <li class=""><a class="dd" href="PositionController.html#header">8.&nbsp;仓位查询接口</a>
                 <ul class="sectlevel2" style="display: none">                </ul>
             </li>
             <li class="open"><a class="dd" href="InstrumentController.html#header">9.&nbsp;交易标的查询接口</a>
@@ -213,7 +213,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /instrument/settlement?tradingDay=908&instrumentCode=38827 --data '&908&38827'</code></pre>
+                        <pre><code class="bash">curl -X GET -i /instrument/settlement?tradingDay=0&instrumentCode=</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
@@ -236,14 +236,14 @@
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的代码 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的代码</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
@@ -274,11 +274,11 @@
                     <div class="content">
                         <pre><code class="json">[
   {
-    "instrumentCode": "38827",
-    "tradingDay": 756,
-    "closePrice": 21.30,
-    "openPrice": 29.37,
-    "settlementPrice": 46.61
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "closePrice": 0.0,
+    "openPrice": 0.0,
+    "settlementPrice": 0.0
   }
 ]</code></pre>
                     </div>
@@ -325,7 +325,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /instrument/last?instrumentCodes=ak5f5u --data '&ak5f5u'</code></pre>
+                        <pre><code class="bash">curl -X GET -i /instrument/last?instrumentCodes=</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
@@ -365,8 +365,8 @@
                     <div class="content">
                         <pre><code class="json">[
   {
-    "instrumentCode": "38827",
-    "lastPrice": 76.61
+    "instrumentCode": "",
+    "lastPrice": 0.0
   }
 ]</code></pre>
                     </div>
@@ -444,7 +444,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /instrument/tradable/764/a5vrlw</code></pre>
+                        <pre><code class="bash">curl -X GET -i /instrument/tradable/0/</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-example:</strong></p></div>
@@ -456,12 +456,12 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-05-02 01:00:41</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-05-24 20:47:07</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1682956841805"></script>
+<script src="search.js?v=1684928827162"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

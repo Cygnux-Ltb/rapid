@@ -1,19 +1,19 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.InstrumentSettlementEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * InstrumentSettlement DAO
+ * InstrumentSettlement Repository
  *
  * @author yellow013
  */
 @Repository
-public interface InstrumentSettlementRepository extends BaseJpaRepository<InstrumentSettlementEntity> {
+public interface InstrumentSettlementRepository extends JpaRepository<InstrumentSettlementEntity, Long> {
 
     /**
      *

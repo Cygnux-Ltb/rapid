@@ -3,8 +3,9 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.PnlEntity;
-import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
 import io.cygnuxltb.console.service.PnlService;
+import io.cygnuxltb.protocol.http.outbound.PnlDTO;
+import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -42,8 +43,8 @@ public final class PnlController {
      * @return ResponseEntity<List < PnlEntity>>
      */
     @GetMapping(path = "/{tradingDay}")
-    public List<PnlEntity> getPnl(@PathVariable("tradingDay") int tradingDay,
-                                  @RequestParam("strategyId") int strategyId) {
+    public List<PnlDTO> getPnl(@PathVariable("tradingDay") int tradingDay,
+                               @RequestParam("strategyId") int strategyId) {
         if (ControllerUtil.paramIsNull(tradingDay))
             throw new IllegalArgumentException("get pnl param error -> " + tradingDay);
         return service.getPnl(strategyId, tradingDay);
@@ -71,8 +72,8 @@ public final class PnlController {
      * @return ResponseEntity<List < PnlSettlementEntity>>
      */
     @GetMapping("/settlement")
-    public List<PnlSettlementEntity> getPnlSettlement(@RequestParam("strategyId") int strategyId,
-                                                      @RequestParam("tradingDay") int tradingDay) {
+    public List<PnlSettlementDTO> getPnlSettlement(@RequestParam("strategyId") int strategyId,
+                                                   @RequestParam("tradingDay") int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             throw new IllegalArgumentException("");
         return (service.getPnlSettlement(strategyId, tradingDay));

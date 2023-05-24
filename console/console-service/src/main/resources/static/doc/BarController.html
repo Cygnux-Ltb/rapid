@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="smart-doc">
-    <title>Cytrader-Console</title>
+    <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1682956841805"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1684928827162"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -19,7 +19,7 @@
     <script src="jquery.min.js"></script>
 </head>
 <body class="book toc2 toc-left">
-<div id="header"><h1>Cytrader-Console</h1>
+<div id="header"><h1>console-service</h1>
     <div id="toc" class="toc2">
         <div id="book-search-input"><input id="search" type="text" placeholder="Type to search"></div>
         <div id="toctitle"><span>API Reference</span></div>
@@ -121,7 +121,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="PositionController.html#header">8.&nbsp;</a>
+            <li class=""><a class="dd" href="PositionController.html#header">8.&nbsp;仓位查询接口</a>
                 <ul class="sectlevel2" style="display: none">                </ul>
             </li>
             <li class=""><a class="dd" href="InstrumentController.html#header">9.&nbsp;交易标的查询接口</a>
@@ -213,7 +213,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /bar?tradingDay=881&instrumentCode=38827 --data '&881&38827'</code></pre>
+                        <pre><code class="bash">curl -X GET -i /bar?tradingDay=0&instrumentCode=</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
@@ -236,70 +236,70 @@
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的代码 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的代码</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">actualDate</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">实际日期 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">实际日期</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">timePoint</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">时间点 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">时间点</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">open</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">开盘价 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">开盘价</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">high</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">最高价 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">最高价</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">low</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">最低价 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">最低价</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">close</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">收盘价 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">收盘价</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">volume</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交量 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交量</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">turnover</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交额 [*]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交额</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
                     </tbody>
@@ -309,16 +309,16 @@
                     <div class="content">
                         <pre><code class="json">[
   {
-    "instrumentCode": "38827",
-    "tradingDay": 64,
-    "actualDate": 762,
-    "timePoint": 302,
-    "open": 63.16,
-    "high": 92.58,
-    "low": 6.48,
-    "close": 45.40,
-    "volume": 70.20,
-    "turnover": 14.43
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "actualDate": 0,
+    "timePoint": 0,
+    "open": 0.0,
+    "high": 0.0,
+    "low": 0.0,
+    "close": 0.0,
+    "volume": 0.0,
+    "turnover": 0.0
   }
 ]</code></pre>
                     </div>
@@ -349,12 +349,12 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-05-02 01:00:41</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-05-24 20:47:07</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1682956841805"></script>
+<script src="search.js?v=1684928827162"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

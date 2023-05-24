@@ -2,9 +2,9 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.ProductEntity;
 import io.cygnuxltb.console.service.ProductService;
 import io.cygnuxltb.protocol.http.inbound.command.InitFinish;
+import io.cygnuxltb.protocol.http.outbound.ProductDTO;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -43,7 +43,7 @@ public final class ProductController {
      * @return ResponseEntity<List < ProductEntity>>
      */
     @GetMapping("/all")
-    public List<ProductEntity> getAllProduct() {
+    public List<ProductDTO> getAllProduct() {
         return service.getAll();
     }
 
@@ -54,7 +54,7 @@ public final class ProductController {
      * @return ResponseEntity<ProductEntity>
      */
     @GetMapping
-    public ProductEntity getProduct(@RequestParam("productId") int productId) {
+    public ProductDTO getProduct(@RequestParam("productId") int productId) {
         return service.getById(productId);
     }
 

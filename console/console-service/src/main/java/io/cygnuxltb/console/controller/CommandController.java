@@ -13,13 +13,15 @@ import io.mercury.serialization.json.JsonWrapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
@@ -39,11 +41,6 @@ public final class CommandController {
     @Resource
     private ParamService service;
 
-    public ResponseEntity<String> get() {
-        return null;
-    }
-
-
     /**
      * 更新参数
      *
@@ -51,7 +48,9 @@ public final class CommandController {
      * @param request   HttpServletRequest
      * @return ResponseEntity<?>
      */
-    @PutMapping(path = "/param", consumes = APPLICATION_JSON_UTF8, produces = APPLICATION_JSON_UTF8)
+    @PutMapping(path = "/param",
+            consumes = APPLICATION_JSON_UTF8,
+            produces = APPLICATION_JSON_UTF8)
     public ResponseStatus updateParam(@RequestParam("productId") int productId,
                                       @RequestBody HttpServletRequest request) {
         // 将参数转换为List
@@ -75,7 +74,9 @@ public final class CommandController {
      * @param request HttpServletRequest
      * @return ResponseEntity<?>
      */
-    @PutMapping(path = "/safe", consumes = APPLICATION_JSON_UTF8, produces = APPLICATION_JSON_UTF8)
+    @PutMapping(path = "/safe",
+            consumes = APPLICATION_JSON_UTF8,
+            produces = APPLICATION_JSON_UTF8)
     public ResponseStatus updateParamSafe(@RequestBody HttpServletRequest request) {
         var strategyParam = ControllerUtil.bodyToObject(request, ParamEntity.class);
         if (strategyParam == null)
@@ -89,6 +90,18 @@ public final class CommandController {
             // 否则返回服务器内部错误状态码
             default -> ResponseStatus.INTERNAL_ERROR;
         };
+    }
+
+    public static void main(String[] args) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder("ls");
+        pb.redirectErrorStream(true);
+        Process proc = pb.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+
     }
 
 }

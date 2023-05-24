@@ -44,7 +44,8 @@ public final class BarController {
     @GetMapping
     public List<BarDTO> getBars(@RequestParam("tradingDay") int tradingDay,
                                 @RequestParam("instrumentCode") String instrumentCode) {
-        log.info("get bars with : tradingDay -> {}, instrumentCode -> {}", tradingDay, instrumentCode);
+        log.info("get bars with : tradingDay -> {}, instrumentCode -> {}",
+                tradingDay, instrumentCode);
         return service.getBars(instrumentCode, tradingDay);
     }
 

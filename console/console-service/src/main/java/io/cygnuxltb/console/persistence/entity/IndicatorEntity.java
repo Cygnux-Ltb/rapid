@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+
 /**
  * 交易账户表
  * Account Entity
@@ -22,7 +26,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_indicator")
+@Table(name = "m_indicator")
 public final class IndicatorEntity {
 
     @Id
@@ -30,16 +34,16 @@ public final class IndicatorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = CommonColumn.ACCOUNT_ID)
+    @Column(name = ACCOUNT_ID)
     private int accountId;
 
-    @Column(name = CommonColumn.SUB_ACCOUNT_ID)
+    @Column(name = SUB_ACCOUNT_ID)
     private int subAccountId;
 
-    @Column(name = CommonColumn.BROKER_ID)
+    @Column(name = BROKER_ID)
     private String brokerId;
 
-    @Column(name = CommonColumn.INVESTOR_ID)
+    @Column(name = INVESTOR_ID)
     private String investorId;
 
     @Column(name = "adaptor_type")

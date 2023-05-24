@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+
 /**
  * 用户表
  * User Entity
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_user")
+@Table(name = "s_user")
 public class UserEntity {
 
     @Id
@@ -30,7 +32,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = CommonColumn.USER_ID)
+    @Column(name = USER_ID)
     private int userId;
 
     @Column(name = "username")
@@ -45,7 +47,7 @@ public class UserEntity {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = CommonColumn.SUB_ACCOUNT_ID)
+    @Column(name = SUB_ACCOUNT_ID)
     private int subAccountId;
 
 }

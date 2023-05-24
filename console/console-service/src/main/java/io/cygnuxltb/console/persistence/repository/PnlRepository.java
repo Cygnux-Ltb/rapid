@@ -1,18 +1,18 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.PnlEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * PnlDaily DAO
+ * PnlDaily Repository
  *
  * @author yellow013
  */
 @Repository
-public interface PnlRepository extends BaseJpaRepository<PnlEntity> {
+public interface PnlRepository extends JpaRepository<PnlEntity, Long> {
 
     /**
      * @param strategyId int

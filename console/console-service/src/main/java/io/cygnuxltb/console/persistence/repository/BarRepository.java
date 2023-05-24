@@ -1,7 +1,7 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.BarEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Bar DAO
+ * Bar Repository
  *
  * @author yellow013
  */
 @Repository
-public interface BarRepository extends BaseJpaRepository<BarEntity> {
+public interface BarRepository extends JpaRepository<BarEntity, Long> {
 
     @Query("SELECT '*' FROM #{#entityName} e WHERE"
             + " e.instrumentCode = :instrumentCode "

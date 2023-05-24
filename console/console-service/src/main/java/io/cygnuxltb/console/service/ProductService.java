@@ -1,11 +1,14 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.dao.ProductDao;
 import io.cygnuxltb.console.persistence.entity.ProductEntity;
+import io.cygnuxltb.console.persistence.repository.ProductRepository;
+import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.protocol.http.outbound.ProductDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
@@ -13,15 +16,17 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 public class ProductService {
 
     @Resource
-    private ProductDao dao;
+    private ProductRepository repo;
 
-    public List<ProductEntity> getAll() {
-        return select(ProductEntity.class,
-                () -> dao.findAll());
+    public List<ProductDTO> getAll() {
+        return select(ProductEntity.class, () -> repo.findAll())
+                .stream()
+                .map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public ProductEntity getById(int productId) {
-        return dao.queryByProductId(productId);
+    public ProductDTO getById(int productId) {
+        return DtoUtil.convertToDTO(repo.queryByProductId(productId));
     }
 
 }

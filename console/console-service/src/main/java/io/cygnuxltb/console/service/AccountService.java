@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.dao.AccountDao;
+import io.cygnuxltb.console.persistence.repository.AccountRepository;
 import io.cygnuxltb.console.persistence.entity.AccountEntity;
-import io.cygnuxltb.console.service.bean.OutboundConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.outbound.AccountDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 public class AccountService {
 
     @Resource
-    private AccountDao accountDao;
+    private AccountRepository repo;
 
     public List<AccountDTO> getAccount(int accountId) {
         return select(AccountEntity.class,
-                () -> accountDao.queryByAccountId(accountId))
+                () -> repo.queryByAccountId(accountId))
                 .stream()
-                .map(OutboundConverter::toAccountDTO)
+                .map(DtoUtil::convertToDTO)
                 .collect(Collectors.toList());
     }
 

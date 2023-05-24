@@ -1,10 +1,14 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.dao.OrderDao;
-import io.cygnuxltb.console.persistence.dao.OrderEventDao;
 import io.cygnuxltb.console.persistence.entity.OrderEntity;
 import io.cygnuxltb.console.persistence.entity.OrderEventEntity;
+import io.cygnuxltb.console.persistence.repository.OrderEventRepository;
+import io.cygnuxltb.console.persistence.repository.OrderExtRepository;
+import io.cygnuxltb.console.persistence.repository.OrderRepository;
+import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.protocol.http.outbound.OrderDTO;
+import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -13,6 +17,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInvestorId;
@@ -28,10 +33,13 @@ public class OrderService {
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderService.class);
 
     @Resource
-    private OrderDao dao;
+    private OrderRepository repo;
 
     @Resource
-    private OrderEventDao eventDao;
+    private OrderExtRepository extRepo;
+
+    @Resource
+    private OrderEventRepository eventRepo;
 
     /**
      * @param strategyId     int
@@ -40,10 +48,8 @@ public class OrderService {
      * @param tradingDay     int
      * @return List<TOrder>
      */
-    public List<OrderEntity> getOrders(int strategyId,
-                                       String investorId,
-                                       String instrumentCode,
-                                       int tradingDay) {
+    public List<OrderDTO> getOrders(int strategyId, String investorId,
+                                    String instrumentCode, int tradingDay) {
         return getOrders(strategyId, investorId, instrumentCode, tradingDay, tradingDay);
     }
 
@@ -55,12 +61,9 @@ public class OrderService {
      * @param endTradingDay   int
      * @return List<TOrder>
      */
-    public List<OrderEntity> getOrders(int strategyId,
-                                       String investorId,
-                                       String instrumentCode,
-                                       int startTradingDay,
-                                       int endTradingDay) {
-        String errMsg = "[OrderService::getOrders] param error";
+    public List<OrderDTO> getOrders(int strategyId, String investorId, String instrumentCode,
+                                    int startTradingDay, int endTradingDay) {
+        // String errMsg = "[OrderService::getOrders] param error";
         if (illegalStrategyId(strategyId, log))
             Throws.illegalArgument("strategyId");
         if (illegalTradingDay(startTradingDay, endTradingDay, log))
@@ -70,30 +73,39 @@ public class OrderService {
         if (illegalInstrumentCode(instrumentCode, log))
             Throws.illegalArgument("instrumentCode");
         return select(OrderEntity.class,
-                () -> dao.queryBy(strategyId, investorId, instrumentCode,
-                        startTradingDay, endTradingDay));
+                () -> repo.queryBy(strategyId, investorId, instrumentCode,
+                        startTradingDay, endTradingDay))
+                .stream()
+                .map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     /**
      * @param ordSysId long
      * @return List<TOrderEvent>
      */
-    public List<OrderEventEntity> getOrderEventsByOrderSysId(long ordSysId) {
+    public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
             return new FastList<>();
         return select(OrderEventEntity.class,
-                () -> eventDao.queryByOrdSysId(ordSysId));
+                () -> eventRepo.queryByOrdSysId(ordSysId))
+                .stream()
+                .map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     /**
      * @param tradingDay int
      * @return List<OrderEventEntity>
      */
-    public List<OrderEventEntity> getOrderEventsByTradingDay(int tradingDay) {
+    public List<OrderEventDTO> getOrderEventsByTradingDay(int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             return new FastList<>();
         return select(OrderEventEntity.class,
-                () -> eventDao.queryByTradingDay(tradingDay));
+                () -> eventRepo.queryByTradingDay(tradingDay))
+                .stream()
+                .map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -101,7 +113,7 @@ public class OrderService {
      * @return boolean
      */
     public boolean putOrder(OrderEntity entity) {
-        return insertOrUpdate(dao, entity);
+        return insertOrUpdate(repo, entity);
     }
 
     /**
@@ -109,7 +121,7 @@ public class OrderService {
      * @return boolean
      */
     public boolean putOrderEvent(OrderEventEntity entity) {
-        return insertOrUpdate(eventDao, entity);
+        return insertOrUpdate(eventRepo, entity);
     }
 
 }

@@ -2,9 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.ParamEntity;
-import io.cygnuxltb.console.persistence.entity.StrategyEntity;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.console.service.StrategyService;
+import io.cygnuxltb.protocol.http.outbound.ParamDTO;
+import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -42,7 +43,7 @@ public final class StrategyController {
      * @return ResponseEntity<List < StrategyEntity>>
      */
     @GetMapping
-    public List<StrategyEntity> getAllStrategy() {
+    public List<StrategyDTO> getAllStrategy() {
         return strategyService.getAllStrategy();
     }
 
@@ -53,20 +54,19 @@ public final class StrategyController {
      * @return ResponseEntity<StrategyEntity>
      */
     @GetMapping(path = "/{strategyId}")
-    public StrategyEntity getStrategyById(@PathVariable("strategyId") int strategyId) {
-        System.out.println("13131");
+    public StrategyDTO getStrategyById(@PathVariable("strategyId") int strategyId) {
         return strategyService.getStrategy(strategyId);
     }
 
     /**
      * 使用StrategyId作为URI访问Param
      *
-     * @param strategyId int
+     * @param strategyName String
      * @return ResponseEntity<?>
      */
-    @GetMapping("/{strategyId}/param")
-    public List<ParamEntity> getParamsByStrategyId(@PathVariable("strategyId") int strategyId) {
-        return paramService.getStrategyParams(strategyId);
+    @GetMapping("/{strategyName}/param")
+    public List<ParamDTO> getParamsByStrategyId(@PathVariable("strategyName") String strategyName) {
+        return paramService.getStrategyParams(strategyName);
     }
 
     /**

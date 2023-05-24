@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+
 /**
  * 交易产品表
  * Product Entity
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_product")
+@Table(name = "s_product")
 public final class ProductEntity {
 
     @Id
@@ -36,10 +38,10 @@ public final class ProductEntity {
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = CommonColumn.SUB_ACCOUNT_ID)
+    @Column(name = SUB_ACCOUNT_ID)
     private String subAccountId;
 
-    @Column(name = CommonColumn.USER_ID)
+    @Column(name = USER_ID)
     private String userId;
 
     @Column(name = "adaptor_type")

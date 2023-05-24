@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+
 /**
  * 盈亏结算表
  * PnlSettlement Entity
@@ -22,7 +25,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_pnl_settlement")
+@Table(name = "t_pnl_settlement")
 public final class PnlSettlementEntity {
 
     @Id
@@ -33,19 +36,19 @@ public final class PnlSettlementEntity {
     /**
      * strategyId
      */
-    @Column(name = CommonColumn.STRATEGY_ID)
+    @Column(name = STRATEGY_ID)
     private int strategyId;
 
     /**
      * instrumentCode
      */
-    @Column(name = CommonColumn.INSTRUMENT_CODE)
+    @Column(name = INSTRUMENT_CODE)
     private String instrumentCode;
 
     /**
      * tradingDay
      */
-    @Column(name = CommonColumn.TRADING_DAY)
+    @Column(name = TRADING_DAY)
     private int tradingDay;
 
     /**

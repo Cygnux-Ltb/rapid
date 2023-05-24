@@ -10,8 +10,11 @@ import lombok.experimental.Accessors;
 public class ResponseBean {
 
     private int code;
+
     private String message;
+
     private boolean isArray;
+
     private Object data;
 
 }

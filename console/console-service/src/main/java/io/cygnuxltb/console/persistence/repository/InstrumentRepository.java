@@ -1,7 +1,7 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.InstrumentEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -9,12 +9,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Instrument DAO
+ * Instrument Repository
  *
  * @author yellow013
  */
 @Repository
-public interface InstrumentRepository extends BaseJpaRepository<InstrumentEntity> {
+public interface InstrumentRepository extends JpaRepository<InstrumentEntity, Long> {
 
     /**
      * @param instrumentCode String

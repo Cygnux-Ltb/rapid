@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_NAME;
+
 /**
  * 策略表
  * Strategy Entity
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_strategy")
+@Table(name = "t_strategy")
 public final class StrategyEntity {
 
     @Id
@@ -30,10 +32,10 @@ public final class StrategyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = CommonColumn.STRATEGY_ID)
+    @Column(name = STRATEGY_ID)
     private int strategyId;
 
-    @Column(name = CommonColumn.STRATEGY_NAME)
+    @Column(name = STRATEGY_NAME)
     private String strategyName;
 
     @Column(name = "strategy_owner")

@@ -1,9 +1,14 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.OrderExtEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderExtRepository extends BaseJpaRepository<OrderExtEntity> {
+/**
+ * OrderExt Repository
+ *
+ * @author yellow013
+ */
+public interface OrderExtRepository extends JpaRepository<OrderExtEntity, Long> {
 
-    
+
 }

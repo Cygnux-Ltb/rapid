@@ -1,18 +1,18 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.AccountEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Account DAO
+ * Account Repository
  *
  * @author yellow013
  */
 @Repository
-public interface AccountRepository extends BaseJpaRepository<AccountEntity> {
+public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
     /**
      * @param brokerId String

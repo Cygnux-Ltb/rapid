@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.service.bean;
+package io.cygnuxltb.console.service.util;
 
 import io.cygnuxltb.console.persistence.entity.AccountEntity;
 import io.cygnuxltb.console.persistence.entity.BarEntity;
@@ -9,6 +9,7 @@ import io.cygnuxltb.console.persistence.entity.OrderEventEntity;
 import io.cygnuxltb.console.persistence.entity.OrderExtEntity;
 import io.cygnuxltb.console.persistence.entity.ParamEntity;
 import io.cygnuxltb.console.persistence.entity.PnlEntity;
+import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
 import io.cygnuxltb.console.persistence.entity.ProductEntity;
 import io.cygnuxltb.console.persistence.entity.StrategyEntity;
 import io.cygnuxltb.protocol.http.outbound.AccountDTO;
@@ -20,6 +21,7 @@ import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
 import io.cygnuxltb.protocol.http.outbound.OrderExtDTO;
 import io.cygnuxltb.protocol.http.outbound.ParamDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
+import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
 import io.cygnuxltb.protocol.http.outbound.ProductDTO;
 import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
 
@@ -104,4 +106,9 @@ public class DtoUtil {
         return dto;
     }
 
+    public static PnlSettlementDTO convertToDTO(PnlSettlementEntity entity) {
+        PnlSettlementDTO dto = new PnlSettlementDTO();
+        copyProperties(entity, dto);
+        return dto;
+    }
 }

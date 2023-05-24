@@ -27,50 +27,48 @@
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/516?strategyId=768 --data '&768'
+curl -X GET -i /pnl/0?strategyId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|strategyId|-|
-|instrumentCode|string|instrumentCode|-|
-|tradingDay|int32|tradingDay|-|
-|avgBuyPrice|double|avgBuyPrice|-|
-|avgSellPrice|double|avgSellPrice|-|
-|buyQuantity|int32|buyQuantity|-|
-|sellQuantity|int32|sellQuantity|-|
-|todayLong|int32|todayLong|-|
-|todayShort|int32|todayShort|-|
-|yesterdayLong|int32|yesterdayLong|-|
-|yesterdayShort|int32|yesterdayShort|-|
-|netPosition|int32|netPosition|-|
-|aggregatedFee|double|aggregatedFee|-|
-|approved|int32|approved|-|
-|turnover|int32|turnover|-|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|avgBuyPrice|double|平均多头价格|-|
+|avgSellPrice|double|平均空头价格|-|
+|buyQuantity|int32|多头数量|-|
+|sellQuantity|int32|空头数量|-|
+|todayLong|int32|今多头数量|-|
+|todayShort|int32|今空头数量|-|
+|yesterdayLong|int32|昨多头数量|-|
+|yesterdayShort|int32|昨空头数量|-|
+|netPosition|int32|净头寸|-|
+|aggregatedFee|double|聚合交易手续费|-|
+|turnover|int32|成交额|-|
+|approved|int32|认证状态|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 776,
-    "strategyId": 569,
-    "instrumentCode": "38827",
-    "tradingDay": 854,
-    "avgBuyPrice": 11.51,
-    "avgSellPrice": 83.55,
-    "buyQuantity": 778,
-    "sellQuantity": 240,
-    "todayLong": 725,
-    "todayShort": 571,
-    "yesterdayLong": 924,
-    "yesterdayShort": 482,
-    "netPosition": 49,
-    "aggregatedFee": 54.68,
-    "approved": 115,
-    "turnover": 546
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "avgBuyPrice": 0.0,
+    "avgSellPrice": 0.0,
+    "buyQuantity": 0,
+    "sellQuantity": 0,
+    "todayLong": 0,
+    "todayShort": 0,
+    "yesterdayLong": 0,
+    "yesterdayShort": 0,
+    "netPosition": 0,
+    "aggregatedFee": 0.0,
+    "turnover": 0,
+    "approved": 0
   }
 ]
 ```
@@ -123,38 +121,36 @@ OK
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/settlement?strategyId=105&tradingDay=824 --data '&105&824'
+curl -X GET -i /pnl/settlement?strategyId=0&tradingDay=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|strategyId|-|
-|instrumentCode|string|instrumentCode|-|
-|tradingDay|int32|tradingDay|-|
-|position|int32|position|-|
-|pnlTotal|double|pnlTotal|-|
-|pnlNet|double|pnlNet|-|
-|tradeCost|double|tradeCost|-|
-|exposure|double|exposure|-|
-|approved|int32|approved|-|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|position|int32|仓位|-|
+|pnlTotal|double|盈亏|-|
+|pnlNet|double|净盈亏|-|
+|tradeCost|double|交易成本|-|
+|exposure|double|风险暴露|-|
+|approved|int32|认证状态|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 109,
-    "strategyId": 840,
-    "instrumentCode": "38827",
-    "tradingDay": 152,
-    "position": 488,
-    "pnlTotal": 51.30,
-    "pnlNet": 99.75,
-    "tradeCost": 6.74,
-    "exposure": 2.45,
-    "approved": 105
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "position": 0,
+    "pnlTotal": 0.0,
+    "pnlNet": 0.0,
+    "tradeCost": 0.0,
+    "exposure": 0.0,
+    "approved": 0
   }
 ]
 ```

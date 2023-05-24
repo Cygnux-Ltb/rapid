@@ -24,7 +24,6 @@ curl -X GET -i /product/all
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
 |productId|int32|No comments found.|-|
 |productName|string|No comments found.|-|
 |subAccountId|string|No comments found.|-|
@@ -35,12 +34,11 @@ curl -X GET -i /product/all
 ```
 [
   {
-    "uid": 261,
-    "productId": 103,
-    "productName": "sona.kuhic",
-    "subAccountId": "172",
-    "userId": "172",
-    "interfaceType": "xmf4zk"
+    "productId": 0,
+    "productName": "",
+    "subAccountId": "",
+    "userId": "",
+    "interfaceType": ""
   }
 ]
 ```
@@ -67,14 +65,13 @@ curl -X GET -i /product/all
 
 **Request-example:**
 ```
-curl -X GET -i /product?productId=752 --data '&752'
+curl -X GET -i /product?productId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
 |productId|int32|No comments found.|-|
 |productName|string|No comments found.|-|
 |subAccountId|string|No comments found.|-|
@@ -84,12 +81,11 @@ curl -X GET -i /product?productId=752 --data '&752'
 **Response-example:**
 ```
 {
-  "uid": 392,
-  "productId": 152,
-  "productName": "sona.kuhic",
-  "subAccountId": "172",
-  "userId": "172",
-  "interfaceType": "k1kl6g"
+  "productId": 0,
+  "productName": "",
+  "subAccountId": "",
+  "userId": "",
+  "interfaceType": ""
 }
 ```
 

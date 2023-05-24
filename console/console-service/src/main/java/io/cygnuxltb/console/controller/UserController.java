@@ -31,7 +31,7 @@ public class UserController {
      * @return boolean
      */
     @PostMapping(path = "/signin")
-    public boolean signIn(String sign, String password) {
+    public boolean signin(String sign, String password) {
         return service.signIn(sign, password);
     }
 
@@ -44,7 +44,7 @@ public class UserController {
      * @return ResponseBean
      */
     @PostMapping(path = "/signup")
-    public ResponseBean signUp(String sign, int type, String password) {
+    public ResponseBean signup(String sign, int type, String password) {
         return ResponseStatus.FORBIDDEN.response();
     }
 

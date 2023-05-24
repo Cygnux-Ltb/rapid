@@ -3,8 +3,9 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.OrderEntity;
-import io.cygnuxltb.console.persistence.entity.OrderEventEntity;
 import io.cygnuxltb.console.service.OrderService;
+import io.cygnuxltb.protocol.http.outbound.OrderDTO;
+import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -44,10 +45,10 @@ public final class OrderController {
      * @return List<OrderEntity>
      */
     @GetMapping(path = "/{tradingDay}")
-    public List<OrderEntity> getOrder(@PathVariable("tradingDay") int tradingDay,
-                                      @RequestParam("strategyId") int strategyId,
-                                      @RequestParam("investorId") String investorId,
-                                      @RequestParam("instrumentCode") String instrumentCode) {
+    public List<OrderDTO> getOrder(@PathVariable("tradingDay") int tradingDay,
+                                   @RequestParam("strategyId") int strategyId,
+                                   @RequestParam("investorId") String investorId,
+                                   @RequestParam("instrumentCode") String instrumentCode) {
         if (ControllerUtil.paramIsNull(strategyId, tradingDay, investorId, instrumentCode))
             return null;
         return service.getOrders(strategyId, investorId, instrumentCode, tradingDay);
@@ -61,8 +62,8 @@ public final class OrderController {
      * @return ResponseEntity<Object>
      */
     @GetMapping(path = "/status")
-    public List<OrderEventEntity> getOrdersByInit(@RequestParam("tradingDay") int tradingDay,
-                                                  @RequestParam("strategyId") int strategyId) {
+    public List<OrderEventDTO> getOrdersByInit(@RequestParam("tradingDay") int tradingDay,
+                                               @RequestParam("strategyId") int strategyId) {
         if (ControllerUtil.paramIsNull(strategyId, tradingDay)) {
             return null;
         }

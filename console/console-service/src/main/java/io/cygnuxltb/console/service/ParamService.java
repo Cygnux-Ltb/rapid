@@ -1,8 +1,10 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.dao.ParamDao;
 import io.cygnuxltb.console.persistence.entity.ParamEntity;
-import io.cygnuxltb.console.service.bean.ValidationRule;
+import io.cygnuxltb.console.persistence.repository.ParamRepository;
+import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.console.service.util.ValidationRule;
+import io.cygnuxltb.protocol.http.outbound.ParamDTO;
 import io.mercury.common.character.Charsets;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -18,8 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyId;
+import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalBrokerId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyName;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
@@ -32,16 +35,15 @@ public class ParamService {
     private static final Map<String, ValidationRule> validationRuleMap = new HashMap<>();
 
     @Resource
-    private ParamDao paramDao;
+    private ParamRepository repo;
 
     static {
         try (InputStream inputStream = ParamService.class.getResourceAsStream("validation_rules.json")) {
             if (inputStream != null) {
                 String json = IOUtils.toString(inputStream, Charsets.UTF8);
                 List<ValidationRule> rules = JsonParser.toList(json, ValidationRule.class);
-                for (ValidationRule rule : rules) {
+                for (ValidationRule rule : rules)
                     validationRuleMap.put(rule.getParamName(), rule);
-                }
             }
         } catch (IOException e) {
             log.error("IOException -> {}", e.getMessage(), e);
@@ -56,7 +58,7 @@ public class ParamService {
     public int updateParamSafe(ParamEntity param) {
         if (validationStrategyParam(param)) {
             try {
-                ParamEntity saved = paramDao.save(param);
+                ParamEntity saved = repo.save(param);
                 return 1;
             } catch (Exception e) {
                 return -1;
@@ -147,42 +149,37 @@ public class ParamService {
         return true;
     }
 
-    /**
-     * @return List<ParamEntity>
-     */
-    public List<ParamEntity> getDefaultStrategyParams() {
-        return getStrategyParams(0);
-    }
-
-
-    /**
-     * @param strategyId int
-     * @return List<ParamEntity>
-     */
-    public List<ParamEntity> getStrategyParams(int strategyId) {
-        if (illegalStrategyId(strategyId, log))
-            Throws.illegalArgument("strategyId");
-        return select(ParamEntity.class,
-                () -> paramDao.queryByStrategyId(strategyId));
-    }
-
 
     /**
      * @param strategyName String
      * @return List<ParamEntity>
      */
-    public List<ParamEntity> getStrategyParams(String strategyName) {
+    public List<ParamDTO> getStrategyParams(String strategyName) {
         if (illegalStrategyName(strategyName, log))
-            Throws.illegalArgument("query StrategyParams param error -> strategyId");
-        return select(ParamEntity.class, () -> paramDao.queryByStrategyName(strategyName));
+            Throws.illegalArgument("getStrategyParams param error -> strategyName");
+        return select(ParamEntity.class,
+                () -> repo.queryStrategyParamByName(strategyName))
+                .stream().map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
     }
+
+
+    public List<ParamDTO> getCtpParams(String brokerId) {
+        if (illegalBrokerId(brokerId, log))
+            Throws.illegalArgument("getCtpParams param error -> brokerId");
+        return select(ParamEntity.class,
+                () -> repo.queryStrategyParamByName(brokerId))
+                .stream().map(DtoUtil::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
 
     /**
      * @param entity ParamEntity
      * @return boolean
      */
     public boolean putStrategyParam(ParamEntity entity) {
-        return insertOrUpdate(paramDao, entity);
+        return insertOrUpdate(repo, entity);
     }
 
     public static void main(String[] args) {

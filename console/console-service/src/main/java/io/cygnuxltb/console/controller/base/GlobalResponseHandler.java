@@ -47,7 +47,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
                         : ResponseStatus.FORBIDDEN.response();
             }
             case Integer i -> {
-                return i < 0
+                return i > 0
                         ? ResponseStatus.CREATED.responseOf(i)
                         : ResponseStatus.FORBIDDEN.response();
             }

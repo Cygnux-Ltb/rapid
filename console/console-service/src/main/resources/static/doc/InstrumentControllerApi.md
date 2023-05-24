@@ -23,15 +23,15 @@
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/settlement?tradingDay=649&instrumentCode=38827 --data '&649&38827'
+curl -X GET -i /instrument/settlement?tradingDay=0&instrumentCode=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|交易标的代码 [*]|-|
-|tradingDay|int32|交易日 [*]|-|
+|instrumentCode|string|交易标的代码|-|
+|tradingDay|int32|交易日|-|
 |closePrice|double|收盘价|-|
 |openPrice|double|开盘价|-|
 |settlementPrice|double|结算价|-|
@@ -40,11 +40,11 @@ curl -X GET -i /instrument/settlement?tradingDay=649&instrumentCode=38827 --data
 ```
 [
   {
-    "instrumentCode": "38827",
-    "tradingDay": 312,
-    "closePrice": 50.25,
-    "openPrice": 82.11,
-    "settlementPrice": 15.19
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "closePrice": 0.0,
+    "openPrice": 0.0,
+    "settlementPrice": 0.0
   }
 ]
 ```
@@ -71,7 +71,7 @@ curl -X GET -i /instrument/settlement?tradingDay=649&instrumentCode=38827 --data
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/last?instrumentCodes=eqipgw --data '&eqipgw'
+curl -X GET -i /instrument/last?instrumentCodes=
 ```
 
 **Response-fields:**
@@ -85,8 +85,8 @@ curl -X GET -i /instrument/last?instrumentCodes=eqipgw --data '&eqipgw'
 ```
 [
   {
-    "instrumentCode": "38827",
-    "lastPrice": 29.61
+    "instrumentCode": "",
+    "lastPrice": 0.0
   }
 ]
 ```
@@ -139,7 +139,7 @@ OK
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/tradable/311/4zn1v3
+curl -X GET -i /instrument/tradable/0/
 ```
 
 **Response-example:**

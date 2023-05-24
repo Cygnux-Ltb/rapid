@@ -1,16 +1,16 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.StrategyEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Strategy DAO
+ * Strategy Repository
  *
  * @author yellow013
  */
 @Repository
-public interface StrategyDao extends BaseJpaRepository<StrategyEntity> {
+public interface StrategyRepository extends JpaRepository<StrategyEntity, Long> {
 
     /**
      * @param strategyId int

@@ -1,7 +1,7 @@
-package io.cygnuxltb.console.persistence.dao;
+package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.dao.base.BaseJpaRepository;
 import io.cygnuxltb.console.persistence.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * User DAO
+ * User Repository
  *
  * @author yellow013
  */
 @Repository
-public interface UserDao extends BaseJpaRepository<UserEntity> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT '*' FROM #{#entityName} e WHERE "
             + " e.username = :username "

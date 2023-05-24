@@ -1,7 +1,6 @@
 package io.cygnuxltb.console.persistence.entity;
 
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,11 +12,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+
 @Getter
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_portfolio")
+@Table(name = "s_portfolio")
 public class PortfolioEntity {
 
     @Id
@@ -28,13 +30,13 @@ public class PortfolioEntity {
     /**
      * userId [*]
      */
-    @Column(name = CommonColumn.USER_ID)
+    @Column(name = USER_ID)
     private int userId;
 
     /**
      * instrumentCode [*]
      */
-    @Column(name = CommonColumn.INSTRUMENT_CODE)
+    @Column(name = INSTRUMENT_CODE)
     private String instrumentCode;
 
 }

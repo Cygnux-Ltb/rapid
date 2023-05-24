@@ -1,6 +1,5 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.cygnuxltb.console.persistence.CommonColumn;
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+
 /**
  * 订单事件表
  * Trade Entity 订单事件
@@ -22,7 +30,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "cy_order_event")
+@Table(name = "t_order_event")
 public final class OrderEventEntity {
 
     @Id
@@ -33,49 +41,49 @@ public final class OrderEventEntity {
     /**
      * tradingDay [*]
      */
-    @Column(name = CommonColumn.TRADING_DAY)
+    @Column(name = TRADING_DAY)
     private int tradingDay;
 
     /**
      * strategyId [*]
      */
-    @Column(name = CommonColumn.STRATEGY_ID)
+    @Column(name = STRATEGY_ID)
     private int strategyId;
 
     /**
      * instrumentCode [*]
      */
-    @Column(name = CommonColumn.INSTRUMENT_CODE)
+    @Column(name = INSTRUMENT_CODE)
     private String instrumentCode;
 
     /**
      * investorId [*]
      */
-    @Column(name = CommonColumn.INVESTOR_ID)
+    @Column(name = INVESTOR_ID)
     private String investorId;
 
     /**
      * brokerId [*]
      */
-    @Column(name = CommonColumn.BROKER_ID)
+    @Column(name = BROKER_ID)
     private String brokerId;
 
     /**
      * accountId [*]
      */
-    @Column(name = CommonColumn.ACCOUNT_ID)
+    @Column(name = ACCOUNT_ID)
     private int accountId;
 
     /**
      * subAccountId [*]
      */
-    @Column(name = CommonColumn.SUB_ACCOUNT_ID)
+    @Column(name = SUB_ACCOUNT_ID)
     private int subAccountId;
 
     /**
      * userId [*]
      */
-    @Column(name = CommonColumn.USER_ID)
+    @Column(name = USER_ID)
     private int userId;
 
 
