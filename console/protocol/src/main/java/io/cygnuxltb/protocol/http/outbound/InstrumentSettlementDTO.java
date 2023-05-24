@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
 public final class InstrumentSettlementDTO {
 
     /**
-     * 交易标的代码 [*]
+     * 交易标的代码
      */
     private String instrumentCode;
 
     /**
-     * 交易日 [*]
+     * 交易日
      */
     private int tradingDay;
 

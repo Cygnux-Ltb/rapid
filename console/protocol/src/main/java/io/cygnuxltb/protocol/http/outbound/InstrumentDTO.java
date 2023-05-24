@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 public final class InstrumentDTO {
 
     /**
-     * 交易标的代码 [*]
+     * 交易标的代码
      */
     private String instrumentCode;
 
@@ -26,17 +26,17 @@ public final class InstrumentDTO {
     private String instrumentType;
 
     /**
-     * exchangeCode [*]
+     * 交易所代码
      */
     private String exchangeCode;
 
     /**
-     * fee
+     * 交易费用
      */
     private double fee;
 
     /**
-     * tradable
+     * 可交易标识
      */
     private boolean tradable;
 

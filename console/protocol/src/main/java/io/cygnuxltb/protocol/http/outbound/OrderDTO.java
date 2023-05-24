@@ -7,9 +7,9 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * 订单基本信息表
- * Order Entity 基本信息
+ * 订单基本信息
  * [*] 为不可为空字段
+ *
  * @author yellow013
  */
 @Getter
@@ -18,117 +18,117 @@ import java.util.Date;
 public final class OrderDTO {
 
     /**
-     * 交易日 [*]
+     * 交易日
      */
     private int tradingDay;
 
     /**
-     * strategyId [*]
+     * 策略ID
      */
     private int strategyId;
 
     /**
-     * 交易标的代码 [*]
+     * 交易标的代码
      */
     private String instrumentCode;
 
     /**
-     * investorId [*]
+     * 投资者ID
      */
     private String investorId;
 
     /**
-     * brokerId [*]
+     * 经纪商ID
      */
     private String brokerId;
 
     /**
-     * accountId [*]
+     * 交易账户ID
      */
     private int accountId;
 
     /**
-     * subAccountId [*]
+     * 子账户ID
      */
     private int subAccountId;
 
     /**
-     * userId [*]
+     * 用户ID
      */
     private int userId;
 
     /**
-     * ordSysId [*]
+     * 订单系统编号 [*]
      */
     private long ordSysId;
 
     /**
-     * ordType
+     * 订单类型
      */
     private String ordType;
 
     /**
-     * orderRef
+     * 订单引用
      */
     private String orderRef;
 
     /**
-     * direction
+     * 订单方向
      */
     private char direction;
 
     /**
-     * side
+     * 订单交易类型
      */
     private char side;
 
     /**
-     * offerPrice
+     * 委托价格
      */
     private double offerPrice;
 
     /**
-     * offerQty
+     * 委托数量
      */
     private int offerQty;
 
     /**
-     * insertTime
+     * 创建时间
      */
     private Date insertTime;
 
     /**
-     * updateTime
+     * 更新时间
      */
     private Date updateTime;
 
     /**
-     * cancelTime
+     * 取消时间
      */
     private Date cancelTime;
 
     /**
-     * frontId
+     * 前置机ID
      */
     private int frontId;
 
     /**
-     * sessionId
+     * 会话ID
      */
     private int sessionId;
 
     /**
-     * fee double 19_4
+     * 交易费用
      */
     private double fee;
 
     /**
-     * adaptorType
+     * 交易通道类型
      */
-    private String adaptorType;
+    private String channelType;
 
     /**
-     * remark
+     * 备注
      */
     private String remark;
 

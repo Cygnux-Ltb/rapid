@@ -16,37 +16,27 @@ import lombok.experimental.Accessors;
 public final class ParamDTO {
 
     /**
-     *
+     * 参数组
      */
-    private int strategyId;
+    private String group;
 
     /**
-     *
+     * 名称
      */
-    private String strategyName;
+    private String name;
 
     /**
-     *
-     */
-    private String ownerType;
-
-    /**
-     *
-     */
-    private String owner;
-
-    /**
-     *
+     * 参数名
      */
     private String paramName;
 
     /**
-     *
+     * 参数类型
      */
     private String paramType;
 
     /**
-     *
+     * 参数值
      */
     private String paramValue;
 

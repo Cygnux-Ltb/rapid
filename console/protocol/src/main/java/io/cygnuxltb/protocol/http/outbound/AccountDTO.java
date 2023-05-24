@@ -15,28 +15,28 @@ import lombok.experimental.Accessors;
 public final class AccountDTO {
 
     /**
-     * 账户ID [*]
+     * 账户ID
      */
     private int accountId;
 
     /**
-     * 子账户ID [*]
+     * 账户名称
+     */
+    public String accountName;
+
+    /**
+     * 子账户ID
      */
     private int subAccountId;
 
     /**
-     * 经纪商ID [*]
+     * 经纪商ID
      */
     private String brokerId;
 
     /**
-     * 投资账户ID [*]
+     * 投资账户ID
      */
     private String investorId;
-
-    /**
-     * 适配器类型
-     */
-    private String adaptorType;
 
 }

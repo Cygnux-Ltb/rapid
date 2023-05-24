@@ -16,52 +16,52 @@ import lombok.experimental.Accessors;
 public final class BarDTO {
 
     /**
-     * 交易标的代码 [*]
+     * 交易标的代码
      */
     private String instrumentCode;
 
     /**
-     * 交易日 [*]
+     * 交易日
      */
     private int tradingDay;
 
     /**
-     * 实际日期 [*]
+     * 实际日期
      */
     private int actualDate;
 
     /**
-     * 时间点 [*]
+     * 时间点
      */
     private int timePoint;
 
     /**
-     * 开盘价 [*]
+     * 开盘价
      */
     private double open;
 
     /**
-     * 最高价 [*]
+     * 最高价
      */
     private double high;
 
     /**
-     * 最低价 [*]
+     * 最低价
      */
     private double low;
 
     /**
-     * 收盘价 [*]
+     * 收盘价
      */
     private double close;
 
     /**
-     * 成交量 [*]
+     * 成交量
      */
     private double volume;
 
     /**
-     * 成交额 [*]
+     * 成交额
      */
     private double turnover;
 
