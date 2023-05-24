@@ -2,7 +2,7 @@ package io.cygnuxltb.channel.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.gateway.utils.CtpLibraryLoader;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.horizon.trader.adaptor.AdaptorRunMode;
@@ -41,7 +41,7 @@ public final class CtpGateway implements Closeable {
     private final String gatewayId;
 
     // 基础配置信息
-    private final CtpConfig config;
+    private final CtpConfiguration config;
 
     // 行情Gateway
     private CtpMdGateway mdGateway;
@@ -72,7 +72,7 @@ public final class CtpGateway implements Closeable {
      * @param mode      运行模式: 0,正常模式; 1,行情模式; 2,交易模式
      */
     public CtpGateway(@Nonnull String gatewayId,
-                      @Nonnull CtpConfig config,
+                      @Nonnull CtpConfiguration config,
                       @Nonnull CtpRunMode mode,
                       @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");

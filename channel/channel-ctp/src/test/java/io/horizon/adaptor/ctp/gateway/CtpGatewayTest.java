@@ -1,6 +1,6 @@
 package io.horizon.adaptor.ctp.gateway;
 
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.gateway.CtpGateway;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcDepthMarketData;
@@ -43,7 +43,7 @@ public class CtpGatewayTest {
     @Test
     public void test() {
 
-        final CtpConfig config = new CtpConfig().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
+        final CtpConfiguration config = new CtpConfiguration().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
                 .setInvestorId(InvestorId).setUserId(UserId).setAccountId(AccountId).setPassword(Password)
                 .setTradingDay(TradingDay).setCurrencyId(CurrencyId);
 

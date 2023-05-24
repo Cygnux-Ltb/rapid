@@ -1,7 +1,7 @@
 package io.cygnuxltb.channel.ctp.converter;
 
-import io.cygnuxltb.channel.ctp.consts.FtdcConstMapper;
 import io.cygnuxltb.channel.ctp.OrderRefKeeper;
+import io.cygnuxltb.channel.ctp.consts.FtdcConstMapper;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrder;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
@@ -16,6 +16,7 @@ import static io.horizon.trader.order.enums.OrdStatus.NewRejected;
 import static io.horizon.trader.order.enums.OrdStatus.Unprovided;
 import static io.mercury.common.datetime.EpochTime.getEpochMicros;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
+import static java.lang.Integer.parseInt;
 
 /**
  * OrderReportConverter
@@ -82,7 +83,7 @@ public final class OrderReportConverter {
                 // OrdSysId
                 .setOrdSysId(ordSysId)
                 // 交易日
-                .setTradingDay(order.getTradingDay())
+                .setTradingDay(parseInt(order.getTradingDay()))
                 // 投资者ID
                 .setInvestorId(order.getInvestorID())
                 // 报单引用
@@ -131,7 +132,7 @@ public final class OrderReportConverter {
         // OrdSysId
         builder.setOrdSysId(ordSysId);
         // 交易日
-        builder.setTradingDay(trade.getTradingDay());
+        builder.setTradingDay(parseInt(trade.getTradingDay()));
         // 投资者ID
         builder.setInvestorId(trade.getInvestorID());
         // 报单引用

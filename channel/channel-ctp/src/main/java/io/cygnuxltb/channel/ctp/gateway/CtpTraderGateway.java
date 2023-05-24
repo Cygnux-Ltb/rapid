@@ -18,7 +18,7 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTraderApi;
 import ctp.thostapi.CThostFtdcTraderSpi;
 import ctp.thostapi.CThostFtdcTradingAccountField;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInputOrderActionConverter;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInputOrderConverter;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInvestorPositionConverter;
@@ -70,7 +70,7 @@ public class CtpTraderGateway implements Closeable {
     private final String gatewayId;
 
     // 基础配置信息
-    private final CtpConfig config;
+    private final CtpConfiguration config;
 
     @Native
     private CThostFtdcTraderApi traderApi;
@@ -99,7 +99,7 @@ public class CtpTraderGateway implements Closeable {
      * @param config    CtpConfig
      * @param handler   Handler<FtdcRspMsg>
      */
-    public CtpTraderGateway(@Nonnull String gatewayId, @Nonnull CtpConfig config,
+    public CtpTraderGateway(@Nonnull String gatewayId, @Nonnull CtpConfiguration config,
                             @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");

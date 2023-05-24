@@ -3,7 +3,7 @@ package io.cygnuxltb.channel.ctp.launch;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.cygnuxltb.channel.ctp.adaptor.CtpAdaptor;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.InstrumentKeeper;
 import io.horizon.trader.account.Account;
@@ -59,7 +59,7 @@ public final class CtpAdaptorStartup {
         if (mode.equals("zmq")) {
             try (// CtpZmqHandler module = new CtpZmqHandler(config);
                  var recorder = new LoggerMarketDataRecorder(instruments);
-                 var adaptor = new CtpAdaptor(new Account(config), CtpConfig.with(config),
+                 var adaptor = new CtpAdaptor(new Account(config), CtpConfiguration.with(config),
                          recorder)) {
                 recorder.setAdaptor(adaptor);
                 adaptor.startup();

@@ -26,13 +26,12 @@
     </developers>
 
     <modules>
+        <module>api</module>
         <module>channel</module>
         <module>console</module>
         <module>display</module>
         <module>engine</module>
         <module>example</module>
-        <module>market-api</module>
-        <module>trader-api</module>
     </modules>
 
     <properties>
@@ -61,7 +60,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerArgument>-parameters</compilerArgument>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Xlint:preview</arg>
+                    </compilerArgs>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>

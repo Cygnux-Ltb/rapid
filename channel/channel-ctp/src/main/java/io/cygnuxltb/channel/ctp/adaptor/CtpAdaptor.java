@@ -2,7 +2,7 @@ package io.cygnuxltb.channel.ctp.adaptor;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.OrderRefKeeper;
 import io.cygnuxltb.channel.ctp.OrderRefNotFoundException;
 import io.cygnuxltb.channel.ctp.converter.FtdcOrderConverter;
@@ -45,7 +45,6 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
 import io.mercury.serialization.json.JsonWrapper;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import org.agrona.concurrent.IdleStrategy;
 import org.agrona.concurrent.SleepingIdleStrategy;
 import org.eclipse.collections.api.set.MutableSet;
@@ -75,7 +74,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final OrderReportConverter orderReportConverter = new OrderReportConverter();
 
     // Ftdc Config
-    private final CtpConfig config;
+    private final CtpConfiguration config;
 
     // TODO 两个INT类型可以合并
     private volatile int frontId;
@@ -90,8 +89,6 @@ public class CtpAdaptor extends AbstractAdaptor {
     // 队列缓冲区
     private Queue<FtdcRspMsg> queue;
 
-    @Resource
-    private OrderRefKeeper orderRefKeeper;
 
     /**
      * 传入MarketDataHandler, OrderReportHandler, AdaptorReportHandler实现,
@@ -104,7 +101,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param adaptorReportHandler AdaptorReportHandler
      */
     public CtpAdaptor(@Nonnull Account account,
-                      @Nonnull CtpConfig config,
+                      @Nonnull CtpConfiguration config,
                       @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
                       @Nonnull OrderReportHandler orderReportHandler,
                       @Nonnull AdaptorReportHandler adaptorReportHandler) {
@@ -123,7 +120,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param adaptorReportHandler AdaptorReportHandler
      */
     public CtpAdaptor(@Nonnull Account account,
-                      @Nonnull CtpConfig config,
+                      @Nonnull CtpConfiguration config,
                       @Nonnull AdaptorRunMode mode,
                       @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
                       @Nonnull OrderReportHandler orderReportHandler,
@@ -142,7 +139,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config    CtpConfig
      * @param scheduler InboundHandler<BasicMarketData>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
         this(account, config, AdaptorRunMode.Normal, scheduler);
     }
@@ -155,7 +152,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param mode      AdaptorRunMode
      * @param scheduler InboundHandler<BasicMarketData>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull AdaptorRunMode mode,
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
         super(CtpAdaptor.class.getSimpleName(), account);
@@ -251,7 +248,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config  CtpConfig
      * @param queue   Queue<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull Queue<FtdcRspMsg> queue) {
         this(account, config, AdaptorRunMode.Normal, queue);
     }
@@ -264,7 +261,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param mode    AdaptorRunMode
      * @param queue   Queue<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull AdaptorRunMode mode, @Nonnull Queue<FtdcRspMsg> queue) {
         this(account, config, mode,
                 // 使用入队函数实现Handler<FtdcRspMsg>
@@ -279,7 +276,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config  CtpConfig
      * @param handler Handler<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull Handler<FtdcRspMsg> handler) {
         this(account, config, AdaptorRunMode.Normal, handler);
     }
@@ -292,7 +289,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param mode    AdaptorRunMode
      * @param handler Handler<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config, AdaptorRunMode mode,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config, AdaptorRunMode mode,
                       @Nonnull Handler<FtdcRspMsg> handler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         this.handler = handler;
@@ -392,7 +389,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
             // 设置OrderRef
             field.setOrderRef(orderRef);
-            orderRefKeeper.put(orderRef, order.getOrdSysId());
+            OrderRefKeeper.put(orderRef, order.getOrdSysId());
             gateway.ReqOrderInsert(field);
             return true;
         } catch (Exception e) {

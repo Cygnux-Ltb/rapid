@@ -1,11 +1,11 @@
 package io.horizon.market.instrument;
 
+import java.time.ZoneOffset;
+import java.util.stream.Stream;
+
 import static io.mercury.common.datetime.TimeZone.CST;
 import static io.mercury.common.datetime.TimeZone.JST;
 import static io.mercury.common.datetime.TimeZone.UTC;
-
-import java.time.ZoneOffset;
-import java.util.stream.Stream;
 
 public enum Exchange {
 
@@ -77,7 +77,7 @@ public enum Exchange {
     private final int exchangeId;
 
     // 交易所全名
-    private final String desc;
+    private final String fullName;
 
     // 交易所时区
     private final ZoneOffset zoneOffset;
@@ -91,7 +91,7 @@ public enum Exchange {
      */
     Exchange(int exchangeId, String fullName, ZoneOffset zoneOffset) {
         this.exchangeId = exchangeId * 10000000;
-        this.desc = fullName;
+        this.fullName = fullName;
         this.zoneOffset = zoneOffset;
     }
 
@@ -104,7 +104,7 @@ public enum Exchange {
     }
 
     public String getDesc() {
-        return desc;
+        return fullName;
     }
 
     public ZoneOffset getZoneOffset() {

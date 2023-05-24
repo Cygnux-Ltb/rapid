@@ -1,7 +1,7 @@
 package io.cygnuxltb.channel.ctp.adaptor;
 
 import com.typesafe.config.Config;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
@@ -64,7 +64,7 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
         ScQueue<FtdcRspMsg> queue = ScQueueByJct
                 .mpscQueue(ClassName + "-Buf").capacity(32)
                 .process(target::publish);
-        this.adaptor = new CtpAdaptor(account, CtpConfig.with(config), queue);
+        this.adaptor = new CtpAdaptor(account, CtpConfiguration.with(config), queue);
     }
 
     @Override

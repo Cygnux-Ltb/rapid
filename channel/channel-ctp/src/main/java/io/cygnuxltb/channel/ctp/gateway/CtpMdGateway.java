@@ -6,7 +6,7 @@ import ctp.thostapi.CThostFtdcMdSpi;
 import ctp.thostapi.CThostFtdcReqUserLoginField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcDepthMarketDataConverter;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcMdConnect;
@@ -51,7 +51,7 @@ public class CtpMdGateway implements Closeable {
     private final String gatewayId;
 
     // 基础配置信息
-    private final CtpConfig config;
+    private final CtpConfiguration config;
 
     @Native
     private CThostFtdcMdApi mdApi;
@@ -73,7 +73,7 @@ public class CtpMdGateway implements Closeable {
      * @param config    CtpConfig
      * @param handler   Handler<FtdcRspMsg>
      */
-    public CtpMdGateway(@Nonnull String gatewayId, @Nonnull CtpConfig config,
+    public CtpMdGateway(@Nonnull String gatewayId, @Nonnull CtpConfiguration config,
                         @MustBeThreadSafe @Nonnull Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");

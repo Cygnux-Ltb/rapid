@@ -2,7 +2,7 @@ package io.cygnuxltb.channel.ctp.converter;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfig;
+import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcActionFlag;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcForceCloseReason;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcVolumeCondition;
@@ -44,7 +44,7 @@ public final class FtdcOrderConverter {
     // MAC地址
     private final String macAddress;
 
-    public FtdcOrderConverter(CtpConfig config) {
+    public FtdcOrderConverter(CtpConfiguration config) {
         this.brokerId = config.getBrokerId();
         this.investorId = config.getInvestorId();
         this.accountId = config.getAccountId();

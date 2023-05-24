@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +22,8 @@ import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
 @Setter
 @Accessors(chain = true)
 @Configuration
-public class CtpConfig {
+@PropertySource("file:${user.home}/conf/ctp.properties")
+public class CtpConfiguration {
 
     @Value("traderAddr")
     private String traderAddr;
@@ -59,9 +61,9 @@ public class CtpConfig {
         return JsonWrapper.toJson(this);
     }
 
-    public static CtpConfig with(Config config) {
+    public static CtpConfiguration with(Config config) {
         var wrapper = new ConfigWrapper<CtpAdaptorParamKey>(config);
-        return new CtpConfig()
+        return new CtpConfiguration()
                 // 交易服务器地址
                 .setTraderAddr(wrapper.getStringOrThrows(CtpAdaptorParamKey.TraderAddr))
                 // 行情服务器地址
@@ -90,8 +92,8 @@ public class CtpConfig {
                 .setTradingDay(wrapper.getString(CtpAdaptorParamKey.TradingDay, YYYYMMDD.format(parseTradingDay(LocalDateTime.now()))));
     }
 
-    public static CtpConfig with(Params<CtpAdaptorParamKey> params) {
-        return new CtpConfig()
+    public static CtpConfiguration with(Params<CtpAdaptorParamKey> params) {
+        return new CtpConfiguration()
                 // 交易服务器地址
                 .setTraderAddr(params.getString(CtpAdaptorParamKey.TraderAddr))
                 // 行情服务器地址

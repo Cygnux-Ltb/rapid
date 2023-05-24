@@ -6,7 +6,6 @@ import io.mercury.common.thread.SleepSupport;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -25,7 +24,6 @@ import static java.lang.System.currentTimeMillis;
  * <p>
  * TODO - Add Persistence
  */
-@Component
 public class OrderRefKeeper {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderRefKeeper.class);
@@ -34,15 +32,15 @@ public class OrderRefKeeper {
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectHashMap(L10_SIZE.value());
 
-    private final static OrderRefKeeper INSTANCE = new OrderRefKeeper();
+    private final static OrderRefKeeper INNER_INSTANCE = new OrderRefKeeper();
 
     private OrderRefKeeper() {
     }
 
-    public void put(String orderRef, long ordSysId) {
-        log.info("CTP orderRef==[{}] mapping to ordSysId==[{}]", orderRef, ordSysId);
-        orderRefMapper.put(orderRef, ordSysId);
-        ordSysIdMapper.put(ordSysId, orderRef);
+    public static void put(String orderRef, long ordSysId) {
+        log.info("PUT ctp orderRef==[{}] mapping to ordSysId==[{}]", orderRef, ordSysId);
+        INNER_INSTANCE.orderRefMapper.put(orderRef, ordSysId);
+        INNER_INSTANCE.ordSysIdMapper.put(ordSysId, orderRef);
     }
 
     /**
@@ -50,7 +48,7 @@ public class OrderRefKeeper {
      * @return long
      */
     public static long getOrdSysId(String orderRef) {
-        long ordSysId = INSTANCE.orderRefMapper.get(orderRef);
+        long ordSysId = INNER_INSTANCE.orderRefMapper.get(orderRef);
         if (ordSysId == 0L) {
             // 处理其他来源的订单
             ordSysId = ForExternalOrder.getOrdSysId();
@@ -65,7 +63,7 @@ public class OrderRefKeeper {
      * @return String
      */
     public static String getOrderRef(long ordSysId) throws OrderRefNotFoundException {
-        String orderRef = INSTANCE.ordSysIdMapper.get(ordSysId);
+        String orderRef = INNER_INSTANCE.ordSysIdMapper.get(ordSysId);
         if (orderRef == null)
             throw new OrderRefNotFoundException(ordSysId);
         return orderRef;
@@ -103,8 +101,11 @@ public class OrderRefKeeper {
             SleepSupport.sleep(2);
         }
 
-        Duration duration = Duration.between(ZonedDateTime.of(LocalDate.now().minusDays(1), LocalTime.of(17, 0), CST),
-                ZonedDateTime.of(LocalDate.now(), LocalTime.of(17, 0), CST));
+        Duration duration = Duration
+                .between(ZonedDateTime.of(LocalDate.now().minusDays(1),
+                                LocalTime.of(17, 0), CST),
+                        ZonedDateTime.of(LocalDate.now(),
+                                LocalTime.of(17, 0), CST));
         System.out.println(duration.getSeconds() * 1000);
         System.out.println(Integer.MAX_VALUE);
 

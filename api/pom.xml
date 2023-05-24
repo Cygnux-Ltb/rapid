@@ -8,15 +8,13 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>channel</artifactId>
-    <name>channel</name>
+    <artifactId>api</artifactId>
+    <name>api</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>channel-ctp</module>
-        <module>channel-fix</module>
-        <module>channel-ib</module>
-        <module>channel-mt5</module>
+        <module>market-api</module>
+        <module>trader-api</module>
     </modules>
 
     <properties>
@@ -77,23 +75,6 @@
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-zmq</artifactId>
                 <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>transport-rabbitmq</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-
-            <!-- API -->
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>market-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>trader-api</artifactId>
-                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
