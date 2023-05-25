@@ -25,13 +25,13 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    public Object beforeBodyWrite(@Nullable Object returnObj,
+    public Object beforeBodyWrite(@Nullable Object body,
                                   @Nonnull MethodParameter parameter,
                                   @Nonnull MediaType selectedContentType,
                                   @Nonnull Class<? extends HttpMessageConverter<?>> type,
                                   @Nonnull ServerHttpRequest request,
                                   @Nonnull ServerHttpResponse response) {
-        switch (returnObj) {
+        switch (body) {
             case null -> {
                 return ResponseStatus.NOT_FOUND.response();
             }
@@ -52,7 +52,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
                         : ResponseStatus.FORBIDDEN.response();
             }
             default -> {
-                return ResponseStatus.OK.responseOf(returnObj);
+                return ResponseStatus.OK.responseOf(body);
             }
         }
     }

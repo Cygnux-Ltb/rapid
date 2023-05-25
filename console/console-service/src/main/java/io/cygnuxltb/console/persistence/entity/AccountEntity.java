@@ -16,7 +16,6 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
 import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
 import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
 
-
 /**
  * 交易账户表
  * Account Entity
