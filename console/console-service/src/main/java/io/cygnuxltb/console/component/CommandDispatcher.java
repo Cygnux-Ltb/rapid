@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.component;
 
-import io.cygnuxltb.console.persistence.entity.ParamEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ParamEntity;
 import io.cygnuxltb.protocol.http.inbound.command.StrategySwitch;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;

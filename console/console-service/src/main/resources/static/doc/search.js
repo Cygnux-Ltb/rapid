@@ -155,21 +155,32 @@ api[8].list.push({
     desc: '获取可交易的标的',
 });
 api.push({
-    alias: 'OrderController',
+    alias: 'PortfolioController',
     order: '10',
-    desc: '订单服务接口',
-    link: '订单服务接口',
+    desc: '投资组合接口',
+    link: '投资组合接口',
     list: []
 })
 api[9].list.push({
     order: '1',
+    desc: '',
+});
+api.push({
+    alias: 'OrderController',
+    order: '11',
+    desc: '订单服务接口',
+    link: '订单服务接口',
+    list: []
+})
+api[10].list.push({
+    order: '1',
     desc: '查询Order',
 });
-api[9].list.push({
+api[10].list.push({
     order: '2',
     desc: '获取订单最新状态',
 });
-api[9].list.push({
+api[10].list.push({
     order: '3',
     desc: '新增订单',
 });

@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.ProductEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ProductEntity;
 import io.cygnuxltb.console.persistence.repository.ProductRepository;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.outbound.ProductDTO;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
 @Component
-public class ProductService {
+public final class ProductService {
 
     @Resource
     private ProductRepository repo;

@@ -2,11 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.OrderEntity;
+import io.cygnuxltb.console.persistence.entity.trade.OrderEntity;
 import io.cygnuxltb.console.service.OrderService;
 import io.cygnuxltb.protocol.http.outbound.OrderDTO;
 import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +26,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * 订单服务接口
  */
 @RestController
-@RequestMapping(path = "/order", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/order", produces = APPLICATION_JSON_UTF8)
 public final class OrderController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderController.class);

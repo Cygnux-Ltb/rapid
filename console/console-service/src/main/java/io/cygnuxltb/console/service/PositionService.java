@@ -1,2 +1,8 @@
-package io.cygnuxltb.console.service;public class PositionService {
+package io.cygnuxltb.console.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public final class PositionService {
+
 }

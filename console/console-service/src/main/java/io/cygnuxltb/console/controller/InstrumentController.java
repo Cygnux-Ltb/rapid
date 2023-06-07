@@ -6,7 +6,6 @@ import io.cygnuxltb.console.service.InstrumentService;
 import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
 import io.cygnuxltb.protocol.http.outbound.InstrumentSettlementDTO;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
@@ -23,11 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+
 /**
  * 交易标的查询接口
  */
 @RestController
-@RequestMapping(path = "/instrument", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/instrument", produces = APPLICATION_JSON_UTF8)
 public final class InstrumentController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentController.class);
@@ -72,7 +73,7 @@ public final class InstrumentController {
      * @param request HttpServletRequest
      * @return ResponseEntity<Object>
      */
-    @PutMapping(path = "/last", produces = MimeType.APPLICATION_JSON_UTF8)
+    @PutMapping(path = "/last", produces = APPLICATION_JSON_UTF8)
     public ResponseStatus putLastPrice(@RequestBody HttpServletRequest request) {
         var price = ControllerUtil.bodyToObject(request, InstrumentPrice.class);
         if (price == null)

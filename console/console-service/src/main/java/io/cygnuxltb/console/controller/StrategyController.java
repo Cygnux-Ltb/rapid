@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.ParamEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ParamEntity;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.console.service.StrategyService;
 import io.cygnuxltb.protocol.http.outbound.ParamDTO;
@@ -26,7 +26,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * 策略服务
  */
 @RestController
-@RequestMapping(path = "/strategy", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/strategy", produces = APPLICATION_JSON_UTF8)
 public final class StrategyController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(StrategyController.class);

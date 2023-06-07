@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.UserEntity;
+import io.cygnuxltb.console.persistence.entity.sys.UserEntity;
 import io.cygnuxltb.console.persistence.repository.UserRepository;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public final class UserService {
 
     @Resource
     private UserRepository repo;

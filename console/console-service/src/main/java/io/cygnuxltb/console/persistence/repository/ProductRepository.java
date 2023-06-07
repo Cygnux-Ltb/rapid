@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.entity.ProductEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

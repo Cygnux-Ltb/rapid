@@ -1,9 +1,10 @@
 package io.cygnuxltb.protocol.http.pack;
 
 import io.mercury.common.codec.Envelope;
-import io.mercury.common.collections.ImmutableMaps;
 import lombok.Getter;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+
+import static io.mercury.common.collections.ImmutableMaps.toImmutableIntObjectMap;
 
 public enum InboxTitle implements Envelope {
 
@@ -29,7 +30,7 @@ public enum InboxTitle implements Envelope {
     }
 
     private static final ImmutableIntObjectMap<InboxTitle> Map =
-            ImmutableMaps.toImmutableIntObjectMap(InboxTitle::getCode, InboxTitle.values());
+            toImmutableIntObjectMap(InboxTitle::getCode, InboxTitle.values());
 
     public static InboxTitle checkout(int code) {
         InboxTitle value;

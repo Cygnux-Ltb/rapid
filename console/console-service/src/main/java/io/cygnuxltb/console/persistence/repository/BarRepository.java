@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.entity.BarEntity;
+import io.cygnuxltb.console.persistence.entity.market.BarEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

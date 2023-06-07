@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.persistence.repository;
 
 import io.cygnuxltb.console.persistence.CommonConst.ParamGroup;
-import io.cygnuxltb.console.persistence.entity.ParamEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ParamEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,26 +16,26 @@ import java.util.List;
 public interface ParamRepository extends JpaRepository<ParamEntity, Long> {
 
     /**
-     * @param group String
-     * @param name  String
+     * @param ownerGroup String
+     * @param ownerName  String
      * @return List<ParamEntity>
      */
-    List<ParamEntity> queryByGroupAndName(String group, String name);
+    List<ParamEntity> queryByOwnerGroupAndOwnerName(String ownerGroup, String ownerName);
 
     default List<ParamEntity> queryStrategyParamByName(String name) {
-        return queryByGroupAndName(ParamGroup.STRATEGY, name);
+        return queryByOwnerGroupAndOwnerName(ParamGroup.STRATEGY, name);
     }
 
     default List<ParamEntity> queryMarketParamByName(String name) {
-        return queryByGroupAndName(ParamGroup.MARKET, name);
+        return queryByOwnerGroupAndOwnerName(ParamGroup.MARKET, name);
     }
 
     default List<ParamEntity> queryTraderParamByName(String name) {
-        return queryByGroupAndName(ParamGroup.TRADER, name);
+        return queryByOwnerGroupAndOwnerName(ParamGroup.TRADER, name);
     }
 
     default List<ParamEntity> querySystemParamByName(String name) {
-        return queryByGroupAndName(ParamGroup.SYSTEM, name);
+        return queryByOwnerGroupAndOwnerName(ParamGroup.SYSTEM, name);
     }
 
 }

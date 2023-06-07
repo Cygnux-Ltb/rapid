@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.repository.BarRepository;
-import io.cygnuxltb.console.persistence.entity.BarEntity;
+import io.cygnuxltb.console.persistence.entity.market.BarEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import jakarta.annotation.Resource;
@@ -15,7 +15,7 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
 @Service
-public class BarService {
+public final class BarService {
 
     @Resource
     private BarRepository repo;

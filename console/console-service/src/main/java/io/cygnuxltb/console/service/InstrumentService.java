@@ -2,8 +2,8 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.repository.InstrumentRepository;
 import io.cygnuxltb.console.persistence.repository.InstrumentSettlementRepository;
-import io.cygnuxltb.console.persistence.entity.InstrumentEntity;
-import io.cygnuxltb.console.persistence.entity.InstrumentSettlementEntity;
+import io.cygnuxltb.console.persistence.entity.market.InstrumentEntity;
+import io.cygnuxltb.console.persistence.entity.market.InstrumentSettlementEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;

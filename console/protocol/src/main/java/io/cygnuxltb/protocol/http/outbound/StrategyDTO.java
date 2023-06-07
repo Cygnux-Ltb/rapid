@@ -19,7 +19,7 @@ public final class StrategyDTO {
 
     private String strategyName;
 
-    private String strategyOwner;
+    private String strategyType;
 
     private String strategyInfo;
 

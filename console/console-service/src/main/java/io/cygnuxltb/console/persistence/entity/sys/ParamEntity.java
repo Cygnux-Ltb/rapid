@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.entity;
+package io.cygnuxltb.console.persistence.entity.sys;
 
 import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
@@ -30,10 +30,10 @@ public final class ParamEntity {
     private long uid;
 
     @Column(name = "owner_group")
-    private String group;
+    private String ownerGroup;
 
     @Column(name = "owner_name")
-    private String name;
+    private String ownerName;
 
     @Column(name = "param_name")
     private String paramName;

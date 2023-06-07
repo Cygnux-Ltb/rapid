@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.StrategyEntity;
+import io.cygnuxltb.console.persistence.entity.trade.StrategyEntity;
 import io.cygnuxltb.console.persistence.repository.StrategyRepository;
 import io.cygnuxltb.console.persistence.util.DaoExecutor;
 import io.cygnuxltb.console.service.util.DtoUtil;

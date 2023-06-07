@@ -6,7 +6,6 @@ import io.cygnuxltb.protocol.http.inbound.command.StrategySwitch;
 import io.cygnuxltb.protocol.http.pack.OutboxMessage;
 import io.cygnuxltb.protocol.http.pack.OutboxTitle;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonWrapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * 交易系统状态服务接口
  */
 @RestController
-@RequestMapping(path = "/status", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/status", produces = APPLICATION_JSON_UTF8)
 public final class StatusController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(StatusController.class);

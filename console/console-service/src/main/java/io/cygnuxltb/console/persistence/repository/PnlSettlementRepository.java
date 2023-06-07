@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
+import io.cygnuxltb.console.persistence.entity.trade.PnlSettlementEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

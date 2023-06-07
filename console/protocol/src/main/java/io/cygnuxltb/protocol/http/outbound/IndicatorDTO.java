@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public final class IndicatorDTO {
 
-
     private int accountId;
 
     private int subAccountId;

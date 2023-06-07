@@ -16,8 +16,6 @@ public class PortfolioDTO {
 
     private int userId;
 
-    private int groupId;
-
     private String groupName;
 
     private List<String> instrumentCodes;

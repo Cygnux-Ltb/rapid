@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.ParamEntity;
+import io.cygnuxltb.console.persistence.entity.sys.ParamEntity;
 import io.cygnuxltb.console.persistence.repository.ParamRepository;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.console.service.util.ValidationRule;
@@ -12,7 +12,7 @@ import io.mercury.serialization.json.JsonParser;
 import jakarta.annotation.Resource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,8 +27,8 @@ import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrateg
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
-@Component
-public class ParamService {
+@Service
+public final class ParamService {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(ParamService.class);
 

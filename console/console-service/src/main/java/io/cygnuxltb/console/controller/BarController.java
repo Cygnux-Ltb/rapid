@@ -2,10 +2,9 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.BarEntity;
+import io.cygnuxltb.console.persistence.entity.market.BarEntity;
 import io.cygnuxltb.console.service.BarService;
 import io.cygnuxltb.protocol.http.outbound.BarDTO;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * 历史行情接口
  */
 @RestController
-@RequestMapping(path = "/bar", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/bar", produces = APPLICATION_JSON_UTF8)
 public final class BarController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BarController.class);

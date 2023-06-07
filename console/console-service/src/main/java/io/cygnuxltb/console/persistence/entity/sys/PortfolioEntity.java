@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.entity;
+package io.cygnuxltb.console.persistence.entity.sys;
 
 
 import io.mercury.persistence.rdb.ColumnDefinition;
@@ -20,7 +20,7 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
 @Accessors(chain = true)
 @Entity
 @Table(name = "s_portfolio")
-public class PortfolioEntity {
+public final class PortfolioEntity {
 
     @Id
     @Column(name = ColumnDefinition.UID)
@@ -32,6 +32,12 @@ public class PortfolioEntity {
      */
     @Column(name = USER_ID)
     private int userId;
+
+    /**
+     * groupId [*]
+     */
+    @Column(name = "group_name")
+    private String groupName;
 
     /**
      * instrumentCode [*]

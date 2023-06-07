@@ -2,11 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.PnlEntity;
+import io.cygnuxltb.console.persistence.entity.trade.PnlEntity;
 import io.cygnuxltb.console.service.PnlService;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +26,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * PNL服务接口
  */
 @RestController
-@RequestMapping(path = "/pnl", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/pnl", produces = APPLICATION_JSON_UTF8)
 public final class PnlController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PnlController.class);

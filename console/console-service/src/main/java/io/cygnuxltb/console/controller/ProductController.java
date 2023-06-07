@@ -5,7 +5,6 @@ import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.service.ProductService;
 import io.cygnuxltb.protocol.http.inbound.command.InitFinish;
 import io.cygnuxltb.protocol.http.outbound.ProductDTO;
-import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+
 /**
  * 产品服务接口
  */
 @RestController
-@RequestMapping(path = "/product", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/product", produces = APPLICATION_JSON_UTF8)
 public final class ProductController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(ProductController.class);

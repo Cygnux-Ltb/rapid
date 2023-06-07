@@ -26,7 +26,7 @@ curl -X GET -i /strategy
 |-------|------|-------------|-------|
 |strategyId|int32|No comments found.|-|
 |strategyName|string|No comments found.|-|
-|strategyOwner|string|No comments found.|-|
+|strategyType|string|No comments found.|-|
 |strategyInfo|string|No comments found.|-|
 
 **Response-example:**
@@ -35,7 +35,7 @@ curl -X GET -i /strategy
   {
     "strategyId": 0,
     "strategyName": "",
-    "strategyOwner": "",
+    "strategyType": "",
     "strategyInfo": ""
   }
 ]
@@ -72,7 +72,7 @@ curl -X GET -i /strategy/0
 |-------|------|-------------|-------|
 |strategyId|int32|No comments found.|-|
 |strategyName|string|No comments found.|-|
-|strategyOwner|string|No comments found.|-|
+|strategyType|string|No comments found.|-|
 |strategyInfo|string|No comments found.|-|
 
 **Response-example:**
@@ -80,7 +80,7 @@ curl -X GET -i /strategy/0
 {
   "strategyId": 0,
   "strategyName": "",
-  "strategyOwner": "",
+  "strategyType": "",
   "strategyInfo": ""
 }
 ```

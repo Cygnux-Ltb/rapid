@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.OrderEntity;
-import io.cygnuxltb.console.persistence.entity.OrderEventEntity;
+import io.cygnuxltb.console.persistence.entity.trade.OrderEntity;
+import io.cygnuxltb.console.persistence.entity.trade.OrderEventEntity;
 import io.cygnuxltb.console.persistence.repository.OrderEventRepository;
 import io.cygnuxltb.console.persistence.repository.OrderExtRepository;
 import io.cygnuxltb.console.persistence.repository.OrderRepository;
@@ -28,7 +28,7 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
 @Service
-public class OrderService {
+public final class OrderService {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderService.class);
 

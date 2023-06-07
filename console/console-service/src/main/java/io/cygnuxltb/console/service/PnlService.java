@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.PnlEntity;
-import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
+import io.cygnuxltb.console.persistence.entity.trade.PnlEntity;
+import io.cygnuxltb.console.persistence.entity.trade.PnlSettlementEntity;
 import io.cygnuxltb.console.persistence.repository.PnlRepository;
 import io.cygnuxltb.console.persistence.repository.PnlSettlementRepository;
 import io.cygnuxltb.console.service.util.DtoUtil;

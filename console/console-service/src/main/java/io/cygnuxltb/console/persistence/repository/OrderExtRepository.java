@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.repository;
 
-import io.cygnuxltb.console.persistence.entity.OrderExtEntity;
+import io.cygnuxltb.console.persistence.entity.trade.OrderExtEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
