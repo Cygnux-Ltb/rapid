@@ -11,13 +11,7 @@ import io.cygnuxltb.channel.ctp.converter.OrderReportConverter;
 import io.cygnuxltb.channel.ctp.gateway.CtpGateway;
 import io.cygnuxltb.channel.ctp.gateway.CtpGateway.CtpRunMode;
 import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcMdConnect;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTraderConnect;
 import io.horizon.market.data.impl.BasicMarketData;
 import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
@@ -29,14 +23,13 @@ import io.horizon.trader.handler.AdaptorReportHandler;
 import io.horizon.trader.handler.InboundHandler;
 import io.horizon.trader.handler.InboundHandler.InboundSchedulerWrapper;
 import io.horizon.trader.handler.OrderReportHandler;
-import io.horizon.trader.transport.avro.enums.TdxAdaptorStatus;
-import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
-import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.avro.inbound.TdxQueryOrder;
-import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.enums.AvroAdaptorStatus;
+import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryBalance;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryPositions;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueByJct;
@@ -162,40 +155,40 @@ public class CtpAdaptor extends AbstractAdaptor {
                 .capacity(32).process(msg -> {
                     switch (msg.getType()) {
                         case MdConnect -> {
-                            FtdcMdConnect mdConnect = msg.getMdConnect();
+                            var mdConnect = msg.getMdConnect();
                             this.mdAvailable = mdConnect.available();
                             log.info("Adaptor buf processed FtdcMdConnect, isMdAvailable==[{}]", mdAvailable);
-                            final TdxAdaptorReport mdReport;
+                            final AvroAdaptorReport mdReport;
                             if (mdAvailable)
-                                mdReport = TdxAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(TdxAdaptorStatus.MD_ENABLE).build();
+                                mdReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AvroAdaptorStatus.MD_ENABLE).build();
                             else
-                                mdReport = TdxAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(TdxAdaptorStatus.MD_DISABLE).build();
+                                mdReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AvroAdaptorStatus.MD_DISABLE).build();
                             scheduler.onAdaptorReport(mdReport);
                         }
                         case TraderConnect -> {
-                            FtdcTraderConnect traderConnect = msg.getTraderConnect();
+                            var traderConnect = msg.getTraderConnect();
                             this.isTraderAvailable = traderConnect.available();
                             this.frontId = traderConnect.frontId();
                             this.sessionId = traderConnect.sessionId();
                             log.info(
                                     "Adaptor buf processed FtdcTraderConnect, isTraderAvailable==[{}], frontId==[{}], sessionId==[{}]",
                                     isTraderAvailable, frontId, sessionId);
-                            final TdxAdaptorReport traderReport;
+                            final AvroAdaptorReport traderReport;
                             if (isTraderAvailable)
-                                traderReport = TdxAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(TdxAdaptorStatus.TRADER_ENABLE).build();
+                                traderReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_ENABLE).build();
                             else
-                                traderReport = TdxAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(TdxAdaptorStatus.TRADER_DISABLE).build();
+                                traderReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_DISABLE).build();
                             scheduler.onAdaptorReport(traderReport);
                         }
                         case DepthMarketData -> {
                             // 行情处理
                             // TODO
                             // multicaster.publish(rspMsg.getDepthMarketData());
-                            BasicMarketData marketData = marketDataConverter.withFtdcDepthMarketData(msg.getDepthMarketData());
+                            var marketData = marketDataConverter.withFtdcDepthMarketData(msg.getDepthMarketData());
                             scheduler.onMarketData(marketData);
                         }
                         case Order -> {
@@ -206,30 +199,30 @@ public class CtpAdaptor extends AbstractAdaptor {
                                             + "OrderRef==[{}], LimitPrice==[{}], VolumeTotalOriginal==[{}], OrderStatus==[{}]",
                                     ftdcOrder.getInstrumentID(), ftdcOrder.getInvestorID(), ftdcOrder.getOrderRef(),
                                     ftdcOrder.getLimitPrice(), ftdcOrder.getVolumeTotalOriginal(), ftdcOrder.getOrderStatus());
-                            TdxOrderReport report0 = orderReportConverter.withFtdcOrder(ftdcOrder);
+                            var report0 = orderReportConverter.withFtdcOrder(ftdcOrder);
                             scheduler.onOrderReport(report0);
                         }
                         case Trade -> {
                             // 成交回报处理
-                            FtdcTrade ftdcTrade = msg.getTrade();
+                            var ftdcTrade = msg.getTrade();
                             log.info("Adaptor buf in FtdcTrade, InstrumentID==[{}], InvestorID==[{}], OrderRef==[{}]",
                                     ftdcTrade.getInstrumentID(), ftdcTrade.getInvestorID(), ftdcTrade.getOrderRef());
-                            TdxOrderReport report1 = orderReportConverter.withFtdcTrade(ftdcTrade);
+                            var report1 = orderReportConverter.withFtdcTrade(ftdcTrade);
                             scheduler.onOrderReport(report1);
                         }
                         case InputOrder -> {
                             // TODO 报单错误处理
-                            FtdcInputOrder ftdcInputOrder = msg.getInputOrder();
+                            var ftdcInputOrder = msg.getInputOrder();
                             log.info("Adaptor buf in [FtdcInputOrder] -> {}", JsonWrapper.toJson(ftdcInputOrder));
                         }
                         case InputOrderAction -> {
                             // TODO 撤单错误处理1
-                            FtdcInputOrderAction ftdcInputOrderAction = msg.getInputOrderAction();
+                            var ftdcInputOrderAction = msg.getInputOrderAction();
                             log.info("Adaptor buf in [FtdcInputOrderAction] -> {}", JsonWrapper.toJson(ftdcInputOrderAction));
                         }
                         case OrderAction -> {
                             // TODO 撤单错误处理2
-                            FtdcOrderAction ftdcOrderAction = msg.getOrderAction();
+                            var ftdcOrderAction = msg.getOrderAction();
                             log.info("Adaptor buf in [FtdcOrderAction] -> {}", JsonWrapper.toJson(ftdcOrderAction));
                         }
                         default -> log.warn("Adaptor buf unprocessed [FtdcRspMsg] -> {}", JsonWrapper.toJson(msg));
@@ -383,7 +376,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull TdxNewOrder order) {
+    public boolean newOrder(@Nonnull AvroNewOrder order) {
         try {
             CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(order);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
@@ -399,7 +392,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull TdxCancelOrder order) {
+    public boolean cancelOrder(@Nonnull AvroCancelOrder order) {
         try {
             CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(order);
             String orderRef = OrderRefKeeper.getOrderRef(order.getOrdSysId());
@@ -424,7 +417,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final long queryInterval = 1100L;
 
     @Override
-    public boolean queryOrder(@Nonnull TdxQueryOrder req) {
+    public boolean queryOrder(@Nonnull AvroQueryOrder req) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
@@ -445,7 +438,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull TdxQueryPositions req) {
+    public boolean queryPositions(@Nonnull AvroQueryPositions req) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
@@ -466,7 +459,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull TdxQueryBalance query) {
+    public boolean queryBalance(@Nonnull AvroQueryBalance query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {

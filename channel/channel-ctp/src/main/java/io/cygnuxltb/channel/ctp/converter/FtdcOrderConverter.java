@@ -6,8 +6,8 @@ import io.cygnuxltb.channel.ctp.CtpConfiguration;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcActionFlag;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcForceCloseReason;
 import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcVolumeCondition;
-import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -125,7 +125,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderField convertToInputOrder(TdxNewOrder order) {
+    public CThostFtdcInputOrderField convertToInputOrder(AvroNewOrder order) {
         // 创建FTDC报单类型
         CThostFtdcInputOrderField field = new CThostFtdcInputOrderField();
         // 经纪公司代码
@@ -276,7 +276,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderActionField convertToInputOrderAction(TdxCancelOrder order) {
+    public CThostFtdcInputOrderActionField convertToInputOrderAction(AvroCancelOrder order) {
         // 创建FTDC撤单类型
         CThostFtdcInputOrderActionField field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码

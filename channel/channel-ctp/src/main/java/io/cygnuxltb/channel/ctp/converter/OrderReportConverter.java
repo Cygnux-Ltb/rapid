@@ -7,7 +7,7 @@ import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrderAction;
 import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -35,10 +35,10 @@ public final class OrderReportConverter {
      * @param order FtdcInputOrder
      * @return OrderReport
      */
-    public TdxOrderReport withFtdcInputOrder(FtdcInputOrder order) {
+    public AvroOrderReport withFtdcInputOrder(FtdcInputOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        TdxOrderReport report = TdxOrderReport.newBuilder()
+        AvroOrderReport report = AvroOrderReport.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -74,10 +74,10 @@ public final class OrderReportConverter {
      * @param order FtdcOrder
      * @return OrderReport
      */
-    public TdxOrderReport withFtdcOrder(FtdcOrder order) {
+    public AvroOrderReport withFtdcOrder(FtdcOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        TdxOrderReport report = TdxOrderReport.newBuilder()
+        AvroOrderReport report = AvroOrderReport.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -123,10 +123,10 @@ public final class OrderReportConverter {
      * @param trade FtdcTrade
      * @return OrderReport
      */
-    public TdxOrderReport withFtdcTrade(FtdcTrade trade) {
+    public AvroOrderReport withFtdcTrade(FtdcTrade trade) {
         var orderRef = trade.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var builder = TdxOrderReport.newBuilder();
+        var builder = AvroOrderReport.newBuilder();
         // 微秒时间戳
         builder.setEpochMicros(getEpochMicros());
         // OrdSysId
@@ -171,7 +171,7 @@ public final class OrderReportConverter {
      * @param inputOrderAction FtdcInputOrderAction
      * @return OrderReport
      */
-    public TdxOrderReport withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
+    public AvroOrderReport withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
 
         return null;
     }
@@ -184,7 +184,7 @@ public final class OrderReportConverter {
      * @param orderAction FtdcOrderAction
      * @return OrderReport
      */
-    public TdxOrderReport withFtdcOrderAction(FtdcOrderAction orderAction) {
+    public AvroOrderReport withFtdcOrderAction(FtdcOrderAction orderAction) {
 
         return null;
     }
