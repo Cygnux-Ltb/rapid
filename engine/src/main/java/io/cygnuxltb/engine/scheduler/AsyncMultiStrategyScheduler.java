@@ -4,8 +4,8 @@ import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
 import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -45,7 +45,7 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Abs
                             });
                         }
                         case OrderReport -> {
-                            TdxOrderReport report = msg.getOrderReport();
+                            var report = msg.getOrderReport();
                             log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", report.getBrokerOrdSysId(),
                                     report.getOrdSysId());
                             ChildOrder order = OrderKeeper.handleOrderReport(report);
@@ -56,7 +56,7 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Abs
                             strategyMap.get(order.getStrategyId()).onOrder(order);
                         }
                         case AdaptorEvent -> {
-                            TdxAdaptorReport adaptorReport = msg.getAdaptorReport();
+                            AvroAdaptorReport adaptorReport = msg.getAdaptorReport();
                             String adaptorId = adaptorReport.getAdaptorId();
                             log.info("Recv AdaptorEvent -> {}", adaptorReport);
                         }
@@ -73,13 +73,13 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Abs
 
     // TODO add pools
     @Override
-    public void onOrderReport(@Nonnull TdxOrderReport report) {
+    public void onOrderReport(@Nonnull AvroOrderReport report) {
         queue.enqueue(new QueueMsg(report));
     }
 
     // TODO add pools
     @Override
-    public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
         queue.enqueue(new QueueMsg(report));
     }
 
@@ -89,21 +89,21 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Abs
 
         private M marketData;
 
-        private TdxOrderReport orderReport;
+        private AvroOrderReport orderReport;
 
-        private TdxAdaptorReport adaptorReport;
+        private AvroAdaptorReport adaptorReport;
 
         private QueueMsg(M marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
 
-        private QueueMsg(TdxOrderReport orderReport) {
+        private QueueMsg(AvroOrderReport orderReport) {
             this.mark = OrderReport;
             this.orderReport = orderReport;
         }
 
-        private QueueMsg(TdxAdaptorReport adaptorReport) {
+        private QueueMsg(AvroAdaptorReport adaptorReport) {
             this.mark = AdaptorEvent;
             this.adaptorReport = adaptorReport;
         }
@@ -116,11 +116,11 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Abs
             return marketData;
         }
 
-        public TdxOrderReport getOrderReport() {
+        public AvroOrderReport getOrderReport() {
             return orderReport;
         }
 
-        public TdxAdaptorReport getAdaptorReport() {
+        public AvroAdaptorReport getAdaptorReport() {
             return adaptorReport;
         }
 

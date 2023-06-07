@@ -1,15 +1,17 @@
 package io.cygnuxltb.engine.strategy;
 
 import io.horizon.market.data.MarketData;
+import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.account.SubAccount;
 import io.horizon.trader.adaptor.Adaptor;
+import io.horizon.trader.handler.AdaptorReportHandler;
 import io.horizon.trader.order.Order;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
 import io.horizon.trader.strategy.Strategy;
 import io.horizon.trader.strategy.StrategyEvent;
 import io.horizon.trader.strategy.StrategyException;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import javax.annotation.Nonnull;
@@ -23,15 +25,18 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
 
     }
 
+    private MarketDataHandler<M> marketDataHandler;
 
     @Override
     public void onMarketData(@Nonnull M m) {
-
+        marketDataHandler.onMarketData(m);
     }
 
-    @Override
-    public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+    private AdaptorReportHandler adaptorReportHandler;
 
+    @Override
+    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
+        adaptorReportHandler.onAdaptorReport(report);
     }
 
     @Override

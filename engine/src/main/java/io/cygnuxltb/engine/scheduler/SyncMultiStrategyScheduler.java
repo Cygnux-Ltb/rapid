@@ -3,9 +3,8 @@ package io.cygnuxltb.engine.scheduler;
 import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
-import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -34,10 +33,10 @@ public final class SyncMultiStrategyScheduler<M extends MarketData> extends Abst
     }
 
     @Override
-    public void onOrderReport(@Nonnull TdxOrderReport report) {
+    public void onOrderReport(@Nonnull AvroOrderReport report) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", report.getBrokerOrdSysId(),
                 report.getOrdSysId());
-        ChildOrder order = OrderKeeper.handleOrderReport(report);
+        var order = OrderKeeper.handleOrderReport(report);
         log.info("Search Order OK. brokerUniqueId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
                 report.getBrokerOrdSysId(), order.getStrategyId(), order.getInstrument().getInstrumentCode(),
                 report.getOrdSysId());
@@ -46,7 +45,7 @@ public final class SyncMultiStrategyScheduler<M extends MarketData> extends Abst
 
     // TODO add pools
     @Override
-    public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
         log.info("Recv AdaptorReport -> {}", report);
     }
 

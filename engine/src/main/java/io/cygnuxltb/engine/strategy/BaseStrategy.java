@@ -18,10 +18,10 @@ import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
 import io.horizon.trader.risk.CircuitBreaker;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryBalance;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryPositions;
 import io.horizon.trader.strategy.Strategy;
 import io.horizon.trader.strategy.StrategyEvent;
-import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.fsm.EnableableComponent;
@@ -68,15 +68,15 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     protected final Params<K> params;
 
     // TODO
-    protected TdxQueryPositions queryPositions;
+    protected AvroQueryPositions queryPositions;
     // TODO
-    protected TdxQueryBalance queryBalance;
+    protected AvroQueryBalance queryBalance;
 
     private final OrdSysIdAllocator allocator;
 
     protected BaseStrategy(int strategyId, String strategyName,
                            SubAccount subAccount, Params<K> params) {
-        Asserter.atWithinRange(strategyId, 1, Strategy.MAX_STRATEGY_ID, "strategyId");
+        Asserter.atWithinRange(strategyId, 1, StrategyCount.MAX_STRATEGY_ID, "strategyId");
         Asserter.nonNull(subAccount, "subAccount");
         Asserter.nonEmpty(strategyName, "strategyName");
         this.strategyId = strategyId;
@@ -86,9 +86,9 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositions = TdxQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryPositions = AvroQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
-        this.queryBalance = TdxQueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryBalance = AvroQueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
         var snowflake = new SnowflakeAlgo(strategyId);
         this.allocator = snowflake::next;

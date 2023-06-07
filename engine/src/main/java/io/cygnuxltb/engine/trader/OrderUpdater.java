@@ -3,7 +3,7 @@ package io.cygnuxltb.engine.trader;
 import io.horizon.trader.order.ChildOrder;
 import io.horizon.trader.order.attr.OrdQty;
 import io.horizon.trader.order.enums.OrdStatus;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -19,7 +19,7 @@ public final class OrderUpdater {
      * @param order  ChildOrder
      * @param report DtoOrderReport
      */
-    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull TdxOrderReport report) {
+    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvroOrderReport report) {
         OrdQty qty = order.getQty();
         int filledQty = report.getFilledQty();
         OrdStatus status = OrdStatus.valueOf(report.getStatus());

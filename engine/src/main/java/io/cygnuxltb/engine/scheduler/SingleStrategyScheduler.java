@@ -4,10 +4,9 @@ import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
 import io.horizon.trader.handler.InboundHandler;
-import io.horizon.trader.order.ChildOrder;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.horizon.trader.strategy.Strategy;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -40,14 +39,14 @@ public class SingleStrategyScheduler<M extends MarketData> implements InboundHan
     }
 
     @Override
-    public void onOrderReport(@Nonnull TdxOrderReport report) {
-        ChildOrder order = OrderKeeper.handleOrderReport(report);
+    public void onOrderReport(@Nonnull AvroOrderReport report) {
+        var order = OrderKeeper.handleOrderReport(report);
         // 调用策略实现的订单回调函数
         strategy.onOrder(order);
     }
 
     @Override
-    public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
         log.error("On Adaptor Report -> {}", report);
         strategy.onAdaptorReport(report);
     }
