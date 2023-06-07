@@ -67,7 +67,7 @@ public final class InstrumentKeeper {
 
     private static void putInstrument(Symbol symbol) {
         symbol.getInstruments().each(instrument -> {
-            log.debug("Put instrument, instrumentId==[{}], instrumentCode==[{}], instrument -> {}",
+            log.info("Put instrument, instrumentId==[{}], instrumentCode==[{}], instrument -> {}",
                     instrument.getInstrumentId(), instrument.getInstrumentCode(), instrument);
             InstrumentById.put(instrument.getInstrumentId(), instrument);
             InstrumentByCode.put(instrument.getInstrumentCode(), instrument);

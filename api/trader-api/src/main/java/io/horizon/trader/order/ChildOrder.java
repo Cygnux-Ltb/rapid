@@ -10,9 +10,9 @@ import io.horizon.trader.order.attr.OrdQty;
 import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -124,7 +124,7 @@ public class ChildOrder extends AbstractOrder {
      * @param report OrderReport
      * @return ChildOrder
      */
-    public static ChildOrder newExternalOrder(TdxOrderReport report) {
+    public static ChildOrder newExternalOrder(AvroOrderReport report) {
         var account = AccountFinder.getAccountByInvestorId(report.getInvestorId());
         var instrument = InstrumentKeeper.getInstrument(report.getInstrumentCode());
         var direction = TrdDirection.valueOf(report.getDirection());
@@ -245,7 +245,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return NewOrder
      */
-    public TdxNewOrder toNewOrder() {
+    public AvroNewOrder toNewOrder() {
         // TODO
         return null;
     }
@@ -253,7 +253,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return CancelOrder
      */
-    public TdxCancelOrder toCancelOrder() {
+    public AvroCancelOrder toCancelOrder() {
         // TODO
         return null;
     }

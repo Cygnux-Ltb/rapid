@@ -1,42 +1,42 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxOrdSide;
+import io.horizon.trader.serialization.avro.enums.AvroOrdSide;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-public enum OrdSide implements TdxProvider<TdxOrdSide> {
+public enum OrdSide implements TdxProvider<AvroOrdSide> {
 
     /**
      * 无效
      */
-    Invalid(OrdSideCode.INVALID, TdxOrdSide.INVALID, TrdDirection.Invalid),
+    Invalid(OrdSideCode.INVALID, AvroOrdSide.INVALID, TrdDirection.Invalid),
 
     /**
      * 买
      */
-    Buy(OrdSideCode.BUY, TdxOrdSide.BUY, TrdDirection.Long),
+    Buy(OrdSideCode.BUY, AvroOrdSide.BUY, TrdDirection.Long),
 
     /**
      * 卖
      */
-    Sell(OrdSideCode.SELL, TdxOrdSide.SELL, TrdDirection.Short),
+    Sell(OrdSideCode.SELL, AvroOrdSide.SELL, TrdDirection.Short),
 
     /**
      * 融资买入
      */
-    MarginBuy(OrdSideCode.MARGIN_BUY, TdxOrdSide.MARGIN_BUY, TrdDirection.Long),
+    MarginBuy(OrdSideCode.MARGIN_BUY, AvroOrdSide.MARGIN_BUY, TrdDirection.Long),
 
     /**
      * 融券卖出
      */
-    ShortSell(OrdSideCode.SHORT_SELL, TdxOrdSide.SHORT_SELL, TrdDirection.Short),
+    ShortSell(OrdSideCode.SHORT_SELL, AvroOrdSide.SHORT_SELL, TrdDirection.Short),
 
     ;
 
     private final char code;
 
-    private final TdxOrdSide tdxValue;
+    private final AvroOrdSide tdxValue;
 
     private final TrdDirection direction;
 
@@ -44,7 +44,7 @@ public enum OrdSide implements TdxProvider<TdxOrdSide> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrdSide.class);
 
-    OrdSide(char code, TdxOrdSide tdxValue, TrdDirection direction) {
+    OrdSide(char code, AvroOrdSide tdxValue, TrdDirection direction) {
         this.code = code;
         this.tdxValue = tdxValue;
         this.direction = direction;
@@ -81,7 +81,7 @@ public enum OrdSide implements TdxProvider<TdxOrdSide> {
     }
 
     @Override
-    public TdxOrdSide getTdxValue() {
+    public AvroOrdSide getTdxValue() {
         return tdxValue;
     }
 

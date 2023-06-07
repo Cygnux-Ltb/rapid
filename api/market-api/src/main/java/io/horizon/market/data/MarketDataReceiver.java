@@ -1,8 +1,9 @@
 package io.horizon.market.data;
 
+import io.horizon.market.serializable.record.InAvMarketDataSubscribe;
+
 import javax.annotation.Nonnull;
 
-import io.horizon.market.transport.inbound.MarketDataSubscribe;
 
 public interface MarketDataReceiver {
 
@@ -12,6 +13,6 @@ public interface MarketDataReceiver {
      * @param subscribe MarketDataSubscribe
      * @return boolean
      */
-    boolean subscribeMarketData(@Nonnull MarketDataSubscribe subscribe);
+    boolean subscribeMarketData(@Nonnull InAvMarketDataSubscribe subscribe);
 
 }

@@ -1,8 +1,8 @@
-@namespace("io.horizon.trader.transport.avro")
+@namespace("io.horizon.trader.serialization.avro")
 protocol TraderProtocol {
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxOrdType {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroOrdType {
 		// 无效
 		INVALID,
 		// 限价单
@@ -27,8 +27,8 @@ protocol TraderProtocol {
 		MV
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxOrdValid {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroOrdValid {
 		//Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
 		GTC,
 		//Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
@@ -37,8 +37,8 @@ protocol TraderProtocol {
 		GFD
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxOrdSide {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroOrdSide {
 		//无效
 		INVALID,
 		//买
@@ -51,8 +51,8 @@ protocol TraderProtocol {
 		SHORT_SELL
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxOrdStatus {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroOrdStatus {
 		// 无效
 		INVALID,
 		// 新订单未确认
@@ -81,8 +81,8 @@ protocol TraderProtocol {
 		UNPROVIDED
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxOrdLevel {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroOrdLevel {
 		//子订单
 		CHILD,
 		//父订单
@@ -93,15 +93,15 @@ protocol TraderProtocol {
 		GROUP
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxTrdDirection {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroTrdDirection {
 		INVALID,
 		LONG,
 		SHORT
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxTrdAction {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroTrdAction {
 		// 无效
 		INVALID,
 		// 开仓
@@ -114,8 +114,8 @@ protocol TraderProtocol {
 		CLOSE_YESTERDAY
 	}
 
-	@namespace("io.horizon.trader.transport.avro.enums")
-	enum TdxAdaptorStatus {
+	@namespace("io.horizon.trader.serialization.avro.enums")
+	enum AvroAdaptorStatus {
 		// 无效
 		INVALID,
 		// 不可用
@@ -133,8 +133,8 @@ protocol TraderProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.horizon.trader.transport.avro.inbound")
-	record TdxNewOrder {
+	@namespace("io.horizon.trader.serialization.avro.inbound")
+	record AvroNewOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -146,10 +146,10 @@ protocol TraderProtocol {
 		string exchangeCode;
 		int instrumentId;
 		string instrumentCode;
-		io.horizon.trader.transport.avro.enums.TdxOrdType type;
-		io.horizon.trader.transport.avro.enums.TdxOrdValid valid;
-		io.horizon.trader.transport.avro.enums.TdxTrdAction action;
-		io.horizon.trader.transport.avro.enums.TdxTrdDirection direction;
+		io.horizon.trader.serialization.avro.enums.AvroOrdType type;
+		io.horizon.trader.serialization.avro.enums.AvroOrdValid valid;
+		io.horizon.trader.serialization.avro.enums.AvroTrdAction action;
+		io.horizon.trader.serialization.avro.enums.AvroTrdDirection direction;
 		string brokerId;
 		int accountId;
 		int subAccountId;
@@ -161,8 +161,8 @@ protocol TraderProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.horizon.trader.transport.avro.inbound")
-	record TdxCancelOrder {
+	@namespace("io.horizon.trader.serialization.avro.inbound")
+	record AvroCancelOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -183,8 +183,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.horizon.trader.transport.avro.inbound")
-	record TdxQueryOrder {
+	@namespace("io.horizon.trader.serialization.avro.inbound")
+	record AvroQueryOrder {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -202,8 +202,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.horizon.trader.transport.avro.inbound")
-	record TdxQueryPositions {
+	@namespace("io.horizon.trader.serialization.avro.inbound")
+	record AvroQueryPositions {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -220,8 +220,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.horizon.trader.transport.avro.inbound")
-	record TdxQueryBalance {
+	@namespace("io.horizon.trader.serialization.avro.inbound")
+	record AvroQueryBalance {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -236,8 +236,8 @@ protocol TraderProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.horizon.trader.transport.avro.outbound")
-	record TdxOrderReport {
+	@namespace("io.horizon.trader.serialization.avro.outbound")
+	record AvroOrderReport {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
@@ -248,9 +248,9 @@ protocol TraderProtocol {
 		string brokerOrdSysId;
 		string exchangeCode;
 		string instrumentCode;
-		io.horizon.trader.transport.avro.enums.TdxOrdStatus status;
-		io.horizon.trader.transport.avro.enums.TdxTrdDirection direction;
-		io.horizon.trader.transport.avro.enums.TdxTrdAction action;
+		io.horizon.trader.serialization.avro.enums.AvroOrdStatus status;
+		io.horizon.trader.serialization.avro.enums.AvroTrdDirection direction;
+		io.horizon.trader.serialization.avro.enums.AvroTrdAction action;
 		int offerQty = 0;
 		int filledQty = 0;
 		long offerPrice = 0;
@@ -263,8 +263,8 @@ protocol TraderProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.horizon.trader.transport.avro.outbound")
-	record TdxBalanceReport {
+	@namespace("io.horizon.trader.serialization.avro.outbound")
+	record AvroBalanceReport {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -275,8 +275,8 @@ protocol TraderProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.horizon.trader.transport.avro.outbound")
-	record TdxPositionsReport {
+	@namespace("io.horizon.trader.serialization.avro.outbound")
+	record AvroPositionsReport {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -288,12 +288,12 @@ protocol TraderProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.horizon.trader.transport.avro.outbound")
-	record TdxAdaptorReport {
+	@namespace("io.horizon.trader.serialization.avro.outbound")
+	record AvroAdaptorReport {
 		long epochMillis;
 		string adaptorId;
 		int accountId;
-		io.horizon.trader.transport.avro.enums.TdxAdaptorStatus status;
+		io.horizon.trader.serialization.avro.enums.AvroAdaptorStatus status;
 	}
 
 }

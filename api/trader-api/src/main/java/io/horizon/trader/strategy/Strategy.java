@@ -8,6 +8,7 @@ import io.horizon.trader.adaptor.Adaptor;
 import io.horizon.trader.handler.AdaptorReportHandler;
 import io.horizon.trader.handler.OrderHandler;
 import io.mercury.common.fsm.Enableable;
+import io.mercury.common.lang.NonInstantiable;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import javax.annotation.Nonnull;
@@ -31,10 +32,12 @@ public interface Strategy<M> extends
         // 用于资源清理
         Closeable {
 
-    /**
-     * 系统可允许的最大策略ID
-     */
-    int MAX_STRATEGY_ID = 1023;
+    final class StrategyCount extends NonInstantiable {
+        /**
+         * 系统可允许的最大策略ID
+         */
+        public final static int MAX_STRATEGY_ID = 1023;
+    }
 
     int getId();
 

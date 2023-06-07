@@ -1,23 +1,23 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxTrdDirection;
+import io.horizon.trader.serialization.avro.enums.AvroTrdDirection;
 
-public enum TrdDirection implements TdxProvider<TdxTrdDirection> {
+public enum TrdDirection implements TdxProvider<AvroTrdDirection> {
 
-    Invalid(TrdDirectionCode.INVALID, TdxTrdDirection.INVALID),
+    Invalid(TrdDirectionCode.INVALID, AvroTrdDirection.INVALID),
 
-    Long(TrdDirectionCode.LONG, TdxTrdDirection.LONG),
+    Long(TrdDirectionCode.LONG, AvroTrdDirection.LONG),
 
-    Short(TrdDirectionCode.SHORT, TdxTrdDirection.SHORT),
+    Short(TrdDirectionCode.SHORT, AvroTrdDirection.SHORT),
 
     ;
 
     private final char code;
 
-    private final TdxTrdDirection tdxValue;
+    private final AvroTrdDirection tdxValue;
 
-    TrdDirection(char code, TdxTrdDirection tdxValue) {
+    TrdDirection(char code, AvroTrdDirection tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -42,7 +42,7 @@ public enum TrdDirection implements TdxProvider<TdxTrdDirection> {
      * @param tdxValue TdxTrdDirection
      * @return TrdDirection
      */
-    public static TrdDirection valueOf(TdxTrdDirection tdxValue) {
+    public static TrdDirection valueOf(AvroTrdDirection tdxValue) {
         return switch (tdxValue) {
             case LONG -> TrdDirection.Long;
             case SHORT -> TrdDirection.Short;
@@ -51,7 +51,7 @@ public enum TrdDirection implements TdxProvider<TdxTrdDirection> {
     }
 
     @Override
-    public TdxTrdDirection getTdxValue() {
+    public AvroTrdDirection getTdxValue() {
         return tdxValue;
     }
 

@@ -1,11 +1,11 @@
 package io.horizon.trader.adaptor;
 
 import io.horizon.trader.account.Account;
-import io.horizon.trader.transport.avro.inbound.TdxCancelOrder;
-import io.horizon.trader.transport.avro.inbound.TdxNewOrder;
-import io.horizon.trader.transport.avro.inbound.TdxQueryBalance;
-import io.horizon.trader.transport.avro.inbound.TdxQueryOrder;
-import io.horizon.trader.transport.avro.inbound.TdxQueryPositions;
+import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryBalance;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryOrder;
+import io.horizon.trader.serialization.avro.inbound.AvroQueryPositions;
+import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 
@@ -40,7 +40,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param order NewOrder
      * @return boolean
      */
-    boolean newOrder(@Nonnull TdxNewOrder order);
+    boolean newOrder(@Nonnull AvroNewOrder order);
 
     /**
      * 发送撤单请求
@@ -48,7 +48,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param order CancelOrder
      * @return boolean
      */
-    boolean cancelOrder(@Nonnull TdxCancelOrder order);
+    boolean cancelOrder(@Nonnull AvroCancelOrder order);
 
     /**
      * 查询订单
@@ -56,7 +56,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param query QueryOrder
      * @return boolean
      */
-    boolean queryOrder(@Nonnull TdxQueryOrder query);
+    boolean queryOrder(@Nonnull AvroQueryOrder query);
 
     /**
      * 查询持仓
@@ -64,13 +64,13 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param query QueryPositions
      * @return boolean
      */
-    boolean queryPositions(@Nonnull TdxQueryPositions query);
+    boolean queryPositions(@Nonnull AvroQueryPositions query);
 
     /**
      * 查询余额
      *
      * @return boolean
      */
-    boolean queryBalance(@Nonnull TdxQueryBalance query);
+    boolean queryBalance(@Nonnull AvroQueryBalance query);
 
 }

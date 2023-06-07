@@ -23,7 +23,9 @@ public abstract class BaseInstrument extends EnableableComponent implements Inst
      * @param instrumentCode String
      * @param exchange       Exchange
      */
-    protected BaseInstrument(int instrumentId, String instrumentCode, Exchange exchange) {
+    protected BaseInstrument(int instrumentId,
+                             String instrumentCode,
+                             Exchange exchange) {
         this.instrumentId = instrumentId;
         this.instrumentCode = instrumentCode;
         this.exchange = exchange;

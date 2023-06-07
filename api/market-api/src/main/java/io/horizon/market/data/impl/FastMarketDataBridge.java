@@ -2,12 +2,12 @@ package io.horizon.market.data.impl;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.market.instrument.Instrument;
-import io.horizon.market.transport.outbound.FastMarketData;
+import io.horizon.market.serializable.record.OutAvFastMarketData;
 import io.mercury.common.datetime.Timestamp;
 
 public final class FastMarketDataBridge implements MarketData {
 
-    private final FastMarketData marketData;
+    private final OutAvFastMarketData marketData;
 
     private final double[] bidPrices = new double[5];
     private final int[] bidVolumes = new int[5];
@@ -15,7 +15,7 @@ public final class FastMarketDataBridge implements MarketData {
     private final int[] askVolumes = new int[5];
 
     private FastMarketDataBridge() {
-        this.marketData = FastMarketData
+        this.marketData = OutAvFastMarketData
                 // call -> new builder
                 .newBuilder()
                 // set -> timestamp, instrumentId, instrumentCode
@@ -45,7 +45,7 @@ public final class FastMarketDataBridge implements MarketData {
         return new FastMarketDataBridge();
     }
 
-    public FastMarketData getFastMarketData() {
+    public OutAvFastMarketData getFastMarketData() {
         return marketData;
     }
 

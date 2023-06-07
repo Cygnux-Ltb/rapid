@@ -1,63 +1,63 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxOrdType;
+import io.horizon.trader.serialization.avro.enums.AvroOrdType;
 
-public enum OrdType implements TdxProvider<TdxOrdType> {
+public enum OrdType implements TdxProvider<AvroOrdType> {
 
-    Invalid(OrdTypeCode.INVALID, TdxOrdType.INVALID),
+    Invalid(OrdTypeCode.INVALID, AvroOrdType.INVALID),
 
-    Limited(OrdTypeCode.LIMITED, TdxOrdType.LIMITED),
+    Limited(OrdTypeCode.LIMITED, AvroOrdType.LIMITED),
 
-    Market(OrdTypeCode.MARKET, TdxOrdType.MARKET),
+    Market(OrdTypeCode.MARKET, AvroOrdType.MARKET),
 
     /**
      * Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
      */
-    LimitedStop(OrdTypeCode.LIMITED_STOP, TdxOrdType.LIMITED_STOP),
+    LimitedStop(OrdTypeCode.LIMITED_STOP, AvroOrdType.LIMITED_STOP),
 
     /**
      * Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
      */
-    MarketStop(OrdTypeCode.MARKET_STOP, TdxOrdType.MARKET_STOP),
+    MarketStop(OrdTypeCode.MARKET_STOP, AvroOrdType.MARKET_STOP),
 
     /**
      * Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
      */
-    MarketToLimited(OrdTypeCode.MTL, TdxOrdType.MTL),
+    MarketToLimited(OrdTypeCode.MTL, AvroOrdType.MTL),
 
     /**
      * Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
      */
-    BestPrice(OrdTypeCode.BP, TdxOrdType.BP),
+    BestPrice(OrdTypeCode.BP, AvroOrdType.BP),
 
     /**
      * Average Price, 限定最终成交平均价格的报单.
      */
-    AveragePrice(OrdTypeCode.AP, TdxOrdType.AP),
+    AveragePrice(OrdTypeCode.AP, AvroOrdType.AP),
 
     /**
      * Fill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
      */
-    FillOrKill(OrdTypeCode.FOK, TdxOrdType.FOK),
+    FillOrKill(OrdTypeCode.FOK, AvroOrdType.FOK),
 
     /**
      * Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
      */
-    FillAndKill(OrdTypeCode.FAK, TdxOrdType.FAK),
+    FillAndKill(OrdTypeCode.FAK, AvroOrdType.FAK),
 
     /**
      * Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
      */
-    MinimumVolume(OrdTypeCode.MV, TdxOrdType.MV),
+    MinimumVolume(OrdTypeCode.MV, AvroOrdType.MV),
 
     ;
 
     private final char code;
 
-    private final TdxOrdType tdxValue;
+    private final AvroOrdType tdxValue;
 
-    OrdType(char code, TdxOrdType tdxValue) {
+    OrdType(char code, AvroOrdType tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -74,7 +74,7 @@ public enum OrdType implements TdxProvider<TdxOrdType> {
     }
 
     @Override
-    public TdxOrdType getTdxValue() {
+    public AvroOrdType getTdxValue() {
         return tdxValue;
     }
 

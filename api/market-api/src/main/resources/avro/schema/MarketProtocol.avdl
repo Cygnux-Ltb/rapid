@@ -1,33 +1,33 @@
-@namespace("io.horizon.market.transport")
-protocol MarketProtocol {
+@namespace("io.horizon.market.serializable.rpc")
+protocol AvroMarketProtocol {
 
 	/**
 	  * 订阅行情函数
  	  */
-	boolean subscribeMarketData(io.horizon.market.transport.inbound.MarketDataSubscribe subscribe);
+	boolean subscribeMarketData(io.horizon.market.serializable.record.InAvMarketDataSubscribe subscribe);
 
 	/**
 	 * 行情类型
 	 */
-	@namespace("io.horizon.market.transport.enums")
-	enum MarketDataType {
+	@namespace("io.horizon.market.serializable.enums")
+	enum EnumAvMarketDataType {
 		Depth, Fast, Level10, Level20, Level30
 	}
 
 	/**
 	 * 行情订阅状态
 	 */
-	@namespace("io.horizon.market.transport.enums")
-	enum SubscribeStatus {
+	@namespace("io.horizon.market.serializable.enums")
+	enum EnumAvSubscribeStatus {
 		Succeed, PartSucceed, Failed
 	}
 
 	/**
 	 * 行情订阅 
 	 */
-	@namespace("io.horizon.market.transport.inbound")
-	record MarketDataSubscribe {
-		io.horizon.market.transport.enums.MarketDataType type;
+	@namespace("io.horizon.market.serializable.record")
+	record InAvMarketDataSubscribe {
+		io.horizon.market.serializable.enums.EnumAvMarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;
 	}
@@ -35,9 +35,9 @@ protocol MarketProtocol {
 	/**
 	 * 行情订阅回报
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record MarketDataSubscribeReply {
-		io.horizon.market.transport.enums.SubscribeStatus status;
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvMarketDataSubscribeReply {
+		io.horizon.market.serializable.enums.EnumAvSubscribeStatus status;
 		array<string> successInstrumentCodes;
 		array<string> failInstrumentCodes;
 		string msg;
@@ -46,8 +46,8 @@ protocol MarketProtocol {
 	/**
 	 * 深度行情数据结构
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record DepthMarketData {
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvDepthMarketData {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -64,8 +64,8 @@ protocol MarketProtocol {
 	/**
 	 * 五档快速行情数据结构
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record FastMarketData {
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvFastMarketData {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -97,8 +97,8 @@ protocol MarketProtocol {
 	/**
 	 * 十档行情数据结构
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record MarketDataL10 {
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvMarketDataL10 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -150,8 +150,8 @@ protocol MarketProtocol {
 	/**
 	 * 二十档行情数据结构
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record MarketDataL20 {
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvMarketDataL20 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -243,8 +243,8 @@ protocol MarketProtocol {
 	/**
 	 * 二十档行情数据结构
 	 */
-	@namespace("io.horizon.market.transport.outbound")
-	record MarketDataL30 {
+	@namespace("io.horizon.market.serializable.record")
+	record OutAvMarketDataL30 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;

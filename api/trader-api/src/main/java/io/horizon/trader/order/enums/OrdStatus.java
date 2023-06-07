@@ -1,78 +1,78 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxOrdStatus;
+import io.horizon.trader.serialization.avro.enums.AvroOrdStatus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import java.io.Serial;
 
-public enum OrdStatus implements TdxProvider<TdxOrdStatus> {
+public enum OrdStatus implements TdxProvider<AvroOrdStatus> {
 
     /**
      * 无效
      */
-    Invalid(OrdStatusCode.INVALID, TdxOrdStatus.INVALID, true),
+    Invalid(OrdStatusCode.INVALID, AvroOrdStatus.INVALID, true),
 
     /**
      * 新订单未确认
      */
-    PendingNew(OrdStatusCode.PENDING_NEW, TdxOrdStatus.PENDING_NEW, false),
+    PendingNew(OrdStatusCode.PENDING_NEW, AvroOrdStatus.PENDING_NEW, false),
     /**
      * 新订单
      */
-    New(OrdStatusCode.NEW, TdxOrdStatus.NEW, false),
+    New(OrdStatusCode.NEW, AvroOrdStatus.NEW, false),
     /**
      * 新订单已拒绝
      */
-    NewRejected(OrdStatusCode.NEW_REJECTED, TdxOrdStatus.NEW_REJECTED, true),
+    NewRejected(OrdStatusCode.NEW_REJECTED, AvroOrdStatus.NEW_REJECTED, true),
 
     /**
      * 部分成交
      */
-    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, TdxOrdStatus.PARTIALLY_FILLED, false),
+    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, AvroOrdStatus.PARTIALLY_FILLED, false),
     /**
      * 全部成交
      */
-    Filled(OrdStatusCode.FILLED, TdxOrdStatus.FILLED, true),
+    Filled(OrdStatusCode.FILLED, AvroOrdStatus.FILLED, true),
 
     /**
      * 未确认撤单
      */
-    PendingCancel(OrdStatusCode.PENDING_CANCEL, TdxOrdStatus.PENDING_CANCEL, false),
+    PendingCancel(OrdStatusCode.PENDING_CANCEL, AvroOrdStatus.PENDING_CANCEL, false),
     /**
      * 已撤单
      */
-    Canceled(OrdStatusCode.CANCELED, TdxOrdStatus.CANCELED, true),
+    Canceled(OrdStatusCode.CANCELED, AvroOrdStatus.CANCELED, true),
     /**
      * 撤单已拒绝
      */
-    CancelRejected(OrdStatusCode.CANCEL_REJECTED, TdxOrdStatus.CANCEL_REJECTED, true),
+    CancelRejected(OrdStatusCode.CANCEL_REJECTED, AvroOrdStatus.CANCEL_REJECTED, true),
 
     /**
      * 未确认修改订单
      */
-    PendingReplace(OrdStatusCode.PENDING_REPLACE, TdxOrdStatus.PENDING_REPLACE, false),
+    PendingReplace(OrdStatusCode.PENDING_REPLACE, AvroOrdStatus.PENDING_REPLACE, false),
 
     /**
      * 已修改
      */
-    Replaced(OrdStatusCode.REPLACED, TdxOrdStatus.REPLACED, true),
+    Replaced(OrdStatusCode.REPLACED, AvroOrdStatus.REPLACED, true),
     /**
      * 已暂停
      */
-    Suspended(OrdStatusCode.SUSPENDED, TdxOrdStatus.SUSPENDED, false),
+    Suspended(OrdStatusCode.SUSPENDED, AvroOrdStatus.SUSPENDED, false),
 
     /**
      * 未提供
      */
-    Unprovided(OrdStatusCode.UNPROVIDED, TdxOrdStatus.UNPROVIDED, false),
+    Unprovided(OrdStatusCode.UNPROVIDED, AvroOrdStatus.UNPROVIDED, false),
 
     ;
 
     private final char code;
 
-    private final TdxOrdStatus tdxValue;
+    private final AvroOrdStatus tdxValue;
 
     private final boolean finished;
 
@@ -85,7 +85,7 @@ public enum OrdStatus implements TdxProvider<TdxOrdStatus> {
      * @param tdxValue Tdx状态
      * @param finished 是否为已结束状态
      */
-    OrdStatus(char code, TdxOrdStatus tdxValue, boolean finished) {
+    OrdStatus(char code, AvroOrdStatus tdxValue, boolean finished) {
         this.code = code;
         this.tdxValue = tdxValue;
         this.finished = finished;
@@ -172,7 +172,7 @@ public enum OrdStatus implements TdxProvider<TdxOrdStatus> {
      * @param status TOrdStatus
      * @return OrdStatus
      */
-    public static OrdStatus valueOf(TdxOrdStatus status) {
+    public static OrdStatus valueOf(AvroOrdStatus status) {
         return switch (status) {
             // 未确认新订单
             case PENDING_NEW -> PendingNew;
@@ -206,7 +206,7 @@ public enum OrdStatus implements TdxProvider<TdxOrdStatus> {
     }
 
     @Override
-    public TdxOrdStatus getTdxValue() {
+    public AvroOrdStatus getTdxValue() {
         return tdxValue;
     }
 

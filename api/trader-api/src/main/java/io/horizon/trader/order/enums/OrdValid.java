@@ -1,32 +1,32 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxOrdValid;
+import io.horizon.trader.serialization.avro.enums.AvroOrdValid;
 
-public enum OrdValid implements TdxProvider<TdxOrdValid> {
+public enum OrdValid implements TdxProvider<AvroOrdValid> {
 
     /**
      * Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
      */
-    GoodTillCancel(OrdValidCode.GTC, TdxOrdValid.GTC),
+    GoodTillCancel(OrdValidCode.GTC, AvroOrdValid.GTC),
 
     /**
      * Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
      */
-    GoodTillDate(OrdValidCode.GTD, TdxOrdValid.GTD),
+    GoodTillDate(OrdValidCode.GTD, AvroOrdValid.GTD),
 
     /**
      * Good For Day, 只在当日的交易时段有效, 一旦当前交易时段结束, 自动取消的报单.
      */
-    GoodForDay(OrdValidCode.GFD, TdxOrdValid.GFD),
+    GoodForDay(OrdValidCode.GFD, AvroOrdValid.GFD),
 
     ;
 
     private final char code;
 
-    private final TdxOrdValid tdxValue;
+    private final AvroOrdValid tdxValue;
 
-    OrdValid(char code, TdxOrdValid tdxValue) {
+    OrdValid(char code, AvroOrdValid tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -44,7 +44,7 @@ public enum OrdValid implements TdxProvider<TdxOrdValid> {
     }
 
     @Override
-    public TdxOrdValid getTdxValue() {
+    public AvroOrdValid getTdxValue() {
         return tdxValue;
     }
 

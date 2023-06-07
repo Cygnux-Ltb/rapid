@@ -1,34 +1,34 @@
 package io.horizon.trader.order.enums;
 
 import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.transport.avro.enums.TdxOrdLevel;
+import io.horizon.trader.serialization.avro.enums.AvroOrdLevel;
 
-public enum OrdLevel implements TdxProvider<TdxOrdLevel> {
+public enum OrdLevel implements TdxProvider<AvroOrdLevel> {
 
     /**
      * 子订单
      */
-    Child('C', TdxOrdLevel.CHILD),
+    Child('C', AvroOrdLevel.CHILD),
 
     /**
      * 父订单
      */
-    Parent('P', TdxOrdLevel.PARENT),
+    Parent('P', AvroOrdLevel.PARENT),
 
     /**
      * 策略订单
      */
-    Strategy('S', TdxOrdLevel.STRATEGY),
+    Strategy('S', AvroOrdLevel.STRATEGY),
 
     /**
      * 组订单
      */
-    Group('G', TdxOrdLevel.GROUP);
+    Group('G', AvroOrdLevel.GROUP);
 
     private final char code;
-    private final TdxOrdLevel tdxValue;
+    private final AvroOrdLevel tdxValue;
 
-    OrdLevel(char code, TdxOrdLevel tdxValue) {
+    OrdLevel(char code, AvroOrdLevel tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -38,7 +38,7 @@ public enum OrdLevel implements TdxProvider<TdxOrdLevel> {
     }
 
     @Override
-    public TdxOrdLevel getTdxValue() {
+    public AvroOrdLevel getTdxValue() {
         return tdxValue;
     }
 }

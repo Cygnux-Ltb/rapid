@@ -2,8 +2,8 @@ package io.horizon.trader.handler;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.market.handler.MarketDataHandler;
-import io.horizon.trader.transport.avro.outbound.TdxAdaptorReport;
-import io.horizon.trader.transport.avro.outbound.TdxOrderReport;
+import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;
@@ -59,13 +59,13 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderReport(@Nonnull TdxOrderReport report) {
+        public void onOrderReport(@Nonnull AvroOrderReport report) {
             if (orderReportHandler != null)
                 orderReportHandler.onOrderReport(report);
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+        public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
             if (adaptorReportHandler != null)
                 adaptorReportHandler.onAdaptorReport(report);
         }
@@ -124,12 +124,12 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderReport(@Nonnull TdxOrderReport report) {
+        public void onOrderReport(@Nonnull AvroOrderReport report) {
             log.info("InboundSchedulerLogger record orderReport -> {}", report);
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull TdxAdaptorReport report) {
+        public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
             log.info("InboundSchedulerLogger record adaptorReport -> {}", report);
         }
 
