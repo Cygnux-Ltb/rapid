@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    @Query("SELECT '*' FROM #{#entityName} e WHERE "
+    @Query("SELECT e FROM #{#entityName} e WHERE "
             + " e.username = :username "
             + " OR e.email = :email "
             + " OR e.phone = :phone "

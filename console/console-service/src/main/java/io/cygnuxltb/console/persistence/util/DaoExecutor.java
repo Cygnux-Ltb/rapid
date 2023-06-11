@@ -34,7 +34,7 @@ public final class DaoExecutor {
                                 result.size(), JsonWrapper.toJson(result));
                     return result;
                 },
-                e -> log.error("query [{}], an exception occurred", type.getSimpleName(), e));
+                e -> log.error("query [{}], an exception occurred -> {}", type.getSimpleName(), e.getMessage(), e));
     }
 
     /**
@@ -55,8 +55,8 @@ public final class DaoExecutor {
                     return true;
                 },
                 e -> {
-                    log.error("insert or update [{}] failure, entity -> {}",
-                            entity.getClass().getSimpleName(), entity, e);
+                    log.error("insert or update [{}] failure, entity -> {}, exception message -> {}",
+                            entity.getClass().getSimpleName(), entity, e.getMessage(), e);
                     return false;
                 });
     }

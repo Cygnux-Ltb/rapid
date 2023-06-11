@@ -24,7 +24,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
      * @param endTradingDay   int
      * @return List<OrderEntity>
      */
-    @Query("SELECT '*' FROM #{#entityName} e WHERE"
+    @Query("SELECT e FROM #{#entityName} e WHERE"
             + " e.strategyId = :strategyId "
             + " AND e.investorId = :investorId "
             + " AND e.instrumentCode = :instrumentCode "

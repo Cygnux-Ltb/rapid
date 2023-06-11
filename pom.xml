@@ -39,7 +39,7 @@
         <java.version>20</java.version>
         <maven.compiler.target>20</maven.compiler.target>
         <maven.compiler.source>20</maven.compiler.source>
-        <spring-boot.version>3.0.6</spring-boot.version>
+        <spring-boot.version>3.1.0</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
         <avro.version>1.11.1</avro.version>
     </properties>
@@ -87,7 +87,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.26</version>
+                <version>1.18.28</version>
             </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
             <!-- mercury commons -->
@@ -134,7 +134,6 @@
                 <artifactId>transport-rabbitmq</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-
             <!-- API -->
             <dependency>
                 <groupId>io.cygnuxltb</groupId>

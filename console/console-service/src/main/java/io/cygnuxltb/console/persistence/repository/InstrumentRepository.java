@@ -20,7 +20,7 @@ public interface InstrumentRepository extends JpaRepository<InstrumentEntity, Lo
      * @param instrumentCode String
      * @return List<InstrumentEntity>
      */
-    @Query("SELECT '*' FROM #{#entityName} e WHERE"
+    @Query("SELECT e FROM #{#entityName} e WHERE"
             + " e.instrumentCode LIKE :instrumentCode% ")
     List<InstrumentEntity> queryBy(@Nullable String instrumentCode);
 

@@ -11,8 +11,6 @@
     <artifactId>example</artifactId>
     <name>example</name>
 
-    <packaging>jar</packaging>
-
     <build>
         <plugins>
             <plugin>
@@ -45,7 +43,7 @@
     <dependencies>
         <dependency>
             <groupId>io.cygnuxltb</groupId>
-            <artifactId>adaptor-ctp</artifactId>
+            <artifactId>channel-ctp</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

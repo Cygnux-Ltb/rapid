@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface BarRepository extends JpaRepository<BarEntity, Long> {
 
-    @Query("SELECT '*' FROM #{#entityName} e WHERE"
+    @Query("SELECT e FROM #{#entityName} e WHERE"
             + " e.instrumentCode = :instrumentCode "
             + " AND e.tradingDay >= :startTradingDay "
             + " AND e.tradingDay <= :endTradingDay ")
