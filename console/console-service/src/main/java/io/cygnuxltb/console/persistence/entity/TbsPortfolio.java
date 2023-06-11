@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.entity.sys;
+package io.cygnuxltb.console.persistence.entity;
 
 
 import io.mercury.persistence.rdb.ColumnDefinition;

@@ -1,10 +1,10 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.trade.PnlEntity;
-import io.cygnuxltb.console.persistence.entity.trade.PnlSettlementEntity;
-import io.cygnuxltb.console.persistence.repository.PnlRepository;
-import io.cygnuxltb.console.persistence.repository.PnlSettlementRepository;
-import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.console.persistence.entity.TbtPnl;
+import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
+import io.cygnuxltb.console.persistence.dao.PnlDao;
+import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
+import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
 import jakarta.annotation.Resource;
@@ -20,10 +20,10 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 public final class PnlService {
 
     @Resource
-    private PnlRepository repo;
+    private PnlDao dao;
 
     @Resource
-    private PnlSettlementRepository settlementRepo;
+    private PnlSettlementDao settlementDao;
 
     /**
      * @param strategyId int
@@ -31,10 +31,10 @@ public final class PnlService {
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
-        return select(PnlEntity.class,
-                () -> repo.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
+        return select(TbtPnl.class,
+                () -> dao.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -44,10 +44,10 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
-        return select(PnlSettlementEntity.class,
-                () -> settlementRepo.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
+        return select(TbtPnlSettlement.class,
+                () -> settlementDao.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList())
                 ;
     }
@@ -56,16 +56,16 @@ public final class PnlService {
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(PnlEntity entity) {
-        return insertOrUpdate(repo, entity);
+    public boolean putPnl(TbtPnl entity) {
+        return insertOrUpdate(dao, entity);
     }
 
     /**
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(PnlSettlementEntity entity) {
-        return insertOrUpdate(settlementRepo, entity);
+    public boolean putPnlSettlement(TbtPnlSettlement entity) {
+        return insertOrUpdate(settlementDao, entity);
     }
 
 }

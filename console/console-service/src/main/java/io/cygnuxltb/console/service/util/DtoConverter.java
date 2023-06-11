@@ -27,75 +27,75 @@ import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
 
-public class DtoUtil {
+public class DtoConverter {
 
-    public static BarDTO convertToDTO(TbmBar entity) {
+    public static BarDTO toDTO(TbmBar entity) {
         BarDTO dto = new BarDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static AccountDTO convertToDTO(TbtAccount entity) {
+    public static AccountDTO toDTO(TbtAccount entity) {
         AccountDTO dto = new AccountDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static InstrumentDTO convertToDTO(TbmInstrument entity) {
+    public static InstrumentDTO toDTO(TbmInstrument entity) {
         InstrumentDTO dto = new InstrumentDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static InstrumentSettlementDTO convertToDTO(TbmInstrumentSettlement entity) {
+    public static InstrumentSettlementDTO toDTO(TbmInstrumentSettlement entity) {
         InstrumentSettlementDTO dto = new InstrumentSettlementDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static StrategyDTO convertToDTO(TbtStrategy entity) {
+    public static StrategyDTO toDTO(TbtStrategy entity) {
         StrategyDTO dto = new StrategyDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderDTO convertToDTO(TbtOrder entity) {
+    public static OrderDTO toDTO(TbtOrder entity) {
         OrderDTO dto = new OrderDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderEventDTO convertToDTO(TbtOrderEvent entity) {
+    public static OrderEventDTO toDTO(TbtOrderEvent entity) {
         OrderEventDTO dto = new OrderEventDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderExtDTO convertToDTO(TbtOrderExt entity) {
+    public static OrderExtDTO toDTO(TbtOrderExt entity) {
         OrderExtDTO dto = new OrderExtDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static PnlDTO convertToDTO(TbtPnl entity) {
+    public static PnlDTO toDTO(TbtPnl entity) {
         PnlDTO dto = new PnlDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static ParamDTO convertToDTO(TbsParam entity) {
+    public static ParamDTO toDTO(TbsParam entity) {
         ParamDTO dto = new ParamDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static ProductDTO convertToDTO(TbsProduct entity) {
+    public static ProductDTO toDTO(TbsProduct entity) {
         ProductDTO dto = new ProductDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static PnlSettlementDTO convertToDTO(TbtPnlSettlement entity) {
+    public static PnlSettlementDTO toDTO(TbtPnlSettlement entity) {
         PnlSettlementDTO dto = new PnlSettlementDTO();
         copyProperties(entity, dto);
         return dto;

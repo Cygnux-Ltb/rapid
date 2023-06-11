@@ -2,7 +2,7 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.market.BarEntity;
+import io.cygnuxltb.console.persistence.entity.TbmBar;
 import io.cygnuxltb.console.service.BarService;
 import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -57,7 +57,7 @@ public final class BarController {
      */
     @PostMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putBar(@RequestBody HttpServletRequest request) {
-        var bar = ControllerUtil.bodyToObject(request, BarEntity.class);
+        var bar = ControllerUtil.bodyToObject(request, TbmBar.class);
         log.info("put bar -> {}", bar);
         return bar == null ? ResponseStatus.BAD_REQUEST
                 : service.putBar(bar)

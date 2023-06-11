@@ -39,7 +39,7 @@ public class TaskScheduler {
 
 
     private void sendEndTimeBars() {
-        List<ProductDTO> all = service.getAll();
+        List<ProductDTO> all = service.get();
 //        for (ProductEntity cyg : all) {
 //            var publisher = CommandDispatcher.getMember(cyg.getProductId());
 //

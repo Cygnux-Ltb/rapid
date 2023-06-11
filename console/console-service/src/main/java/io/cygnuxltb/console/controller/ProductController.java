@@ -45,7 +45,7 @@ public final class ProductController {
      */
     @GetMapping("/all")
     public List<ProductDTO> getAllProduct() {
-        return service.getAll();
+        return service.get();
     }
 
     /**
@@ -56,7 +56,7 @@ public final class ProductController {
      */
     @GetMapping
     public ProductDTO getProduct(@RequestParam("productId") int productId) {
-        return service.getById(productId);
+        return service.get(productId);
     }
 
     /**

@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.CommonConst.ParamGroup;
 import io.cygnuxltb.console.persistence.entity.TbsParam;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface ParamRepository extends JpaRepository<TbsParam, Long> {
+public interface ParamDao extends JpaRepository<TbsParam, Long> {
 
     /**
      * @param ownerGroup String

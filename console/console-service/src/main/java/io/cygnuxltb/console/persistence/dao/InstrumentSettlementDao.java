@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface InstrumentSettlementRepository extends JpaRepository<TbmInstrumentSettlement, Long> {
+public interface InstrumentSettlementDao extends JpaRepository<TbmInstrumentSettlement, Long> {
 
     /**
      * @param instrumentCode String

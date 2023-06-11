@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbmBar;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface BarRepository extends JpaRepository<TbmBar, Long> {
+public interface BarDao extends JpaRepository<TbmBar, Long> {
 
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.instrumentCode = :instrumentCode "

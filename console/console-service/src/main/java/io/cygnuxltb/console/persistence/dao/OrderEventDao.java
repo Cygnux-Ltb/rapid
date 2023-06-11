@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbtOrderEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface OrderEventRepository extends JpaRepository<TbtOrderEvent, Long> {
+public interface OrderEventDao extends JpaRepository<TbtOrderEvent, Long> {
 
     /**
      * @param strategyId int

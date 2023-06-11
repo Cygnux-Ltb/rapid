@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.market.BarEntity;
-import io.cygnuxltb.console.persistence.repository.BarRepository;
-import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.console.persistence.entity.TbmBar;
+import io.cygnuxltb.console.persistence.dao.BarDao;
+import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 public final class BarService {
 
     @Resource
-    private BarRepository repo;
+    private BarDao dao;
 
     /**
      * @param instrumentCode String
@@ -37,10 +37,10 @@ public final class BarService {
      * @return List<BarEntity>
      */
     public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
-        return select(BarEntity.class,
-                () -> repo.queryBy(instrumentCode, startTradingDay, endTradingDay))
+        return select(TbmBar.class,
+                () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -48,8 +48,8 @@ public final class BarService {
      * @param entity BarEntity
      * @return boolean
      */
-    public boolean putBar(@Nonnull BarEntity entity) {
-        return insertOrUpdate(repo, entity);
+    public boolean putBar(@Nonnull TbmBar entity) {
+        return insertOrUpdate(dao, entity);
     }
 
 }

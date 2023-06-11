@@ -1,10 +1,10 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.repository.InstrumentRepository;
-import io.cygnuxltb.console.persistence.repository.InstrumentSettlementRepository;
-import io.cygnuxltb.console.persistence.entity.market.InstrumentEntity;
-import io.cygnuxltb.console.persistence.entity.market.InstrumentSettlementEntity;
-import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.console.persistence.entity.TbmInstrument;
+import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
+import io.cygnuxltb.console.persistence.dao.InstrumentDao;
+import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
+import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
 import io.cygnuxltb.protocol.http.outbound.InstrumentSettlementDTO;
@@ -25,10 +25,10 @@ import static java.util.Arrays.stream;
 public final class InstrumentService {
 
     @Resource
-    private InstrumentRepository repo;
+    private InstrumentDao dao;
 
     @Resource
-    private InstrumentSettlementRepository settlementRepo;
+    private InstrumentSettlementDao settlementDao;
 
     // LastPrices Cache
     private final ConcurrentMutableMap<String, InstrumentPrice> cacheMap = MutableMaps.newConcurrentHashMap();
@@ -42,10 +42,10 @@ public final class InstrumentService {
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
-        return select(InstrumentEntity.class,
-                () -> repo.queryBy(instrumentCode))
+        return select(TbmInstrument.class,
+                () -> dao.queryBy(instrumentCode))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -56,11 +56,11 @@ public final class InstrumentService {
      */
     public List<InstrumentSettlementDTO> getInstrumentSettlement(int tradingDay,
                                                                  @Nonnull String instrumentCode) {
-        return select(InstrumentSettlementEntity.class,
-                () -> settlementRepo
+        return select(TbmInstrumentSettlement.class,
+                () -> settlementDao
                         .queryByInstrumentCodeAndTradingDay(instrumentCode, tradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -79,16 +79,16 @@ public final class InstrumentService {
      * @param entity InstrumentEntity
      * @return boolean
      */
-    public boolean putInstrument(@Nonnull InstrumentEntity entity) {
-        return insertOrUpdate(repo, entity);
+    public boolean putInstrument(@Nonnull TbmInstrument entity) {
+        return insertOrUpdate(dao, entity);
     }
 
     /**
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentStatic(@Nonnull InstrumentSettlementEntity entity) {
-        return insertOrUpdate(settlementRepo, entity);
+    public boolean putInstrumentStatic(@Nonnull TbmInstrumentSettlement entity) {
+        return insertOrUpdate(settlementDao, entity);
     }
 
     /**

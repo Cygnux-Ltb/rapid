@@ -2,7 +2,7 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.trade.OrderEntity;
+import io.cygnuxltb.console.persistence.entity.TbtOrder;
 import io.cygnuxltb.console.service.OrderService;
 import io.cygnuxltb.protocol.http.outbound.OrderDTO;
 import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
@@ -78,7 +78,7 @@ public final class OrderController {
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putOrder(@RequestBody HttpServletRequest request) {
-        var order = ControllerUtil.bodyToObject(request, OrderEntity.class);
+        var order = ControllerUtil.bodyToObject(request, TbtOrder.class);
         return order == null
                 ? ResponseStatus.BAD_REQUEST : service.putOrder(order)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;

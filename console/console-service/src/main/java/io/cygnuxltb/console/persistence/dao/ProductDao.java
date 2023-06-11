@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbsProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author yellow013
  */
 @Repository
-public interface ProductRepository extends JpaRepository<TbsProduct, Long> {
+public interface ProductDao extends JpaRepository<TbsProduct, Long> {
 
     /**
      * @param productId int

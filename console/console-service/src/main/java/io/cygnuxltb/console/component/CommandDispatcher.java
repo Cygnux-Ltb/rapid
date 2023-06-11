@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.component;
 
-import io.cygnuxltb.console.persistence.entity.sys.ParamEntity;
+import io.cygnuxltb.console.persistence.entity.TbsParam;
 import io.cygnuxltb.protocol.http.inbound.command.StrategySwitch;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public final class CommandDispatcher {
     }
 
 
-    public boolean sendParams(List<ParamEntity> params) {
+    public boolean sendParams(List<TbsParam> params) {
         return false;
     }
 

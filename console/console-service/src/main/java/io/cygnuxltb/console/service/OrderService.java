@@ -1,12 +1,12 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.trade.OrderEntity;
-import io.cygnuxltb.console.persistence.entity.trade.OrderEventEntity;
-import io.cygnuxltb.console.persistence.repository.OrderEventRepository;
-import io.cygnuxltb.console.persistence.repository.OrderExtRepository;
-import io.cygnuxltb.console.persistence.repository.OrderRepository;
-import io.cygnuxltb.console.service.util.DtoUtil;
+import io.cygnuxltb.console.persistence.entity.TbtOrder;
+import io.cygnuxltb.console.persistence.entity.TbtOrderEvent;
+import io.cygnuxltb.console.persistence.dao.OrderEventDao;
+import io.cygnuxltb.console.persistence.dao.OrderExtDao;
+import io.cygnuxltb.console.persistence.dao.OrderDao;
+import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.OrderDTO;
 import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
 import io.mercury.common.lang.Throws;
@@ -33,13 +33,13 @@ public final class OrderService {
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderService.class);
 
     @Resource
-    private OrderRepository repo;
+    private OrderDao dao;
 
     @Resource
-    private OrderExtRepository extRepo;
+    private OrderExtDao extDao;
 
     @Resource
-    private OrderEventRepository eventRepo;
+    private OrderEventDao eventDao;
 
     /**
      * @param strategyId     int
@@ -72,11 +72,11 @@ public final class OrderService {
             Throws.illegalArgument("investorId");
         if (illegalInstrumentCode(instrumentCode, log))
             Throws.illegalArgument("instrumentCode");
-        return select(OrderEntity.class,
-                () -> repo.queryBy(strategyId, investorId, instrumentCode,
+        return select(TbtOrder.class,
+                () -> dao.queryBy(strategyId, investorId, instrumentCode,
                         startTradingDay, endTradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -87,10 +87,10 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
             return new FastList<>();
-        return select(OrderEventEntity.class,
-                () -> eventRepo.queryByOrdSysId(ordSysId))
+        return select(TbtOrderEvent.class,
+                () -> eventDao.queryByOrdSysId(ordSysId))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -101,10 +101,10 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByTradingDay(int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             return new FastList<>();
-        return select(OrderEventEntity.class,
-                () -> eventRepo.queryByTradingDay(tradingDay))
+        return select(TbtOrderEvent.class,
+                () -> eventDao.queryByTradingDay(tradingDay))
                 .stream()
-                .map(DtoUtil::convertToDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -112,16 +112,16 @@ public final class OrderService {
      * @param entity OrderEntity
      * @return boolean
      */
-    public boolean putOrder(OrderEntity entity) {
-        return insertOrUpdate(repo, entity);
+    public boolean putOrder(TbtOrder entity) {
+        return insertOrUpdate(dao, entity);
     }
 
     /**
      * @param entity OrderEventEntity
      * @return boolean
      */
-    public boolean putOrderEvent(OrderEventEntity entity) {
-        return insertOrUpdate(eventRepo, entity);
+    public boolean putOrderEvent(TbtOrderEvent entity) {
+        return insertOrUpdate(eventDao, entity);
     }
 
 }

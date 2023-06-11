@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface PnlSettlementRepository extends JpaRepository<TbtPnlSettlement, Long> {
+public interface PnlSettlementDao extends JpaRepository<TbtPnlSettlement, Long> {
 
     /**
      * @param strategyId int

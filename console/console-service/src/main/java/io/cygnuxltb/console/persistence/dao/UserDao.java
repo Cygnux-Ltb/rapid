@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.repository;
+package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbsUser;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface UserRepository extends JpaRepository<TbsUser, Long> {
+public interface UserDao extends JpaRepository<TbsUser, Long> {
 
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.username = :username "
