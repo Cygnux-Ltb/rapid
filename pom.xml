@@ -35,10 +35,10 @@
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>20</java.version>
-        <maven.compiler.target>20</maven.compiler.target>
         <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.1.0</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
         <avro.version>1.11.1</avro.version>
