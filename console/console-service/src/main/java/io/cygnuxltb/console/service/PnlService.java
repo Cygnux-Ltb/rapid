@@ -1,9 +1,9 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TbtPnl;
-import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
+import io.cygnuxltb.console.persistence.entity.TbtPnl;
+import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
@@ -32,7 +32,7 @@ public final class PnlService {
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
         return select(TbtPnl.class,
-                () -> dao.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
+                () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
@@ -45,7 +45,7 @@ public final class PnlService {
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
         return select(TbtPnlSettlement.class,
-                () -> settlementDao.queryByStrategyIdAndTradingDay(strategyId, tradingDay))
+                () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
                 .collect(Collectors.toList())

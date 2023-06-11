@@ -29,8 +29,8 @@ public final class TbsParam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = "group_name")
-    private String groupName;
+    @Column(name = "owner_name")
+    private String ownerGroup;
 
     @Column(name = "owner_name")
     private String ownerName;

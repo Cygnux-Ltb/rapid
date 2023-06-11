@@ -2,6 +2,7 @@ package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TbsPortfolio;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public interface PortfolioDao extends JpaRepository<TbsPortfolio, Long> {
      * @param groupName String
      * @return List<PortfolioEntity>
      */
-    List<TbsPortfolio> queryByUserIdAndGroupName(int userId, String groupName);
+    @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
+            + " AND e.userId = :userId "
+            + " AND e.groupName = :groupName "
+    )
+    List<TbsPortfolio> queryBy(int userId, String groupName);
 
 }

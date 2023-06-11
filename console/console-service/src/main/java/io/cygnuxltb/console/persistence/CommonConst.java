@@ -1,10 +1,13 @@
 package io.cygnuxltb.console.persistence;
 
 public enum CommonConst {
+
     ;
 
     public enum Column {
+
         ;
+
         /**
          * 策略ID
          */
@@ -55,7 +58,9 @@ public enum CommonConst {
      * 参数组
      */
     public enum ParamGroup {
+
         ;
+
         /**
          * 策略
          */

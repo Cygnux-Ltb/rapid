@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TbsParam;
 import io.cygnuxltb.console.persistence.dao.ParamDao;
+import io.cygnuxltb.console.persistence.entity.TbsParam;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.console.service.util.ValidationRule;
 import io.cygnuxltb.protocol.http.outbound.ParamDTO;
@@ -158,7 +158,7 @@ public final class ParamService {
         if (illegalStrategyName(strategyName, log))
             Throws.illegalArgument("getStrategyParams param error -> strategyName");
         return select(TbsParam.class,
-                () -> dao.queryStrategyParamByName(strategyName))
+                () -> dao.queryStrategyParam(strategyName))
                 .stream().map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
@@ -168,7 +168,7 @@ public final class ParamService {
         if (illegalBrokerId(brokerId, log))
             Throws.illegalArgument("getCtpParams param error -> brokerId");
         return select(TbsParam.class,
-                () -> dao.queryStrategyParamByName(brokerId))
+                () -> dao.queryTraderParam(brokerId))
                 .stream().map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }

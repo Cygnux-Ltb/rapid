@@ -29,7 +29,8 @@ public interface OrderDao extends JpaRepository<TbtOrder, Long> {
             + " AND e.investorId = :investorId "
             + " AND e.instrumentCode = :instrumentCode "
             + " AND e.tradingDay >= :startTradingDay "
-            + " AND e.tradingDay <= :endTradingDay ")
+            + " AND e.tradingDay <= :endTradingDay "
+    )
     List<TbtOrder> queryBy(@Param("strategyId") int strategyId,
                            @Param("investorId") String investorId,
                            @Param("instrumentCode") String instrumentCode,

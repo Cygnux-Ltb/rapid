@@ -25,7 +25,7 @@ public interface InstrumentSettlementDao extends JpaRepository<TbmInstrumentSett
             + " AND e.instrumentCode LIKE :instrumentCode% "
             + " AND e.tradingDay = :tradingDay "
     )
-    List<TbmInstrumentSettlement> queryByInstrumentCodeAndTradingDay(
+    List<TbmInstrumentSettlement> queryBy(
             @Nullable String instrumentCode, int tradingDay);
 
 }

@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * User Repository
  *
@@ -22,9 +20,9 @@ public interface UserDao extends JpaRepository<TbsUser, Long> {
             + " OR e.phone = :phone "
             + " AND e.password = :password"
     )
-    List<TbsUser> queryBy(@Param("username") String username,
-                          @Param("email") String email,
-                          @Param("phone") String phone,
-                          @Param("password") String password);
+    TbsUser queryBy(@Param("username") String username,
+                    @Param("email") String email,
+                    @Param("phone") String phone,
+                    @Param("password") String password);
 
 }
