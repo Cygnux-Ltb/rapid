@@ -14,10 +14,19 @@ import java.util.List;
 @Accessors(chain = true)
 public class PortfolioDTO {
 
+    /**
+     * 用户ID
+     */
     private int userId;
 
-    private String groupName;
+    /**
+     * 投资组合名称
+     */
+    private String portfolioName;
 
+    /**
+     * 交易标的列表
+     */
     private List<String> instrumentCodes;
 
 }

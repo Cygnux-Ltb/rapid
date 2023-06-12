@@ -9,8 +9,14 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class InstrumentPrice {
 
+    /**
+     * 交易标的
+     */
     private String instrumentCode;
 
+    /**
+     * 最新价格
+     */
     private double lastPrice;
 
     public InstrumentPrice() {

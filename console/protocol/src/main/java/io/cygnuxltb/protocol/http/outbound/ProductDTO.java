@@ -15,14 +15,29 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public final class ProductDTO {
 
+    /**
+     * 产品ID
+     */
     private int productId;
 
+    /**
+     * 产品名称
+     */
     private String productName;
 
+    /**
+     * 子账户ID
+     */
     private String subAccountId;
 
+    /**
+     * 用户ID
+     */
     private String userId;
 
+    /**
+     * 接口名称
+     */
     private String interfaceType;
 
 }
