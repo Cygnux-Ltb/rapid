@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1686477772695"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1686494574399"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -38,30 +38,30 @@
             <li class=""><a class="dd" href="StrategyController.html#header">2.&nbsp;策略服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="StrategyController.html#_2_1_返回全部Strategy">2.1.&nbsp;返回全部Strategy</a>
+                            href="StrategyController.html#_2_1_获取全部策略">2.1.&nbsp;获取全部策略</a>
                     </li>
 
                     <li><a
-                            href="StrategyController.html#_2_2_使用StrategyId作为get params访问Strategy">2.2.&nbsp;使用StrategyId作为get params访问Strategy</a>
+                            href="StrategyController.html#_2_2_获取策略">2.2.&nbsp;获取策略</a>
                     </li>
 
                     <li><a
-                            href="StrategyController.html#_2_3_使用StrategyId作为URI访问Param">2.3.&nbsp;使用StrategyId作为URI访问Param</a>
+                            href="StrategyController.html#_2_3_根据策略名称获取策略相关参数">2.3.&nbsp;根据策略名称获取策略相关参数</a>
                     </li>
 
                     <li><a
-                            href="StrategyController.html#_2_4_Put StrategyParam URI is StrategyId">2.4.&nbsp;Put StrategyParam URI is StrategyId</a>
+                            href="StrategyController.html#_2_4_添加策略参数 (内部接口)">2.4.&nbsp;添加策略参数 (内部接口)</a>
                     </li>
                 </ul>
             </li>
             <li class=""><a class="dd" href="BarController.html#header">3.&nbsp;历史行情接口</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="BarController.html#_3_1_获取1分钟Bar">3.1.&nbsp;获取1分钟Bar</a>
+                            href="BarController.html#_3_1_获取1分钟BAR">3.1.&nbsp;获取1分钟BAR</a>
                     </li>
 
                     <li><a
-                            href="BarController.html#_3_2_Put Bar">3.2.&nbsp;Put Bar</a>
+                            href="BarController.html#_3_2_更新BAR (內部接口)">3.2.&nbsp;更新BAR (內部接口)</a>
                     </li>
                 </ul>
             </li>
@@ -72,7 +72,7 @@
                     </li>
 
                     <li><a
-                            href="PnlController.html#_4_2_Put PnlDaily">4.2.&nbsp;Put PnlDaily</a>
+                            href="PnlController.html#_4_2_更新PNL, 策略引擎调用 (内部接口)">4.2.&nbsp;更新PNL, 策略引擎调用 (内部接口)</a>
                     </li>
 
                     <li><a
@@ -127,7 +127,7 @@
             <li class=""><a class="dd" href="InstrumentController.html#header">9.&nbsp;交易标的查询接口</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="InstrumentController.html#_9_1_获取结算价格">9.1.&nbsp;获取结算价格</a>
+                            href="InstrumentController.html#_9_1_获取结算信息">9.1.&nbsp;获取结算信息</a>
                     </li>
 
                     <li><a
@@ -135,18 +135,22 @@
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_9_3_更新最新价格">9.3.&nbsp;更新最新价格</a>
+                            href="InstrumentController.html#_9_3_更新最新价格 (內部接口)">9.3.&nbsp;更新最新价格 (內部接口)</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_9_4_获取可交易的标的">9.4.&nbsp;获取可交易的标的</a>
+                            href="InstrumentController.html#_9_4_获取交易费用">9.4.&nbsp;获取交易费用</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#_9_5_获取可交易标的">9.5.&nbsp;获取可交易标的</a>
                     </li>
                 </ul>
             </li>
             <li class=""><a class="dd" href="PortfolioController.html#header">10.&nbsp;投资组合接口</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="PortfolioController.html#_10_1_">10.1.&nbsp;</a>
+                            href="PortfolioController.html#_10_1_获取用户投资组合">10.1.&nbsp;获取用户投资组合</a>
                     </li>
                 </ul>
             </li>
@@ -176,39 +180,11 @@
                 <a class="anchor" href="#_11_1_查询Order"></a>
                 <a class="link" href="#_11_1_查询Order">11.1.&nbsp;查询Order</a>
             </h3>
-                <div class="paragraph"><p><strong>URL:</strong><a href="/order/{tradingDay}" class="bare">&nbsp;/order/{tradingDay}</a>
+                <div class="paragraph"><p><strong>URL:</strong><a href="/order" class="bare">&nbsp;/order</a>
                 </p></div>
                 <div class="paragraph"><p><strong>Type:</strong>&nbsp;GET</p></div>
                 <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;application/x-www-form-urlencoded;charset=UTF-8</p></div>
                 <div class="paragraph"><p><strong>Description:</strong>&nbsp;查询Order</p></div>
-                <div class="paragraph"><p><strong>Path-parameters:</strong></p></div>
-                <table class="tableblock frame-all grid-all spread">
-                    <colgroup>
-                        <col style="width: 20%;">
-                        <col style="width: 20%;">
-                        <col style="width: 20%;">
-                        <col style="width: 20%;">
-                        <col style="width: 20%;">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th class="tableblock halign-left valign-top">Parameter</th>
-                        <th class="tableblock halign-left valign-top">Type</th>
-                        <th class="tableblock halign-left valign-top">Description</th>
-                        <th class="tableblock halign-left valign-top">Required</th>
-                        <th class="tableblock halign-left valign-top">Since</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">    String</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-                    </tbody>
-                </table>
                 <div class="paragraph"><p><strong>Query-parameters:</strong></p></div>
                 <table class="tableblock frame-all grid-all spread">
                     <colgroup>
@@ -229,9 +205,17 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">td</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">    交易日</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">strategyId</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">    int</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">    策略ID</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -239,15 +223,15 @@
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">investorId</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">    String</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">    交易账户</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">code</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -256,7 +240,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /order/0?strategyId=0&investorId=&instrumentCode=</code></pre>
+                        <pre><code class="bash">curl -X GET -i /order?td=0&strategyId=0&investorId=&code=</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
@@ -501,9 +485,9 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">td</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -511,7 +495,7 @@
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">strategyId</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">策略ID</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -520,7 +504,7 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X GET -i /order/status?tradingDay=0&strategyId=0</code></pre>
+                        <pre><code class="bash">curl -X GET -i /order/status?td=0&strategyId=0</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
@@ -792,12 +776,12 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-06-11 19:02:52</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-06-11 23:42:54</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1686477772695"></script>
+<script src="search.js?v=1686494574399"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -33,27 +35,27 @@ public final class BarController {
     private BarService service;
 
     /**
-     * 获取1分钟Bar
+     * 获取1分钟BAR
      *
      * @param tradingDay     交易日
-     * @param instrumentCode 标的代码
+     * @param instrumentCode 标的代码 (不支持查询多个标的)
      * @return List<BarEntity>
-     * @apiNote 获取行情Bar
+     * @apiNote 获取1分钟BAR
      */
     @GetMapping
-    public List<BarDTO> getBars(@RequestParam("tradingDay") int tradingDay,
-                                @RequestParam("instrumentCode") String instrumentCode) {
+    public List<BarDTO> getBars(@RequestParam(TRADING_DAY) int tradingDay,
+                                @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
         log.info("get bars with : tradingDay -> {}, instrumentCode -> {}",
                 tradingDay, instrumentCode);
         return service.getBars(instrumentCode, tradingDay);
     }
 
     /**
-     * Put Bar
+     * 更新BAR (內部接口)
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<Integer>
-     * @apiNote 添加行情Bar
+     * @return ResponseStatus
+     * @apiNote 更新BAR (內部接口)
      */
     @PostMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putBar(@RequestBody HttpServletRequest request) {

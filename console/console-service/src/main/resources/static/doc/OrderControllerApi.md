@@ -2,7 +2,7 @@
 # 订单服务接口
 ## 查询Order
 
-**URL:** `/order/{tradingDay}`
+**URL:** `/order`
 
 **Type:** `GET`
 
@@ -12,24 +12,20 @@
 **Description:** 查询Order
 
 
-**Path-parameters:**
-
-| Parameter | Type | Required | Description | Since |
-|-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|    String|-|
 
 **Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|    int|-|
-|investorId|string|true|    String|-|
-|instrumentCode|string|true|int|-|
+|td|int32|true|    交易日|-|
+|strategyId|int32|true|    策略ID|-|
+|investorId|string|true|    交易账户|-|
+|code|string|true|交易标的|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /order/0?strategyId=0&investorId=&instrumentCode=
+curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
 ```
 
 **Response-fields:**
@@ -108,13 +104,13 @@ curl -X GET -i /order/0?strategyId=0&investorId=&instrumentCode=
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|int|-|
-|strategyId|int32|true|int|-|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /order/status?tradingDay=0&strategyId=0
+curl -X GET -i /order/status?td=0&strategyId=0
 ```
 
 **Response-fields:**

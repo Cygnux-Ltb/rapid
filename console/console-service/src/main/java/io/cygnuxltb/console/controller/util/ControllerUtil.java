@@ -89,6 +89,14 @@ public final class ControllerUtil {
         return false;
     }
 
+    public static boolean illegalStringParam(String paramName, String param, Logger logger) {
+        if (StringSupport.isNullOrEmpty(param)) {
+            logger.error("illegal param -> {}=={}", paramName, param);
+            return true;
+        }
+        return false;
+    }
+
     public static boolean illegalStrategyName(String strategyName, Logger logger) {
         return illegalStringParam("strategyName", strategyName, logger);
     }
@@ -104,13 +112,5 @@ public final class ControllerUtil {
     public static boolean illegalBrokerId(String brokerId, Logger logger) {
         return illegalStringParam("brokerId", brokerId, logger);
     }
-
-    public static boolean illegalStringParam(String paramName, String param, Logger logger) {
-        if (StringSupport.isNullOrEmpty(param)) {
-            logger.error("illegal param -> {}=={}", paramName, param);
-            return true;
-        }
-        return false;
-    }
-
+    
 }

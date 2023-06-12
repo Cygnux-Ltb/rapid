@@ -17,7 +17,7 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|productId|int32|true|int|-|
+|productId|int32|true|产品ID|-|
 
 
 **Request-example:**

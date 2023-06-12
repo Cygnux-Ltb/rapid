@@ -2,7 +2,7 @@
 # PNL服务接口
 ## 查询PNL
 
-**URL:** `/pnl/{tradingDay}`
+**URL:** `/pnl`
 
 **Type:** `GET`
 
@@ -12,22 +12,18 @@
 **Description:** 查询PNL
 
 
-**Path-parameters:**
-
-| Parameter | Type | Required | Description | Since |
-|-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|int|-|
 
 **Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/0?strategyId=0
+curl -X GET -i /pnl?td=0&strategyId=0
 ```
 
 **Response-fields:**
@@ -73,7 +69,7 @@ curl -X GET -i /pnl/0?strategyId=0
 ]
 ```
 
-## Put PnlDaily
+## 更新PNL, 策略引擎调用 (内部接口)
 
 **URL:** `/pnl`
 
@@ -82,7 +78,7 @@ curl -X GET -i /pnl/0?strategyId=0
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** Put PnlDaily
+**Description:** 更新PNL, 策略引擎调用 (内部接口)
 
 
 
@@ -115,13 +111,13 @@ OK
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
-|tradingDay|int32|true|int|-|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/settlement?strategyId=0&tradingDay=0
+curl -X GET -i /pnl/settlement?td=0&strategyId=0
 ```
 
 **Response-fields:**

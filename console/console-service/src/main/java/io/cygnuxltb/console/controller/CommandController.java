@@ -43,9 +43,9 @@ public final class CommandController {
     /**
      * 更新参数
      *
-     * @param productId int
+     * @param productId 产品ID
      * @param request   HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping(path = "/param",
             consumes = APPLICATION_JSON_UTF8,
@@ -71,7 +71,7 @@ public final class CommandController {
      * 安全更新参数
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping(path = "/safe",
             consumes = APPLICATION_JSON_UTF8,
@@ -100,7 +100,6 @@ public final class CommandController {
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
-
     }
 
 }

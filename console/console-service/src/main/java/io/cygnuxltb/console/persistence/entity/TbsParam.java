@@ -29,7 +29,7 @@ public final class TbsParam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = "owner_name")
+    @Column(name = "owner_group")
     private String ownerGroup;
 
     @Column(name = "owner_name")

@@ -6,6 +6,7 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
@@ -22,8 +23,16 @@ public class PortfolioController {
     @Resource
     private PortfolioService service;
 
+    /**
+     * 获取用户投资组合
+     *
+     * @param userId    用户ID
+     * @param groupName 投资组合名
+     * @return PortfolioDTO
+     */
     @RequestMapping()
-    public PortfolioDTO get(int userId, String groupName) {
+    public PortfolioDTO get(@RequestParam("userId") int userId,
+                            @RequestParam("group") String groupName) {
         return service.getPortfolio(userId, groupName);
     }
 

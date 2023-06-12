@@ -1,9 +1,9 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TbmInstrument;
-import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
+import io.cygnuxltb.console.persistence.entity.TbmInstrument;
+import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
@@ -54,11 +54,11 @@ public final class InstrumentService {
      * @param instrumentCode String
      * @return List<InstrumentSettlementEntity>
      */
-    public List<InstrumentSettlementDTO> getInstrumentSettlement(int tradingDay,
-                                                                 @Nonnull String instrumentCode) {
+    public List<InstrumentSettlementDTO> getInstrumentSettlement(
+            int tradingDay, @Nonnull String instrumentCode) {
         return select(TbmInstrumentSettlement.class,
                 () -> settlementDao
-                        .queryByInstrumentCodeAndTradingDay(instrumentCode, tradingDay))
+                        .queryBy(tradingDay, instrumentCode))
                 .stream()
                 .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());

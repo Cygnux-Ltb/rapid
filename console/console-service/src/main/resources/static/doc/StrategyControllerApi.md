@@ -1,6 +1,6 @@
 
 # 策略服务
-## 返回全部Strategy
+## 获取全部策略
 
 **URL:** `/strategy`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 返回全部Strategy
+**Description:** 获取全部策略
 
 
 
@@ -41,29 +41,29 @@ curl -X GET -i /strategy
 ]
 ```
 
-## 使用StrategyId作为get params访问Strategy
+## 获取策略
 
-**URL:** `/strategy/{strategyId}`
+**URL:** `/strategy/get`
 
 **Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 使用StrategyId作为get params访问Strategy
+**Description:** 获取策略
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
-
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /strategy/0
+curl -X GET -i /strategy/get?strategyId=0
 ```
 
 **Response-fields:**
@@ -85,29 +85,29 @@ curl -X GET -i /strategy/0
 }
 ```
 
-## 使用StrategyId作为URI访问Param
+## 根据策略名称获取策略相关参数
 
-**URL:** `/strategy/{strategyName}/param`
+**URL:** `/strategy/param`
 
 **Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 使用StrategyId作为URI访问Param
+**Description:** 根据策略名称获取策略相关参数
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |strategyName|string|true|String|-|
 
 
-
 **Request-example:**
 ```
-curl -X GET -i /strategy/param
+curl -X GET -i /strategy/param?strategyName=
 ```
 
 **Response-fields:**
@@ -133,29 +133,29 @@ curl -X GET -i /strategy/param
 ]
 ```
 
-## Put StrategyParam URI is StrategyId
+## 添加策略参数 (内部接口)
 
-**URL:** `/strategy/{strategyId}/param`
+**URL:** `/strategy/param`
 
 **Type:** `PUT`
 
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** Put StrategyParam URI is StrategyId
+**Description:** 添加策略参数 (内部接口)
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |strategyId|int32|true|int|-|
 
 
-
 **Request-example:**
 ```
-curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/0/param
+curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/param --data 'strategyId=0'
 ```
 
 **Response-example:**

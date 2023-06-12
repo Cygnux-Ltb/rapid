@@ -15,17 +15,17 @@ import java.util.List;
  */
 @Repository
 public interface InstrumentSettlementDao extends JpaRepository<TbmInstrumentSettlement, Long> {
-
     /**
      * @param instrumentCode String
      * @param tradingDay     int
      * @return List<InstrumentSettlementEntity>
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
-            + " AND e.instrumentCode LIKE :instrumentCode% "
             + " AND e.tradingDay = :tradingDay "
+            + " AND e.instrumentCode LIKE :instrumentCode% "
     )
-    List<TbmInstrumentSettlement> queryBy(
-            @Nullable String instrumentCode, int tradingDay);
+    List<TbmInstrumentSettlement> queryBy(int tradingDay,
+                                          @Nullable String instrumentCode);
+
 
 }

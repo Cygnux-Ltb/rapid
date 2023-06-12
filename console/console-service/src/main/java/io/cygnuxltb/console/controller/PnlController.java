@@ -11,7 +11,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
+import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -37,44 +38,44 @@ public final class PnlController {
     /**
      * 查询PNL
      *
-     * @param strategyId int
-     * @param tradingDay int
-     * @return ResponseEntity<List < PnlEntity>>
+     * @param tradingDay 交易日
+     * @param strategyId 策略ID
+     * @return List<PnlDTO>
      */
-    @GetMapping(path = "/{tradingDay}")
-    public List<PnlDTO> getPnl(@PathVariable("tradingDay") int tradingDay,
-                               @RequestParam("strategyId") int strategyId) {
+    @GetMapping
+    public List<PnlDTO> getPnl(@RequestParam(TRADING_DAY) int tradingDay,
+                               @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.paramIsNull(tradingDay))
             throw new IllegalArgumentException("get pnl param error -> " + tradingDay);
         return service.getPnl(strategyId, tradingDay);
     }
 
     /**
-     * Put PnlDaily
+     * 更新PNL, 策略引擎调用 (内部接口)
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnlDaily = ControllerUtil.bodyToObject(request, TbtPnl.class);
-        return pnlDaily == null
-                ? ResponseStatus.BAD_REQUEST : service.putPnl(pnlDaily)
+        var pnl = ControllerUtil.bodyToObject(request, TbtPnl.class);
+        return pnl == null
+                ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;
     }
 
     /**
      * 查询结算PNL
      *
-     * @param strategyId int
-     * @param tradingDay int
-     * @return ResponseEntity<List < PnlSettlementEntity>>
+     * @param tradingDay 交易日
+     * @param strategyId 策略ID
+     * @return List<PnlSettlementDTO>
      */
     @GetMapping("/settlement")
-    public List<PnlSettlementDTO> getPnlSettlement(@RequestParam("strategyId") int strategyId,
-                                                   @RequestParam("tradingDay") int tradingDay) {
+    public List<PnlSettlementDTO> getPnlSettlement(@RequestParam(TRADING_DAY) int tradingDay,
+                                                   @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("tradingDay");
         return (service.getPnlSettlement(strategyId, tradingDay));
     }
 

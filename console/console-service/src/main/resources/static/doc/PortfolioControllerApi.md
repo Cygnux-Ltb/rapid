@@ -1,6 +1,6 @@
 
 # 投资组合接口
-## 
+## 获取用户投资组合
 
 **URL:** `/portfolio`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 
+**Description:** 获取用户投资组合
 
 
 
@@ -17,13 +17,13 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|userId|int32|false|No comments found.|-|
-|groupName|string|false|No comments found.|-|
+|userId|int32|true|   用户ID|-|
+|group|string|true|投资组合名|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /portfolio?userId=0&groupName=
+curl -X GET -i /portfolio?userId=0&group=
 ```
 
 **Response-fields:**

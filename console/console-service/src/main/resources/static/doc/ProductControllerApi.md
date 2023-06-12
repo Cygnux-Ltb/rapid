@@ -2,7 +2,7 @@
 # 产品服务接口
 ## 获取全部产品
 
-**URL:** `/product/all`
+**URL:** `/product`
 
 **Type:** `GET`
 
@@ -17,7 +17,7 @@
 
 **Request-example:**
 ```
-curl -X GET -i /product/all
+curl -X GET -i /product
 ```
 
 **Response-fields:**

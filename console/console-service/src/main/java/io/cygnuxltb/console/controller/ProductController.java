@@ -43,8 +43,8 @@ public final class ProductController {
      *
      * @return ResponseEntity<List < ProductEntity>>
      */
-    @GetMapping("/all")
-    public List<ProductDTO> getAllProduct() {
+    @GetMapping
+    public List<ProductDTO> getProduct() {
         return service.get();
     }
 
@@ -54,7 +54,7 @@ public final class ProductController {
      * @param productId int
      * @return ResponseEntity<ProductEntity>
      */
-    @GetMapping
+    @GetMapping("/get")
     public ProductDTO getProduct(@RequestParam("productId") int productId) {
         return service.get(productId);
     }

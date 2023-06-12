@@ -17,7 +17,7 @@ public final class PortfolioService {
     private PortfolioDao dao;
 
     public PortfolioDTO getPortfolio(int userId, String groupName) {
-        List<TbsPortfolio> entities = dao.queryByUserIdAndGroupName(userId, groupName);
+        List<TbsPortfolio> entities = dao.queryBy(userId, groupName);
         return new PortfolioDTO()
                 .setUserId(userId)
                 .setGroupName(groupName)

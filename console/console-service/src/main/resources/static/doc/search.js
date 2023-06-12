@@ -23,19 +23,19 @@ api.push({
 })
 api[1].list.push({
     order: '1',
-    desc: '返回全部Strategy',
+    desc: '获取全部策略',
 });
 api[1].list.push({
     order: '2',
-    desc: '使用StrategyId作为get params访问Strategy',
+    desc: '获取策略',
 });
 api[1].list.push({
     order: '3',
-    desc: '使用StrategyId作为URI访问Param',
+    desc: '根据策略名称获取策略相关参数',
 });
 api[1].list.push({
     order: '4',
-    desc: 'Put StrategyParam URI is StrategyId',
+    desc: '添加策略参数 (内部接口)',
 });
 api.push({
     alias: 'BarController',
@@ -46,11 +46,11 @@ api.push({
 })
 api[2].list.push({
     order: '1',
-    desc: '获取1分钟Bar',
+    desc: '获取1分钟BAR',
 });
 api[2].list.push({
     order: '2',
-    desc: 'Put Bar',
+    desc: '更新BAR (內部接口)',
 });
 api.push({
     alias: 'PnlController',
@@ -65,7 +65,7 @@ api[3].list.push({
 });
 api[3].list.push({
     order: '2',
-    desc: 'Put PnlDaily',
+    desc: '更新PNL, 策略引擎调用 (内部接口)',
 });
 api[3].list.push({
     order: '3',
@@ -140,7 +140,7 @@ api.push({
 })
 api[8].list.push({
     order: '1',
-    desc: '获取结算价格',
+    desc: '获取结算信息',
 });
 api[8].list.push({
     order: '2',
@@ -148,11 +148,15 @@ api[8].list.push({
 });
 api[8].list.push({
     order: '3',
-    desc: '更新最新价格',
+    desc: '更新最新价格 (內部接口)',
 });
 api[8].list.push({
     order: '4',
-    desc: '获取可交易的标的',
+    desc: '获取交易费用',
+});
+api[8].list.push({
+    order: '5',
+    desc: '获取可交易标的',
 });
 api.push({
     alias: 'PortfolioController',
@@ -163,7 +167,7 @@ api.push({
 })
 api[9].list.push({
     order: '1',
-    desc: '',
+    desc: '获取用户投资组合',
 });
 api.push({
     alias: 'OrderController',

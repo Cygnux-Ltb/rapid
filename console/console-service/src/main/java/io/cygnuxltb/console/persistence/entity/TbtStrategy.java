@@ -38,7 +38,7 @@ public final class TbtStrategy {
     @Column(name = STRATEGY_NAME)
     private String strategyName;
 
-    @Column(name = "strategy_typr")
+    @Column(name = "strategy_type")
     private String strategyType;
 
     @Column(name = "strategy_info")

@@ -11,7 +11,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.controller.base.HttpParam.INVESTOR_ID;
+import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
+import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -37,17 +40,17 @@ public final class OrderController {
     /**
      * 查询Order
      *
-     * @param strategyId     int
-     * @param tradingDay     String
-     * @param investorId     String
-     * @param instrumentCode int
+     * @param strategyId     策略ID
+     * @param tradingDay     交易日
+     * @param investorId     交易账户
+     * @param instrumentCode 交易标的
      * @return List<OrderEntity>
      */
-    @GetMapping(path = "/{tradingDay}")
-    public List<OrderDTO> getOrder(@PathVariable("tradingDay") int tradingDay,
-                                   @RequestParam("strategyId") int strategyId,
-                                   @RequestParam("investorId") String investorId,
-                                   @RequestParam("instrumentCode") String instrumentCode) {
+    @GetMapping
+    public List<OrderDTO> getOrder(@RequestParam(TRADING_DAY) int tradingDay,
+                                   @RequestParam(STRATEGY_ID) int strategyId,
+                                   @RequestParam(INVESTOR_ID) String investorId,
+                                   @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
         if (ControllerUtil.paramIsNull(strategyId, tradingDay, investorId, instrumentCode))
             return null;
         return service.getOrders(strategyId, investorId, instrumentCode, tradingDay);
@@ -56,16 +59,15 @@ public final class OrderController {
     /**
      * 获取订单最新状态
      *
-     * @param tradingDay int
-     * @param strategyId int
-     * @return ResponseEntity<Object>
+     * @param tradingDay 交易日
+     * @param strategyId 策略ID
+     * @return List<OrderEventDTO>
      */
-    @GetMapping(path = "/status")
-    public List<OrderEventDTO> getOrdersByInit(@RequestParam("tradingDay") int tradingDay,
-                                               @RequestParam("strategyId") int strategyId) {
-        if (ControllerUtil.paramIsNull(strategyId, tradingDay)) {
+    @GetMapping(path = "/event")
+    public List<OrderEventDTO> getOrderEvents(@RequestParam(TRADING_DAY) int tradingDay,
+                                              @RequestParam(STRATEGY_ID) int strategyId) {
+        if (ControllerUtil.paramIsNull(strategyId, tradingDay))
             return null;
-        }
         // TODO 过滤最后的订单
         return service.getOrderEventsByTradingDay(tradingDay);
     }

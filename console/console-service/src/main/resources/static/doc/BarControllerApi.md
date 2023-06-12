@@ -1,6 +1,6 @@
 
 # 历史行情接口
-## 获取1分钟Bar
+## 获取1分钟BAR
 
 **URL:** `/bar`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 获取行情Bar
+**Description:** 获取1分钟BAR
 
 
 
@@ -17,13 +17,13 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|    交易日|-|
-|instrumentCode|string|true|标的代码|-|
+|td|int32|true|    交易日|-|
+|code|string|true|标的代码 (不支持查询多个标的)|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /bar?tradingDay=0&instrumentCode=
+curl -X GET -i /bar?td=0&code=
 ```
 
 **Response-fields:**
@@ -59,7 +59,7 @@ curl -X GET -i /bar?tradingDay=0&instrumentCode=
 ]
 ```
 
-## Put Bar
+## 更新BAR (內部接口)
 
 **URL:** `/bar`
 
@@ -68,7 +68,7 @@ curl -X GET -i /bar?tradingDay=0&instrumentCode=
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** 添加行情Bar
+**Description:** 更新BAR (內部接口)
 
 
 
