@@ -1,10 +1,10 @@
-package io.cygnuxltb.engine.scheduler;
+package io.cygnuxltb.engine.manager;
 
 import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -15,11 +15,11 @@ import javax.annotation.Nonnull;
  * <p>
  * 策略执行引擎与整体框架分离
  */
-public final class SyncMultiStrategyScheduler<M extends MarketData> extends MultiStrategyScheduler<M> {
+public final class SyncMultiStrategyManager<M extends MarketData> extends MultiStrategyManager<M> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(SyncMultiStrategyScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SyncMultiStrategyManager.class);
 
-    public SyncMultiStrategyScheduler() {
+    public SyncMultiStrategyManager() {
     }
 
     @Override
@@ -33,7 +33,7 @@ public final class SyncMultiStrategyScheduler<M extends MarketData> extends Mult
     }
 
     @Override
-    public void onOrderReport(@Nonnull AvroOrderReport report) {
+    public void onOrderEvent(@Nonnull AvroOrderEvent report) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", report.getBrokerOrdSysId(),
                 report.getOrdSysId());
         var order = OrderKeeper.handleOrderReport(report);
@@ -45,8 +45,8 @@ public final class SyncMultiStrategyScheduler<M extends MarketData> extends Mult
 
     // TODO add pools
     @Override
-    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
-        log.info("Recv AdaptorReport -> {}", report);
+    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+        log.info("Recv AdaptorEvent -> {}", event);
     }
 
     @Override

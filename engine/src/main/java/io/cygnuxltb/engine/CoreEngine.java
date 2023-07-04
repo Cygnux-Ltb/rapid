@@ -1,7 +1,7 @@
 package io.cygnuxltb.engine;
 
-public interface Engine {
+public class CoreEngine {
 
-	// 分离行情与交易部分
-	
+    // 分离行情与交易部分
+
 }

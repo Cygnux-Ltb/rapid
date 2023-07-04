@@ -10,7 +10,7 @@ import io.horizon.trader.order.Order;
 import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -107,7 +107,7 @@ public final class OrderKeeper implements Serializable {
      * @param report TdxOrderReport
      * @return ChildOrder
      */
-    public static ChildOrder handleOrderReport(AvroOrderReport report) {
+    public static ChildOrder handleOrderReport(AvroOrderEvent report) {
         log.info("Handle OrdReport, report -> {}", report);
         // 根据订单回报查找所属订单
         Order order = getOrder(report.getOrdSysId());

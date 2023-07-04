@@ -1,4 +1,4 @@
-package io.cygnuxltb.engine.scheduler;
+package io.cygnuxltb.engine.manager;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.market.instrument.Instrument;
@@ -15,13 +15,13 @@ import java.io.IOException;
 import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
-public abstract class MultiStrategyScheduler<M extends MarketData>
-        implements StrategyScheduler<M> {
+public abstract class MultiStrategyManager<M extends MarketData>
+        implements StrategyManager<M> {
 
     /**
      * Logger
      */
-    private static final Logger log = Log4j2LoggerFactory.getLogger(MultiStrategyScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(MultiStrategyManager.class);
 
     /**
      * 策略列表
@@ -35,12 +35,13 @@ public abstract class MultiStrategyScheduler<M extends MarketData>
     protected final MutableIntObjectMap<MutableSet<Strategy<M>>> subscribedMap = newIntObjectHashMap();
 
     @Override
-    public void addStrategy(Strategy<M> strategy) {
+    public StrategyManager<M> addStrategy(Strategy<M> strategy) {
         log.info("Add strategy -> strategyId==[{}], strategyName==[{}], subAccount==[{}]",
                 strategy.getId(), strategy.getName(), strategy.getSubAccount());
         strategyMap.put(strategy.getId(), strategy);
         strategy.getInstruments().each(instrument -> subscribeInstrument(instrument, strategy));
         strategy.enable();
+        return this;
     }
 
     private void subscribeInstrument(Instrument instrument, Strategy<M> strategy) {

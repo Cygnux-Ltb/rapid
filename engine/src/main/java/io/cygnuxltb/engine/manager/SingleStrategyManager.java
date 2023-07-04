@@ -1,10 +1,10 @@
-package io.cygnuxltb.engine.scheduler;
+package io.cygnuxltb.engine.manager;
 
 import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.horizon.trader.strategy.Strategy;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -18,9 +18,9 @@ import java.io.IOException;
  * @param <M>
  * @author yellow013
  */
-public class SingleStrategyScheduler<M extends MarketData> implements StrategyScheduler<M> {
+public class SingleStrategyManager<M extends MarketData> implements StrategyManager<M> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(SingleStrategyScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SingleStrategyManager.class);
 
     /**
      * Only one strategy
@@ -28,9 +28,10 @@ public class SingleStrategyScheduler<M extends MarketData> implements StrategySc
     private Strategy<M> strategy;
 
     @Override
-    public void addStrategy(Strategy<M> strategy) {
+    public StrategyManager<M> addStrategy(Strategy<M> strategy) {
         this.strategy = strategy;
         strategy.enable();
+        return this;
     }
 
     @Override
@@ -40,16 +41,16 @@ public class SingleStrategyScheduler<M extends MarketData> implements StrategySc
     }
 
     @Override
-    public void onOrderReport(@Nonnull AvroOrderReport report) {
-        var order = OrderKeeper.handleOrderReport(report);
+    public void onOrderEvent(@Nonnull AvroOrderEvent event) {
+        var order = OrderKeeper.handleOrderReport(event);
         // 调用策略实现的订单回调函数
         strategy.onOrder(order);
     }
 
     @Override
-    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
-        log.error("On Adaptor Report -> {}", report);
-        strategy.onAdaptorReport(report);
+    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+        log.error("On Adaptor event -> {}", event);
+        strategy.onAdaptorEvent(event);
     }
 
     @Override

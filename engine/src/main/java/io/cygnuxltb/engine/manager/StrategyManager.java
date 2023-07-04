@@ -1,4 +1,4 @@
-package io.cygnuxltb.engine.scheduler;
+package io.cygnuxltb.engine.manager;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.trader.handler.InboundHandler;
@@ -10,8 +10,8 @@ import io.horizon.trader.strategy.Strategy;
  *
  * @param <M>
  */
-public interface StrategyScheduler<M extends MarketData> extends InboundHandler<M> {
+public interface StrategyManager<M extends MarketData> extends InboundHandler<M> {
 
-	void addStrategy(Strategy<M> strategy);
+	StrategyManager<M> addStrategy(Strategy<M> strategy);
 
 }

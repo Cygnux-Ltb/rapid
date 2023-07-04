@@ -5,38 +5,68 @@ import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.adaptor.Adaptor;
-import io.horizon.trader.handler.AdaptorReportHandler;
+import io.horizon.trader.handler.AdaptorEventHandler;
 import io.horizon.trader.order.Order;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
 import io.horizon.trader.strategy.Strategy;
 import io.horizon.trader.strategy.StrategyEvent;
 import io.horizon.trader.strategy.StrategyException;
+import io.mercury.common.datetime.EpochTime;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+
 public class StrategyImpl<M extends MarketData> implements Strategy<M> {
 
+    private static final Logger log = getLogger(StrategyImpl.class);
 
-    StrategyImpl() {
-
+    StrategyImpl(MarketDataHandler<M> marketDataHandler) {
+        this.marketDataHandler = marketDataHandler;
     }
 
-    private MarketDataHandler<M> marketDataHandler;
+    private final MarketDataHandler<M> marketDataHandler;
 
     @Override
     public void onMarketData(@Nonnull M m) {
         marketDataHandler.onMarketData(m);
     }
 
-    private AdaptorReportHandler adaptorReportHandler;
+    private final AdaptorEventHandler adaptorEventHandler = event -> {
+        log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getName(),
+                event.getAdaptorId(), event.getStatus());
+        switch (event.getStatus()) {
+            case MD_ENABLE -> {
+                log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
+                adaptor.subscribeMarketData(instrument);
+                log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
+            }
+            case TRADER_ENABLE -> {
+                log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
+                // TODO
+//			adaptor.queryOrder(null);
+//			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
+//					event.getAdaptorId());
+                adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
+                        .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
+                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getName(),
+                        event.getAdaptorId());
+                adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
+                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getName(),
+                        event.getAdaptorId());
+            }
+            default -> log.warn("{} unhandled event received {}", getName(), event);
+        }
+
+    };
 
     @Override
-    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
-        adaptorReportHandler.onAdaptorReport(report);
+    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+        adaptorEventHandler.onAdaptorEvent(event);
     }
 
     @Override
@@ -71,11 +101,6 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
 
     @Override
     public Strategy<M> initialize(@Nonnull Supplier<Boolean> initializer) {
-        return null;
-    }
-
-    @Override
-    public Strategy<M> addAdaptor(@Nonnull Adaptor adaptor) {
         return null;
     }
 

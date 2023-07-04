@@ -1,14 +1,14 @@
 package io.cygnuxltb.engine.actor;
 
-import io.horizon.trader.handler.OrderReportHandler;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.handler.OrderEventHandler;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 
 import javax.annotation.Nonnull;
 
-public class OrderReportActor implements OrderReportHandler {
+public class OrderEventActor implements OrderEventHandler {
 
     @Override
-    public void onOrderReport(@Nonnull AvroOrderReport report) {
+    public void onOrderEvent(@Nonnull AvroOrderEvent event) {
         // TODO Auto-generated method stub
     }
 

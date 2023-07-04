@@ -5,6 +5,9 @@ import io.horizon.trader.risk.OrderBarrier;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ *
+ */
 
 @NotThreadSafe
 public class AccountBarrier implements OrderBarrier {

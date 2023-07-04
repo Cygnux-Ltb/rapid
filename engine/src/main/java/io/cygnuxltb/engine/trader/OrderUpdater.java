@@ -3,7 +3,7 @@ package io.cygnuxltb.engine.trader;
 import io.horizon.trader.order.ChildOrder;
 import io.horizon.trader.order.attr.OrdQty;
 import io.horizon.trader.order.enums.OrdStatus;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -16,15 +16,15 @@ public final class OrderUpdater {
     /**
      * 根据订单回报处理订单状态
      *
-     * @param order  ChildOrder
-     * @param report DtoOrderReport
+     * @param order ChildOrder
+     * @param event DtoOrderReport
      */
-    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvroOrderReport report) {
+    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvroOrderEvent event) {
         OrdQty qty = order.getQty();
-        int filledQty = report.getFilledQty();
-        OrdStatus status = OrdStatus.valueOf(report.getStatus());
-        log.info("OrdReport status==[{}], filledQty==[{}], tradePrice==[{}], order.getQty() -> {}", status, filledQty,
-                report.getTradePrice(), qty);
+        int filledQty = event.getFilledQty();
+        OrdStatus status = OrdStatus.valueOf(event.getStatus());
+        log.info("OrderEvent status==[{}], filledQty==[{}], tradePrice==[{}], order.getQty() -> {}", status, filledQty,
+                event.getTradePrice(), qty);
         switch (status) {
             case Unprovided, Invalid -> {
                 // 处理未返回订单状态的情况, 根据成交数量判断
@@ -48,7 +48,7 @@ public final class OrderUpdater {
                 order.getQty().setFilledQty(filledQty);
                 // 新增订单成交记录
                 // Add NewTrade record
-                order.addRecord(report.getEpochMicros(), report.getTradePrice(),
+                order.addRecord(event.getEpochMicros(), event.getTradePrice(),
                         filledQty - order.getQty().getLastFilledQty());
                 log.info(
                         "ChildOrder current status PartiallyFilled, strategyId==[{}], ordSysId==[{}], "
@@ -63,7 +63,7 @@ public final class OrderUpdater {
                 order.getQty().setFilledQty(filledQty);
                 // 新增订单成交记录
                 // Add NewTrade Record
-                order.addRecord(report.getEpochMicros(), report.getTradePrice(),
+                order.addRecord(event.getEpochMicros(), event.getTradePrice(),
                         filledQty - order.getQty().getLastFilledQty());
                 // 计算此订单成交均价
                 // Calculation AvgPrice
@@ -76,7 +76,7 @@ public final class OrderUpdater {
             default ->
                 // 记录其他情况, 打印详细信息
                     log.warn("Order updateWithReport finish, switch in default, order status==[{}], "
-                            + "order -> {}, report -> {}", order.getStatus(), order, report);
+                            + "order -> {}, event -> {}", order.getStatus(), order, event);
         }
     }
 

@@ -1,11 +1,11 @@
-package io.cygnuxltb.engine.scheduler;
+package io.cygnuxltb.engine.manager;
 
 import io.cygnuxltb.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
 import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -13,16 +13,16 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
-import static io.mercury.common.concurrent.queue.ScQueueByJct.spscQueue;
+import static io.mercury.common.concurrent.queue.ScQueueWithJCT.spscQueue;
 
 /**
  * @author yellow013
  * <p>
  * 策略执行引擎与整体框架分离
  */
-public final class AsyncMultiStrategyScheduler<M extends MarketData> extends MultiStrategyScheduler<M> {
+public final class AsyncMultiStrategyManager<M extends MarketData> extends MultiStrategyManager<M> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyManager.class);
 
     private final Queue<QueueMsg> queue;
 
@@ -30,7 +30,7 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Mul
     private static final int OrderReport = 1;
     private static final int AdaptorEvent = 2;
 
-    public AsyncMultiStrategyScheduler(Capacity capacity) {
+    public AsyncMultiStrategyManager(Capacity capacity) {
         this.queue = spscQueue("AsyncMultiStrategyScheduler-Queue")
                 .capacity(capacity.value()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
@@ -44,18 +44,18 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Mul
                             });
                         }
                         case OrderReport -> {
-                            var report = msg.getOrderReport();
-                            log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", report.getBrokerOrdSysId(),
-                                    report.getOrdSysId());
-                            ChildOrder order = OrderKeeper.handleOrderReport(report);
+                            var event = msg.getOrderEvent();
+                            log.info("Handle OrderEvent, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
+                                    event.getOrdSysId());
+                            ChildOrder order = OrderKeeper.handleOrderReport(event);
                             log.info(
                                     "Search Order OK. brokerSysId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
-                                    report.getBrokerOrdSysId(), order.getStrategyId(),
-                                    order.getInstrument().getInstrumentCode(), report.getOrdSysId());
+                                    event.getBrokerOrdSysId(), order.getStrategyId(),
+                                    order.getInstrument().getInstrumentCode(), event.getOrdSysId());
                             strategyMap.get(order.getStrategyId()).onOrder(order);
                         }
                         case AdaptorEvent -> {
-                            AvroAdaptorReport adaptorReport = msg.getAdaptorReport();
+                            AvroAdaptorEvent adaptorReport = msg.getAdaptorEvent();
                             String adaptorId = adaptorReport.getAdaptorId();
                             log.info("Recv AdaptorEvent -> {}", adaptorReport);
                         }
@@ -72,13 +72,13 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Mul
 
     // TODO add pools
     @Override
-    public void onOrderReport(@Nonnull AvroOrderReport report) {
-        queue.enqueue(new QueueMsg(report));
+    public void onOrderEvent(@Nonnull AvroOrderEvent event) {
+        queue.enqueue(new QueueMsg(event));
     }
 
     // TODO add pools
     @Override
-    public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
+    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent report) {
         queue.enqueue(new QueueMsg(report));
     }
 
@@ -88,23 +88,23 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Mul
 
         private M marketData;
 
-        private AvroOrderReport orderReport;
+        private AvroOrderEvent orderEvent;
 
-        private AvroAdaptorReport adaptorReport;
+        private AvroAdaptorEvent adaptorEvent;
 
         private QueueMsg(M marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
 
-        private QueueMsg(AvroOrderReport orderReport) {
+        private QueueMsg(AvroOrderEvent orderEvent) {
             this.mark = OrderReport;
-            this.orderReport = orderReport;
+            this.orderEvent = orderEvent;
         }
 
-        private QueueMsg(AvroAdaptorReport adaptorReport) {
+        private QueueMsg(AvroAdaptorEvent adaptorEvent) {
             this.mark = AdaptorEvent;
-            this.adaptorReport = adaptorReport;
+            this.adaptorEvent = adaptorEvent;
         }
 
         public int getMark() {
@@ -115,12 +115,12 @@ public final class AsyncMultiStrategyScheduler<M extends MarketData> extends Mul
             return marketData;
         }
 
-        public AvroOrderReport getOrderReport() {
-            return orderReport;
+        public AvroOrderEvent getOrderEvent() {
+            return orderEvent;
         }
 
-        public AvroAdaptorReport getAdaptorReport() {
-            return adaptorReport;
+        public AvroAdaptorEvent getAdaptorEvent() {
+            return adaptorEvent;
         }
 
     }
