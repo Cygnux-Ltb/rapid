@@ -1,0 +1,22 @@
+INSERT INTO "PUBLIC"."TBL_S_PARAM" ("OWNER_GROUP", "OWNER_NAME", "PARAM_NAME", "PARAM_TYPE", "PARAM_VALUE")
+VALUES ('SIMNOW', 'TEST0', 'Param1', 'Type1', 'Value1'),
+       ('SIMNOW', 'TEST0', 'Param2', 'Type2', 'Value2'),
+       ('SIMNOW', 'TEST0', 'Param3', 'Type3', 'Value3'),
+       ('SIMNOW', 'TEST0', 'Param4', 'Type4', 'Value4'),
+       ('SIMNOW', 'TEST0', 'Param5', 'Type5', 'Value5'),
+       ('SIMNOW', 'TEST0', 'Param6', 'Type6', 'Value6'),
+       ('SIMNOW', 'TEST0', 'Param7', 'Type7', 'Value7'),
+       ('SIMNOW', 'TEST0', 'Param8', 'Type8', 'Value8'),
+       ('SIMNOW', 'Owner3', 'Param9', 'Type9', 'Value9'),
+       ('SIMNOW', 'Owner4', 'Param10', 'Type10', 'Value10'),
+       ('Group4', 'Owner4', 'Param11', 'Type11', 'Value11'),
+       ('Group4', 'Owner4', 'Param12', 'Type12', 'Value12'),
+       ('Group5', 'Owner5', 'Param13', 'Type13', 'Value13'),
+       ('Group5', 'Owner5', 'Param14', 'Type14', 'Value14'),
+       ('Group5', 'Owner5', 'Param15', 'Type15', 'Value15'),
+       ('Group6', 'Owner6', 'Param16', 'Type16', 'Value16'),
+       ('Group6', 'Owner6', 'Param17', 'Type17', 'Value17'),
+       ('Group6', 'Owner6', 'Param18', 'Type18', 'Value18'),
+       ('Group7', 'Owner7', 'Param19', 'Type19', 'Value19'),
+       ('Group7', 'Owner7', 'Param20', 'Type20', 'Value20');
+
