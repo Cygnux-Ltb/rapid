@@ -4,8 +4,7 @@ import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.adaptor.Adaptor;
-import io.horizon.trader.handler.AdaptorReportHandler;
+import io.horizon.trader.handler.AdaptorEventHandler;
 import io.horizon.trader.handler.OrderHandler;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.NonInstantiable;
@@ -28,7 +27,7 @@ public interface Strategy<M> extends
         // 集成订单处理
         OrderHandler,
         // 集成AdaptorReport处理
-        AdaptorReportHandler,
+        AdaptorEventHandler,
         // 用于资源清理
         Closeable {
 
@@ -50,8 +49,6 @@ public interface Strategy<M> extends
     ImmutableIntObjectMap<Instrument> getInstruments();
 
     Strategy<M> initialize(@Nonnull Supplier<Boolean> initializer);
-
-    Strategy<M> addAdaptor(@Nonnull Adaptor adaptor);
 
     void onStrategyEvent(@Nonnull StrategyEvent event);
 

@@ -4,8 +4,9 @@ import io.horizon.market.data.MarketData;
 import io.horizon.market.data.impl.BasicMarketData;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.adaptor.Adaptor;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.handler.AdaptorEventHandler;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -21,50 +22,36 @@ import java.io.IOException;
  */
 public interface MarketDataRecorder<M extends MarketData> extends MarketDataHandler<M>, Closeable {
 
-    void setAdaptor(@Nonnull final Adaptor adaptor);
-
     /**
      * MarketDataRecorder base implements
      *
      * @param <M>
      * @author yellow013
      */
-    abstract class BaseMarketDataRecorder<M extends MarketData> implements MarketDataRecorder<M> {
+    abstract class BaseMarketDataRecorder<M extends MarketData> implements MarketDataRecorder<M> , AdaptorEventHandler {
 
         private static final Logger log = Log4j2LoggerFactory.getLogger(BaseMarketDataRecorder.class);
 
         protected final Instrument[] instruments;
 
-        protected Adaptor adaptor;
+        protected final Adaptor adaptor;
 
         protected BaseMarketDataRecorder(@Nonnull Adaptor adaptor,
                                          @Nonnull Instrument... instruments) {
-            if (this.adaptor == null) {
-                this.adaptor = adaptor;
-            } else {
-                throw new IllegalStateException("Adaptor repeat setting.");
-            }
+            this.adaptor = adaptor;
             this.instruments = instruments;
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull AvroAdaptorReport event) {
+        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
             log.info("Received event -> {}", event);
-            if (adaptor == null) {
-                throw new IllegalStateException("adaptor is null");
-            }
             switch (event.getStatus()) {
-                case AvroAdaptorStatus.MD_ENABLE -> adaptor.subscribeMarketData(instruments);
-                case AvroAdaptorStatus.MD_DISABLE ->
-                        log.info("Adaptor -> {} market data is disable", adaptor.getAdaptorId());
+                case MD_ENABLE -> adaptor.subscribeMarketData(instruments);
+                case MD_DISABLE -> log.info("Adaptor -> {} market data is disable", adaptor.getAdaptorId());
                 default -> log.warn("Event no processing, AdaptorEvent -> {}", event);
             }
         }
 
-        @Override
-        public void onOrderReport(@Nonnull AvroOrderReport report) {
-            log.info("Ignored order report -> {}", report);
-        }
 
 
     }
@@ -76,8 +63,8 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
 
         private final Logger log = Log4j2LoggerFactory.getLogger(getClass());
 
-        public LoggerMarketDataRecorder(Instrument[] instruments) {
-            super(instruments);
+        public LoggerMarketDataRecorder(Adaptor adaptor,  Instrument... instruments) {
+            super(adaptor, instruments);
         }
 
         @Override

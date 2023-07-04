@@ -25,7 +25,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
      */
     protected final Account account;
 
-    protected AdaptorRunMode mode = AdaptorRunMode.Normal;
+    protected ConnectionType type = ConnectionType.Normal;
 
     /**
      * @param prefix  String
@@ -60,7 +60,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         } catch (IOException ioe) {
             throw ioe;
         } catch (Exception e) {
-            throw new ComponentStartupException("Adaptor[" + adaptorId + "] -> " + e.getMessage(), e);
+            throw new ComponentStartupException(adaptorId + " -> " + e.getMessage(), e);
         }
     }
 

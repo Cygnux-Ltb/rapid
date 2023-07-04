@@ -27,7 +27,7 @@
 
     <modules>
         <module>api</module>
-        <module>channel</module>
+        <module>adaptor</module>
         <module>console</module>
         <module>display</module>
         <module>engine</module>

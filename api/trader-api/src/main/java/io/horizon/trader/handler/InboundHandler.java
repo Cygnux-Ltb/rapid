@@ -2,8 +2,8 @@ package io.horizon.trader.handler;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.market.handler.MarketDataHandler;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ public interface InboundHandler<M extends MarketData> extends
         // 行情处理器
         MarketDataHandler<M>,
         // 订单回报处理器
-        OrderReportHandler,
+        OrderEventHandler,
         // Adaptor事件处理器
-        AdaptorReportHandler,
+        AdaptorEventHandler,
         // 用于清理资源
         Closeable {
 
@@ -36,18 +36,18 @@ public interface InboundHandler<M extends MarketData> extends
     final class InboundSchedulerWrapper<M extends MarketData> implements InboundHandler<M> {
 
         private final MarketDataHandler<M> marketDataHandler;
-        private final OrderReportHandler orderReportHandler;
-        private final AdaptorReportHandler adaptorReportHandler;
+        private final OrderEventHandler orderEventHandler;
+        private final AdaptorEventHandler adaptorEventHandler;
 
         private final Logger logger;
 
         public InboundSchedulerWrapper(@Nullable MarketDataHandler<M> marketDataHandler,
-                                       @Nullable OrderReportHandler orderReportHandler,
-                                       @Nullable AdaptorReportHandler adaptorReportHandler,
+                                       @Nullable OrderEventHandler orderEventHandler,
+                                       @Nullable AdaptorEventHandler adaptorEventHandler,
                                        @Nullable Logger logger) {
             this.marketDataHandler = marketDataHandler;
-            this.orderReportHandler = orderReportHandler;
-            this.adaptorReportHandler = adaptorReportHandler;
+            this.orderEventHandler = orderEventHandler;
+            this.adaptorEventHandler = adaptorEventHandler;
             this.logger = logger;
         }
 
@@ -59,15 +59,15 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderReport(@Nonnull AvroOrderReport report) {
-            if (orderReportHandler != null)
-                orderReportHandler.onOrderReport(report);
+        public void onOrderEvent(@Nonnull AvroOrderEvent event) {
+            if (orderEventHandler != null)
+                orderEventHandler.onOrderEvent(event);
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
-            if (adaptorReportHandler != null)
-                adaptorReportHandler.onAdaptorReport(report);
+        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+            if (adaptorEventHandler != null)
+                adaptorEventHandler.onAdaptorEvent(event);
         }
 
         @Override
@@ -83,23 +83,23 @@ public interface InboundHandler<M extends MarketData> extends
                     }
                 }
             }
-            if (orderReportHandler != null) {
+            if (orderEventHandler != null) {
                 try {
-                    ResourceUtil.close(orderReportHandler);
+                    ResourceUtil.close(orderEventHandler);
                 } catch (Exception e) {
                     if (logger != null)
                         logger.error("Close OrderReportHandler -> {} throw {}",
-                                orderReportHandler.getClass().getSimpleName(),
+                                orderEventHandler.getClass().getSimpleName(),
                                 e.getClass().getSimpleName(), e);
                 }
             }
-            if (adaptorReportHandler != null) {
+            if (adaptorEventHandler != null) {
                 try {
-                    ResourceUtil.close(adaptorReportHandler);
+                    ResourceUtil.close(adaptorEventHandler);
                 } catch (Exception e) {
                     if (logger != null)
                         logger.error("Close AdaptorReportHandler -> {} throw {}",
-                                adaptorReportHandler.getClass().getSimpleName(),
+                                adaptorEventHandler.getClass().getSimpleName(),
                                 e.getClass().getSimpleName(), e);
                 }
             }
@@ -124,12 +124,12 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderReport(@Nonnull AvroOrderReport report) {
-            log.info("InboundSchedulerLogger record orderReport -> {}", report);
+        public void onOrderEvent(@Nonnull AvroOrderEvent event) {
+            log.info("InboundSchedulerLogger record orderReport -> {}", event);
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull AvroAdaptorReport report) {
+        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent report) {
             log.info("InboundSchedulerLogger record adaptorReport -> {}", report);
         }
 

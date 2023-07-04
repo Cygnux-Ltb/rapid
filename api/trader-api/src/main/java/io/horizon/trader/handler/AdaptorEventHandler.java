@@ -1,6 +1,5 @@
 package io.horizon.trader.handler;
 
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
 import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -8,7 +7,7 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 
 @FunctionalInterface
-public interface AdaptorReportHandler {
+public interface AdaptorEventHandler {
 
     void onAdaptorEvent(@Nonnull final AvroAdaptorEvent event);
 
@@ -17,7 +16,7 @@ public interface AdaptorReportHandler {
      *
      * @author yellow013
      */
-    class AdaptorEventLogger implements AdaptorReportHandler {
+    class AdaptorEventLogger implements AdaptorEventHandler {
 
         private final Logger log;
 
@@ -26,7 +25,7 @@ public interface AdaptorReportHandler {
         }
 
         @Override
-        public void onAdaptorReport(@Nonnull final AvroAdaptorEvent report) {
+        public void onAdaptorEvent(@Nonnull final AvroAdaptorEvent report) {
             log.info("AdaptorEventLogger -> {}", report);
         }
 

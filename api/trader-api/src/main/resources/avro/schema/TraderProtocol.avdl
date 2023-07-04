@@ -133,7 +133,7 @@ protocol TraderProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.inbound")
+	@namespace("io.horizon.trader.serialization.avro.send")
 	record AvroNewOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
@@ -161,7 +161,7 @@ protocol TraderProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.inbound")
+	@namespace("io.horizon.trader.serialization.avro.send")
 	record AvroCancelOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
@@ -183,7 +183,7 @@ protocol TraderProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.inbound")
+	@namespace("io.horizon.trader.serialization.avro.send")
 	record AvroQueryOrder {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -202,7 +202,7 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.horizon.trader.serialization.avro.inbound")
+	@namespace("io.horizon.trader.serialization.avro.send")
 	record AvroQueryPositions {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -220,7 +220,7 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.horizon.trader.serialization.avro.inbound")
+	@namespace("io.horizon.trader.serialization.avro.send")
 	record AvroQueryBalance {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -236,8 +236,8 @@ protocol TraderProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.outbound")
-	record AvroOrderReport {
+	@namespace("io.horizon.trader.serialization.avro.receive")
+	record AvroOrderEvent {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
@@ -263,8 +263,8 @@ protocol TraderProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.outbound")
-	record AvroBalanceReport {
+	@namespace("io.horizon.trader.serialization.avro.receive")
+	record AvroBalanceEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -275,8 +275,8 @@ protocol TraderProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.outbound")
-	record AvroPositionsReport {
+	@namespace("io.horizon.trader.serialization.avro.receive")
+	record AvroPositionsEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -288,8 +288,8 @@ protocol TraderProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.outbound")
-	record AvroAdaptorReport {
+	@namespace("io.horizon.trader.serialization.avro.receive")
+	record AvroAdaptorEvent {
 		long epochMillis;
 		string adaptorId;
 		int accountId;

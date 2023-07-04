@@ -1,6 +1,6 @@
 package io.horizon.trader.adaptor;
 
-public enum AdaptorRunMode {
+public enum ConnectionType {
 
     Normal,
 

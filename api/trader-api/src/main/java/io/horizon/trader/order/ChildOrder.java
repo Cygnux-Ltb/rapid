@@ -10,9 +10,9 @@ import io.horizon.trader.order.attr.OrdQty;
 import io.horizon.trader.order.enums.OrdType;
 import io.horizon.trader.order.enums.TrdAction;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
+import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.send.AvroNewOrder;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -121,15 +121,15 @@ public class ChildOrder extends AbstractOrder {
     /**
      * 用于构建外部来源的新订单, 通常是根据系统未托管的订单回报构建, 此时需要传递订单当前状态
      *
-     * @param report OrderReport
+     * @param event OrderReport
      * @return ChildOrder
      */
-    public static ChildOrder newExternalOrder(AvroOrderReport report) {
-        var account = AccountFinder.getAccountByInvestorId(report.getInvestorId());
-        var instrument = InstrumentKeeper.getInstrument(report.getInstrumentCode());
-        var direction = TrdDirection.valueOf(report.getDirection());
-        var action = TrdAction.valueOf(report.getAction());
-        return new ChildOrder(report.getOrdSysId(),
+    public static ChildOrder newExternalOrder(AvroOrderEvent event) {
+        var account = AccountFinder.getAccountByInvestorId(event.getInvestorId());
+        var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
+        var direction = TrdDirection.valueOf(event.getDirection());
+        var action = TrdAction.valueOf(event.getAction());
+        return new ChildOrder(event.getOrdSysId(),
                 // -------------------------------
                 // 外部订单使用的策略ID
                 0,
@@ -138,9 +138,9 @@ public class ChildOrder extends AbstractOrder {
                 // -------------------------------
                 account.getAccountId(), instrument,
                 // 以委托数量创建
-                OrdQty.withOffer(report.getOfferQty()),
+                OrdQty.withOffer(event.getOfferQty()),
                 // 以委托价格创建
-                OrdPrice.withOffer(report.getOfferPrice()),
+                OrdPrice.withOffer(event.getOfferPrice()),
                 // -------------------------------
                 OrdType.Limited, direction, action);
 

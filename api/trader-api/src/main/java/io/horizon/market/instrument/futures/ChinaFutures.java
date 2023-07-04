@@ -7,6 +7,7 @@ import io.horizon.market.instrument.attr.PriceMultiplier;
 import io.horizon.market.instrument.attr.PriorityCloseType;
 import io.horizon.market.instrument.attr.TradablePeriod;
 import io.horizon.market.instrument.base.BaseFutures;
+import io.mercury.common.collections.ImmutableLists;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.datetime.DateTimeUtil;
@@ -534,7 +535,7 @@ public final class ChinaFutures {
             this.symbolCode = symbolCode;
             this.priorityCloseType = priorityCloseType;
             this.multiplier = multiplier;
-            this.tradablePeriods = newImmutableList(tradablePeriods);
+            this.tradablePeriods = ImmutableLists.newImmutableList(tradablePeriods);
             this.instruments = generateInstruments();
         }
 
