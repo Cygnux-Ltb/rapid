@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.consts;
+package io.cygnuxltb.adaptor.ctp.consts;
 
 import static ctp.thostapi.thosttraderapiConstants.*;
 

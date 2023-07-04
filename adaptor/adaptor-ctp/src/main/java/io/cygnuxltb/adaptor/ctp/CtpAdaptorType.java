@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.adaptor;
+package io.cygnuxltb.adaptor.ctp;
 
 import io.horizon.trader.adaptor.AdaptorType;
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp;
+package io.cygnuxltb.adaptor.ctp;
 
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -7,6 +7,7 @@ import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
 
+import java.io.Serial;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,15 +33,15 @@ public class OrderRefKeeper {
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectHashMap(L10_SIZE.value());
 
-    private final static OrderRefKeeper INNER_INSTANCE = new OrderRefKeeper();
+    private final static OrderRefKeeper INSTANCE = new OrderRefKeeper();
 
     private OrderRefKeeper() {
     }
 
     public static void put(String orderRef, long ordSysId) {
         log.info("PUT ctp orderRef==[{}] mapping to ordSysId==[{}]", orderRef, ordSysId);
-        INNER_INSTANCE.orderRefMapper.put(orderRef, ordSysId);
-        INNER_INSTANCE.ordSysIdMapper.put(ordSysId, orderRef);
+        INSTANCE.orderRefMapper.put(orderRef, ordSysId);
+        INSTANCE.ordSysIdMapper.put(ordSysId, orderRef);
     }
 
     /**
@@ -48,12 +49,12 @@ public class OrderRefKeeper {
      * @return long
      */
     public static long getOrdSysId(String orderRef) {
-        long ordSysId = INNER_INSTANCE.orderRefMapper.get(orderRef);
+        long ordSysId = INSTANCE.orderRefMapper.get(orderRef);
         if (ordSysId == 0L) {
             // 处理其他来源的订单
             ordSysId = ForExternalOrder.getOrdSysId();
-            log.warn("Handle external order, allocate external order used ordSysId==[{}], orderRef==[{}]", ordSysId,
-                    orderRef);
+            log.warn("Handle external order, allocate external order used ordSysId==[{}], orderRef==[{}]",
+                    ordSysId, orderRef);
         }
         return ordSysId;
     }
@@ -63,7 +64,7 @@ public class OrderRefKeeper {
      * @return String
      */
     public static String getOrderRef(long ordSysId) throws OrderRefNotFoundException {
-        String orderRef = INNER_INSTANCE.ordSysIdMapper.get(ordSysId);
+        String orderRef = INSTANCE.ordSysIdMapper.get(ordSysId);
         if (orderRef == null)
             throw new OrderRefNotFoundException(ordSysId);
         return orderRef;
@@ -93,6 +94,18 @@ public class OrderRefKeeper {
     public static int nextOrderRef() {
         return (int) (currentTimeMillis() - BenchmarkPoint);
     }
+
+    public static final class OrderRefNotFoundException extends Exception {
+
+        @Serial
+        private static final long serialVersionUID = -74254388017422611L;
+
+        private OrderRefNotFoundException(long ordSysId) {
+            super("ordSysId -> [" + ordSysId + "] is not find orderRef");
+        }
+
+    }
+
 
     public static void main(String[] args) {
 

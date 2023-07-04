@@ -1,19 +1,18 @@
-package io.cygnuxltb.channel.ctp.adaptor;
+package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.adaptor.AbstractAdaptor;
 import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryPositions;
+import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.send.AvroNewOrder;
+import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
+import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
+import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
 import io.mercury.common.concurrent.queue.ScQueue;
-import io.mercury.common.concurrent.queue.ScQueueByJct;
+import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.avro.msg.AvroBinaryMsg;
 import io.mercury.transport.zmq.ZmqConfigurator;
@@ -61,7 +60,7 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
 
         this.target = ZmqConfigurator.withConfig("adaptor.target", config)
                 .newPublisher("", msg -> null);
-        ScQueue<FtdcRspMsg> queue = ScQueueByJct
+        ScQueue<FtdcRspMsg> queue = ScQueueWithJCT
                 .mpscQueue(ClassName + "-Buf").capacity(32)
                 .process(target::publish);
         this.adaptor = new CtpAdaptor(account, CtpConfiguration.with(config), queue);

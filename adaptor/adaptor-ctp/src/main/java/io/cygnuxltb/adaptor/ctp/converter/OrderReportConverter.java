@@ -1,13 +1,13 @@
-package io.cygnuxltb.channel.ctp.converter;
+package io.cygnuxltb.adaptor.ctp.converter;
 
-import io.cygnuxltb.channel.ctp.OrderRefKeeper;
-import io.cygnuxltb.channel.ctp.consts.FtdcConstMapper;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
-import io.horizon.trader.serialization.avro.outbound.AvroOrderReport;
+import io.cygnuxltb.adaptor.ctp.OrderRefKeeper;
+import io.cygnuxltb.adaptor.ctp.consts.FtdcConstMapper;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
+import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -35,10 +35,10 @@ public final class OrderReportConverter {
      * @param order FtdcInputOrder
      * @return OrderReport
      */
-    public AvroOrderReport withFtdcInputOrder(FtdcInputOrder order) {
+    public AvroOrderEvent withFtdcInputOrder(FtdcInputOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        AvroOrderReport report = AvroOrderReport.newBuilder()
+        var report = AvroOrderEvent.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -74,10 +74,10 @@ public final class OrderReportConverter {
      * @param order FtdcOrder
      * @return OrderReport
      */
-    public AvroOrderReport withFtdcOrder(FtdcOrder order) {
+    public AvroOrderEvent withFtdcOrder(FtdcOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        AvroOrderReport report = AvroOrderReport.newBuilder()
+        var event = AvroOrderEvent.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -111,8 +111,8 @@ public final class OrderReportConverter {
                 // 更新时间
                 .setUpdateTime(order.getUpdateTime())
                 .build();
-        log.info("FtdcOrder conversion to OrderReport -> {}", report);
-        return report;
+        log.info("FtdcOrder conversion to OrderReport -> {}", event);
+        return event;
     }
 
     /**
@@ -123,10 +123,10 @@ public final class OrderReportConverter {
      * @param trade FtdcTrade
      * @return OrderReport
      */
-    public AvroOrderReport withFtdcTrade(FtdcTrade trade) {
+    public AvroOrderEvent withFtdcTrade(FtdcTrade trade) {
         var orderRef = trade.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var builder = AvroOrderReport.newBuilder();
+        var builder = AvroOrderEvent.newBuilder();
         // 微秒时间戳
         builder.setEpochMicros(getEpochMicros());
         // OrdSysId
@@ -158,9 +158,9 @@ public final class OrderReportConverter {
         // 最后修改时间
         builder.setUpdateTime(removeNonDigits(trade.getTradeDate()) + removeNonDigits(trade.getTradeTime()));
 
-        var report = builder.build();
-        log.info("FtdcTrade conversion to OrderReport -> {}", report);
-        return report;
+        var event = builder.build();
+        log.info("FtdcTrade conversion to OrderEvent -> {}", event);
+        return event;
     }
 
     /**
@@ -171,7 +171,7 @@ public final class OrderReportConverter {
      * @param inputOrderAction FtdcInputOrderAction
      * @return OrderReport
      */
-    public AvroOrderReport withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
+    public AvroOrderEvent withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
 
         return null;
     }
@@ -184,7 +184,7 @@ public final class OrderReportConverter {
      * @param orderAction FtdcOrderAction
      * @return OrderReport
      */
-    public AvroOrderReport withFtdcOrderAction(FtdcOrderAction orderAction) {
+    public AvroOrderEvent withFtdcOrderAction(FtdcOrderAction orderAction) {
 
         return null;
     }

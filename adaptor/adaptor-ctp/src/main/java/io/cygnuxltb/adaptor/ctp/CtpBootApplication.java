@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CtpChannelApplication {
+public class CtpBootApplication {
 
     static {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CTP CHANNEL START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -15,7 +15,7 @@ public class CtpChannelApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(CtpChannelApplication.class, args);
+        SpringApplication.run(CtpBootApplication.class, args);
     }
 
 }

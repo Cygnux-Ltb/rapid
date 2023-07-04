@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcMdApi;
@@ -6,11 +6,11 @@ import ctp.thostapi.CThostFtdcMdSpi;
 import ctp.thostapi.CThostFtdcReqUserLoginField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcDepthMarketDataConverter;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcMdConnect;
-import io.cygnuxltb.channel.ctp.gateway.utils.CtpLibraryLoader;
+import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcDepthMarketDataConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcMdConnect;
+import io.cygnuxltb.adaptor.ctp.gateway.utils.CtpLibraryLoader;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
@@ -74,7 +74,7 @@ public class CtpMdGateway implements Closeable {
      * @param handler   Handler<FtdcRspMsg>
      */
     public CtpMdGateway(@Nonnull String gatewayId, @Nonnull CtpConfiguration config,
-                        @MustBeThreadSafe @Nonnull Handler<FtdcRspMsg> handler) {
+                        @Nonnull @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");
         Asserter.nonNull(handler, "handler");
@@ -86,7 +86,7 @@ public class CtpMdGateway implements Closeable {
     /**
      * 启动并挂起线程
      */
-    public final void bootstrap() {
+    public final void startup() {
         if (isInitialize.compareAndSet(false, true)) {
             log.info("CThostFtdcMdApi.version() -> {}", CThostFtdcMdApi.GetApiVersion());
             try {

@@ -1,26 +1,13 @@
-package io.cygnuxltb.channel.ctp.converter;
+package io.cygnuxltb.adaptor.ctp.converter;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcActionFlag;
-import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcForceCloseReason;
-import io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcVolumeCondition;
-import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
+import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
+import io.cygnuxltb.adaptor.ctp.consts.FtdcConst;
+import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.send.AvroNewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
-
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcContingentCondition.IMMEDIATELY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.BUY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.SELL;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcHedgeFlag.SPECULATION_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_TODAY_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.OPEN_STR;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderPrice.LIMIT_PRICE;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcTimeCondition.GFD;
 
 /**
  * FtdcOrderConverter
@@ -33,14 +20,19 @@ public final class FtdcOrderConverter {
 
     // 经纪公司代码
     private final String brokerId;
+
     // 投资者代码
     private final String investorId;
+
     // 资金账号
     private final String accountId;
+
     // 用户代码
     private final String userId;
+
     // IP地址
     private final String ipAddress;
+
     // MAC地址
     private final String macAddress;
 
@@ -147,28 +139,28 @@ public final class FtdcOrderConverter {
         field.setInstrumentID(order.getInstrumentCode());
         log.info("Set CThostFtdcInputOrderField -> InstrumentID == {}", order.getInstrumentCode());
         // 设置报单价格
-        field.setOrderPriceType(LIMIT_PRICE);
+        field.setOrderPriceType(FtdcConst.FtdcOrderPrice.LIMIT_PRICE);
         log.info("Set CThostFtdcInputOrderField -> OrderPriceType == LimitPrice");
         // 设置开平标识
         switch (order.getAction()) {
             case OPEN -> {
                 // 设置为开仓
-                field.setCombOffsetFlag(OPEN_STR);
+                field.setCombOffsetFlag(FtdcConst.FtdcOffsetFlag.OPEN_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Open");
             }
             case CLOSE -> {
                 // 设置为平仓
-                field.setCombOffsetFlag(CLOSE_STR);
+                field.setCombOffsetFlag(FtdcConst.FtdcOffsetFlag.CLOSE_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Close");
             }
             case CLOSE_TODAY -> {
                 // 设置为平今仓
-                field.setCombOffsetFlag(CLOSE_TODAY_STR);
+                field.setCombOffsetFlag(FtdcConst.FtdcOffsetFlag.CLOSE_TODAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseToday");
             }
             case CLOSE_YESTERDAY -> {
                 // 设置为平昨仓
-                field.setCombOffsetFlag(CLOSE_YESTERDAY_STR);
+                field.setCombOffsetFlag(FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseYesterday");
             }
             case INVALID -> {
@@ -178,18 +170,18 @@ public final class FtdcOrderConverter {
             }
         }
         // 设置投机标识
-        field.setCombHedgeFlag(SPECULATION_STR);
+        field.setCombHedgeFlag(FtdcConst.FtdcHedgeFlag.SPECULATION_STR);
         log.info("Set CThostFtdcInputOrderField -> CombHedgeFlag == Speculation");
         // 设置买卖方向
         switch (order.getDirection()) {
             case LONG -> {
                 // 设置为买单
-                field.setDirection(BUY);
+                field.setDirection(FtdcConst.FtdcDirection.BUY);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Buy");
             }
             case SHORT -> {
                 // 设置为卖单
-                field.setDirection(SELL);
+                field.setDirection(FtdcConst.FtdcDirection.SELL);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Sell");
             }
             case INVALID -> {
@@ -207,22 +199,22 @@ public final class FtdcOrderConverter {
         field.setVolumeTotalOriginal(volumeTotalOriginal);
         log.info("Set CThostFtdcInputOrderField -> VolumeTotalOriginal == {}", volumeTotalOriginal);
         // 设置有效期类型
-        field.setTimeCondition(GFD);
+        field.setTimeCondition(FtdcConst.FtdcTimeCondition.GFD);
         log.info("Set CThostFtdcInputOrderField -> TimeCondition == GFD");
         // 设置成交量类型
-        field.setVolumeCondition(FtdcVolumeCondition.AV);
+        field.setVolumeCondition(FtdcConst.FtdcVolumeCondition.AV);
         log.info("Set CThostFtdcInputOrderField -> VolumeCondition == AV");
         // 设置最小成交数量, 默认为1
         field.setMinVolume(1);
         log.info("Set CThostFtdcInputOrderField -> MinVolume == 1");
         // 设置触发条件
-        field.setContingentCondition(IMMEDIATELY);
+        field.setContingentCondition(FtdcConst.FtdcContingentCondition.IMMEDIATELY);
         log.info("Set CThostFtdcInputOrderField -> ContingentCondition == Immediately");
         // 设置止损价格
         field.setStopPrice(0.0D);
         log.info("Set CThostFtdcInputOrderField -> StopPrice == 0.0D");
         // 设置强平原因: 此处固定为非强平
-        field.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
+        field.setForceCloseReason(FtdcConst.FtdcForceCloseReason.NOT_FORCE_CLOSE);
         log.info("Set CThostFtdcInputOrderField -> ForceCloseReason == NotForceClose");
         // 设置自动挂起标识
         field.setIsAutoSuspend(0);
@@ -290,7 +282,7 @@ public final class FtdcOrderConverter {
         // MAC地址
         field.setMacAddress(macAddress);
         // 操作标志
-        field.setActionFlag(FtdcActionFlag.DELETE);
+        field.setActionFlag(FtdcConst.FtdcActionFlag.DELETE);
         // 交易所代码
         field.setExchangeID(order.getExchangeCode());
         // 合约代码

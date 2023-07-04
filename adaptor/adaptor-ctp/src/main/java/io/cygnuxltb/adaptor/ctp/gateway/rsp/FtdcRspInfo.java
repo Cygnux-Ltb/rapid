@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway.rsp;
+package io.cygnuxltb.adaptor.ctp.gateway.rsp;
 
 public record FtdcRspInfo(
         // 错误代码

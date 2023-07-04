@@ -1,7 +1,7 @@
-package io.cygnuxltb.channel.ctp.gateway.converter;
+package io.cygnuxltb.adaptor.ctp.gateway.converter;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
 
 import java.util.function.Function;
 

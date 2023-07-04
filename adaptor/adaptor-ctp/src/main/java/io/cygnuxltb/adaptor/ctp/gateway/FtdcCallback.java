@@ -1,8 +1,8 @@
-package io.cygnuxltb.channel.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcRspInfoField;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcRspInfo;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcRspInfo;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;

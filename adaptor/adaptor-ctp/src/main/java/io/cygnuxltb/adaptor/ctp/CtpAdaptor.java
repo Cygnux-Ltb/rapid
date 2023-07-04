@@ -1,38 +1,35 @@
-package io.cygnuxltb.channel.ctp.adaptor;
+package io.cygnuxltb.adaptor.ctp;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.OrderRefKeeper;
-import io.cygnuxltb.channel.ctp.OrderRefNotFoundException;
-import io.cygnuxltb.channel.ctp.converter.FtdcOrderConverter;
-import io.cygnuxltb.channel.ctp.converter.MarketDataConverter;
-import io.cygnuxltb.channel.ctp.converter.OrderReportConverter;
-import io.cygnuxltb.channel.ctp.gateway.CtpGateway;
-import io.cygnuxltb.channel.ctp.gateway.CtpGateway.CtpRunMode;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.OrderRefKeeper.OrderRefNotFoundException;
+import io.cygnuxltb.adaptor.ctp.converter.FtdcOrderConverter;
+import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
+import io.cygnuxltb.adaptor.ctp.converter.OrderReportConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.horizon.market.data.impl.BasicMarketData;
 import io.horizon.market.handler.MarketDataHandler;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.adaptor.AbstractAdaptor;
-import io.horizon.trader.adaptor.AdaptorRunMode;
+import io.horizon.trader.adaptor.ConnectionType;
 import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.handler.AdaptorReportHandler;
+import io.horizon.trader.handler.AdaptorEventHandler;
 import io.horizon.trader.handler.InboundHandler;
 import io.horizon.trader.handler.InboundHandler.InboundSchedulerWrapper;
-import io.horizon.trader.handler.OrderReportHandler;
+import io.horizon.trader.handler.OrderEventHandler;
 import io.horizon.trader.serialization.avro.enums.AvroAdaptorStatus;
-import io.horizon.trader.serialization.avro.inbound.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroNewOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.inbound.AvroQueryPositions;
-import io.horizon.trader.serialization.avro.outbound.AvroAdaptorReport;
+import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
+import io.horizon.trader.serialization.avro.send.AvroNewOrder;
+import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
+import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
+import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.ScQueueByJct;
+import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
@@ -90,15 +87,15 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param account              Account
      * @param config               CtpConfig
      * @param marketDataHandler    MarketDataHandler<BasicMarketData>
-     * @param orderReportHandler   OrderReportHandler
-     * @param adaptorReportHandler AdaptorReportHandler
+     * @param orderEventHandler   OrderReportHandler
+     * @param adaptorEventHandler AdaptorReportHandler
      */
     public CtpAdaptor(@Nonnull Account account,
                       @Nonnull CtpConfiguration config,
                       @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
-                      @Nonnull OrderReportHandler orderReportHandler,
-                      @Nonnull AdaptorReportHandler adaptorReportHandler) {
-        this(account, config, AdaptorRunMode.Normal, marketDataHandler, orderReportHandler, adaptorReportHandler);
+                      @Nonnull OrderEventHandler orderEventHandler,
+                      @Nonnull AdaptorEventHandler adaptorEventHandler) {
+        this(account, config, ConnectionType.Normal, marketDataHandler, orderEventHandler, adaptorEventHandler);
     }
 
     /**
@@ -109,20 +106,20 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config               CtpConfig
      * @param mode                 AdaptorRunMode
      * @param marketDataHandler    MarketDataHandler<BasicMarketData>
-     * @param orderReportHandler   OrderReportHandler
-     * @param adaptorReportHandler AdaptorReportHandler
+     * @param orderEventHandler   OrderReportHandler
+     * @param adaptorEventHandler AdaptorReportHandler
      */
     public CtpAdaptor(@Nonnull Account account,
                       @Nonnull CtpConfiguration config,
-                      @Nonnull AdaptorRunMode mode,
+                      @Nonnull ConnectionType mode,
                       @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
-                      @Nonnull OrderReportHandler orderReportHandler,
-                      @Nonnull AdaptorReportHandler adaptorReportHandler) {
+                      @Nonnull OrderEventHandler orderEventHandler,
+                      @Nonnull AdaptorEventHandler adaptorEventHandler) {
         this(account, config, mode,
                 new InboundSchedulerWrapper<>(
                         marketDataHandler,
-                        orderReportHandler,
-                        adaptorReportHandler, log));
+                        orderEventHandler,
+                        adaptorEventHandler, log));
     }
 
     /**
@@ -134,7 +131,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
-        this(account, config, AdaptorRunMode.Normal, scheduler);
+        this(account, config, ConnectionType.Normal, scheduler);
     }
 
     /**
@@ -146,11 +143,11 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param scheduler InboundHandler<BasicMarketData>
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull AdaptorRunMode mode,
+                      @Nonnull ConnectionType mode,
                       @Nonnull InboundHandler<BasicMarketData> scheduler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         // 创建队列缓冲区
-        this.queue = ScQueueByJct
+        this.queue = ScQueueWithJCT
                 .mpscQueue(this.getClass().getSimpleName() + "-Buf")
                 .capacity(32).process(msg -> {
                     switch (msg.getType()) {
@@ -158,14 +155,14 @@ public class CtpAdaptor extends AbstractAdaptor {
                             var mdConnect = msg.getMdConnect();
                             this.mdAvailable = mdConnect.available();
                             log.info("Adaptor buf processed FtdcMdConnect, isMdAvailable==[{}]", mdAvailable);
-                            final AvroAdaptorReport mdReport;
+                            final AvroAdaptorEvent mdReport;
                             if (mdAvailable)
-                                mdReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                mdReport = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
                                         .setStatus(AvroAdaptorStatus.MD_ENABLE).build();
                             else
-                                mdReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                mdReport = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
                                         .setStatus(AvroAdaptorStatus.MD_DISABLE).build();
-                            scheduler.onAdaptorReport(mdReport);
+                            scheduler.onAdaptorEvent(mdReport);
                         }
                         case TraderConnect -> {
                             var traderConnect = msg.getTraderConnect();
@@ -175,14 +172,14 @@ public class CtpAdaptor extends AbstractAdaptor {
                             log.info(
                                     "Adaptor buf processed FtdcTraderConnect, isTraderAvailable==[{}], frontId==[{}], sessionId==[{}]",
                                     isTraderAvailable, frontId, sessionId);
-                            final AvroAdaptorReport traderReport;
+                            final AvroAdaptorEvent adaptorEvent;
                             if (isTraderAvailable)
-                                traderReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
+                                adaptorEvent = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
                                         .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_ENABLE).build();
                             else
-                                traderReport = AvroAdaptorReport.newBuilder().setEpochMillis(getEpochMillis())
+                                adaptorEvent = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
                                         .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_DISABLE).build();
-                            scheduler.onAdaptorReport(traderReport);
+                            scheduler.onAdaptorEvent(adaptorEvent);
                         }
                         case DepthMarketData -> {
                             // 行情处理
@@ -200,7 +197,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                                     ftdcOrder.getInstrumentID(), ftdcOrder.getInvestorID(), ftdcOrder.getOrderRef(),
                                     ftdcOrder.getLimitPrice(), ftdcOrder.getVolumeTotalOriginal(), ftdcOrder.getOrderStatus());
                             var report0 = orderReportConverter.withFtdcOrder(ftdcOrder);
-                            scheduler.onOrderReport(report0);
+                            scheduler.onOrderEvent(report0);
                         }
                         case Trade -> {
                             // 成交回报处理
@@ -208,7 +205,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                             log.info("Adaptor buf in FtdcTrade, InstrumentID==[{}], InvestorID==[{}], OrderRef==[{}]",
                                     ftdcTrade.getInstrumentID(), ftdcTrade.getInvestorID(), ftdcTrade.getOrderRef());
                             var report1 = orderReportConverter.withFtdcTrade(ftdcTrade);
-                            scheduler.onOrderReport(report1);
+                            scheduler.onOrderEvent(report1);
                         }
                         case InputOrder -> {
                             // TODO 报单错误处理
@@ -230,7 +227,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 });
         this.handler = queue::enqueue;
         this.config = config;
-        this.mode = mode;
+        this.type = mode;
         initializer();
     }
 
@@ -243,7 +240,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull Queue<FtdcRspMsg> queue) {
-        this(account, config, AdaptorRunMode.Normal, queue);
+        this(account, config, ConnectionType.Normal, queue);
     }
 
     /**
@@ -255,7 +252,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param queue   Queue<FtdcRspMsg>
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull AdaptorRunMode mode, @Nonnull Queue<FtdcRspMsg> queue) {
+                      @Nonnull ConnectionType mode, @Nonnull Queue<FtdcRspMsg> queue) {
         this(account, config, mode,
                 // 使用入队函数实现Handler<FtdcRspMsg>
                 queue::enqueue);
@@ -271,7 +268,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull Handler<FtdcRspMsg> handler) {
-        this(account, config, AdaptorRunMode.Normal, handler);
+        this(account, config, ConnectionType.Normal, handler);
     }
 
     /**
@@ -282,12 +279,12 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param mode    AdaptorRunMode
      * @param handler Handler<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config, AdaptorRunMode mode,
+    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config, ConnectionType mode,
                       @Nonnull Handler<FtdcRspMsg> handler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         this.handler = handler;
         this.config = config;
-        this.mode = mode;
+        this.type = mode;
         initializer();
     }
 
@@ -306,14 +303,14 @@ public class CtpAdaptor extends AbstractAdaptor {
         this.gatewayId = config.getBrokerId() + "-" + config.getInvestorId();
         // 创建Gateway
         log.info("Try create gateway, gatewayId -> {}", gatewayId);
-        this.gateway = new CtpGateway(gatewayId, config, CtpRunMode.get(mode), handler);
+        this.gateway = new CtpGateway(gatewayId, config, type, handler);
         log.info("Create gateway success, gatewayId -> {}", gatewayId);
     }
 
     @Override
     protected boolean startup0() {
         try {
-            gateway.bootstrap();
+            gateway.startup();
             log.info("{} -> bootstrap finish", gatewayId);
             return true;
         } catch (Exception e) {

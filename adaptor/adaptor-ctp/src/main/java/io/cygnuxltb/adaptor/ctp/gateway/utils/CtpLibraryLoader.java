@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway.utils;
+package io.cygnuxltb.adaptor.ctp.gateway.utils;
 
 import io.mercury.common.lang.exception.NativeLibraryLoadException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

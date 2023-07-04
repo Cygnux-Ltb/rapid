@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway.msg;
+package io.cygnuxltb.adaptor.ctp.gateway.msg;
 
 import java.util.UUID;
 

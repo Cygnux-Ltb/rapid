@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
@@ -18,16 +18,16 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTraderApi;
 import ctp.thostapi.CThostFtdcTraderSpi;
 import ctp.thostapi.CThostFtdcTradingAccountField;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInputOrderActionConverter;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInputOrderConverter;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcInvestorPositionConverter;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcOrderActionConverter;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcOrderConverter;
-import io.cygnuxltb.channel.ctp.gateway.converter.CThostFtdcTradeConverter;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTraderConnect;
-import io.cygnuxltb.channel.ctp.gateway.utils.CtpLibraryLoader;
+import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcInputOrderActionConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcInputOrderConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcInvestorPositionConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcOrderActionConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcOrderConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcTradeConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTraderConnect;
+import io.cygnuxltb.adaptor.ctp.gateway.utils.CtpLibraryLoader;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
@@ -100,7 +100,7 @@ public class CtpTraderGateway implements Closeable {
      * @param handler   Handler<FtdcRspMsg>
      */
     public CtpTraderGateway(@Nonnull String gatewayId, @Nonnull CtpConfiguration config,
-                            @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
+                            @Nonnull @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");
         Asserter.nonNull(handler, "handler");
@@ -112,7 +112,7 @@ public class CtpTraderGateway implements Closeable {
     /**
      * 启动并挂起线程
      */
-    public final void bootstrap() {
+    public final void startup() {
         if (isInitialize.compareAndSet(false, true)) {
             log.info("CThostFtdcTraderApi.version() -> {}", CThostFtdcTraderApi.GetApiVersion());
             try {

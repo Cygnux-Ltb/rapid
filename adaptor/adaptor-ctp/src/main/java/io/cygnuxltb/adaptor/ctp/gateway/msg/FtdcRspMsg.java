@@ -1,28 +1,28 @@
-package io.cygnuxltb.channel.ctp.gateway.msg;
+package io.cygnuxltb.adaptor.ctp.gateway.msg;
 
 import com.lmax.disruptor.EventFactory;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcDepthMarketData;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInputOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInvestorPosition;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcMdConnect;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrder;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcOrderAction;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcRspInfo;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTrade;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcTraderConnect;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInvestorPosition;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcMdConnect;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcRspInfo;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTraderConnect;
 import lombok.Getter;
 
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.DepthMarketData;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InputOrder;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InputOrderAction;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InvestorPosition;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.MdConnect;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.Order;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.OrderAction;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.RspInfo;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.Trade;
-import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.TraderConnect;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.DepthMarketData;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InputOrder;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InputOrderAction;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.InvestorPosition;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.MdConnect;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.Order;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.OrderAction;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.RspInfo;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.Trade;
+import static io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.TraderConnect;
 
 /**
  * @author yellow013
@@ -30,7 +30,7 @@ import static io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType.Trader
 @Getter
 public final class FtdcRspMsg {
 
-    public static final EventFactory<FtdcRspMsg> FACTORY = FtdcRspMsg::new;
+    public static final EventFactory<FtdcRspMsg> RSP_FACTORY = FtdcRspMsg::new;
 
     private FtdcRspType type;
 

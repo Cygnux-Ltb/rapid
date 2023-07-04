@@ -1,7 +1,6 @@
-package io.cygnuxltb.channel.ctp;
+package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
-import io.cygnuxltb.channel.ctp.adaptor.CtpAdaptorParamKey;
 import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;

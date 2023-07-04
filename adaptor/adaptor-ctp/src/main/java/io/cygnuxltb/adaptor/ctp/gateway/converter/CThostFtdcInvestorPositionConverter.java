@@ -1,7 +1,7 @@
-package io.cygnuxltb.channel.ctp.gateway.converter;
+package io.cygnuxltb.adaptor.ctp.gateway.converter;
 
 import ctp.thostapi.CThostFtdcInvestorPositionField;
-import io.cygnuxltb.channel.ctp.gateway.rsp.FtdcInvestorPosition;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInvestorPosition;
 
 import java.util.function.Function;
 

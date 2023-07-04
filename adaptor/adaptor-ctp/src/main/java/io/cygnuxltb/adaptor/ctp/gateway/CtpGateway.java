@@ -1,11 +1,11 @@
-package io.cygnuxltb.channel.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.channel.ctp.CtpConfiguration;
-import io.cygnuxltb.channel.ctp.gateway.utils.CtpLibraryLoader;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg;
-import io.horizon.trader.adaptor.AdaptorRunMode;
+import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.utils.CtpLibraryLoader;
+import io.horizon.trader.adaptor.ConnectionType;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.lang.Asserter;
@@ -52,28 +52,17 @@ public final class CtpGateway implements Closeable {
     // RSP消息处理器
     private final Handler<FtdcRspMsg> handler;
 
-    public enum CtpRunMode {
-
-        Normal, OnlyMarketData, OnlyTrade;
-
-        public static CtpRunMode get(AdaptorRunMode mode) {
-            return switch (mode) {
-                case Normal -> Normal;
-                case OnlyMarketData -> OnlyMarketData;
-                case OnlyTrade -> OnlyTrade;
-            };
-        }
-    }
+    private final long REQUEST_INTERVAL = 850;
 
     /**
      * @param gatewayId String
      * @param config    CtpConfig
      * @param handler   Handler<FtdcRspMsg>
-     * @param mode      运行模式: 0,正常模式; 1,行情模式; 2,交易模式
+     * @param type      运行模式: 0,正常模式; 1,行情模式; 2,交易模式
      */
     public CtpGateway(@Nonnull String gatewayId,
                       @Nonnull CtpConfiguration config,
-                      @Nonnull CtpRunMode mode,
+                      @Nonnull ConnectionType type,
                       @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");
@@ -81,12 +70,12 @@ public final class CtpGateway implements Closeable {
         this.gatewayId = gatewayId;
         this.config = config;
         this.handler = handler;
-        initializer(mode);
+        initializer(type);
     }
 
     @PostConstruct
-    private void initializer(CtpRunMode mode) {
-        switch (mode) {
+    private void initializer(ConnectionType type) {
+        switch (type) {
             case OnlyMarketData -> this.mdGateway = new CtpMdGateway(gatewayId, config, handler);
             case OnlyTrade -> this.traderGateway = new CtpTraderGateway(gatewayId, config, handler);
             default -> {
@@ -99,14 +88,14 @@ public final class CtpGateway implements Closeable {
     /**
      * 启动并挂起线程
      */
-    public void bootstrap() {
+    public void startup() {
         if (mdGateway != null) {
-            mdGateway.bootstrap();
-            sleep(777);
+            mdGateway.startup();
+            sleep(REQUEST_INTERVAL);
         }
         if (traderGateway != null) {
-            traderGateway.bootstrap();
-            sleep(777);
+            traderGateway.startup();
+            sleep(REQUEST_INTERVAL);
         }
     }
 
@@ -183,11 +172,11 @@ public final class CtpGateway implements Closeable {
     public void close() throws IOException {
         if (mdGateway != null) {
             mdGateway.close();
-            sleep(777);
+            sleep(REQUEST_INTERVAL);
         }
         if (traderGateway != null) {
             traderGateway.close();
-            sleep(777);
+            sleep(REQUEST_INTERVAL);
         }
     }
 

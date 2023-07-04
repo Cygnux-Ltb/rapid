@@ -1,7 +1,6 @@
-package io.cygnuxltb.channel.ctp.gateway.msg;
+package io.cygnuxltb.adaptor.ctp.gateway.msg;
 
 import com.lmax.disruptor.EventFactory;
-import io.cygnuxltb.channel.ctp.gateway.msg.FtdcRspMsg.FtdcRspType;
 
 public final class FtdcRspIntegratedMsg {
 
@@ -9,7 +8,7 @@ public final class FtdcRspIntegratedMsg {
     }
 
     @SuppressWarnings("unused")
-    private FtdcRspType type;
+    private FtdcRspMsg.FtdcRspType type;
 
 
     public static final EventFactory<FtdcRspIntegratedMsg> FACTORY = FtdcRspIntegratedMsg::new;

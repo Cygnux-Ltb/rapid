@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway.consts;
+package io.cygnuxltb.adaptor.ctp.gateway.consts;
 
 import java.io.Serial;
 import java.time.format.DateTimeFormatter;

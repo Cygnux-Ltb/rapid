@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.consts;
+package io.cygnuxltb.adaptor.ctp.consts;
 
 import io.horizon.trader.order.enums.OrdStatus;
 import io.horizon.trader.order.enums.TrdAction;
@@ -6,18 +6,18 @@ import io.horizon.trader.order.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.BUY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcDirection.SELL;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_TODAY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOffsetFlag.OPEN;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.ALL_TRADED;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.CANCELED;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
-import static io.cygnuxltb.channel.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcDirection.BUY;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcDirection.SELL;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_TODAY;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOffsetFlag.CLOSE_YESTERDAY;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOffsetFlag.OPEN;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.ALL_TRADED;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.CANCELED;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.NO_TRADE_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConst.FtdcOrderStatus.PART_TRADED_QUEUEING;
 
 /**
  * @author yellow013

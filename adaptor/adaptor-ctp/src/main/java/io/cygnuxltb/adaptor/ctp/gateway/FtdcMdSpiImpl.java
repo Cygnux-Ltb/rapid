@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcMdSpi;
@@ -6,8 +6,8 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.channel.ctp.gateway.CtpMdGateway.FtdcMdCallback;
-import io.cygnuxltb.channel.ctp.gateway.handler.FtdcRspInfoHandler;
+import io.cygnuxltb.adaptor.ctp.gateway.CtpMdGateway.FtdcMdCallback;
+import io.cygnuxltb.adaptor.ctp.gateway.handler.FtdcRspInfoHandler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
