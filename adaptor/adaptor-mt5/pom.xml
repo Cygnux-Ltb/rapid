@@ -9,11 +9,13 @@
     </parent>
 
     <artifactId>adaptor-mt5</artifactId>
-    <name>gateway-mt5</name>
+    <name>adaptor-mt5</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-zmq</artifactId>
+        </dependency>
     </dependencies>
-
 
 </project>

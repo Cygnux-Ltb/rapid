@@ -11,12 +11,22 @@
     <artifactId>console-service</artifactId>
     <name>console-service</name>
 
-    <properties>
-    </properties>
-
     <build>
         <finalName>jcts-console</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <excludes>
+                        <!-- This is where the exclusion occurs -->
+                        <exclude>**/application-*.properties</exclude>
+                        <exclude>**/application.properties</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -29,15 +39,16 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Smart Doc Plugin -->
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>2.6.7</version>
+                <version>2.6.9</version>
                 <configuration>
                     <!--指定生成文档的使用的配置文件, 配置文件放在自己的项目中-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>
                     <!--指定项目名称-->
-                    <projectName>Cytrader-Console</projectName>
+                    <projectName>${project.name}</projectName>
                     <!--smart-doc实现自动分析依赖树加载第三方依赖的源码, 如果一些框架依赖库加载不到导致报错, 这时请使用excludes排除掉-->
                     <excludes>
                         <!--格式为: groupId:artifactId;参考如下-->
@@ -48,9 +59,9 @@
                     <!--smart-doc能自动分析依赖树加载所有依赖源码, 原则上会影响文档构建效率, 因此你可以使用includes来让插件加载你配置的组件-->
                     <includes>
                         <!-- 使用了mybatis-plus的Page分页需要include所使用的源码包 -->
-                        <include>com.baomidou:mybatis-plus-extension</include>
-                        <!-- 使用了mybatis-plus的IPage分页需要include mybatis-plus-core-->
-                        <include>com.baomidou:mybatis-plus-core</include>
+                        <!-- <include>com.baomidou:mybatis-plus-extension</include> -->
+                        <!-- 使用了mybatis-plus的IPage分页需要include mybatis-plus-core -->
+                        <!-- <include>com.baomidou:mybatis-plus-core</include> -->
                         <!-- 如果配置了includes的情况下, 使用了jpa的分页需要include所使用的源码包 -->
                         <include>org.springframework.data:spring-data-commons</include>
                     </includes>
@@ -77,61 +88,43 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-web</artifactId>
-            <version>4.4.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-core</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-json</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>transport-rabbitmq</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>persistence-h2</artifactId>
         </dependency>
-
-        <!-- Jakarta XML Binding API -->
+        <!-- Jakarta Activation API 2.1 Specification -->
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.2</version>
         </dependency>
-
-        <!-- Jakarta Restful Web Services -->
-        <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
         <!-- YAML 1.1 parser and emitter for Java -->
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>2.0</version>
         </dependency>
-
+        <!-- Starter for using Undertow as the embedded servlet container. -->
+        <!-- An alternative to spring-boot-starter-tomcat -->
         <dependency>
-            <groupId>io.cygnuxltb</groupId>
-            <artifactId>protocol</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <!-- Starter for using Log4j2 for logging. -->
         <!-- An alternative to spring-boot-starter-logging -->
         <dependency>
@@ -170,17 +163,16 @@
             <version>${spring-boot.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-core</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-classic</artifactId>
-                </exclusion>
-
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
                 </exclusion>
                 <exclusion>
                     <artifactId>spring-boot-starter-logging</artifactId>
@@ -192,11 +184,11 @@
         <!-- The AspectJ weaver applies aspects to Java classes.
              It can be used as a Java agent in order to apply load-time weaving
              (LTW) during class-loading and also contains the AspectJ runtime classes. -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.9.19</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.aspectj</groupId>-->
+        <!--            <artifactId>aspectjweaver</artifactId>-->
+        <!--            <version>1.9.19</version>-->
+        <!--        </dependency>-->
 
         <!-- Starter for using Spring Data JPA with Hibernate -->
         <dependency>
@@ -209,26 +201,19 @@
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.aspectj</groupId>
-                    <artifactId>aspectjweaver</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.annotation</groupId>
                     <artifactId>jakarta.annotation-api</artifactId>
+                    <groupId>jakarta.annotation</groupId>
                 </exclusion>
                 <exclusion>
-                    <groupId>jakarta.persistence</groupId>
-                    <artifactId>jakarta.persistence-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.transaction</groupId>
-                    <artifactId>jakarta.transaction-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.xml.bind</groupId>
-                    <artifactId>jakarta.xml.bind-api</artifactId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                    <groupId>jakarta.activation</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.cygnuxltb</groupId>
+            <artifactId>protocol</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

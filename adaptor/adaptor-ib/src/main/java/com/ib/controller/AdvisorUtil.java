@@ -37,14 +37,13 @@ public class AdvisorUtil {
 
             switch (state) {
                 // top of file
-                case 0:
+                case 0 -> {
                     if (line.equals("<ListOfGroups>")) {
                         state = 1;
                     }
-                    break;
-
+                }
                 // reading groups
-                case 1:
+                case 1 -> {
                     if (line.equals("<Group>")) {
                         group = new Group();
                         state = 2;
@@ -53,10 +52,9 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading group
-                case 2:
+                case 2 -> {
                     if (line.startsWith("<name>")) {
                         group.name(getVal(line));
                     } else if (line.startsWith("<defaultMethod>")) {
@@ -69,23 +67,20 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading list of accts
-                case 3:
+                case 3 -> {
                     if (line.equals("</ListOfAccts>")) {
                         state = 2;
                     } else {
                         group.addAccount(getVal(line));
                     }
-                    break;
-
+                }
                 // should not happen
-                default:
-                    break;
+                default -> {
+                }
             }
         }
-
         return list;
     }
 
@@ -112,14 +107,13 @@ public class AdvisorUtil {
 
             switch (state) {
                 // top of file
-                case 0:
+                case 0 -> {
                     if (line.equals("<ListOfAllocationProfiles>")) {
                         state = 1;
                     }
-                    break;
-
+                }
                 // reading profiles
-                case 1:
+                case 1 -> {
                     if (line.equals("<AllocationProfile>")) {
                         profile = new Profile();
                         state = 2;
@@ -128,10 +122,9 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading Profile
-                case 2:
+                case 2 -> {
                     if (line.startsWith("<name>")) {
                         profile.name(getVal(line));
                     } else if (line.startsWith("<type>")) {
@@ -145,10 +138,9 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading list of allocations
-                case 3:
+                case 3 -> {
                     if (line.equals("<Allocation>")) {
                         alloc = new Allocation();
                         state = 4;
@@ -157,10 +149,9 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading Allocation
-                case 4:
+                case 4 -> {
                     if (line.startsWith("<acct>")) {
                         alloc.account(getVal(line));
                     } else if (line.startsWith("<amount>")) {
@@ -173,11 +164,11 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
+                }
 
                 // should not happen
-                default:
-                    break;
+                default -> {
+                }
             }
         }
 
@@ -203,17 +194,15 @@ public class AdvisorUtil {
         int state = 0; // 0=none; 1=list of aliases; 2=reading alias
         while ((line = reader.readLine()) != null) {
             line = line.trim();
-
             switch (state) {
                 // top of file
-                case 0:
+                case 0 -> {
                     if (line.equals("<ListOfAccountAliases>")) {
                         state = 1;
                     }
-                    break;
-
+                }
                 // reading aliases
-                case 1:
+                case 1 -> {
                     if (line.equals("<AccountAlias>")) {
                         alias = new Alias();
                         state = 2;
@@ -222,10 +211,9 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // reading Alias
-                case 2:
+                case 2 -> {
                     if (line.startsWith("<account>")) {
                         alias.account(getVal(line));
                     } else if (line.startsWith("<alias>")) {
@@ -236,14 +224,12 @@ public class AdvisorUtil {
                     } else {
                         err(line);
                     }
-                    break;
-
+                }
                 // should not happen
-                default:
-                    break;
+                default -> {
+                }
             }
         }
-
         return list;
     }
 

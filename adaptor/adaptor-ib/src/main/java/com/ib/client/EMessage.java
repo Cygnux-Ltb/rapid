@@ -14,7 +14,6 @@ public class EMessage {
 	
 	public EMessage(byte[] buf, int len) {
 		m_buf = new ByteArrayOutputStream();
-		
 		m_buf.write(buf, 0, len);
 	}
 	

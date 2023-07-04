@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.component;
 
-import io.cygnuxltb.console.persistence.entity.ParamEntity;
-import io.cygnuxltb.protocol.http.inbound.StrategySwitch;
+import io.cygnuxltb.console.persistence.entity.TblParam;
+import io.cygnuxltb.protocol.http.inbound.command.StrategySwitch;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -14,20 +14,15 @@ public final class CommandDispatcher {
     private void init() {
     }
 
-    /**
-     *
-     */
     public boolean sendControlCommand(StrategySwitch strategySwitch) {
         return false;
     }
-
 
     public boolean sendStrategyCommand(StrategySwitch strategySwitch) {
         return false;
     }
 
-
-    public boolean sendParams(List<ParamEntity> params) {
+    public boolean sendParams(List<TblParam> params) {
         return false;
     }
 

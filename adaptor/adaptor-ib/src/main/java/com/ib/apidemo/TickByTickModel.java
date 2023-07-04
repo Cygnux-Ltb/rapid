@@ -8,10 +8,13 @@ import com.ib.client.Types.TickByTickType;
 import com.ib.client.Util;
 
 import javax.swing.table.AbstractTableModel;
+import java.io.Serial;
 import java.util.List;
 
 class TickByTickModel extends AbstractTableModel {
 
+    @Serial
+    private static final long serialVersionUID = -2059130337831724308L;
     private final List<TickByTick> m_rows;
     private final TickByTickType m_tickType;
 
@@ -55,42 +58,56 @@ class TickByTickModel extends AbstractTableModel {
             case Last:
             case AllLast:
                 switch (columnIndex) {
-                    case 0:
+                    case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
-                    case 1:
+                    }
+                    case 1 -> {
                         return row.price();
-                    case 2:
+                    }
+                    case 2 -> {
                         return row.size();
-                    case 3:
+                    }
+                    case 3 -> {
                         return row.tickAttribLastStr();
-                    case 4:
+                    }
+                    case 4 -> {
                         return row.exchange();
-                    case 5:
+                    }
+                    case 5 -> {
                         return row.specialConditions();
+                    }
                 }
                 break;
             case BidAsk:
                 switch (columnIndex) {
-                    case 0:
+                    case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
-                    case 1:
+                    }
+                    case 1 -> {
                         return row.bidPrice();
-                    case 2:
+                    }
+                    case 2 -> {
                         return row.bidSize();
-                    case 3:
+                    }
+                    case 3 -> {
                         return row.askPrice();
-                    case 4:
+                    }
+                    case 4 -> {
                         return row.askSize();
-                    case 5:
+                    }
+                    case 5 -> {
                         return row.tickAttribBidAskStr();
+                    }
                 }
                 break;
             case MidPoint:
                 switch (columnIndex) {
-                    case 0:
+                    case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
-                    case 1:
+                    }
+                    case 1 -> {
                         return row.midPoint();
+                    }
                 }
                 break;
         }
@@ -106,42 +123,56 @@ class TickByTickModel extends AbstractTableModel {
             case Last:
             case AllLast:
                 switch (column) {
-                    case 0:
+                    case 0 -> {
                         return "Time";
-                    case 1:
+                    }
+                    case 1 -> {
                         return "Price";
-                    case 2:
+                    }
+                    case 2 -> {
                         return "Size";
-                    case 3:
+                    }
+                    case 3 -> {
                         return "Last Tick Attribs";
-                    case 4:
+                    }
+                    case 4 -> {
                         return "Exchange";
-                    case 5:
+                    }
+                    case 5 -> {
                         return "Spec Cond";
+                    }
                 }
                 break;
             case BidAsk:
                 switch (column) {
-                    case 0:
+                    case 0 -> {
                         return "Time";
-                    case 1:
+                    }
+                    case 1 -> {
                         return "Bid Price";
-                    case 2:
+                    }
+                    case 2 -> {
                         return "Bid Size";
-                    case 3:
+                    }
+                    case 3 -> {
                         return "Ask Price";
-                    case 4:
+                    }
+                    case 4 -> {
                         return "Ask Size";
-                    case 5:
+                    }
+                    case 5 -> {
                         return "Bid/Ask Tick Attribs";
+                    }
                 }
                 break;
             case MidPoint:
                 switch (column) {
-                    case 0:
+                    case 0 -> {
                         return "Time";
-                    case 1:
+                    }
+                    case 1 -> {
                         return "Mid Point";
+                    }
                 }
                 break;
         }

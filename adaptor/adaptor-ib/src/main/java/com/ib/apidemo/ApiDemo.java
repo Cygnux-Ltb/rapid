@@ -269,7 +269,7 @@ public class ApiDemo implements IConnectionHandler {
 // change from "New" to something else
 // more dn work, e.g. deltaNeutralValidation
 // add a "newAPI" signature
-// probably should not send F..A position updates to listeners, at least not to API; also probably not send FX positions; or maybe we should support that?; filter out models or include it 
+// probably should not send F.A position updates to listeners, at least not to API; also probably not send FX positions; or maybe we should support that?; filter out models or include it
 // finish or remove strat panel
 // check all ps
 // must allow normal summary and ledger at the same time
@@ -297,7 +297,7 @@ public class ApiDemo implements IConnectionHandler {
 // API/TWS Changes
 // we should add underConid for sec def request sent API to TWS so option chains can be requested properly
 // reqContractDetails needs primary exchange, currently only takes currency which is wrong; all requests taking Contract should be updated
-// reqMktDepth and reqContractDetails does not take primary exchange but it needs to; ideally we could also pass underConid in request
+// reqMktDepth and reqContractDetails does not take primary exchange, but it needs to; ideally we could also pass underConid in request
 // scanner results should return primary exchange
 // the check margin does not give nearly as much info as in TWS
 // need clear way to distinguish between order reject and warning
@@ -321,11 +321,11 @@ public class ApiDemo implements IConnectionHandler {
 // DEV: All Box layouts have max size same as pref size; but center border layout ignores this
 // DEV: Box layout grows items proportionally to the difference between max and pref sizes, and never more than max size
 
-//TWS sends error "Snapshot exceeds 100/sec" even when it doesn't; maybe try flush? or maybe send 100 then pause 1 second? this will take forever; i think the limit needs to be increased
+//TWS sends error "Snapshot exceeds 100/sec" even when it doesn't; maybe try flush? or maybe send 100 then pause 1 second? this will take forever; I think the limit needs to be increased
 
 //req open orders can only be done by client 0 it seems; give a message
 //somehow group is defaulting to EqualQuantity if not set; seems wrong
-//i frequently see order canceled - reason: with no text
+//I frequently see order canceled - reason: with no text
 //Missing or invalid NonGuaranteed value. error should be split into two messages
 //Rejected API order is downloaded as Inactive open order; rejected orders should never be sen
 //Submitting an initial stop price for trailing stop orders is supported only for trailing stop-limit orders; should be supported for plain trailing stop orders as well 

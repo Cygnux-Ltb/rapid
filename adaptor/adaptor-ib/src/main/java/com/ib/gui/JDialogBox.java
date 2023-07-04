@@ -3,8 +3,11 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Window;
 
 public class JDialogBox extends JDialog {
 

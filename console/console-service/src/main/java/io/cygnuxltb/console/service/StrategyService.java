@@ -1,16 +1,18 @@
 package io.cygnuxltb.console.service;
 
+import io.cygnuxltb.console.persistence.entity.TblStrategy;
 import io.cygnuxltb.console.persistence.dao.StrategyDao;
-import io.cygnuxltb.console.persistence.entity.StrategyEntity;
 import io.cygnuxltb.console.persistence.util.DaoExecutor;
+import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyName;
@@ -22,42 +24,42 @@ public final class StrategyService {
     private static final Logger log = Log4j2LoggerFactory.getLogger(StrategyService.class);
 
     @Resource
-    private StrategyDao strategyDao;
+    private StrategyDao dao;
 
     /**
      * @return List<StrategyEntity>
      */
-    public List<StrategyEntity> getAllStrategy() {
-        return select(StrategyEntity.class,
-                () -> strategyDao.findAll());
+    public List<StrategyDTO> getAllStrategy() {
+        return select(TblStrategy.class,
+                () -> dao.findAll())
+                .stream().map(DtoConverter::toDTO)
+                .collect(Collectors.toList());
     }
 
     /**
      * @param strategyId int
      * @return StrategyEntity
      */
-    @Nullable
-    public StrategyEntity getStrategy(int strategyId) {
+    public StrategyDTO getStrategy(int strategyId) {
         if (illegalStrategyId(strategyId, log))
             Throws.illegalArgument("strategyId");
-        StrategyEntity entity = strategyDao.queryByStrategyId(strategyId);
+        TblStrategy entity = dao.queryByStrategyId(strategyId);
         if (entity == null)
             log.warn("entity == null where strategyId -> {}", strategyId);
-        return entity;
+        return DtoConverter.toDTO(entity);
     }
 
     /**
      * @param strategyName String
      * @return StrategyEntity
      */
-    @Nullable
-    public StrategyEntity getStrategy(String strategyName) {
+    public StrategyDTO getStrategy(String strategyName) {
         if (illegalStrategyName(strategyName, log))
             Throws.illegalArgument("strategyName");
-        StrategyEntity entity = strategyDao.queryByStrategyName(strategyName);
+        TblStrategy entity = dao.queryByStrategyName(strategyName);
         if (entity == null)
             log.warn("entity == null where strategyName -> {}", strategyName);
-        return entity;
+        return DtoConverter.toDTO(entity);
     }
 
 
@@ -65,8 +67,8 @@ public final class StrategyService {
      * @param entity StrategyEntity
      * @return boolean
      */
-    public boolean putStrategy(StrategyEntity entity) {
-        return DaoExecutor.insertOrUpdate(strategyDao, entity);
+    public boolean putStrategy(TblStrategy entity) {
+        return DaoExecutor.insertOrUpdate(dao, entity);
     }
 
 

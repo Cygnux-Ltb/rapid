@@ -3,12 +3,7 @@
 
 package com.ib.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import com.ib.client.EClient;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,8 +14,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
-import com.ib.client.EClient;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.Serial;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 class MktDepthDlg extends JDialog {
     private final static int OPERATION_INSERT = 0;
@@ -35,7 +35,7 @@ class MktDepthDlg extends JDialog {
     private final MktDepthModel m_askModel = new MktDepthModel();
     private EClient m_client;
     private int m_id;
-    private boolean m_isSmartDepth = false;
+    private final boolean m_isSmartDepth;
 
     MktDepthDlg(String title, JFrame parent, boolean isSmartDepth) {
         super(parent, title, false);
@@ -138,7 +138,9 @@ class MktDepthDlg extends JDialog {
 }
 
 class MktDepthModel extends AbstractTableModel {
-    private LinkedList<MktDepthTableRow> m_allData = new LinkedList<>();
+    @Serial
+    private static final long serialVersionUID = -7498720476456886930L;
+    private final LinkedList<MktDepthTableRow> m_allData = new LinkedList<>();
 
     synchronized public void addOrderAt(int position, String marketMaker, double price, int size) {
         MktDepthTableRow newData = new MktDepthTableRow(marketMaker, price, size);
@@ -206,20 +208,14 @@ class MktDepthModel extends AbstractTableModel {
     }
 
     public String getColumnName(int c) {
-        switch (c) {
-            case 0:
-                return "MM";
-            case 1:
-                return "Price";
-            case 2:
-                return "Size";
-            case 3:
-                return "Cum Size";
-            case 4:
-                return "Avg Price";
-            default:
-                return null;
-        }
+        return switch (c) {
+            case 0 -> "MM";
+            case 1 -> "Price";
+            case 2 -> "Size";
+            case 3 -> "Cum Size";
+            case 4 -> "Avg Price";
+            default -> null;
+        };
     }
 
     static class MktDepthTableRow {
@@ -238,20 +234,14 @@ class MktDepthModel extends AbstractTableModel {
         }
 
         Object getValue(int c) {
-            switch (c) {
-                case 0:
-                    return m_marketMaker;
-                case 1:
-                    return "" + m_price;
-                case 2:
-                    return "" + m_size;
-                case 3:
-                    return "" + m_cumSize;
-                case 4:
-                    return "" + m_avgPrice;
-                default:
-                    return null;
-            }
+            return switch (c) {
+                case 0 -> m_marketMaker;
+                case 1 -> String.valueOf(m_price);
+                case 2 -> String.valueOf(m_size);
+                case 3 -> String.valueOf(m_cumSize);
+                case 4 -> String.valueOf(m_avgPrice);
+                default -> null;
+            };
         }
     }
 }

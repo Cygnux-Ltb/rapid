@@ -4,10 +4,14 @@
 package com.ib.apidemo;
 
 import javax.swing.table.AbstractTableModel;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PnLSingleModel extends AbstractTableModel {
+
+    @Serial
+    private static final long serialVersionUID = -7212917208988738443L;
 
     @Override
     public String getColumnName(int column) {

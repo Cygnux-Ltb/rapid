@@ -204,10 +204,9 @@ public class OrderState {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof OrderState)) {
+        if (!(other instanceof OrderState state)) {
             return false;
         }
-        OrderState state = (OrderState) other;
 
         if (m_commission != state.m_commission ||
                 m_minCommission != state.m_minCommission ||

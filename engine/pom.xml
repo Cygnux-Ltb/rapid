@@ -16,27 +16,28 @@
             <groupId>io.mercury</groupId>
             <artifactId>commons-concurrent</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-json</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-avro</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-databind</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>transport-zmq</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.cygnuxltb</groupId>
             <artifactId>trader-api</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>

@@ -2,7 +2,7 @@
 # 产品服务接口
 ## 获取全部产品
 
-**URL:** `/product/all`
+**URL:** `/product`
 
 **Type:** `GET`
 
@@ -17,37 +17,35 @@
 
 **Request-example:**
 ```
-curl -X GET -i /product/all
+curl -X GET -i /product
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|productId|int32|No comments found.|-|
-|productName|string|No comments found.|-|
-|subAccountId|string|No comments found.|-|
-|userId|string|No comments found.|-|
-|interfaceType|string|No comments found.|-|
+|productId|int32|产品ID|-|
+|productName|string|产品名称|-|
+|subAccountId|string|子账户ID|-|
+|userId|string|用户ID|-|
+|interfaceType|string|接口名称|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 2,
-    "productId": 21,
-    "productName": "janetta.rippin",
-    "subAccountId": "19",
-    "userId": "19",
-    "interfaceType": "6jxu5g"
+    "productId": 0,
+    "productName": "",
+    "subAccountId": "",
+    "userId": "",
+    "interfaceType": ""
   }
 ]
 ```
 
 ## 获取指定产品信息
 
-**URL:** `/product`
+**URL:** `/product/get`
 
 **Type:** `GET`
 
@@ -67,29 +65,27 @@ curl -X GET -i /product/all
 
 **Request-example:**
 ```
-curl -X GET -i /product?productId=526 --data '&526'
+curl -X GET -i /product/get?productId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|productId|int32|No comments found.|-|
-|productName|string|No comments found.|-|
-|subAccountId|string|No comments found.|-|
-|userId|string|No comments found.|-|
-|interfaceType|string|No comments found.|-|
+|productId|int32|产品ID|-|
+|productName|string|产品名称|-|
+|subAccountId|string|子账户ID|-|
+|userId|string|用户ID|-|
+|interfaceType|string|接口名称|-|
 
 **Response-example:**
 ```
 {
-  "uid": 493,
-  "productId": 505,
-  "productName": "janetta.rippin",
-  "subAccountId": "19",
-  "userId": "19",
-  "interfaceType": "5m964t"
+  "productId": 0,
+  "productName": "",
+  "subAccountId": "",
+  "userId": "",
+  "interfaceType": ""
 }
 ```
 

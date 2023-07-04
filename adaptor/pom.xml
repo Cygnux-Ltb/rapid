@@ -12,35 +12,14 @@
     <name>adaptor</name>
     <packaging>pom</packaging>
 
-    <url>https://cygnuxltb.io</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>yellow013</name>
-        </developer>
-    </developers>
-
     <modules>
         <module>adaptor-ctp</module>
-        <module>adaptor-fix4j</module>
+        <module>adaptor-fix</module>
         <module>adaptor-ib</module>
         <module>adaptor-mt5</module>
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
-        <spring-boot.version>3.0.6</spring-boot.version>
-        <mercury.version>1.0-SNAPSHOT</mercury.version>
-        <avro.version>1.11.1</avro.version>
     </properties>
 
     <build>
@@ -73,25 +52,9 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.26</version>
+                <version>1.18.28</version>
             </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
-            <!-- mercury commons -->
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>commons-core</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>commons-config</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>commons-concurrent</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
             <!-- mercury persistence -->
             <dependency>
                 <groupId>io.mercury</groupId>

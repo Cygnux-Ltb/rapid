@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+import java.io.Serial;
 
 public class UpperField extends JTextField {
 	int m_ival;
@@ -28,6 +29,9 @@ public class UpperField extends JTextField {
 		super( i);
 		
 		setDocument( new PlainDocument() {
+			@Serial
+			private static final long serialVersionUID = -1309531967335174926L;
+
 			@Override public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 				super.insertString(offs, str.toUpperCase(), a);
 			}
@@ -42,7 +46,7 @@ public class UpperField extends JTextField {
 			setText( null);
 		}
 		else {
-			super.setText( "" + v);
+			super.setText(String.valueOf(v));
 		}
 	}
 
@@ -52,7 +56,7 @@ public class UpperField extends JTextField {
 			setText( null);
 		}
 		else {
-			super.setText( "" + v);
+			super.setText(String.valueOf(v));
 		}
 	}
 	

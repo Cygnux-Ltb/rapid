@@ -3,15 +3,14 @@
 
 package com.ib.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
 
 public class LogConfigDlg extends JDialog {
 

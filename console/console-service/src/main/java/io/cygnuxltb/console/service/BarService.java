@@ -1,9 +1,9 @@
 package io.cygnuxltb.console.service;
 
+import io.cygnuxltb.console.persistence.entity.TblBar;
 import io.cygnuxltb.console.persistence.dao.BarDao;
-import io.cygnuxltb.console.persistence.entity.BarEntity;
-import io.cygnuxltb.console.service.bean.OutboundConverter;
-import io.cygnuxltb.protocol.http.outbound.BarM1DTO;
+import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +15,7 @@ import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
 
 @Service
-public class BarService {
-
+public final class BarService {
 
     @Resource
     private BarDao dao;
@@ -26,7 +25,7 @@ public class BarService {
      * @param tradingDay     int
      * @return List<BarEntity>
      */
-    public List<BarM1DTO> getBars(@Nonnull String instrumentCode, int tradingDay) {
+    public List<BarDTO> getBars(@Nonnull String instrumentCode, int tradingDay) {
         return getBars(instrumentCode, tradingDay, tradingDay);
     }
 
@@ -37,11 +36,11 @@ public class BarService {
      * @param endTradingDay   int
      * @return List<BarEntity>
      */
-    public List<BarM1DTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
-        return select(BarEntity.class,
+    public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
+        return select(TblBar.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
-                .map(OutboundConverter::toBarDTO)
+                .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +48,7 @@ public class BarService {
      * @param entity BarEntity
      * @return boolean
      */
-    public boolean putBar(@Nonnull BarEntity entity) {
+    public boolean putBar(@Nonnull TblBar entity) {
         return insertOrUpdate(dao, entity);
     }
 

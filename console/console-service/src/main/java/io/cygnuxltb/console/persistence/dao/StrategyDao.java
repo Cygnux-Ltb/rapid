@@ -1,27 +1,27 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.StrategyEntity;
+import io.cygnuxltb.console.persistence.entity.TblStrategy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Strategy DAO
+ * Strategy Repository
  *
  * @author yellow013
  */
 @Repository
-public interface StrategyDao extends JpaRepository<StrategyEntity, Long> {
+public interface StrategyDao extends JpaRepository<TblStrategy, Long> {
 
     /**
      * @param strategyId int
      * @return StrategyEntity
      */
-    StrategyEntity queryByStrategyId(int strategyId);
+    TblStrategy queryByStrategyId(int strategyId);
 
     /**
      * @param strategyName String
      * @return StrategyEntity
      */
-    StrategyEntity queryByStrategyName(String strategyName);
+    TblStrategy queryByStrategyName(String strategyName);
 
 }

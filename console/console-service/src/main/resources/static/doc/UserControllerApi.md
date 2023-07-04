@@ -23,12 +23,24 @@
 
 **Request-example:**
 ```
-curl -X POST -i /user/signin --data 'sign=tdwfuz&password=a1htpj'
+curl -X POST -i /user/signin
 ```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|authenticated|boolean|是否已验证|-|
+|message|string|消息内容|-|
+|securityCode|int64|安全码|-|
 
 **Response-example:**
 ```
-true
+{
+  "authenticated": true,
+  "message": "",
+  "securityCode": 0
+}
 ```
 
 ## 用户注册, 当前不支持新用户注册
@@ -55,7 +67,7 @@ true
 
 **Request-example:**
 ```
-curl -X POST -i /user/signup --data 'sign=hzbgmx&type=872&password=4kg89n'
+curl -X POST -i /user/signup
 ```
 
 **Response-fields:**
@@ -70,8 +82,8 @@ curl -X POST -i /user/signup --data 'sign=hzbgmx&type=872&password=4kg89n'
 **Response-example:**
 ```
 {
-  "code": 109,
-  "message": "success",
+  "code": 0,
+  "message": "",
   "array": true,
   "data": {}
 }

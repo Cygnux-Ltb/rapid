@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
     @ResponseBody
+    @ExceptionHandler(Exception.class)
     public ResponseBean handleException(Exception e) {
         if (e instanceof NullPointerException)
-            return ResponseStatus.NOT_FOUND
-                    .response()
+            return ResponseStatus
+                    .NOT_FOUND.response()
                     .setMessage(e.getMessage());
         if (e instanceof IllegalArgumentException)
-            return ResponseStatus.BAD_REQUEST
-                    .response()
+            return ResponseStatus
+                    .BAD_REQUEST.response()
                     .setMessage(e.getMessage());
-        return ResponseStatus.INTERNAL_ERROR
-                .response();
+        return ResponseStatus
+                .INTERNAL_ERROR.response();
     }
 
 }

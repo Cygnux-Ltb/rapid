@@ -1,13 +1,13 @@
 package io.horizon.adaptor.ctp.gateway;
 
-import io.horizon.ctp.adaptor.CtpConfig;
-import io.horizon.ctp.gateway.CtpGateway;
-import io.horizon.ctp.gateway.msg.FtdcRspMsg;
-import io.horizon.ctp.gateway.rsp.FtdcDepthMarketData;
-import io.horizon.ctp.gateway.rsp.FtdcOrder;
-import io.horizon.ctp.gateway.rsp.FtdcTrade;
+import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
+import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.jct.JctSingleConsumerQueue;
+import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.ThreadSupport;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.horizon.ctp.gateway.CtpGateway.CtpRunMode.Normal;
+import static io.cygnuxltb.adaptor.ctp.gateway.CtpGateway.CtpRunMode.Normal;
 
 public class CtpGatewayTest {
 
@@ -43,11 +43,11 @@ public class CtpGatewayTest {
     @Test
     public void test() {
 
-        final CtpConfig config = new CtpConfig().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
+        final CtpConfiguration config = new CtpConfiguration().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
                 .setInvestorId(InvestorId).setUserId(UserId).setAccountId(AccountId).setPassword(Password)
                 .setTradingDay(TradingDay).setCurrencyId(CurrencyId);
 
-        final Queue<FtdcRspMsg> queue = JctSingleConsumerQueue.mpscQueue("Simnow-Handle-Queue").setCapacity(128)
+        final Queue<FtdcRspMsg> queue = ScQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {
                     switch (msg.getType()) {
                         case DepthMarketData -> {
@@ -72,7 +72,7 @@ public class CtpGatewayTest {
                 });
 
         try (CtpGateway gateway = new CtpGateway(GatewayId, config, Normal, queue::enqueue)) {
-            gateway.bootstrap();
+            gateway.startup();
             gateway.SubscribeMarketData(new String[]{"rb2010"});
             ThreadSupport.join();
         } catch (IOException e) {

@@ -3,46 +3,83 @@
 
 package com.ib.gui;
 
-import com.ib.client.*;
+import com.ib.client.Bar;
+import com.ib.client.CommissionReport;
+import com.ib.client.Contract;
+import com.ib.client.ContractDescription;
+import com.ib.client.ContractDetails;
+import com.ib.client.DeltaNeutralContract;
+import com.ib.client.DepthMktDataDescription;
+import com.ib.client.EClientSocket;
+import com.ib.client.EJavaSignal;
+import com.ib.client.EReader;
+import com.ib.client.EWrapper;
+import com.ib.client.EWrapperMsgGenerator;
+import com.ib.client.Execution;
+import com.ib.client.FamilyCode;
+import com.ib.client.HistogramEntry;
+import com.ib.client.HistoricalTick;
+import com.ib.client.HistoricalTickBidAsk;
+import com.ib.client.HistoricalTickLast;
+import com.ib.client.MarketDataType;
+import com.ib.client.NewsProvider;
+import com.ib.client.Order;
+import com.ib.client.OrderState;
+import com.ib.client.PriceIncrement;
+import com.ib.client.SoftDollarTier;
+import com.ib.client.TagValue;
+import com.ib.client.TickAttrib;
+import com.ib.client.TickAttribBidAsk;
+import com.ib.client.TickAttribLast;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 class SampleFrame extends JFrame implements EWrapper {
     private static final int NOT_AN_FA_ACCOUNT_ERROR = 321;
-    private int[] faErrorCodes = {503, 504, 505, 522, 1100, NOT_AN_FA_ACCOUNT_ERROR};
+    private final int[] faErrorCodes = {503, 504, 505, 522, 1100, NOT_AN_FA_ACCOUNT_ERROR};
     private boolean faError;
 
-    private EJavaSignal m_signal = new EJavaSignal();
-    private EClientSocket m_client = new EClientSocket(this, m_signal);
+    private final EJavaSignal m_signal = new EJavaSignal();
+    private final EClientSocket m_client = new EClientSocket(this, m_signal);
     private EReader m_reader;
-    private IBTextPanel m_tickers = new IBTextPanel("Market and Historical Data", false);
-    private IBTextPanel m_TWS = new IBTextPanel("TWS Server Responses", false);
-    private IBTextPanel m_errors = new IBTextPanel("Errors and Messages", false);
-    private OrderDlg m_orderDlg = new OrderDlg(this);
-    private ExtOrdDlg m_extOrdDlg = new ExtOrdDlg(m_orderDlg);
-    private AccountDlg m_acctDlg = new AccountDlg(this);
-    private Map<Integer, MktDepthDlg> m_mapRequestToMktDepthDlg = new HashMap<>();
-    private Map<Integer, MktDepthDlg> m_mapRequestToSmartDepthDlg = new HashMap<>();
-    private NewsBulletinDlg m_newsBulletinDlg = new NewsBulletinDlg(this);
-    private ScannerDlg m_scannerDlg = new ScannerDlg(this);
-    private GroupsDlg m_groupsDlg;
-    private SecDefOptParamsReqDlg m_secDefOptParamsReq = new SecDefOptParamsReqDlg(this);
-    private SmartComponentsParamsReqDlg m_smartComponentsParamsReq = new SmartComponentsParamsReqDlg(this);
-    private HistoricalNewsDlg m_historicalNewsDlg = new HistoricalNewsDlg(this);
-    private NewsArticleDlg m_newsArticleDlg = new NewsArticleDlg(this);
-    private MarketRuleDlg m_marketRuleDlg = new MarketRuleDlg(this);
-    private PnLDlg m_pnlDlg = new PnLDlg(this);
-    private PnLSingleDlg m_pnlSingleDlg = new PnLSingleDlg(this);
+    private final IBTextPanel m_tickers = new IBTextPanel("Market and Historical Data", false);
+    private final IBTextPanel m_TWS = new IBTextPanel("TWS Server Responses", false);
+    private final IBTextPanel m_errors = new IBTextPanel("Errors and Messages", false);
+    private final OrderDlg m_orderDlg = new OrderDlg(this);
+    private final ExtOrdDlg m_extOrdDlg = new ExtOrdDlg(m_orderDlg);
+    private final AccountDlg m_acctDlg = new AccountDlg(this);
+    private final Map<Integer, MktDepthDlg> m_mapRequestToMktDepthDlg = new HashMap<>();
+    private final Map<Integer, MktDepthDlg> m_mapRequestToSmartDepthDlg = new HashMap<>();
+    private final NewsBulletinDlg m_newsBulletinDlg = new NewsBulletinDlg(this);
+    private final ScannerDlg m_scannerDlg = new ScannerDlg(this);
+    private final GroupsDlg m_groupsDlg;
+    private final SecDefOptParamsReqDlg m_secDefOptParamsReq = new SecDefOptParamsReqDlg(this);
+    private final SmartComponentsParamsReqDlg m_smartComponentsParamsReq = new SmartComponentsParamsReqDlg(this);
+    private final HistoricalNewsDlg m_historicalNewsDlg = new HistoricalNewsDlg(this);
+    private final NewsArticleDlg m_newsArticleDlg = new NewsArticleDlg(this);
+    private final MarketRuleDlg m_marketRuleDlg = new MarketRuleDlg(this);
+    private final PnLDlg m_pnlDlg = new PnLDlg(this);
+    private final PnLSingleDlg m_pnlSingleDlg = new PnLSingleDlg(this);
 
     private List<TagValue> m_mktDataOptions = new ArrayList<>();
     private List<TagValue> m_chartOptions = new ArrayList<>();
@@ -328,7 +365,7 @@ class SampleFrame extends JFrame implements EWrapper {
 
     static class BtnPairSlot {
 
-        private JPanel m_parentPanel;
+        private final JPanel m_parentPanel;
 
         public BtnPairSlot(JPanel parentPanel) {
             m_parentPanel = parentPanel;
@@ -688,7 +725,7 @@ class SampleFrame extends JFrame implements EWrapper {
                 m_mapRequestToMktDepthDlg.put(dialogId, depthDialog);
             }
 
-            // cleanup the map after depth dialog is closed so it does not linger or leak memory
+            // cleanup the map after depth dialog is closed, so it does not linger or leak memory
             depthDialog.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -1382,17 +1419,12 @@ class SampleFrame extends JFrame implements EWrapper {
     public void receiveFA(int faDataType, String xml) {
         displayXML(EWrapperMsgGenerator.FINANCIAL_ADVISOR + " " + EClientSocket.faMsgTypeName(faDataType), xml);
         switch (faDataType) {
-            case EClientSocket.GROUPS:
-                faGroupXML = xml;
-                break;
-            case EClientSocket.PROFILES:
-                faProfilesXML = xml;
-                break;
-            case EClientSocket.ALIASES:
-                faAliasesXML = xml;
-                break;
-            default:
+            case EClientSocket.GROUPS -> faGroupXML = xml;
+            case EClientSocket.PROFILES -> faProfilesXML = xml;
+            case EClientSocket.ALIASES -> faAliasesXML = xml;
+            default -> {
                 return;
+            }
         }
 
         if (!faError &&

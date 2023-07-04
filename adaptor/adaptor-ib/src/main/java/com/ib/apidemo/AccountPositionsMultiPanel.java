@@ -161,6 +161,9 @@ class AccountPositionsMultiPanel extends JPanel {
             }
 
             class PositionsModel extends AbstractTableModel {
+                @Serial
+                private static final long serialVersionUID = -8022952317781802769L;
+
                 @Override
                 public int getRowCount() {
                     return m_map.size();
@@ -293,6 +296,9 @@ class AccountPositionsMultiPanel extends JPanel {
             }
 
             class AccountUpdatesModel extends AbstractTableModel {
+                @Serial
+                private static final long serialVersionUID = -2034267700916534734L;
+
                 @Override
                 public int getRowCount() {
                     return m_map.size();

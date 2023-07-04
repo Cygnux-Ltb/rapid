@@ -4,9 +4,6 @@
 package com.ib.controller;
 
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
 import com.ib.client.Contract;
 import com.ib.client.EClientErrors;
 import com.ib.client.EClientSocket;
@@ -14,6 +11,9 @@ import com.ib.client.EJavaSignal;
 import com.ib.client.EMessage;
 import com.ib.client.EWrapper;
 import com.ib.client.Order;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 // NOTE: TWS 936 SERVER_VERSION is 67.
 
@@ -43,7 +43,7 @@ public class ApiConnection extends EClientSocket {
         byte[] buf = msg.getRawData();
 
         if (m_outLogger != null) {
-            m_outLogger.log(new String(buf, 0, buf.length, StandardCharsets.UTF_8));
+            m_outLogger.log(new String(buf, StandardCharsets.UTF_8));
         }
     }
 

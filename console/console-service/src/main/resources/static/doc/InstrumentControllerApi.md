@@ -1,6 +1,6 @@
 
 # 交易标的查询接口
-## 获取结算价格
+## 获取结算信息
 
 **URL:** `/instrument/settlement`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 获取结算价格
+**Description:** 获取结算信息
 
 
 
@@ -17,21 +17,21 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|    int|-|
-|instrumentCode|string|true|String|-|
+|td|int32|true|    int|-|
+|code|string|true|交易标的 [查询多个标的使用','分割]|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data '&197&96385'
+curl -X GET -i /instrument/settlement?td=0&code=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|交易标的代码 [*]|-|
-|tradingDay|int32|交易日 [*]|-|
+|instrumentCode|string|交易标的代码|-|
+|tradingDay|int32|交易日|-|
 |closePrice|double|收盘价|-|
 |openPrice|double|开盘价|-|
 |settlementPrice|double|结算价|-|
@@ -40,18 +40,18 @@ curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data
 ```
 [
   {
-    "instrumentCode": "96385",
-    "tradingDay": 929,
-    "closePrice": 1.24,
-    "openPrice": 79.41,
-    "settlementPrice": 85.58
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "closePrice": 0.0,
+    "openPrice": 0.0,
+    "settlementPrice": 0.0
   }
 ]
 ```
 
 ## 获取最新价格
 
-**URL:** `/instrument/last`
+**URL:** `/instrument/price`
 
 **Type:** `GET`
 
@@ -66,41 +66,41 @@ curl -X GET -i /instrument/settlement?tradingDay=197&instrumentCode=96385 --data
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|instrumentCodes|string|true|String|-|
+|code|string|true|交易标的 [查询多个标的使用','分割]|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/last?instrumentCodes=u2vbta --data '&u2vbta'
+curl -X GET -i /instrument/price?code=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|No comments found.|-|
-|lastPrice|double|No comments found.|-|
+|instrumentCode|string|交易标的|-|
+|lastPrice|double|最新价格|-|
 
 **Response-example:**
 ```
 [
   {
-    "instrumentCode": "96385",
-    "lastPrice": 62.92
+    "instrumentCode": "",
+    "lastPrice": 0.0
   }
 ]
 ```
 
-## 更新最新价格
+## 更新最新价格 (內部接口)
 
-**URL:** `/instrument/last`
+**URL:** `/instrument/price`
 
 **Type:** `PUT`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 更新最新价格
+**Description:** 更新最新价格 (內部接口)
 
 
 
@@ -108,7 +108,7 @@ curl -X GET -i /instrument/last?instrumentCodes=u2vbta --data '&u2vbta'
 
 **Request-example:**
 ```
-curl -X PUT -i /instrument/last
+curl -X PUT -i /instrument/price
 ```
 
 **Response-example:**
@@ -116,30 +116,78 @@ curl -X PUT -i /instrument/last
 OK
 ```
 
-## 获取可交易的标的
+## 获取交易费用
 
-**URL:** `/instrument/tradable/{tradingDay}/{symbol}`
+**URL:** `/instrument/fee`
 
 **Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 获取可交易的标的
+**Description:** 获取交易费用
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|String|-|
-|symbol|string|true|    String|-|
-
+|code|string|true|交易标的 [查询多个标的使用','分割]|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /instrument/tradable/83/ci7tys
+curl -X GET -i /instrument/fee?code=
+```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|instrumentCode|string|交易标的代码|-|
+|instrumentType|string|交易标的类型|-|
+|exchangeCode|string|交易所代码|-|
+|fee|double|交易费用|-|
+|tradable|boolean|可交易标识|-|
+
+**Response-example:**
+```
+[
+  {
+    "instrumentCode": "",
+    "instrumentType": "",
+    "exchangeCode": "",
+    "fee": 0.0,
+    "tradable": true
+  }
+]
+```
+
+## 获取可交易标的
+
+**URL:** `/instrument/tradable`
+
+**Type:** `GET`
+
+
+**Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
+
+**Description:** 获取可交易标的
+
+
+
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|td|int32|true|    交易日|-|
+|code|string|true|交易标的 [查询多个标的使用','分割]|-|
+
+
+**Request-example:**
+```
+curl -X GET -i /instrument/tradable?td=0&code=
 ```
 
 **Response-example:**

@@ -3,25 +3,30 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.GridBagConstraints;
+import java.awt.Window;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class HistoricalDataDlg extends JDialogBox {
-    private IBGridBagPanel m_panel = new IBGridBagPanel();
-    private JTextField m_StartTime = new JTextField(22);
-    private JTextField m_BackfillEndTime = new JTextField(22);
-    private JTextField m_BackfillDuration = new JTextField("1 M");
-    private JTextField m_BarSizeSetting = new JTextField("1 day");
-    private JCheckBox m_UseRTH = new JCheckBox();
-    private JTextField m_FormatDate = new JTextField("1");
-    private JTextField m_WhatToShow = new JTextField("TRADES");
-    private JCheckBox m_keepUpToDateCheckBox = new JCheckBox();
-    private JCheckBox m_ignoreSize = new JCheckBox();
-    private JTextField m_numberOfTicks = new JTextField("0");
-    private JComboBox m_tickByTickTypeComboBox = new JComboBox(new Object[]{"Last", "AllLast", "BidAsk", "MidPoint"});
+    private final IBGridBagPanel m_panel = new IBGridBagPanel();
+    private final JTextField m_StartTime = new JTextField(22);
+    private final JTextField m_BackfillEndTime = new JTextField(22);
+    private final JTextField m_BackfillDuration = new JTextField("1 M");
+    private final JTextField m_BarSizeSetting = new JTextField("1 day");
+    private final JCheckBox m_UseRTH = new JCheckBox();
+    private final JTextField m_FormatDate = new JTextField("1");
+    private final JTextField m_WhatToShow = new JTextField("TRADES");
+    private final JCheckBox m_keepUpToDateCheckBox = new JCheckBox();
+    private final JCheckBox m_ignoreSize = new JCheckBox();
+    private final JTextField m_numberOfTicks = new JTextField("0");
+    private final JComboBox<?> m_tickByTickTypeComboBox = new JComboBox<>(new Object[]{"Last", "AllLast", "BidAsk", "MidPoint"});
 
     public String startTime() {
         return m_StartTime.getText();
@@ -78,8 +83,7 @@ public class HistoricalDataDlg extends JDialogBox {
         GregorianCalendar gc = new GregorianCalendar();
 
         gc.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String dateTime = "" +
-                gc.get(Calendar.YEAR) +
+        String dateTime = gc.get(Calendar.YEAR) +
                 pad(gc.get(Calendar.MONTH) + 1) +
                 pad(gc.get(Calendar.DAY_OF_MONTH)) + " " +
                 pad(gc.get(Calendar.HOUR_OF_DAY)) + ":" +
@@ -123,7 +127,7 @@ public class HistoricalDataDlg extends JDialogBox {
     }
 
     private static String pad(int val) {
-        return val < 10 ? "0" + val : "" + val;
+        return val < 10 ? "0" + val : String.valueOf(val);
     }
 
 }

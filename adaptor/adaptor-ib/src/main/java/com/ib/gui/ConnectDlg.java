@@ -3,19 +3,19 @@
 
 package com.ib.gui;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.io.Serial;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 class ConnectDlg extends JDialog {
+
     @Serial
     private static final long serialVersionUID = 8446500300257055914L;
     private static int LAST_CLIENT_ID = 0;

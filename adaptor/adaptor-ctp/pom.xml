@@ -14,51 +14,28 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>io.horizon.ctp.launch.CtpAdaptorStartup</mainClass>
-                            <arguments>
-                                <argument>--add-opens</argument>
-                                <argument>java.base/java.lang.reflect=ALL-UNNAMED</argument>
-                                <argument>java.base/sun.nio.ch=ALL-UNNAMED</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.5.0</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>io.horizon.ctp.launch.CtpAdaptorStartup</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    <jvmArguments>-Xmx512m</jvmArguments>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>7.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>transport-rabbitmq</artifactId>
@@ -80,31 +57,33 @@
             <version>2.1.1</version>
         </dependency>
 
-        <!-- Spring Boot autoconfiguration attempts to automatically configure your Spring application
-             based on the jar dependencies that you have added. -->
+        <!-- Spring Boot autoconfiguration attempts to automatically
+             configure your Spring application based on the jar
+             dependencies that you have added. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
 
-        <!-- Starter for using Log4j2 for logging. An alternative to spring-boot-starter-logging -->
+        <!-- Starter for using Log4j2 for logging.
+             An alternative to spring-boot-starter-logging -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>${spring-boot.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-jul</artifactId>
-                    <groupId>org.apache.logging.log4j</groupId>
                 </exclusion>
                 <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-core</artifactId>
-                    <groupId>org.apache.logging.log4j</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>log4j-slf4j2-impl</artifactId>
                     <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j2-impl</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -127,6 +106,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
+
 </project>

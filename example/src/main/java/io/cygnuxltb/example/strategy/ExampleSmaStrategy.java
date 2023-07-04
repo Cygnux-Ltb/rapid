@@ -20,7 +20,7 @@ public final class ExampleSmaStrategy extends SingleInstrumentStrategy<BasicMark
     }
 
     @Override
-    public String getStrategyName() {
+    public String getName() {
         return "SmaStrategyExample";
     }
 

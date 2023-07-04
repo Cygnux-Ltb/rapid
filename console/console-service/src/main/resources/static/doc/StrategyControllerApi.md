@@ -1,6 +1,6 @@
 
 # 策略服务
-## 返回全部Strategy
+## 获取全部策略
 
 **URL:** `/strategy`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 返回全部Strategy
+**Description:** 获取全部策略
 
 
 
@@ -24,148 +24,138 @@ curl -X GET -i /strategy
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|No comments found.|-|
-|strategyName|string|No comments found.|-|
-|strategyOwner|string|No comments found.|-|
-|strategyInfo|string|No comments found.|-|
+|strategyId|int32|策略ID|-|
+|strategyName|string|策略名称|-|
+|strategyType|string|策略类型|-|
+|strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 110,
-    "strategyId": 981,
-    "strategyName": "janetta.rippin",
-    "strategyOwner": "f6p0yf",
-    "strategyInfo": "458fy1"
+    "strategyId": 0,
+    "strategyName": "",
+    "strategyType": "",
+    "strategyInfo": ""
   }
 ]
 ```
 
-## 使用StrategyId作为get params访问Strategy
+## 获取策略
 
-**URL:** `/strategy/{strategyId}`
+**URL:** `/strategy/get`
 
 **Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 使用StrategyId作为get params访问Strategy
+**Description:** 获取策略
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
-
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /strategy/258
+curl -X GET -i /strategy/get?strategyId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|No comments found.|-|
-|strategyName|string|No comments found.|-|
-|strategyOwner|string|No comments found.|-|
-|strategyInfo|string|No comments found.|-|
+|strategyId|int32|策略ID|-|
+|strategyName|string|策略名称|-|
+|strategyType|string|策略类型|-|
+|strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
 ```
 {
-  "uid": 810,
-  "strategyId": 995,
-  "strategyName": "janetta.rippin",
-  "strategyOwner": "7kq2v3",
-  "strategyInfo": "k7iyr7"
+  "strategyId": 0,
+  "strategyName": "",
+  "strategyType": "",
+  "strategyInfo": ""
 }
 ```
 
-## 使用StrategyId作为URI访问Param
+## 根据策略名称获取策略相关参数
 
-**URL:** `/strategy/{strategyId}/param`
+**URL:** `/strategy/param`
 
 **Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 使用StrategyId作为URI访问Param
+**Description:** 根据策略名称获取策略相关参数
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
-
+|strategyName|string|true|String|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /strategy/33/param
+curl -X GET -i /strategy/param?strategyName=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|No comments found.|-|
-|strategyName|string|No comments found.|-|
-|ownerType|string|No comments found.|-|
-|owner|string|No comments found.|-|
-|paramName|string|No comments found.|-|
-|paramType|string|No comments found.|-|
-|paramValue|string|No comments found.|-|
+|group|string|参数组|-|
+|name|string|名称|-|
+|paramName|string|参数名|-|
+|paramType|string|参数类型|-|
+|paramValue|string|参数值|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 49,
-    "strategyId": 387,
-    "strategyName": "janetta.rippin",
-    "ownerType": "kf7mea",
-    "owner": "8nl73i",
-    "paramName": "janetta.rippin",
-    "paramType": "ss3j7y",
-    "paramValue": "o5095a"
+    "group": "",
+    "name": "",
+    "paramName": "",
+    "paramType": "",
+    "paramValue": ""
   }
 ]
 ```
 
-## Put StrategyParam URI is StrategyId
+## 添加策略参数 (内部接口)
 
-**URL:** `/strategy/{strategyId}/param`
+**URL:** `/strategy/param`
 
 **Type:** `PUT`
 
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** Put StrategyParam URI is StrategyId
+**Description:** 添加策略参数 (内部接口)
 
 
-**Path-parameters:**
+
+**Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |strategyId|int32|true|int|-|
 
 
-
 **Request-example:**
 ```
-curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/23/param
+curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/param --data 'strategyId=0'
 ```
 
 **Response-example:**

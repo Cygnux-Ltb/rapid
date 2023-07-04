@@ -2,12 +2,16 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
-import io.cygnuxltb.console.persistence.entity.PnlEntity;
-import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
+import io.cygnuxltb.console.persistence.entity.TblPnlSettlement;
+import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.protocol.http.outbound.PnlDTO;
+import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
@@ -26,9 +30,12 @@ public final class PnlService {
      * @param tradingDay int
      * @return List<PnlEntity>
      */
-    public List<PnlEntity> getPnl(int strategyId, int tradingDay) {
-        return select(PnlEntity.class,
-                () -> dao.queryByStrategyIdAndTradingDay(strategyId, tradingDay));
+    public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
+        return select(TblPnl.class,
+                () -> dao.queryBy(strategyId, tradingDay))
+                .stream()
+                .map(DtoConverter::toDTO)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -36,16 +43,20 @@ public final class PnlService {
      * @param tradingDay int
      * @return List<PnlSettlementEntity>
      */
-    public List<PnlSettlementEntity> getPnlSettlement(int strategyId, int tradingDay) {
-        return select(PnlSettlementEntity.class,
-                () -> settlementDao.queryByStrategyIdAndTradingDay(strategyId, tradingDay));
+    public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
+        return select(TblPnlSettlement.class,
+                () -> settlementDao.queryBy(strategyId, tradingDay))
+                .stream()
+                .map(DtoConverter::toDTO)
+                .collect(Collectors.toList())
+                ;
     }
 
     /**
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(PnlEntity entity) {
+    public boolean putPnl(TblPnl entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -53,7 +64,7 @@ public final class PnlService {
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(PnlSettlementEntity entity) {
+    public boolean putPnlSettlement(TblPnlSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

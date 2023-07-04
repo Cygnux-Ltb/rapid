@@ -17,12 +17,12 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|productId|int32|true|int|-|
+|productId|int32|true|产品ID|-|
 
 
 **Request-example:**
 ```
-curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/param --data 'productId=328'
+curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/param --data 'productId=0'
 ```
 
 **Response-example:**

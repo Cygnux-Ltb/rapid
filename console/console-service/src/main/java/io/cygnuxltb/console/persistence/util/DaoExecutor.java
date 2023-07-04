@@ -27,14 +27,15 @@ public final class DaoExecutor {
                 result -> {
                     if (isEmpty(result))
                         log.warn("query [{}] return 0 row", type.getSimpleName());
-                    else if (result.size() > 4)
+                    else if (result.size() > 3)
                         log.info("query [{}] return {} row", type.getSimpleName(), result.size());
                     else
                         log.info("query [{}] return {} row, result -> {}", type.getSimpleName(),
                                 result.size(), JsonWrapper.toJson(result));
                     return result;
                 },
-                e -> log.error("query [{}], an exception occurred", type.getSimpleName(), e));
+                e -> log.error("query [{}], an exception occurred -> {}", type.getSimpleName(),
+                        e.getMessage(), e));
     }
 
     /**
@@ -55,8 +56,8 @@ public final class DaoExecutor {
                     return true;
                 },
                 e -> {
-                    log.error("insert or update [{}] failure, entity -> {}",
-                            entity.getClass().getSimpleName(), entity, e);
+                    log.error("insert or update [{}] failure, entity -> {}, exception message -> {}",
+                            entity.getClass().getSimpleName(), entity, e.getMessage(), e);
                     return false;
                 });
     }

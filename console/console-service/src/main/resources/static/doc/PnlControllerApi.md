@@ -2,7 +2,7 @@
 # PNL服务接口
 ## 查询PNL
 
-**URL:** `/pnl/{tradingDay}`
+**URL:** `/pnl`
 
 **Type:** `GET`
 
@@ -12,70 +12,64 @@
 **Description:** 查询PNL
 
 
-**Path-parameters:**
-
-| Parameter | Type | Required | Description | Since |
-|-----------|------|----------|-------------|-------|
-|tradingDay|int32|true|int|-|
 
 **Query-parameters:**
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/515?strategyId=757 --data '&757'
+curl -X GET -i /pnl?td=0&strategyId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|strategyId|-|
-|instrumentCode|string|instrumentCode|-|
-|tradingDay|int32|tradingDay|-|
-|avgBuyPrice|double|avgBuyPrice|-|
-|avgSellPrice|double|avgSellPrice|-|
-|buyQuantity|int32|buyQuantity|-|
-|sellQuantity|int32|sellQuantity|-|
-|todayLong|int32|todayLong|-|
-|todayShort|int32|todayShort|-|
-|yesterdayLong|int32|yesterdayLong|-|
-|yesterdayShort|int32|yesterdayShort|-|
-|netPosition|int32|netPosition|-|
-|aggregatedFee|double|aggregatedFee|-|
-|approved|int32|approved|-|
-|turnover|int32|turnover|-|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|avgBuyPrice|double|平均多头价格|-|
+|avgSellPrice|double|平均空头价格|-|
+|buyQuantity|int32|多头数量|-|
+|sellQuantity|int32|空头数量|-|
+|todayLong|int32|今多头数量|-|
+|todayShort|int32|今空头数量|-|
+|yesterdayLong|int32|昨多头数量|-|
+|yesterdayShort|int32|昨空头数量|-|
+|netPosition|int32|净头寸|-|
+|aggregatedFee|double|聚合交易手续费|-|
+|turnover|int32|成交额|-|
+|approved|int32|认证状态|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 120,
-    "strategyId": 528,
-    "instrumentCode": "96385",
-    "tradingDay": 522,
-    "avgBuyPrice": 57.34,
-    "avgSellPrice": 52.15,
-    "buyQuantity": 207,
-    "sellQuantity": 531,
-    "todayLong": 730,
-    "todayShort": 410,
-    "yesterdayLong": 212,
-    "yesterdayShort": 581,
-    "netPosition": 417,
-    "aggregatedFee": 6.76,
-    "approved": 723,
-    "turnover": 660
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "avgBuyPrice": 0.0,
+    "avgSellPrice": 0.0,
+    "buyQuantity": 0,
+    "sellQuantity": 0,
+    "todayLong": 0,
+    "todayShort": 0,
+    "yesterdayLong": 0,
+    "yesterdayShort": 0,
+    "netPosition": 0,
+    "aggregatedFee": 0.0,
+    "turnover": 0,
+    "approved": 0
   }
 ]
 ```
 
-## Put PnlDaily
+## 更新PNL, 策略引擎调用 (内部接口)
 
 **URL:** `/pnl`
 
@@ -84,7 +78,7 @@ curl -X GET -i /pnl/515?strategyId=757 --data '&757'
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** Put PnlDaily
+**Description:** 更新PNL, 策略引擎调用 (内部接口)
 
 
 
@@ -117,44 +111,42 @@ OK
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|strategyId|int32|true|int|-|
-|tradingDay|int32|true|int|-|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /pnl/settlement?strategyId=154&tradingDay=390 --data '&154&390'
+curl -X GET -i /pnl/settlement?td=0&strategyId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|uid|int64|No comments found.|-|
-|strategyId|int32|strategyId|-|
-|instrumentCode|string|instrumentCode|-|
-|tradingDay|int32|tradingDay|-|
-|position|int32|position|-|
-|pnlTotal|double|pnlTotal|-|
-|pnlNet|double|pnlNet|-|
-|tradeCost|double|tradeCost|-|
-|exposure|double|exposure|-|
-|approved|int32|approved|-|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|position|int32|仓位|-|
+|pnlTotal|double|盈亏|-|
+|pnlNet|double|净盈亏|-|
+|tradeCost|double|交易成本|-|
+|exposure|double|风险暴露|-|
+|approved|int32|认证状态|-|
 
 **Response-example:**
 ```
 [
   {
-    "uid": 138,
-    "strategyId": 755,
-    "instrumentCode": "96385",
-    "tradingDay": 855,
-    "position": 810,
-    "pnlTotal": 54.56,
-    "pnlNet": 92.29,
-    "tradeCost": 98.60,
-    "exposure": 46.93,
-    "approved": 511
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "position": 0,
+    "pnlTotal": 0.0,
+    "pnlNet": 0.0,
+    "tradeCost": 0.0,
+    "exposure": 0.0,
+    "approved": 0
   }
 ]
 ```

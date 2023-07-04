@@ -34,7 +34,7 @@ public class Histogram extends JComponent {
         for (HistogramEntry bar : m_rows) {
             int x1 = (int) ((bar.size() * width) / max);
 
-            String label = bar.price() + "";
+            String label = String.valueOf(bar.price());
 
             g.setColor(Color.red);
             g.fillRect(m_x0, y, x1, m_barHeight);

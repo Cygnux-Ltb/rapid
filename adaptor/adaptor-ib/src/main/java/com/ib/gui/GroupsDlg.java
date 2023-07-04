@@ -5,8 +5,15 @@ package com.ib.gui;
 
 import com.ib.client.EClient;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 
 public class GroupsDlg extends JDialog {
@@ -15,19 +22,19 @@ public class GroupsDlg extends JDialog {
 
     public int m_reqId;
 
-    private JTextField m_txtReqId = new JTextField("0");
-    private JTextField m_txtContractInfo = new JTextField("");
+    private final JTextField m_txtReqId = new JTextField("0");
+    private final JTextField m_txtContractInfo = new JTextField("");
 
-    private JButton m_btnQueryDisplayGroups = new JButton("Query Display Groups");
-    private JButton m_btnSubscribeToGroupEvents = new JButton("Subscribe To Group Events");
-    private JButton m_btnUnsubscribeFromGroupEvents = new JButton("Unsubscribe From Group Events");
-    private JButton m_btnUpdateDisplayGroup = new JButton("Update Display Group");
+    private final JButton m_btnQueryDisplayGroups = new JButton("Query Display Groups");
+    private final JButton m_btnSubscribeToGroupEvents = new JButton("Subscribe To Group Events");
+    private final JButton m_btnUnsubscribeFromGroupEvents = new JButton("Unsubscribe From Group Events");
+    private final JButton m_btnUpdateDisplayGroup = new JButton("Update Display Group");
 
-    private JComboBox<String> m_cmbDisplayGroups = new JComboBox<>();
+    private final JComboBox<String> m_cmbDisplayGroups = new JComboBox<>();
 
-    private IBTextPanel m_txtGroupMessages = new IBTextPanel("Group Messages", false);
+    private final IBTextPanel m_txtGroupMessages = new IBTextPanel("Group Messages", false);
 
-    private EClient m_client;
+    private final EClient m_client;
 
     GroupsDlg(SampleFrame owner, EClient client) {
         super(owner, true);

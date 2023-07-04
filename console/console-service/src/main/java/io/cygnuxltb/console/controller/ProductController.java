@@ -2,10 +2,9 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.ProductEntity;
 import io.cygnuxltb.console.service.ProductService;
-import io.cygnuxltb.protocol.http.inbound.ControlCommand.InitFinish;
-import io.mercury.common.http.MimeType;
+import io.cygnuxltb.protocol.http.inbound.command.InitFinish;
+import io.cygnuxltb.protocol.http.outbound.ProductDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+
 /**
  * 产品服务接口
  */
 @RestController
-@RequestMapping(path = "/product", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/product", produces = APPLICATION_JSON_UTF8)
 public final class ProductController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(ProductController.class);
@@ -42,9 +43,9 @@ public final class ProductController {
      *
      * @return ResponseEntity<List < ProductEntity>>
      */
-    @GetMapping("/all")
-    public List<ProductEntity> getAllProduct() {
-        return service.getAll();
+    @GetMapping
+    public List<ProductDTO> getProduct() {
+        return service.get();
     }
 
     /**
@@ -53,9 +54,9 @@ public final class ProductController {
      * @param productId int
      * @return ResponseEntity<ProductEntity>
      */
-    @GetMapping
-    public ProductEntity getProduct(@RequestParam("productId") int productId) {
-        return service.getById(productId);
+    @GetMapping("/get")
+    public ProductDTO getProduct(@RequestParam("productId") int productId) {
+        return service.get(productId);
     }
 
     /**

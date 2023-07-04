@@ -3,7 +3,6 @@ package io.cygnuxltb.engine.position;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.order.ChildOrder;
 import io.horizon.trader.order.enums.TrdDirection;
-import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.functional.Formatter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.BitOperator;
@@ -16,6 +15,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import static io.mercury.common.collections.MutableMaps.newLongIntHashMap;
 import static java.lang.Math.abs;
 
 /**
@@ -42,7 +42,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentPos = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentPos = newLongIntHashMap();
 
     /**
      * [subAccount]的[instrument]最大多仓持仓限制<br>
@@ -50,7 +50,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentLongLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentLongLimit = newLongIntHashMap();
 
     /**
      * [subAccount]的[instrument]最大空仓持仓限制<br>
@@ -58,7 +58,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentShortLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentShortLimit = newLongIntHashMap();
 
     /**
      * [account]的[instrument]持仓数量<br>
@@ -66,7 +66,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentPos = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentPos = newLongIntHashMap();
 
     /**
      * [account]的[instrument]最大多仓持仓限制<br>
@@ -74,7 +74,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentLongLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentLongLimit = newLongIntHashMap();
 
     /**
      * [account]的[instrument]最大空仓持仓限制<br>
@@ -82,7 +82,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentShortLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentShortLimit = newLongIntHashMap();
 
     private PositionKeeper() {
     }
@@ -106,8 +106,8 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * @param longLimitQty  多仓限制
      * @param shortLimitQty 空仓限制
      */
-    public static void setSubAccountPositionsLimit(int subAccountId, Instrument instrument, int longLimitQty,
-                                                   int shortLimitQty) {
+    public static void setSubAccountPositionsLimit(int subAccountId, Instrument instrument,
+                                                   int longLimitQty, int shortLimitQty) {
         long key = mergePositionsKey(subAccountId, instrument);
         SubAccountInstrumentLongLimit.put(key, abs(longLimitQty));
         log.info("Set long positions limit -> subAccountId==[{}], instrument -> {}, longLimitQty==[{}]", subAccountId,
@@ -125,8 +125,8 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * @param longLimitQty  多仓限制
      * @param shortLimitQty 空仓限制
      */
-    public static void setAccountPositionsLimit(int accountId, Instrument instrument, int longLimitQty,
-                                                int shortLimitQty) {
+    public static void setAccountPositionsLimit(int accountId, Instrument instrument,
+                                                int longLimitQty, int shortLimitQty) {
         long key = mergePositionsKey(accountId, instrument);
         AccountInstrumentLongLimit.put(key, abs(longLimitQty));
         log.info("Set long positions limit -> accountId==[{}], instrument -> {}, longLimitQty==[{}]", accountId,
@@ -163,7 +163,8 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
      * @param direction  交易方向
      * @return int
      */
-    public static int getCurrentAccountPositionLimit(int accountId, Instrument instrument, TrdDirection direction) {
+    public static int getCurrentAccountPositionLimit(int accountId, Instrument instrument,
+                                                     TrdDirection direction) {
         long key = mergePositionsKey(accountId, instrument);
         int currentQty = AccountInstrumentPos.get(key);
         return switch (direction) {
@@ -198,13 +199,17 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
     public static int getCurrentAccountPosition(int accountId, Instrument instrument) {
         long positionKey = mergePositionsKey(accountId, instrument);
         int currentPosition = AccountInstrumentPos.get(positionKey);
-        log.info("Get current position, accountId==[{}], instrumentCode==[{}], currentPosition==[{}]", accountId,
-                instrument.getInstrumentCode(), currentPosition);
+        log.info("Get current position, accountId==[{}], instrumentCode==[{}], currentPosition==[{}]",
+                accountId, instrument.getInstrumentCode(), currentPosition);
         return currentPosition;
     }
 
-    private static final String UpdatePosLogTemplate = "Update position, subAccountId==[{}], instrumentCode==[{}], "
-            + "beforePos==[{}], trdQty==[{}], currentPos==[{}]";
+    private static final String UpdatePosLogTemplate = "Update position -> "
+            + "subAccountId==[{}], "
+            + "instrumentCode==[{}], "
+            + "beforePos==[{}], "
+            + "trdQty==[{}], "
+            + "currentPos==[{}]";
 
     /**
      * 根据子单状态变化更新持仓信息
@@ -245,8 +250,12 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
         log.info(UpdatePosLogTemplate, subAccountId, instrument.getInstrumentCode(), beforePos, trdQty, currentPos);
     }
 
-    private static final String AddPosLogTemplate = "Add current position, subAccountId==[{}], "
-            + "instrumentCode==[{}], beforePos==[{}], qty==[{}], currentPos==[{}]";
+    private static final String AddPosLogTemplate = "Add current position -> "
+            + "subAccountId==[{}], "
+            + "instrumentCode==[{}], "
+            + "beforePos==[{}], "
+            + "qty==[{}], "
+            + "currentPos==[{}]";
 
     /**
      * 添加当前头寸

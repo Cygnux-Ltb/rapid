@@ -51,24 +51,16 @@ public class DeltaNeutralContract {
         if (this == p_other) {
             return true;
         }
-
-        if (p_other == null || !(p_other instanceof DeltaNeutralContract)) {
+        if (!(p_other instanceof DeltaNeutralContract l_theOther)) {
             return false;
         }
-
-        DeltaNeutralContract l_theOther = (DeltaNeutralContract) p_other;
-
         if (m_conid != l_theOther.m_conid) {
             return false;
         }
         if (m_delta != l_theOther.m_delta) {
             return false;
         }
-        if (m_price != l_theOther.m_price) {
-            return false;
-        }
-
-        return true;
+        return m_price == l_theOther.m_price;
     }
 
     @Override

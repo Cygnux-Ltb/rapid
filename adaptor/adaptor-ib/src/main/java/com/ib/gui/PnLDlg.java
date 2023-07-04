@@ -3,8 +3,11 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.GridLayout;
 
 public class PnLDlg extends JDialogBox {
 
@@ -12,9 +15,9 @@ public class PnLDlg extends JDialogBox {
     String m_account;
     String m_modelCode;
 
-    private JTextField m_reqIdField = new JTextField();
-    private JTextField m_accountField = new JTextField();
-    private JTextField m_modelCodeField = new JTextField();
+    private final JTextField m_reqIdField = new JTextField();
+    private final JTextField m_accountField = new JTextField();
+    private final JTextField m_modelCodeField = new JTextField();
 
     protected JPanel m_editsPanel = new JPanel(new GridLayout(0, 1));
 

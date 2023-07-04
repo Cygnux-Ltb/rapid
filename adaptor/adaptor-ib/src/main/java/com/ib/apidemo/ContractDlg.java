@@ -27,7 +27,6 @@ public class ContractDlg extends JDialog {
 
         setLayout(new BorderLayout());
 
-
         HtmlButton ok = new HtmlButton("OK") {
             @Serial
             private static final long serialVersionUID = 7583994120321957478L;

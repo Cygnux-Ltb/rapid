@@ -221,14 +221,16 @@ public class EWrapperImpl implements EWrapper {
     @Override
     public void updateMktDepth(int tickerId, int position, int operation,
                                int side, double price, int size) {
-        System.out.println("UpdateMarketDepth. " + tickerId + " - Position: " + position + ", Operation: " + operation + ", Side: " + side + ", Price: " + price + ", Size: " + size + "");
+        System.out.println("UpdateMarketDepth. " + tickerId + " - Position: " + position + ", Operation: " + operation + ", Side: " + side + ", Price: " + price + ", Size: " + size);
     }
     //! [updatemktdepth]
 
     //! [updatemktdepthl2]
     @Override
     public void updateMktDepthL2(int tickerId, int position,
-                                 String marketMaker, int operation, int side, double price, int size, boolean isSmartDepth) {
+                                 String marketMaker, int operation,
+                                 int side, double price, int size,
+                                 boolean isSmartDepth) {
         System.out.println("UpdateMarketDepthL2. " + tickerId + " - Position: " + position + ", Operation: " + operation + ", Side: " + side + ", Price: " + price + ", Size: " + size + ", isSmartDepth: " + isSmartDepth);
     }
     //! [updatemktdepthl2]

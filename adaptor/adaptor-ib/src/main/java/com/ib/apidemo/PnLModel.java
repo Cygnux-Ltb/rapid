@@ -4,12 +4,16 @@
 package com.ib.apidemo;
 
 import javax.swing.table.AbstractTableModel;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
 public class PnLModel extends AbstractTableModel {
+
+    @Serial
+    private static final long serialVersionUID = -3204232860902367221L;
 
     private static class PnLItem {
 

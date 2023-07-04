@@ -16,7 +16,7 @@ public class PriceCondition extends ContractCondition {
 
     private double m_price;
     private int m_triggerMethod;
-    private static String[] mthdNames = new String[]{"default", "double bid/ask", "last", "double last", "bid/ask", "", "", "last of bid/ask", "mid-point"};
+    private static final String[] mthdNames = new String[]{"default", "double bid/ask", "last", "double last", "bid/ask", "", "", "last of bid/ask", "mid-point"};
 
     @Override
     public String toString() {
@@ -50,7 +50,7 @@ public class PriceCondition extends ContractCondition {
 
     @Override
     protected String valueToString() {
-        return "" + m_price;
+        return String.valueOf(m_price);
     }
 
     @Override

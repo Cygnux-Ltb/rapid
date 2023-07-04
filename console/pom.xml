@@ -29,17 +29,11 @@
     <modules>
         <module>console-hc</module>
         <module>console-service</module>
+        <module>protocol</module>
         <module>websocket</module>
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
-        <spring-boot.version>3.0.6</spring-boot.version>
-        <mercury.version>1.0-SNAPSHOT</mercury.version>
-        <avro.version>1.11.1</avro.version>
     </properties>
 
     <build>
@@ -69,11 +63,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.26</version>
-            </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
             <!-- mercury commons -->
             <dependency>

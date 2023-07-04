@@ -6,8 +6,10 @@ package com.ib.gui;
 import com.ib.apidemo.util.UpperField;
 import com.ib.apidemo.util.VerticalPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
 
 public class SmartComponentsParamsReqDlg extends JDialog {
 

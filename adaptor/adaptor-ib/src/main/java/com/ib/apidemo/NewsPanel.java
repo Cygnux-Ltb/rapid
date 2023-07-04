@@ -35,6 +35,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -235,6 +236,9 @@ class NewsPanel extends JPanel {
         }
 
         class NewsProvidersModel extends AbstractTableModel {
+            @Serial
+            private static final long serialVersionUID = 4141507300444249745L;
+
             @Override
             public int getRowCount() {
                 return m_rows.size();
@@ -375,6 +379,9 @@ class NewsPanel extends JPanel {
         }
 
         class NewsTicksModel extends AbstractTableModel {
+            @Serial
+            private static final long serialVersionUID = 5145714108313041990L;
+
             @Override
             public int getRowCount() {
                 return m_rows.size();
@@ -532,6 +539,9 @@ class NewsPanel extends JPanel {
         }
 
         class HistoricalNewsModel extends AbstractTableModel {
+            @Serial
+            private static final long serialVersionUID = -7446425113162872807L;
+
             @Override
             public int getRowCount() {
                 return m_rows.size();

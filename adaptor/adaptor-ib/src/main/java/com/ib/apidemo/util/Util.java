@@ -14,6 +14,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 
 public class Util {
 
@@ -60,6 +61,9 @@ public class Util {
      */
     public static void closeOnEsc(final JDialog dlg) {
         dlg.getRootPane().getActionMap().put("Cancel", new AbstractAction() {
+            @Serial
+            private static final long serialVersionUID = 8853665237968748791L;
+
             public void actionPerformed(ActionEvent e) {
                 dlg.dispose();
             }

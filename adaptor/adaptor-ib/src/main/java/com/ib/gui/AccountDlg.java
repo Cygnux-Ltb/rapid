@@ -122,6 +122,9 @@ public class AccountDlg extends JDialog {
 
 
 class PortfolioTable extends AbstractTableModel {
+
+    @Serial
+    private static final long serialVersionUID = -8993594613406171267L;
     private final Vector<PortfolioTableRow> m_allData = new Vector<>();
 
     void updatePortfolio(Contract contract, double position, double marketPrice, double marketValue,
@@ -219,7 +222,7 @@ class PortfolioTable extends AbstractTableModel {
                 case 1 -> m_contract.symbol();
                 case 2 -> m_contract.secType();
                 case 3 -> m_contract.lastTradeDateOrContractMonth();
-                case 4 -> m_contract.lastTradeDateOrContractMonth() == null ? null : "" + m_contract.strike();
+                case 4 -> m_contract.lastTradeDateOrContractMonth() == null ? null : String.valueOf(m_contract.strike());
                 case 5 -> (m_contract.getRight() != null && m_contract.getRight().equals("???"))
                         ? null : m_contract.getRight();
                 case 6 -> m_contract.multiplier();
@@ -227,12 +230,12 @@ class PortfolioTable extends AbstractTableModel {
                 case 8 -> m_contract.currency();
                 case 9 -> (m_contract.localSymbol() != null ? m_contract.localSymbol() : "");
                 case 10 -> (m_contract.tradingClass() != null ? m_contract.tradingClass() : "");
-                case 11 -> "" + m_position;
-                case 12 -> "" + m_marketPrice;
-                case 13 -> "" + m_marketValue;
-                case 14 -> "" + m_averageCost;
-                case 15 -> "" + m_unrealizedPNL;
-                case 16 -> "" + m_realizedPNL;
+                case 11 -> String.valueOf(m_position);
+                case 12 -> String.valueOf(m_marketPrice);
+                case 13 -> String.valueOf(m_marketValue);
+                case 14 -> String.valueOf(m_averageCost);
+                case 15 -> String.valueOf(m_unrealizedPNL);
+                case 16 -> String.valueOf(m_realizedPNL);
                 case 17 -> m_accountName;
                 default -> null;
             };
@@ -241,6 +244,10 @@ class PortfolioTable extends AbstractTableModel {
 }
 
 class AcctValueModel extends AbstractTableModel {
+
+    @Serial
+    private static final long serialVersionUID = -8041034599864243699L;
+
     private final Vector<AccountTableRow> m_allData = new Vector<>();
 
     void updateAccountValue(String key, String val, String currency, String accountName) {

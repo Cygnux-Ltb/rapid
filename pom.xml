@@ -26,22 +26,20 @@
     </developers>
 
     <modules>
+        <module>api</module>
         <module>adaptor</module>
         <module>console</module>
         <module>display</module>
         <module>engine</module>
         <module>example</module>
-        <module>market-api</module>
-        <module>protocol</module>
-        <module>trader-api</module>
     </modules>
 
     <properties>
+        <java.version>20</java.version>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
-        <spring-boot.version>3.0.6</spring-boot.version>
+        <spring-boot.version>3.1.0</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
         <avro.version>1.11.1</avro.version>
     </properties>
@@ -62,7 +60,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerArgument>-parameters</compilerArgument>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Xlint:preview</arg>
+                    </compilerArgs>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>
@@ -85,7 +87,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.26</version>
+                <version>1.18.28</version>
             </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
             <!-- mercury commons -->
@@ -132,7 +134,6 @@
                 <artifactId>transport-rabbitmq</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-
             <!-- API -->
             <dependency>
                 <groupId>io.cygnuxltb</groupId>

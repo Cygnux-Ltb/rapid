@@ -1,27 +1,27 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.ProductEntity;
+import io.cygnuxltb.console.persistence.entity.TblProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Product DAO
+ * Product Repository
  *
  * @author yellow013
  */
 @Repository
-public interface ProductDao extends JpaRepository<ProductEntity, Long> {
+public interface ProductDao extends JpaRepository<TblProduct, Long> {
 
     /**
      * @param productId int
      * @return ProductEntity
      */
-    ProductEntity queryByProductId(int productId);
+    TblProduct queryByProductId(int productId);
 
     /**
      * @param productName String
      * @return ProductEntity
      */
-    ProductEntity queryByProductName(String productName);
+    TblProduct queryByProductName(String productName);
 
 }

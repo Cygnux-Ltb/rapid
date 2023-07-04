@@ -134,7 +134,7 @@ public class OptionChainsPanel extends JPanel {
             @Override
             public void tickPrice(TickType tickType, double price, TickAttrib attribs) {
                 if (tickType == TickType.LAST || tickType == TickType.DELAYED_LAST) {
-                    m_labUnderPrice.setText("" + price);
+                    m_labUnderPrice.setText(String.valueOf(price));
                 }
             }
         };
@@ -203,6 +203,8 @@ public class OptionChainsPanel extends JPanel {
         }
 
         private class ChainModel extends AbstractTableModel {
+            @Serial
+            private static final long serialVersionUID = -8168543754056365716L;
             Comparator<ChainRow> c = Comparator.comparing((ChainRow o) -> o.m_c.lastTradeDateOrContractMonth()).thenComparingDouble(o -> o.m_c.strike());
 
 //            Comparator<ChainRow> c = (o1, o2) -> {

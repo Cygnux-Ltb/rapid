@@ -55,64 +55,62 @@ public final class ControllerUtil {
         return JsonParser.toList(body, clazz);
     }
 
-
-    public static boolean illegalStrategyId(int strategyId, Logger log) {
+    public static boolean illegalStrategyId(int strategyId, Logger logger) {
         if (strategyId < 0) {
-            log.error("illegal param -> strategyId=={}", strategyId);
+            logger.error("illegal param -> strategyId=={}", strategyId);
             return true;
         }
         return false;
     }
 
-    public static boolean illegalStrategyName(String strategyName, Logger log) {
-        if (StringSupport.isNullOrEmpty(strategyName)) {
-            log.error("illegal param -> strategyName=={}", strategyName);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean illegalInvestorId(String investorId, Logger log) {
-        if (StringSupport.isNullOrEmpty(investorId)) {
-            log.error("illegal param -> investorId=={}", investorId);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean illegalInstrumentCode(String instrumentCode, Logger log) {
-        if (StringSupport.isNullOrEmpty(instrumentCode)) {
-            log.error("illegal param -> instrumentCode=={}", instrumentCode);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean illegalTradingDay(int tradingDay, Logger log) {
+    public static boolean illegalTradingDay(int tradingDay, Logger logger) {
         if (tradingDay <= 0) {
-            log.error("illegal param -> tradingDay=={}", tradingDay);
+            logger.error("illegal param -> tradingDay=={}", tradingDay);
             return true;
         }
         return false;
     }
 
     public static boolean illegalTradingDay(int startTradingDay, int endTradingDay,
-                                            Logger log) {
+                                            Logger logger) {
         if (startTradingDay <= 0 || endTradingDay < startTradingDay) {
-            log.error("illegal param -> startTradingDay=={}, endTradingDay=={}",
+            logger.error("illegal param -> startTradingDay=={}, endTradingDay=={}",
                     startTradingDay, endTradingDay);
             return true;
         }
         return false;
     }
 
-    public static boolean illegalOrdSysId(long ordSysId, Logger log) {
+    public static boolean illegalOrdSysId(long ordSysId, Logger logger) {
         if (ordSysId <= 0) {
-            log.error("illegal param -> ordSysId=={}", ordSysId);
+            logger.error("illegal param -> ordSysId=={}", ordSysId);
             return true;
         }
         return false;
     }
 
+    public static boolean illegalStringParam(String paramName, String param, Logger logger) {
+        if (StringSupport.isNullOrEmpty(param)) {
+            logger.error("illegal param -> {}=={}", paramName, param);
+            return true;
+        }
+        return false;
+    }
 
+    public static boolean illegalStrategyName(String strategyName, Logger logger) {
+        return illegalStringParam("strategyName", strategyName, logger);
+    }
+
+    public static boolean illegalInvestorId(String investorId, Logger logger) {
+        return illegalStringParam("investorId", investorId, logger);
+    }
+
+    public static boolean illegalInstrumentCode(String instrumentCode, Logger logger) {
+        return illegalStringParam("instrumentCode", instrumentCode, logger);
+    }
+
+    public static boolean illegalBrokerId(String brokerId, Logger logger) {
+        return illegalStringParam("brokerId", brokerId, logger);
+    }
+    
 }

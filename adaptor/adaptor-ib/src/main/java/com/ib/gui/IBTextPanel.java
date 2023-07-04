@@ -3,9 +3,15 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,7 +20,7 @@ import java.util.StringTokenizer;
 class IBTextPanel extends JPanel {
     private static final Color textBackgroundColor = new Color(5, 5, 5);
     private static final Color textForegroundColor = new Color(0, 245, 0);
-    private static final Font textComponentFont = new JList().getFont();
+    private static final Font textComponentFont = new JList<>().getFont();
     private static final Color textCaretColor = Color.WHITE;
     private static final String lineSeparator = System.getProperty("line.separator");
 

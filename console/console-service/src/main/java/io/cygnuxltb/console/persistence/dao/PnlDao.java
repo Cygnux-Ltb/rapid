@@ -1,24 +1,31 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.PnlEntity;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * PnlDaily DAO
+ * PnlDaily Repository
  *
  * @author yellow013
  */
 @Repository
-public interface PnlDao extends JpaRepository<PnlEntity, Long> {
+public interface PnlDao extends JpaRepository<TblPnl, Long> {
 
     /**
      * @param strategyId int
      * @param tradingDay int
      * @return List<PnlEntity>
      */
-    List<PnlEntity> queryByStrategyIdAndTradingDay(int strategyId, int tradingDay);
+    @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
+            + " AND e.strategyId = :strategyId "
+            + " AND e.tradingDay = :tradingDay "
+    )
+    List<TblPnl> queryBy(@Param("strategyId") int strategyId,
+                         @Param("tradingDay") int tradingDay);
 
 }

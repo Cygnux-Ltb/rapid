@@ -2,16 +2,15 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.PnlEntity;
-import io.cygnuxltb.console.persistence.entity.PnlSettlementEntity;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
 import io.cygnuxltb.console.service.PnlService;
-import io.mercury.common.http.MimeType;
+import io.cygnuxltb.protocol.http.outbound.PnlDTO;
+import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
+import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * PNL服务接口
  */
 @RestController
-@RequestMapping(path = "/pnl", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = "/pnl", produces = APPLICATION_JSON_UTF8)
 public final class PnlController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PnlController.class);
@@ -37,44 +38,44 @@ public final class PnlController {
     /**
      * 查询PNL
      *
-     * @param strategyId int
-     * @param tradingDay int
-     * @return ResponseEntity<List < PnlEntity>>
+     * @param tradingDay 交易日
+     * @param strategyId 策略ID
+     * @return List<PnlDTO>
      */
-    @GetMapping(path = "/{tradingDay}")
-    public List<PnlEntity> getPnl(@PathVariable("tradingDay") int tradingDay,
-                                  @RequestParam("strategyId") int strategyId) {
+    @GetMapping
+    public List<PnlDTO> getPnl(@RequestParam(TRADING_DAY) int tradingDay,
+                               @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.paramIsNull(tradingDay))
             throw new IllegalArgumentException("get pnl param error -> " + tradingDay);
         return service.getPnl(strategyId, tradingDay);
     }
 
     /**
-     * Put PnlDaily
+     * 更新PNL, 策略引擎调用 (内部接口)
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnlDaily = ControllerUtil.bodyToObject(request, PnlEntity.class);
-        return pnlDaily == null
-                ? ResponseStatus.BAD_REQUEST : service.putPnl(pnlDaily)
+        var pnl = ControllerUtil.bodyToObject(request, TblPnl.class);
+        return pnl == null
+                ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;
     }
 
     /**
      * 查询结算PNL
      *
-     * @param strategyId int
-     * @param tradingDay int
-     * @return ResponseEntity<List < PnlSettlementEntity>>
+     * @param tradingDay 交易日
+     * @param strategyId 策略ID
+     * @return List<PnlSettlementDTO>
      */
     @GetMapping("/settlement")
-    public List<PnlSettlementEntity> getPnlSettlement(@RequestParam("strategyId") int strategyId,
-                                                      @RequestParam("tradingDay") int tradingDay) {
+    public List<PnlSettlementDTO> getPnlSettlement(@RequestParam(TRADING_DAY) int tradingDay,
+                                                   @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("tradingDay");
         return (service.getPnlSettlement(strategyId, tradingDay));
     }
 
