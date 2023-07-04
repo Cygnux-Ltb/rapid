@@ -1,17 +1,17 @@
 package io.cygnuxltb.console.service.util;
 
-import io.cygnuxltb.console.persistence.entity.TbmBar;
-import io.cygnuxltb.console.persistence.entity.TbmInstrument;
-import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
-import io.cygnuxltb.console.persistence.entity.TbsParam;
-import io.cygnuxltb.console.persistence.entity.TbsProduct;
-import io.cygnuxltb.console.persistence.entity.TbtAccount;
-import io.cygnuxltb.console.persistence.entity.TbtOrder;
-import io.cygnuxltb.console.persistence.entity.TbtOrderEvent;
-import io.cygnuxltb.console.persistence.entity.TbtOrderExt;
-import io.cygnuxltb.console.persistence.entity.TbtPnl;
-import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
-import io.cygnuxltb.console.persistence.entity.TbtStrategy;
+import io.cygnuxltb.console.persistence.entity.TblBar;
+import io.cygnuxltb.console.persistence.entity.TblInstrument;
+import io.cygnuxltb.console.persistence.entity.TblInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.TblParam;
+import io.cygnuxltb.console.persistence.entity.TblProduct;
+import io.cygnuxltb.console.persistence.entity.TblAccount;
+import io.cygnuxltb.console.persistence.entity.TblOrder;
+import io.cygnuxltb.console.persistence.entity.TblOrderEvent;
+import io.cygnuxltb.console.persistence.entity.TblOrderExt;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
+import io.cygnuxltb.console.persistence.entity.TblPnlSettlement;
+import io.cygnuxltb.console.persistence.entity.TblStrategy;
 import io.cygnuxltb.protocol.http.outbound.AccountDTO;
 import io.cygnuxltb.protocol.http.outbound.BarDTO;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
@@ -29,73 +29,73 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class DtoConverter {
 
-    public static BarDTO toDTO(TbmBar entity) {
+    public static BarDTO toDTO(TblBar entity) {
         BarDTO dto = new BarDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static AccountDTO toDTO(TbtAccount entity) {
+    public static AccountDTO toDTO(TblAccount entity) {
         AccountDTO dto = new AccountDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static InstrumentDTO toDTO(TbmInstrument entity) {
+    public static InstrumentDTO toDTO(TblInstrument entity) {
         InstrumentDTO dto = new InstrumentDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static InstrumentSettlementDTO toDTO(TbmInstrumentSettlement entity) {
+    public static InstrumentSettlementDTO toDTO(TblInstrumentSettlement entity) {
         InstrumentSettlementDTO dto = new InstrumentSettlementDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static StrategyDTO toDTO(TbtStrategy entity) {
+    public static StrategyDTO toDTO(TblStrategy entity) {
         StrategyDTO dto = new StrategyDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderDTO toDTO(TbtOrder entity) {
+    public static OrderDTO toDTO(TblOrder entity) {
         OrderDTO dto = new OrderDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderEventDTO toDTO(TbtOrderEvent entity) {
+    public static OrderEventDTO toDTO(TblOrderEvent entity) {
         OrderEventDTO dto = new OrderEventDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static OrderExtDTO toDTO(TbtOrderExt entity) {
+    public static OrderExtDTO toDTO(TblOrderExt entity) {
         OrderExtDTO dto = new OrderExtDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static PnlDTO toDTO(TbtPnl entity) {
+    public static PnlDTO toDTO(TblPnl entity) {
         PnlDTO dto = new PnlDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static ParamDTO toDTO(TbsParam entity) {
+    public static ParamDTO toDTO(TblParam entity) {
         ParamDTO dto = new ParamDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static ProductDTO toDTO(TbsProduct entity) {
+    public static ProductDTO toDTO(TblProduct entity) {
         ProductDTO dto = new ProductDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
-    public static PnlSettlementDTO toDTO(TbtPnlSettlement entity) {
+    public static PnlSettlementDTO toDTO(TblPnlSettlement entity) {
         PnlSettlementDTO dto = new PnlSettlementDTO();
         copyProperties(entity, dto);
         return dto;

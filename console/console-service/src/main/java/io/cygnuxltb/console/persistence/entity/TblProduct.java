@@ -24,8 +24,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_S_PRODUCT")
-public final class TbsProduct {
+@Table(name = "TBL_S_PRODUCT")
+public final class TblProduct {
 
     @Id
     @Column(name = ColumnDefinition.UID)

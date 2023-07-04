@@ -2,8 +2,8 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TbmInstrument;
-import io.cygnuxltb.console.persistence.entity.TbmInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.TblInstrument;
+import io.cygnuxltb.console.persistence.entity.TblInstrumentSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
 import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
@@ -42,7 +42,7 @@ public final class InstrumentService {
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
-        return select(TbmInstrument.class,
+        return select(TblInstrument.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -56,7 +56,7 @@ public final class InstrumentService {
      */
     public List<InstrumentSettlementDTO> getInstrumentSettlement(
             int tradingDay, @Nonnull String instrumentCode) {
-        return select(TbmInstrumentSettlement.class,
+        return select(TblInstrumentSettlement.class,
                 () -> settlementDao
                         .queryBy(tradingDay, instrumentCode))
                 .stream()
@@ -79,7 +79,7 @@ public final class InstrumentService {
      * @param entity InstrumentEntity
      * @return boolean
      */
-    public boolean putInstrument(@Nonnull TbmInstrument entity) {
+    public boolean putInstrument(@Nonnull TblInstrument entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -87,7 +87,7 @@ public final class InstrumentService {
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentStatic(@Nonnull TbmInstrumentSettlement entity) {
+    public boolean putInstrumentStatic(@Nonnull TblInstrumentSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

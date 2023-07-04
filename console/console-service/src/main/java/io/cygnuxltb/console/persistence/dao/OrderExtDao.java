@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TbtOrderExt;
+import io.cygnuxltb.console.persistence.entity.TblOrderExt;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author yellow013
  */
-public interface OrderExtDao extends JpaRepository<TbtOrderExt, Long> {
+public interface OrderExtDao extends JpaRepository<TblOrderExt, Long> {
 
 }

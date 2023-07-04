@@ -2,8 +2,8 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TbtPnl;
-import io.cygnuxltb.console.persistence.entity.TbtPnlSettlement;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
+import io.cygnuxltb.console.persistence.entity.TblPnlSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
@@ -31,7 +31,7 @@ public final class PnlService {
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
-        return select(TbtPnl.class,
+        return select(TblPnl.class,
                 () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -44,7 +44,7 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
-        return select(TbtPnlSettlement.class,
+        return select(TblPnlSettlement.class,
                 () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -56,7 +56,7 @@ public final class PnlService {
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(TbtPnl entity) {
+    public boolean putPnl(TblPnl entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -64,7 +64,7 @@ public final class PnlService {
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(TbtPnlSettlement entity) {
+    public boolean putPnlSettlement(TblPnlSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

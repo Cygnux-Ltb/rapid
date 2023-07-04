@@ -24,8 +24,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_NAME;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_T_STRATEGY")
-public final class TbtStrategy {
+@Table(name = "TBL_T_STRATEGY")
+public final class TblStrategy {
 
     @Id
     @Column(name = ColumnDefinition.UID)

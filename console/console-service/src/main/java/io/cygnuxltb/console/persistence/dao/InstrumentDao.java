@@ -1,11 +1,11 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TbmInstrument;
+import io.cygnuxltb.console.persistence.entity.TblInstrument;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface InstrumentDao extends JpaRepository<TbmInstrument, Long> {
+public interface InstrumentDao extends JpaRepository<TblInstrument, Long> {
 
     /**
      * @param instrumentCode String
@@ -23,6 +23,6 @@ public interface InstrumentDao extends JpaRepository<TbmInstrument, Long> {
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.instrumentCode LIKE :instrumentCode% "
     )
-    List<TbmInstrument> queryBy(@Nullable String instrumentCode);
+    List<TblInstrument> queryBy(@Param("instrumentCode") String instrumentCode);
 
 }

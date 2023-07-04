@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TbtOrder;
-import io.cygnuxltb.console.persistence.entity.TbtOrderEvent;
+import io.cygnuxltb.console.persistence.entity.TblOrder;
+import io.cygnuxltb.console.persistence.entity.TblOrderEvent;
 import io.cygnuxltb.console.persistence.dao.OrderEventDao;
 import io.cygnuxltb.console.persistence.dao.OrderExtDao;
 import io.cygnuxltb.console.persistence.dao.OrderDao;
@@ -72,7 +72,7 @@ public final class OrderService {
             Throws.illegalArgument("investorId");
         if (illegalInstrumentCode(instrumentCode, log))
             Throws.illegalArgument("instrumentCode");
-        return select(TbtOrder.class,
+        return select(TblOrder.class,
                 () -> dao.queryBy(strategyId, investorId, instrumentCode,
                         startTradingDay, endTradingDay))
                 .stream()
@@ -87,7 +87,7 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
             return new FastList<>();
-        return select(TbtOrderEvent.class,
+        return select(TblOrderEvent.class,
                 () -> eventDao.queryByOrdSysId(ordSysId))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -101,7 +101,7 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByTradingDay(int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             return new FastList<>();
-        return select(TbtOrderEvent.class,
+        return select(TblOrderEvent.class,
                 () -> eventDao.queryByTradingDay(tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -112,7 +112,7 @@ public final class OrderService {
      * @param entity OrderEntity
      * @return boolean
      */
-    public boolean putOrder(TbtOrder entity) {
+    public boolean putOrder(TblOrder entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -120,7 +120,7 @@ public final class OrderService {
      * @param entity OrderEventEntity
      * @return boolean
      */
-    public boolean putOrderEvent(TbtOrderEvent entity) {
+    public boolean putOrderEvent(TblOrderEvent entity) {
         return insertOrUpdate(eventDao, entity);
     }
 

@@ -21,8 +21,8 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_S_PRODUCT_STRATEGY")
-public final class TbsProductStrategy {
+@Table(name = "TBL_S_PRODUCT_STRATEGY")
+public final class TblProductStrategy {
 
     @Id
     @Column(name = ColumnDefinition.UID)

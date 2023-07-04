@@ -26,9 +26,21 @@
 curl -X POST -i /user/signin
 ```
 
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|authenticated|boolean|是否已验证|-|
+|message|string|消息内容|-|
+|securityCode|int64|安全码|-|
+
 **Response-example:**
 ```
-true
+{
+  "authenticated": true,
+  "message": "",
+  "securityCode": 0
+}
 ```
 
 ## 用户注册, 当前不支持新用户注册

@@ -1,9 +1,10 @@
 package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.CommonConst.ParamGroup;
-import io.cygnuxltb.console.persistence.entity.TbsParam;
+import io.cygnuxltb.console.persistence.entity.TblParam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface ParamDao extends JpaRepository<TbsParam, Long> {
+public interface ParamDao extends JpaRepository<TblParam, Long> {
 
     /**
      * @param ownerGroup String
@@ -25,21 +26,22 @@ public interface ParamDao extends JpaRepository<TbsParam, Long> {
             + " AND e.ownerGroup = :ownerGroup "
             + " AND e.ownerName = :ownerName "
     )
-    List<TbsParam> queryBy(String ownerGroup, String ownerName);
+    List<TblParam> queryBy(@Param("ownerGroup") String ownerGroup,
+                           @Param("ownerName") String ownerName);
 
-    default List<TbsParam> queryStrategyParam(String name) {
+    default List<TblParam> queryStrategyParam(String name) {
         return queryBy(ParamGroup.STRATEGY, name);
     }
 
-    default List<TbsParam> queryMarketParam(String name) {
+    default List<TblParam> queryMarketParam(String name) {
         return queryBy(ParamGroup.MARKET, name);
     }
 
-    default List<TbsParam> queryTraderParam(String name) {
+    default List<TblParam> queryTraderParam(String name) {
         return queryBy(ParamGroup.TRADER, name);
     }
 
-    default List<TbsParam> querySystemParam(String name) {
+    default List<TblParam> querySystemParam(String name) {
         return queryBy(ParamGroup.SYSTEM, name);
     }
 

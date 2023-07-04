@@ -24,11 +24,11 @@ curl -X GET -i /product
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|productId|int32|No comments found.|-|
-|productName|string|No comments found.|-|
-|subAccountId|string|No comments found.|-|
-|userId|string|No comments found.|-|
-|interfaceType|string|No comments found.|-|
+|productId|int32|产品ID|-|
+|productName|string|产品名称|-|
+|subAccountId|string|子账户ID|-|
+|userId|string|用户ID|-|
+|interfaceType|string|接口名称|-|
 
 **Response-example:**
 ```
@@ -45,7 +45,7 @@ curl -X GET -i /product
 
 ## 获取指定产品信息
 
-**URL:** `/product`
+**URL:** `/product/get`
 
 **Type:** `GET`
 
@@ -65,18 +65,18 @@ curl -X GET -i /product
 
 **Request-example:**
 ```
-curl -X GET -i /product?productId=0
+curl -X GET -i /product/get?productId=0
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|productId|int32|No comments found.|-|
-|productName|string|No comments found.|-|
-|subAccountId|string|No comments found.|-|
-|userId|string|No comments found.|-|
-|interfaceType|string|No comments found.|-|
+|productId|int32|产品ID|-|
+|productName|string|产品名称|-|
+|subAccountId|string|子账户ID|-|
+|userId|string|用户ID|-|
+|interfaceType|string|接口名称|-|
 
 **Response-example:**
 ```

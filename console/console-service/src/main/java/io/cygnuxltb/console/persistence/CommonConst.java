@@ -1,57 +1,55 @@
 package io.cygnuxltb.console.persistence;
 
 public enum CommonConst {
-
     ;
 
     public enum Column {
-
         ;
 
         /**
          * 策略ID
          */
-        public static final String STRATEGY_ID = "strategy_id";
+        public static final String STRATEGY_ID = "STRATEGY_ID";
 
         /**
          * 策略名称
          */
-        public static final String STRATEGY_NAME = "strategy_name";
+        public static final String STRATEGY_NAME = "STRATEGY_NAME";
 
         /**
          * 经纪商
          */
-        public static final String BROKER_ID = "broker_id";
+        public static final String BROKER_ID = "BROKER_ID";
 
         /**
          * 投资者ID
          */
-        public static final String INVESTOR_ID = "investor_id";
+        public static final String INVESTOR_ID = "INVESTOR_ID";
 
         /**
          * 账户ID
          */
-        public static final String ACCOUNT_ID = "account_id";
+        public static final String ACCOUNT_ID = "ACCOUNT_ID";
 
         /**
          * 子账户ID (逻辑账户)
          */
-        public static final String SUB_ACCOUNT_ID = "sub_account_id";
+        public static final String SUB_ACCOUNT_ID = "SUB_ACCOUNT_ID";
 
         /**
          * 用户ID
          */
-        public static final String USER_ID = "user_id";
+        public static final String USER_ID = "USER_ID";
 
         /**
          * 交易标的代码
          */
-        public static final String INSTRUMENT_CODE = "instrument_code";
+        public static final String INSTRUMENT_CODE = "INSTRUMENT_CODE";
 
         /**
          * 交易日
          */
-        public static final String TRADING_DAY = "trading_day";
+        public static final String TRADING_DAY = "TRADING_DAY";
     }
 
     /**
@@ -64,22 +62,22 @@ public enum CommonConst {
         /**
          * 策略
          */
-        public static final String STRATEGY = "strategy";
+        public static final String STRATEGY = "STRATEGY";
 
         /**
          * 交易
          */
-        public static final String TRADER = "trader";
+        public static final String TRADER = "TRADER";
 
         /**
          * 市场
          */
-        public static final String MARKET = "market";
+        public static final String MARKET = "MARKET";
 
         /**
          * 系统
          */
-        public static final String SYSTEM = "system";
+        public static final String SYSTEM = "SYSTEM";
     }
 
 

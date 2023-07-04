@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.ParamDao;
-import io.cygnuxltb.console.persistence.entity.TbsParam;
+import io.cygnuxltb.console.persistence.entity.TblParam;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.console.service.util.ValidationRule;
 import io.cygnuxltb.protocol.http.outbound.ParamDTO;
@@ -55,10 +55,10 @@ public final class ParamService {
      * @param param ParamEntity
      * @return int
      */
-    public int updateParamSafe(TbsParam param) {
+    public int updateParamSafe(TblParam param) {
         if (validationStrategyParam(param)) {
             try {
-                TbsParam saved = dao.save(param);
+                TblParam saved = dao.save(param);
                 return 1;
             } catch (Exception e) {
                 return -1;
@@ -67,7 +67,7 @@ public final class ParamService {
         return -1;
     }
 
-    private boolean validationStrategyParam(TbsParam param) {
+    private boolean validationStrategyParam(TblParam param) {
         String paramName = param.getParamName();
         ValidationRule rule = validationRuleMap.get(paramName);
         if (!validationParamName(paramName, rule)) {
@@ -157,7 +157,7 @@ public final class ParamService {
     public List<ParamDTO> getStrategyParams(String strategyName) {
         if (illegalStrategyName(strategyName, log))
             Throws.illegalArgument("getStrategyParams param error -> strategyName");
-        return select(TbsParam.class,
+        return select(TblParam.class,
                 () -> dao.queryStrategyParam(strategyName))
                 .stream().map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
@@ -167,7 +167,7 @@ public final class ParamService {
     public List<ParamDTO> getCtpParams(String brokerId) {
         if (illegalBrokerId(brokerId, log))
             Throws.illegalArgument("getCtpParams param error -> brokerId");
-        return select(TbsParam.class,
+        return select(TblParam.class,
                 () -> dao.queryTraderParam(brokerId))
                 .stream().map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
@@ -178,7 +178,7 @@ public final class ParamService {
      * @param entity ParamEntity
      * @return boolean
      */
-    public boolean putStrategyParam(TbsParam entity) {
+    public boolean putStrategyParam(TblParam entity) {
         return insertOrUpdate(dao, entity);
     }
 

@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TbtOrder;
+import io.cygnuxltb.console.persistence.entity.TblOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface OrderDao extends JpaRepository<TbtOrder, Long> {
+public interface OrderDao extends JpaRepository<TblOrder, Long> {
 
     /**
      * @param strategyId      int
@@ -31,7 +31,7 @@ public interface OrderDao extends JpaRepository<TbtOrder, Long> {
             + " AND e.tradingDay >= :startTradingDay "
             + " AND e.tradingDay <= :endTradingDay "
     )
-    List<TbtOrder> queryBy(@Param("strategyId") int strategyId,
+    List<TblOrder> queryBy(@Param("strategyId") int strategyId,
                            @Param("investorId") String investorId,
                            @Param("instrumentCode") String instrumentCode,
                            @Param("startTradingDay") int startTradingDay,
@@ -41,6 +41,6 @@ public interface OrderDao extends JpaRepository<TbtOrder, Long> {
      * @param ordSysId long
      * @return OrderEntity
      */
-    TbtOrder queryByOrdSysId(long ordSysId);
+    TblOrder queryByOrdSysId(long ordSysId);
 
 }

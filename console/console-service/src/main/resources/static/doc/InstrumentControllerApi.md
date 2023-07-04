@@ -78,8 +78,8 @@ curl -X GET -i /instrument/price?code=
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|No comments found.|-|
-|lastPrice|double|No comments found.|-|
+|instrumentCode|string|交易标的|-|
+|lastPrice|double|最新价格|-|
 
 **Response-example:**
 ```

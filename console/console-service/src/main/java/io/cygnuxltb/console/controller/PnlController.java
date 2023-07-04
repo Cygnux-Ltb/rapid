@@ -2,7 +2,7 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TbtPnl;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
 import io.cygnuxltb.console.service.PnlService;
 import io.cygnuxltb.protocol.http.outbound.PnlDTO;
 import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
@@ -58,7 +58,7 @@ public final class PnlController {
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnl = ControllerUtil.bodyToObject(request, TbtPnl.class);
+        var pnl = ControllerUtil.bodyToObject(request, TblPnl.class);
         return pnl == null
                 ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;

@@ -1,8 +1,9 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TbtPnl;
+import io.cygnuxltb.console.persistence.entity.TblPnl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface PnlDao extends JpaRepository<TbtPnl, Long> {
+public interface PnlDao extends JpaRepository<TblPnl, Long> {
 
     /**
      * @param strategyId int
@@ -24,6 +25,7 @@ public interface PnlDao extends JpaRepository<TbtPnl, Long> {
             + " AND e.strategyId = :strategyId "
             + " AND e.tradingDay = :tradingDay "
     )
-    List<TbtPnl> queryBy(int strategyId, int tradingDay);
+    List<TblPnl> queryBy(@Param("strategyId") int strategyId,
+                         @Param("tradingDay") int tradingDay);
 
 }

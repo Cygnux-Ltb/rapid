@@ -21,8 +21,8 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_S_PARAM")
-public final class TbsParam {
+@Table(name = "TBL_S_PARAM")
+public final class TblParam {
 
     @Id
     @Column(name = ColumnDefinition.UID)
@@ -34,6 +34,9 @@ public final class TbsParam {
 
     @Column(name = "OWNER_NAME")
     private String ownerName;
+
+    @Column(name = "PARAM_GROUP")
+    private String paramGroup;
 
     @Column(name = "PARAM_NAME")
     private String paramName;

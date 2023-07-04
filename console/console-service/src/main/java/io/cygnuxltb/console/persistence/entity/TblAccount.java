@@ -27,8 +27,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_T_ACCOUNT")
-public final class TbtAccount {
+@Table(name = "TBL_T_ACCOUNT")
+public final class TblAccount {
 
     @Id
     @Column(name = ColumnDefinition.UID)

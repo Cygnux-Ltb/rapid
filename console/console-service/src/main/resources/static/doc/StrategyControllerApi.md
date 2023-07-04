@@ -24,10 +24,10 @@ curl -X GET -i /strategy
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|strategyId|int32|No comments found.|-|
-|strategyName|string|No comments found.|-|
-|strategyType|string|No comments found.|-|
-|strategyInfo|string|No comments found.|-|
+|strategyId|int32|策略ID|-|
+|strategyName|string|策略名称|-|
+|strategyType|string|策略类型|-|
+|strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
 ```
@@ -70,10 +70,10 @@ curl -X GET -i /strategy/get?strategyId=0
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|strategyId|int32|No comments found.|-|
-|strategyName|string|No comments found.|-|
-|strategyType|string|No comments found.|-|
-|strategyInfo|string|No comments found.|-|
+|strategyId|int32|策略ID|-|
+|strategyName|string|策略名称|-|
+|strategyType|string|策略类型|-|
+|strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
 ```

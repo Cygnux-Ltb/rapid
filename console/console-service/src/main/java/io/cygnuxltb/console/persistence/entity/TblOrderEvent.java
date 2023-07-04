@@ -30,8 +30,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_T_ORDER_EVENT")
-public final class TbtOrderEvent {
+@Table(name = "TBL_T_ORDER_EVENT")
+public final class TblOrderEvent {
 
     @Id
     @Column(name = ColumnDefinition.UID)

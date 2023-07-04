@@ -23,8 +23,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_COD
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TB_M_INSTRUMENT")
-public final class TbmInstrument {
+@Table(name = "TBL_M_INSTRUMENT")
+public final class TblInstrument {
 
     @Id
     @Column(name = ColumnDefinition.UID)

@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TbtStrategy;
+import io.cygnuxltb.console.persistence.entity.TblStrategy;
 import io.cygnuxltb.console.persistence.dao.StrategyDao;
 import io.cygnuxltb.console.persistence.util.DaoExecutor;
 import io.cygnuxltb.console.service.util.DtoConverter;
@@ -30,7 +30,7 @@ public final class StrategyService {
      * @return List<StrategyEntity>
      */
     public List<StrategyDTO> getAllStrategy() {
-        return select(TbtStrategy.class,
+        return select(TblStrategy.class,
                 () -> dao.findAll())
                 .stream().map(DtoConverter::toDTO)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public final class StrategyService {
     public StrategyDTO getStrategy(int strategyId) {
         if (illegalStrategyId(strategyId, log))
             Throws.illegalArgument("strategyId");
-        TbtStrategy entity = dao.queryByStrategyId(strategyId);
+        TblStrategy entity = dao.queryByStrategyId(strategyId);
         if (entity == null)
             log.warn("entity == null where strategyId -> {}", strategyId);
         return DtoConverter.toDTO(entity);
@@ -56,7 +56,7 @@ public final class StrategyService {
     public StrategyDTO getStrategy(String strategyName) {
         if (illegalStrategyName(strategyName, log))
             Throws.illegalArgument("strategyName");
-        TbtStrategy entity = dao.queryByStrategyName(strategyName);
+        TblStrategy entity = dao.queryByStrategyName(strategyName);
         if (entity == null)
             log.warn("entity == null where strategyName -> {}", strategyName);
         return DtoConverter.toDTO(entity);
@@ -67,7 +67,7 @@ public final class StrategyService {
      * @param entity StrategyEntity
      * @return boolean
      */
-    public boolean putStrategy(TbtStrategy entity) {
+    public boolean putStrategy(TblStrategy entity) {
         return DaoExecutor.insertOrUpdate(dao, entity);
     }
 

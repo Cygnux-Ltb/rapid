@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TbsProduct;
+import io.cygnuxltb.console.persistence.entity.TblProduct;
 import io.cygnuxltb.console.persistence.dao.ProductDao;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.outbound.ProductDTO;
@@ -19,7 +19,7 @@ public final class ProductService {
     private ProductDao dao;
 
     public List<ProductDTO> get() {
-        return select(TbsProduct.class, () -> dao.findAll())
+        return select(TblProduct.class, () -> dao.findAll())
                 .stream()
                 .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());

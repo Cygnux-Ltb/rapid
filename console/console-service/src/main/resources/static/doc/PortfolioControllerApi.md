@@ -30,15 +30,15 @@ curl -X GET -i /portfolio?userId=0&group=
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|userId|int32|No comments found.|-|
-|groupName|string|No comments found.|-|
-|instrumentCodes|array|No comments found.|-|
+|userId|int32|用户ID|-|
+|portfolioName|string|投资组合名称|-|
+|instrumentCodes|array|交易标的列表|-|
 
 **Response-example:**
 ```
 {
   "userId": 0,
-  "groupName": "",
+  "portfolioName": "",
   "instrumentCodes": [
     ""
   ]

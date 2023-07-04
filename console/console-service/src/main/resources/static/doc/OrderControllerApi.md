@@ -89,7 +89,7 @@ curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
 
 ## 获取订单最新状态
 
-**URL:** `/order/status`
+**URL:** `/order/event`
 
 **Type:** `GET`
 
@@ -110,7 +110,7 @@ curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
 
 **Request-example:**
 ```
-curl -X GET -i /order/status?td=0&strategyId=0
+curl -X GET -i /order/event?td=0&strategyId=0
 ```
 
 **Response-fields:**
