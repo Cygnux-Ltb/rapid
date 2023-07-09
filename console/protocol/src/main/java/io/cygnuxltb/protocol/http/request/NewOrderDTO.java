@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class NewOrder {
+public class NewOrderDTO {
 
     /**
      * 用户ID

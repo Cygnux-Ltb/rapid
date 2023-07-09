@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.outbound;
+package io.cygnuxltb.protocol.http.response;
 
 import lombok.Getter;
 import lombok.Setter;

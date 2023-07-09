@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.outbound;
+package io.cygnuxltb.protocol.http.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,15 +15,24 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public final class IndicatorDTO {
 
-    private int accountId;
+    /**
+     * 指标ID
+     */
+    private int indicatorId;
 
-    private int subAccountId;
+    /**
+     * 指标名称
+     */
+    private String indicatorName;
 
-    private String brokerId;
+    /**
+     * 指标类型
+     */
+    private String indicatorType;
 
-    private String investorId;
-
-    private String adaptorType;
+    /**
+     * 是否可用
+     */
+    private boolean available;
 
 }
-
