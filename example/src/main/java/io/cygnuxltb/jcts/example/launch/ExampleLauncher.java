@@ -1,4 +1,4 @@
-package io.cygnuxltb.example.launch;
+package io.cygnuxltb.jcts.example.launch;
 
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.log4j2.Log4j2Configurator;
