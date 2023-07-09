@@ -2,11 +2,11 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TblPnl;
-import io.cygnuxltb.console.persistence.entity.TblPnlSettlement;
+import io.cygnuxltb.console.persistence.entity.TblTPnl;
+import io.cygnuxltb.console.persistence.entity.TblTPnlSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
-import io.cygnuxltb.protocol.http.outbound.PnlDTO;
-import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
+import io.cygnuxltb.protocol.http.response.PnlDTO;
+import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public final class PnlService {
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
-        return select(TblPnl.class,
+        return select(TblTPnl.class,
                 () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -44,7 +44,7 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
-        return select(TblPnlSettlement.class,
+        return select(TblTPnlSettlement.class,
                 () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -56,7 +56,7 @@ public final class PnlService {
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(TblPnl entity) {
+    public boolean putPnl(TblTPnl entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -64,7 +64,7 @@ public final class PnlService {
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(TblPnlSettlement entity) {
+    public boolean putPnlSettlement(TblTPnlSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

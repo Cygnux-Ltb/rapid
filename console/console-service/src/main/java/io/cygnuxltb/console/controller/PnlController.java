@@ -2,10 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblPnl;
+import io.cygnuxltb.console.persistence.entity.TblTPnl;
 import io.cygnuxltb.console.service.PnlService;
-import io.cygnuxltb.protocol.http.outbound.PnlDTO;
-import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
+import io.cygnuxltb.protocol.http.response.PnlDTO;
+import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,7 +58,7 @@ public final class PnlController {
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnl = ControllerUtil.bodyToObject(request, TblPnl.class);
+        var pnl = ControllerUtil.bodyToObject(request, TblTPnl.class);
         return pnl == null
                 ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;

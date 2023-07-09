@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.component.CommandDispatcher;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblParam;
+import io.cygnuxltb.console.persistence.entity.TblSParam;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.protocol.http.pack.OutboxMessage;
 import io.cygnuxltb.protocol.http.pack.OutboxTitle;
@@ -26,7 +26,7 @@ import java.util.List;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 系统指令服务
+ * 系统指令服务[X]
  */
 @RestController
 @RequestMapping(path = "/command", produces = APPLICATION_JSON_UTF8)
@@ -53,7 +53,7 @@ public final class CommandController {
     public ResponseStatus updateParam(@RequestParam("productId") int productId,
                                       @RequestBody HttpServletRequest request) {
         // 将参数转换为List
-        List<TblParam> strategyParams = ControllerUtil.bodyToList(request, TblParam.class);
+        List<TblSParam> strategyParams = ControllerUtil.bodyToList(request, TblSParam.class);
         // 获取Publisher
         //dispatcher.sendCommand();
         //Publisher<String, String> publisher = GROUP_INSTANCE.getMember(cygId);
@@ -77,7 +77,7 @@ public final class CommandController {
             consumes = APPLICATION_JSON_UTF8,
             produces = APPLICATION_JSON_UTF8)
     public ResponseStatus updateParamSafe(@RequestBody HttpServletRequest request) {
-        var strategyParam = ControllerUtil.bodyToObject(request, TblParam.class);
+        var strategyParam = ControllerUtil.bodyToObject(request, TblSParam.class);
         if (strategyParam == null)
             return ResponseStatus.BAD_REQUEST;
         log.info("method updateParamSafe recv : {}", strategyParam);

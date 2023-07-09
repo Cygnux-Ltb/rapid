@@ -2,12 +2,12 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TblInstrument;
-import io.cygnuxltb.console.persistence.entity.TblInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.TblMInstrument;
+import io.cygnuxltb.console.persistence.entity.TblMInstrumentSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
-import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
-import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
-import io.cygnuxltb.protocol.http.outbound.InstrumentSettlementDTO;
+import io.cygnuxltb.protocol.http.request.InstrumentPrice;
+import io.cygnuxltb.protocol.http.response.InstrumentDTO;
+import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
 import io.mercury.common.collections.MutableMaps;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.ConcurrentMutableMap;
@@ -42,7 +42,7 @@ public final class InstrumentService {
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
-        return select(TblInstrument.class,
+        return select(TblMInstrument.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -56,7 +56,7 @@ public final class InstrumentService {
      */
     public List<InstrumentSettlementDTO> getInstrumentSettlement(
             int tradingDay, @Nonnull String instrumentCode) {
-        return select(TblInstrumentSettlement.class,
+        return select(TblMInstrumentSettlement.class,
                 () -> settlementDao
                         .queryBy(tradingDay, instrumentCode))
                 .stream()
@@ -79,7 +79,7 @@ public final class InstrumentService {
      * @param entity InstrumentEntity
      * @return boolean
      */
-    public boolean putInstrument(@Nonnull TblInstrument entity) {
+    public boolean putInstrument(@Nonnull TblMInstrument entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -87,7 +87,7 @@ public final class InstrumentService {
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentStatic(@Nonnull TblInstrumentSettlement entity) {
+    public boolean putInstrumentStatic(@Nonnull TblMInstrumentSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

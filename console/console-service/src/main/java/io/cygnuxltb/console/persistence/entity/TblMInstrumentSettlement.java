@@ -25,7 +25,7 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_M_INSTRUMENT_SETTLEMENT")
-public final class TblInstrumentSettlement {
+public final class TblMInstrumentSettlement {
 
     @Id
     @Column(name = ColumnDefinition.UID)

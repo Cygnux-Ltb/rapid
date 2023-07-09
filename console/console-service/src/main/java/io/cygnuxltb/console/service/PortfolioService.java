@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.PortfolioDao;
-import io.cygnuxltb.console.persistence.entity.TblPortfolio;
-import io.cygnuxltb.protocol.http.outbound.PortfolioDTO;
+import io.cygnuxltb.console.persistence.entity.TblTPortfolio;
+import io.cygnuxltb.protocol.http.response.PortfolioDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public final class PortfolioService {
     private PortfolioDao dao;
 
     public PortfolioDTO getPortfolio(int userId, String portfolioName) {
-        List<TblPortfolio> entities = dao.queryBy(userId, portfolioName);
+        List<TblTPortfolio> entities = dao.queryBy(userId, portfolioName);
         return new PortfolioDTO()
                 .setUserId(userId)
                 .setPortfolioName(portfolioName)
@@ -25,7 +25,7 @@ public final class PortfolioService {
                         ? new ArrayList<>()
                         : entities
                         .stream()
-                        .map(TblPortfolio::getInstrumentCode)
+                        .map(TblTPortfolio::getInstrumentCode)
                         .collect(Collectors.toList()));
     }
 

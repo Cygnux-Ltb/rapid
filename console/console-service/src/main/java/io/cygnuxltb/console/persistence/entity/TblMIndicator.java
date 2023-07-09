@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_M_INDICATOR")
-public final class TblIndicator {
+public final class TblMIndicator {
 
     @Id
     @Column(name = ColumnDefinition.UID)

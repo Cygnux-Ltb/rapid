@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.service.PortfolioService;
-import io.cygnuxltb.protocol.http.outbound.PortfolioDTO;
+import io.cygnuxltb.protocol.http.response.PortfolioDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -26,14 +26,14 @@ public class PortfolioController {
     /**
      * 获取用户投资组合
      *
-     * @param userId    用户ID
-     * @param groupName 投资组合名
+     * @param userId        用户ID
+     * @param portfolioName 投资组合名
      * @return PortfolioDTO
      */
     @RequestMapping()
     public PortfolioDTO get(@RequestParam("userId") int userId,
-                            @RequestParam("group") String groupName) {
-        return service.getPortfolio(userId, groupName);
+                            @RequestParam("portfolio") String portfolioName) {
+        return service.getPortfolio(userId, portfolioName);
     }
 
 

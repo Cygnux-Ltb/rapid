@@ -1,11 +1,11 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblParam;
+import io.cygnuxltb.console.persistence.entity.TblSParam;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.console.service.StrategyService;
-import io.cygnuxltb.protocol.http.outbound.ParamDTO;
-import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
+import io.cygnuxltb.protocol.http.response.ParamDTO;
+import io.cygnuxltb.protocol.http.response.StrategyDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -78,7 +78,7 @@ public final class StrategyController {
     @PutMapping(path = "/param", consumes = APPLICATION_JSON_UTF8)
     public boolean putParamsByStrategyId(@RequestParam(STRATEGY_ID) int strategyId,
                                          @RequestBody HttpServletRequest request) {
-        var params = ControllerUtil.bodyToObject(request, TblParam.class);
+        var params = ControllerUtil.bodyToObject(request, TblSParam.class);
         log.info("putParamsByStrategyId recv : {}", params);
         return params != null && paramService.putStrategyParam(params);
     }

@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TblInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.TblMInstrumentSettlement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface InstrumentSettlementDao extends JpaRepository<TblInstrumentSettlement, Long> {
+public interface InstrumentSettlementDao extends JpaRepository<TblMInstrumentSettlement, Long> {
     /**
      * @param instrumentCode String
      * @param tradingDay     int
@@ -24,7 +24,7 @@ public interface InstrumentSettlementDao extends JpaRepository<TblInstrumentSett
             + " AND e.tradingDay = :tradingDay "
             + " AND e.instrumentCode LIKE :instrumentCode% "
     )
-    List<TblInstrumentSettlement> queryBy(@Param("tradingDay") int tradingDay,
-                                          @Param("instrumentCode") String instrumentCode);
+    List<TblMInstrumentSettlement> queryBy(@Param("tradingDay") int tradingDay,
+                                           @Param("instrumentCode") String instrumentCode);
 
 }

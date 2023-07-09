@@ -1,9 +1,9 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TblProduct;
+import io.cygnuxltb.console.persistence.entity.TblSProduct;
 import io.cygnuxltb.console.persistence.dao.ProductDao;
 import io.cygnuxltb.console.service.util.DtoConverter;
-import io.cygnuxltb.protocol.http.outbound.ProductDTO;
+import io.cygnuxltb.protocol.http.response.ProductDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public final class ProductService {
     private ProductDao dao;
 
     public List<ProductDTO> get() {
-        return select(TblProduct.class, () -> dao.findAll())
+        return select(TblSProduct.class, () -> dao.findAll())
                 .stream()
                 .map(DtoConverter::toDTO)
                 .collect(Collectors.toList());

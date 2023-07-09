@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.service.UserService;
-import io.cygnuxltb.protocol.http.outbound.SignInStatus;
+import io.cygnuxltb.protocol.http.response.SignInStatus;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

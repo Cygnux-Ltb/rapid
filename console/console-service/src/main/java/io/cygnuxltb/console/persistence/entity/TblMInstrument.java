@@ -24,7 +24,7 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_COD
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_M_INSTRUMENT")
-public final class TblInstrument {
+public final class TblMInstrument {
 
     @Id
     @Column(name = ColumnDefinition.UID)

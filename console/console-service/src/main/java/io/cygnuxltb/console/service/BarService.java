@@ -1,9 +1,9 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TblBar;
 import io.cygnuxltb.console.persistence.dao.BarDao;
+import io.cygnuxltb.console.persistence.entity.TblMBar;
 import io.cygnuxltb.console.service.util.DtoConverter;
-import io.cygnuxltb.protocol.http.outbound.BarDTO;
+import io.cygnuxltb.protocol.http.response.BarDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public final class BarService {
      * @return List<BarEntity>
      */
     public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
-        return select(TblBar.class,
+        return select(TblMBar.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -48,7 +48,7 @@ public final class BarService {
      * @param entity BarEntity
      * @return boolean
      */
-    public boolean putBar(@Nonnull TblBar entity) {
+    public boolean putBar(@Nonnull TblMBar entity) {
         return insertOrUpdate(dao, entity);
     }
 

@@ -2,15 +2,17 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblOrder;
+import io.cygnuxltb.console.persistence.entity.TblTOrder;
 import io.cygnuxltb.console.service.OrderService;
-import io.cygnuxltb.protocol.http.outbound.OrderDTO;
-import io.cygnuxltb.protocol.http.outbound.OrderEventDTO;
+import io.cygnuxltb.protocol.http.request.NewOrderDTO;
+import io.cygnuxltb.protocol.http.response.OrderDTO;
+import io.cygnuxltb.protocol.http.response.OrderEventDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,15 +74,26 @@ public final class OrderController {
         return service.getOrderEventsByTradingDay(tradingDay);
     }
 
+
     /**
-     * 新增订单
+     * 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+     * @param newOrderDTO
+     * @return
+     */
+    @PostMapping(consumes = APPLICATION_JSON_UTF8)
+    public ResponseStatus newOrder( NewOrderDTO newOrderDTO) {
+        return  ResponseStatus.OK ;
+    }
+
+    /**
+     * 新增订单 [非前端界面调用]
      *
      * @param request HttpServletRequest
      * @return ResponseEntity<Object>
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putOrder(@RequestBody HttpServletRequest request) {
-        var order = ControllerUtil.bodyToObject(request, TblOrder.class);
+        var order = ControllerUtil.bodyToObject(request, TblTOrder.class);
         return order == null
                 ? ResponseStatus.BAD_REQUEST : service.putOrder(order)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;
