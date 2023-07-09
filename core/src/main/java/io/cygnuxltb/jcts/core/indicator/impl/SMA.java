@@ -1,0 +1,56 @@
+package io.cygnuxltb.jcts.core.market.indicator.impl;
+
+import java.time.Duration;
+
+import io.horizon.market.indicator.impl.SmaPoint;
+import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
+
+import io.horizon.market.data.impl.BasicMarketData;
+import io.horizon.market.indicator.IndicatorEvent;
+import io.horizon.market.indicator.base.FixedPeriodIndicator;
+import io.horizon.market.indicator.impl.SMA.SmaEvent;
+import io.horizon.market.instrument.Instrument;
+import io.horizon.market.pool.TimeWindowPool;
+import io.mercury.common.collections.window.LongRingWindow;
+import io.mercury.common.sequence.TimeWindow;
+
+public final class SMA extends FixedPeriodIndicator<io.horizon.market.indicator.impl.SmaPoint, SmaEvent, BasicMarketData> {
+
+	private final LongRingWindow historyPriceWindow;
+
+	public SMA(Instrument instrument, Duration duration, int cycle) {
+		super(instrument, duration, cycle);
+		this.historyPriceWindow = new LongRingWindow(cycle);
+		ImmutableSortedSet<TimeWindow> timePeriodSet = TimeWindowPool.Singleton.getTimePeriodSet(instrument,
+				duration);
+		int i = -1;
+		for (TimeWindow timePeriod : timePeriodSet)
+			pointSet.add(io.horizon.market.indicator.impl.SmaPoint.with(++i, instrument, duration, timePeriod, cycle, historyPriceWindow));
+		currentPoint = pointSet.getFirst();
+
+	}
+
+	public static SMA with(Instrument instrument, Duration duration, int cycle) {
+		return new SMA(instrument, duration, cycle);
+	}
+
+	@Override
+	protected void handleMarketData(BasicMarketData marketData) {
+
+	}
+
+	public interface SmaEvent extends IndicatorEvent {
+
+		default String eventName() {
+			return "SmaEvent";
+		}
+
+		void onCurrentPointAvgPriceChanged(io.horizon.market.indicator.impl.SmaPoint point);
+
+		void onStartSmaPoint(io.horizon.market.indicator.impl.SmaPoint point);
+
+		void onEndSmaPoint(SmaPoint point);
+
+	}
+
+}
