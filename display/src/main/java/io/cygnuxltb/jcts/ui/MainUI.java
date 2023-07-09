@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package io.cygnuxltb.ui;
+package io.cygnuxltb.jcts.ui;
 
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.Serial;

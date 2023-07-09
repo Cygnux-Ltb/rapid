@@ -1,4 +1,4 @@
-package io.cygnuxltb.ui;
+package io.cygnuxltb.jcts.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
