@@ -5,7 +5,8 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrder;
 
 import java.util.function.Function;
 
-public class CThostFtdcInputOrderConverter implements Function<CThostFtdcInputOrderField, FtdcInputOrder> {
+public class CThostFtdcInputOrderConverter implements
+		Function<CThostFtdcInputOrderField, FtdcInputOrder> {
 
 	@Override
 	public FtdcInputOrder apply(CThostFtdcInputOrderField field) {

@@ -88,7 +88,7 @@ public class CtpConfiguration {
                 // 结算货币
                 .setCurrencyId(wrapper.getString(CtpAdaptorParamKey.CurrencyId, "CNY"))
                 // 交易日
-                .setTradingDay(wrapper.getString(CtpAdaptorParamKey.TradingDay, YYYYMMDD.format(parseTradingDay(LocalDateTime.now()))));
+                .setTradingDay(wrapper.getString(CtpAdaptorParamKey.TradingDay, YYYYMMDD.fmt(parseTradingDay(LocalDateTime.now()))));
     }
 
     public static CtpConfiguration with(Params<CtpAdaptorParamKey> params) {

@@ -5,7 +5,8 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
 
 import java.util.function.Function;
 
-public class CThostFtdcOrderActionConverter implements Function<CThostFtdcOrderActionField, FtdcOrderAction> {
+public class CThostFtdcOrderActionConverter implements
+		Function<CThostFtdcOrderActionField, FtdcOrderAction> {
 
 	@Override
 	public FtdcOrderAction apply(CThostFtdcOrderActionField field) {

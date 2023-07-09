@@ -10,7 +10,6 @@ public final class FtdcRspIntegratedMsg {
     @SuppressWarnings("unused")
     private FtdcRspMsg.FtdcRspType type;
 
-
     public static final EventFactory<FtdcRspIntegratedMsg> FACTORY = FtdcRspIntegratedMsg::new;
 
 

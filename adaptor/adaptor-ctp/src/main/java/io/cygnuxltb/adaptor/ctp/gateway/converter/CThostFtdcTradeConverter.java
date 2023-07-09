@@ -5,7 +5,8 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
 
 import java.util.function.Function;
 
-public class CThostFtdcTradeConverter implements Function<CThostFtdcTradeField, FtdcTrade> {
+public class CThostFtdcTradeConverter implements
+		Function<CThostFtdcTradeField, FtdcTrade> {
 
 	@Override
 	public FtdcTrade apply(CThostFtdcTradeField field) {

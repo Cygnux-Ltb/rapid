@@ -10,7 +10,6 @@ import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
 import io.cygnuxltb.adaptor.ctp.gateway.converter.CThostFtdcDepthMarketDataConverter;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcMdConnect;
-import io.cygnuxltb.adaptor.ctp.gateway.utils.CtpLibraryLoader;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
@@ -39,7 +38,7 @@ public class CtpMdGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryLoader.startLoad(CtpMdGateway.class);
+            CtpLibraryManager.startLoad(CtpMdGateway.class);
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -203,8 +202,7 @@ public class CtpMdGateway implements Closeable {
          * @param field CThostFtdcDepthMarketDataField
          */
         void onRtnDepthMarketData(CThostFtdcDepthMarketDataField field) {
-            log.debug(
-                    "FtdcCallback::onRtnDepthMarketData -> InstrumentID == [{}], " +
+            log.debug("FtdcCallback::onRtnDepthMarketData -> InstrumentID == [{}], " +
                             "UpdateTime==[{}], UpdateMillisec==[{}]",
                     field.getInstrumentID(), field.getUpdateTime(), field.getUpdateMillisec());
             handler.handle(FtdcRspMsg.with(depthMarketDataConverter.apply(field)));

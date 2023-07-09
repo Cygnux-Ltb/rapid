@@ -119,7 +119,7 @@ public final class FtdcOrderConverter {
      */
     public CThostFtdcInputOrderField convertToInputOrder(AvroNewOrder order) {
         // 创建FTDC报单类型
-        CThostFtdcInputOrderField field = new CThostFtdcInputOrderField();
+        var field = new CThostFtdcInputOrderField();
         // 经纪公司代码
         field.setBrokerID(brokerId);
         // 投资者代码
@@ -270,7 +270,7 @@ public final class FtdcOrderConverter {
      */
     public CThostFtdcInputOrderActionField convertToInputOrderAction(AvroCancelOrder order) {
         // 创建FTDC撤单类型
-        CThostFtdcInputOrderActionField field = new CThostFtdcInputOrderActionField();
+        var field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码
         field.setBrokerID(brokerId);
         // 投资者代码

@@ -5,47 +5,47 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
 
 import java.util.function.Function;
 
-public final class CThostFtdcInputOrderActionConverter
-		implements Function<CThostFtdcInputOrderActionField, FtdcInputOrderAction> {
+public final class CThostFtdcInputOrderActionConverter implements
+        Function<CThostFtdcInputOrderActionField, FtdcInputOrderAction> {
 
-	@Override
-	public FtdcInputOrderAction apply(CThostFtdcInputOrderActionField field) {
-		return new FtdcInputOrderAction()
+    @Override
+    public FtdcInputOrderAction apply(CThostFtdcInputOrderActionField field) {
+        return new FtdcInputOrderAction()
 
-				.setBrokerID(field.getBrokerID())
+                .setBrokerID(field.getBrokerID())
 
-				.setInvestorID(field.getInvestorID())
+                .setInvestorID(field.getInvestorID())
 
-				.setOrderActionRef(field.getOrderActionRef())
+                .setOrderActionRef(field.getOrderActionRef())
 
-				.setOrderRef(field.getOrderRef())
+                .setOrderRef(field.getOrderRef())
 
-				.setRequestID(field.getRequestID())
+                .setRequestID(field.getRequestID())
 
-				.setFrontID(field.getFrontID())
+                .setFrontID(field.getFrontID())
 
-				.setSessionID(field.getSessionID())
+                .setSessionID(field.getSessionID())
 
-				.setExchangeID(field.getExchangeID())
+                .setExchangeID(field.getExchangeID())
 
-				.setOrderSysID(field.getOrderSysID())
+                .setOrderSysID(field.getOrderSysID())
 
-				.setActionFlag(field.getActionFlag())
+                .setActionFlag(field.getActionFlag())
 
-				.setLimitPrice(field.getLimitPrice())
+                .setLimitPrice(field.getLimitPrice())
 
-				.setVolumeChange(field.getVolumeChange())
+                .setVolumeChange(field.getVolumeChange())
 
-				.setUserID(field.getUserID())
+                .setUserID(field.getUserID())
 
-				.setInstrumentID(field.getInstrumentID())
+                .setInstrumentID(field.getInstrumentID())
 
-				.setInvestUnitID(field.getInvestUnitID())
+                .setInvestUnitID(field.getInvestUnitID())
 
-				.setIPAddress(field.getIPAddress())
+                .setIPAddress(field.getIPAddress())
 
-				.setMacAddress(field.getMacAddress());
+                .setMacAddress(field.getMacAddress());
 
-	}
+    }
 
 }

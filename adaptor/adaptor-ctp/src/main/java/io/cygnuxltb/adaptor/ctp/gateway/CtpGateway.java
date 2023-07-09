@@ -4,7 +4,6 @@ import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.adaptor.ctp.gateway.utils.CtpLibraryLoader;
 import io.horizon.trader.adaptor.ConnectionType;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.functional.Handler;
@@ -29,7 +28,7 @@ public final class CtpGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryLoader.startLoad(CtpGateway.class);
+            CtpLibraryManager.startLoad(CtpGateway.class);
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -168,6 +167,9 @@ public final class CtpGateway implements Closeable {
         traderGateway.ReqQryInstrument(exchangeId, instrumentId);
     }
 
+    /**
+     * @throws IOException ioe
+     */
     @Override
     public void close() throws IOException {
         if (mdGateway != null) {

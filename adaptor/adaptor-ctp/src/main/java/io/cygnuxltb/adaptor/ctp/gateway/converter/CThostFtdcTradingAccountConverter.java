@@ -5,109 +5,110 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTradingAccount;
 
 import java.util.function.Function;
 
-public class CThostFtdcTradingAccountConverter implements Function<CThostFtdcTradingAccountField, FtdcTradingAccount> {
+public class CThostFtdcTradingAccountConverter implements
+        Function<CThostFtdcTradingAccountField, FtdcTradingAccount> {
 
-	@Override
-	public FtdcTradingAccount apply(CThostFtdcTradingAccountField field) {
-		return new FtdcTradingAccount()
+    @Override
+    public FtdcTradingAccount apply(CThostFtdcTradingAccountField field) {
+        return new FtdcTradingAccount()
 
-				.setBrokerID(field.getBrokerID())
+                .setBrokerID(field.getBrokerID())
 
-				.setAccountID(field.getAccountID())
+                .setAccountID(field.getAccountID())
 
-				.setPreMortgage(field.getPreMortgage())
+                .setPreMortgage(field.getPreMortgage())
 
-				.setPreCredit(field.getPreCredit())
+                .setPreCredit(field.getPreCredit())
 
-				.setPreDeposit(field.getPreDeposit())
+                .setPreDeposit(field.getPreDeposit())
 
-				.setPreBalance(field.getPreBalance())
+                .setPreBalance(field.getPreBalance())
 
-				.setPreMargin(field.getPreMargin())
+                .setPreMargin(field.getPreMargin())
 
-				.setInterestBase(field.getInterestBase())
+                .setInterestBase(field.getInterestBase())
 
-				.setInterest(field.getInterest())
+                .setInterest(field.getInterest())
 
-				.setDeposit(field.getDeposit())
+                .setDeposit(field.getDeposit())
 
-				.setWithdraw(field.getWithdraw())
+                .setWithdraw(field.getWithdraw())
 
-				.setFrozenMargin(field.getFrozenMargin())
+                .setFrozenMargin(field.getFrozenMargin())
 
-				.setFrozenCash(field.getFrozenCash())
+                .setFrozenCash(field.getFrozenCash())
 
-				.setFrozenCommission(field.getFrozenCommission())
+                .setFrozenCommission(field.getFrozenCommission())
 
-				.setCurrMargin(field.getCurrMargin())
+                .setCurrMargin(field.getCurrMargin())
 
-				.setCashIn(field.getCashIn())
+                .setCashIn(field.getCashIn())
 
-				.setCommission(field.getCommission())
+                .setCommission(field.getCommission())
 
-				.setCloseProfit(field.getCloseProfit())
+                .setCloseProfit(field.getCloseProfit())
 
-				.setPositionProfit(field.getPositionProfit())
+                .setPositionProfit(field.getPositionProfit())
 
-				.setBalance(field.getBalance())
+                .setBalance(field.getBalance())
 
-				.setAvailable(field.getAvailable())
+                .setAvailable(field.getAvailable())
 
-				.setWithdrawQuota(field.getWithdrawQuota())
+                .setWithdrawQuota(field.getWithdrawQuota())
 
-				.setReserve(field.getReserve())
+                .setReserve(field.getReserve())
 
-				.setTradingDay(field.getTradingDay())
+                .setTradingDay(field.getTradingDay())
 
-				.setSettlementID(field.getSettlementID())
+                .setSettlementID(field.getSettlementID())
 
-				.setCredit(field.getCredit())
+                .setCredit(field.getCredit())
 
-				.setMortgage(field.getMortgage())
+                .setMortgage(field.getMortgage())
 
-				.setExchangeMargin(field.getExchangeMargin())
+                .setExchangeMargin(field.getExchangeMargin())
 
-				.setDeliveryMargin(field.getDeliveryMargin())
+                .setDeliveryMargin(field.getDeliveryMargin())
 
-				.setExchangeDeliveryMargin(field.getExchangeDeliveryMargin())
+                .setExchangeDeliveryMargin(field.getExchangeDeliveryMargin())
 
-				.setReserveBalance(field.getReserveBalance())
+                .setReserveBalance(field.getReserveBalance())
 
-				.setCurrencyID(field.getCurrencyID())
+                .setCurrencyID(field.getCurrencyID())
 
-				.setPreFundMortgageIn(field.getPreFundMortgageIn())
+                .setPreFundMortgageIn(field.getPreFundMortgageIn())
 
-				.setPreFundMortgageOut(field.getPreFundMortgageOut())
+                .setPreFundMortgageOut(field.getPreFundMortgageOut())
 
-				.setFundMortgageIn(field.getFundMortgageIn())
+                .setFundMortgageIn(field.getFundMortgageIn())
 
-				.setFundMortgageOut(field.getFundMortgageOut())
+                .setFundMortgageOut(field.getFundMortgageOut())
 
-				.setFundMortgageAvailable(field.getFundMortgageAvailable())
+                .setFundMortgageAvailable(field.getFundMortgageAvailable())
 
-				.setMortgageableFund(field.getMortgageableFund())
+                .setMortgageableFund(field.getMortgageableFund())
 
-				.setSpecProductMargin(field.getSpecProductMargin())
+                .setSpecProductMargin(field.getSpecProductMargin())
 
-				.setSpecProductFrozenMargin(field.getSpecProductFrozenMargin())
+                .setSpecProductFrozenMargin(field.getSpecProductFrozenMargin())
 
-				.setSpecProductCommission(field.getSpecProductCommission())
+                .setSpecProductCommission(field.getSpecProductCommission())
 
-				.setSpecProductFrozenCommission(field.getSpecProductFrozenCommission())
+                .setSpecProductFrozenCommission(field.getSpecProductFrozenCommission())
 
-				.setSpecProductPositionProfit(field.getSpecProductPositionProfit())
+                .setSpecProductPositionProfit(field.getSpecProductPositionProfit())
 
-				.setSpecProductCloseProfit(field.getSpecProductCloseProfit())
+                .setSpecProductCloseProfit(field.getSpecProductCloseProfit())
 
-				.setSpecProductPositionProfitByAlg(field.getSpecProductPositionProfitByAlg())
+                .setSpecProductPositionProfitByAlg(field.getSpecProductPositionProfitByAlg())
 
-				.setSpecProductExchangeMargin(field.getSpecProductExchangeMargin())
+                .setSpecProductExchangeMargin(field.getSpecProductExchangeMargin())
 
-				.setBizType(field.getBizType())
+                .setBizType(field.getBizType())
 
-				.setFrozenSwap(field.getFrozenSwap())
+                .setFrozenSwap(field.getFrozenSwap())
 
-				.setRemainSwap(field.getRemainSwap());
-	}
+                .setRemainSwap(field.getRemainSwap());
+    }
 
 }

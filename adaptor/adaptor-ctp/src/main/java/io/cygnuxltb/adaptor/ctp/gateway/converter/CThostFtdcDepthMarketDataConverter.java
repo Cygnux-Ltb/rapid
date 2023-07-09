@@ -5,8 +5,8 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
 
 import java.util.function.Function;
 
-public final class CThostFtdcDepthMarketDataConverter
-        implements Function<CThostFtdcDepthMarketDataField, FtdcDepthMarketData> {
+public final class CThostFtdcDepthMarketDataConverter implements
+        Function<CThostFtdcDepthMarketDataField, FtdcDepthMarketData> {
 
     @Override
     public FtdcDepthMarketData apply(CThostFtdcDepthMarketDataField field) {
@@ -54,7 +54,8 @@ public final class CThostFtdcDepthMarketDataConverter
                 .setAveragePrice(field.getAveragePrice())
                 .setUpdateTime(field.getUpdateTime())
                 .setUpdateMillisec(field.getUpdateMillisec())
-                .setActionDay(field.getActionDay());
+                .setActionDay(field.getActionDay())
+                ;
     }
 
 }

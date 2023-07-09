@@ -5,138 +5,139 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 
 import java.util.function.Function;
 
-public class CThostFtdcOrderConverter implements Function<CThostFtdcOrderField, FtdcOrder> {
+public class CThostFtdcOrderConverter implements
+        Function<CThostFtdcOrderField, FtdcOrder> {
 
-	@Override
-	public FtdcOrder apply(CThostFtdcOrderField field) {
-		return new FtdcOrder()
+    @Override
+    public FtdcOrder apply(CThostFtdcOrderField field) {
+        return new FtdcOrder()
 
-				.setBrokerID(field.getBrokerID())
+                .setBrokerID(field.getBrokerID())
 
-				.setInvestorID(field.getInvestorID())
+                .setInvestorID(field.getInvestorID())
 
-				.setInstrumentID(field.getInstrumentID())
+                .setInstrumentID(field.getInstrumentID())
 
-				.setOrderRef(field.getOrderRef())
+                .setOrderRef(field.getOrderRef())
 
-				.setUserID(field.getUserID())
+                .setUserID(field.getUserID())
 
-				.setOrderPriceType(field.getOrderPriceType())
+                .setOrderPriceType(field.getOrderPriceType())
 
-				.setDirection(field.getDirection())
+                .setDirection(field.getDirection())
 
-				.setCombOffsetFlag(field.getCombOffsetFlag())
+                .setCombOffsetFlag(field.getCombOffsetFlag())
 
-				.setCombHedgeFlag(field.getCombHedgeFlag())
+                .setCombHedgeFlag(field.getCombHedgeFlag())
 
-				.setLimitPrice(field.getLimitPrice())
+                .setLimitPrice(field.getLimitPrice())
 
-				.setVolumeTotalOriginal(field.getVolumeTotalOriginal())
+                .setVolumeTotalOriginal(field.getVolumeTotalOriginal())
 
-				.setTimeCondition(field.getTimeCondition())
+                .setTimeCondition(field.getTimeCondition())
 
-				.setGTDDate(field.getGTDDate())
+                .setGTDDate(field.getGTDDate())
 
-				.setVolumeCondition(field.getVolumeCondition())
+                .setVolumeCondition(field.getVolumeCondition())
 
-				.setMinVolume(field.getMinVolume())
+                .setMinVolume(field.getMinVolume())
 
-				.setContingentCondition(field.getContingentCondition())
+                .setContingentCondition(field.getContingentCondition())
 
-				.setStopPrice(field.getStopPrice())
+                .setStopPrice(field.getStopPrice())
 
-				.setForceCloseReason(field.getForceCloseReason())
+                .setForceCloseReason(field.getForceCloseReason())
 
-				.setIsAutoSuspend(field.getIsAutoSuspend())
+                .setIsAutoSuspend(field.getIsAutoSuspend())
 
-				.setBusinessUnit(field.getBusinessUnit())
+                .setBusinessUnit(field.getBusinessUnit())
 
-				.setRequestID(field.getRequestID())
+                .setRequestID(field.getRequestID())
 
-				.setOrderLocalID(field.getOrderLocalID())
+                .setOrderLocalID(field.getOrderLocalID())
 
-				.setExchangeID(field.getExchangeID())
+                .setExchangeID(field.getExchangeID())
 
-				.setParticipantID(field.getParticipantID())
+                .setParticipantID(field.getParticipantID())
 
-				.setClientID(field.getClientID())
+                .setClientID(field.getClientID())
 
-				.setExchangeInstID(field.getExchangeInstID())
+                .setExchangeInstID(field.getExchangeInstID())
 
-				.setTraderID(field.getTraderID())
+                .setTraderID(field.getTraderID())
 
-				.setInstallID(field.getInstallID())
+                .setInstallID(field.getInstallID())
 
-				.setOrderSubmitStatus(field.getOrderSubmitStatus())
+                .setOrderSubmitStatus(field.getOrderSubmitStatus())
 
-				.setNotifySequence(field.getNotifySequence())
+                .setNotifySequence(field.getNotifySequence())
 
-				.setTradingDay(field.getTradingDay())
+                .setTradingDay(field.getTradingDay())
 
-				.setSettlementID(field.getSettlementID())
+                .setSettlementID(field.getSettlementID())
 
-				.setOrderSysID(field.getOrderSysID())
+                .setOrderSysID(field.getOrderSysID())
 
-				.setOrderSource(field.getOrderSource())
+                .setOrderSource(field.getOrderSource())
 
-				.setOrderStatus(field.getOrderStatus())
+                .setOrderStatus(field.getOrderStatus())
 
-				.setOrderType(field.getOrderType())
+                .setOrderType(field.getOrderType())
 
-				.setVolumeTraded(field.getVolumeTraded())
+                .setVolumeTraded(field.getVolumeTraded())
 
-				.setVolumeTotal(field.getVolumeTotal())
+                .setVolumeTotal(field.getVolumeTotal())
 
-				.setInsertDate(field.getInsertDate())
+                .setInsertDate(field.getInsertDate())
 
-				.setInsertTime(field.getInsertTime())
+                .setInsertTime(field.getInsertTime())
 
-				.setActiveTime(field.getActiveTime())
+                .setActiveTime(field.getActiveTime())
 
-				.setSuspendTime(field.getSuspendTime())
+                .setSuspendTime(field.getSuspendTime())
 
-				.setUpdateTime(field.getUpdateTime())
+                .setUpdateTime(field.getUpdateTime())
 
-				.setCancelTime(field.getCancelTime())
+                .setCancelTime(field.getCancelTime())
 
-				.setActiveTraderID(field.getActiveTraderID())
+                .setActiveTraderID(field.getActiveTraderID())
 
-				.setClearingPartID(field.getClearingPartID())
+                .setClearingPartID(field.getClearingPartID())
 
-				.setSequenceNo(field.getSequenceNo())
+                .setSequenceNo(field.getSequenceNo())
 
-				.setFrontID(field.getFrontID())
+                .setFrontID(field.getFrontID())
 
-				.setSessionID(field.getSessionID())
+                .setSessionID(field.getSessionID())
 
-				.setUserProductInfo(field.getUserProductInfo())
+                .setUserProductInfo(field.getUserProductInfo())
 
-				.setStatusMsg(field.getStatusMsg())
+                .setStatusMsg(field.getStatusMsg())
 
-				.setUserForceClose(field.getUserForceClose())
+                .setUserForceClose(field.getUserForceClose())
 
-				.setActiveUserID(field.getActiveUserID())
+                .setActiveUserID(field.getActiveUserID())
 
-				.setBrokerOrderSeq(field.getBrokerOrderSeq())
+                .setBrokerOrderSeq(field.getBrokerOrderSeq())
 
-				.setRelativeOrderSysID(field.getRelativeOrderSysID())
+                .setRelativeOrderSysID(field.getRelativeOrderSysID())
 
-				.setZCETotalTradedVolume(field.getZCETotalTradedVolume())
+                .setZCETotalTradedVolume(field.getZCETotalTradedVolume())
 
-				.setIsSwapOrder(field.getIsSwapOrder())
+                .setIsSwapOrder(field.getIsSwapOrder())
 
-				.setBranchID(field.getBranchID())
+                .setBranchID(field.getBranchID())
 
-				.setInvestUnitID(field.getInvestUnitID())
+                .setInvestUnitID(field.getInvestUnitID())
 
-				.setAccountID(field.getAccountID())
+                .setAccountID(field.getAccountID())
 
-				.setCurrencyID(field.getCurrencyID())
+                .setCurrencyID(field.getCurrencyID())
 
-				.setIPAddress(field.getIPAddress())
+                .setIPAddress(field.getIPAddress())
 
-				.setMacAddress(field.getMacAddress());
+                .setMacAddress(field.getMacAddress());
 
-	}
+    }
 
 }
