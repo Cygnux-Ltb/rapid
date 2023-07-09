@@ -1,7 +1,7 @@
-package io.cygnuxltb.engine.strategy;
+package io.cygnuxltb.jcts.engine.strategy;
 
-import io.cygnuxltb.engine.position.PositionKeeper;
-import io.cygnuxltb.engine.trader.OrderKeeper;
+import io.cygnuxltb.jcts.engine.position.PositionKeeper;
+import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.horizon.market.data.MarketData;
 import io.horizon.market.data.MarketDataKeeper;
 import io.horizon.market.data.MarketDataKeeper.MarketDataSnapshot;
