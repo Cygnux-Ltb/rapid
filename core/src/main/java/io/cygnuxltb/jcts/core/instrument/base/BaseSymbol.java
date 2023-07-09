@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.instrument.base;
+package io.cygnuxltb.jcts.core.instrument.base;
 
 import io.horizon.market.instrument.Exchange;
 import io.horizon.market.instrument.Symbol;

@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.trader.order;
+package io.cygnuxltb.jcts.core.order;
 
-import io.cygnuxltb.jcts.core.trader.order.attr.OrdQty;
-import io.cygnuxltb.jcts.core.trader.order.attr.OrdTimestamp;
+import io.cygnuxltb.jcts.core.order.attr.OrdQty;
+import io.cygnuxltb.jcts.core.order.attr.OrdTimestamp;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.order.attr.OrdPrice;
 import io.horizon.trader.order.attr.OrdQty;

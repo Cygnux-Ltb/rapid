@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.instrument.attr;
+package io.cygnuxltb.jcts.core.instrument.attr;
 
 public enum InstrumentType {
 

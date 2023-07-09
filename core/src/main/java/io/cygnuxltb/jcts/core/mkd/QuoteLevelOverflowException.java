@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.data;
+package io.cygnuxltb.jcts.core.mkd;
 
 import java.io.Serial;
 

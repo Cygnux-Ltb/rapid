@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.market.data;
+package io.cygnuxltb.jcts.core.mkd;
 
-import io.cygnuxltb.jcts.core.market.data.api.MarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataSnapshot;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 

@@ -1,33 +1,33 @@
-@namespace("io.horizon.market.serializable.rpc")
-protocol AvroMarketProtocol {
+@namespace("io.cygnuxltb.jcts.core.serialization.avro.rpc")
+protocol ARpcMarketProtocol {
 
 	/**
 	  * 订阅行情函数
  	  */
-	boolean subscribeMarketData(io.horizon.market.serializable.record.InAvMarketDataSubscribe subscribe);
+	boolean subscribeMarketData(io.cygnuxltb.jcts.core.serialization.avro.record.AInMarketDataSubscribe subscribe);
 
 	/**
 	 * 行情类型
 	 */
-	@namespace("io.horizon.market.serializable.enums")
-	enum EnumAvMarketDataType {
-		Depth, Fast, Level10, Level20, Level30
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumMarketDataType {
+		DEPTH, FAST, LEVEL10, LEVEL20, LEVEL30
 	}
 
 	/**
 	 * 行情订阅状态
 	 */
-	@namespace("io.horizon.market.serializable.enums")
-	enum EnumAvSubscribeStatus {
-		Succeed, PartSucceed, Failed
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumSubscribeStatus {
+		SUCCEED, PART_SUCCEED, FAILED
 	}
 
 	/**
 	 * 行情订阅 
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record InAvMarketDataSubscribe {
-		io.horizon.market.serializable.enums.EnumAvMarketDataType type;
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInMarketDataSubscribe {
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumMarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;
 	}
@@ -35,9 +35,9 @@ protocol AvroMarketProtocol {
 	/**
 	 * 行情订阅回报
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvMarketDataSubscribeReply {
-		io.horizon.market.serializable.enums.EnumAvSubscribeStatus status;
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutMarketDataSubscribeReply {
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumSubscribeStatus status;
 		array<string> successInstrumentCodes;
 		array<string> failInstrumentCodes;
 		string msg;
@@ -46,8 +46,8 @@ protocol AvroMarketProtocol {
 	/**
 	 * 深度行情数据结构
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvDepthMarketData {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutDepthMarketData {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -64,8 +64,8 @@ protocol AvroMarketProtocol {
 	/**
 	 * 五档快速行情数据结构
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvFastMarketData {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutFastMarketData {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -97,8 +97,8 @@ protocol AvroMarketProtocol {
 	/**
 	 * 十档行情数据结构
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvMarketDataL10 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutMarketDataL10 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -150,8 +150,8 @@ protocol AvroMarketProtocol {
 	/**
 	 * 二十档行情数据结构
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvMarketDataL20 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutMarketDataL20 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -241,10 +241,10 @@ protocol AvroMarketProtocol {
 	}
 
 	/**
-	 * 二十档行情数据结构
+	 * 三十档行情数据结构
 	 */
-	@namespace("io.horizon.market.serializable.record")
-	record OutAvMarketDataL30 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutMarketDataL30 {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;

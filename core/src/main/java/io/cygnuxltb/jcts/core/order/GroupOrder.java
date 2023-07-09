@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.trader.order;
+package io.cygnuxltb.jcts.core.order;
 
-import io.cygnuxltb.jcts.core.trader.order.attr.OrdTimestamp;
+import io.cygnuxltb.jcts.core.order.attr.OrdTimestamp;
 import io.horizon.trader.order.attr.OrdTimestamp;
 import org.eclipse.collections.api.set.ImmutableSet;
 

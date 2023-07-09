@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.trader.position;
+package io.cygnuxltb.jcts.core.position;
 
-import io.cygnuxltb.jcts.core.trader.order.Order;
+import io.cygnuxltb.jcts.core.order.Order;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.order.Order;
 

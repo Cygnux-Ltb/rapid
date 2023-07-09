@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.position;
+package io.cygnuxltb.jcts.core.position;
 
 import io.horizon.market.instrument.Instrument;
 

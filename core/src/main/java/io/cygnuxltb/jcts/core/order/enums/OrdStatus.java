@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.trader.order.enums;
+package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.trader.order.TdxProvider;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.enums.AvroOrdStatus;
+import io.cygnuxltb.jcts.core.order.TdxProvider;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroOrdStatus;
 import io.horizon.trader.order.TdxProvider;
 import io.horizon.trader.serialization.avro.enums.AvroOrdStatus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

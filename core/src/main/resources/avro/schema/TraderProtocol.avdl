@@ -1,8 +1,8 @@
-@namespace("io.horizon.trader.serialization.avro")
-protocol TraderProtocol {
+@namespace("io.cygnuxltb.jcts.core.serialization.avro.rpc")
+protocol ARpcTraderProtocol {
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroOrdType {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumOrdType {
 		// 无效
 		INVALID,
 		// 限价单
@@ -27,8 +27,8 @@ protocol TraderProtocol {
 		MV
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroOrdValid {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumOrdValid {
 		//Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
 		GTC,
 		//Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
@@ -37,8 +37,8 @@ protocol TraderProtocol {
 		GFD
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroOrdSide {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumOrdSide {
 		//无效
 		INVALID,
 		//买
@@ -51,8 +51,8 @@ protocol TraderProtocol {
 		SHORT_SELL
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroOrdStatus {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumOrdStatus {
 		// 无效
 		INVALID,
 		// 新订单未确认
@@ -81,8 +81,8 @@ protocol TraderProtocol {
 		UNPROVIDED
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroOrdLevel {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumOrdLevel {
 		//子订单
 		CHILD,
 		//父订单
@@ -93,15 +93,15 @@ protocol TraderProtocol {
 		GROUP
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroTrdDirection {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumTrdDirection {
 		INVALID,
 		LONG,
 		SHORT
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroTrdAction {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumTrdAction {
 		// 无效
 		INVALID,
 		// 开仓
@@ -114,8 +114,8 @@ protocol TraderProtocol {
 		CLOSE_YESTERDAY
 	}
 
-	@namespace("io.horizon.trader.serialization.avro.enums")
-	enum AvroAdaptorStatus {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
+	enum AEnumAdaptorStatus {
 		// 无效
 		INVALID,
 		// 不可用
@@ -133,8 +133,8 @@ protocol TraderProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.send")
-	record AvroNewOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInNewOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -146,10 +146,10 @@ protocol TraderProtocol {
 		string exchangeCode;
 		int instrumentId;
 		string instrumentCode;
-		io.horizon.trader.serialization.avro.enums.AvroOrdType type;
-		io.horizon.trader.serialization.avro.enums.AvroOrdValid valid;
-		io.horizon.trader.serialization.avro.enums.AvroTrdAction action;
-		io.horizon.trader.serialization.avro.enums.AvroTrdDirection direction;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdType type;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdValid valid;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdAction action;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection direction;
 		string brokerId;
 		int accountId;
 		int subAccountId;
@@ -161,8 +161,8 @@ protocol TraderProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.send")
-	record AvroCancelOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInCancelOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -183,8 +183,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.horizon.trader.serialization.avro.send")
-	record AvroQueryOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInQueryOrder {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -202,8 +202,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.horizon.trader.serialization.avro.send")
-	record AvroQueryPositions {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInQueryPositions {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -220,8 +220,8 @@ protocol TraderProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.horizon.trader.serialization.avro.send")
-	record AvroQueryBalance {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AInQueryBalance {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -236,8 +236,8 @@ protocol TraderProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.receive")
-	record AvroOrderEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutOrderEvent {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
@@ -248,9 +248,9 @@ protocol TraderProtocol {
 		string brokerOrdSysId;
 		string exchangeCode;
 		string instrumentCode;
-		io.horizon.trader.serialization.avro.enums.AvroOrdStatus status;
-		io.horizon.trader.serialization.avro.enums.AvroTrdDirection direction;
-		io.horizon.trader.serialization.avro.enums.AvroTrdAction action;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdStatus status;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection direction;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdAction action;
 		int offerQty = 0;
 		int filledQty = 0;
 		long offerPrice = 0;
@@ -263,8 +263,8 @@ protocol TraderProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.receive")
-	record AvroBalanceEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutBalanceEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -275,8 +275,8 @@ protocol TraderProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.receive")
-	record AvroPositionsEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutPositionsEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -288,12 +288,12 @@ protocol TraderProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.horizon.trader.serialization.avro.receive")
-	record AvroAdaptorEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
+	record AOutAdaptorEvent {
 		long epochMillis;
 		string adaptorId;
 		int accountId;
-		io.horizon.trader.serialization.avro.enums.AvroAdaptorStatus status;
+		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumAdaptorStatus status;
 	}
 
 }

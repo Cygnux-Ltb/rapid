@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.instrument.futures;
+package io.cygnuxltb.jcts.core.instrument.futures;
 
 import io.horizon.market.instrument.Exchange;
 import io.horizon.market.instrument.Instrument;

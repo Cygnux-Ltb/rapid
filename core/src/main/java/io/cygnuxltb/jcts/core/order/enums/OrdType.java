@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.trader.order.enums;
+package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.trader.order.TdxProvider;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.enums.AvroOrdType;
+import io.cygnuxltb.jcts.core.order.TdxProvider;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroOrdType;
 import io.horizon.trader.order.TdxProvider;
 import io.horizon.trader.serialization.avro.enums.AvroOrdType;
 

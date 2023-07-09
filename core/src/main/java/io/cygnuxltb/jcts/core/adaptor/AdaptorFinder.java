@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.adaptor;
+package io.cygnuxltb.jcts.core.adaptor;
 
 import io.horizon.trader.account.Account;
 import io.horizon.trader.account.SubAccount;

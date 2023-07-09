@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.adaptor;
+package io.cygnuxltb.jcts.core.adaptor;
 
 public enum ConnectionType {
 

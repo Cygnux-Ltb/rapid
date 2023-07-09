@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.order;
+package io.cygnuxltb.jcts.core.order;
 
 import org.apache.avro.generic.GenericEnumSymbol;
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.indicator.impl;
+package io.cygnuxltb.jcts.core.indicator.impl;
 
 import io.horizon.market.data.impl.BasicMarketData;
 import io.horizon.market.indicator.IndicatorEvent;

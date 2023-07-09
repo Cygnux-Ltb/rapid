@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.account;
+package io.cygnuxltb.jcts.core.account;
 
 import com.typesafe.config.Config;
 import io.mercury.common.collections.MutableSets;
@@ -12,13 +12,13 @@ import org.eclipse.collections.api.set.MutableSet;
 import javax.annotation.Nonnull;
 import java.io.Serial;
 
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.AccountId;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.Balance;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.BrokerId;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.BrokerName;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.Credit;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.InvestorId;
-import static io.cygnuxltb.jcts.core.trader.account.Account.AccountConfig.Remark;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.AccountId;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Balance;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.BrokerId;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.BrokerName;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Credit;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.InvestorId;
+import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Remark;
 
 /**
  * 实际账户, 对应一个实际的经纪商账户

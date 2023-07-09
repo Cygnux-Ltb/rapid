@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.instrument;
+package io.cygnuxltb.jcts.core.instrument;
 
 public enum CryptocurrencyExchange {
 

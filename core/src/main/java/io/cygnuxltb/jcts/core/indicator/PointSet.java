@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.indicator;
+package io.cygnuxltb.jcts.core.indicator;
 
 import io.horizon.market.indicator.Point;
 import io.mercury.common.collections.Capacity;

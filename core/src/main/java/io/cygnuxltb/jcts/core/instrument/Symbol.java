@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.market.instrument;
+package io.cygnuxltb.jcts.core.instrument;
 
-import io.cygnuxltb.jcts.core.market.instrument.attr.PriceMultiplier;
-import io.cygnuxltb.jcts.core.market.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
+import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
 import io.mercury.common.functional.Formatter;
 import org.eclipse.collections.api.list.ImmutableList;
 

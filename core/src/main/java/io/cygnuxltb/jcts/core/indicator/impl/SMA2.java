@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.indicator.impl;
+package io.cygnuxltb.jcts.core.indicator.impl;
 
 import java.time.Duration;
 import java.time.LocalDate;

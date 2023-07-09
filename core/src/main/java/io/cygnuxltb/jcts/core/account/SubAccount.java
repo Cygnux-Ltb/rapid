@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.account;
+package io.cygnuxltb.jcts.core.account;
 
 import com.typesafe.config.Config;
 import io.mercury.common.config.ConfigOption;

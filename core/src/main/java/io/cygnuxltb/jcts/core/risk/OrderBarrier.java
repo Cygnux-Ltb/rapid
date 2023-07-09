@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.trader.risk;
+package io.cygnuxltb.jcts.core.risk;
 
-import io.cygnuxltb.jcts.core.trader.order.ChildOrder;
+import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.horizon.trader.order.ChildOrder;
 
 import java.util.function.Predicate;

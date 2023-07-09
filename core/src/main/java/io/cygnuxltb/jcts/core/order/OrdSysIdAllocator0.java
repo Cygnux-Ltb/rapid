@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.order;
+package io.cygnuxltb.jcts.core.order;
 
 import static io.mercury.common.datetime.TimeConst.MILLIS_PER_SECONDS;
 

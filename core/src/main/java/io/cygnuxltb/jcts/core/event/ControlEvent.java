@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.event;
+package io.cygnuxltb.jcts.core.event;
 
 import io.mercury.common.codec.Envelope;
 

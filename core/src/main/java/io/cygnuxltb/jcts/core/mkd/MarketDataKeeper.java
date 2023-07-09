@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.data;
+package io.cygnuxltb.jcts.core.mkd;
 
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.InstrumentKeeper;

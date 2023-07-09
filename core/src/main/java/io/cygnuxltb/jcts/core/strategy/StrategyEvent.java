@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.strategy;
+package io.cygnuxltb.jcts.core.strategy;
 
 public interface StrategyEvent {
 

@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.trader.account;
+package io.cygnuxltb.jcts.core.account;
 
-import io.cygnuxltb.jcts.core.trader.position.Position;
-import io.cygnuxltb.jcts.core.trader.position.PositionProducer;
+import io.cygnuxltb.jcts.core.position.Position;
+import io.cygnuxltb.jcts.core.position.PositionProducer;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.trader.position.Position;
 import io.horizon.trader.position.PositionProducer;

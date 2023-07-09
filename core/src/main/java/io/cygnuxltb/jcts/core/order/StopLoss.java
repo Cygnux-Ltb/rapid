@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.order;
+package io.cygnuxltb.jcts.core.order;
 
 import io.horizon.market.data.MarketData;
 import io.horizon.trader.order.enums.TrdDirection;

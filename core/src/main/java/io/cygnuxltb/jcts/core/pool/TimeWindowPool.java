@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.pool;
+package io.cygnuxltb.jcts.core.pool;
 
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.Symbol;

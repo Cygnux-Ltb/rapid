@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.market.instrument;
+package io.cygnuxltb.jcts.core.instrument;
 
-import io.cygnuxltb.jcts.core.market.instrument.futures.ChinaFutures;
+import io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures;
 import io.horizon.market.instrument.Instrument;
 import io.horizon.market.instrument.Symbol;
 import io.mercury.common.collections.MutableLists;

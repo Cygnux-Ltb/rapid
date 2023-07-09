@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.order.attr;
+package io.cygnuxltb.jcts.core.order.attr;
 
 import io.mercury.common.datetime.EpochTime;
 

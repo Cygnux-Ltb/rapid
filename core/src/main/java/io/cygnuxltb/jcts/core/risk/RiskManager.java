@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.risk;
+package io.cygnuxltb.jcts.core.risk;
 
 public final class RiskManager {
 

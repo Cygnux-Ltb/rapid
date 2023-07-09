@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.trader.handler;
+package io.cygnuxltb.jcts.core.handler;
 
-import io.cygnuxltb.jcts.core.trader.serialization.avro.receive.AvroAdaptorEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.receive.AvroAdaptorEvent;
 import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;

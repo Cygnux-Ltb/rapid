@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.indicator.base;
+package io.cygnuxltb.jcts.core.indicator.base;
 
 import io.horizon.market.data.MarketData;
 import io.mercury.common.sequence.TimePoint;

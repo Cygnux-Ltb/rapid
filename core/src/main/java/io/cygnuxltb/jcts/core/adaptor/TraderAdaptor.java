@@ -1,10 +1,10 @@
-package io.cygnuxltb.jcts.core.trader.adaptor;
+package io.cygnuxltb.jcts.core.adaptor;
 
-import io.cygnuxltb.jcts.core.trader.serialization.avro.send.AvroCancelOrder;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.send.AvroNewOrder;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.send.AvroQueryBalance;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.send.AvroQueryOrder;
-import io.cygnuxltb.jcts.core.trader.serialization.avro.send.AvroQueryPositions;
+import io.cygnuxltb.jcts.core.serialization.avro.send.AvroCancelOrder;
+import io.cygnuxltb.jcts.core.serialization.avro.send.AvroNewOrder;
+import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryBalance;
+import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryOrder;
+import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryPositions;
 import io.horizon.trader.account.Account;
 import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
 import io.horizon.trader.serialization.avro.send.AvroNewOrder;

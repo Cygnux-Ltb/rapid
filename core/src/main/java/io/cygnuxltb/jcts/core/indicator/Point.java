@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.indicator;
+package io.cygnuxltb.jcts.core.indicator;
 
 import io.mercury.common.sequence.Serial;
 

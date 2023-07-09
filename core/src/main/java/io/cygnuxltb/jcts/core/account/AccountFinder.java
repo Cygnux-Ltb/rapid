@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.trader.account;
+package io.cygnuxltb.jcts.core.account;
 
 import io.horizon.trader.account.Account.AccountException;
 import io.horizon.trader.account.SubAccount.SubAccountException;

@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.market.instrument;
+package io.cygnuxltb.jcts.core.instrument;
 
 import java.time.ZoneOffset;
 import java.util.stream.Stream;

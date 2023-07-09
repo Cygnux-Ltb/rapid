@@ -1,14 +1,14 @@
-package io.cygnuxltb.jcts.core.market.data;
+package io.cygnuxltb.jcts.core.mkd;
 
 
-import io.cygnuxltb.jcts.core.market.data.api.MarketDataIncrement;
-import io.cygnuxltb.jcts.core.market.data.api.MarketDataSnapshot;
-import io.cygnuxltb.jcts.core.market.data.api.Side;
-import io.cygnuxltb.jcts.core.market.data.impl.DefaultMarketDataIncrement;
-import io.cygnuxltb.jcts.core.market.data.impl.DefaultMarketDataNewOrder;
-import io.cygnuxltb.jcts.core.market.data.impl.DefaultMarketDataReplaceOrder;
-import io.cygnuxltb.jcts.core.market.data.impl.DefaultMarketDataSnapshot;
-import io.cygnuxltb.jcts.core.market.data.impl.MarketDataSnapshotFunction;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataIncrement;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.api.Side;
+import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataIncrement;
+import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataNewOrder;
+import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataReplaceOrder;
+import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.impl.MarketDataSnapshotFunction;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
