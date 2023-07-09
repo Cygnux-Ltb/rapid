@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.hc;
+package io.cygnuxltb.console;
 
 import io.mercury.common.http.JreHttpClient;
 import io.mercury.common.http.PathParams;
@@ -14,7 +14,7 @@ import java.util.List;
 
 class BaseHttpClient {
 
-    protected final Logger log = Log4j2LoggerFactory.getLogger(getClass());
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseHttpClient.class);
 
     protected <T> List<T> sendGetRequest(Class<T> type, String uri, PathParam... params) {
         try {

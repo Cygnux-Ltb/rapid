@@ -27,7 +27,7 @@
     </developers>
 
     <modules>
-        <module>console-hc</module>
+        <module>console-client</module>
         <module>console-service</module>
         <module>protocol</module>
         <module>websocket</module>

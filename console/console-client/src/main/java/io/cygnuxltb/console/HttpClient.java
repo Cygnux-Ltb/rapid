@@ -1,11 +1,11 @@
 package io.cygnuxltb.console;
 
-import io.cygnuxltb.protocol.http.outbound.BarDTO;
-import io.cygnuxltb.protocol.http.outbound.OrderDTO;
-import io.cygnuxltb.protocol.http.outbound.ParamDTO;
-import io.cygnuxltb.protocol.http.outbound.PnlDTO;
-import io.cygnuxltb.protocol.http.outbound.ProductDTO;
-import io.cygnuxltb.protocol.http.outbound.StrategyDTO;
+import io.cygnuxltb.protocol.http.response.BarDTO;
+import io.cygnuxltb.protocol.http.response.OrderDTO;
+import io.cygnuxltb.protocol.http.response.ParamDTO;
+import io.cygnuxltb.protocol.http.response.PnlDTO;
+import io.cygnuxltb.protocol.http.response.ProductDTO;
+import io.cygnuxltb.protocol.http.response.StrategyDTO;
 import io.mercury.common.http.JreHttpClient;
 import io.mercury.common.http.PathParams.PathParam;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-public final class JctsHttpClient extends BaseHttpClient {
+public final class HttpClient extends BaseHttpClient {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseHttpClient.class);
 
@@ -30,11 +30,11 @@ public final class JctsHttpClient extends BaseHttpClient {
     private String strategyUri;
 
 
-    private JctsHttpClient() {
+    private HttpClient() {
         var prop = new Properties();
         try {
             if (SysProperties.USER_HOME == null) {
-                prop.load(JctsHttpClient.class.getResourceAsStream("config.properties"));
+                prop.load(HttpClient.class.getResourceAsStream("config.properties"));
             } else {
                 FileInputStream fileInputStream = new FileInputStream(
                         SysProperties.USER_HOME + "/config/config.properties");

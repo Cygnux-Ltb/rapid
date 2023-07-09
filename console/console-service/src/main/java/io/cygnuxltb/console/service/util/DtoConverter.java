@@ -1,16 +1,16 @@
 package io.cygnuxltb.console.service.util;
 
-import io.cygnuxltb.console.persistence.entity.TblTAccount;
 import io.cygnuxltb.console.persistence.entity.TblMBar;
 import io.cygnuxltb.console.persistence.entity.TblMInstrument;
 import io.cygnuxltb.console.persistence.entity.TblMInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.TblSParam;
+import io.cygnuxltb.console.persistence.entity.TblSProduct;
+import io.cygnuxltb.console.persistence.entity.TblTAccount;
 import io.cygnuxltb.console.persistence.entity.TblTOrder;
 import io.cygnuxltb.console.persistence.entity.TblTOrderEvent;
 import io.cygnuxltb.console.persistence.entity.TblTOrderExt;
-import io.cygnuxltb.console.persistence.entity.TblSParam;
 import io.cygnuxltb.console.persistence.entity.TblTPnl;
 import io.cygnuxltb.console.persistence.entity.TblTPnlSettlement;
-import io.cygnuxltb.console.persistence.entity.TblSProduct;
 import io.cygnuxltb.console.persistence.entity.TblTStrategy;
 import io.cygnuxltb.protocol.http.response.AccountDTO;
 import io.cygnuxltb.protocol.http.response.BarDTO;
@@ -30,73 +30,73 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 public class DtoConverter {
 
     public static BarDTO toDTO(TblMBar entity) {
-        BarDTO dto = new BarDTO();
+        var dto = new BarDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static AccountDTO toDTO(TblTAccount entity) {
-        AccountDTO dto = new AccountDTO();
+        var dto = new AccountDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static InstrumentDTO toDTO(TblMInstrument entity) {
-        InstrumentDTO dto = new InstrumentDTO();
+        var dto = new InstrumentDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static InstrumentSettlementDTO toDTO(TblMInstrumentSettlement entity) {
-        InstrumentSettlementDTO dto = new InstrumentSettlementDTO();
+        var dto = new InstrumentSettlementDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static StrategyDTO toDTO(TblTStrategy entity) {
-        StrategyDTO dto = new StrategyDTO();
+        var dto = new StrategyDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static OrderDTO toDTO(TblTOrder entity) {
-        OrderDTO dto = new OrderDTO();
+        var dto = new OrderDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static OrderEventDTO toDTO(TblTOrderEvent entity) {
-        OrderEventDTO dto = new OrderEventDTO();
+        var dto = new OrderEventDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static OrderExtDTO toDTO(TblTOrderExt entity) {
-        OrderExtDTO dto = new OrderExtDTO();
+        var dto = new OrderExtDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static PnlDTO toDTO(TblTPnl entity) {
-        PnlDTO dto = new PnlDTO();
+        var dto = new PnlDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static ParamDTO toDTO(TblSParam entity) {
-        ParamDTO dto = new ParamDTO();
+        var dto = new ParamDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static ProductDTO toDTO(TblSProduct entity) {
-        ProductDTO dto = new ProductDTO();
+        var dto = new ProductDTO();
         copyProperties(entity, dto);
         return dto;
     }
 
     public static PnlSettlementDTO toDTO(TblTPnlSettlement entity) {
-        PnlSettlementDTO dto = new PnlSettlementDTO();
+        var dto = new PnlSettlementDTO();
         copyProperties(entity, dto);
         return dto;
     }

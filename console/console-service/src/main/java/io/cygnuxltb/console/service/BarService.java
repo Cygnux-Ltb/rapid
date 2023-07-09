@@ -29,7 +29,6 @@ public final class BarService {
         return getBars(instrumentCode, tradingDay, tradingDay);
     }
 
-
     /**
      * @param instrumentCode  String
      * @param startTradingDay int
