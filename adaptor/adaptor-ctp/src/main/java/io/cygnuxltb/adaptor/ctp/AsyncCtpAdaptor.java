@@ -2,15 +2,15 @@ package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.adaptor.AbstractAdaptor;
-import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
 import io.mercury.common.concurrent.queue.ScQueue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -90,31 +90,31 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull AvroNewOrder order) {
+    public boolean newOrder(@Nonnull AvNewOrderRequest request) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull AvroCancelOrder order) {
+    public boolean cancelOrder(@Nonnull AvCancelOrderRequest request) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean queryOrder(@Nonnull AvroQueryOrder query) {
+    public boolean queryOrder(@Nonnull AvQueryOrderRequest request) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean queryPositions(@Nonnull AvroQueryPositions query) {
+    public boolean queryPositions(@Nonnull AvQueryPositionsRequest request) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean queryBalance(@Nonnull AvroQueryBalance query) {
+    public boolean queryBalance(@Nonnull AvQueryBalanceRequest request) {
         // TODO Auto-generated method stub
         return false;
     }

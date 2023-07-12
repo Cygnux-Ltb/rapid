@@ -8,16 +8,16 @@ import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
 import io.cygnuxltb.adaptor.ctp.converter.OrderReportConverter;
 import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.adaptor.AbstractAdaptor;
-import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.adaptor.ConnectionType;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
@@ -178,13 +178,13 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull AvroNewOrder order) {
+    public boolean newOrder(@Nonnull AvNewOrderRequest request) {
         try {
-            CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(order);
+            CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(request);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
             // 设置OrderRef
             field.setOrderRef(orderRef);
-            OrderRefKeeper.put(orderRef, order.getOrdSysId());
+            OrderRefKeeper.put(orderRef, request.getOrdSysId());
             gateway.ReqOrderInsert(field);
             return true;
         } catch (Exception e) {
@@ -194,10 +194,10 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull AvroCancelOrder order) {
+    public boolean cancelOrder(@Nonnull AvCancelOrderRequest request) {
         try {
-            CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(order);
-            String orderRef = OrderRefKeeper.getOrderRef(order.getOrdSysId());
+            CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(request);
+            String orderRef = OrderRefKeeper.getOrderRef(request.getOrdSysId());
             // 目前使用orderRef进行撤单
             field.setOrderRef(orderRef);
             field.setOrderActionRef(OrderRefKeeper.nextOrderRef());
@@ -219,14 +219,14 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     private final long queryInterval = 1100L;
 
     @Override
-    public boolean queryOrder(@Nonnull AvroQueryOrder req) {
+    public boolean queryOrder(@Nonnull AvQueryOrderRequest request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryOrder(req.getExchangeCode(), req.getInstrumentCode());
+                        gateway.ReqQryOrder(request.getExchangeCode(), request.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -240,14 +240,14 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull AvroQueryPositions req) {
+    public boolean queryPositions(@Nonnull AvQueryPositionsRequest request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryInvestorPosition(req.getExchangeCode(), req.getInstrumentCode());
+                        gateway.ReqQryInvestorPosition(request.getExchangeCode(), request.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -261,7 +261,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull AvroQueryBalance query) {
+    public boolean queryBalance(@Nonnull AvQueryBalanceRequest request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {

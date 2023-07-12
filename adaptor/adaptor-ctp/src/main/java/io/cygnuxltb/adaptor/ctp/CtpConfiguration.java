@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.time.LocalDateTime;
 
-import static io.horizon.market.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
+import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
 

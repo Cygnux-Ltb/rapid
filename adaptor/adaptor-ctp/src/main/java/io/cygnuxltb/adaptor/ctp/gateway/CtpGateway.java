@@ -4,7 +4,7 @@ import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
-import io.horizon.trader.adaptor.ConnectionType;
+import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
 import io.mercury.common.annotation.thread.MustBeThreadSafe;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.lang.Asserter;

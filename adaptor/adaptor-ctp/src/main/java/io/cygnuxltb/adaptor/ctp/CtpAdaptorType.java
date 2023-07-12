@@ -1,6 +1,6 @@
 package io.cygnuxltb.adaptor.ctp;
 
-import io.horizon.trader.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
 
 import java.time.LocalTime;
 

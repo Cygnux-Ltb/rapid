@@ -1,8 +1,8 @@
 package io.cygnuxltb.adaptor.ctp.converter;
 
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 import io.mercury.common.datetime.TimeConst;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static io.horizon.market.data.impl.BasicMarketData.newLevel5;
+import static io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData.newLevel5;
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.datetime.pattern.TimePattern.HH_MM_SS;
 
@@ -37,13 +37,16 @@ public final class MarketDataConverter {
     public BasicMarketData withFtdcDepthMarketData(FtdcDepthMarketData depthMarketData) {
 
         // 业务日期
-        var actionDay = LocalDate.parse(depthMarketData.getActionDay(), actionDayFormatter);
+        var actionDay = LocalDate
+                .parse(depthMarketData.getActionDay(), actionDayFormatter);
 
         // 最后修改时间
-        var updateTime = LocalTime.parse(depthMarketData.getUpdateTime(), updateTimeFormatter)
+        var updateTime = LocalTime
+                .parse(depthMarketData.getUpdateTime(), updateTimeFormatter)
                 .plusNanos(depthMarketData.getUpdateMillisec() * TimeConst.NANOS_PER_MILLIS);
 
-        var instrument = InstrumentKeeper.getInstrument(depthMarketData.getInstrumentID());
+        var instrument = InstrumentKeeper
+                .getInstrument(depthMarketData.getInstrumentID());
 
         log.info("Convert depthMarketData apply -> InstrumentCode==[{}], actionDay==[{}], updateTime==[{}]",
                 instrument.getInstrumentCode(), actionDay, updateTime);

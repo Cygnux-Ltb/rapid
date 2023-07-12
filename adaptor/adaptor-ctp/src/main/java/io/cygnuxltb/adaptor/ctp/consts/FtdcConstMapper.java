@@ -1,8 +1,8 @@
 package io.cygnuxltb.adaptor.ctp.consts;
 
-import io.horizon.trader.order.enums.OrdStatus;
-import io.horizon.trader.order.enums.TrdAction;
-import io.horizon.trader.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
+import io.cygnuxltb.jcts.core.order.enums.TrdAction;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 

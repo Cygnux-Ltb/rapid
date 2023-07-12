@@ -1,4 +1,4 @@
-package io.horizon.adaptor.ctp;
+package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;

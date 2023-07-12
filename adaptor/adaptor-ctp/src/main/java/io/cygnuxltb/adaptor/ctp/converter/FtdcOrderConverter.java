@@ -4,8 +4,8 @@ import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
 import io.cygnuxltb.adaptor.ctp.consts.FtdcConst;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -50,7 +50,7 @@ public final class FtdcOrderConverter {
     /**
      * 订单转换为FTDC报单录入请求, 返回 CThostFtdcInputOrderField 对象
      *
-     * @param order NewOrder
+     * @param request NewOrder
      * @return <pre>
      * struct CThostFtdcInputOrderField
      * {
@@ -117,7 +117,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderField convertToInputOrder(AvroNewOrder order) {
+    public CThostFtdcInputOrderField convertToInputOrder(AvNewOrderRequest request) {
         // 创建FTDC报单类型
         var field = new CThostFtdcInputOrderField();
         // 经纪公司代码
@@ -133,16 +133,16 @@ public final class FtdcOrderConverter {
         // MAC地址
         field.setMacAddress(macAddress);
         // 设置交易所ID
-        field.setExchangeID(order.getExchangeCode());
-        log.info("Set CThostFtdcInputOrderField -> ExchangeID == {}", order.getExchangeCode());
+        field.setExchangeID(request.getExchangeCode());
+        log.info("Set CThostFtdcInputOrderField -> ExchangeID == {}", request.getExchangeCode());
         // 设置交易标的
-        field.setInstrumentID(order.getInstrumentCode());
-        log.info("Set CThostFtdcInputOrderField -> InstrumentID == {}", order.getInstrumentCode());
+        field.setInstrumentID(request.getInstrumentCode());
+        log.info("Set CThostFtdcInputOrderField -> InstrumentID == {}", request.getInstrumentCode());
         // 设置报单价格
         field.setOrderPriceType(FtdcConst.FtdcOrderPrice.LIMIT_PRICE);
         log.info("Set CThostFtdcInputOrderField -> OrderPriceType == LimitPrice");
         // 设置开平标识
-        switch (order.getAction()) {
+        switch (request.getAction()) {
             case OPEN -> {
                 // 设置为开仓
                 field.setCombOffsetFlag(FtdcConst.FtdcOffsetFlag.OPEN_STR);
@@ -165,15 +165,15 @@ public final class FtdcOrderConverter {
             }
             case INVALID -> {
                 // 无效订单动作
-                log.error("order action is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order action is invalid -> ordSysId == " + order.getOrdSysId());
+                log.error("request action is invalid, ordSysId==[{}]", request.getOrdSysId());
+                throw new IllegalStateException("request action is invalid -> ordSysId == " + request.getOrdSysId());
             }
         }
         // 设置投机标识
         field.setCombHedgeFlag(FtdcConst.FtdcHedgeFlag.SPECULATION_STR);
         log.info("Set CThostFtdcInputOrderField -> CombHedgeFlag == Speculation");
         // 设置买卖方向
-        switch (order.getDirection()) {
+        switch (request.getDirection()) {
             case LONG -> {
                 // 设置为买单
                 field.setDirection(FtdcConst.FtdcDirection.BUY);
@@ -186,16 +186,16 @@ public final class FtdcOrderConverter {
             }
             case INVALID -> {
                 // 无效订单方向
-                log.error("order direction is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order direction is invalid -> ordSysId == " + order.getOrdSysId());
+                log.error("request direction is invalid, ordSysId==[{}]", request.getOrdSysId());
+                throw new IllegalStateException("request direction is invalid -> ordSysId == " + request.getOrdSysId());
             }
         }
         // 设置价格
-        double limitPrice = order.getOfferPrice();
+        double limitPrice = request.getOfferPrice();
         field.setLimitPrice(limitPrice);
         log.info("Set CThostFtdcInputOrderField -> LimitPrice == {}", limitPrice);
         // 设置数量
-        int volumeTotalOriginal = order.getOfferQty();
+        int volumeTotalOriginal = request.getOfferQty();
         field.setVolumeTotalOriginal(volumeTotalOriginal);
         log.info("Set CThostFtdcInputOrderField -> VolumeTotalOriginal == {}", volumeTotalOriginal);
         // 设置有效期类型
@@ -227,7 +227,7 @@ public final class FtdcOrderConverter {
     /**
      * 订单转换为FTDC报单操作请求, 返回 CThostFtdcInputOrderActionField 对象
      *
-     * @param order CancelOrder
+     * @param request CancelOrder
      * @return <pre>
      * struct CThostFtdcInputOrderActionField
      * {
@@ -268,7 +268,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderActionField convertToInputOrderAction(AvroCancelOrder order) {
+    public CThostFtdcInputOrderActionField convertToInputOrderAction(AvCancelOrderRequest request) {
         // 创建FTDC撤单类型
         var field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码
@@ -284,9 +284,9 @@ public final class FtdcOrderConverter {
         // 操作标志
         field.setActionFlag(FtdcConst.FtdcActionFlag.DELETE);
         // 交易所代码
-        field.setExchangeID(order.getExchangeCode());
+        field.setExchangeID(request.getExchangeCode());
         // 合约代码
-        field.setInstrumentID(order.getInstrumentCode());
+        field.setInstrumentID(request.getInstrumentCode());
         // 返回FTDC撤单对象
         log.info("Set CThostFtdcInputOrderActionField finished");
         return field;

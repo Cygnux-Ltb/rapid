@@ -7,13 +7,13 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.horizon.market.instrument.futures.ChinaFutures.FixedMultiplier;
-import static io.horizon.trader.order.enums.OrdStatus.NewRejected;
-import static io.horizon.trader.order.enums.OrdStatus.Unprovided;
+import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.FixedMultiplier;
+import static io.cygnuxltb.jcts.core.order.enums.OrdStatus.NewRejected;
+import static io.cygnuxltb.jcts.core.order.enums.OrdStatus.Unprovided;
 import static io.mercury.common.datetime.EpochTime.getEpochMicros;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
 import static java.lang.Integer.parseInt;
@@ -35,10 +35,10 @@ public final class OrderReportConverter {
      * @param order FtdcInputOrder
      * @return OrderReport
      */
-    public AvroOrderEvent withFtdcInputOrder(FtdcInputOrder order) {
+    public AvOrderEvent withFtdcInputOrder(FtdcInputOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var report = AvroOrderEvent.newBuilder()
+        var report = AvOrderEvent.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -74,10 +74,10 @@ public final class OrderReportConverter {
      * @param order FtdcOrder
      * @return OrderReport
      */
-    public AvroOrderEvent withFtdcOrder(FtdcOrder order) {
+    public AvOrderEvent withFtdcOrder(FtdcOrder order) {
         String orderRef = order.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var event = AvroOrderEvent.newBuilder()
+        var event = AvOrderEvent.newBuilder()
                 // 时间戳
                 .setEpochMicros(getEpochMicros())
                 // OrdSysId
@@ -123,10 +123,10 @@ public final class OrderReportConverter {
      * @param trade FtdcTrade
      * @return OrderReport
      */
-    public AvroOrderEvent withFtdcTrade(FtdcTrade trade) {
+    public AvOrderEvent withFtdcTrade(FtdcTrade trade) {
         var orderRef = trade.getOrderRef();
         long ordSysId = OrderRefKeeper.getOrdSysId(orderRef);
-        var builder = AvroOrderEvent.newBuilder();
+        var builder = AvOrderEvent.newBuilder();
         // 微秒时间戳
         builder.setEpochMicros(getEpochMicros());
         // OrdSysId
@@ -171,7 +171,7 @@ public final class OrderReportConverter {
      * @param inputOrderAction FtdcInputOrderAction
      * @return OrderReport
      */
-    public AvroOrderEvent withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
+    public AvOrderEvent withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
 
         return null;
     }
@@ -184,7 +184,7 @@ public final class OrderReportConverter {
      * @param orderAction FtdcOrderAction
      * @return OrderReport
      */
-    public AvroOrderEvent withFtdcOrderAction(FtdcOrderAction orderAction) {
+    public AvOrderEvent withFtdcOrderAction(FtdcOrderAction orderAction) {
 
         return null;
     }

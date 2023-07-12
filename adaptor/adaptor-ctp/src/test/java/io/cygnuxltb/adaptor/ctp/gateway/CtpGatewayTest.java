@@ -1,7 +1,6 @@
-package io.horizon.adaptor.ctp.gateway;
+package io.cygnuxltb.adaptor.ctp.gateway;
 
 import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
-import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
@@ -15,7 +14,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.cygnuxltb.adaptor.ctp.gateway.CtpGateway.CtpRunMode.Normal;
+import static io.cygnuxltb.jcts.core.adaptor.ConnectionType.Normal;
 
 public class CtpGatewayTest {
 
