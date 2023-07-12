@@ -1,18 +1,16 @@
 package io.cygnuxltb.jcts.core.indicator.impl;
 
-import java.time.Duration;
-
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.base.FixedPeriodIndicator;
-import io.horizon.market.indicator.base.FixedPeriodPoint;
-import io.horizon.market.indicator.impl.MACD.MacdEvent;
-import io.horizon.market.indicator.impl.MACD.MacdPoint;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 import io.mercury.common.sequence.TimeWindow;
 
+import java.time.Duration;
+
 public final class MACD extends
-        FixedPeriodIndicator<MacdPoint, MacdEvent, BasicMarketData> {
+        FixedPeriodIndicator<MACD.MacdPoint, MACD.MacdEvent, BasicMarketData> {
 
     public MACD(Instrument instrument, Duration duration) {
         super(instrument, duration);

@@ -50,12 +50,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.cygnuxltb</groupId>
-            <artifactId>market-api</artifactId>
+            <groupId>io.mercury</groupId>
+            <artifactId>commons-config</artifactId>
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
-            <artifactId>commons-config</artifactId>
+            <artifactId>serialization-avro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-ipc</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-json</artifactId>
         </dependency>
     </dependencies>
 

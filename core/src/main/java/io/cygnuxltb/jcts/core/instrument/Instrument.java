@@ -3,8 +3,6 @@ package io.cygnuxltb.jcts.core.instrument;
 import io.cygnuxltb.jcts.core.instrument.attr.InstrumentType;
 import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
 import io.cygnuxltb.jcts.core.instrument.attr.PriorityCloseType;
-import io.horizon.market.instrument.Exchange;
-import io.horizon.market.instrument.Symbol;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.functional.Formatter;
 

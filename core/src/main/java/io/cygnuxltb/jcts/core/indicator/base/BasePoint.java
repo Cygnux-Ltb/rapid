@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.indicator.Point;
+import io.cygnuxltb.jcts.core.indicator.Point;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.lang.Asserter;
 

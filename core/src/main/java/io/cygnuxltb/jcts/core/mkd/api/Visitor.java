@@ -1,8 +1,5 @@
 package io.cygnuxltb.jcts.core.mkd.api;
 
-import io.horizon.market.data.api.MarketDataReplaceOrder;
-import io.horizon.market.data.api.MarketDataSnapshot;
-
 public interface Visitor<R, I> {
 
     default R visit(MarketDataNewOrder event, I input) {

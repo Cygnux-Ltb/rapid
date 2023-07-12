@@ -1,7 +1,5 @@
 package io.cygnuxltb.jcts.core.mkd.api;
 
-import io.horizon.market.data.api.Side;
-
 public interface MarketDataReplaceOrder extends MarketDataEvent {
 
     double getPrice();

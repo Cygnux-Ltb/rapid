@@ -1,8 +1,6 @@
 package io.cygnuxltb.jcts.core.instrument;
 
 import io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.instrument.Symbol;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
@@ -33,19 +31,19 @@ public final class InstrumentKeeper {
     /**
      * 存储instrument, 以instrumentId索引
      */
-    private static final MutableIntObjectMap<io.horizon.market.instrument.Instrument> InstrumentById = MutableMaps.newIntObjectHashMap();
+    private static final MutableIntObjectMap<Instrument> InstrumentById = MutableMaps.newIntObjectHashMap();
 
     /**
      * 存储instrument, 以instrumentCode索引
      */
-    private static final MutableMap<String, io.horizon.market.instrument.Instrument> InstrumentByCode = MutableMaps.newUnifiedMap();
+    private static final MutableMap<String, Instrument> InstrumentByCode = MutableMaps.newUnifiedMap();
 
     /**
      * 初始化标识
      */
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
-    private static ImmutableList<io.horizon.market.instrument.Instrument> instruments;
+    private static ImmutableList<Instrument> instruments;
 
     private InstrumentKeeper() {
     }
@@ -84,14 +82,14 @@ public final class InstrumentKeeper {
     /**
      * @param instrument Instrument
      */
-    public static io.horizon.market.instrument.Instrument setTradable(@Nonnull io.horizon.market.instrument.Instrument instrument) {
+    public static Instrument setTradable(@Nonnull Instrument instrument) {
         return setTradable(instrument.getInstrumentId());
     }
 
     /**
      * @param instrumentId int
      */
-    public static io.horizon.market.instrument.Instrument setTradable(int instrumentId) {
+    public static Instrument setTradable(int instrumentId) {
         var instrument = getInstrument(instrumentId);
         instrument.enable();
         log.info("Instrument enable, instrumentId==[{}], instrument -> {}", instrumentId, instrument);
@@ -102,7 +100,7 @@ public final class InstrumentKeeper {
      * @param instrument Instrument
      * @return Instrument
      */
-    public static io.horizon.market.instrument.Instrument setNotTradable(io.horizon.market.instrument.Instrument instrument) {
+    public static Instrument setNotTradable(Instrument instrument) {
         return setNotTradable(instrument.getInstrumentId());
     }
 
@@ -110,7 +108,7 @@ public final class InstrumentKeeper {
      * @param instrumentId int
      * @return Instrument
      */
-    public static io.horizon.market.instrument.Instrument setNotTradable(int instrumentId) {
+    public static Instrument setNotTradable(int instrumentId) {
         var instrument = getInstrument(instrumentId);
         instrument.disable();
         log.info("Instrument disable, instrumentId==[{}], instrument -> {}", instrumentId, instrument);
@@ -121,7 +119,7 @@ public final class InstrumentKeeper {
      * @param instrument Instrument
      * @return boolean
      */
-    public static boolean isTradable(io.horizon.market.instrument.Instrument instrument) {
+    public static boolean isTradable(Instrument instrument) {
         return isTradable(instrument.getInstrumentId());
     }
 
@@ -136,7 +134,7 @@ public final class InstrumentKeeper {
     /**
      * @return ImmutableList
      */
-    public static ImmutableList<io.horizon.market.instrument.Instrument> getInstruments() {
+    public static ImmutableList<Instrument> getInstruments() {
         return instruments;
     }
 
@@ -144,7 +142,7 @@ public final class InstrumentKeeper {
      * @param instrumentId int
      * @return Instrument
      */
-    public static io.horizon.market.instrument.Instrument getInstrument(int instrumentId) {
+    public static Instrument getInstrument(int instrumentId) {
         var instrument = InstrumentById.get(instrumentId);
         if (instrument == null)
             throw new IllegalArgumentException("Instrument is not find, by instrumentId : " + instrumentId);
@@ -155,12 +153,12 @@ public final class InstrumentKeeper {
      * @param instrumentCodes String[]
      * @return Instrument[]
      */
-    public static io.horizon.market.instrument.Instrument[] getInstrument(String[] instrumentCodes) {
+    public static Instrument[] getInstrument(String[] instrumentCodes) {
         if (isInitialized()) {
             Asserter.requiredLength(instrumentCodes, 1, "instrumentCodes");
-            var list = MutableLists.<io.horizon.market.instrument.Instrument>newFastList();
+            var list = MutableLists.<Instrument>newFastList();
             for (String instrumentCode : instrumentCodes) {
-                io.horizon.market.instrument.Instrument instrument = null;
+                Instrument instrument = null;
                 try {
                     instrument = getInstrument(instrumentCode);
                 } catch (IllegalArgumentException e) {
@@ -173,7 +171,7 @@ public final class InstrumentKeeper {
                     log.error("Not found instrument, with instrument code -> {}", instrumentCode);
                 }
             }
-            return list.toArray(new io.horizon.market.instrument.Instrument[list.size()]);
+            return list.toArray(new Instrument[list.size()]);
         } else {
             initialize();
             return getInstrument(instrumentCodes);

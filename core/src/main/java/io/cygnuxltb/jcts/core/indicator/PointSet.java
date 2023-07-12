@@ -1,6 +1,5 @@
 package io.cygnuxltb.jcts.core.indicator;
 
-import io.horizon.market.indicator.Point;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
@@ -12,7 +11,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import java.util.Optional;
 
 @NotThreadSafe
-public final class PointSet<P extends io.horizon.market.indicator.Point> {
+public final class PointSet<P extends Point> {
 
     private final MutableList<P> list;
 
@@ -26,7 +25,7 @@ public final class PointSet<P extends io.horizon.market.indicator.Point> {
     /**
      * @return PointSet<P>
      */
-    public static <P extends io.horizon.market.indicator.Point> PointSet<P> newEmpty() {
+    public static <P extends Point> PointSet<P> newEmpty() {
         return new PointSet<>(Capacity.L07_SIZE);
     }
 

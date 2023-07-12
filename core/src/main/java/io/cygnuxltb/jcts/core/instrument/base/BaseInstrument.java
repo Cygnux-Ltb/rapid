@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.instrument.base;
 
-import io.horizon.market.instrument.Exchange;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.Exchange;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.serialization.json.JsonWrapper;
 

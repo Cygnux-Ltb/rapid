@@ -3,12 +3,13 @@ package io.cygnuxltb.jcts.core.adaptor;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.INVALID;
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.MD_DISABLE;
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.MD_ENABLE;
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_DISABLE;
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_ENABLE;
-import static io.horizon.trader.adaptor.AdaptorStatus.AdaptorStatusCode.UNAVAILABLE;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.INVALID;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.MD_DISABLE;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.MD_ENABLE;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_DISABLE;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_ENABLE;
+import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.UNAVAILABLE;
+
 
 /**
  * @author yellow013

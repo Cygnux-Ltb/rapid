@@ -1,7 +1,8 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataDeleteOrder;
-import io.horizon.market.data.api.Visitor;
+
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataDeleteOrder;
+import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 public final class DefaultMarketDataDeleteOrder
         extends DefaultMarketDataEvent implements MarketDataDeleteOrder {

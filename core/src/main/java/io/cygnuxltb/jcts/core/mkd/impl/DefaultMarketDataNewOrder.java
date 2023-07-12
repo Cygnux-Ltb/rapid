@@ -1,8 +1,9 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataNewOrder;
-import io.horizon.market.data.api.Side;
-import io.horizon.market.data.api.Visitor;
+
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataNewOrder;
+import io.cygnuxltb.jcts.core.mkd.api.Side;
+import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 import java.util.Objects;
 

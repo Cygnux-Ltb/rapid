@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.order;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.trader.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import io.mercury.common.sequence.Serial;
 
 public class StopLoss implements Serial<StopLoss> {

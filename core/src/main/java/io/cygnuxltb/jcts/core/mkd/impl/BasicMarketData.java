@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.datetime.Timestamp;
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonWrapper;

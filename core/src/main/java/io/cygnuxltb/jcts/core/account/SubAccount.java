@@ -1,7 +1,6 @@
 package io.cygnuxltb.jcts.core.account;
 
 import com.typesafe.config.Config;
-import io.mercury.common.config.ConfigOption;
 import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.common.lang.Asserter;
@@ -64,7 +63,8 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     private SubAccount(@Nonnull ConfigWrapper<SubAccountConfig> wrapper, @Nonnull Account account) {
         this(wrapper.getIntOrThrows(SubAccountConfig.SubAccountId),
                 wrapper.getString(SubAccountConfig.SubAccountName, ""),
-                wrapper.getLong(SubAccountConfig.SubBalance, 0L), wrapper.getLong(SubAccountConfig.SubCredit, 0L),
+                wrapper.getLong(SubAccountConfig.SubBalance, 0L),
+                wrapper.getLong(SubAccountConfig.SubCredit, 0L),
                 account);
     }
 
@@ -156,28 +156,6 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     @Override
     public int compareTo(SubAccount o) {
         return Integer.compare(this.subAccountId, o.subAccountId);
-    }
-
-    public enum SubAccountConfig implements ConfigOption {
-
-        SubAccountId("sys.subAccountId"),
-
-        SubAccountName("sys.subAccountName"),
-
-        SubBalance("sys.subBalance"),
-
-        SubCredit("sys.subCredit");
-
-        private final String configName;
-
-        SubAccountConfig(String configName) {
-            this.configName = configName;
-        }
-
-        @Override
-        public String getConfigName() {
-            return configName;
-        }
     }
 
     public static void main(String[] args) {

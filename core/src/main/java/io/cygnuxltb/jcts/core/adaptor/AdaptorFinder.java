@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
-import io.horizon.trader.account.Account;
-import io.horizon.trader.account.SubAccount;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.account.SubAccount;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 

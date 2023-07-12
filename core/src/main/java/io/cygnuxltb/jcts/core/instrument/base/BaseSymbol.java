@@ -1,9 +1,9 @@
 package io.cygnuxltb.jcts.core.instrument.base;
 
-import io.horizon.market.instrument.Exchange;
-import io.horizon.market.instrument.Symbol;
-import io.horizon.market.instrument.attr.PriceMultiplier;
-import io.horizon.market.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.Exchange;
+import io.cygnuxltb.jcts.core.instrument.Symbol;
+import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
+import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class BaseSymbol implements Symbol {

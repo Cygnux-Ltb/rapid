@@ -1,11 +1,11 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataIncrement;
-import io.horizon.market.data.api.Visitor;
-import io.horizon.market.data.impl.DefaultMarketDataMessage;
+
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataIncrement;
+import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 public class DefaultMarketDataIncrement
-        extends io.horizon.market.data.impl.DefaultMarketDataMessage implements MarketDataIncrement {
+        extends DefaultMarketDataMessage implements MarketDataIncrement {
 
     private DefaultMarketDataIncrement(final Builder builder) {
         super(builder);

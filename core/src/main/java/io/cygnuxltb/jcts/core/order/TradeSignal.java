@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.core.order;
 
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.order.enums.TrdAction;
-import io.horizon.trader.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.order.enums.TrdAction;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import io.mercury.common.fsm.Signal;
 
 public interface TradeSignal extends Signal {

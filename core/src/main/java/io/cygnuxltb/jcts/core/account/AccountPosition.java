@@ -1,10 +1,8 @@
 package io.cygnuxltb.jcts.core.account;
 
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.position.Position;
 import io.cygnuxltb.jcts.core.position.PositionProducer;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.position.Position;
-import io.horizon.trader.position.PositionProducer;
 import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 

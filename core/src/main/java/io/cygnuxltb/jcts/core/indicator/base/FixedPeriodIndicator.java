@@ -1,10 +1,9 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.base.BaseIndicator;
-import io.horizon.market.indicator.base.FixedPeriodPoint;
-import io.horizon.market.instrument.Instrument;
+
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 
 import java.time.Duration;
 

@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.mkd;
 
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 

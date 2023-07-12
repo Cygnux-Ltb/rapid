@@ -1,16 +1,11 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
-import io.cygnuxltb.jcts.core.serialization.avro.send.AvroCancelOrder;
-import io.cygnuxltb.jcts.core.serialization.avro.send.AvroNewOrder;
-import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryBalance;
-import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryOrder;
-import io.cygnuxltb.jcts.core.serialization.avro.send.AvroQueryPositions;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 
@@ -42,40 +37,41 @@ public interface TraderAdaptor extends Closeable, Enableable {
     /**
      * 发送新订单
      *
-     * @param order NewOrder
+     * @param request AvNewOrderRequest
      * @return boolean
      */
-    boolean newOrder(@Nonnull AvroNewOrder order);
+    boolean newOrder(@Nonnull AvNewOrderRequest request);
 
     /**
      * 发送撤单请求
      *
-     * @param order CancelOrder
+     * @param request AvCancelOrderRequest
      * @return boolean
      */
-    boolean cancelOrder(@Nonnull AvroCancelOrder order);
+    boolean cancelOrder(@Nonnull AvCancelOrderRequest request);
 
     /**
      * 查询订单
      *
-     * @param query QueryOrder
+     * @param request AvQueryOrderRequest
      * @return boolean
      */
-    boolean queryOrder(@Nonnull AvroQueryOrder query);
+    boolean queryOrder(@Nonnull AvQueryOrderRequest request);
 
     /**
      * 查询持仓
      *
-     * @param query QueryPositions
+     * @param request AvQueryPositionsRequest
      * @return boolean
      */
-    boolean queryPositions(@Nonnull AvroQueryPositions query);
+    boolean queryPositions(@Nonnull AvQueryPositionsRequest request);
 
     /**
      * 查询余额
      *
+     * @param request AvQueryBalanceRequest
      * @return boolean
      */
-    boolean queryBalance(@Nonnull AvroQueryBalance query);
+    boolean queryBalance(@Nonnull AvQueryBalanceRequest request);
 
 }

@@ -1,14 +1,10 @@
 package io.cygnuxltb.jcts.core.handler;
 
+import io.cygnuxltb.jcts.core.adaptor.Adaptor;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroAdaptorStatus;
-import io.cygnuxltb.jcts.core.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.adaptor.Adaptor;
-import io.horizon.trader.handler.AdaptorEventHandler;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -30,7 +26,7 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
      * @param <M>
      * @author yellow013
      */
-    abstract class BaseMarketDataRecorder<M extends MarketData> implements MarketDataRecorder<M> , AdaptorEventHandler {
+    abstract class BaseMarketDataRecorder<M extends MarketData> implements MarketDataRecorder<M>, AdaptorEventHandler {
 
         private static final Logger log = Log4j2LoggerFactory.getLogger(BaseMarketDataRecorder.class);
 
@@ -45,15 +41,14 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
             log.info("Received event -> {}", event);
             switch (event.getStatus()) {
-                case AvroAdaptorStatus.MD_ENABLE -> adaptor.subscribeMarketData(instruments);
-                case AvroAdaptorStatus.MD_DISABLE -> log.info("Adaptor -> {} market data is disable", adaptor.getAdaptorId());
+                case MD_ENABLE -> adaptor.subscribeMarketData(instruments);
+                case MD_DISABLE -> log.info("Adaptor -> {} market data is disable", adaptor.getAdaptorId());
                 default -> log.warn("Event no processing, AdaptorEvent -> {}", event);
             }
         }
-
 
 
     }
@@ -65,7 +60,7 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
 
         private final Logger log = Log4j2LoggerFactory.getLogger(getClass());
 
-        public LoggerMarketDataRecorder(Adaptor adaptor,  Instrument... instruments) {
+        public LoggerMarketDataRecorder(Adaptor adaptor, Instrument... instruments) {
             super(adaptor, instruments);
         }
 

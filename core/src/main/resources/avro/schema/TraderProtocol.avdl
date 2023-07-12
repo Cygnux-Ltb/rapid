@@ -1,6 +1,18 @@
 @namespace("io.cygnuxltb.jcts.core.serialization.avro.rpc")
 protocol ARpcTraderProtocol {
 
+	/**
+	  * new order
+   	  */
+	boolean newOrder(
+		io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest request);
+
+	/**
+	  * cancel order
+ 	  */
+	boolean cancelOrder(
+		io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest request);
+
 	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
 	enum AEnumOrdType {
 		// 无效
@@ -133,8 +145,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInNewOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvNewOrderRequest {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -161,8 +173,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInCancelOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvCancelOrderRequest {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -183,8 +195,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInQueryOrder {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvQueryOrderRequest {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -202,8 +214,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInQueryPositions {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvQueryPositionsRequest {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -220,8 +232,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInQueryBalance {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvQueryBalanceRequest {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -236,8 +248,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutOrderEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvOrderEvent {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
@@ -263,8 +275,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutBalanceEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvBalanceEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -275,8 +287,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutPositionsEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvPositionsEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -288,8 +300,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutAdaptorEvent {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvAdaptorEvent {
 		long epochMillis;
 		string adaptorId;
 		int accountId;

@@ -1,7 +1,8 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataSnapshot;
-import io.horizon.market.data.api.Visitor;
+
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 public final class DefaultMarketDataSnapshot
         extends DefaultMarketDataMessage implements MarketDataSnapshot {

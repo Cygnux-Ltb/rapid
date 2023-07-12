@@ -1,7 +1,8 @@
 package io.cygnuxltb.jcts.core.instrument.base;
 
-import io.horizon.market.instrument.Symbol;
-import io.horizon.market.instrument.attr.InstrumentType;
+
+import io.cygnuxltb.jcts.core.instrument.Symbol;
+import io.cygnuxltb.jcts.core.instrument.attr.InstrumentType;
 
 public abstract class BaseFutures extends BaseInstrument {
 

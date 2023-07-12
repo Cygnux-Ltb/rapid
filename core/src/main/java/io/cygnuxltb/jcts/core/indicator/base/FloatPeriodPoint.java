@@ -1,24 +1,24 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.horizon.market.data.MarketData;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.sequence.TimePoint;
 
 public abstract class FloatPeriodPoint<M extends MarketData> extends BasePoint<M> {
 
-	private final TimePoint point;
+    private final TimePoint point;
 
-	protected FloatPeriodPoint(int index, TimePoint point) {
-		super(index);
-		this.point = point;
-	}
+    protected FloatPeriodPoint(int index, TimePoint point) {
+        super(index);
+        this.point = point;
+    }
 
-	public TimePoint getPoint() {
-		return point;
-	}
+    public TimePoint getPoint() {
+        return point;
+    }
 
-	@Override
-	public long serialId() {
-		return point.serialId();
-	}
+    @Override
+    public long serialId() {
+        return point.serialId();
+    }
 
 }

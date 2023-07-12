@@ -1,10 +1,8 @@
 package io.cygnuxltb.jcts.core.handler;
 
 import io.cygnuxltb.jcts.core.mkd.MarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.receive.AvroAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.receive.AvroOrderEvent;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;
@@ -60,13 +58,13 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderEvent(@Nonnull AvroOrderEvent event) {
+        public void onOrderEvent(@Nonnull AvOrderEvent event) {
             if (orderEventHandler != null)
                 orderEventHandler.onOrderEvent(event);
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
             if (adaptorEventHandler != null)
                 adaptorEventHandler.onAdaptorEvent(event);
         }
@@ -121,17 +119,17 @@ public interface InboundHandler<M extends MarketData> extends
 
         @Override
         public void onMarketData(@Nonnull M marketData) {
-            log.info("InboundSchedulerLogger record marketData -> {}", marketData);
+            log.info("InboundSchedulerLogger record MarketData -> {}", marketData);
         }
 
         @Override
-        public void onOrderEvent(@Nonnull AvroOrderEvent event) {
-            log.info("InboundSchedulerLogger record orderReport -> {}", event);
+        public void onOrderEvent(@Nonnull AvOrderEvent event) {
+            log.info("InboundSchedulerLogger record OrderEvent -> {}", event);
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvroAdaptorEvent report) {
-            log.info("InboundSchedulerLogger record adaptorReport -> {}", report);
+        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+            log.info("InboundSchedulerLogger record AdaptorEvent -> {}", event);
         }
 
         @Override

@@ -1,13 +1,12 @@
 package io.cygnuxltb.jcts.core.order.attr;
 
-import javax.annotation.Nonnull;
-
-import org.eclipse.collections.api.list.MutableList;
-
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.common.util.StringSupport;
 import io.mercury.serialization.json.JsonWrapper;
+import org.eclipse.collections.api.list.MutableList;
+
+import javax.annotation.Nonnull;
 
 public final class OrdRemark implements JsonSerializable {
 

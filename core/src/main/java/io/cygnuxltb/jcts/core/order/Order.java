@@ -1,16 +1,14 @@
 package io.cygnuxltb.jcts.core.order;
 
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.order.attr.OrdPrice;
 import io.cygnuxltb.jcts.core.order.attr.OrdQty;
+import io.cygnuxltb.jcts.core.order.attr.OrdRemark;
 import io.cygnuxltb.jcts.core.order.attr.OrdTimestamp;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.order.attr.OrdPrice;
-import io.horizon.trader.order.attr.OrdQty;
-import io.horizon.trader.order.attr.OrdRemark;
-import io.horizon.trader.order.attr.OrdTimestamp;
-import io.horizon.trader.order.enums.OrdStatus;
-import io.horizon.trader.order.enums.OrdType;
-import io.horizon.trader.order.enums.OrdValid;
-import io.horizon.trader.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
+import io.cygnuxltb.jcts.core.order.enums.OrdType;
+import io.cygnuxltb.jcts.core.order.enums.OrdValid;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import io.mercury.common.sequence.Serial;
 import org.slf4j.Logger;
 
@@ -135,7 +133,7 @@ public interface Order extends Serial<Order>, Serializable {
 
     /**
      * @param logger Logger
-     * @param msg String
+     * @param msg    String
      */
     void printLog(Logger logger, String msg);
 

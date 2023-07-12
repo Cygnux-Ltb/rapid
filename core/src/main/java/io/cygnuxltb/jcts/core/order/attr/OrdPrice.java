@@ -1,12 +1,10 @@
 package io.cygnuxltb.jcts.core.order.attr;
 
-import javax.annotation.Nonnull;
-
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.order.TradeRecord;
-import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.order.TradeRecord;
 import io.mercury.common.serialization.specific.JsonSerializable;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author yellow013

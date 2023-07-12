@@ -1,9 +1,8 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
 import com.google.common.collect.ImmutableList;
-import io.horizon.market.data.api.MarketDataEvent;
-import io.horizon.market.data.api.MarketDataMessage;
-import io.horizon.market.data.impl.DefaultMarketDataNewOrder;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataEvent;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataMessage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,7 +40,7 @@ public abstract class DefaultMarketDataMessage implements MarketDataMessage {
         private long triggerTimestamp;
         private long eventTimestamp;
         private ImmutableList.Builder<MarketDataEvent> eventsListBuilder = ImmutableList.builder();
-        private final List<io.horizon.market.data.impl.DefaultMarketDataNewOrder.Builder<?>> newOrderBuilders = new ArrayList<>();
+        private final List<DefaultMarketDataNewOrder.Builder<?>> newOrderBuilders = new ArrayList<>();
         private final List<DefaultMarketDataReplaceOrder.Builder<?>> replaceOrderBuilders = new ArrayList<>();
         private final List<DefaultMarketDataDeleteOrder.Builder<?>> deleteOrderBuilders = new ArrayList<>();
 
@@ -74,8 +73,8 @@ public abstract class DefaultMarketDataMessage implements MarketDataMessage {
             return getThis();
         }
 
-        public io.horizon.market.data.impl.DefaultMarketDataNewOrder.Builder<T> addNewOrder() {
-            final io.horizon.market.data.impl.DefaultMarketDataNewOrder.Builder<T> newOrderBuilder = DefaultMarketDataNewOrder.newBuilder(getThis());
+        public DefaultMarketDataNewOrder.Builder<T> addNewOrder() {
+            final DefaultMarketDataNewOrder.Builder<T> newOrderBuilder = DefaultMarketDataNewOrder.newBuilder(getThis());
             newOrderBuilders.add(newOrderBuilder);
             return newOrderBuilder;
         }

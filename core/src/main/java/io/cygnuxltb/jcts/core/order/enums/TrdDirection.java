@@ -1,25 +1,23 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
 import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroTrdDirection;
-import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.serialization.avro.enums.AvroTrdDirection;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection;
 
-public enum TrdDirection implements TdxProvider<AvroTrdDirection> {
+public enum TrdDirection implements TdxProvider<AEnumTrdDirection> {
 
-    Invalid(TrdDirectionCode.INVALID, AvroTrdDirection.INVALID),
+    Invalid(TrdDirectionCode.INVALID, AEnumTrdDirection.INVALID),
 
-    Long(TrdDirectionCode.LONG, AvroTrdDirection.LONG),
+    Long(TrdDirectionCode.LONG, AEnumTrdDirection.LONG),
 
-    Short(TrdDirectionCode.SHORT, AvroTrdDirection.SHORT),
+    Short(TrdDirectionCode.SHORT, AEnumTrdDirection.SHORT),
 
     ;
 
     private final char code;
 
-    private final AvroTrdDirection tdxValue;
+    private final AEnumTrdDirection tdxValue;
 
-    TrdDirection(char code, AvroTrdDirection tdxValue) {
+    TrdDirection(char code, AEnumTrdDirection tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -44,7 +42,7 @@ public enum TrdDirection implements TdxProvider<AvroTrdDirection> {
      * @param tdxValue TdxTrdDirection
      * @return TrdDirection
      */
-    public static TrdDirection valueOf(AvroTrdDirection tdxValue) {
+    public static TrdDirection valueOf(AEnumTrdDirection tdxValue) {
         return switch (tdxValue) {
             case LONG -> TrdDirection.Long;
             case SHORT -> TrdDirection.Short;
@@ -53,7 +51,7 @@ public enum TrdDirection implements TdxProvider<AvroTrdDirection> {
     }
 
     @Override
-    public AvroTrdDirection getTdxValue() {
+    public AEnumTrdDirection getTdxValue() {
         return tdxValue;
     }
 

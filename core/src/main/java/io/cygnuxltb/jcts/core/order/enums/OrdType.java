@@ -1,65 +1,64 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
+
 import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroOrdType;
-import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.serialization.avro.enums.AvroOrdType;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdType;
 
-public enum OrdType implements TdxProvider<AvroOrdType> {
+public enum OrdType implements TdxProvider<AEnumOrdType> {
 
-    Invalid(OrdTypeCode.INVALID, AvroOrdType.INVALID),
+    Invalid(OrdTypeCode.INVALID, AEnumOrdType.INVALID),
 
-    Limited(OrdTypeCode.LIMITED, AvroOrdType.LIMITED),
+    Limited(OrdTypeCode.LIMITED, AEnumOrdType.LIMITED),
 
-    Market(OrdTypeCode.MARKET, AvroOrdType.MARKET),
+    Market(OrdTypeCode.MARKET, AEnumOrdType.MARKET),
 
     /**
      * Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
      */
-    LimitedStop(OrdTypeCode.LIMITED_STOP, AvroOrdType.LIMITED_STOP),
+    LimitedStop(OrdTypeCode.LIMITED_STOP, AEnumOrdType.LIMITED_STOP),
 
     /**
      * Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
      */
-    MarketStop(OrdTypeCode.MARKET_STOP, AvroOrdType.MARKET_STOP),
+    MarketStop(OrdTypeCode.MARKET_STOP, AEnumOrdType.MARKET_STOP),
 
     /**
      * Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
      */
-    MarketToLimited(OrdTypeCode.MTL, AvroOrdType.MTL),
+    MarketToLimited(OrdTypeCode.MTL, AEnumOrdType.MTL),
 
     /**
      * Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
      */
-    BestPrice(OrdTypeCode.BP, AvroOrdType.BP),
+    BestPrice(OrdTypeCode.BP, AEnumOrdType.BP),
 
     /**
      * Average Price, 限定最终成交平均价格的报单.
      */
-    AveragePrice(OrdTypeCode.AP, AvroOrdType.AP),
+    AveragePrice(OrdTypeCode.AP, AEnumOrdType.AP),
 
     /**
      * Fill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
      */
-    FillOrKill(OrdTypeCode.FOK, AvroOrdType.FOK),
+    FillOrKill(OrdTypeCode.FOK, AEnumOrdType.FOK),
 
     /**
      * Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
      */
-    FillAndKill(OrdTypeCode.FAK, AvroOrdType.FAK),
+    FillAndKill(OrdTypeCode.FAK, AEnumOrdType.FAK),
 
     /**
      * Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
      */
-    MinimumVolume(OrdTypeCode.MV, AvroOrdType.MV),
+    MinimumVolume(OrdTypeCode.MV, AEnumOrdType.MV),
 
     ;
 
     private final char code;
 
-    private final AvroOrdType tdxValue;
+    private final AEnumOrdType tdxValue;
 
-    OrdType(char code, AvroOrdType tdxValue) {
+    OrdType(char code, AEnumOrdType tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -76,7 +75,7 @@ public enum OrdType implements TdxProvider<AvroOrdType> {
     }
 
     @Override
-    public AvroOrdType getTdxValue() {
+    public AEnumOrdType getTdxValue() {
         return tdxValue;
     }
 

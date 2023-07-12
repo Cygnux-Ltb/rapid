@@ -1,36 +1,35 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroOrdLevel;
-import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.serialization.avro.enums.AvroOrdLevel;
 
-public enum OrdLevel implements TdxProvider<AvroOrdLevel> {
+import io.cygnuxltb.jcts.core.order.TdxProvider;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdLevel;
+
+public enum OrdLevel implements TdxProvider<AEnumOrdLevel> {
 
     /**
      * 子订单
      */
-    Child('C', AvroOrdLevel.CHILD),
+    Child('C', AEnumOrdLevel.CHILD),
 
     /**
      * 父订单
      */
-    Parent('P', AvroOrdLevel.PARENT),
+    Parent('P', AEnumOrdLevel.PARENT),
 
     /**
      * 策略订单
      */
-    Strategy('S', AvroOrdLevel.STRATEGY),
+    Strategy('S', AEnumOrdLevel.STRATEGY),
 
     /**
      * 组订单
      */
-    Group('G', AvroOrdLevel.GROUP);
+    Group('G', AEnumOrdLevel.GROUP);
 
     private final char code;
-    private final AvroOrdLevel tdxValue;
+    private final AEnumOrdLevel tdxValue;
 
-    OrdLevel(char code, AvroOrdLevel tdxValue) {
+    OrdLevel(char code, AEnumOrdLevel tdxValue) {
         this.code = code;
         this.tdxValue = tdxValue;
     }
@@ -40,7 +39,7 @@ public enum OrdLevel implements TdxProvider<AvroOrdLevel> {
     }
 
     @Override
-    public AvroOrdLevel getTdxValue() {
+    public AEnumOrdLevel getTdxValue() {
         return tdxValue;
     }
 }

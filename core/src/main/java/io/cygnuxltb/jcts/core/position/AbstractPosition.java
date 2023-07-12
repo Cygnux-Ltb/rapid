@@ -1,6 +1,7 @@
 package io.cygnuxltb.jcts.core.position;
 
-import io.horizon.market.instrument.Instrument;
+
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 
 import java.io.Serial;
 

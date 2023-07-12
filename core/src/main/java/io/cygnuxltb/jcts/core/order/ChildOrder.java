@@ -1,26 +1,25 @@
 package io.cygnuxltb.jcts.core.order;
 
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.account.AccountFinder;
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.order.attr.OrdPrice;
 import io.cygnuxltb.jcts.core.order.attr.OrdQty;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.instrument.InstrumentKeeper;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.account.AccountFinder;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.order.attr.OrdPrice;
-import io.horizon.trader.order.attr.OrdQty;
-import io.horizon.trader.order.enums.OrdType;
-import io.horizon.trader.order.enums.TrdAction;
-import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
+import io.cygnuxltb.jcts.core.order.enums.OrdType;
+import io.cygnuxltb.jcts.core.order.enums.TrdAction;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.Serial;
 
-import static io.horizon.trader.account.SubAccount.ExternalOrderSubAccount;
+import static io.cygnuxltb.jcts.core.account.SubAccount.ExternalOrderSubAccount;
 import static io.mercury.common.collections.MutableLists.newFastList;
 
 /**
@@ -125,7 +124,7 @@ public class ChildOrder extends AbstractOrder {
      * @param event OrderReport
      * @return ChildOrder
      */
-    public static ChildOrder newExternalOrder(AvroOrderEvent event) {
+    public static ChildOrder newExternalOrder(AvOrderEvent event) {
         var account = AccountFinder.getAccountByInvestorId(event.getInvestorId());
         var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
         var direction = TrdDirection.valueOf(event.getDirection());
@@ -246,7 +245,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return NewOrder
      */
-    public AvroNewOrder toNewOrder() {
+    public AvNewOrderRequest toNewOrder() {
         // TODO
         return null;
     }
@@ -254,7 +253,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return CancelOrder
      */
-    public AvroCancelOrder toCancelOrder() {
+    public AvCancelOrderRequest toCancelOrder() {
         // TODO
         return null;
     }

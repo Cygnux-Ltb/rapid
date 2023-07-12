@@ -2,19 +2,17 @@ package io.cygnuxltb.jcts.core.indicator.impl;
 
 import java.time.Duration;
 
-import io.horizon.market.indicator.impl.SmaPoint;
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.base.FixedPeriodIndicator;
-import io.horizon.market.indicator.impl.SMA.SmaEvent;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.pool.TimeWindowPool;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
-public final class SMA extends FixedPeriodIndicator<io.horizon.market.indicator.impl.SmaPoint, SmaEvent, BasicMarketData> {
+public final class SMA extends FixedPeriodIndicator<SmaPoint, SMA.SmaEvent, BasicMarketData> {
 
 	private final LongRingWindow historyPriceWindow;
 
@@ -25,7 +23,7 @@ public final class SMA extends FixedPeriodIndicator<io.horizon.market.indicator.
 				duration);
 		int i = -1;
 		for (TimeWindow timePeriod : timePeriodSet)
-			pointSet.add(io.horizon.market.indicator.impl.SmaPoint.with(++i, instrument, duration, timePeriod, cycle, historyPriceWindow));
+			pointSet.add(SmaPoint.with(++i, instrument, duration, timePeriod, cycle, historyPriceWindow));
 		currentPoint = pointSet.getFirst();
 
 	}
@@ -45,9 +43,9 @@ public final class SMA extends FixedPeriodIndicator<io.horizon.market.indicator.
 			return "SmaEvent";
 		}
 
-		void onCurrentPointAvgPriceChanged(io.horizon.market.indicator.impl.SmaPoint point);
+		void onCurrentPointAvgPriceChanged(SmaPoint point);
 
-		void onStartSmaPoint(io.horizon.market.indicator.impl.SmaPoint point);
+		void onStartSmaPoint(SmaPoint point);
 
 		void onEndSmaPoint(SmaPoint point);
 

@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.base.FixedPeriodIndicator;
-import io.horizon.market.indicator.impl.SmaPoint;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.instrument.attr.TradablePeriod;
-import io.horizon.market.pool.TradablePeriodPool;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
+import io.cygnuxltb.jcts.core.indicator.impl.SMA.SmaEvent;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.pool.TradablePeriodPool;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
-public final class SMA2 extends FixedPeriodIndicator<io.horizon.market.indicator.impl.SmaPoint, SMA.SmaEvent, BasicMarketData> {
+public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent, BasicMarketData> {
 
 	private final LongRingWindow historyPriceWindow;
 

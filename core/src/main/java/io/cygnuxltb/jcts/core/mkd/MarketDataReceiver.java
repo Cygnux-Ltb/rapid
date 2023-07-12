@@ -1,6 +1,7 @@
 package io.cygnuxltb.jcts.core.mkd;
 
-import io.horizon.market.serializable.record.InAvMarketDataSubscribe;
+
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvMarketDataSubscribeRequest;
 
 import javax.annotation.Nonnull;
 
@@ -10,9 +11,9 @@ public interface MarketDataReceiver {
     /**
      * 订阅行情
      *
-     * @param subscribe MarketDataSubscribe
+     * @param request AvMarketDataSubscribeRequest
      * @return boolean
      */
-    boolean subscribeMarketData(@Nonnull InAvMarketDataSubscribe subscribe);
+    boolean subscribeMarketData(@Nonnull AvMarketDataSubscribeRequest request);
 
 }

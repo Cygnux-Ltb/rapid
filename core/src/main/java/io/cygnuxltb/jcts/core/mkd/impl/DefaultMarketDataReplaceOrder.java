@@ -1,14 +1,14 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataReplaceOrder;
-import io.horizon.market.data.api.Side;
-import io.horizon.market.data.api.Visitor;
-import io.horizon.market.data.impl.DefaultMarketDataEvent;
+
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataReplaceOrder;
+import io.cygnuxltb.jcts.core.mkd.api.Side;
+import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 import java.util.Objects;
 
 public final class DefaultMarketDataReplaceOrder
-        extends io.horizon.market.data.impl.DefaultMarketDataEvent implements MarketDataReplaceOrder {
+        extends DefaultMarketDataEvent implements MarketDataReplaceOrder {
 
     private final String prevOrderId;
     private final double price;

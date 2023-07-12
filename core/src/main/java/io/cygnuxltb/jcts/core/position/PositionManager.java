@@ -1,9 +1,8 @@
 package io.cygnuxltb.jcts.core.position;
 
+import io.cygnuxltb.jcts.core.account.AccountPosition;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.AccountPosition;
-import io.horizon.trader.order.ChildOrder;
 
 import java.util.function.IntFunction;
 

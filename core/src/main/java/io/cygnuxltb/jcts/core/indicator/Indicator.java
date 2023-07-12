@@ -1,7 +1,8 @@
 package io.cygnuxltb.jcts.core.indicator;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.instrument.Instrument;
+
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 
 /**
  * 

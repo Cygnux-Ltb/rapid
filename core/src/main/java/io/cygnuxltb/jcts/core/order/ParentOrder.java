@@ -1,11 +1,10 @@
 package io.cygnuxltb.jcts.core.order;
 
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.order.attr.OrdPrice;
 import io.cygnuxltb.jcts.core.order.attr.OrdQty;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.order.attr.OrdPrice;
-import io.horizon.trader.order.attr.OrdQty;
-import io.horizon.trader.order.enums.OrdType;
-import io.horizon.trader.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.order.enums.OrdType;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 

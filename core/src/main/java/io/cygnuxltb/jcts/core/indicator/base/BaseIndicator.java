@@ -1,10 +1,11 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.indicator.Indicator;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.PointSet;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.indicator.Indicator;
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.indicator.Point;
+import io.cygnuxltb.jcts.core.indicator.PointSet;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableLists;
@@ -12,7 +13,7 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
-public abstract class BaseIndicator<P extends BasePoint<M>,
+public abstract class BaseIndicator<P extends BasePoint<M> & Point,
         E extends IndicatorEvent, M extends MarketData> implements Indicator<P, E, M> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseIndicator.class);

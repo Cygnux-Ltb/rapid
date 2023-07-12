@@ -1,14 +1,12 @@
 package io.cygnuxltb.jcts.core.indicator.impl;
 
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
 import io.cygnuxltb.jcts.core.indicator.structure.Bar;
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.base.FixedPeriodIndicator;
-import io.horizon.market.indicator.base.FixedPeriodPoint;
-import io.horizon.market.indicator.impl.TimeBarIndicator.TimeBarEvent;
-import io.horizon.market.indicator.impl.TimeBarIndicator.TimeBarPoint;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.pool.TimeWindowPool;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.TimeWindow;
@@ -24,7 +22,7 @@ import java.time.LocalDateTime;
  *
  * @author yellow013
  */
-public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarPoint, TimeBarEvent, BasicMarketData> {
+public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicator.TimeBarPoint, TimeBarIndicator.TimeBarEvent, BasicMarketData> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(TimeBarIndicator.class);
 

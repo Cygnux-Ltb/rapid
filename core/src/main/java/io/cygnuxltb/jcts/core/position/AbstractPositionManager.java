@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.position;
 
-import io.horizon.trader.account.AccountPosition;
+import io.cygnuxltb.jcts.core.account.AccountPosition;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 
 import javax.annotation.Nonnull;

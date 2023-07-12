@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.api.MarketDataEvent;
+import io.cygnuxltb.jcts.core.mkd.api.MarketDataEvent;
 
 import java.util.Objects;
 

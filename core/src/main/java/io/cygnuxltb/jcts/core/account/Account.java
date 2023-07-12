@@ -2,7 +2,6 @@ package io.cygnuxltb.jcts.core.account;
 
 import com.typesafe.config.Config;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.config.ConfigOption;
 import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.common.lang.Asserter;
@@ -11,14 +10,6 @@ import org.eclipse.collections.api.set.MutableSet;
 
 import javax.annotation.Nonnull;
 import java.io.Serial;
-
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.AccountId;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Balance;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.BrokerId;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.BrokerName;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Credit;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.InvestorId;
-import static io.cygnuxltb.jcts.core.account.Account.AccountConfig.Remark;
 
 /**
  * 实际账户, 对应一个实际的经纪商账户
@@ -66,13 +57,13 @@ public final class Account extends EnableableComponent implements Comparable<Acc
      * @param wrapper io.mercury.common.config.ConfigWrapper
      */
     private Account(@Nonnull ConfigWrapper<AccountConfig> wrapper) {
-        this(wrapper.getIntOrThrows(AccountId),
-                wrapper.getStringOrThrows(BrokerId),
-                wrapper.getStringOrThrows(BrokerName),
-                wrapper.getStringOrThrows(InvestorId),
-                wrapper.getLong(Balance, 0L),
-                wrapper.getLong(Credit, 0L));
-        this.remark = wrapper.getString(Remark, "");
+        this(wrapper.getIntOrThrows(AccountConfig.AccountId),
+                wrapper.getStringOrThrows(AccountConfig.BrokerId),
+                wrapper.getStringOrThrows(AccountConfig.BrokerName),
+                wrapper.getStringOrThrows(AccountConfig.InvestorId),
+                wrapper.getLong(AccountConfig.Balance, 0L),
+                wrapper.getLong(AccountConfig.Credit, 0L));
+        this.remark = wrapper.getString(AccountConfig.Remark, "");
     }
 
     /**
@@ -211,34 +202,6 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     @Override
     public int compareTo(Account o) {
         return Integer.compare(this.accountId, o.accountId);
-    }
-
-    public enum AccountConfig implements ConfigOption {
-
-        AccountId("sys.accountId"),
-
-        BrokerId("sys.brokerId"),
-
-        BrokerName("sys.brokerName"),
-
-        InvestorId("sys.investorId"),
-
-        Balance("sys.balance"),
-
-        Credit("sys.credit"),
-
-        Remark("sys.remark");
-
-        private final String configName;
-
-        AccountConfig(String configName) {
-            this.configName = configName;
-        }
-
-        @Override
-        public String getConfigName() {
-            return configName;
-        }
     }
 
     public static void main(String[] args) {

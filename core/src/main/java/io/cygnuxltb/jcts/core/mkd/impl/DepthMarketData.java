@@ -1,7 +1,6 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.datetime.Timestamp;
 
 import javax.annotation.Nonnull;

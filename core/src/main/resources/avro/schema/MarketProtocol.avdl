@@ -4,7 +4,8 @@ protocol ARpcMarketProtocol {
 	/**
 	  * 订阅行情函数
  	  */
-	boolean subscribeMarketData(io.cygnuxltb.jcts.core.serialization.avro.record.AInMarketDataSubscribe subscribe);
+	boolean subscribeMarketData(
+		io.cygnuxltb.jcts.core.serialization.avro.request.AvMarketDataSubscribeRequest subscribe);
 
 	/**
 	 * 行情类型
@@ -25,8 +26,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 行情订阅 
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AInMarketDataSubscribe {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
+	record AvMarketDataSubscribeRequest {
 		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumMarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;
@@ -35,8 +36,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 行情订阅回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutMarketDataSubscribeReply {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvMarketDataSubscribeEvent {
 		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumSubscribeStatus status;
 		array<string> successInstrumentCodes;
 		array<string> failInstrumentCodes;
@@ -46,8 +47,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 深度行情数据结构
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutDepthMarketData {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvDepthMarketDataEvent {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -64,8 +65,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 五档快速行情数据结构
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutFastMarketData {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvFastMarketDataEvent {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -97,8 +98,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 十档行情数据结构
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutMarketDataL10 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvL10MarketDataEvent {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -150,8 +151,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 二十档行情数据结构
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutMarketDataL20 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvL20MarketDataEvent {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;
@@ -243,8 +244,8 @@ protocol ARpcMarketProtocol {
 	/**
 	 * 三十档行情数据结构
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.record")
-	record AOutMarketDataL30 {
+	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
+	record AvL30MarketDataEvent {
 		long timestamp;
 		int instrumentId;
 		string instrumentCode;

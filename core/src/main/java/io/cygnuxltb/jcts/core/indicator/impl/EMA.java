@@ -1,18 +1,16 @@
 package io.cygnuxltb.jcts.core.indicator.impl;
 
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.IndicatorEvent;
-import io.horizon.market.indicator.base.FixedPeriodIndicator;
-import io.horizon.market.indicator.impl.EMA.EmaEvent;
-import io.horizon.market.indicator.impl.EMA.EmaPoint;
-import io.horizon.market.instrument.Instrument;
+import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
+import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
 import java.time.Duration;
 
 public final class EMA extends
-        FixedPeriodIndicator<EmaPoint, EmaEvent, BasicMarketData> {
+        FixedPeriodIndicator<EMA.EmaPoint, EMA.EmaEvent, BasicMarketData> {
 
     public EMA(Instrument instrument, Duration duration, int cycle) {
         super(instrument, duration);

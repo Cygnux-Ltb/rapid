@@ -1,80 +1,78 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
 import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AvroOrdStatus;
-import io.horizon.trader.order.TdxProvider;
-import io.horizon.trader.serialization.avro.enums.AvroOrdStatus;
+import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdStatus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import java.io.Serial;
 
-public enum OrdStatus implements TdxProvider<AvroOrdStatus> {
+public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
 
     /**
      * 无效
      */
-    Invalid(OrdStatusCode.INVALID, AvroOrdStatus.INVALID, true),
+    Invalid(OrdStatusCode.INVALID, AEnumOrdStatus.INVALID, true),
 
     /**
      * 新订单未确认
      */
-    PendingNew(OrdStatusCode.PENDING_NEW, AvroOrdStatus.PENDING_NEW, false),
+    PendingNew(OrdStatusCode.PENDING_NEW, AEnumOrdStatus.PENDING_NEW, false),
     /**
      * 新订单
      */
-    New(OrdStatusCode.NEW, AvroOrdStatus.NEW, false),
+    New(OrdStatusCode.NEW, AEnumOrdStatus.NEW, false),
     /**
      * 新订单已拒绝
      */
-    NewRejected(OrdStatusCode.NEW_REJECTED, AvroOrdStatus.NEW_REJECTED, true),
+    NewRejected(OrdStatusCode.NEW_REJECTED, AEnumOrdStatus.NEW_REJECTED, true),
 
     /**
      * 部分成交
      */
-    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, AvroOrdStatus.PARTIALLY_FILLED, false),
+    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, AEnumOrdStatus.PARTIALLY_FILLED, false),
     /**
      * 全部成交
      */
-    Filled(OrdStatusCode.FILLED, AvroOrdStatus.FILLED, true),
+    Filled(OrdStatusCode.FILLED, AEnumOrdStatus.FILLED, true),
 
     /**
      * 未确认撤单
      */
-    PendingCancel(OrdStatusCode.PENDING_CANCEL, AvroOrdStatus.PENDING_CANCEL, false),
+    PendingCancel(OrdStatusCode.PENDING_CANCEL, AEnumOrdStatus.PENDING_CANCEL, false),
     /**
      * 已撤单
      */
-    Canceled(OrdStatusCode.CANCELED, AvroOrdStatus.CANCELED, true),
+    Canceled(OrdStatusCode.CANCELED, AEnumOrdStatus.CANCELED, true),
     /**
      * 撤单已拒绝
      */
-    CancelRejected(OrdStatusCode.CANCEL_REJECTED, AvroOrdStatus.CANCEL_REJECTED, true),
+    CancelRejected(OrdStatusCode.CANCEL_REJECTED, AEnumOrdStatus.CANCEL_REJECTED, true),
 
     /**
      * 未确认修改订单
      */
-    PendingReplace(OrdStatusCode.PENDING_REPLACE, AvroOrdStatus.PENDING_REPLACE, false),
+    PendingReplace(OrdStatusCode.PENDING_REPLACE, AEnumOrdStatus.PENDING_REPLACE, false),
 
     /**
      * 已修改
      */
-    Replaced(OrdStatusCode.REPLACED, AvroOrdStatus.REPLACED, true),
+    Replaced(OrdStatusCode.REPLACED, AEnumOrdStatus.REPLACED, true),
     /**
      * 已暂停
      */
-    Suspended(OrdStatusCode.SUSPENDED, AvroOrdStatus.SUSPENDED, false),
+    Suspended(OrdStatusCode.SUSPENDED, AEnumOrdStatus.SUSPENDED, false),
 
     /**
      * 未提供
      */
-    Unprovided(OrdStatusCode.UNPROVIDED, AvroOrdStatus.UNPROVIDED, false),
+    Unprovided(OrdStatusCode.UNPROVIDED, AEnumOrdStatus.UNPROVIDED, false),
 
     ;
 
     private final char code;
 
-    private final AvroOrdStatus tdxValue;
+    private final AEnumOrdStatus tdxValue;
 
     private final boolean finished;
 
@@ -87,7 +85,7 @@ public enum OrdStatus implements TdxProvider<AvroOrdStatus> {
      * @param tdxValue Tdx状态
      * @param finished 是否为已结束状态
      */
-    OrdStatus(char code, AvroOrdStatus tdxValue, boolean finished) {
+    OrdStatus(char code, AEnumOrdStatus tdxValue, boolean finished) {
         this.code = code;
         this.tdxValue = tdxValue;
         this.finished = finished;
@@ -174,7 +172,7 @@ public enum OrdStatus implements TdxProvider<AvroOrdStatus> {
      * @param status TOrdStatus
      * @return OrdStatus
      */
-    public static OrdStatus valueOf(AvroOrdStatus status) {
+    public static OrdStatus valueOf(AEnumOrdStatus status) {
         return switch (status) {
             // 未确认新订单
             case PENDING_NEW -> PendingNew;
@@ -208,7 +206,7 @@ public enum OrdStatus implements TdxProvider<AvroOrdStatus> {
     }
 
     @Override
-    public AvroOrdStatus getTdxValue() {
+    public AEnumOrdStatus getTdxValue() {
         return tdxValue;
     }
 
