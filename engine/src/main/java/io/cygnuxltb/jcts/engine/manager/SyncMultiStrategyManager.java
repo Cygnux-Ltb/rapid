@@ -1,10 +1,10 @@
 package io.cygnuxltb.jcts.engine.manager;
 
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
-import io.horizon.market.data.MarketData;
-import io.horizon.market.data.MarketDataKeeper;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -33,19 +33,19 @@ public final class SyncMultiStrategyManager<M extends MarketData> extends MultiS
     }
 
     @Override
-    public void onOrderEvent(@Nonnull AvroOrderEvent report) {
-        log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", report.getBrokerOrdSysId(),
-                report.getOrdSysId());
-        var order = OrderKeeper.handleOrderReport(report);
+    public void onOrderEvent(@Nonnull AvOrderEvent event) {
+        log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
+                event.getOrdSysId());
+        var order = OrderKeeper.handleOrderReport(event);
         log.info("Search Order OK. brokerUniqueId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
-                report.getBrokerOrdSysId(), order.getStrategyId(), order.getInstrument().getInstrumentCode(),
-                report.getOrdSysId());
+                event.getBrokerOrdSysId(), order.getStrategyId(), order.getInstrument().getInstrumentCode(),
+                event.getOrdSysId());
         strategyMap.get(order.getStrategyId()).onOrder(order);
     }
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
         log.info("Recv AdaptorEvent -> {}", event);
     }
 

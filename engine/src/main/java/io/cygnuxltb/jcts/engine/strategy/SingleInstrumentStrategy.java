@@ -1,11 +1,11 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.adaptor.Adaptor;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.strategy.Strategy;
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.adaptor.Adaptor;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.param.ParamKey;
@@ -72,7 +72,7 @@ public abstract class SingleInstrumentStrategy<M extends MarketData, K extends P
     }
 
     @Override
-    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getName(),
                 event.getAdaptorId(), event.getStatus());
         switch (event.getStatus()) {

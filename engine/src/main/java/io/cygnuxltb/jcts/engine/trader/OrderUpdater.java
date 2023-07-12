@@ -1,9 +1,8 @@
 package io.cygnuxltb.jcts.engine.trader;
 
-import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.order.attr.OrdQty;
-import io.horizon.trader.order.enums.OrdStatus;
-import io.horizon.trader.serialization.avro.receive.AvroOrderEvent;
+import io.cygnuxltb.jcts.core.order.ChildOrder;
+import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -19,8 +18,8 @@ public final class OrderUpdater {
      * @param order ChildOrder
      * @param event DtoOrderReport
      */
-    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvroOrderEvent event) {
-        OrdQty qty = order.getQty();
+    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvOrderEvent event) {
+        var qty = order.getQty();
         int filledQty = event.getFilledQty();
         OrdStatus status = OrdStatus.valueOf(event.getStatus());
         log.info("OrderEvent status==[{}], filledQty==[{}], tradePrice==[{}], order.getQty() -> {}", status, filledQty,

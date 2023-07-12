@@ -1,6 +1,7 @@
 package io.cygnuxltb.jcts.engine.actor;
 
-import io.horizon.market.data.impl.BasicMarketData;
+
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 
 import javax.annotation.Nonnull;
 

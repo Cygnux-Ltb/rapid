@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.strategy.Strategy;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.strategy.Strategy;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -56,7 +56,7 @@ public final class StrategyKeeper implements Serializable {
 	/**
 	 * 添加策略并置为激活, 同时添加策略订阅的Instrument
 	 * 
-	 * @param strategy
+	 * @param strategy Strategy<?>
 	 */
 	public static void putStrategy(Strategy<?> strategy) {
 		if (StrategyMap.containsKey(strategy.getId())) {
@@ -78,11 +78,11 @@ public final class StrategyKeeper implements Serializable {
 		return StrategyMap.get(strategyId);
 	}
 
-	public static MutableList<Strategy<?>> getSubscribedStrategys(Instrument instrument) {
-		return getSubscribedStrategys(instrument.getInstrumentId());
+	public static MutableList<Strategy<?>> getSubscribedStrategy(Instrument instrument) {
+		return getSubscribedStrategy(instrument.getInstrumentId());
 	}
 
-	public static MutableList<Strategy<?>> getSubscribedStrategys(int instrumentId) {
+	public static MutableList<Strategy<?>> getSubscribedStrategy(int instrumentId) {
 		return SubscribedInstrumentMap.get(instrumentId);
 	}
 

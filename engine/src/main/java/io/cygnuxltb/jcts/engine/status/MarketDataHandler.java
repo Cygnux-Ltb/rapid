@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.status;
 
 import com.lmax.disruptor.EventHandler;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 
-import io.horizon.market.data.impl.BasicMarketData;
 
 public final class MarketDataHandler implements EventHandler<BasicMarketData> {
 

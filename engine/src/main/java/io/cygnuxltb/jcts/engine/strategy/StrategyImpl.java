@@ -1,17 +1,16 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.handler.MarketDataHandler;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.handler.AdaptorEventHandler;
-import io.horizon.trader.order.Order;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.strategy.Strategy;
-import io.horizon.trader.strategy.StrategyEvent;
-import io.horizon.trader.strategy.StrategyException;
-import io.mercury.common.datetime.EpochTime;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.handler.AdaptorEventHandler;
+import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.order.Order;
+import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.strategy.Strategy;
+import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
+import io.cygnuxltb.jcts.core.strategy.StrategyException;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import org.slf4j.Logger;
 
@@ -42,8 +41,8 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
         switch (event.getStatus()) {
             case MD_ENABLE -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
-                adaptor.subscribeMarketData(instrument);
-                log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
+                //adaptor.subscribeMarketData(instrument);
+                // log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
             case TRADER_ENABLE -> {
                 log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getName(), event.getAdaptorId());
@@ -51,11 +50,11 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
 //			adaptor.queryOrder(null);
 //			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
 //					event.getAdaptorId());
-                adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
-                        .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
+                //adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
+                //       .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
-                adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
+                // adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getName(),
                         event.getAdaptorId());
             }
@@ -65,7 +64,7 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
     };
 
     @Override
-    public void onAdaptorEvent(@Nonnull AvroAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
         adaptorEventHandler.onAdaptorEvent(event);
     }
 

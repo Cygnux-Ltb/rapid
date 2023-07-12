@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.barrier;
 
-import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.risk.OrderBarrier;
+import io.cygnuxltb.jcts.core.order.ChildOrder;
+import io.cygnuxltb.jcts.core.risk.OrderBarrier;
 
 import javax.annotation.concurrent.NotThreadSafe;
 

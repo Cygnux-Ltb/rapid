@@ -1,9 +1,10 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
-import io.horizon.market.data.MarketData;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.strategy.Strategy;
+
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.strategy.Strategy;
 
 public final class StrategyDSL {
 
@@ -13,21 +14,21 @@ public final class StrategyDSL {
 
 
     public static StrategyDSL useAvro() {
-
+        return null;
     }
 
     public static StrategyDSL useWire() {
-
+        return null;
     }
 
     public static StrategyDSL subAccount(SubAccount subAccount){
-
+        return null;
     }
 
 
 
 
-    Instrument instrument
+    Instrument instrument;
 
     public static class StrategyBuilder<M extends MarketData> {
 
@@ -41,7 +42,7 @@ public final class StrategyDSL {
         }
 
         public <M extends MarketData> Strategy<M> build() {
-
+            return null;
         }
 
 

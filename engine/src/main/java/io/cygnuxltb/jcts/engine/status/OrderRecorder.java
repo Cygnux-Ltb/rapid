@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.status;
 
 import com.lmax.disruptor.EventHandler;
+import io.cygnuxltb.jcts.core.order.Order;
 
-import io.horizon.trader.order.Order;
 
 public final class OrderRecorder implements EventHandler<Order> {
 

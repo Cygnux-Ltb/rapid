@@ -1,26 +1,26 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.account.AccountFinder;
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.adaptor.Adaptor;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
+import io.cygnuxltb.jcts.core.order.ChildOrder;
+import io.cygnuxltb.jcts.core.order.OrdSysIdAllocator;
+import io.cygnuxltb.jcts.core.order.Order;
+import io.cygnuxltb.jcts.core.order.enums.OrdType;
+import io.cygnuxltb.jcts.core.order.enums.TrdAction;
+import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.risk.CircuitBreaker;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
+import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
+import io.cygnuxltb.jcts.core.strategy.Strategy;
+import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
 import io.cygnuxltb.jcts.engine.position.PositionKeeper;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
-import io.horizon.market.data.MarketData;
-import io.horizon.market.data.MarketDataKeeper;
-import io.horizon.market.data.MarketDataKeeper.MarketDataSnapshot;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.instrument.InstrumentKeeper;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.account.AccountFinder;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.order.ChildOrder;
-import io.horizon.trader.order.OrdSysIdAllocator;
-import io.horizon.trader.order.Order;
-import io.horizon.trader.order.enums.OrdType;
-import io.horizon.trader.order.enums.TrdAction;
-import io.horizon.trader.order.enums.TrdDirection;
-import io.horizon.trader.risk.CircuitBreaker;
-import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
-import io.horizon.trader.strategy.Strategy;
-import io.horizon.trader.strategy.StrategyEvent;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.fsm.EnableableComponent;
@@ -71,10 +71,10 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     protected final Params<K> params;
 
     // TODO
-    protected AvroQueryPositions queryPositions;
+    protected AvQueryPositionsRequest queryPositions;
 
     // TODO
-    protected AvroQueryBalance queryBalance;
+    protected AvQueryBalanceRequest queryBalance;
 
     private final OrdSysIdAllocator allocator;
 
@@ -101,9 +101,9 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositions = AvroQueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryPositions = AvQueryPositionsRequest.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
-        this.queryBalance = AvroQueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryBalance = AvQueryBalanceRequest.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
         var snowflake = new SnowflakeAlgo(id);
         this.allocator = snowflake::next;
@@ -342,7 +342,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
      * @return double
      */
     protected double getLevel1Price(Instrument instrument, TrdDirection direction) {
-        MarketDataSnapshot snapshot = MarketDataKeeper.getSnapshot(instrument);
+        MarketDataKeeper.MarketDataSnapshot snapshot = MarketDataKeeper.getSnapshot(instrument);
         return switch (direction) {
             // 获取当前卖一价
             case Long -> snapshot.getAskPrice1();
@@ -394,7 +394,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         childOrder.printLog(log, getName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAdaptor(instrument).newOrder(childOrder.toNewOrder());
+        getAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, getName() + " :: Open position [ChildOrder] has been sent");
     }
 
@@ -485,7 +485,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         childOrder.printLog(log, "Close position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAdaptor(instrument).newOrder(childOrder.toNewOrder());
+        getAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, "Close position [ChildOrder] has been sent");
     }
 
@@ -502,9 +502,11 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     /**
      * 由策略自行决定在交易不同Instrument时使用哪个Adaptor
      *
-     * @param instrument Instrument
      * @return Adaptor
      */
-    //protected Adaptor getAdaptor();
+    protected Adaptor getAdaptor() {
+        //TODO
+        return null;
+    }
 
 }
