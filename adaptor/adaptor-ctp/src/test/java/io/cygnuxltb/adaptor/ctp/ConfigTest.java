@@ -10,7 +10,7 @@ import static io.mercury.common.sys.SysProperties.USER_HOME_FILE;
 /**
  * Unit test for simple App.
  */
-public class CinfigTest {
+public class ConfigTest {
 
     public static void main(String[] args) {
 
