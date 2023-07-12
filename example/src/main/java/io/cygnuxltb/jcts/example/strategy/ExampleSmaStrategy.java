@@ -1,19 +1,19 @@
 package io.cygnuxltb.jcts.example.strategy;
 
+import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.cygnuxltb.jcts.core.indicator.impl.SMA;
+import io.cygnuxltb.jcts.core.indicator.impl.SmaPoint;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.order.Order;
 import io.cygnuxltb.jcts.engine.strategy.SingleInstrumentStrategy;
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.indicator.impl.SMA.SmaEvent;
-import io.horizon.market.indicator.impl.SmaPoint;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.SubAccount;
-import io.horizon.trader.order.Order;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params;
 
 /**
  * @author yellow013
  */
-public final class ExampleSmaStrategy extends SingleInstrumentStrategy<BasicMarketData, ParamKey> implements SmaEvent {
+public final class ExampleSmaStrategy extends SingleInstrumentStrategy<BasicMarketData, ParamKey> implements SMA.SmaEvent {
 
     public ExampleSmaStrategy(SubAccount subAccount, Params<ParamKey> params, Instrument instrument) {
         super(100, "ExampleSmaStrategy", subAccount, params, instrument);

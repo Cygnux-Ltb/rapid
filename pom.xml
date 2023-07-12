@@ -134,17 +134,6 @@
                 <artifactId>transport-rabbitmq</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- API -->
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>market-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>trader-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

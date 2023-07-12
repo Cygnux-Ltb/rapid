@@ -14,7 +14,8 @@
     <dependencies>
         <dependency>
             <groupId>io.cygnuxltb</groupId>
-            <artifactId>trader-api</artifactId>
+            <artifactId>core</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <!-- Java UUID Generator (JUG) is a Java library for generating Universally

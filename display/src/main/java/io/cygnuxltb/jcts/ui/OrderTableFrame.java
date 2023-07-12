@@ -28,4 +28,5 @@ public class OrderTableFrame extends JFrame {
         OrderTableFrame frame = new OrderTableFrame();
         frame.setVisible(true);
     }
+
 }
