@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1687845200242"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1689088619285"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -80,7 +80,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="CommandController.html#header">5.&nbsp;系统指令服务</a>
+            <li class=""><a class="dd" href="CommandController.html#header">5.&nbsp;系统指令服务[X]</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="CommandController.html#_5_1_更新参数">5.1.&nbsp;更新参数</a>
@@ -165,7 +165,11 @@
                     </li>
 
                     <li><a
-                            href="OrderController.html#_11_3_新增订单">11.3.&nbsp;新增订单</a>
+                            href="OrderController.html#_11_3_创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]">11.3.&nbsp;创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#_11_4_新增订单 [非前端界面调用]">11.4.&nbsp;新增订单 [非前端界面调用]</a>
                     </li>
                 </ul>
             </li>
@@ -752,15 +756,122 @@
                 </div>
             </div>
 
-            <div class="sect2"><h3 id="_11_3_新增订单">
-                <a class="anchor" href="#_11_3_新增订单"></a>
-                <a class="link" href="#_11_3_新增订单">11.3.&nbsp;新增订单</a>
+            <div class="sect2"><h3 id="_11_3_创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]">
+                <a class="anchor" href="#_11_3_创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]"></a>
+                <a class="link" href="#_11_3_创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]">11.3.&nbsp;创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]</a>
+            </h3>
+                <div class="paragraph"><p><strong>URL:</strong><a href="/order" class="bare">&nbsp;/order</a>
+                </p></div>
+                <div class="paragraph"><p><strong>Type:</strong>&nbsp;POST</p></div>
+                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;APPLICATION_JSON_UTF8</p></div>
+                <div class="paragraph"><p><strong>Description:</strong>&nbsp;创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]</p></div>
+                <div class="paragraph"><p><strong>Query-parameters:</strong></p></div>
+                <table class="tableblock frame-all grid-all spread">
+                    <colgroup>
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Parameter</th>
+                        <th class="tableblock halign-left valign-top">Type</th>
+                        <th class="tableblock halign-left valign-top">Description</th>
+                        <th class="tableblock halign-left valign-top">Required</th>
+                        <th class="tableblock halign-left valign-top">Since</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">userId</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">用户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的 (例: 期货代码, 股票代码)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">side</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">订单交易类型 (1:买入, 2:卖出)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易动作 (1: 开仓, 2: 平仓)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">offerPrice</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托价格</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">offerQty</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托数量</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">订单类型 (1:COMMON, 2:FAK, 3:FOK) [可为空]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">valid</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">有效类型 (1:GTC, 2:GTD, 3:GFD) [可为空]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="paragraph"><p><strong>Request-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="bash">curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&offerQty=0&type=0&valid=0&instrumentCode='</code></pre>
+                    </div>
+                </div>
+                <div class="paragraph"><p><strong>Response-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="json">OK</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sect2"><h3 id="_11_4_新增订单 [非前端界面调用]">
+                <a class="anchor" href="#_11_4_新增订单 [非前端界面调用]"></a>
+                <a class="link" href="#_11_4_新增订单 [非前端界面调用]">11.4.&nbsp;新增订单 [非前端界面调用]</a>
             </h3>
                 <div class="paragraph"><p><strong>URL:</strong><a href="/order" class="bare">&nbsp;/order</a>
                 </p></div>
                 <div class="paragraph"><p><strong>Type:</strong>&nbsp;PUT</p></div>
                 <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;APPLICATION_JSON_UTF8</p></div>
-                <div class="paragraph"><p><strong>Description:</strong>&nbsp;新增订单</p></div>
+                <div class="paragraph"><p><strong>Description:</strong>&nbsp;新增订单 [非前端界面调用]</p></div>
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
@@ -776,12 +887,12 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-06-27 14:53:20</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-07-12 00:16:59</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1687845200242"></script>
+<script src="search.js?v=1689088619285"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

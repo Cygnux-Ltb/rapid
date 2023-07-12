@@ -74,8 +74,8 @@ api[3].list.push({
 api.push({
     alias: 'CommandController',
     order: '5',
-    desc: '系统指令服务',
-    link: '系统指令服务',
+    desc: '系统指令服务[X]',
+    link: '系统指令服务[x]',
     list: []
 })
 api[4].list.push({
@@ -186,7 +186,11 @@ api[10].list.push({
 });
 api[10].list.push({
     order: '3',
-    desc: '新增订单',
+    desc: '创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]',
+});
+api[10].list.push({
+    order: '4',
+    desc: '新增订单 [非前端界面调用]',
 });
 document.onkeydown = keyDownSearch;
 function keyDownSearch(e) {

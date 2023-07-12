@@ -17,13 +17,13 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|userId|int32|true|   用户ID|-|
-|group|string|true|投资组合名|-|
+|userId|int32|true|       用户ID|-|
+|portfolio|string|true|投资组合名|-|
 
 
 **Request-example:**
 ```
-curl -X GET -i /portfolio?userId=0&group=
+curl -X GET -i /portfolio?userId=0&portfolio=
 ```
 
 **Response-fields:**

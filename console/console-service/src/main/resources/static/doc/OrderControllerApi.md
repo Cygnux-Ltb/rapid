@@ -180,7 +180,44 @@ curl -X GET -i /order/event?td=0&strategyId=0
 ]
 ```
 
-## 新增订单
+## 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+
+**URL:** `/order`
+
+**Type:** `POST`
+
+
+**Content-Type:** `APPLICATION_JSON_UTF8`
+
+**Description:** 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+
+
+
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|userId|int32|false|用户ID|-|
+|instrumentCode|string|false|交易标的 (例: 期货代码, 股票代码)|-|
+|side|int32|false|订单交易类型 (1:买入, 2:卖出)|-|
+|action|int32|false|交易动作 (1: 开仓, 2: 平仓)|-|
+|offerPrice|double|false|委托价格|-|
+|offerQty|int32|false|委托数量|-|
+|type|int32|false|订单类型 (1:COMMON, 2:FAK, 3:FOK) [可为空]|-|
+|valid|int32|false|有效类型 (1:GTC, 2:GTD, 3:GFD) [可为空]|-|
+
+
+**Request-example:**
+```
+curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&offerQty=0&type=0&valid=0&instrumentCode='
+```
+
+**Response-example:**
+```
+OK
+```
+
+## 新增订单 [非前端界面调用]
 
 **URL:** `/order`
 
@@ -189,7 +226,7 @@ curl -X GET -i /order/event?td=0&strategyId=0
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** 新增订单
+**Description:** 新增订单 [非前端界面调用]
 
 
 
