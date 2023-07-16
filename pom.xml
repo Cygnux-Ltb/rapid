@@ -29,7 +29,7 @@
         <module>core</module>
         <module>adaptor</module>
         <module>console</module>
-        <module>display</module>
+        <module>dashboard</module>
         <module>engine</module>
         <module>example</module>
     </modules>
