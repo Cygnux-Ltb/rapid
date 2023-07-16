@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.request.command;
+package io.cygnuxltb.protocol.http.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +7,10 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Init {
+public class StrategyStatus {
 
-    private int sysId;
+    private int strategyId;
 
-    private int tradingDay;
+    private int status;
 
 }

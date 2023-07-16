@@ -2,14 +2,14 @@
 protocol ARpcTraderProtocol {
 
 	/**
-	  * new order
-   	  */
+	 * new order
+   	 */
 	boolean newOrder(
 		io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest request);
 
 	/**
-	  * cancel order
- 	  */
+	 * cancel order
+ 	 */
 	boolean cancelOrder(
 		io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest request);
 

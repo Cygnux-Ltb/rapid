@@ -2,8 +2,8 @@
 protocol ARpcMarketProtocol {
 
 	/**
-	  * 订阅行情函数
- 	  */
+	 * 订阅行情函数
+ 	 */
 	boolean subscribeMarketData(
 		io.cygnuxltb.jcts.core.serialization.avro.request.AvMarketDataSubscribeRequest subscribe);
 
