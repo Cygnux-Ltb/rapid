@@ -1,6 +1,6 @@
 
 # 系统指令服务[X]
-## 更新参数
+## 更新参数 [内部接口]
 
 **URL:** `/command/param`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** 更新参数
+**Description:** 更新参数 [内部接口]
 
 
 

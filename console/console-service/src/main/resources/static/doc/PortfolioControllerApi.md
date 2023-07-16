@@ -1,6 +1,6 @@
 
 # 投资组合接口
-## 获取用户投资组合
+## 获取用户投资组合<br>[股票池/目标池都通过此接口]
 
 **URL:** `/portfolio`
 
@@ -10,6 +10,7 @@
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
 **Description:** 获取用户投资组合
+[股票池/目标池都通过此接口]
 
 
 
@@ -18,7 +19,7 @@
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |userId|int32|true|       用户ID|-|
-|portfolio|string|true|投资组合名|-|
+|portfolio|string|true|投资组合名称|-|
 
 
 **Request-example:**

@@ -50,7 +50,7 @@ api[2].list.push({
 });
 api[2].list.push({
     order: '2',
-    desc: '更新BAR (內部接口)',
+    desc: '更新BAR [內部接口]',
 });
 api.push({
     alias: 'PnlController',
@@ -72,123 +72,149 @@ api[3].list.push({
     desc: '查询结算PNL',
 });
 api.push({
-    alias: 'CommandController',
+    alias: 'DictionaryController',
     order: '5',
-    desc: '系统指令服务[X]',
-    link: '系统指令服务[x]',
+    desc: '辞典, 包含名词解释',
+    link: '辞典,_包含名词解释',
     list: []
 })
 api[4].list.push({
     order: '1',
-    desc: '更新参数',
+    desc: '',
 });
-api[4].list.push({
+api.push({
+    alias: 'CommandController',
+    order: '6',
+    desc: '系统指令服务[X]',
+    link: '系统指令服务[x]',
+    list: []
+})
+api[5].list.push({
+    order: '1',
+    desc: '更新参数 [内部接口]',
+});
+api[5].list.push({
     order: '2',
     desc: '安全更新参数',
 });
 api.push({
     alias: 'ProductController',
-    order: '6',
+    order: '7',
     desc: '产品服务接口',
     link: '产品服务接口',
     list: []
 })
-api[5].list.push({
+api[6].list.push({
     order: '1',
     desc: '获取全部产品',
 });
-api[5].list.push({
+api[6].list.push({
     order: '2',
     desc: '获取指定产品信息',
 });
-api[5].list.push({
+api[6].list.push({
     order: '3',
     desc: '产品初始化',
 });
 api.push({
     alias: 'StatusController',
-    order: '7',
+    order: '8',
     desc: '交易系统状态服务接口',
     link: '交易系统状态服务接口',
     list: []
 })
-api[6].list.push({
+api[7].list.push({
     order: '1',
     desc: '获取全部策略状态',
 });
-api[6].list.push({
+api[7].list.push({
     order: '2',
     desc: '发送状态指令',
 });
-api[6].list.push({
+api[7].list.push({
     order: '3',
     desc: '更新状态',
 });
 api.push({
     alias: 'PositionController',
-    order: '8',
+    order: '9',
     desc: '仓位查询接口',
     link: '仓位查询接口',
     list: []
 })
+api[8].list.push({
+    order: '1',
+    desc: '查询当前持仓',
+});
 api.push({
     alias: 'InstrumentController',
-    order: '9',
+    order: '10',
     desc: '交易标的查询接口',
     link: '交易标的查询接口',
     list: []
 })
-api[8].list.push({
+api[9].list.push({
     order: '1',
     desc: '获取结算信息',
 });
-api[8].list.push({
+api[9].list.push({
     order: '2',
     desc: '获取最新价格',
 });
-api[8].list.push({
+api[9].list.push({
     order: '3',
     desc: '更新最新价格 (內部接口)',
 });
-api[8].list.push({
+api[9].list.push({
     order: '4',
     desc: '获取交易费用',
 });
-api[8].list.push({
+api[9].list.push({
     order: '5',
     desc: '获取可交易标的',
 });
 api.push({
     alias: 'PortfolioController',
-    order: '10',
+    order: '11',
     desc: '投资组合接口',
     link: '投资组合接口',
     list: []
 })
-api[9].list.push({
+api[10].list.push({
     order: '1',
-    desc: '获取用户投资组合',
+    desc: '获取用户投资组合 [股票池/目标池都通过此接口]',
+});
+api.push({
+    alias: 'SimulateController',
+    order: '12',
+    desc: '',
+    link: '',
+    list: []
+})
+api[11].list.push({
+    order: '1',
+    desc: '',
 });
 api.push({
     alias: 'OrderController',
-    order: '11',
+    order: '13',
     desc: '订单服务接口',
     link: '订单服务接口',
     list: []
 })
-api[10].list.push({
+api[12].list.push({
     order: '1',
     desc: '查询Order',
 });
-api[10].list.push({
+api[12].list.push({
     order: '2',
     desc: '获取订单最新状态',
 });
-api[10].list.push({
+api[12].list.push({
     order: '3',
     desc: '创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]',
 });
-api[10].list.push({
+api[12].list.push({
     order: '4',
     desc: '新增订单 [非前端界面调用]',
 });

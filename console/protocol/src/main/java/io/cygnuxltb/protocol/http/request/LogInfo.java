@@ -9,14 +9,18 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LogInfo {
 
-    private long epochTime;
+    private long epoch;
 
-    private String logTime;
+    private String datetime;
 
-    private String logLevel;
+    private String level;
 
-    private String logTitle;
+    private String type;
 
-    private String logText;
+    private String keyword;
+
+    private String title;
+
+    private String text;
 
 }

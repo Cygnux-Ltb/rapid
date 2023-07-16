@@ -41,7 +41,7 @@ public final class CommandController {
     private ParamService service;
 
     /**
-     * 更新参数
+     * 更新参数 [内部接口]
      *
      * @param productId 产品ID
      * @param request   HttpServletRequest

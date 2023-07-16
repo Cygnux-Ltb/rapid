@@ -51,7 +51,7 @@ public final class BarController {
     }
 
     /**
-     * 更新BAR (內部接口)
+     * 更新BAR [內部接口]
      *
      * @param request HttpServletRequest
      * @return ResponseStatus

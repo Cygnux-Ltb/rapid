@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.response;
+package io.cygnuxltb.protocol.http.response.status;
 
 import lombok.Getter;
 import lombok.Setter;

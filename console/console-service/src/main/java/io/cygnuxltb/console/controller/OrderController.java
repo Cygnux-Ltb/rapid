@@ -77,12 +77,13 @@ public final class OrderController {
 
     /**
      * 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
-     * @param newOrderDTO
-     * @return
+     *
+     * @param newOrderDTO NewOrderDTO
+     * @return ResponseStatus
      */
     @PostMapping(consumes = APPLICATION_JSON_UTF8)
-    public ResponseStatus newOrder( NewOrderDTO newOrderDTO) {
-        return  ResponseStatus.OK ;
+    public ResponseStatus newOrder(NewOrderDTO newOrderDTO) {
+        return ResponseStatus.OK;
     }
 
     /**

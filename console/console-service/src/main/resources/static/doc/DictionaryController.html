@@ -80,15 +80,15 @@
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="DictionaryController.html#header">5.&nbsp;辞典, 包含名词解释</a>
-                <ul class="sectlevel2" style="display: none">
+            <li class="open"><a class="dd" href="DictionaryController.html#header">5.&nbsp;辞典, 包含名词解释</a>
+                <ul class="sectlevel2" style="display: block">
                     <li><a
                             href="DictionaryController.html#_5_1_">5.1.&nbsp;</a>
                     </li>
                 </ul>
             </li>
-            <li class="open"><a class="dd" href="CommandController.html#header">6.&nbsp;系统指令服务[X]</a>
-                <ul class="sectlevel2" style="display: block">
+            <li class=""><a class="dd" href="CommandController.html#header">6.&nbsp;系统指令服务[X]</a>
+                <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="CommandController.html#_6_1_更新参数 [内部接口]">6.1.&nbsp;更新参数 [内部接口]</a>
                     </li>
@@ -196,18 +196,18 @@
     </div>
 </div>
 <div id="content">
-    <div class="sect1"><h2 id="_系统指令服务[X]"><a class="anchor" href="#_系统指令服务[X]"></a><a class="link" href="#_系统指令服务[X]">6.&nbsp;系统指令服务[X]</a>
+    <div class="sect1"><h2 id="_辞典, 包含名词解释"><a class="anchor" href="#_辞典, 包含名词解释"></a><a class="link" href="#_辞典, 包含名词解释">5.&nbsp;辞典, 包含名词解释</a>
     </h2>
         <div class="sectionbody">
-            <div class="sect2"><h3 id="_6_1_更新参数 [内部接口]">
-                <a class="anchor" href="#_6_1_更新参数 [内部接口]"></a>
-                <a class="link" href="#_6_1_更新参数 [内部接口]">6.1.&nbsp;更新参数 [内部接口]</a>
+            <div class="sect2"><h3 id="_5_1_">
+                <a class="anchor" href="#_5_1_"></a>
+                <a class="link" href="#_5_1_">5.1.&nbsp;</a>
             </h3>
-                <div class="paragraph"><p><strong>URL:</strong><a href="/command/param" class="bare">&nbsp;/command/param</a>
+                <div class="paragraph"><p><strong>URL:</strong><a href="/mapping" class="bare">&nbsp;/mapping</a>
                 </p></div>
-                <div class="paragraph"><p><strong>Type:</strong>&nbsp;PUT</p></div>
-                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;APPLICATION_JSON_UTF8</p></div>
-                <div class="paragraph"><p><strong>Description:</strong>&nbsp;更新参数 [内部接口]</p></div>
+                <div class="paragraph"><p><strong>Type:</strong>&nbsp;GET</p></div>
+                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;application/x-www-form-urlencoded;charset=UTF-8</p></div>
+                <div class="paragraph"><p><strong>Description:</strong>&nbsp;</p></div>
                 <div class="paragraph"><p><strong>Query-parameters:</strong></p></div>
                 <table class="tableblock frame-all grid-all spread">
                     <colgroup>
@@ -228,10 +228,10 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">产品ID</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">key</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">关键字</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
                     </tbody>
@@ -239,36 +239,13 @@
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/param --data 'productId=0'</code></pre>
+                        <pre><code class="bash">curl -X GET -i /mapping?key=</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="json">OK</code></pre>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sect2"><h3 id="_6_2_安全更新参数">
-                <a class="anchor" href="#_6_2_安全更新参数"></a>
-                <a class="link" href="#_6_2_安全更新参数">6.2.&nbsp;安全更新参数</a>
-            </h3>
-                <div class="paragraph"><p><strong>URL:</strong><a href="/command/safe" class="bare">&nbsp;/command/safe</a>
-                </p></div>
-                <div class="paragraph"><p><strong>Type:</strong>&nbsp;PUT</p></div>
-                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;APPLICATION_JSON_UTF8</p></div>
-                <div class="paragraph"><p><strong>Description:</strong>&nbsp;安全更新参数</p></div>
-                <div class="paragraph"><p><strong>Request-example:</strong></p></div>
-                <div class="listingblock">
-                    <div class="content">
-                        <pre><code class="bash">curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/safe</code></pre>
-                    </div>
-                </div>
-                <div class="paragraph"><p><strong>Response-example:</strong></p></div>
-                <div class="listingblock">
-                    <div class="content">
-                        <pre><code class="json">OK</code></pre>
+                        <pre><code class="json">string</code></pre>
                     </div>
                 </div>
             </div>

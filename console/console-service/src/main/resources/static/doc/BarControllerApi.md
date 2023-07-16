@@ -59,7 +59,7 @@ curl -X GET -i /bar?td=0&code=
 ]
 ```
 
-## 更新BAR (內部接口)
+## 更新BAR [內部接口]
 
 **URL:** `/bar`
 

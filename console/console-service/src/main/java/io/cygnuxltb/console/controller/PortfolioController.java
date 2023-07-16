@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -25,14 +26,15 @@ public class PortfolioController {
 
     /**
      * 获取用户投资组合
+     * [股票池/目标池都通过此接口]
      *
      * @param userId        用户ID
-     * @param portfolioName 投资组合名
+     * @param portfolioName 投资组合名称
      * @return PortfolioDTO
      */
-    @RequestMapping()
-    public PortfolioDTO get(@RequestParam("userId") int userId,
-                            @RequestParam("portfolio") String portfolioName) {
+    @RequestMapping("")
+    public PortfolioDTO getPortfolio(@RequestParam(USER_ID) int userId,
+                                     @RequestParam("portfolio") String portfolioName) {
         return service.getPortfolio(userId, portfolioName);
     }
 
