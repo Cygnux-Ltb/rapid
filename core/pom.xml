@@ -7,7 +7,7 @@
         <artifactId>jcts</artifactId>
         <version>1.0</version>
     </parent>
-    
+
     <artifactId>core</artifactId>
     <name>core</name>
 
@@ -55,16 +55,34 @@
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
+            <artifactId>serialization-json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.mercury</groupId>
             <artifactId>serialization-avro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-wire</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro-ipc</artifactId>
-            <version>1.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>serialization-json</artifactId>
+            <version>1.11.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-databind</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-lang3</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
