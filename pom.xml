@@ -123,6 +123,11 @@
                 <artifactId>serialization-avro</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-wire</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
             <!-- mercury transport -->
             <dependency>
                 <groupId>io.mercury</groupId>
