@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.UserDao;
-import io.cygnuxltb.console.persistence.entity.TblSUser;
+import io.cygnuxltb.console.persistence.entity.TblSysUser;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public final class UserService {
     private UserDao dao;
 
     public boolean signIn(String sign, String password) {
-        TblSUser user = getUser(sign);
+        TblSysUser user = getUser(sign);
         if (user == null)
             return false;
         else
@@ -24,7 +24,7 @@ public final class UserService {
     }
 
 
-    public TblSUser getUser(String sign) {
+    public TblSysUser getUser(String sign) {
         try {
             return dao.queryBy(sign, sign, sign);
         } catch (Exception e) {

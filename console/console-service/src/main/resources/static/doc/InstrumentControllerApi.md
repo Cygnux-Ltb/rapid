@@ -1,5 +1,5 @@
 
-# 交易标的查询接口
+# 交易标的接口
 ## 获取结算信息
 
 **URL:** `/instrument/settlement`

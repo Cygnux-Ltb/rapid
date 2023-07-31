@@ -40,8 +40,8 @@ api[1].list.push({
 api.push({
     alias: 'BarController',
     order: '3',
-    desc: '历史行情接口',
-    link: '历史行情接口',
+    desc: '历史行情服务',
+    link: '历史行情服务',
     list: []
 })
 api[2].list.push({
@@ -55,32 +55,32 @@ api[2].list.push({
 api.push({
     alias: 'PnlController',
     order: '4',
-    desc: 'PNL服务接口',
-    link: 'pnl服务接口',
+    desc: 'PNL服务(盈亏)',
+    link: 'pnl服务(盈亏)',
     list: []
 })
 api[3].list.push({
     order: '1',
-    desc: '查询PNL',
+    desc: '查询PNL (查询盈亏)',
 });
 api[3].list.push({
     order: '2',
-    desc: '更新PNL, 策略引擎调用 (内部接口)',
+    desc: '更新PNL (内部接口, 策略引擎调用)',
 });
 api[3].list.push({
     order: '3',
-    desc: '查询结算PNL',
+    desc: '查询结算PNL (查询结算盈亏)',
 });
 api.push({
     alias: 'DictionaryController',
     order: '5',
-    desc: '辞典, 包含名词解释',
-    link: '辞典,_包含名词解释',
+    desc: '辞典',
+    link: '辞典',
     list: []
 })
 api[4].list.push({
     order: '1',
-    desc: '',
+    desc: '&lt;br&gt;Page1: &lt;br&gt;/- &lt;br&gt;/-1.交易执行 &lt;br&gt;/--(1).策略下拉列表 -&gt; 策略服务:获取全部策略 &lt;br&gt;/--(2).证券代码下拉列表 -&gt; 交易标的查询接口:获取可交易标的 &lt;br&gt;/--(3).委托按钮 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口] &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-2.持仓 &lt;br&gt;/--(1).列表 -&gt; 仓位查询接口:查询当前持仓 &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-3.当日委托 &lt;br&gt;/--(1).列表 -&gt; 订单服务接口:查询Order &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-4.当日成交 &lt;br&gt;/--(1).列表 -&gt; 订单服务接口:查询Order &lt;br&gt;================================================================================= &lt;br&gt;================================================================================= &lt;br&gt;Page2: &lt;br&gt;/- &lt;br&gt;/-1.目标池 &lt;br&gt;/--(1).策略名称 -&gt; 投资组合接口:获取用户投资组合 &lt;br&gt;/--(2).添加股票 -&gt; 交易标的接口: &lt;br&gt;/--(3).股票名称代码 -&gt; 交易标的查询接口 &lt;br&gt;/--(4).现价 -&gt; 交易标的查询接口:获取最新价格 &lt;br&gt;/--(5).持仓 -&gt; 仓位查询接口:查询当前持仓 &lt;br&gt;/--(6).涨幅 -&gt; 交易标的查询接口:获取结算信息 &lt;br&gt;/--(7).操作 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口] &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-2.添加策略 &lt;br&gt;/--(1).添加策略 -&gt; 策略服务: &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-3.当前订单:一键清仓 -&gt; 订单服务接口-&gt;创建订单[前端调用:开仓,平仓,一键平仓都通过此接口] &lt;br&gt;--------------------------------------------------------------------------------- &lt;br&gt;/-4.当前订单 &lt;br&gt;/--(1).名称 -&gt; 订单服务接口:获取订单最新状态 &lt;br&gt;/--(2).持仓 -&gt; 仓位查询接口:查询当前持仓 &lt;br&gt;/--(3).盈亏 -&gt; PNL服务接口:查询结算PNL &lt;br&gt;/--(4).操作作 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口] &lt;br&gt;================================================================================= &lt;br&gt;================================================================================= &lt;br&gt;Page3: &lt;br&gt;/- &lt;br&gt;/-1.技术指标 &lt;br&gt;/--(1). &lt;br&gt;/-2.左上页面 &lt;br&gt;/--(1).策略服务:根据策略名称获取策略相关参数 &lt;br&gt;/-2.左下页面 &lt;br&gt;/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]',
 });
 api.push({
     alias: 'CommandController',
@@ -100,8 +100,8 @@ api[5].list.push({
 api.push({
     alias: 'ProductController',
     order: '7',
-    desc: '产品服务接口',
-    link: '产品服务接口',
+    desc: '产品服务',
+    link: '产品服务',
     list: []
 })
 api[6].list.push({
@@ -119,8 +119,8 @@ api[6].list.push({
 api.push({
     alias: 'StatusController',
     order: '8',
-    desc: '交易系统状态服务接口',
-    link: '交易系统状态服务接口',
+    desc: '交易系统状态服务',
+    link: '交易系统状态服务',
     list: []
 })
 api[7].list.push({
@@ -138,8 +138,8 @@ api[7].list.push({
 api.push({
     alias: 'PositionController',
     order: '9',
-    desc: '仓位查询接口',
-    link: '仓位查询接口',
+    desc: '仓位服务',
+    link: '仓位服务',
     list: []
 })
 api[8].list.push({
@@ -149,8 +149,8 @@ api[8].list.push({
 api.push({
     alias: 'InstrumentController',
     order: '10',
-    desc: '交易标的查询接口',
-    link: '交易标的查询接口',
+    desc: '交易标的接口',
+    link: '交易标的接口',
     list: []
 })
 api[9].list.push({
@@ -176,8 +176,8 @@ api[9].list.push({
 api.push({
     alias: 'PortfolioController',
     order: '11',
-    desc: '投资组合接口',
-    link: '投资组合接口',
+    desc: '投资组合服务 (股票池/目标池)',
+    link: '投资组合服务_(股票池/目标池)',
     list: []
 })
 api[10].list.push({
@@ -187,8 +187,8 @@ api[10].list.push({
 api.push({
     alias: 'SimulateController',
     order: '12',
-    desc: '',
-    link: '',
+    desc: '模拟测试',
+    link: '模拟测试',
     list: []
 })
 api[11].list.push({
@@ -198,8 +198,8 @@ api[11].list.push({
 api.push({
     alias: 'OrderController',
     order: '13',
-    desc: '订单服务接口',
-    link: '订单服务接口',
+    desc: '订单服务',
+    link: '订单服务',
     list: []
 })
 api[12].list.push({

@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_SYS_PRODUCT_STRATEGY")
-public final class TblSProductStrategy {
+public final class TblSysProductStrategy {
 
     @Id
     @Column(name = ColumnDefinition.UID)

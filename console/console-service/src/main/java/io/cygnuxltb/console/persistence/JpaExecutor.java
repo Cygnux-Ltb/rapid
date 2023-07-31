@@ -1,4 +1,4 @@
-package io.cygnuxltb.console.persistence.util;
+package io.cygnuxltb.console.persistence;
 
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -13,9 +13,9 @@ import static io.mercury.common.functional.Functions.exec;
 import static io.mercury.common.functional.Functions.execBool;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
-public final class DaoExecutor {
+public final class JpaExecutor {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(DaoExecutor.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(JpaExecutor.class);
 
     /**
      * @param func Supplier<List<T>>

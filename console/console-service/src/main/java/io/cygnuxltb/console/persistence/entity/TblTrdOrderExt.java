@@ -36,7 +36,7 @@ import static io.mercury.persistence.rdb.ColumnDefinition.TIME;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_TRD_ORDER_EXT")
-public final class TblTOrderExt {
+public final class TblTrdOrderExt {
 
     @Id
     @Column(name = ColumnDefinition.UID)

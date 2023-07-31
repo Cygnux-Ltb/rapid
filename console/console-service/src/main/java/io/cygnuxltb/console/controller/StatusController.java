@@ -29,7 +29,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.PRODUCT_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 交易系统状态服务接口
+ * 交易系统状态服务
  */
 @RestController
 @RequestMapping(path = "/status", produces = APPLICATION_JSON_UTF8)

@@ -26,7 +26,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 交易标的查询接口
+ * 交易标的接口
  */
 @RestController
 @RequestMapping(path = "/instrument", produces = APPLICATION_JSON_UTF8)
@@ -52,7 +52,6 @@ public final class InstrumentController {
             return null;
         return service.getInstrumentSettlement(tradingDay, instrumentCode);
     }
-
 
     /**
      * 获取最新价格

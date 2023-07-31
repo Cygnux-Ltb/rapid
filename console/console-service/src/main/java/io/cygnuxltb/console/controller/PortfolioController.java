@@ -13,7 +13,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 投资组合接口
+ * 投资组合服务 (股票池/目标池)
  */
 @RestController
 @RequestMapping(path = "/portfolio", produces = APPLICATION_JSON_UTF8)

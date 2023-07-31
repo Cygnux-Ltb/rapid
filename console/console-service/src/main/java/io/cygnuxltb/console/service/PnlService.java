@@ -2,8 +2,8 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TblTPnl;
-import io.cygnuxltb.console.persistence.entity.TblTPnlSettlement;
+import io.cygnuxltb.console.persistence.entity.TblTrdPnl;
+import io.cygnuxltb.console.persistence.entity.TblTrdPnlSettlement;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.response.PnlDTO;
 import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
-import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
+import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
+import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 
 @Service
 public final class PnlService {
@@ -31,7 +31,7 @@ public final class PnlService {
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
-        return select(TblTPnl.class,
+        return select(TblTrdPnl.class,
                 () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -44,7 +44,7 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
-        return select(TblTPnlSettlement.class,
+        return select(TblTrdPnlSettlement.class,
                 () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -56,7 +56,7 @@ public final class PnlService {
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(TblTPnl entity) {
+    public boolean putPnl(TblTrdPnl entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -64,7 +64,7 @@ public final class PnlService {
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(TblTPnlSettlement entity) {
+    public boolean putPnlSettlement(TblTrdPnlSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

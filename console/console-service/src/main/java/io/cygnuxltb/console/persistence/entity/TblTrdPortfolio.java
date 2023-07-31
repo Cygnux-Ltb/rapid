@@ -20,7 +20,7 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_TRD_PORTFOLIO")
-public final class TblTPortfolio {
+public final class TblTrdPortfolio {
 
     @Id
     @Column(name = ColumnDefinition.UID)

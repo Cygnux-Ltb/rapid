@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "TBL_SYS_PARAM")
-public final class TblSParam {
+public final class TblSysParam {
 
     @Id
     @Column(name = ColumnDefinition.UID)

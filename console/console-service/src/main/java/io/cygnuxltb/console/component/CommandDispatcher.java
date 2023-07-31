@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.component;
 
-import io.cygnuxltb.console.persistence.entity.TblSParam;
+import io.cygnuxltb.console.persistence.entity.TblSysParam;
 import io.cygnuxltb.protocol.http.request.StrategySwitch;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ public final class CommandDispatcher {
         return false;
     }
 
-    public boolean sendParams(List<TblSParam> params) {
+    public boolean sendParams(List<TblSysParam> params) {
         return false;
     }
 

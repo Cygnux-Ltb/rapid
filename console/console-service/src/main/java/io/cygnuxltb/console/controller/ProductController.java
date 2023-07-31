@@ -20,7 +20,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 产品服务接口
+ * 产品服务
  */
 @RestController
 @RequestMapping(path = "/product", produces = APPLICATION_JSON_UTF8)

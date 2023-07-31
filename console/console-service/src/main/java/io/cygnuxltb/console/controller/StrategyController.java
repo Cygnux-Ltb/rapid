@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblSParam;
+import io.cygnuxltb.console.persistence.entity.TblSysParam;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.console.service.StrategyService;
 import io.cygnuxltb.protocol.http.response.ParamDTO;
@@ -11,7 +11,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,10 +75,11 @@ public final class StrategyController {
      * @param strategyId int
      * @return HttpServletRequest
      */
-    @PutMapping(path = "/param", consumes = APPLICATION_JSON_UTF8)
+    @PostMapping(path = "/param", consumes = APPLICATION_JSON_UTF8)
     public boolean putParamsByStrategyId(@RequestParam(STRATEGY_ID) int strategyId,
                                          @RequestBody HttpServletRequest request) {
-        var params = ControllerUtil.bodyToObject(request, TblSParam.class);
+        var params = ControllerUtil.bodyToObject(request, TblSysParam.class);
+
         log.info("putParamsByStrategyId recv : {}", params);
         return params != null && paramService.putStrategyParam(params);
     }

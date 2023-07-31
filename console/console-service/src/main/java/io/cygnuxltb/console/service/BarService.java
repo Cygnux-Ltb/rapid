@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.BarDao;
-import io.cygnuxltb.console.persistence.entity.TblMBar;
+import io.cygnuxltb.console.persistence.entity.TblMkdBar;
 import io.cygnuxltb.console.service.util.DtoConverter;
 import io.cygnuxltb.protocol.http.response.BarDTO;
 import jakarta.annotation.Resource;
@@ -11,8 +11,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.cygnuxltb.console.persistence.util.DaoExecutor.insertOrUpdate;
-import static io.cygnuxltb.console.persistence.util.DaoExecutor.select;
+import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
+import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 
 @Service
 public final class BarService {
@@ -36,7 +36,7 @@ public final class BarService {
      * @return List<BarEntity>
      */
     public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
-        return select(TblMBar.class,
+        return select(TblMkdBar.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
                 .map(DtoConverter::toDTO)
@@ -47,7 +47,7 @@ public final class BarService {
      * @param entity BarEntity
      * @return boolean
      */
-    public boolean putBar(@Nonnull TblMBar entity) {
+    public boolean putBar(@Nonnull TblMkdBar entity) {
         return insertOrUpdate(dao, entity);
     }
 

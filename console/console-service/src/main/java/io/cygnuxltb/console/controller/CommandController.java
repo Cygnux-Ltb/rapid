@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.component.CommandDispatcher;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblSParam;
+import io.cygnuxltb.console.persistence.entity.TblSysParam;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.protocol.http.pack.OutboxMessage;
 import io.cygnuxltb.protocol.http.pack.OutboxTitle;
@@ -12,6 +12,7 @@ import io.mercury.serialization.json.JsonWrapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,23 +45,21 @@ public final class CommandController {
      * 更新参数 [内部接口]
      *
      * @param productId 产品ID
-     * @param request   HttpServletRequest
+     * @param params    参数列表
      * @return ResponseStatus
      */
-    @PutMapping(path = "/param",
+    @PostMapping(path = "/param",
             consumes = APPLICATION_JSON_UTF8,
             produces = APPLICATION_JSON_UTF8)
     public ResponseStatus updateParam(@RequestParam("productId") int productId,
-                                      @RequestBody HttpServletRequest request) {
-        // 将参数转换为List
-        List<TblSParam> strategyParams = ControllerUtil.bodyToList(request, TblSParam.class);
+                                      @RequestBody List<TblSysParam> params) {
         // 获取Publisher
         //dispatcher.sendCommand();
         //Publisher<String, String> publisher = GROUP_INSTANCE.getMember(cygId);
         // 转换为需要发送的发件箱消息
         String msg = JsonWrapper.toJson(new OutboxMessage<>()
                 .setTitle(OutboxTitle.UpdateStrategyParams.name())
-                .setContent(strategyParams));
+                .setContent(params));
         // 发送消息
         //publisher.publish(msg);
         // 返回Put成功标识
@@ -77,7 +76,7 @@ public final class CommandController {
             consumes = APPLICATION_JSON_UTF8,
             produces = APPLICATION_JSON_UTF8)
     public ResponseStatus updateParamSafe(@RequestBody HttpServletRequest request) {
-        var strategyParam = ControllerUtil.bodyToObject(request, TblSParam.class);
+        var strategyParam = ControllerUtil.bodyToObject(request, TblSysParam.class);
         if (strategyParam == null)
             return ResponseStatus.BAD_REQUEST;
         log.info("method updateParamSafe recv : {}", strategyParam);

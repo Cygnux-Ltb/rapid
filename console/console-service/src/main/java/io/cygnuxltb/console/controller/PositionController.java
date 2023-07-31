@@ -13,7 +13,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 仓位查询接口
+ * 仓位服务
  */
 @RestController
 @RequestMapping(path = "/position", produces = APPLICATION_JSON_UTF8)

@@ -5,6 +5,9 @@ import io.cygnuxltb.protocol.http.request.SimulateDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 模拟测试
+ */
 @RestController("/simulate")
 public class SimulateController {
 

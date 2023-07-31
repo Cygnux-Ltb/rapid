@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>Error Code</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1689436449768"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1690543214086"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8
@@ -54,7 +54,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="BarController.html#header">3.&nbsp;历史行情接口</a>
+            <li><a class="dd" href="BarController.html#header">3.&nbsp;历史行情服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="BarController.html#_3_1_获取1分钟BAR">3.1.&nbsp;获取1分钟BAR</a>
@@ -65,25 +65,72 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="PnlController.html#header">4.&nbsp;PNL服务接口</a>
+            <li><a class="dd" href="PnlController.html#header">4.&nbsp;PNL服务(盈亏)</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="PnlController.html#_4_1_查询PNL">4.1.&nbsp;查询PNL</a>
+                            href="PnlController.html#_4_1_查询PNL (查询盈亏)">4.1.&nbsp;查询PNL (查询盈亏)</a>
                     </li>
 
                     <li><a
-                            href="PnlController.html#_4_2_更新PNL, 策略引擎调用 (内部接口)">4.2.&nbsp;更新PNL, 策略引擎调用 (内部接口)</a>
+                            href="PnlController.html#_4_2_更新PNL (内部接口, 策略引擎调用)">4.2.&nbsp;更新PNL (内部接口, 策略引擎调用)</a>
                     </li>
 
                     <li><a
-                            href="PnlController.html#_4_3_查询结算PNL">4.3.&nbsp;查询结算PNL</a>
+                            href="PnlController.html#_4_3_查询结算PNL (查询结算盈亏)">4.3.&nbsp;查询结算PNL (查询结算盈亏)</a>
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="DictionaryController.html#header">5.&nbsp;辞典, 包含名词解释</a>
+            <li><a class="dd" href="DictionaryController.html#header">5.&nbsp;辞典</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="DictionaryController.html#_5_1_">5.1.&nbsp;</a>
+                            href="DictionaryController.html#_5_1_<br>Page1:
+<br>/-
+<br>/-1.交易执行
+<br>/--(1).策略下拉列表 -> 策略服务:获取全部策略
+<br>/--(2).证券代码下拉列表 -> 交易标的查询接口:获取可交易标的
+<br>/--(3).委托按钮 -> 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]
+<br>---------------------------------------------------------------------------------
+<br>/-2.持仓
+<br>/--(1).列表 -> 仓位查询接口:查询当前持仓
+<br>---------------------------------------------------------------------------------
+<br>/-3.当日委托
+<br>/--(1).列表 -> 订单服务接口:查询Order
+<br>---------------------------------------------------------------------------------
+<br>/-4.当日成交
+<br>/--(1).列表 -> 订单服务接口:查询Order
+<br>=================================================================================
+<br>=================================================================================
+<br>Page2:
+<br>/-
+<br>/-1.目标池
+<br>/--(1).策略名称 -> 投资组合接口:获取用户投资组合
+<br>/--(2).添加股票 -> 交易标的接口:
+<br>/--(3).股票名称代码 -> 交易标的查询接口
+<br>/--(4).现价 -> 交易标的查询接口:获取最新价格
+<br>/--(5).持仓 -> 仓位查询接口:查询当前持仓
+<br>/--(6).涨幅 -> 交易标的查询接口:获取结算信息
+<br>/--(7).操作 -> 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]
+<br>---------------------------------------------------------------------------------
+<br>/-2.添加策略
+<br>/--(1).添加策略 -> 策略服务:
+<br>---------------------------------------------------------------------------------
+<br>/-3.当前订单:一键清仓 -> 订单服务接口->创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]
+<br>---------------------------------------------------------------------------------
+<br>/-4.当前订单
+<br>/--(1).名称 -> 订单服务接口:获取订单最新状态
+<br>/--(2).持仓 -> 仓位查询接口:查询当前持仓
+<br>/--(3).盈亏 -> PNL服务接口:查询结算PNL
+<br>/--(4).操作作 -> 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]
+<br>=================================================================================
+<br>=================================================================================
+<br>Page3:
+<br>/-
+<br>/-1.技术指标
+<br>/--(1).
+<br>/-2.左上页面
+<br>/--(1).策略服务:根据策略名称获取策略相关参数
+<br>/-2.左下页面
+<br>/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]">5.1.&nbsp;&lt;br&gt;Page1:<br>&lt;br&gt;/-<br>&lt;br&gt;/-1.交易执行<br>&lt;br&gt;/--(1).策略下拉列表 -&gt; 策略服务:获取全部策略<br>&lt;br&gt;/--(2).证券代码下拉列表 -&gt; 交易标的查询接口:获取可交易标的<br>&lt;br&gt;/--(3).委托按钮 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-2.持仓<br>&lt;br&gt;/--(1).列表 -&gt; 仓位查询接口:查询当前持仓<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-3.当日委托<br>&lt;br&gt;/--(1).列表 -&gt; 订单服务接口:查询Order<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-4.当日成交<br>&lt;br&gt;/--(1).列表 -&gt; 订单服务接口:查询Order<br>&lt;br&gt;=================================================================================<br>&lt;br&gt;=================================================================================<br>&lt;br&gt;Page2:<br>&lt;br&gt;/-<br>&lt;br&gt;/-1.目标池<br>&lt;br&gt;/--(1).策略名称 -&gt; 投资组合接口:获取用户投资组合<br>&lt;br&gt;/--(2).添加股票 -&gt; 交易标的接口:<br>&lt;br&gt;/--(3).股票名称代码 -&gt; 交易标的查询接口<br>&lt;br&gt;/--(4).现价 -&gt; 交易标的查询接口:获取最新价格<br>&lt;br&gt;/--(5).持仓 -&gt; 仓位查询接口:查询当前持仓<br>&lt;br&gt;/--(6).涨幅 -&gt; 交易标的查询接口:获取结算信息<br>&lt;br&gt;/--(7).操作 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-2.添加策略<br>&lt;br&gt;/--(1).添加策略 -&gt; 策略服务:<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-3.当前订单:一键清仓 -&gt; 订单服务接口-&gt;创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]<br>&lt;br&gt;---------------------------------------------------------------------------------<br>&lt;br&gt;/-4.当前订单<br>&lt;br&gt;/--(1).名称 -&gt; 订单服务接口:获取订单最新状态<br>&lt;br&gt;/--(2).持仓 -&gt; 仓位查询接口:查询当前持仓<br>&lt;br&gt;/--(3).盈亏 -&gt; PNL服务接口:查询结算PNL<br>&lt;br&gt;/--(4).操作作 -&gt; 订单服务接口:创建订单[前端调用:开仓,平仓,一键平仓都通过此接口]<br>&lt;br&gt;=================================================================================<br>&lt;br&gt;=================================================================================<br>&lt;br&gt;Page3:<br>&lt;br&gt;/-<br>&lt;br&gt;/-1.技术指标<br>&lt;br&gt;/--(1).<br>&lt;br&gt;/-2.左上页面<br>&lt;br&gt;/--(1).策略服务:根据策略名称获取策略相关参数<br>&lt;br&gt;/-2.左下页面<br>&lt;br&gt;/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]</a>
                     </li>
                 </ul>
             </li>
@@ -98,7 +145,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="ProductController.html#header">7.&nbsp;产品服务接口</a>
+            <li><a class="dd" href="ProductController.html#header">7.&nbsp;产品服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="ProductController.html#_7_1_获取全部产品">7.1.&nbsp;获取全部产品</a>
@@ -113,7 +160,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="StatusController.html#header">8.&nbsp;交易系统状态服务接口</a>
+            <li><a class="dd" href="StatusController.html#header">8.&nbsp;交易系统状态服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="StatusController.html#_8_1_获取全部策略状态">8.1.&nbsp;获取全部策略状态</a>
@@ -128,14 +175,14 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="PositionController.html#header">9.&nbsp;仓位查询接口</a>
+            <li><a class="dd" href="PositionController.html#header">9.&nbsp;仓位服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="PositionController.html#_9_1_查询当前持仓">9.1.&nbsp;查询当前持仓</a>
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="InstrumentController.html#header">10.&nbsp;交易标的查询接口</a>
+            <li><a class="dd" href="InstrumentController.html#header">10.&nbsp;交易标的接口</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="InstrumentController.html#_10_1_获取结算信息">10.1.&nbsp;获取结算信息</a>
@@ -158,7 +205,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="PortfolioController.html#header">11.&nbsp;投资组合接口</a>
+            <li><a class="dd" href="PortfolioController.html#header">11.&nbsp;投资组合服务 (股票池/目标池)</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="PortfolioController.html#_11_1_获取用户投资组合
@@ -166,14 +213,14 @@
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="SimulateController.html#header">12.&nbsp;</a>
+            <li><a class="dd" href="SimulateController.html#header">12.&nbsp;模拟测试</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="SimulateController.html#_12_1_">12.1.&nbsp;</a>
                     </li>
                 </ul>
             </li>
-            <li><a class="dd" href="OrderController.html#header">13.&nbsp;订单服务接口</a>
+            <li><a class="dd" href="OrderController.html#header">13.&nbsp;订单服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="OrderController.html#_13_1_查询Order">13.1.&nbsp;查询Order</a>
@@ -195,12 +242,12 @@
         </ul>
     </div>
 </div>
-<div id="content">    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-07-16 00:54:09</span><span
+<div id="content">    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-07-28 20:20:14</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1689436449768"></script>
+<script src="search.js?v=1690543214086"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {
