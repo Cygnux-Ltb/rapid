@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.instrument.attr;
+package io.cygnuxltb.jcts.core.instrument.base;
 
 import io.mercury.common.datetime.TimeZone;
 import io.mercury.common.sequence.Serial;

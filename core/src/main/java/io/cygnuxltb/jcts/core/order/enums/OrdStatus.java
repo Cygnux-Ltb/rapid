@@ -1,78 +1,72 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdStatus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import java.io.Serial;
-
-public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
+public enum OrdStatus {
 
     /**
      * 无效
      */
-    Invalid(OrdStatusCode.INVALID, AEnumOrdStatus.INVALID, true),
+    Invalid(OrdStatusCode.INVALID, true),
 
     /**
      * 新订单未确认
      */
-    PendingNew(OrdStatusCode.PENDING_NEW, AEnumOrdStatus.PENDING_NEW, false),
+    PendingNew(OrdStatusCode.PENDING_NEW, false),
     /**
      * 新订单
      */
-    New(OrdStatusCode.NEW, AEnumOrdStatus.NEW, false),
+    New(OrdStatusCode.NEW, false),
     /**
      * 新订单已拒绝
      */
-    NewRejected(OrdStatusCode.NEW_REJECTED, AEnumOrdStatus.NEW_REJECTED, true),
+    NewRejected(OrdStatusCode.NEW_REJECTED, true),
 
     /**
      * 部分成交
      */
-    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, AEnumOrdStatus.PARTIALLY_FILLED, false),
+    PartiallyFilled(OrdStatusCode.PARTIALLY_FILLED, false),
     /**
      * 全部成交
      */
-    Filled(OrdStatusCode.FILLED, AEnumOrdStatus.FILLED, true),
+    Filled(OrdStatusCode.FILLED, true),
 
     /**
      * 未确认撤单
      */
-    PendingCancel(OrdStatusCode.PENDING_CANCEL, AEnumOrdStatus.PENDING_CANCEL, false),
+    PendingCancel(OrdStatusCode.PENDING_CANCEL, false),
     /**
      * 已撤单
      */
-    Canceled(OrdStatusCode.CANCELED, AEnumOrdStatus.CANCELED, true),
+    Canceled(OrdStatusCode.CANCELED, true),
     /**
      * 撤单已拒绝
      */
-    CancelRejected(OrdStatusCode.CANCEL_REJECTED, AEnumOrdStatus.CANCEL_REJECTED, true),
+    CancelRejected(OrdStatusCode.CANCEL_REJECTED, true),
 
     /**
      * 未确认修改订单
      */
-    PendingReplace(OrdStatusCode.PENDING_REPLACE, AEnumOrdStatus.PENDING_REPLACE, false),
+    PendingReplace(OrdStatusCode.PENDING_REPLACE, false),
 
     /**
      * 已修改
      */
-    Replaced(OrdStatusCode.REPLACED, AEnumOrdStatus.REPLACED, true),
+    Replaced(OrdStatusCode.REPLACED, true),
     /**
      * 已暂停
      */
-    Suspended(OrdStatusCode.SUSPENDED, AEnumOrdStatus.SUSPENDED, false),
+    Suspended(OrdStatusCode.SUSPENDED, false),
 
     /**
      * 未提供
      */
-    Unprovided(OrdStatusCode.UNPROVIDED, AEnumOrdStatus.UNPROVIDED, false),
+    Unprovided(OrdStatusCode.UNPROVIDED, false),
 
     ;
 
     private final char code;
-
-    private final AEnumOrdStatus tdxValue;
 
     private final boolean finished;
 
@@ -82,12 +76,10 @@ public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
 
     /**
      * @param code     代码
-     * @param tdxValue Tdx状态
      * @param finished 是否为已结束状态
      */
-    OrdStatus(char code, AEnumOrdStatus tdxValue, boolean finished) {
+    OrdStatus(char code, boolean finished) {
         this.code = code;
-        this.tdxValue = tdxValue;
         this.finished = finished;
         this.str = name() + "[" + code + "-" + (finished ? "Finished" : "Unfinished") + "]";
     }
@@ -169,10 +161,10 @@ public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
     }
 
     /**
-     * @param status TOrdStatus
+     * @param status io.cygnuxltb.jcts.core.ser.enums.OrdStatus
      * @return OrdStatus
      */
-    public static OrdStatus valueOf(AEnumOrdStatus status) {
+    public static OrdStatus valueOf(io.cygnuxltb.jcts.core.ser.enums.OrdStatus status) {
         return switch (status) {
             // 未确认新订单
             case PENDING_NEW -> PendingNew;
@@ -205,10 +197,6 @@ public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
         };
     }
 
-    @Override
-    public AEnumOrdStatus getTdxValue() {
-        return tdxValue;
-    }
 
     public interface OrdStatusCode {
         // 无效
@@ -249,20 +237,5 @@ public enum OrdStatus implements TdxProvider<AEnumOrdStatus> {
 
     }
 
-    /**
-     * OrdStatusException
-     *
-     * @author yellow013
-     */
-    public static class OrdStatusException extends RuntimeException {
-
-        @Serial
-        private static final long serialVersionUID = -4772495541311633988L;
-
-        public OrdStatusException(String message) {
-            super(message);
-        }
-
-    }
 
 }

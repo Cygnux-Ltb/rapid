@@ -1,20 +1,8 @@
-@namespace("io.cygnuxltb.jcts.core.serialization.avro.rpc")
-protocol ARpcTraderProtocol {
+@namespace("io.cygnuxltb.jcts.core.ser")
+protocol TraderProtocol {
 
-	/**
-	 * new order
-   	 */
-	boolean newOrder(
-		io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest request);
-
-	/**
-	 * cancel order
- 	 */
-	boolean cancelOrder(
-		io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest request);
-
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumOrdType {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum OrdType {
 		// 无效
 		INVALID,
 		// 限价单
@@ -39,8 +27,8 @@ protocol ARpcTraderProtocol {
 		MV
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumOrdValid {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum OrdValid {
 		//Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
 		GTC,
 		//Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
@@ -49,8 +37,8 @@ protocol ARpcTraderProtocol {
 		GFD
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumOrdSide {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum OrdSide {
 		//无效
 		INVALID,
 		//买
@@ -63,8 +51,8 @@ protocol ARpcTraderProtocol {
 		SHORT_SELL
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumOrdStatus {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum OrdStatus {
 		// 无效
 		INVALID,
 		// 新订单未确认
@@ -93,8 +81,8 @@ protocol ARpcTraderProtocol {
 		UNPROVIDED
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumOrdLevel {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum OrdLevel {
 		//子订单
 		CHILD,
 		//父订单
@@ -105,15 +93,15 @@ protocol ARpcTraderProtocol {
 		GROUP
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumTrdDirection {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum TrdDirection {
 		INVALID,
 		LONG,
 		SHORT
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumTrdAction {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum TrdAction {
 		// 无效
 		INVALID,
 		// 开仓
@@ -126,8 +114,8 @@ protocol ARpcTraderProtocol {
 		CLOSE_YESTERDAY
 	}
 
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.enums")
-	enum AEnumAdaptorStatus {
+	@namespace("io.cygnuxltb.jcts.core.ser.enums")
+	enum AdaptorStatus {
 		// 无效
 		INVALID,
 		// 不可用
@@ -145,8 +133,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
-	record AvNewOrderRequest {
+	@namespace("io.cygnuxltb.jcts.core.ser.req")
+	record NewOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -158,10 +146,10 @@ protocol ARpcTraderProtocol {
 		string exchangeCode;
 		int instrumentId;
 		string instrumentCode;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdType type;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdValid valid;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdAction action;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection direction;
+		io.cygnuxltb.jcts.core.ser.enums.OrdType type;
+		io.cygnuxltb.jcts.core.ser.enums.OrdValid valid;
+		io.cygnuxltb.jcts.core.ser.enums.TrdAction action;
+		io.cygnuxltb.jcts.core.ser.enums.TrdDirection direction;
 		string brokerId;
 		int accountId;
 		int subAccountId;
@@ -173,8 +161,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
-	record AvCancelOrderRequest {
+	@namespace("io.cygnuxltb.jcts.core.ser.req")
+	record CancelOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
 		// Epoch Microsecond Unit
@@ -195,8 +183,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
-	record AvQueryOrderRequest {
+	@namespace("io.cygnuxltb.jcts.core.ser.req")
+	record QueryOrder {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -214,8 +202,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
-	record AvQueryPositionsRequest {
+	@namespace("io.cygnuxltb.jcts.core.ser.req")
+	record QueryPositions {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -232,8 +220,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.request")
-	record AvQueryBalanceRequest {
+	@namespace("io.cygnuxltb.jcts.core.ser.req")
+	record QueryBalance {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
 		// Epoch Millisecond Unit
@@ -248,8 +236,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
-	record AvOrderEvent {
+	@namespace("io.cygnuxltb.jcts.core.ser.event")
+	record OrderEvent {
 		// Epoch Microsecond Unit
 		long epochMicros;
 		long ordSysId;
@@ -260,9 +248,9 @@ protocol ARpcTraderProtocol {
 		string brokerOrdSysId;
 		string exchangeCode;
 		string instrumentCode;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdStatus status;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection direction;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdAction action;
+		io.cygnuxltb.jcts.core.ser.enums.OrdStatus status;
+		io.cygnuxltb.jcts.core.ser.enums.TrdDirection direction;
+		io.cygnuxltb.jcts.core.ser.enums.TrdAction action;
 		int offerQty = 0;
 		int filledQty = 0;
 		long offerPrice = 0;
@@ -275,8 +263,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
-	record AvBalanceEvent {
+	@namespace("io.cygnuxltb.jcts.core.ser.event")
+	record BalanceEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -287,8 +275,8 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
-	record AvPositionsEvent {
+	@namespace("io.cygnuxltb.jcts.core.ser.event")
+	record PositionsEvent {
 		long epochMillis;
 		string brokerId;
 		string investorId;
@@ -300,12 +288,12 @@ protocol ARpcTraderProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.cygnuxltb.jcts.core.serialization.avro.event")
-	record AvAdaptorEvent {
+	@namespace("io.cygnuxltb.jcts.core.ser.event")
+	record AdaptorEvent {
 		long epochMillis;
 		string adaptorId;
 		int accountId;
-		io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumAdaptorStatus status;
+		io.cygnuxltb.jcts.core.ser.enums.AdaptorStatus status;
 	}
 
 }

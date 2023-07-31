@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.instrument.attr;
+package io.cygnuxltb.jcts.core.instrument.enums;
 
 public enum InstrumentType {
 

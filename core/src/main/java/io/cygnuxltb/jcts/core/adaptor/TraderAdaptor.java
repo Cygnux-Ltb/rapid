@@ -1,11 +1,11 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
 import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
+import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 
@@ -40,7 +40,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param request AvNewOrderRequest
      * @return boolean
      */
-    boolean newOrder(@Nonnull AvNewOrderRequest request);
+    boolean newOrder(@Nonnull NewOrder request);
 
     /**
      * 发送撤单请求
@@ -48,7 +48,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param request AvCancelOrderRequest
      * @return boolean
      */
-    boolean cancelOrder(@Nonnull AvCancelOrderRequest request);
+    boolean cancelOrder(@Nonnull CancelOrder request);
 
     /**
      * 查询订单
@@ -56,7 +56,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param request AvQueryOrderRequest
      * @return boolean
      */
-    boolean queryOrder(@Nonnull AvQueryOrderRequest request);
+    boolean queryOrder(@Nonnull QueryOrder request);
 
     /**
      * 查询持仓
@@ -64,7 +64,7 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param request AvQueryPositionsRequest
      * @return boolean
      */
-    boolean queryPositions(@Nonnull AvQueryPositionsRequest request);
+    boolean queryPositions(@Nonnull QueryPositions request);
 
     /**
      * 查询余额
@@ -72,6 +72,6 @@ public interface TraderAdaptor extends Closeable, Enableable {
      * @param request AvQueryBalanceRequest
      * @return boolean
      */
-    boolean queryBalance(@Nonnull AvQueryBalanceRequest request);
+    boolean queryBalance(@Nonnull QueryBalance request);
 
 }

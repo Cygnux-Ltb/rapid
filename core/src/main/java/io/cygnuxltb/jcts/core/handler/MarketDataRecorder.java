@@ -4,7 +4,7 @@ import io.cygnuxltb.jcts.core.adaptor.Adaptor;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -26,7 +26,8 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
      * @param <M>
      * @author yellow013
      */
-    abstract class BaseMarketDataRecorder<M extends MarketData> implements MarketDataRecorder<M>, AdaptorEventHandler {
+    abstract class BaseMarketDataRecorder<M extends MarketData>
+            implements MarketDataRecorder<M>, AdaptorEventHandler {
 
         private static final Logger log = Log4j2LoggerFactory.getLogger(BaseMarketDataRecorder.class);
 
@@ -41,7 +42,7 @@ public interface MarketDataRecorder<M extends MarketData> extends MarketDataHand
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+        public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
             log.info("Received event -> {}", event);
             switch (event.getStatus()) {
                 case MD_ENABLE -> adaptor.subscribeMarketData(instruments);

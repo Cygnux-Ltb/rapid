@@ -9,7 +9,7 @@ import java.time.ZoneOffset;
 import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
 import io.cygnuxltb.jcts.core.indicator.impl.SMA.SmaEvent;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
 import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 import io.cygnuxltb.jcts.core.pool.TradablePeriodPool;
 import io.mercury.common.collections.window.LongRingWindow;

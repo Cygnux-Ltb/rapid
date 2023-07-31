@@ -2,12 +2,12 @@ package io.cygnuxltb.jcts.core.mkd.impl;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvFastMarketDataEvent;
+import io.cygnuxltb.jcts.core.ser.event.FastMarketDataEvent;
 import io.mercury.common.datetime.Timestamp;
 
 public final class FastMarketDataBridge implements MarketData {
 
-    private final AvFastMarketDataEvent marketData;
+    private final FastMarketDataEvent marketData;
 
     private final double[] bidPrices = new double[5];
     private final int[] bidVolumes = new int[5];
@@ -15,7 +15,7 @@ public final class FastMarketDataBridge implements MarketData {
     private final int[] askVolumes = new int[5];
 
     private FastMarketDataBridge() {
-        this.marketData = AvFastMarketDataEvent
+        this.marketData = FastMarketDataEvent
                 // call -> new builder
                 .newBuilder()
                 // set -> timestamp, instrumentId, instrumentCode
@@ -45,7 +45,7 @@ public final class FastMarketDataBridge implements MarketData {
         return new FastMarketDataBridge();
     }
 
-    public AvFastMarketDataEvent getFastMarketData() {
+    public FastMarketDataEvent getFastMarketData() {
         return marketData;
     }
 

@@ -2,7 +2,9 @@ package io.cygnuxltb.jcts.core.account;
 
 
 import io.mercury.common.config.ConfigOption;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public enum AccountConfig implements ConfigOption {
 
     AccountId("sys.accountId"),
@@ -21,12 +23,9 @@ public enum AccountConfig implements ConfigOption {
 
     private final String configName;
 
-    AccountConfig(String configName) {
-        this.configName = configName;
-    }
-
     @Override
     public String getConfigName() {
         return configName;
     }
+
 }

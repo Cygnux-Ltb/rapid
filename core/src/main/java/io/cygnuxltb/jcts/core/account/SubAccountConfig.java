@@ -2,7 +2,9 @@ package io.cygnuxltb.jcts.core.account;
 
 
 import io.mercury.common.config.ConfigOption;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public enum SubAccountConfig implements ConfigOption {
 
     SubAccountId("sys.subAccountId"),
@@ -14,10 +16,6 @@ public enum SubAccountConfig implements ConfigOption {
     SubCredit("sys.subCredit");
 
     private final String configName;
-
-    SubAccountConfig(String configName) {
-        this.configName = configName;
-    }
 
     @Override
     public String getConfigName() {

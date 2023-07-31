@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.core.handler;
 
 import io.cygnuxltb.jcts.core.mkd.MarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;
@@ -58,13 +58,13 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderEvent(@Nonnull AvOrderEvent event) {
+        public void onOrderEvent(@Nonnull OrderEvent event) {
             if (orderEventHandler != null)
                 orderEventHandler.onOrderEvent(event);
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+        public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
             if (adaptorEventHandler != null)
                 adaptorEventHandler.onAdaptorEvent(event);
         }
@@ -123,12 +123,12 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onOrderEvent(@Nonnull AvOrderEvent event) {
+        public void onOrderEvent(@Nonnull OrderEvent event) {
             log.info("InboundSchedulerLogger record OrderEvent -> {}", event);
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+        public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
             log.info("InboundSchedulerLogger record AdaptorEvent -> {}", event);
         }
 

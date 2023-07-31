@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.instrument.attr;
+package io.cygnuxltb.jcts.core.instrument.enums;
 
 import java.time.Duration;
 import java.util.concurrent.SynchronousQueue;

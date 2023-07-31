@@ -1,26 +1,19 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdDirection;
+import lombok.RequiredArgsConstructor;
 
-public enum TrdDirection implements TdxProvider<AEnumTrdDirection> {
+@RequiredArgsConstructor
+public enum TrdDirection {
 
-    Invalid(TrdDirectionCode.INVALID, AEnumTrdDirection.INVALID),
+    Invalid(TrdDirectionCode.INVALID),
 
-    Long(TrdDirectionCode.LONG, AEnumTrdDirection.LONG),
+    Long(TrdDirectionCode.LONG),
 
-    Short(TrdDirectionCode.SHORT, AEnumTrdDirection.SHORT),
+    Short(TrdDirectionCode.SHORT),
 
     ;
 
     private final char code;
-
-    private final AEnumTrdDirection tdxValue;
-
-    TrdDirection(char code, AEnumTrdDirection tdxValue) {
-        this.code = code;
-        this.tdxValue = tdxValue;
-    }
 
     public char getCode() {
         return code;
@@ -39,21 +32,16 @@ public enum TrdDirection implements TdxProvider<AEnumTrdDirection> {
     }
 
     /**
-     * @param tdxValue TdxTrdDirection
      * @return TrdDirection
      */
-    public static TrdDirection valueOf(AEnumTrdDirection tdxValue) {
-        return switch (tdxValue) {
+    public static TrdDirection valueOf(io.cygnuxltb.jcts.core.ser.enums.TrdDirection direction) {
+        return switch (direction) {
             case LONG -> TrdDirection.Long;
             case SHORT -> TrdDirection.Short;
             default -> TrdDirection.Invalid;
         };
     }
 
-    @Override
-    public AEnumTrdDirection getTdxValue() {
-        return tdxValue;
-    }
 
     public interface TrdDirectionCode {
         // 无效

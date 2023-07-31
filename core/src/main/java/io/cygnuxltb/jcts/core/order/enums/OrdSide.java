@@ -1,42 +1,41 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
 import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdSide;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-public enum OrdSide implements TdxProvider<AEnumOrdSide> {
+public enum OrdSide implements TdxProvider<io.cygnuxltb.jcts.core.ser.enums.OrdSide> {
 
     /**
      * 无效
      */
-    Invalid(OrdSideCode.INVALID, AEnumOrdSide.INVALID, TrdDirection.Invalid),
+    Invalid(OrdSideCode.INVALID, io.cygnuxltb.jcts.core.ser.enums.OrdSide.INVALID, TrdDirection.Invalid),
 
     /**
      * 买
      */
-    Buy(OrdSideCode.BUY, AEnumOrdSide.BUY, TrdDirection.Long),
+    Buy(OrdSideCode.BUY, io.cygnuxltb.jcts.core.ser.enums.OrdSide.BUY, TrdDirection.Long),
 
     /**
      * 卖
      */
-    Sell(OrdSideCode.SELL, AEnumOrdSide.SELL, TrdDirection.Short),
+    Sell(OrdSideCode.SELL, io.cygnuxltb.jcts.core.ser.enums.OrdSide.SELL, TrdDirection.Short),
 
     /**
      * 融资买入
      */
-    MarginBuy(OrdSideCode.MARGIN_BUY, AEnumOrdSide.MARGIN_BUY, TrdDirection.Long),
+    MarginBuy(OrdSideCode.MARGIN_BUY, io.cygnuxltb.jcts.core.ser.enums.OrdSide.MARGIN_BUY, TrdDirection.Long),
 
     /**
      * 融券卖出
      */
-    ShortSell(OrdSideCode.SHORT_SELL, AEnumOrdSide.SHORT_SELL, TrdDirection.Short),
+    ShortSell(OrdSideCode.SHORT_SELL, io.cygnuxltb.jcts.core.ser.enums.OrdSide.SHORT_SELL, TrdDirection.Short),
 
     ;
 
     private final char code;
 
-    private final AEnumOrdSide tdxValue;
+    private final io.cygnuxltb.jcts.core.ser.enums.OrdSide tdxValue;
 
     private final TrdDirection direction;
 
@@ -44,7 +43,7 @@ public enum OrdSide implements TdxProvider<AEnumOrdSide> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrdSide.class);
 
-    OrdSide(char code, AEnumOrdSide tdxValue, TrdDirection direction) {
+    OrdSide(char code, io.cygnuxltb.jcts.core.ser.enums.OrdSide tdxValue, TrdDirection direction) {
         this.code = code;
         this.tdxValue = tdxValue;
         this.direction = direction;
@@ -81,7 +80,7 @@ public enum OrdSide implements TdxProvider<AEnumOrdSide> {
     }
 
     @Override
-    public AEnumOrdSide getTdxValue() {
+    public io.cygnuxltb.jcts.core.ser.enums.OrdSide getTdxValue() {
         return tdxValue;
     }
 

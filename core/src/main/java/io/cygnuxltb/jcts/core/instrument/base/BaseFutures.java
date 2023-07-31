@@ -2,7 +2,7 @@ package io.cygnuxltb.jcts.core.instrument.base;
 
 
 import io.cygnuxltb.jcts.core.instrument.Symbol;
-import io.cygnuxltb.jcts.core.instrument.attr.InstrumentType;
+import io.cygnuxltb.jcts.core.instrument.enums.InstrumentType;
 
 public abstract class BaseFutures extends BaseInstrument {
 

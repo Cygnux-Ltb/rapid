@@ -2,7 +2,7 @@ package io.cygnuxltb.jcts.core.pool;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.Symbol;
-import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
 import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;

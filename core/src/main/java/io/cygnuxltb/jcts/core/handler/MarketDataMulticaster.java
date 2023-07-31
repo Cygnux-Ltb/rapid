@@ -31,11 +31,7 @@ public final class MarketDataMulticaster<I, E extends MarketData>
                                  @Nonnull EventTranslatorOneArg<E, I> translator) {
         this.builder = RingMulticaster
                 // 单生产者广播器
-                .withSingleProducer(eventFactory,
-                        (E event, long sequence, I in) -> {
-                            event.updated();
-                            translator.translateTo(event, sequence, in);
-                        })
+                .withSingleProducer(eventFactory, translator)
                 // 设置缓冲区大小
                 .size(64)
                 // 设置AdaptorName加后缀
@@ -90,4 +86,5 @@ public final class MarketDataMulticaster<I, E extends MarketData>
     protected void stop0() {
         multicaster.stop();
     }
+
 }

@@ -1,6 +1,7 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 
 import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.INVALID;
@@ -14,6 +15,7 @@ import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.UNA
 /**
  * @author yellow013
  */
+@RequiredArgsConstructor
 public enum AdaptorStatus {
 
     /**
@@ -51,10 +53,6 @@ public enum AdaptorStatus {
     private final char code;
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AdaptorStatus.class);
-
-    AdaptorStatus(char code) {
-        this.code = code;
-    }
 
     public char getCode() {
         return code;

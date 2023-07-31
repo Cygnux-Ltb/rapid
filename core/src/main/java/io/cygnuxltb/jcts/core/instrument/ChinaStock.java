@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.instrument;
 
-import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
-import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.enums.PriceMultiplier;
+import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
 import io.cygnuxltb.jcts.core.instrument.base.BaseStock;
 import org.eclipse.collections.api.list.ImmutableList;
 

@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.handler;
 
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 @FunctionalInterface
 public interface AdaptorEventHandler {
 
-    void onAdaptorEvent(@Nonnull final AvAdaptorEvent event);
+    void onAdaptorEvent(@Nonnull final AdaptorEvent event);
 
     /**
      * Logger implements AdaptorEventHandler
@@ -25,7 +25,7 @@ public interface AdaptorEventHandler {
         }
 
         @Override
-        public void onAdaptorEvent(@Nonnull final AvAdaptorEvent report) {
+        public void onAdaptorEvent(@Nonnull final AdaptorEvent report) {
             log.info("AdaptorEventLogger -> {}", report);
         }
 

@@ -1,45 +1,38 @@
 package io.cygnuxltb.jcts.core.order.enums;
 
-import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumTrdAction;
+import lombok.RequiredArgsConstructor;
 
-public enum TrdAction implements TdxProvider<AEnumTrdAction> {
+@RequiredArgsConstructor
+public enum TrdAction {
 
     /**
      * 无效
      */
-    Invalid(TrdActionCode.INVALID, AEnumTrdAction.INVALID),
+    Invalid(TrdActionCode.INVALID),
 
     /**
      * 开仓
      */
-    Open(TrdActionCode.OPEN, AEnumTrdAction.OPEN),
+    Open(TrdActionCode.OPEN),
 
     /**
      * 平仓
      */
-    Close(TrdActionCode.CLOSE, AEnumTrdAction.CLOSE),
+    Close(TrdActionCode.CLOSE),
 
     /**
      * 平今仓
      */
-    CloseToday(TrdActionCode.CLOSE_TODAY, AEnumTrdAction.CLOSE_TODAY),
+    CloseToday(TrdActionCode.CLOSE_TODAY),
 
     /**
      * 平昨仓
      */
-    CloseYesterday(TrdActionCode.CLOSE_YESTERDAY, AEnumTrdAction.CLOSE_YESTERDAY),
+    CloseYesterday(TrdActionCode.CLOSE_YESTERDAY),
 
     ;
 
     private final char code;
-
-    private final AEnumTrdAction tdxValue;
-
-    TrdAction(char code, AEnumTrdAction tdxValue) {
-        this.code = code;
-        this.tdxValue = tdxValue;
-    }
 
     public char getCode() {
         return code;
@@ -59,7 +52,7 @@ public enum TrdAction implements TdxProvider<AEnumTrdAction> {
         };
     }
 
-    public static TrdAction valueOf(AEnumTrdAction action) {
+    public static TrdAction valueOf(io.cygnuxltb.jcts.core.ser.enums.TrdAction action) {
         return switch (action) {
             case OPEN -> Open;
             case CLOSE -> Close;
@@ -69,10 +62,6 @@ public enum TrdAction implements TdxProvider<AEnumTrdAction> {
         };
     }
 
-    @Override
-    public AEnumTrdAction getTdxValue() {
-        return tdxValue;
-    }
 
     public interface TrdActionCode {
         // 无效

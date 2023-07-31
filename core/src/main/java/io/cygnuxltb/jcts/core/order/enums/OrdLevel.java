@@ -2,44 +2,41 @@ package io.cygnuxltb.jcts.core.order.enums;
 
 
 import io.cygnuxltb.jcts.core.order.TdxProvider;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumOrdLevel;
+import lombok.RequiredArgsConstructor;
 
-public enum OrdLevel implements TdxProvider<AEnumOrdLevel> {
+@RequiredArgsConstructor
+public enum OrdLevel implements TdxProvider<io.cygnuxltb.jcts.core.ser.enums.OrdLevel> {
 
     /**
      * 子订单
      */
-    Child('C', AEnumOrdLevel.CHILD),
+    Child('C', io.cygnuxltb.jcts.core.ser.enums.OrdLevel.CHILD),
 
     /**
      * 父订单
      */
-    Parent('P', AEnumOrdLevel.PARENT),
+    Parent('P', io.cygnuxltb.jcts.core.ser.enums.OrdLevel.PARENT),
 
     /**
      * 策略订单
      */
-    Strategy('S', AEnumOrdLevel.STRATEGY),
+    Strategy('S', io.cygnuxltb.jcts.core.ser.enums.OrdLevel.STRATEGY),
 
     /**
      * 组订单
      */
-    Group('G', AEnumOrdLevel.GROUP);
+    Group('G', io.cygnuxltb.jcts.core.ser.enums.OrdLevel.GROUP);
 
     private final char code;
-    private final AEnumOrdLevel tdxValue;
-
-    OrdLevel(char code, AEnumOrdLevel tdxValue) {
-        this.code = code;
-        this.tdxValue = tdxValue;
-    }
+    private final io.cygnuxltb.jcts.core.ser.enums.OrdLevel tdxValue;
 
     public char getCode() {
         return code;
     }
 
     @Override
-    public AEnumOrdLevel getTdxValue() {
+    public io.cygnuxltb.jcts.core.ser.enums.OrdLevel getTdxValue() {
         return tdxValue;
     }
+
 }

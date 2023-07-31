@@ -2,9 +2,8 @@ package io.cygnuxltb.jcts.core.instrument.base;
 
 import io.cygnuxltb.jcts.core.instrument.Exchange;
 import io.cygnuxltb.jcts.core.instrument.Symbol;
-import io.cygnuxltb.jcts.core.instrument.attr.InstrumentType;
-import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
-import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.enums.InstrumentType;
+import io.cygnuxltb.jcts.core.instrument.enums.PriceMultiplier;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class BaseStock extends BaseInstrument implements Symbol {

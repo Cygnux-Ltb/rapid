@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.core.instrument;
 
-import io.cygnuxltb.jcts.core.instrument.attr.InstrumentType;
-import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
-import io.cygnuxltb.jcts.core.instrument.attr.PriorityCloseType;
+import io.cygnuxltb.jcts.core.instrument.enums.InstrumentType;
+import io.cygnuxltb.jcts.core.instrument.enums.PriceMultiplier;
+import io.cygnuxltb.jcts.core.instrument.enums.PriorityCloseType;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.functional.Formatter;
 

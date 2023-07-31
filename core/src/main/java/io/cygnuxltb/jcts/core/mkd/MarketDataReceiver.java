@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.mkd;
 
 
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvMarketDataSubscribeRequest;
+import io.cygnuxltb.jcts.core.ser.req.MarketDataSubscribe;
 
 import javax.annotation.Nonnull;
 
@@ -14,6 +14,6 @@ public interface MarketDataReceiver {
      * @param request AvMarketDataSubscribeRequest
      * @return boolean
      */
-    boolean subscribeMarketData(@Nonnull AvMarketDataSubscribeRequest request);
+    boolean subscribeMarketData(@Nonnull MarketDataSubscribe request);
 
 }

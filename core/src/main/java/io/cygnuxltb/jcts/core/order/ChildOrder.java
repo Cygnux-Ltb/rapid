@@ -10,9 +10,9 @@ import io.cygnuxltb.jcts.core.order.attr.OrdQty;
 import io.cygnuxltb.jcts.core.order.enums.OrdType;
 import io.cygnuxltb.jcts.core.order.enums.TrdAction;
 import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -124,7 +124,7 @@ public class ChildOrder extends AbstractOrder {
      * @param event OrderReport
      * @return ChildOrder
      */
-    public static ChildOrder newExternalOrder(AvOrderEvent event) {
+    public static ChildOrder newExternalOrder(OrderEvent event) {
         var account = AccountFinder.getAccountByInvestorId(event.getInvestorId());
         var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
         var direction = TrdDirection.valueOf(event.getDirection());
@@ -245,7 +245,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return NewOrder
      */
-    public AvNewOrderRequest toNewOrder() {
+    public NewOrder toNewOrder() {
         // TODO
         return null;
     }
@@ -253,7 +253,7 @@ public class ChildOrder extends AbstractOrder {
     /**
      * @return CancelOrder
      */
-    public AvCancelOrderRequest toCancelOrder() {
+    public CancelOrder toCancelOrder() {
         // TODO
         return null;
     }

@@ -3,9 +3,9 @@ package io.cygnuxltb.jcts.core.instrument.futures;
 import io.cygnuxltb.jcts.core.instrument.Exchange;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.Symbol;
-import io.cygnuxltb.jcts.core.instrument.attr.PriceMultiplier;
-import io.cygnuxltb.jcts.core.instrument.attr.PriorityCloseType;
-import io.cygnuxltb.jcts.core.instrument.attr.TradablePeriod;
+import io.cygnuxltb.jcts.core.instrument.enums.PriceMultiplier;
+import io.cygnuxltb.jcts.core.instrument.enums.PriorityCloseType;
+import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
 import io.cygnuxltb.jcts.core.instrument.base.BaseFutures;
 import io.mercury.common.collections.ImmutableLists;
 import io.mercury.common.collections.MutableLists;
@@ -45,7 +45,7 @@ public final class ChinaFutures {
     /**
      * 固定价格乘数
      */
-    public static final PriceMultiplier FixedMultiplier = PriceMultiplier.MULTIPLIER_10000;
+    public static final PriceMultiplier FixedMultiplier = PriceMultiplier.MULTIPLIER_4;
 
     /**
      * 交易日分割点
@@ -152,7 +152,7 @@ public final class ChinaFutures {
         /**
          * 黄金
          */
-        AU(SHFE, "au", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_10000,
+        AU(SHFE, "au", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_4,
                 // 黄金期货交易时段
                 new TradablePeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(2, 30, 0)),
@@ -358,7 +358,7 @@ public final class ChinaFutures {
         /**
          * 铁矿石 i
          */
-        I(DCE, "i", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_100,
+        I(DCE, "i", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 铁矿石期货交易时段
                 new TradablePeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
@@ -456,7 +456,7 @@ public final class ChinaFutures {
         /**
          * 沪深300
          */
-        IF(CFFEX, "IF", 1, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_100,
+        IF(CFFEX, "IF", 1, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
                 new TradablePeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
@@ -469,7 +469,7 @@ public final class ChinaFutures {
         /**
          * 上证50
          */
-        IH(CFFEX, "IH", 2, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_100,
+        IH(CFFEX, "IH", 2, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
                 new TradablePeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
@@ -482,7 +482,7 @@ public final class ChinaFutures {
         /**
          * 中证500
          */
-        IC(CFFEX, "IC", 3, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_100,
+        IC(CFFEX, "IC", 3, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
                 new TradablePeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
