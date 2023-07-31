@@ -3,8 +3,8 @@ package io.cygnuxltb.jcts.engine.manager;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
@@ -55,7 +55,7 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
                             strategyMap.get(order.getStrategyId()).onOrder(order);
                         }
                         case AdaptorEvent -> {
-                            AvAdaptorEvent adaptorReport = msg.getAdaptorEvent();
+                            AdaptorEvent adaptorReport = msg.getAdaptorEvent();
                             String adaptorId = adaptorReport.getAdaptorId();
                             log.info("Recv AdaptorEvent -> {}", adaptorReport);
                         }
@@ -72,13 +72,13 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
 
     // TODO add pools
     @Override
-    public void onOrderEvent(@Nonnull AvOrderEvent event) {
+    public void onOrderEvent(@Nonnull OrderEvent event) {
         queue.enqueue(new QueueMsg(event));
     }
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull AvAdaptorEvent report) {
+    public void onAdaptorEvent(@Nonnull io.cygnuxltb.jcts.core.ser.event.AdaptorEvent report) {
         queue.enqueue(new QueueMsg(report));
     }
 
@@ -88,21 +88,21 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
 
         private M marketData;
 
-        private AvOrderEvent orderEvent;
+        private OrderEvent orderEvent;
 
-        private AvAdaptorEvent adaptorEvent;
+        private AdaptorEvent adaptorEvent;
 
         private QueueMsg(M marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
 
-        private QueueMsg(AvOrderEvent orderEvent) {
+        private QueueMsg(OrderEvent orderEvent) {
             this.mark = OrderReport;
             this.orderEvent = orderEvent;
         }
 
-        private QueueMsg(AvAdaptorEvent adaptorEvent) {
+        private QueueMsg(AdaptorEvent adaptorEvent) {
             this.mark = AdaptorEvent;
             this.adaptorEvent = adaptorEvent;
         }
@@ -115,11 +115,11 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
             return marketData;
         }
 
-        public AvOrderEvent getOrderEvent() {
+        public OrderEvent getOrderEvent() {
             return orderEvent;
         }
 
-        public AvAdaptorEvent getAdaptorEvent() {
+        public AdaptorEvent getAdaptorEvent() {
             return adaptorEvent;
         }
 

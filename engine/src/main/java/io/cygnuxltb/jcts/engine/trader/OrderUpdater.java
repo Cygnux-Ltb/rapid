@@ -2,7 +2,7 @@ package io.cygnuxltb.jcts.engine.trader;
 
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -18,7 +18,7 @@ public final class OrderUpdater {
      * @param order ChildOrder
      * @param event DtoOrderReport
      */
-    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull AvOrderEvent event) {
+    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull OrderEvent event) {
         var qty = order.getQty();
         int filledQty = event.getFilledQty();
         OrdStatus status = OrdStatus.valueOf(event.getStatus());

@@ -7,7 +7,7 @@ import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.order.Order;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
 import io.cygnuxltb.jcts.core.strategy.StrategyException;
@@ -64,7 +64,7 @@ public class StrategyImpl<M extends MarketData> implements Strategy<M> {
     };
 
     @Override
-    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
         adaptorEventHandler.onAdaptorEvent(event);
     }
 

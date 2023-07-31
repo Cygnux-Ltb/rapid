@@ -15,8 +15,8 @@ import io.cygnuxltb.jcts.core.order.enums.OrdType;
 import io.cygnuxltb.jcts.core.order.enums.TrdAction;
 import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import io.cygnuxltb.jcts.core.risk.CircuitBreaker;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
+import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
+import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
 import io.cygnuxltb.jcts.engine.position.PositionKeeper;
@@ -71,10 +71,10 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     protected final Params<K> params;
 
     // TODO
-    protected AvQueryPositionsRequest queryPositions;
+    protected QueryPositions queryPositions;
 
     // TODO
-    protected AvQueryBalanceRequest queryBalance;
+    protected QueryBalance queryBalance;
 
     private final OrdSysIdAllocator allocator;
 
@@ -101,9 +101,9 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositions = AvQueryPositionsRequest.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryPositions = QueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
-        this.queryBalance = AvQueryBalanceRequest.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
+        this.queryBalance = QueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
                 .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
         var snowflake = new SnowflakeAlgo(id);
         this.allocator = snowflake::next;

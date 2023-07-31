@@ -2,8 +2,8 @@ package io.cygnuxltb.jcts.engine.manager;
 
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public final class SyncMultiStrategyManager<M extends MarketData> extends MultiS
     }
 
     @Override
-    public void onOrderEvent(@Nonnull AvOrderEvent event) {
+    public void onOrderEvent(@Nonnull OrderEvent event) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                 event.getOrdSysId());
         var order = OrderKeeper.handleOrderReport(event);
@@ -45,7 +45,7 @@ public final class SyncMultiStrategyManager<M extends MarketData> extends MultiS
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
         log.info("Recv AdaptorEvent -> {}", event);
     }
 

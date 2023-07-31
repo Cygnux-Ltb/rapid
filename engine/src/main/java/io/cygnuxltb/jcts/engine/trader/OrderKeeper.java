@@ -10,7 +10,7 @@ import io.cygnuxltb.jcts.core.order.Order;
 import io.cygnuxltb.jcts.core.order.enums.OrdType;
 import io.cygnuxltb.jcts.core.order.enums.TrdAction;
 import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -107,7 +107,7 @@ public final class OrderKeeper implements Serializable {
      * @param event AvOrderEvent
      * @return ChildOrder
      */
-    public static ChildOrder handleOrderReport(AvOrderEvent event) {
+    public static ChildOrder handleOrderReport(OrderEvent event) {
         log.info("Handle OrderEvent, event -> {}", event);
         // 根据订单回报查找所属订单
         Order order = getOrder(event.getOrdSysId());

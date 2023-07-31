@@ -4,7 +4,7 @@ import io.cygnuxltb.jcts.core.account.SubAccount;
 import io.cygnuxltb.jcts.core.adaptor.Adaptor;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.MarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.lang.Asserter;
@@ -72,7 +72,7 @@ public abstract class SingleInstrumentStrategy<M extends MarketData, K extends P
     }
 
     @Override
-    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getName(),
                 event.getAdaptorId(), event.getStatus());
         switch (event.getStatus()) {

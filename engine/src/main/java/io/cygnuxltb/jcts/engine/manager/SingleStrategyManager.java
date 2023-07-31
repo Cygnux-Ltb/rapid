@@ -2,8 +2,8 @@ package io.cygnuxltb.jcts.engine.manager;
 
 import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -41,14 +41,14 @@ public class SingleStrategyManager<M extends MarketData> implements StrategyMana
     }
 
     @Override
-    public void onOrderEvent(@Nonnull AvOrderEvent event) {
+    public void onOrderEvent(@Nonnull OrderEvent event) {
         var order = OrderKeeper.handleOrderReport(event);
         // 调用策略实现的订单回调函数
         strategy.onOrder(order);
     }
 
     @Override
-    public void onAdaptorEvent(@Nonnull AvAdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
         log.error("On Adaptor event -> {}", event);
         strategy.onAdaptorEvent(event);
     }

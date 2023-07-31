@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.trader;
 
 import io.cygnuxltb.jcts.core.order.Order;
-import io.cygnuxltb.jcts.core.order.enums.OrdStatus.OrdStatusException;
+import io.cygnuxltb.jcts.core.order.Order.OrdStatusException;
 import io.mercury.common.collections.Capacity;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 
