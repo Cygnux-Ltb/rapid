@@ -4,8 +4,8 @@ import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
 import io.cygnuxltb.adaptor.ctp.consts.FtdcConst;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -117,7 +117,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderField convertToInputOrder(AvNewOrderRequest request) {
+    public CThostFtdcInputOrderField convertToInputOrder(NewOrder request) {
         // 创建FTDC报单类型
         var field = new CThostFtdcInputOrderField();
         // 经纪公司代码
@@ -268,7 +268,7 @@ public final class FtdcOrderConverter {
      * };
      *         </pre>
      */
-    public CThostFtdcInputOrderActionField convertToInputOrderAction(AvCancelOrderRequest request) {
+    public CThostFtdcInputOrderActionField convertToInputOrderAction(CancelOrder request) {
         // 创建FTDC撤单类型
         var field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码

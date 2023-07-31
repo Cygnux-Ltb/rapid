@@ -13,11 +13,11 @@ import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
 import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
 import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
+import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
@@ -178,7 +178,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull AvNewOrderRequest request) {
+    public boolean newOrder(@Nonnull NewOrder request) {
         try {
             CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(request);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
@@ -194,7 +194,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull AvCancelOrderRequest request) {
+    public boolean cancelOrder(@Nonnull CancelOrder request) {
         try {
             CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(request);
             String orderRef = OrderRefKeeper.getOrderRef(request.getOrdSysId());
@@ -219,7 +219,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     private final long queryInterval = 1100L;
 
     @Override
-    public boolean queryOrder(@Nonnull AvQueryOrderRequest request) {
+    public boolean queryOrder(@Nonnull QueryOrder request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
@@ -240,7 +240,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull AvQueryPositionsRequest request) {
+    public boolean queryPositions(@Nonnull QueryPositions request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
@@ -261,7 +261,7 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull AvQueryBalanceRequest request) {
+    public boolean queryBalance(@Nonnull QueryBalance request) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {

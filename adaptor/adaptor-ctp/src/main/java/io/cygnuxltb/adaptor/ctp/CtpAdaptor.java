@@ -20,13 +20,13 @@ import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
 import io.cygnuxltb.jcts.core.handler.OrderEventHandler;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
-import io.cygnuxltb.jcts.core.serialization.avro.enums.AEnumAdaptorStatus;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvAdaptorEvent;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvCancelOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvNewOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryBalanceRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryOrderRequest;
-import io.cygnuxltb.jcts.core.serialization.avro.request.AvQueryPositionsRequest;
+import io.cygnuxltb.jcts.core.ser.enums.AdaptorStatus;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
+import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
@@ -155,13 +155,13 @@ public class CtpAdaptor extends AbstractAdaptor {
                             var mdConnect = msg.getMdConnect();
                             this.mdAvailable = mdConnect.available();
                             log.info("Adaptor buf processed FtdcMdConnect, isMdAvailable==[{}]", mdAvailable);
-                            final AvAdaptorEvent mdReport;
+                            final AdaptorEvent mdReport;
                             if (mdAvailable)
-                                mdReport = AvAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(AEnumAdaptorStatus.MD_ENABLE).build();
+                                mdReport = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AdaptorStatus.MD_ENABLE).build();
                             else
-                                mdReport = AvAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(AEnumAdaptorStatus.MD_DISABLE).build();
+                                mdReport = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AdaptorStatus.MD_DISABLE).build();
                             scheduler.onAdaptorEvent(mdReport);
                         }
                         case TraderConnect -> {
@@ -172,13 +172,13 @@ public class CtpAdaptor extends AbstractAdaptor {
                             log.info(
                                     "Adaptor buf processed FtdcTraderConnect, isTraderAvailable==[{}], frontId==[{}], sessionId==[{}]",
                                     isTraderAvailable, frontId, sessionId);
-                            final AvAdaptorEvent adaptorEvent;
+                            final AdaptorEvent adaptorEvent;
                             if (isTraderAvailable)
-                                adaptorEvent = AvAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(AEnumAdaptorStatus.TRADER_ENABLE).build();
+                                adaptorEvent = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AdaptorStatus.TRADER_ENABLE).build();
                             else
-                                adaptorEvent = AvAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(AEnumAdaptorStatus.TRADER_DISABLE).build();
+                                adaptorEvent = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AdaptorStatus.TRADER_DISABLE).build();
                             scheduler.onAdaptorEvent(adaptorEvent);
                         }
                         case DepthMarketData -> {
@@ -373,7 +373,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull AvNewOrderRequest request) {
+    public boolean newOrder(@Nonnull NewOrder request) {
         try {
             CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(request);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
@@ -389,7 +389,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull AvCancelOrderRequest request) {
+    public boolean cancelOrder(@Nonnull CancelOrder request) {
         try {
             CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(request);
             String orderRef = OrderRefKeeper.getOrderRef(request.getOrdSysId());
@@ -414,7 +414,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final long queryInterval = 1100L;
 
     @Override
-    public boolean queryOrder(@Nonnull AvQueryOrderRequest req) {
+    public boolean queryOrder(@Nonnull QueryOrder req) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
@@ -435,7 +435,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull AvQueryPositionsRequest req) {
+    public boolean queryPositions(@Nonnull QueryPositions req) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
@@ -456,7 +456,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull AvQueryBalanceRequest req) {
+    public boolean queryBalance(@Nonnull QueryBalance req) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {

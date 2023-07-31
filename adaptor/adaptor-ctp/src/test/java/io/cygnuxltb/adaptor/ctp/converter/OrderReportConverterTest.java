@@ -1,9 +1,9 @@
 package io.cygnuxltb.adaptor.ctp.converter;
 
-import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
-import io.cygnuxltb.jcts.core.order.enums.TrdAction;
-import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
-import io.cygnuxltb.jcts.core.serialization.avro.event.AvOrderEvent;
+import io.cygnuxltb.jcts.core.ser.enums.OrdStatus;
+import io.cygnuxltb.jcts.core.ser.enums.TrdAction;
+import io.cygnuxltb.jcts.core.ser.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
@@ -18,7 +18,7 @@ public class OrderReportConverterTest {
 
     @Test
     public void test() {
-        var builder = AvOrderEvent.newBuilder();
+        var builder = OrderEvent.newBuilder();
         // 微秒时间戳
         builder.setEpochMicros(EpochTime.getEpochMicros());
         // OrdSysId
@@ -31,11 +31,11 @@ public class OrderReportConverterTest {
                 .setBrokerOrdSysId("");
         // 报单编号
         // 报单状态
-        builder.setStatus(OrdStatus.NewRejected.getTdxValue());
-        builder.setDirection(TrdDirection.Long.getTdxValue());
-        builder.setAction(TrdAction.Open.getTdxValue());
-        AvOrderEvent report = builder.build();
-        System.out.println(JsonWrapper.toJson(report));
+        builder.setStatus(OrdStatus.NEW_REJECTED);
+        builder.setDirection(TrdDirection.LONG);
+        builder.setAction(TrdAction.OPEN);
+        OrderEvent event = builder.build();
+        System.out.println(JsonWrapper.toJson(event));
 
     }
 

@@ -1,8 +1,8 @@
 package io.cygnuxltb.adaptor.ctp.consts;
 
-import io.cygnuxltb.jcts.core.order.enums.OrdStatus;
-import io.cygnuxltb.jcts.core.order.enums.TrdAction;
-import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
+import io.cygnuxltb.jcts.core.ser.enums.TrdAction;
+import io.cygnuxltb.jcts.core.ser.enums.OrdStatus;
+import io.cygnuxltb.jcts.core.ser.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 
@@ -34,18 +34,18 @@ public final class FtdcConstMapper {
     public static OrdStatus withOrderStatus(char orderStatus) {
         return  // 未成交不在队列中 or 未成交还在队列中 return [OrdStatus.New]
                 NO_TRADE_NOT_QUEUEING == orderStatus || NO_TRADE_QUEUEING == orderStatus
-                        ? OrdStatus.New
+                        ? OrdStatus.NEW
                         // 部分成交不在队列中 or 部分成交还在队列中 return [OrdStatus.PartiallyFilled]
                         : PART_TRADED_NOT_QUEUEING == orderStatus || PART_TRADED_QUEUEING == orderStatus
-                        ? OrdStatus.PartiallyFilled
+                        ? OrdStatus.PARTIALLY_FILLED
                         // 全部成交 return [OrdStatus.Filled]
                         : ALL_TRADED == orderStatus
-                        ? OrdStatus.Filled
+                        ? OrdStatus.FILLED
                         // 撤单 return [OrdStatus.Canceled]
                         : CANCELED == orderStatus
-                        ? OrdStatus.Canceled
+                        ? OrdStatus.CANCELED
                         // return [OrdStatus.Invalid]
-                        : OrdStatus.Invalid;
+                        : OrdStatus.INVALID;
     }
 
     /**
@@ -68,15 +68,15 @@ public final class FtdcConstMapper {
     @Nonnull
     public static TrdAction withOffsetFlag(char offsetFlag) {
         return  // 开仓
-                OPEN == offsetFlag ? TrdAction.Open
+                OPEN == offsetFlag ? TrdAction.OPEN
                         // 平仓
-                        : CLOSE == offsetFlag ? TrdAction.Close
+                        : CLOSE == offsetFlag ? TrdAction.CLOSE
                         // 平今
-                        : CLOSE_TODAY == offsetFlag ? TrdAction.CloseToday
+                        : CLOSE_TODAY == offsetFlag ? TrdAction.CLOSE_TODAY
                         // 平昨
-                        : CLOSE_YESTERDAY == offsetFlag ? TrdAction.CloseYesterday
+                        : CLOSE_YESTERDAY == offsetFlag ? TrdAction.CLOSE_YESTERDAY
                         // 未知
-                        : TrdAction.Invalid;
+                        : TrdAction.INVALID;
     }
 
     /**
@@ -87,11 +87,11 @@ public final class FtdcConstMapper {
      */
     public static TrdDirection withDirection(char direction) {
         return  // 买
-                BUY == direction ? TrdDirection.Long
+                BUY == direction ? TrdDirection.LONG
                         // 卖
-                        : SELL == direction ? TrdDirection.Short
+                        : SELL == direction ? TrdDirection.SHORT
                         // 未知
-                        : TrdDirection.Invalid;
+                        : TrdDirection.INVALID;
     }
 
 }
