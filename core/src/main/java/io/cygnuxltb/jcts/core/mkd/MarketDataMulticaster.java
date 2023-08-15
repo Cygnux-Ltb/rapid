@@ -3,7 +3,7 @@ package io.cygnuxltb.jcts.core.handler;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventTranslatorOneArg;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.impl.FastMarketData;
 import io.mercury.common.concurrent.disruptor.RingMulticaster;
 import io.mercury.common.concurrent.disruptor.RingMulticaster.Builder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -17,18 +17,18 @@ import java.io.IOException;
 import static io.mercury.common.concurrent.disruptor.CommonWaitStrategy.BusySpin;
 import static io.mercury.common.thread.RunnableComponent.StartMode.manual;
 
-public final class MarketDataMulticaster<I, E extends MarketData>
+public final class MarketDataMulticaster<In>
         extends RunnableComponent implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(MarketDataMulticaster.class);
 
-    private RingMulticaster<E, I> multicaster;
+    private RingMulticaster<FastMarketData, In> multicaster;
 
-    private final Builder<E, I> builder;
+    private final Builder<FastMarketData, In> builder;
 
     public MarketDataMulticaster(String adaptorName,
-                                 @Nonnull EventFactory<E> eventFactory,
-                                 @Nonnull EventTranslatorOneArg<E, I> translator) {
+                                 @Nonnull EventFactory<FastMarketData> eventFactory,
+                                 @Nonnull EventTranslatorOneArg<FastMarketData, In> translator) {
         this.builder = RingMulticaster
                 // 单生产者广播器
                 .withSingleProducer(eventFactory, translator)
@@ -42,15 +42,15 @@ public final class MarketDataMulticaster<I, E extends MarketData>
                 .setWaitStrategy(BusySpin);
     }
 
-    public void publish(I in) {
+    public void publish(In in) {
         multicaster.publishEvent(in);
     }
 
     /**
      * @param handler MarketDataHandler<M>
      */
-    public void addMarketDataHandler(MarketDataHandler<E> handler) {
-        addEventHandler((E event, long sequence, boolean endOfBatch) -> {
+    public void addMarketDataHandler(MarketDataHandler handler) {
+        addEventHandler((FastMarketData event, long sequence, boolean endOfBatch) -> {
             try {
                 handler.onMarketData(event);
             } catch (Exception e) {
@@ -63,7 +63,7 @@ public final class MarketDataMulticaster<I, E extends MarketData>
     /**
      * @param handler EventHandler<M>
      */
-    public void addEventHandler(EventHandler<E> handler) {
+    public void addEventHandler(EventHandler<FastMarketData> handler) {
         builder.addHandler(handler);
     }
 

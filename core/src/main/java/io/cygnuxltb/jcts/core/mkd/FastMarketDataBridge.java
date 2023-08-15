@@ -1,11 +1,10 @@
 package io.cygnuxltb.jcts.core.mkd.impl;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.ser.event.FastMarketDataEvent;
 import io.mercury.common.datetime.Timestamp;
 
-public final class FastMarketDataBridge implements MarketData {
+public final class FastMarketDataBridge  {
 
     private final FastMarketDataEvent marketData;
 
@@ -55,168 +54,168 @@ public final class FastMarketDataBridge implements MarketData {
         return this;
     }
 
-    @Override
+
     public int getInstrumentId() {
         return marketData.getInstrumentId();
     }
 
-    @Override
+
     public String getInstrumentCode() {
         return marketData.getInstrumentCode();
     }
 
-    @Override
+
     public long getEpochMillis() {
         return marketData.getTimestamp();
     }
 
-    @Override
+
     public Timestamp getTimestamp() {
         return Timestamp.withEpochMillis(marketData.getTimestamp());
     }
 
-    @Override
+
     public double getLastPrice() {
         return marketData.getLastPrice();
     }
 
-    @Override
+
     public int getVolume() {
         return marketData.getVolume();
     }
 
-    @Override
+
     public long getTurnover() {
         return marketData.getTurnover();
     }
 
-    @Override
+
     public int getDepth() {
         return 5;
     }
 
-    @Override
+
     public double[] getBidPrices() {
         return bidPrices;
     }
 
-    @Override
+
     public double getBidPrice1() {
         return marketData.getBidPrices1();
     }
 
-    @Override
+
     public double getBidPrice2() {
         return marketData.getBidPrices2();
     }
 
-    @Override
+
     public double getBidPrice3() {
         return marketData.getBidPrices3();
     }
 
-    @Override
+
     public double getBidPrice4() {
         return marketData.getBidPrices4();
     }
 
-    @Override
+
     public double getBidPrice5() {
         return marketData.getBidPrices5();
     }
 
-    @Override
+
     public int[] getBidVolumes() {
         return bidVolumes;
     }
 
-    @Override
+
     public int getBidVolume1() {
         return marketData.getBidVolumes1();
     }
 
-    @Override
+
     public int getBidVolume2() {
         return marketData.getBidVolumes2();
     }
 
-    @Override
+
     public int getBidVolume3() {
         return marketData.getBidVolumes3();
     }
 
-    @Override
+
     public int getBidVolume4() {
         return marketData.getBidVolumes4();
     }
 
-    @Override
+
     public int getBidVolume5() {
         return marketData.getBidVolumes5();
     }
 
-    @Override
+
     public double[] getAskPrices() {
         return askPrices;
     }
 
-    @Override
+
     public double getAskPrice1() {
         return marketData.getAskPrices1();
     }
 
-    @Override
+
     public double getAskPrice2() {
         return marketData.getAskPrices2();
     }
 
-    @Override
+
     public double getAskPrice3() {
         return marketData.getAskPrices3();
     }
 
-    @Override
+
     public double getAskPrice4() {
         return marketData.getAskPrices4();
     }
 
-    @Override
+
     public double getAskPrice5() {
         return marketData.getAskPrices5();
     }
 
-    @Override
+
     public int[] getAskVolumes() {
         return askVolumes;
     }
 
-    @Override
+
     public int getAskVolume1() {
         return marketData.getAskVolumes1();
 
     }
 
-    @Override
+
     public int getAskVolume2() {
         return marketData.getAskVolumes2();
     }
 
-    @Override
+
     public int getAskVolume3() {
         return marketData.getAskVolumes3();
     }
 
-    @Override
+
     public int getAskVolume4() {
         return marketData.getAskVolumes4();
     }
 
-    @Override
+
     public int getAskVolume5() {
         return marketData.getAskVolumes5();
     }
 
-    @Override
+
     public void updated() {
         this.bidPrices[0] = marketData.getBidPrices1();
         this.bidPrices[1] = marketData.getBidPrices2();

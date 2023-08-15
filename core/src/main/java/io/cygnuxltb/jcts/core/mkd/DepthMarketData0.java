@@ -6,13 +6,13 @@ import io.mercury.common.datetime.Timestamp;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class DepthMarketData extends BasicMarketData {
+public final class DepthMarketData0 extends BasicMarketData {
 
-    public DepthMarketData(@Nonnull Instrument instrument, long epochMillis, int depth) {
+    public DepthMarketData0(@Nonnull Instrument instrument, long epochMillis, int depth) {
         super(instrument, epochMillis, depth);
     }
 
-    public DepthMarketData(@Nonnull Instrument instrument, long epochMillis, @Nullable Timestamp timestamp, int depth) {
+    public DepthMarketData0(@Nonnull Instrument instrument, long epochMillis, @Nullable Timestamp timestamp, int depth) {
         super(instrument, epochMillis, timestamp, depth);
     }
 
