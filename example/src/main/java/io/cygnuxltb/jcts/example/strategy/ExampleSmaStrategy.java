@@ -4,7 +4,7 @@ import io.cygnuxltb.jcts.core.account.SubAccount;
 import io.cygnuxltb.jcts.core.indicator.impl.SMA;
 import io.cygnuxltb.jcts.core.indicator.impl.SmaPoint;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.order.Order;
 import io.cygnuxltb.jcts.engine.strategy.SingleInstrumentStrategy;
 import io.mercury.common.param.ParamKey;
@@ -13,19 +13,19 @@ import io.mercury.common.param.Params;
 /**
  * @author yellow013
  */
-public final class ExampleSmaStrategy extends SingleInstrumentStrategy<BasicMarketData, ParamKey> implements SMA.SmaEvent {
+public final class ExampleSmaStrategy extends SingleInstrumentStrategy<ParamKey> implements SMA.SmaEvent {
 
     public ExampleSmaStrategy(SubAccount subAccount, Params<ParamKey> params, Instrument instrument) {
         super(100, "ExampleSmaStrategy", subAccount, params, instrument);
     }
 
     @Override
-    public String getName() {
+    public String getStrategyName() {
         return "SmaStrategyExample";
     }
 
     @Override
-    protected void handleMarketData(BasicMarketData marketData) {
+    protected void handleMarketData(FastMarketData marketData) {
 
     }
 
