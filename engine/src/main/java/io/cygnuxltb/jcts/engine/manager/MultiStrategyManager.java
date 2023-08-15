@@ -1,11 +1,11 @@
 package io.cygnuxltb.jcts.engine.manager;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.slf4j.Logger;
@@ -13,10 +13,10 @@ import org.slf4j.Logger;
 import java.io.IOException;
 
 import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
-public abstract class MultiStrategyManager<M extends MarketData>
-        implements StrategyManager<M> {
+public abstract class MultiStrategyManager implements StrategyManager {
 
     /**
      * Logger
@@ -26,27 +26,27 @@ public abstract class MultiStrategyManager<M extends MarketData>
     /**
      * 策略列表
      */
-    protected final MutableIntObjectMap<Strategy<M>> strategyMap = newIntObjectHashMap();
+    protected final MutableIntObjectMap<Strategy> strategyMap = newIntObjectHashMap();
 
     /**
      * 订阅合约的策略列表 <br>
      * instrumentId -> Set::[Strategy]
      */
-    protected final MutableIntObjectMap<MutableSet<Strategy<M>>> subscribedMap = newIntObjectHashMap();
+    protected final MutableMap<String, MutableSet<Strategy>> subscribedMap = newUnifiedMap();
 
     @Override
-    public StrategyManager<M> addStrategy(Strategy<M> strategy) {
+    public StrategyManager addStrategy(Strategy strategy) {
         log.info("Add strategy -> strategyId==[{}], strategyName==[{}], subAccount==[{}]",
-                strategy.getId(), strategy.getName(), strategy.getSubAccount());
-        strategyMap.put(strategy.getId(), strategy);
+                strategy.getStrategyId(), strategy.getStrategyName(), strategy.getSubAccount());
+        strategyMap.put(strategy.getStrategyId(), strategy);
         strategy.getInstruments().each(instrument -> subscribeInstrument(instrument, strategy));
         strategy.enable();
         return this;
     }
 
-    private void subscribeInstrument(Instrument instrument, Strategy<M> strategy) {
-        subscribedMap.getIfAbsentPut(instrument.getInstrumentId(), MutableSets::newUnifiedSet).add(strategy);
-        log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getId(),
+    private void subscribeInstrument(Instrument instrument, Strategy strategy) {
+        subscribedMap.getIfAbsentPut(instrument.getInstrumentCode(), MutableSets::newUnifiedSet).add(strategy);
+        log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
                 instrument.getInstrumentId());
     }
 
@@ -58,7 +58,7 @@ public abstract class MultiStrategyManager<M extends MarketData>
         strategyMap.each(strategy ->
                 closeQuietly(strategy, e ->
                         log.error("strategy -> {} close exception!",
-                                strategy.getName(), e)));
+                                strategy.getStrategyName(), e)));
         close0();
     }
 

@@ -3,10 +3,10 @@ package io.cygnuxltb.jcts.engine.strategy;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.account.AccountFinder;
 import io.cygnuxltb.jcts.core.account.SubAccount;
-import io.cygnuxltb.jcts.core.adaptor.Adaptor;
+import io.cygnuxltb.jcts.core.adaptor.OrderAgent;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.order.OrdSysIdAllocator;
@@ -22,6 +22,7 @@ import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
 import io.cygnuxltb.jcts.engine.position.PositionKeeper;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.common.lang.Asserter;
@@ -29,21 +30,19 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params;
 import io.mercury.common.sequence.SnowflakeAlgo;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
+import org.eclipse.collections.api.set.ImmutableSet;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static io.mercury.common.collections.ImmutableMaps.getIntObjectMapFactory;
 import static java.lang.Math.abs;
-import static java.util.stream.Collectors.toSet;
 
-public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
+public abstract class BaseStrategy<K extends ParamKey>
         extends EnableableComponent
-        implements Strategy<M>, CircuitBreaker {
+        implements Strategy, CircuitBreaker {
 
     private final static Logger log = Log4j2LoggerFactory.getLogger(BaseStrategy.class);
 
@@ -79,7 +78,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     private final OrdSysIdAllocator allocator;
 
     // 策略订阅的合约列表
-    protected ImmutableIntObjectMap<Instrument> instruments;
+    protected ImmutableSet<Instrument> instruments;
 
     // 策略订阅的合约
     protected Instrument instrument;
@@ -113,16 +112,15 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         } else {
             this.instrument = null;
         }
-        this.instruments = getIntObjectMapFactory().from(Stream.of(instruments).collect(toSet()),
-                Instrument::getInstrumentId, instrument -> instrument);
+        this.instruments = ImmutableSets.getSetFactory().fromStream(Stream.of(instruments));
 
     }
 
-    public int getId() {
+    public int getStrategyId() {
         return id;
     }
 
-    public String getName() {
+    public String getStrategyName() {
         return name;
     }
 
@@ -143,7 +141,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     }
 
     @Override
-    public Strategy<M> initialize(@Nonnull Supplier<Boolean> initializer) {
+    public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
         Asserter.nonNull(initializer, "initializer");
         this.initSuccess = initializer.get();
         log.info("Initialize result initSuccess==[{}]", initSuccess);
@@ -153,16 +151,16 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     }
 
     @Override
-    public void onMarketData(@Nonnull M marketData) {
+    public void onMarketData(@Nonnull FastMarketData marketData) {
         if (orders.notEmpty()) {
-            log.info("{} :: strategyOrders not empty, doing....", getName());
+            log.info("{} :: strategyOrders not empty, doing....", getStrategyName());
             // TODO
         }
         handleMarketData(marketData);
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData(M marketData);
+    protected abstract void handleMarketData(FastMarketData marketData);
 
     @Override
     public void onOrder(@Nonnull Order order) {
@@ -176,7 +174,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     @Override
     public void onStrategyEvent(@Nonnull StrategyEvent event) {
         // TODO
-        log.info("{} :: Handle StrategyControlEvent -> {}", getName(), event);
+        log.info("{} :: Handle StrategyControlEvent -> {}", getStrategyName(), event);
     }
 
     @Override
@@ -195,7 +193,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         } else {
             log.info(
                     "{} :: enable strategy failure, strategy is not initialized. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                    getName(), id, initSuccess, isEnabled());
+                    getStrategyName(), id, initSuccess, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
     }
@@ -204,11 +202,11 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     public boolean disable() {
         boolean disable = super.disable();
         if (disable) {
-            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getName(), id,
+            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getStrategyName(), id,
                     isEnabled());
         } else {
             log.info("{} :: disable strategy failure, strategy is disabled. strategyId==[{}], isEnable==[{}]",
-                    getName(), id, isEnabled());
+                    getStrategyName(), id, isEnabled());
         }
         return disable;
     }
@@ -361,7 +359,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
     protected int getCurrentPosition(int subAccountId, Instrument instrument) {
         int position = PositionKeeper.getCurrentSubAccountPosition(subAccountId, instrument);
         if (position == 0)
-            log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getName(), subAccountId,
+            log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getStrategyName(), subAccountId,
                     instrument);
         return position;
     }
@@ -391,11 +389,11 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
                                 TrdDirection direction) {
         final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, id, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.Open);
-        childOrder.printLog(log, getName() + " :: Open position generate [ChildOrder]");
+        childOrder.printLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAdaptor().newOrder(childOrder.toNewOrder());
-        childOrder.printLog(log, getName() + " :: Open position [ChildOrder] has been sent");
+        getAgent().newOrder(childOrder.toNewOrder());
+        childOrder.printLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
     /**
@@ -414,10 +412,10 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
             double offerPrice;
             if (position > 0)
                 offerPrice = getLevel1Price(instrument, TrdDirection.Long);
@@ -436,10 +434,10 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
             closePosition(instrument, position, offerPrice, OrdType.Limited);
         }
     }
@@ -454,10 +452,10 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         if (position == 0) {
             log.warn(
                     "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getName(), subAccountId, instrument.getInstrumentCode(), position);
+                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
             closePosition(instrument, position, offerPrice, ordType);
         }
     }
@@ -485,7 +483,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
         childOrder.printLog(log, "Close position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAdaptor().newOrder(childOrder.toNewOrder());
+        getAgent().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, "Close position [ChildOrder] has been sent");
     }
 
@@ -504,7 +502,7 @@ public abstract class BaseStrategy<M extends MarketData, K extends ParamKey>
      *
      * @return Adaptor
      */
-    protected Adaptor getAdaptor() {
+    protected OrderAgent getAgent() {
         //TODO
         return null;
     }

@@ -3,7 +3,7 @@ package io.cygnuxltb.jcts.engine.trader;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.account.SubAccount;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.BasicMarketData;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.order.OrdSysIdAllocator;
 import io.cygnuxltb.jcts.core.order.Order;

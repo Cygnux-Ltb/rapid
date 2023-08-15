@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.manager;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
@@ -20,7 +20,7 @@ import static io.mercury.common.concurrent.queue.ScQueueWithJCT.spscQueue;
  * <p>
  * 策略执行引擎与整体框架分离
  */
-public final class AsyncMultiStrategyManager<M extends MarketData> extends MultiStrategyManager<M> {
+public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyManager.class);
 
@@ -35,9 +35,9 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
                 .capacity(capacity.value()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
                         case MarketData -> {
-                            M marketData = msg.getMarketData();
+                            FastMarketData marketData = msg.getMarketData();
                             MarketDataKeeper.onMarketDate(marketData);
-                            subscribedMap.get(marketData.getInstrumentId()).each(strategy -> {
+                            subscribedMap.get(marketData.getInstrumentCode()).each(strategy -> {
                                 if (strategy.isEnabled()) {
                                     strategy.onMarketData(marketData);
                                 }
@@ -66,7 +66,7 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
 
     // TODO add pools
     @Override
-    public void onMarketData(@Nonnull M marketData) {
+    public void onMarketData(@Nonnull FastMarketData marketData) {
         queue.enqueue(new QueueMsg(marketData));
     }
 
@@ -82,17 +82,17 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
         queue.enqueue(new QueueMsg(report));
     }
 
-    private class QueueMsg {
+    private static class QueueMsg {
 
         private final int mark;
 
-        private M marketData;
+        private FastMarketData marketData;
 
         private OrderEvent orderEvent;
 
         private AdaptorEvent adaptorEvent;
 
-        private QueueMsg(M marketData) {
+        private QueueMsg(FastMarketData marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
@@ -111,7 +111,7 @@ public final class AsyncMultiStrategyManager<M extends MarketData> extends Multi
             return mark;
         }
 
-        public M getMarketData() {
+        public FastMarketData getMarketData() {
             return marketData;
         }
 

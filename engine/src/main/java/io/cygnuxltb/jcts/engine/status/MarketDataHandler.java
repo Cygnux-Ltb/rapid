@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.status;
 
 import com.lmax.disruptor.EventHandler;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.BasicMarketData;
 
 
 public final class MarketDataHandler implements EventHandler<BasicMarketData> {

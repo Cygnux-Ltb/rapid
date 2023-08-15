@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.manager;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
@@ -15,27 +15,26 @@ import java.io.IOException;
 /**
  * 单策略调度器, 直接调用策略回调函数, 没有异步操作, 最简单并且速度最快的调度器
  *
- * @param <M>
  * @author yellow013
  */
-public class SingleStrategyManager<M extends MarketData> implements StrategyManager<M> {
+public class SingleStrategyManager implements StrategyManager {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(SingleStrategyManager.class);
 
     /**
      * Only one strategy
      */
-    private Strategy<M> strategy;
+    private Strategy strategy;
 
     @Override
-    public StrategyManager<M> addStrategy(Strategy<M> strategy) {
+    public StrategyManager addStrategy(Strategy strategy) {
         this.strategy = strategy;
         strategy.enable();
         return this;
     }
 
     @Override
-    public void onMarketData(@Nonnull M marketData) {
+    public void onMarketData(@Nonnull FastMarketData marketData) {
         MarketDataKeeper.onMarketDate(marketData);
         strategy.onMarketData(marketData);
     }
@@ -56,7 +55,7 @@ public class SingleStrategyManager<M extends MarketData> implements StrategyMana
     @Override
     public void close() throws IOException {
         strategy.close();
-        log.info("Strategy [{}] closed", strategy.getName());
+        log.info("Strategy [{}] closed", strategy.getStrategyName());
     }
 
 

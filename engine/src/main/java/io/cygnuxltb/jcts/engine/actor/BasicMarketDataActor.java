@@ -1,14 +1,14 @@
 package io.cygnuxltb.jcts.engine.actor;
 
 
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 
 import javax.annotation.Nonnull;
 
-public class BasicMarketDataActor extends MarketDataActor<BasicMarketData> {
+public class BasicMarketDataActor extends MarketDataActor {
 
 	@Override
-	public void onMarketData(@Nonnull BasicMarketData marketData) {
+	public void onMarketData(@Nonnull FastMarketData marketData) {
 
 	}
 
