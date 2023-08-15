@@ -4,9 +4,11 @@ import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
 
 import java.time.LocalTime;
 
-public class CtpAdaptorType implements AdaptorAvailableTime {
+import static java.time.LocalTime.of;
 
-    public static final AdaptorType INSTANCE = new CtpAdaptorType();
+public class CtpAdaptorAvailableTime implements AdaptorAvailableTime {
+
+    public static final CtpAdaptorAvailableTime INSTANCE = new CtpAdaptorAvailableTime();
 
     @Override
     public boolean isRunningAllTime() {
@@ -15,18 +17,12 @@ public class CtpAdaptorType implements AdaptorAvailableTime {
 
     @Override
     public LocalTime[] getStartTimes() {
-        return new LocalTime[]{
-                LocalTime.of(8, 55),
-                LocalTime.of(22, 55)
-        };
+        return new LocalTime[]{of(8, 55), of(22, 55)};
     }
 
     @Override
     public LocalTime[] getEndTimes() {
-        return new LocalTime[]{
-                LocalTime.of(15, 10),
-                LocalTime.of(2, 40)
-        };
+        return new LocalTime[]{of(15, 10), of(2, 40)};
     }
 
 }

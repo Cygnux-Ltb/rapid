@@ -11,7 +11,7 @@ import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
-import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
 import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
 import io.cygnuxltb.jcts.core.handler.AdaptorEventHandler;
 import io.cygnuxltb.jcts.core.handler.InboundHandler;
@@ -19,7 +19,7 @@ import io.cygnuxltb.jcts.core.handler.InboundHandler.InboundSchedulerWrapper;
 import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
 import io.cygnuxltb.jcts.core.handler.OrderEventHandler;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
 import io.cygnuxltb.jcts.core.ser.enums.AdaptorStatus;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
@@ -54,6 +54,11 @@ import static io.mercury.common.thread.ThreadSupport.startNewThread;
  * @author yellow013
  */
 public class CtpAdaptor extends AbstractAdaptor {
+
+    @Override
+    public MarketDataFeed setMarketDataHandler(MarketDataHandler handler) {
+        return null;
+    }
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpAdaptor.class);
 
@@ -92,7 +97,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     public CtpAdaptor(@Nonnull Account account,
                       @Nonnull CtpConfiguration config,
-                      @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
+                      @Nonnull MarketDataHandler marketDataHandler,
                       @Nonnull OrderEventHandler orderEventHandler,
                       @Nonnull AdaptorEventHandler adaptorEventHandler) {
         this(account, config, ConnectionType.Normal, marketDataHandler, orderEventHandler, adaptorEventHandler);
@@ -112,11 +117,11 @@ public class CtpAdaptor extends AbstractAdaptor {
     public CtpAdaptor(@Nonnull Account account,
                       @Nonnull CtpConfiguration config,
                       @Nonnull ConnectionType mode,
-                      @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
+                      @Nonnull MarketDataHandler marketDataHandler,
                       @Nonnull OrderEventHandler orderEventHandler,
                       @Nonnull AdaptorEventHandler adaptorEventHandler) {
         this(account, config, mode,
-                new InboundSchedulerWrapper<>(
+                new InboundSchedulerWrapper(
                         marketDataHandler,
                         orderEventHandler,
                         adaptorEventHandler, log));
@@ -130,7 +135,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param scheduler InboundHandler<BasicMarketData>
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull InboundHandler<BasicMarketData> scheduler) {
+                      @Nonnull InboundHandler scheduler) {
         this(account, config, ConnectionType.Normal, scheduler);
     }
 
@@ -144,7 +149,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
                       @Nonnull ConnectionType mode,
-                      @Nonnull InboundHandler<BasicMarketData> scheduler) {
+                      @Nonnull InboundHandler scheduler) {
         super(CtpAdaptor.class.getSimpleName(), account);
         // 创建队列缓冲区
         this.queue = ScQueueWithJCT
@@ -323,8 +328,8 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final MutableSet<String> subscribedInstrumentCodes = MutableSets.newUnifiedSet();
 
     @Override
-    public AdaptorType getAdaptorType() {
-        return CtpAdaptorType.INSTANCE;
+    public AdaptorAvailableTime getAvailableTime() {
+        return CtpAdaptorAvailableTime.INSTANCE;
     }
 
     /**
@@ -411,7 +416,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final Object mutex = new Object();
 
     // 查询间隔, 依据CTP规定限制
-    private final long queryInterval = 1100L;
+    private final long queryInterval = 1050L;
 
     @Override
     public boolean queryOrder(@Nonnull QueryOrder req) {

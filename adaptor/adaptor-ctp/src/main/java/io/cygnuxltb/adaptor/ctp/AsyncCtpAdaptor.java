@@ -4,8 +4,10 @@ import com.typesafe.config.Config;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
-import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
+import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
 import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
 import io.cygnuxltb.jcts.core.ser.req.NewOrder;
 import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
@@ -77,8 +79,8 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public AdaptorType getAdaptorType() {
-        return CtpAdaptorType.INSTANCE;
+    public AdaptorAvailableTime getAvailableTime() {
+        return CtpAdaptorAvailableTime.INSTANCE;
     }
 
     /**
@@ -126,4 +128,8 @@ public class AsyncCtpAdaptor extends AbstractAdaptor {
         adaptor.close();
     }
 
+    @Override
+    public MarketDataFeed setMarketDataHandler(MarketDataHandler handler) {
+        return null;
+    }
 }

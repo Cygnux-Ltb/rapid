@@ -10,9 +10,11 @@ import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
-import io.cygnuxltb.jcts.core.adaptor.AdaptorType;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
 import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
+import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
 import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
 import io.cygnuxltb.jcts.core.ser.req.NewOrder;
 import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
@@ -77,6 +79,11 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     private final Queue<FtdcRspMsg> queue;
 
 
+    @Override
+    public MarketDataFeed setMarketDataHandler(MarketDataHandler handler) {
+        return null;
+    }
+
     /**
      * 传入InboundScheduler实现, 由构造函数在内部转换为MPSC队列缓冲区
      *
@@ -128,8 +135,8 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
     private final MutableSet<String> subscribedInstrumentCodes = MutableSets.newUnifiedSet();
 
     @Override
-    public AdaptorType getAdaptorType() {
-        return CtpAdaptorType.INSTANCE;
+    public AdaptorAvailableTime getAvailableTime() {
+        return CtpAdaptorAvailableTime.INSTANCE;
     }
 
     /**
@@ -297,5 +304,10 @@ public class CtpAdaptorDSL extends AbstractAdaptor {
             throw new IOException(e);
         }
     }
+
+
+
+
+
 
 }
