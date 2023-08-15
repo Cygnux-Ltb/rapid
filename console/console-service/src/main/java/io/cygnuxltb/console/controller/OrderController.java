@@ -40,12 +40,12 @@ public final class OrderController {
     private OrderService service;
 
     /**
-     * 查询Order
+     * 查询订单
      *
      * @param strategyId     策略ID
      * @param tradingDay     交易日
      * @param investorId     交易账户
-     * @param instrumentCode 交易标的
+     * @param instrumentCode 交易标的(股票代码/期货代码)
      * @return List<OrderEntity>
      */
     @GetMapping
@@ -76,7 +76,7 @@ public final class OrderController {
 
 
     /**
-     * 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+     * 创建订单 [前端调用: 开仓, 平仓, 一键平仓]
      *
      * @param newOrderDTO NewOrderDTO
      * @return ResponseStatus

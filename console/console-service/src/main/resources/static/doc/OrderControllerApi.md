@@ -1,6 +1,6 @@
 
 # 订单服务
-## 查询Order
+## 查询订单
 
 **URL:** `/order`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 查询Order
+**Description:** 查询订单
 
 
 
@@ -20,7 +20,7 @@
 |td|int32|true|    交易日|-|
 |strategyId|int32|true|    策略ID|-|
 |investorId|string|true|    交易账户|-|
-|code|string|true|交易标的|-|
+|code|string|true|交易标的(股票代码/期货代码)|-|
 
 
 **Request-example:**
@@ -180,7 +180,7 @@ curl -X GET -i /order/event?td=0&strategyId=0
 ]
 ```
 
-## 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+## 创建订单 [前端调用: 开仓, 平仓, 一键平仓]
 
 **URL:** `/order`
 
@@ -189,7 +189,7 @@ curl -X GET -i /order/event?td=0&strategyId=0
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** 创建订单 [前端调用: 开仓, 平仓, 一键平仓都通过此接口]
+**Description:** 创建订单 [前端调用: 开仓, 平仓, 一键平仓]
 
 
 

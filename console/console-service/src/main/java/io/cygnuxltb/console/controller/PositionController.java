@@ -5,6 +5,7 @@ import io.cygnuxltb.protocol.http.response.PositionDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +31,7 @@ public class PositionController {
      * @param userId 用户ID
      * @return PositionDTO
      */
-    @RequestMapping("/current")
+    @GetMapping("/current")
     public PositionDTO getCurrentPosition(@RequestParam(USER_ID) int userId) {
         return service.getPosition(userId);
     }

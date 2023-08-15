@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/simulate")
 public class SimulateController {
 
-
     /**
      * @return ResponseStatus
      */
@@ -19,5 +18,5 @@ public class SimulateController {
     public ResponseStatus start(SimulateDTO dto) {
         return ResponseStatus.OK;
     }
-    
+
 }

@@ -20,12 +20,12 @@ public class PortfolioDTO {
     private int userId;
 
     /**
-     * 投资组合名称
+     * 投资组合(股票池/目标池)名称
      */
     private String portfolioName;
 
     /**
-     * 交易标的列表
+     * 交易标的(股票/期货)列表
      */
     private List<String> instrumentCodes;
 

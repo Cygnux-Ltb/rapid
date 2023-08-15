@@ -26,7 +26,9 @@ import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 交易标的接口
+ * 交易标的服务
+ *
+ * @apiNote
  */
 @RestController
 @RequestMapping(path = "/instrument", produces = APPLICATION_JSON_UTF8)
@@ -40,7 +42,7 @@ public final class InstrumentController {
     /**
      * 获取结算信息
      *
-     * @param instrumentCode 交易标的 [查询多个标的使用','分割]
+     * @param instrumentCode 交易标的 () [查询多个标的使用','分割]
      * @param tradingDay     int
      * @return List<InstrumentSettlementDTO>
      */

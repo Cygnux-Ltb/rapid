@@ -24,7 +24,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * PNL服务(盈亏)
+ * PNL(盈亏)服务
  */
 @RestController
 @RequestMapping(path = "/pnl", produces = APPLICATION_JSON_UTF8)

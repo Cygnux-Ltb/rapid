@@ -71,7 +71,8 @@ public final class ControllerUtil {
         return false;
     }
 
-    public static boolean illegalTradingDay(int startTradingDay, int endTradingDay,
+    public static boolean illegalTradingDay(int startTradingDay,
+                                            int endTradingDay,
                                             Logger logger) {
         if (startTradingDay <= 0 || endTradingDay < startTradingDay) {
             logger.error("illegal param -> startTradingDay=={}, endTradingDay=={}",
@@ -89,9 +90,10 @@ public final class ControllerUtil {
         return false;
     }
 
-    public static boolean illegalStringParam(String paramName, String param, Logger logger) {
-        if (StringSupport.isNullOrEmpty(param)) {
-            logger.error("illegal param -> {}=={}", paramName, param);
+    public static boolean illegalStringParam(String paramName,
+                                             String paramValue, Logger logger) {
+        if (StringSupport.isNullOrEmpty(paramValue)) {
+            logger.error("illegal param -> {}=={}", paramName, paramValue);
             return true;
         }
         return false;

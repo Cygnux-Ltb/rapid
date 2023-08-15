@@ -5,6 +5,7 @@ import io.cygnuxltb.protocol.http.response.PortfolioDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 投资组合服务 (股票池/目标池)
+ * 投资组合(股票池/目标池)服务
  */
 @RestController
 @RequestMapping(path = "/portfolio", produces = APPLICATION_JSON_UTF8)
@@ -26,17 +27,38 @@ public class PortfolioController {
 
     /**
      * 获取用户投资组合
-     * [股票池/目标池都通过此接口]
+     * [股票池/目标池]
      *
      * @param userId        用户ID
-     * @param portfolioName 投资组合名称
+     * @param portfolioName 投资组合(股票池/目标池)名称
      * @return PortfolioDTO
      */
-    @RequestMapping("")
+    @GetMapping
     public PortfolioDTO getPortfolio(@RequestParam(USER_ID) int userId,
                                      @RequestParam("portfolio") String portfolioName) {
         return service.getPortfolio(userId, portfolioName);
     }
 
+    /**
+     * 获取用户第一投资组合 (左侧优先股票池)
+     *
+     * @param userId 用户ID
+     * @return PortfolioDTO
+     */
+    @GetMapping("/first")
+    public PortfolioDTO getFirstPortfolio(@RequestParam(USER_ID) int userId) {
+        return service.getPortfolio(userId, "FIRST");
+    }
+
+    /**
+     * 获取用户第二投资组合 (右侧次优股票池)
+     *
+     * @param userId 用户ID
+     * @return PortfolioDTO
+     */
+    @GetMapping("/second")
+    public PortfolioDTO getSecondPortfolio(@RequestParam(USER_ID) int userId) {
+        return service.getPortfolio(userId, "SECOND");
+    }
 
 }
