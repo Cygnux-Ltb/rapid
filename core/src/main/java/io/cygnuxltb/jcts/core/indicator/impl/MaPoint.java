@@ -1,14 +1,13 @@
 package io.cygnuxltb.jcts.core.indicator.impl;
 
-import java.time.Duration;
-
 import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
-public abstract class MaPoint extends FixedPeriodPoint<BasicMarketData> {
+import java.time.Duration;
+
+public abstract class MaPoint extends FixedPeriodPoint {
 
 	protected LongRingWindow historyPriceWindow;
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.ser.event.FastMarketDataEvent;

@@ -11,7 +11,7 @@ import io.mercury.common.fsm.Enableable;
 import javax.annotation.Nonnull;
 import java.io.Closeable;
 
-public interface TraderAgent extends Closeable, Enableable {
+public interface OrderAgent extends Closeable, Enableable {
 
     /**
      * @return Account
@@ -22,7 +22,7 @@ public interface TraderAgent extends Closeable, Enableable {
     /**
      * 发送新订单
      *
-     * @param request AvNewOrderRequest
+     * @param request NewOrder
      * @return boolean
      */
     boolean newOrder(@Nonnull NewOrder request);
@@ -30,7 +30,7 @@ public interface TraderAgent extends Closeable, Enableable {
     /**
      * 发送撤单请求
      *
-     * @param request AvCancelOrderRequest
+     * @param request CancelOrder
      * @return boolean
      */
     boolean cancelOrder(@Nonnull CancelOrder request);
@@ -38,7 +38,7 @@ public interface TraderAgent extends Closeable, Enableable {
     /**
      * 查询订单
      *
-     * @param request AvQueryOrderRequest
+     * @param request QueryOrder
      * @return boolean
      */
     boolean queryOrder(@Nonnull QueryOrder request);
@@ -46,7 +46,7 @@ public interface TraderAgent extends Closeable, Enableable {
     /**
      * 查询持仓
      *
-     * @param request AvQueryPositionsRequest
+     * @param request QueryPositions
      * @return boolean
      */
     boolean queryPositions(@Nonnull QueryPositions request);
@@ -54,7 +54,7 @@ public interface TraderAgent extends Closeable, Enableable {
     /**
      * 查询余额
      *
-     * @param request AvQueryBalanceRequest
+     * @param request QueryBalance
      * @return boolean
      */
     boolean queryBalance(@Nonnull QueryBalance request);

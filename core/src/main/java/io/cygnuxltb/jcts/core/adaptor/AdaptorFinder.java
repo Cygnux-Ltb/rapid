@@ -66,7 +66,7 @@ public final class AdaptorFinder implements Serializable {
     }
 
     public static void putAdaptor(@Nonnull Adaptor adaptor) {
-        var account = adaptor.getAccount();
+        var account = adaptor.account();
         AccountAdaptorMap.put(account.getAccountId(), adaptor);
         log.info("Put adaptor to AccountAdaptorMap, accountId==[{}], remark==[{}], adaptorId==[{}]",
                 account.getAccountId(), account.getRemark(), adaptor.getAdaptorId());

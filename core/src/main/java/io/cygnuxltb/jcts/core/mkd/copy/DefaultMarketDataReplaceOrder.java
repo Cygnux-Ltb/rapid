@@ -1,9 +1,5 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
-
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataReplaceOrder;
-import io.cygnuxltb.jcts.core.mkd.api.Side;
-import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 import java.util.Objects;
 

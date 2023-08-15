@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonWrapper;

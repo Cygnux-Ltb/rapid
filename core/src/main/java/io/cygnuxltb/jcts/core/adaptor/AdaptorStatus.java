@@ -1,6 +1,7 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 
@@ -15,6 +16,7 @@ import static io.cygnuxltb.jcts.core.adaptor.AdaptorStatus.AdaptorStatusCode.UNA
 /**
  * @author yellow013
  */
+@Getter
 @RequiredArgsConstructor
 public enum AdaptorStatus {
 
@@ -54,10 +56,6 @@ public enum AdaptorStatus {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AdaptorStatus.class);
 
-    public char getCode() {
-        return code;
-    }
-
     /**
      * @param code int
      * @return AdaptorStatus
@@ -75,9 +73,10 @@ public enum AdaptorStatus {
             // 交易禁用
             case TRADER_DISABLE -> TraderDisable;
             // 没有匹配项
-            default ->
-                // log.error("AdaptorStatus valueOf error, return AdaptorStatus -> [Invalid], input code==[{}]", code);
-                    Invalid;
+            default -> {
+                log.error("AdaptorStatus valueOf error, return AdaptorStatus -> [Invalid], input code==[{}]", code);
+                yield Invalid;
+            }
         };
     }
 

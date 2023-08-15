@@ -3,7 +3,7 @@ package io.cygnuxltb.jcts.core.indicator.impl;
 import java.time.Duration;
 
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
@@ -30,7 +30,7 @@ public final class SmaPoint extends MaPoint {
     }
 
     @Override
-    protected void handleMarketData0(BasicMarketData marketData) {
+    protected void handleMarketData0(FastMarketData marketData) {
         this.lastPrice = marketData.getLastPrice();
         int count = historyPriceWindow.count();
         this.avgPrice = (historyPriceSum + lastPrice) / count;

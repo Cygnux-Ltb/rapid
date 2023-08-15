@@ -5,9 +5,10 @@ import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
 import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
 import io.cygnuxltb.jcts.core.indicator.structure.Bar;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
 import io.mercury.common.collections.MutableLists;
+import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.TimeWindow;
 import org.eclipse.collections.api.list.primitive.MutableDoubleList;
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
  *
  * @author yellow013
  */
-public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicator.TimeBarPoint, TimeBarIndicator.TimeBarEvent, BasicMarketData> {
+public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicator.TimeBarPoint, TimeBarIndicator.TimeBarEvent> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(TimeBarIndicator.class);
 
@@ -49,9 +50,10 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
     }
 
     @Override
-    protected void handleMarketData(BasicMarketData marketData) {
+    protected void handleMarketData(FastMarketData marketData) {
         TimeWindow currentPointSerial = currentPoint.getWindow();
-        LocalDateTime marketDatetime = marketData.getTimestamp().getDateTimeWith(instrument.getZoneOffset())
+        LocalDateTime marketDatetime = EpochTime.ofEpochMillis(marketData.getEpochMillis(),
+                        instrument.getZoneOffset())
                 .toLocalDateTime();
         if (currentPointSerial.isPeriod(marketDatetime)) {
             currentPoint.handleMarketData(marketData);
@@ -107,7 +109,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
     /**
      * @author yellow013
      */
-    public static final class TimeBarPoint extends FixedPeriodPoint<BasicMarketData> {
+    public static final class TimeBarPoint extends FixedPeriodPoint {
 
         // 存储开高低收价格和成交量以及成交金额的字段
         private final Bar bar = new Bar();
@@ -162,7 +164,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
         }
 
         @Override
-        protected void handleMarketData0(BasicMarketData marketData) {
+        protected void handleMarketData0(FastMarketData marketData) {
             // 处理当前价格
             bar.onPrice(marketData.getLastPrice());
             // 记录当前价格

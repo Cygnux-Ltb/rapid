@@ -9,5 +9,5 @@ public enum OrdLevel implements org.apache.avro.generic.GenericEnumSymbol<OrdLev
   CHILD, PARENT, STRATEGY, GROUP  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"OrdLevel\",\"namespace\":\"io.cygnuxltb.jcts.core.ser.enums\",\"symbols\":[\"CHILD\",\"PARENT\",\"STRATEGY\",\"GROUP\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  public org.apache.avro.Schema  getSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

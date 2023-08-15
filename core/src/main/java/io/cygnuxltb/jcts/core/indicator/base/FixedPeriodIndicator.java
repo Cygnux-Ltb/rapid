@@ -3,12 +3,11 @@ package io.cygnuxltb.jcts.core.indicator.base;
 
 import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 
 import java.time.Duration;
 
-public abstract class FixedPeriodIndicator<P extends FixedPeriodPoint<M>,
-        E extends IndicatorEvent, M extends MarketData> extends BaseIndicator<P, E, M> {
+public abstract class FixedPeriodIndicator<P extends FixedPeriodPoint,
+        E extends IndicatorEvent> extends BaseIndicator<P, E> {
 
     protected final Duration duration;
 

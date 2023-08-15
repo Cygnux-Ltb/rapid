@@ -99,22 +99,22 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
-    switch (field$) {
-    case 0: return type;
-    case 1: return instrumentCodes;
-    case 2: return recvAddr;
-    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
-    }
+      return switch (field$) {
+          case 0 -> type;
+          case 1 -> instrumentCodes;
+          case 2 -> recvAddr;
+          default -> throw new IndexOutOfBoundsException("Invalid index: " + field$);
+      };
   }
 
   // Used by DatumReader.  Applications should not call.
   public void put(int field$, java.lang.Object value$) {
-    switch (field$) {
-    case 0: type = (io.cygnuxltb.jcts.core.ser.enums.MarketDataType)value$; break;
-    case 1: instrumentCodes = (java.util.List<java.lang.String>)value$; break;
-    case 2: recvAddr = value$ != null ? value$.toString() : null; break;
-    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
-    }
+      switch (field$) {
+          case 0 -> type = (io.cygnuxltb.jcts.core.ser.enums.MarketDataType) value$;
+          case 1 -> instrumentCodes = (java.util.List<String>) value$;
+          case 2 -> recvAddr = value$ != null ? value$.toString() : null;
+          default -> throw new IndexOutOfBoundsException("Invalid index: " + field$);
+      }
   }
 
   /**
@@ -474,7 +474,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
           long size0 = in.readArrayStart();
           java.util.List<java.lang.String> a0 = this.instrumentCodes;
           if (a0 == null) {
-            a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("instrumentCodes").schema());
+            a0 = new SpecificData.Array<>((int) size0, SCHEMA$.getField("instrumentCodes").schema());
             this.instrumentCodes = a0;
           } else a0.clear();
           SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);

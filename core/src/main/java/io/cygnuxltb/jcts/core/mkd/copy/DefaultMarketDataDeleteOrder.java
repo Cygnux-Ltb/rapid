@@ -1,8 +1,5 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
-
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataDeleteOrder;
-import io.cygnuxltb.jcts.core.mkd.api.Visitor;
 
 public final class DefaultMarketDataDeleteOrder
         extends DefaultMarketDataEvent implements MarketDataDeleteOrder {

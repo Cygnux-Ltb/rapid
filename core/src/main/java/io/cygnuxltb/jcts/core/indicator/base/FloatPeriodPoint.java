@@ -1,9 +1,8 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.sequence.TimePoint;
 
-public abstract class FloatPeriodPoint<M extends MarketData> extends BasePoint<M> {
+public abstract class FloatPeriodPoint extends BasePoint {
 
     private final TimePoint point;
 

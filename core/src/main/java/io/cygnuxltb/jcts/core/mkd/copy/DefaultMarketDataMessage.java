@@ -1,8 +1,6 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
 import com.google.common.collect.ImmutableList;
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataEvent;
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataMessage;
 
 import java.util.ArrayList;
 import java.util.Collection;

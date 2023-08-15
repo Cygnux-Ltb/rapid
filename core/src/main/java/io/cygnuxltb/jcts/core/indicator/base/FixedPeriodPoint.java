@@ -1,13 +1,11 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
 import io.mercury.common.sequence.TimeWindow;
 
 /**
- * @param <M>
  * @author yellow013
  */
-public abstract class FixedPeriodPoint<M extends MarketData> extends BasePoint<M> {
+public abstract class FixedPeriodPoint extends BasePoint {
 
     protected final TimeWindow window;
 

@@ -5,7 +5,7 @@ import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
 import io.cygnuxltb.jcts.core.indicator.Point;
 import io.cygnuxltb.jcts.core.indicator.PointSet;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableLists;
@@ -13,8 +13,8 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
-public abstract class BaseIndicator<P extends BasePoint<M> & Point,
-        E extends IndicatorEvent, M extends MarketData> implements Indicator<P, E, M> {
+public abstract class BaseIndicator<P extends BasePoint & Point,
+        E extends IndicatorEvent> implements Indicator<P, E> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseIndicator.class);
 
@@ -41,7 +41,7 @@ public abstract class BaseIndicator<P extends BasePoint<M> & Point,
     /**
      * 前一笔行情
      */
-    protected M preMarketData;
+    protected FastMarketData preMarketData;
 
     /**
      * 存储事件的集合
@@ -61,7 +61,7 @@ public abstract class BaseIndicator<P extends BasePoint<M> & Point,
         return instrument;
     }
 
-    public M getPreMarketData() {
+    public FastMarketData getPreMarketData() {
         return preMarketData;
     }
 
@@ -100,12 +100,12 @@ public abstract class BaseIndicator<P extends BasePoint<M> & Point,
     }
 
     @Override
-    public void onMarketData(M marketData) {
+    public void onMarketData(FastMarketData marketData) {
         handleMarketData(marketData);
         this.preMarketData = marketData;
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData(M marketData);
+    protected abstract void handleMarketData(FastMarketData marketData);
 
 }

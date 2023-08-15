@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.api;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
 public interface MarketDataEvent extends Visitable {
 

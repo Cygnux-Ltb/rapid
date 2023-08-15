@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package io.cygnuxltb.jcts.core.protobuf.enums;
+
+enum MarketDataType {
+  DEPTH = 0; FAST = 1; LEVEL10 = 2; LEVEL20 = 3; LEVEL30 = 4;
+}
+
+enum SubscribeStatus {
+  SUCCEED = 0; PART_SUCCEED = 1; FAILED = 2;
+}

@@ -3,21 +3,21 @@ package io.cygnuxltb.jcts.core.indicator.impl;
 import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
 import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
 import java.time.Duration;
 
 public final class EMA extends
-        FixedPeriodIndicator<EMA.EmaPoint, EMA.EmaEvent, BasicMarketData> {
+        FixedPeriodIndicator<EMA.EmaPoint, EMA.EmaEvent> {
 
     public EMA(Instrument instrument, Duration duration, int cycle) {
         super(instrument, duration);
     }
 
     @Override
-    protected void handleMarketData(BasicMarketData marketData) {
+    protected void handleMarketData(FastMarketData marketData) {
         // TODO Auto-generated method stub
     }
 
@@ -51,7 +51,7 @@ public final class EMA extends
         }
 
         @Override
-        protected void handleMarketData0(BasicMarketData preMarketData) {
+        protected void handleMarketData0(FastMarketData preMarketData) {
             // TODO Auto-generated method stub
 
         }

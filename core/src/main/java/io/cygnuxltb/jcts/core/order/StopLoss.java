@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.order;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
 import io.mercury.common.sequence.Serial;
 
@@ -66,7 +66,7 @@ public class StopLoss implements Serial<StopLoss> {
         return ordSysId;
     }
 
-    public final boolean isStopLoss(MarketData marketData) {
+        public final boolean isStopLoss(FastMarketData marketData) {
         return switch (direction) {
             case Long -> stopPrice < marketData.getAskPrice1();
             case Short -> stopPrice > marketData.getBidPrice1();

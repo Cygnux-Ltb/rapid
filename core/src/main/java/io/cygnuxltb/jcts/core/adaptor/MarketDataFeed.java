@@ -1,13 +1,17 @@
-package io.cygnuxltb.jcts.core.mkd;
+package io.cygnuxltb.jcts.core.adaptor;
 
 import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
 
+import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.io.IOException;
 
-public interface MarketDataFeed extends Closeable, Enableable, MarketAgent {
+public interface MarketDataFeed extends Closeable, Enableable {
+
+    String getFeedId();
 
     /**
      * 启动函数
@@ -16,7 +20,13 @@ public interface MarketDataFeed extends Closeable, Enableable, MarketAgent {
      */
     boolean startup() throws IOException, IllegalStateException, ComponentStartupException;
 
+    /**
+     * 订阅行情
+     *
+     * @param instruments Instrument[]
+     */
+    boolean subscribeMarketData(@Nonnull Instrument... instruments);
 
-    MarketDataFeed registerMarketDataHandler(MarketDataHandler handler);
+    MarketDataFeed setMarketDataHandler(MarketDataHandler handler);
 
 }

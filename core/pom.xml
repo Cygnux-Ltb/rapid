@@ -45,10 +45,15 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-sbe</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>commons-config</artifactId>
@@ -60,6 +65,12 @@
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-avro</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-databind</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

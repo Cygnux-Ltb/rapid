@@ -1,13 +1,12 @@
 package io.cygnuxltb.jcts.core.handler.impl;
 
 import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
-import io.cygnuxltb.jcts.core.mkd.impl.FastMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * @param <M>
  * @author yellow013
  */
 @NotThreadSafe

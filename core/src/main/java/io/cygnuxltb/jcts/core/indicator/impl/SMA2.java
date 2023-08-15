@@ -10,12 +10,12 @@ import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
 import io.cygnuxltb.jcts.core.indicator.impl.SMA.SmaEvent;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.pool.TradablePeriodPool;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
-public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent, BasicMarketData> {
+public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent> {
 
 	private final LongRingWindow historyPriceWindow;
 
@@ -36,12 +36,12 @@ public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent, BasicMa
 	}
 
 	@Override
-	public void onMarketData(BasicMarketData marketData) {
+	public void onMarketData(FastMarketData marketData) {
 
 	}
 
 	@Override
-	protected void handleMarketData(BasicMarketData marketData) {
+	protected void handleMarketData(FastMarketData marketData) {
 
 	}
 

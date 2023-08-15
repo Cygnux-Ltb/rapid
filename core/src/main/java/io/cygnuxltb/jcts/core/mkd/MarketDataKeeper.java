@@ -53,7 +53,7 @@ public final class MarketDataKeeper implements Serializable {
     /**
      * @param marketData MarketData
      */
-    public static void onMarketDate(@Nonnull final MarketData marketData) {
+    public static void onMarketDate(@Nonnull final FastMarketData marketData) {
         var instrumentCode = marketData.getInstrumentCode();
         var snapshot = getSnapshot(instrumentCode);
         if (snapshot == null) {

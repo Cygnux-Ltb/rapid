@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.handler;
 
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -15,12 +15,11 @@ import java.io.IOException;
 /**
  * 处理Adaptor的入站信息接口
  *
- * @param <M>
  * @author yellow013
  */
-public interface InboundHandler<M extends MarketData> extends
+public interface InboundHandler extends
         // 行情处理器
-        MarketDataHandler<M>,
+        MarketDataHandler,
         // 订单回报处理器
         OrderEventHandler,
         // Adaptor事件处理器
@@ -29,18 +28,17 @@ public interface InboundHandler<M extends MarketData> extends
         Closeable {
 
     /**
-     * @param <M>
      * @author yellow013
      */
-    final class InboundSchedulerWrapper<M extends MarketData> implements InboundHandler<M> {
+    final class InboundSchedulerWrapper implements InboundHandler {
 
-        private final MarketDataHandler<M> marketDataHandler;
+        private final MarketDataHandler marketDataHandler;
         private final OrderEventHandler orderEventHandler;
         private final AdaptorEventHandler adaptorEventHandler;
 
         private final Logger logger;
 
-        public InboundSchedulerWrapper(@Nullable MarketDataHandler<M> marketDataHandler,
+        public InboundSchedulerWrapper(@Nullable MarketDataHandler marketDataHandler,
                                        @Nullable OrderEventHandler orderEventHandler,
                                        @Nullable AdaptorEventHandler adaptorEventHandler,
                                        @Nullable Logger logger) {
@@ -51,7 +49,7 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onMarketData(@Nonnull M marketData) {
+        public void onMarketData(@Nonnull FastMarketData marketData) {
             if (marketDataHandler != null) {
                 marketDataHandler.onMarketData(marketData);
             }
@@ -106,10 +104,9 @@ public interface InboundHandler<M extends MarketData> extends
     }
 
     /**
-     * @param <M>
      * @author yellow013
      */
-    final class InboundSchedulerLogger<M extends MarketData> implements InboundHandler<M> {
+    final class InboundSchedulerLogger implements InboundHandler {
 
         private final Logger log;
 
@@ -118,7 +115,7 @@ public interface InboundHandler<M extends MarketData> extends
         }
 
         @Override
-        public void onMarketData(@Nonnull M marketData) {
+        public void onMarketData(@Nonnull FastMarketData marketData) {
             log.info("InboundSchedulerLogger record MarketData -> {}", marketData);
         }
 

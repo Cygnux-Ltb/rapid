@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 public abstract class AbstractAdaptor extends EnableableComponent implements Adaptor {
 
+
     /**
      * Adaptor标识
      */
@@ -25,6 +26,9 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
      */
     protected final Account account;
 
+    /**
+     * Normal
+     */
     protected ConnectionType type = ConnectionType.Normal;
 
     /**
@@ -47,7 +51,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
 
     @Nonnull
     @Override
-    public Account getAccount() {
+    public Account account() {
         return account;
     }
 

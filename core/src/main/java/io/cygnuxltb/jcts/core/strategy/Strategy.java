@@ -9,21 +9,22 @@ import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.NonInstantiable;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import org.eclipse.collections.api.set.ImmutableSet;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.util.function.Supplier;
 
 /**
- * @param <M> MarketData type
+ *
  */
-public interface Strategy<M> extends
+public interface Strategy extends
         // 用于控制可用状态
         Enableable,
         // 用于确定优先级
-        Comparable<Strategy<M>>,
+        Comparable<Strategy>,
         // 集成行情处理
-        MarketDataHandler<M>,
+        MarketDataHandler,
         // 集成订单处理
         OrderHandler,
         // 集成AdaptorReport处理
@@ -38,25 +39,25 @@ public interface Strategy<M> extends
         public final static int MAX_STRATEGY_ID = 1023;
     }
 
-    int getId();
+    int getStrategyId();
 
-    String getName();
+    String getStrategyName();
 
     SubAccount getSubAccount();
 
     Account getAccount();
 
-    ImmutableIntObjectMap<Instrument> getInstruments();
+    ImmutableSet<Instrument> getInstruments();
 
-    Strategy<M> initialize(@Nonnull Supplier<Boolean> initializer);
+    Strategy initialize(@Nonnull Supplier<Boolean> initializer);
 
     void onStrategyEvent(@Nonnull StrategyEvent event);
 
     void onThrowable(Throwable throwable) throws StrategyException;
 
     @Override
-    default int compareTo(Strategy<M> o) {
-        return Integer.compare(this.getId(), o.getId());
+    default int compareTo(Strategy o) {
+        return Integer.compare(this.getStrategyId(), o.getStrategyId());
     }
 
 }

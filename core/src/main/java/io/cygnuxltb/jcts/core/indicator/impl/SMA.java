@@ -5,14 +5,14 @@ import java.time.Duration;
 import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
 import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.impl.BasicMarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 
-public final class SMA extends FixedPeriodIndicator<SmaPoint, SMA.SmaEvent, BasicMarketData> {
+public final class SMA extends FixedPeriodIndicator<SmaPoint, SMA.SmaEvent> {
 
 	private final LongRingWindow historyPriceWindow;
 
@@ -33,7 +33,7 @@ public final class SMA extends FixedPeriodIndicator<SmaPoint, SMA.SmaEvent, Basi
 	}
 
 	@Override
-	protected void handleMarketData(BasicMarketData marketData) {
+	protected void handleMarketData(FastMarketData marketData) {
 
 	}
 

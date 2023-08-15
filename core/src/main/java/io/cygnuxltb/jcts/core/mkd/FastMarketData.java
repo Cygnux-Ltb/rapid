@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
+package io.cygnuxltb.jcts.core.mkd;
 
 /**
  * 统一行情处理数据结构

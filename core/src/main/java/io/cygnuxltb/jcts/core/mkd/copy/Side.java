@@ -1,7 +1,9 @@
-package io.cygnuxltb.jcts.core.mkd.api;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
 public enum Side {
 
-    BID, ASK
+    BID,
+
+    ASK
 
 }

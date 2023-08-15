@@ -1,19 +1,18 @@
 package io.cygnuxltb.jcts.core.indicator.base;
 
 import io.cygnuxltb.jcts.core.indicator.Point;
-import io.cygnuxltb.jcts.core.mkd.MarketData;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.lang.Asserter;
 
 /**
- * @param <M>
  * @author yellow013
  */
-public abstract class BasePoint<M extends MarketData> implements Point {
+public abstract class BasePoint implements Point {
 
     protected final int index;
 
-    protected M preMarketData;
+    protected FastMarketData preMarketData;
 
     protected BasePoint(int index) {
         Asserter.greaterThan(index, -1, "index");
@@ -24,21 +23,21 @@ public abstract class BasePoint<M extends MarketData> implements Point {
         return index;
     }
 
-    public M getPreMarketData() {
+    public FastMarketData getPreMarketData() {
         return preMarketData;
     }
 
-    public void handleMarketData(M marketData) {
+    public void handleMarketData(FastMarketData marketData) {
         handleMarketData0(marketData);
         updatePreMarketData(marketData);
     }
 
-    public void updatePreMarketData(M marketData) {
+    public void updatePreMarketData(FastMarketData marketData) {
         this.preMarketData = marketData;
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData0(M marketData);
+    protected abstract void handleMarketData0(FastMarketData marketData);
 
     @Override
     public int compareTo(Point o) {

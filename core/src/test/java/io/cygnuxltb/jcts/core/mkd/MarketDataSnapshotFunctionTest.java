@@ -1,18 +1,16 @@
 package io.cygnuxltb.jcts.core.mkd;
 
 
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataIncrement;
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataSnapshot;
-import io.cygnuxltb.jcts.core.mkd.api.Side;
-import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataIncrement;
-import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataNewOrder;
-import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataReplaceOrder;
-import io.cygnuxltb.jcts.core.mkd.impl.DefaultMarketDataSnapshot;
-import io.cygnuxltb.jcts.core.mkd.impl.MarketDataSnapshotFunction;
+import io.cygnuxltb.jcts.core.mkd.copy.DefaultMarketDataIncrement;
+import io.cygnuxltb.jcts.core.mkd.copy.DefaultMarketDataNewOrder;
+import io.cygnuxltb.jcts.core.mkd.copy.DefaultMarketDataReplaceOrder;
+import io.cygnuxltb.jcts.core.mkd.copy.DefaultMarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.copy.MarketDataIncrement;
+import io.cygnuxltb.jcts.core.mkd.copy.MarketDataSnapshot;
+import io.cygnuxltb.jcts.core.mkd.copy.MarketDataSnapshotFunction;
+import io.cygnuxltb.jcts.core.mkd.copy.Side;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MarketDataSnapshotFunctionTest {
 
@@ -73,7 +71,6 @@ public class MarketDataSnapshotFunctionTest {
 
         MatcherAssert.assertThat(snapshot1, MarketDataSnapshotMatcher.matches(expectedSnapshot1));
 
-
         MarketDataSnapshot snapshot2 = function.apply(increment2);
         MarketDataSnapshot expectedSnapshot2 = DefaultMarketDataSnapshot.newBuilder()
                 .withTriggerTimestamp(3)
@@ -84,7 +81,8 @@ public class MarketDataSnapshotFunctionTest {
                         .withInstrument("AUDUSD")
                         .withPrice(1.345)
                         .withQty(1000000)
-                        .withSide(Side.BID).build())
+                        .withSide(Side.BID)
+                        .build())
                 .withEvent(DefaultMarketDataNewOrder.newBuilder()
                         .withOrderId("2")
                         .withMarket("CNX")
@@ -96,8 +94,8 @@ public class MarketDataSnapshotFunctionTest {
 
         MatcherAssert.assertThat(snapshot2, MarketDataSnapshotMatcher.matches(expectedSnapshot2));
 
-
         MarketDataSnapshot snapshot3 = function.apply(increment3);
+
         MarketDataSnapshot expectedSnapshot3 = DefaultMarketDataSnapshot.newBuilder()
                 .withTriggerTimestamp(5)
                 .withEventTimestamp(6)
@@ -118,14 +116,13 @@ public class MarketDataSnapshotFunctionTest {
                         .withSide(Side.BID).build())
                 .build();
 
-
         MatcherAssert.assertThat(snapshot3, MarketDataSnapshotMatcher.matches(expectedSnapshot3));
 
     }
 
 
     @Test
-    public void testWithNestedOrderBuilder() throws Exception {
+    public void testWithNestedOrderBuilder() {
 
         MarketDataIncrement increment1 = DefaultMarketDataIncrement.newBuilder()
                 .withTriggerTimestamp(1)
@@ -185,7 +182,6 @@ public class MarketDataSnapshotFunctionTest {
 
         MatcherAssert.assertThat(snapshot1, MarketDataSnapshotMatcher.matches(expectedSnapshot1));
 
-
         MarketDataSnapshot snapshot2 = function.apply(increment2);
         MarketDataSnapshot expectedSnapshot2 = DefaultMarketDataSnapshot.newBuilder()
                 .withTriggerTimestamp(3)
@@ -210,7 +206,6 @@ public class MarketDataSnapshotFunctionTest {
 
         MatcherAssert.assertThat(snapshot2, MarketDataSnapshotMatcher.matches(expectedSnapshot2));
 
-
         MarketDataSnapshot snapshot3 = function.apply(increment3);
         MarketDataSnapshot expectedSnapshot3 = DefaultMarketDataSnapshot.newBuilder()
                 .withTriggerTimestamp(5)
@@ -233,7 +228,6 @@ public class MarketDataSnapshotFunctionTest {
                 .withSide(Side.BID)
                 .end()
                 .build();
-
 
         MatcherAssert.assertThat(snapshot3, MarketDataSnapshotMatcher.matches(expectedSnapshot3));
 

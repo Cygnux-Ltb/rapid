@@ -1,2 +1,7 @@
-package io.cygnuxltb.jcts.core.loop;public class InboundLoop {
+package io.cygnuxltb.jcts.core.loop;
+
+public class InboundLoop {
+
+
+
 }

@@ -1,6 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.impl;
-
-import io.cygnuxltb.jcts.core.mkd.api.MarketDataEvent;
+package io.cygnuxltb.jcts.core.mkd.copy;
 
 import java.util.Objects;
 
