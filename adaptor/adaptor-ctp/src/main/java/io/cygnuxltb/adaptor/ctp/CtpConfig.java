@@ -21,8 +21,8 @@ import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
 @Setter
 @Accessors(chain = true)
 @Configuration
-@PropertySource("file:${user.home}/conf/ctp.properties")
-public class CtpConfiguration {
+@PropertySource("file:${user.home}/config/ctp.properties")
+public class CtpConfig {
 
     @Value("traderAddr")
     private String traderAddr;
@@ -60,9 +60,9 @@ public class CtpConfiguration {
         return JsonWrapper.toJson(this);
     }
 
-    public static CtpConfiguration with(Config config) {
+    public static CtpConfig with(Config config) {
         var wrapper = new ConfigWrapper<CtpAdaptorParamKey>(config);
-        return new CtpConfiguration()
+        return new CtpConfig()
                 // 交易服务器地址
                 .setTraderAddr(wrapper.getStringOrThrows(CtpAdaptorParamKey.TraderAddr))
                 // 行情服务器地址
@@ -91,8 +91,8 @@ public class CtpConfiguration {
                 .setTradingDay(wrapper.getString(CtpAdaptorParamKey.TradingDay, YYYYMMDD.fmt(parseTradingDay(LocalDateTime.now()))));
     }
 
-    public static CtpConfiguration with(Params<CtpAdaptorParamKey> params) {
-        return new CtpConfiguration()
+    public static CtpConfig with(Params<CtpAdaptorParamKey> params) {
+        return new CtpConfig()
                 // 交易服务器地址
                 .setTraderAddr(params.getString(CtpAdaptorParamKey.TraderAddr))
                 // 行情服务器地址

@@ -229,7 +229,7 @@ public class MarketDataPanel extends JPanel {
             }
         }
 
-        private class SmartComponentsRow {
+        private static class SmartComponentsRow {
             int m_reqId;
             int m_bitNum;
             String m_exch;
@@ -497,7 +497,7 @@ public class MarketDataPanel extends JPanel {
             m_topResultPanel = null;
         }
 
-        class TopTable extends JTable {
+        static class TopTable extends JTable {
             @Serial
             private static final long serialVersionUID = 5003464118546865794L;
 
@@ -772,9 +772,10 @@ public class MarketDataPanel extends JPanel {
 
             HistoricalTickResultsPanel panel = new HistoricalTickResultsPanel();
 
-            ApiDemo.INSTANCE.controller().reqHistoricalTicks(m_contract, m_begin.getText(), m_end.getText(),
-                    m_nTicks.getInt(), m_whatToShow.getSelectedItem().name(), m_rthOnly.isSelected() ? 1 : 0,
-                    m_ignoreSize.isSelected(), panel);
+            ApiDemo.INSTANCE.controller()
+                    .reqHistoricalTicks(m_contract, m_begin.getText(), m_end.getText(),
+                            m_nTicks.getInt(), m_whatToShow.getSelectedItem().name(), m_rthOnly.isSelected() ? 1 : 0,
+                            m_ignoreSize.isSelected(), panel);
             m_resultsPanel.addTab("Historical tick " + m_contract.symbol(), panel, true, true);
         }
 
@@ -1540,7 +1541,9 @@ public class MarketDataPanel extends JPanel {
 
             ApiDemo.INSTANCE.controller().reqTickByTickData(m_contract, m_tickType.getSelectedItem().name(),
                     m_numberOfTicks.getInt(), m_ignoreSize.isSelected(), panel);
-            m_resultsPanel.addTab("Tick-By-Tick " + (m_numberOfTicks.getInt() > 0 ? "Hist + " : "") + m_tickType.getSelectedItem().name() + " " + m_contract.symbol(), panel, true, true);
+            m_resultsPanel.addTab("Tick-By-Tick " + (m_numberOfTicks.getInt() > 0 ? "Hist + " : "")
+                    + m_tickType.getSelectedItem().name() + " "
+                    + m_contract.symbol(), panel, true, true);
         }
     }
 }

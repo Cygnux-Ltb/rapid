@@ -2,11 +2,9 @@ package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
-import io.cygnuxltb.jcts.core.adaptor.ConnectionType;
-import io.mercury.common.annotation.thread.MustBeThreadSafe;
-import io.mercury.common.functional.Handler;
+import io.cygnuxltb.adaptor.ctp.CtpConfig;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEventPublisher;
+import io.cygnuxltb.jcts.core.adaptor.ConnectionMode;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.lang.exception.NativeLibraryLoadException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -17,7 +15,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import static io.mercury.common.sys.SysProperties.JAVA_LIBRARY_PATH;
+import static io.mercury.common.sys.SysProperties.OS_NAME;
 import static io.mercury.common.thread.SleepSupport.sleep;
 
 @NotThreadSafe
@@ -28,7 +29,7 @@ public final class CtpGateway implements Closeable {
     // 静态加载FtdcLibrary
     static {
         try {
-            CtpLibraryManager.startLoad(CtpGateway.class);
+            loadNativeLibrary();
         } catch (NativeLibraryLoadException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -36,11 +37,60 @@ public final class CtpGateway implements Closeable {
         }
     }
 
+    private static final AtomicBoolean isLoaded = new AtomicBoolean(false);
+
+    private static void loadNativeLibrary() throws NativeLibraryLoadException {
+        if (isLoaded.compareAndSet(false, true)) {
+            try {
+                log.info("Trying to load library !!!");
+                // 根据操作系统选择加载不同库文件
+                if (OS_NAME.toLowerCase().startsWith("windows")) {
+                    log.info("Copy win64 library file to java.library.path -> {}", JAVA_LIBRARY_PATH);
+                    // TODO 复制DLL文件到LIBRARY_PATH目录
+                    // 加载.dll文件
+                    //////////////////////////////// thostapi_wrap.dll
+                    System.loadLibrary("thostapi_wrap");
+                    log.info("System.loadLibrary() -> thostapi_wrap");
+                    //////////////////////////////// thostmduserapi_se.dll
+                    System.loadLibrary("thostmduserapi_se");
+                    log.info("System.loadLibrary() -> thostmduserapi_se");
+                    //////////////////////////////// thosttraderapi_se.dll
+                    System.loadLibrary("thosttraderapi_se");
+                    log.info("System.loadLibrary() -> thosttraderapi_se");
+                } else if (OS_NAME.toLowerCase().startsWith("linux")) {
+                    log.info("Copy linux64 library file to java.library.path -> {}", JAVA_LIBRARY_PATH);
+                    // TODO 复制SO文件到LIBRARY_PATH目录
+                    // 加载.so文件
+                    //////////////////////////////// libthostapi_wrap.so
+                    System.load("/usr/lib/ctp_6.3.13/libthostapi_wrap.so");
+                    log.info("System.load() -> /usr/lib/libthostapi_wrap.so");
+                    //////////////////////////////// libthostmduserapi_se.so
+                    System.load("/usr/lib/ctp_6.3.13/libthostmduserapi_se.so");
+                    log.info("System.load() -> /usr/lib/libthostmduserapi_se.so");
+                    //////////////////////////////// libthosttraderapi_se.so
+                    System.load("/usr/lib/ctp_6.3.13/libthosttraderapi_se.so");
+                    log.info("System.load() -> /usr/lib/libthosttraderapi_se.so");
+                } else {
+                    log.error("Unsupported operating system : {}", OS_NAME);
+                    throw new UnsupportedOperationException("Unsupported operating system : " + OS_NAME);
+                }
+                log.info("Load library success by os -> {}", OS_NAME);
+            } catch (SecurityException | UnsatisfiedLinkError | NullPointerException e) {
+                isLoaded.set(false);
+                log.info("Load library failure by os -> {}", OS_NAME);
+                throw new NativeLibraryLoadException("Load native library failure, Throw by -> " + e.getClass(), e);
+            }
+        } else {
+            log.warn("Library already loaded, CtpGateway::loadNativeLibrary() cannot be called repeatedly by CtpGateway");
+        }
+    }
+
+
     // gatewayId
     private final String gatewayId;
 
     // 基础配置信息
-    private final CtpConfiguration config;
+    private final CtpConfig config;
 
     // 行情Gateway
     private CtpMdGateway mdGateway;
@@ -48,38 +98,37 @@ public final class CtpGateway implements Closeable {
     // 交易Gateway
     private CtpTraderGateway traderGateway;
 
-    // RSP消息处理器
-    private final Handler<FtdcRspMsg> handler;
+    // FtdcEvent 事件发布器
+    private final FtdcEventPublisher publisher;
 
     private final long REQUEST_INTERVAL = 850;
 
     /**
      * @param gatewayId String
      * @param config    CtpConfig
-     * @param handler   Handler<FtdcRspMsg>
+     * @param publisher FtdcEventPublisher
      * @param type      运行模式: 0,正常模式; 1,行情模式; 2,交易模式
      */
     public CtpGateway(@Nonnull String gatewayId,
-                      @Nonnull CtpConfiguration config,
-                      @Nonnull ConnectionType type,
-                      @MustBeThreadSafe Handler<FtdcRspMsg> handler) {
+                      @Nonnull CtpConfig config, @Nonnull ConnectionMode type,
+                      @Nonnull FtdcEventPublisher publisher) {
         Asserter.nonEmpty(gatewayId, "gatewayId");
         Asserter.nonNull(config, "config");
-        Asserter.nonNull(handler, "handler");
+        Asserter.nonNull(publisher, "publisher");
         this.gatewayId = gatewayId;
         this.config = config;
-        this.handler = handler;
+        this.publisher = publisher;
         initializer(type);
     }
 
     @PostConstruct
-    private void initializer(ConnectionType type) {
+    private void initializer(ConnectionMode type) {
         switch (type) {
-            case OnlyMarketData -> this.mdGateway = new CtpMdGateway(gatewayId, config, handler);
-            case OnlyTrade -> this.traderGateway = new CtpTraderGateway(gatewayId, config, handler);
+            case OnlyMarketData -> this.mdGateway = new CtpMdGateway(gatewayId, config, publisher);
+            case OnlyTrade -> this.traderGateway = new CtpTraderGateway(gatewayId, config, publisher);
             default -> {
-                this.mdGateway = new CtpMdGateway(gatewayId, config, handler);
-                this.traderGateway = new CtpTraderGateway(gatewayId, config, handler);
+                this.mdGateway = new CtpMdGateway(gatewayId, config, publisher);
+                this.traderGateway = new CtpTraderGateway(gatewayId, config, publisher);
             }
         }
     }
@@ -103,8 +152,8 @@ public final class CtpGateway implements Closeable {
      *
      * @param instruments String[]
      */
-    public void SubscribeMarketData(@Nonnull String[] instruments) {
-        mdGateway.SubscribeMarketData(instruments);
+    public int SubscribeMarketData(@Nonnull String[] instruments) {
+        return mdGateway.SubscribeMarketData(instruments);
     }
 
     /**
@@ -112,8 +161,8 @@ public final class CtpGateway implements Closeable {
      *
      * @param field CThostFtdcInputOrderField
      */
-    public void ReqOrderInsert(CThostFtdcInputOrderField field) {
-        traderGateway.ReqOrderInsert(field);
+    public int ReqOrderInsert(CThostFtdcInputOrderField field) {
+        return traderGateway.ReqOrderInsert(field);
     }
 
     /**
@@ -121,8 +170,8 @@ public final class CtpGateway implements Closeable {
      *
      * @param field CThostFtdcInputOrderActionField
      */
-    public void ReqOrderAction(CThostFtdcInputOrderActionField field) {
-        traderGateway.ReqOrderAction(field);
+    public int ReqOrderAction(CThostFtdcInputOrderActionField field) {
+        return traderGateway.ReqOrderAction(field);
     }
 
     /**
@@ -131,30 +180,32 @@ public final class CtpGateway implements Closeable {
      * @param exchangeCode   String
      * @param instrumentCode String
      */
-    public void ReqQryOrder(String exchangeCode, String instrumentCode) {
-        traderGateway.ReqQryOrder(exchangeCode, instrumentCode);
+    public int ReqQryOrder(String exchangeCode, String instrumentCode) {
+        return traderGateway.ReqQryOrder(exchangeCode, instrumentCode);
     }
 
     /**
      * 查询账户
      */
-    public void ReqQryTradingAccount() {
-        traderGateway.ReqQryTradingAccount();
+    public int ReqQryTradingAccount() {
+        return traderGateway.ReqQryTradingAccount();
     }
 
     /**
+     * 查询持仓信息
+     *
      * @param exchangeCode   String
      * @param instrumentCode String
      */
-    public void ReqQryInvestorPosition(String exchangeCode, String instrumentCode) {
-        traderGateway.ReqQryInvestorPosition(exchangeCode, instrumentCode);
+    public int ReqQryInvestorPosition(String exchangeCode, String instrumentCode) {
+        return traderGateway.ReqQryInvestorPosition(exchangeCode, instrumentCode);
     }
 
     /**
      * 查询结算信息
      */
-    public void ReqQrySettlementInfo() {
-        traderGateway.ReqQrySettlementInfo();
+    public int ReqQrySettlementInfo() {
+        return traderGateway.ReqQrySettlementInfo();
     }
 
     /**
@@ -163,8 +214,8 @@ public final class CtpGateway implements Closeable {
      * @param exchangeId   String
      * @param instrumentId String
      */
-    public void ReqQryInstrument(String exchangeId, String instrumentId) {
-        traderGateway.ReqQryInstrument(exchangeId, instrumentId);
+    public int ReqQryInstrument(String exchangeId, String instrumentId) {
+        return traderGateway.ReqQryInstrument(exchangeId, instrumentId);
     }
 
     /**

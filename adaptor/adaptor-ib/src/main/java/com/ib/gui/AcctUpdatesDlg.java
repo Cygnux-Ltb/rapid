@@ -27,7 +27,6 @@ class AcctUpdatesDlg extends JDialog {
 
         m_txtAcctCode.setMaximumSize(m_txtAcctCode.getPreferredSize());
 
-
         Box row1 = Box.createHorizontalBox();
         row1.add(new JLabel(" Enter the account code for the FA managed \n account you wish to receive updates for :"));
 
@@ -42,7 +41,6 @@ class AcctUpdatesDlg extends JDialog {
         row3.add(Box.createHorizontalStrut(10));
         JButton btnUnSubscribe = new JButton("UnSubscribe");
         row3.add(btnUnSubscribe);
-
 
         Box vbox = Box.createVerticalBox();
         vbox.add(Box.createVerticalStrut(10));

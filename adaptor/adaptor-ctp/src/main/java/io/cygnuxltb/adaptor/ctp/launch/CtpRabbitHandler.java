@@ -2,7 +2,7 @@ package io.cygnuxltb.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
 import io.mercury.common.sys.SysProperties;
 import io.mercury.transport.rmq.AdvancedRmqPublisher;
 
@@ -15,7 +15,7 @@ public class CtpRabbitHandler implements Runnable, Closeable {
 	@SuppressWarnings("unused")
 	private final Config config;
 
-	private AdvancedRmqPublisher<FtdcRspMsg> publisher;
+	private AdvancedRmqPublisher<FtdcEvent> publisher;
 
 	public CtpRabbitHandler(Config config) {
 		this.config = config;

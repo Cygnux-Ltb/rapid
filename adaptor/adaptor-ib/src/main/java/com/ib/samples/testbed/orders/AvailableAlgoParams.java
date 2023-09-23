@@ -15,7 +15,8 @@ public class AvailableAlgoParams {
                                        int scaleSubsLevelSize, boolean scaleRandomPercent,
                                        double scalePriceIncrement, double scalePriceAdjustValue,
                                        int scalePriceAdjustInterval, double scaleProfitOffset,
-                                       boolean scaleAutoReset, int scaleInitPosition, int scaleInitFillQty) {
+                                       boolean scaleAutoReset, int scaleInitPosition,
+                                       int scaleInitFillQty) {
 
         baseOrder.scaleInitLevelSize(scaleInitLevelSize);   //Initial Component Size
         baseOrder.scaleSubsLevelSize(scaleSubsLevelSize);    //Subsequent Comp. Size
@@ -36,8 +37,10 @@ public class AvailableAlgoParams {
     //! [scale_params]
 
     //! [arrivalpx_params]
-    public static void FillArrivalPriceParams(Order baseOrder, double maxPctVol, String riskAversion, String startTime,
-                                              String endTime, boolean forceCompletion, boolean allowPastTime, double monetaryValue) {
+    public static void FillArrivalPriceParams(Order baseOrder, double maxPctVol,
+                                              String riskAversion, String startTime,
+                                              String endTime, boolean forceCompletion,
+                                              boolean allowPastTime, double monetaryValue) {
 
         baseOrder.algoStrategy("ArrivalPx");
         baseOrder.algoParams(new ArrayList<>());
@@ -68,7 +71,9 @@ public class AvailableAlgoParams {
     //! [darkice_params]
 
     //! [pctvol_params]
-    public static void FillPctVolParams(Order baseOrder, double pctVol, String startTime, String endTime, boolean noTakeLiq, double monetaryValue) {
+    public static void FillPctVolParams(Order baseOrder, double pctVol,
+                                        String startTime, String endTime,
+                                        boolean noTakeLiq, double monetaryValue) {
 
         baseOrder.algoStrategy("PctVol");
         baseOrder.algoParams(new ArrayList<>());
@@ -81,7 +86,8 @@ public class AvailableAlgoParams {
     //! [pctvol_params]
 
     //! [twap_params]
-    public static void FillTwapParams(Order baseOrder, String strategyType, String startTime, String endTime,
+    public static void FillTwapParams(Order baseOrder, String strategyType,
+                                      String startTime, String endTime,
                                       boolean allowPastEndTime, double monetaryValue) {
 
         baseOrder.algoStrategy("Twap");
@@ -96,8 +102,10 @@ public class AvailableAlgoParams {
     //! [twap_params]
 
     //! [vwap_params]
-    public static void FillVwapParams(Order baseOrder, double maxPctVol, String startTime, String endTime,
-                                      boolean allowPastEndTime, boolean noTakeLiq, boolean speedUp, double monetaryValue) {
+    public static void FillVwapParams(Order baseOrder, double maxPctVol,
+                                      String startTime, String endTime,
+                                      boolean allowPastEndTime, boolean noTakeLiq,
+                                      boolean speedUp, double monetaryValue) {
 
         baseOrder.algoStrategy("Vwap");
         baseOrder.algoParams(new ArrayList<>());
@@ -113,8 +121,11 @@ public class AvailableAlgoParams {
     //! [vwap_params]
 
     //! [ad_params]
-    public static void FillAccumulateDistributeParams(Order baseOrder, int componentSize, int timeBetweenOrders, boolean randomizeTime20, boolean randomizeSize55,
-                                                      int giveUp, boolean catchUp, boolean waitForFill, String startTime, String endTime) {
+    public static void FillAccumulateDistributeParams(Order baseOrder, int componentSize,
+                                                      int timeBetweenOrders, boolean randomizeTime20,
+                                                      boolean randomizeSize55, int giveUp,
+                                                      boolean catchUp, boolean waitForFill,
+                                                      String startTime, String endTime) {
 
         baseOrder.algoStrategy("AD");
         baseOrder.algoParams(new ArrayList<>());
@@ -132,7 +143,8 @@ public class AvailableAlgoParams {
     //! [ad_params]
 
     //! [balanceimpactrisk_params]
-    public static void FillBalanceImpactRiskParams(Order baseOrder, double maxPctVol, String riskAversion, boolean forceCompletion) {
+    public static void FillBalanceImpactRiskParams(Order baseOrder, double maxPctVol,
+                                                   String riskAversion, boolean forceCompletion) {
 
         baseOrder.algoStrategy("BalanceImpactRisk");
         baseOrder.algoParams(new ArrayList<>());
@@ -164,7 +176,8 @@ public class AvailableAlgoParams {
     //! [adaptive_params]
 
     //! [closepx_params]
-    public static void FillClosePriceParams(Order baseOrder, double maxPctVol, String riskAversion, String startTime,
+    public static void FillClosePriceParams(Order baseOrder, double maxPctVol,
+                                            String riskAversion, String startTime,
                                             boolean forceCompletion, double monetaryValue) {
 
         baseOrder.algoStrategy("ClosePx");
@@ -178,8 +191,11 @@ public class AvailableAlgoParams {
     //! [closepx_params]
 
     //! [pctvolpx_params]
-    public static void FillPriceVariantPctVolParams(Order baseOrder, double pctVol, double deltaPctVol, double minPctVol4Px,
-                                                    double maxPctVol4Px, String startTime, String endTime, boolean noTakeLiq, double monetaryValue) {
+    public static void FillPriceVariantPctVolParams(Order baseOrder, double pctVol,
+                                                    double deltaPctVol, double minPctVol4Px,
+                                                    double maxPctVol4Px, String startTime,
+                                                    String endTime, boolean noTakeLiq,
+                                                    double monetaryValue) {
 
         baseOrder.algoStrategy("PctVolPx");
         baseOrder.algoParams(new ArrayList<>());
@@ -195,8 +211,10 @@ public class AvailableAlgoParams {
     //! [pctvolpx_params]
 
     //! [pctvolsz_params]
-    public static void FillSizeVariantPctVolParams(Order baseOrder, double startPctVol, double endPctVol,
-                                                   String startTime, String endTime, boolean noTakeLiq, double monetaryValue) {
+    public static void FillSizeVariantPctVolParams(Order baseOrder, double startPctVol,
+                                                   double endPctVol, String startTime,
+                                                   String endTime, boolean noTakeLiq,
+                                                   double monetaryValue) {
 
         baseOrder.algoStrategy("PctVolSz");
         baseOrder.algoParams(new ArrayList<>());
@@ -210,8 +228,10 @@ public class AvailableAlgoParams {
     //! [pctvolsz_params]
 
     //! [pctvoltm_params]
-    public static void FillTimeVariantPctVolParams(Order baseOrder, double startPctVol, double endPctVol,
-                                                   String startTime, String endTime, boolean noTakeLiq, double monetaryValue) {
+    public static void FillTimeVariantPctVolParams(Order baseOrder, double startPctVol,
+                                                   double endPctVol, String startTime,
+                                                   String endTime, boolean noTakeLiq,
+                                                   double monetaryValue) {
 
         baseOrder.algoStrategy("PctVolTm");
         baseOrder.algoParams(new ArrayList<>());
@@ -225,8 +245,10 @@ public class AvailableAlgoParams {
     //! [pctvoltm_params]
 
     //! [csfb_params]
-    public static void FillCSFBParams(Order baseOrder, double startPctVol, double endPctVol,
-                                      String startTime, String endTime, boolean noTakeLiq, double monetaryValue) {
+    public static void FillCSFBParams(Order baseOrder, double startPctVol,
+                                      double endPctVol, String startTime,
+                                      String endTime, boolean noTakeLiq,
+                                      double monetaryValue) {
 
         // must be direct-routed to "CSFB"
 
@@ -242,9 +264,13 @@ public class AvailableAlgoParams {
     //! [csfb_params]
 
     //! [jefferies_vwap_params]
-    public static void FillJefferiesVWAPParams(Order baseOrder, String startTime, String endTime, double relativeLimit,
-                                               double maxVolumeRate, String excludeAuctions, double triggerPrice, double wowPrice, int minFillSize, double wowOrderPct,
-                                               String wowMode, boolean isBuyBack, String wowReference) {
+    public static void FillJefferiesVWAPParams(Order baseOrder, String startTime,
+                                               String endTime, double relativeLimit,
+                                               double maxVolumeRate, String excludeAuctions,
+                                               double triggerPrice, double wowPrice,
+                                               int minFillSize, double wowOrderPct,
+                                               String wowMode, boolean isBuyBack,
+                                               String wowReference) {
 
         // must be direct-routed to "JEFFALGO"
 
@@ -268,9 +294,13 @@ public class AvailableAlgoParams {
     //! [jefferies_vwap_params]
 
     //! [csfb_inline_params]
-    public static void FillCSFBInlineParams(Order baseOrder, String startTime, String endTime, String execStyle, int minPercent,
-                                            int maxPercent, int displaySize, String auction, boolean blockFinder, double blockPrice,
-                                            int minBlockSize, int maxBlockSize, double iWouldPrice) {
+    public static void FillCSFBInlineParams(Order baseOrder, String startTime,
+                                            String endTime, String execStyle,
+                                            int minPercent, int maxPercent,
+                                            int displaySize, String auction,
+                                            boolean blockFinder, double blockPrice,
+                                            int minBlockSize, int maxBlockSize,
+                                            double iWouldPrice) {
 
         // must be direct-routed to "CSFBALGO"
 
@@ -294,8 +324,10 @@ public class AvailableAlgoParams {
     //! [csfb_inline_params]
 
     //! [qbalgo_strobe_params]
-    public static void FillQBAlgoInlineParams(Order baseOrder, String startTime, String endTime, double duration, String benchmark,
-                                              double percentVolume, boolean noCleanUp) {
+    public static void FillQBAlgoInlineParams(Order baseOrder, String startTime,
+                                              String endTime, double duration,
+                                              String benchmark, double percentVolume,
+                                              boolean noCleanUp) {
 
         baseOrder.algoStrategy("STROBE");
 

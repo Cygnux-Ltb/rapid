@@ -13,7 +13,7 @@ public final class FtdcDepthMarketData {
     // 交易日
     private String TradingDay;
 
-    // InstrumentID
+    // 合约ID
     private String InstrumentID;
 
     // 交易所ID
@@ -25,7 +25,7 @@ public final class FtdcDepthMarketData {
     // 最新价
     private double LastPrice;
 
-    // 上次结算价
+    // 昨结算价
     private double PreSettlementPrice;
 
     // 昨收盘
@@ -105,27 +105,37 @@ public final class FtdcDepthMarketData {
     // 业务日期
     private String ActionDay;
 
-    public FtdcDepthMarketData readJniValue(CThostFtdcDepthMarketDataField field) {
-        return this.setTradingDay(field.getTradingDay())
+    public FtdcDepthMarketData load(CThostFtdcDepthMarketDataField field) {
+        return this
+                // 交易日, 合约ID, 交易所ID, 合约在交易所的代码
+                .setTradingDay(field.getTradingDay())
                 .setInstrumentID(field.getInstrumentID())
                 .setExchangeID(field.getExchangeID())
                 .setExchangeInstID(field.getExchangeInstID())
+                // 最新价
                 .setLastPrice(field.getLastPrice())
+                // 昨结算价, 昨收盘, 昨持仓量
                 .setPreSettlementPrice(field.getPreSettlementPrice())
                 .setPreClosePrice(field.getPreClosePrice())
                 .setPreOpenInterest(field.getPreOpenInterest())
+                // 开盘价, 最高价, 最低价
                 .setOpenPrice(field.getOpenPrice())
                 .setHighestPrice(field.getHighestPrice())
                 .setLowestPrice(field.getLowestPrice())
+                // 成交量, 成交金额, 持仓量
                 .setVolume(field.getVolume())
                 .setTurnover(field.getTurnover())
                 .setOpenInterest(field.getOpenInterest())
+                // 收盘价, 结算价
                 .setClosePrice(field.getClosePrice())
                 .setSettlementPrice(field.getSettlementPrice())
+                // 涨停板价, 跌停板价
                 .setUpperLimitPrice(field.getUpperLimitPrice())
                 .setLowerLimitPrice(field.getLowerLimitPrice())
+                // 昨Delta, 今Delta
                 .setPreDelta(field.getPreDelta())
                 .setCurrDelta(field.getCurrDelta())
+                // 五档买价卖价及买量卖量 v
                 .setBidPrice1(field.getBidPrice1())
                 .setBidVolume1(field.getBidVolume1())
                 .setAskPrice1(field.getAskPrice1())
@@ -146,10 +156,14 @@ public final class FtdcDepthMarketData {
                 .setBidVolume5(field.getBidVolume5())
                 .setAskPrice5(field.getAskPrice5())
                 .setAskVolume5(field.getAskVolume5())
+                // 五档买价卖价及买量卖量 ^
+                // 平均价格
                 .setAveragePrice(field.getAveragePrice())
+                // 更新时间, 更新毫秒数, 业务日期
                 .setUpdateTime(field.getUpdateTime())
                 .setUpdateMillisec(field.getUpdateMillisec())
-                .setActionDay(field.getActionDay());
+                .setActionDay(field.getActionDay())
+                ;
     }
 
 }

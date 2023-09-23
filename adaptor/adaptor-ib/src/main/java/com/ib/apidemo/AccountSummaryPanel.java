@@ -149,11 +149,11 @@ public class AccountSummaryPanel extends NewTabPanel {
         }
 
         String fmtPct(String val) {
-            return val == null || val.length() == 0 ? null : Formats.fmtPct(Double.parseDouble(val));
+            return val == null || val.isEmpty() ? null : Formats.fmtPct(Double.parseDouble(val));
         }
 
         String fmtTime(String val) {
-            return val == null || val.length() == 0 || val.equals("0") ? null : Formats.fmtDate(Long.parseLong(val) * 1000);
+            return val == null || val.isEmpty() || val.equals("0") ? null : Formats.fmtDate(Long.parseLong(val) * 1000);
         }
     }
 

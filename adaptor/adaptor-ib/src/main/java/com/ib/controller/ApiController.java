@@ -16,6 +16,7 @@ import com.ib.client.Types.WhatToShow;
 import com.ib.controller.ApiConnection.ILogger;
 
 import java.io.IOException;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -279,7 +280,7 @@ public class ApiController implements EWrapper {
 
         StringBuilder sb = new StringBuilder();
         for (AccountSummaryTag tag : tags) {
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 sb.append(',');
             }
             sb.append(tag);
@@ -1144,7 +1145,9 @@ public class ApiController implements EWrapper {
                     int year = Integer.parseInt(bar.time().substring(0, 4));
                     int month = Integer.parseInt(bar.time().substring(4, 6));
                     int day = Integer.parseInt(bar.time().substring(6));
-                    longDate = new GregorianCalendar(year, month - 1, day).getTimeInMillis() / 1000;
+
+                    //longDate = new GregorianCalendar(year, month - 1, day).getTimeInMillis() / 1000;
+                    longDate = new GregorianCalendar(year, Month.of(month).getValue(), day).getTimeInMillis() / 1000;
                 } else {
                     longDate = Long.parseLong(bar.time());
                 }
@@ -1236,7 +1239,6 @@ public class ApiController implements EWrapper {
             error(EClientErrors.NO_VALID_ID, EClientErrors.NOT_CONNECTED.code(), EClientErrors.NOT_CONNECTED.msg());
             return false;
         }
-
         return true;
     }
 

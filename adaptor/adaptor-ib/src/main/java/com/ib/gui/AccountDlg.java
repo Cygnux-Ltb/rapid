@@ -122,7 +122,7 @@ public class AccountDlg extends JDialog {
             sb.append(m_accountName);
         }
         if (m_complete) {
-            if (sb.length() != 0) {
+            if (!sb.isEmpty()) {
                 sb.append(' ');
             }
             sb.append("[complete]");

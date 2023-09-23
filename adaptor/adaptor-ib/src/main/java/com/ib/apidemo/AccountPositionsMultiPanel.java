@@ -106,7 +106,7 @@ class AccountPositionsMultiPanel extends JPanel {
                     panel, true, true);
         }
 
-        private class PositionsResultsPanel extends NewTabPanel implements IPositionMultiHandler {
+        private static class PositionsResultsPanel extends NewTabPanel implements IPositionMultiHandler {
             Map<String, PositionRow> m_map = new HashMap<>();
             List<PositionRow> m_list = new ArrayList<>();
             PositionsModel m_model = new PositionsModel();
@@ -241,7 +241,7 @@ class AccountPositionsMultiPanel extends JPanel {
                     panel, true, true);
         }
 
-        private class AccountUpdatesResultsPanel extends NewTabPanel implements IAccountUpdateMultiHandler {
+        private static class AccountUpdatesResultsPanel extends NewTabPanel implements IAccountUpdateMultiHandler {
             Map<AccountUpdateKey, AccountUpdateRow> m_map = new HashMap<>();
             List<AccountUpdateRow> m_list = new ArrayList<>();
             AccountUpdatesModel m_model = new AccountUpdatesModel();

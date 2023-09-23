@@ -1,7 +1,7 @@
 package io.cygnuxltb.adaptor.ctp.gateway;
 
-import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.CtpConfig;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.cygnuxltb.jcts.core.adaptor.ConnectionType.Normal;
+import static io.cygnuxltb.jcts.core.adaptor.ConnectionMode.Normal;
 
 public class CtpGatewayTest {
 
@@ -42,11 +42,11 @@ public class CtpGatewayTest {
     @Test
     public void test() {
 
-        final CtpConfiguration config = new CtpConfiguration().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
+        final CtpConfig config = new CtpConfig().setTraderAddr(TradeAddr).setMdAddr(MdAddr).setBrokerId(BrokerId)
                 .setInvestorId(InvestorId).setUserId(UserId).setAccountId(AccountId).setPassword(Password)
                 .setTradingDay(TradingDay).setCurrencyId(CurrencyId);
 
-        final Queue<FtdcRspMsg> queue = ScQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
+        final Queue<FtdcEvent> queue = ScQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {
                     switch (msg.getType()) {
                         case DepthMarketData -> {

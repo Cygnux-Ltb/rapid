@@ -7,9 +7,10 @@ import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.gateway.CtpMdGateway.FtdcMdCallback;
-import io.cygnuxltb.adaptor.ctp.gateway.handler.FtdcRspInfoHandler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
+
+import static io.cygnuxltb.adaptor.ctp.gateway.utils.FtdcRspInfoHandler.nonError;
 
 public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
 
@@ -38,7 +39,7 @@ public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
                                CThostFtdcRspInfoField pRspInfo,
                                int nRequestID, boolean bIsLast) {
         log.info("FtdcMdSpi::OnRspUserLogin");
-        if (!FtdcRspInfoHandler.hasError("FtdcMdSpi::OnRspUserLogin", pRspInfo)) {
+        if (nonError("FtdcMdSpi::OnRspUserLogin", pRspInfo)) {
             if (pRspUserLogin != null)
                 callback.onMdRspUserLogin(pRspUserLogin);
             else
@@ -51,7 +52,7 @@ public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
                                 CThostFtdcRspInfoField pRspInfo,
                                 int nRequestID, boolean bIsLast) {
         log.info("FtdcMdSpi::OnRspUserLogout");
-        if (!FtdcRspInfoHandler.hasError("FtdcMdSpi::OnRspUserLogout", pRspInfo)) {
+        if (nonError("FtdcMdSpi::OnRspUserLogout", pRspInfo)) {
             if (pUserLogout != null)
                 // TODO 处理用户登出
                 log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", pUserLogout.getBrokerID(),
@@ -59,7 +60,6 @@ public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
             else
                 log.error("FtdcMdSpi::OnRspUserLogin return null");
         }
-
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class FtdcMdSpiImpl extends CThostFtdcMdSpi {
                                    CThostFtdcRspInfoField pRspInfo,
                                    int nRequestID, boolean bIsLast) {
         log.info("FtdcMdSpi::OnRspSubMarketData");
-        if (!FtdcRspInfoHandler.hasError("FtdcMdSpi::OnRspSubMarketData", pRspInfo)) {
+        if (nonError("FtdcMdSpi::OnRspSubMarketData", pRspInfo)) {
             if (pSpecificInstrument != null)
                 callback.onRspSubMarketData(pSpecificInstrument);
             else

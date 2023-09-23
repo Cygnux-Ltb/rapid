@@ -1,7 +1,7 @@
 package io.cygnuxltb.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.functional.Handler;
@@ -15,13 +15,13 @@ import org.slf4j.Logger;
 import java.io.Closeable;
 import java.io.IOException;
 
-public class CtpZmqHandler implements Closeable, Handler<FtdcRspMsg> {
+public class CtpZmqHandler implements Closeable, Handler<FtdcEvent> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpZmqHandler.class);
 
     private final ZmqPublisher<String> publisher;
 
-    private final Queue<FtdcRspMsg> queue;
+    private final Queue<FtdcEvent> queue;
 
     public CtpZmqHandler(Config config) {
         String topic = config.getString("zmq.topic");
@@ -43,7 +43,7 @@ public class CtpZmqHandler implements Closeable, Handler<FtdcRspMsg> {
     }
 
     @Override
-    public void handle(FtdcRspMsg msg) {
+    public void handle(FtdcEvent msg) {
         queue.enqueue(msg);
     }
 

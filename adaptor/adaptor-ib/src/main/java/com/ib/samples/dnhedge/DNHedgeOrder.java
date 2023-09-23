@@ -34,6 +34,6 @@ public class DNHedgeOrder extends Order {
         deltaNeutralShortSale(true);
 
         deltaNeutralDesignatedLocation(designatedLocation);
-        deltaNeutralShortSaleSlot(deltaNeutralDesignatedLocation().length() == 0 ? 1 : 2);
+        deltaNeutralShortSaleSlot(deltaNeutralDesignatedLocation().isEmpty() ? 1 : 2);
     }
 }

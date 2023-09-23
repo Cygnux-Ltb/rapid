@@ -440,7 +440,7 @@ public class AccountInfoPanel extends JPanel implements INewTab, IAccountHandler
      * If val is a number, format it with commas and no decimals.
      */
     static String format(String val, String currency) {
-        if (val == null || val.length() == 0) {
+        if (val == null || val.isEmpty()) {
             return null;
         }
 
@@ -450,7 +450,7 @@ public class AccountInfoPanel extends JPanel implements INewTab, IAccountHandler
         } catch (Exception ignored) {
         }
 
-        return currency != null && currency.length() > 0
+        return currency != null && !currency.isEmpty()
                 ? val + " " + currency : val;
     }
 

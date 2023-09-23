@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashSet;
 
 public class HtmlButton extends JLabel {
+
     static Color light = new Color(220, 220, 220);
 
     private String m_text;

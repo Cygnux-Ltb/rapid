@@ -1,8 +1,8 @@
 package io.cygnuxltb.adaptor.ctp.gateway.msg;
 
-import io.mercury.common.functional.Handler;
+import io.mercury.common.functional.Processor;
 
 @FunctionalInterface
-public interface FtdcRspHandler extends Handler<FtdcRspMsg> {
+public interface FtdcRspProcessor extends Processor<FtdcEvent> {
 
 }
