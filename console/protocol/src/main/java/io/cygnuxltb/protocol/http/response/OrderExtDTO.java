@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 订单扩展信息表
@@ -58,18 +58,15 @@ public final class OrderExtDTO {
      */
     private int userId;
 
-
     /**
      * orderSysId [*]
      */
     private long ordSysId;
 
-
     /**
      * orderRef
      */
     private String orderRef;
-
 
     /**
      * direction
@@ -91,7 +88,6 @@ public final class OrderExtDTO {
      */
     private int offerQty;
 
-
     /**
      * brokerSysId
      */
@@ -107,21 +103,20 @@ public final class OrderExtDTO {
      */
     private double price;
 
-
     /**
      * insertTime
      */
-    private Date insertTime;
+    private LocalDateTime insertTime;
 
     /**
      * updateTime
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * cancelTime
      */
-    private Date cancelTime;
+    private LocalDateTime cancelTime;
 
     /**
      * frontId

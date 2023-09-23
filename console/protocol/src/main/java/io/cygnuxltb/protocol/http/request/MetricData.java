@@ -9,28 +9,34 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MetricData {
 
-	private int keyId;
+    private int keyId;
 
-	private int strategyId;
+    private int strategyId;
 
-	private String exchangeCode;
+    private String exchangeCode;
 
-	private String lastPoint;
+    private String lastPoint;
 
-	private String currPoint;
+    private String currPoint;
 
-	private long epochTime;
+    private long epochTime;
 
-	private int epochTimeDiff;
+    private int epochTimeDiff;
 
-	private char interfaceType;
+    private char interfaceType;
 
-	@Override
-	public String toString() {
-		return keyId + "," + interfaceType + "," + exchangeCode +
-				"," + strategyId + "," + lastPoint + "<->" + currPoint +
-				"," + lastPoint + "," + currPoint + "," + epochTime + "," +
-				epochTimeDiff;
-	}
+    @Override
+    public String toString() {
+        return keyId + ","
+                + interfaceType + ","
+                + exchangeCode + ","
+                + strategyId + ","
+                + lastPoint + "<->"
+                + currPoint + ","
+                + lastPoint + ","
+                + currPoint + ","
+                + epochTime + ","
+                + epochTimeDiff;
+    }
 
 }

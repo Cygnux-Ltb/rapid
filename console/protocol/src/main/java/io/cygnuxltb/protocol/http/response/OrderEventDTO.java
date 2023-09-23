@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
+
 /**
  * 订单事件表
  * Trade Entity 订单事件
@@ -55,7 +57,6 @@ public final class OrderEventDTO {
      */
     private int userId;
 
-
     /**
      * ord_sys_id [*]
      */
@@ -100,7 +101,7 @@ public final class OrderEventDTO {
     /**
      * brokerSysID
      */
-    private Long brokerSysID;
+    private long brokerSysID;
 
     /**
      * volume int
@@ -132,21 +133,15 @@ public final class OrderEventDTO {
      */
     private int ordRejReason;
 
-    // InsertTime datetime
-    /**
-     * insert_time
-     */
-    private int insertTime;
-
     /**
      * update_time
      */
-    private int updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * cancel_time
      */
-    private int cancelTime;
+    private LocalDateTime cancelTime;
 
     /**
      * remark

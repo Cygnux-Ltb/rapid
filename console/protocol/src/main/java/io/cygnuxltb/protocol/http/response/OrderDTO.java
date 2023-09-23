@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -95,17 +96,12 @@ public final class OrderDTO {
     /**
      * 创建时间
      */
-    private Date insertTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
+    private LocalDateTime insertTime;
 
     /**
      * 取消时间
      */
-    private Date cancelTime;
+    private LocalDateTime cancelTime;
 
     /**
      * 前置机ID

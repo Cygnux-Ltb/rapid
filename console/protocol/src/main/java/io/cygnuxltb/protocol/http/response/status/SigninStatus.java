@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class SignInStatus {
+public class SigninStatus {
 
     /**
      * 是否已验证
