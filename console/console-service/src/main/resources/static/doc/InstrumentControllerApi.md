@@ -1,5 +1,5 @@
 
-# 交易标的查询接口
+# 交易标的服务
 ## 获取结算信息
 
 **URL:** `/instrument/settlement`
@@ -18,7 +18,7 @@
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |td|int32|true|    int|-|
-|code|string|true|交易标的 [查询多个标的使用','分割]|-|
+|code|string|true|交易标的 () [查询多个标的使用','分割]|-|
 
 
 **Request-example:**

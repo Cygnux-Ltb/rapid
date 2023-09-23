@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
-import static io.horizon.trader.order.OrdSysIdAllocator.ForExternalOrder;
+import static io.cygnuxltb.jcts.core.order.OrdSysIdAllocator.ForExternalOrder;
 import static io.mercury.common.collections.Capacity.L10_SIZE;
 import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
 import static io.mercury.common.collections.MutableMaps.newObjectLongHashMap;

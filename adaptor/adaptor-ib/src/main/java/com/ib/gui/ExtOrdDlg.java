@@ -335,7 +335,7 @@ public class ExtOrdDlg extends JDialog {
             m_order.discretionaryAmt(parseDouble(m_discretionaryAmt));
             m_order.shortSaleSlot(parseInt(m_shortSaleSlot));
             m_order.designatedLocation(m_designatedLocation.getText().trim());
-            m_order.exemptCode(Integer.parseInt(m_exemptCode.getText().length() != 0 ? m_exemptCode.getText() : "-1"));
+            m_order.exemptCode(Integer.parseInt(!m_exemptCode.getText().isEmpty() ? m_exemptCode.getText() : "-1"));
             m_order.rule80A(m_rule80A.getText().trim());
             m_order.allOrNone(parseInt(m_allOrNone) != 0);
             m_order.minQty(parseMaxInt(m_minQty));
@@ -404,7 +404,7 @@ public class ExtOrdDlg extends JDialog {
 
     private static int parseMaxInt(JTextField textField) {
         String text = textField.getText().trim();
-        if (text.length() == 0) {
+        if (text.isEmpty()) {
             return Integer.MAX_VALUE;
         }
         return Integer.parseInt(text);
@@ -412,7 +412,7 @@ public class ExtOrdDlg extends JDialog {
 
     private static double parseMaxDouble(JTextField textField) {
         String text = textField.getText().trim();
-        if (text.length() == 0) {
+        if (text.isEmpty()) {
             return Double.MAX_VALUE;
         }
         return Double.parseDouble(text);
@@ -420,7 +420,7 @@ public class ExtOrdDlg extends JDialog {
 
     private static int parseInt(JTextField textField) {
         String text = textField.getText().trim();
-        if (text.length() == 0) {
+        if (text.isEmpty()) {
             return 0;
         }
         return Integer.parseInt(text);
@@ -428,7 +428,7 @@ public class ExtOrdDlg extends JDialog {
 
     private static double parseDouble(JTextField textField) {
         String text = textField.getText().trim();
-        if (text.length() == 0) {
+        if (text.isEmpty()) {
             return 0;
         }
         return Double.parseDouble(text);

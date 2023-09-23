@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdvisorPanel extends NewTabPanel implements IAdvisorHandler {
+
     static DefaultCellEditor DEF_CELL_EDITOR = new DefaultCellEditor(new JTextField());
 
     static {

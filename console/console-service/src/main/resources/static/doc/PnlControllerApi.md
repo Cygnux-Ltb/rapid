@@ -1,6 +1,6 @@
 
-# PNL服务接口
-## 查询PNL
+# PNL(盈亏)服务
+## 查询PNL (查询盈亏)
 
 **URL:** `/pnl`
 
@@ -9,7 +9,7 @@
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 查询PNL
+**Description:** 查询PNL (查询盈亏)
 
 
 
@@ -69,7 +69,7 @@ curl -X GET -i /pnl?td=0&strategyId=0
 ]
 ```
 
-## 更新PNL, 策略引擎调用 (内部接口)
+## 更新PNL (内部接口, 策略引擎调用)
 
 **URL:** `/pnl`
 
@@ -78,7 +78,7 @@ curl -X GET -i /pnl?td=0&strategyId=0
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
 
-**Description:** 更新PNL, 策略引擎调用 (内部接口)
+**Description:** 更新PNL (内部接口, 策略引擎调用)
 
 
 
@@ -94,7 +94,7 @@ curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /pnl
 OK
 ```
 
-## 查询结算PNL
+## 查询结算PNL (查询结算盈亏)
 
 **URL:** `/pnl/settlement`
 
@@ -103,7 +103,7 @@ OK
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 查询结算PNL
+**Description:** 查询结算PNL (查询结算盈亏)
 
 
 

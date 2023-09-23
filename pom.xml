@@ -5,11 +5,11 @@
 
     <!-- This is parent cygnux pom.xml -->
     <groupId>io.cygnuxltb</groupId>
-    <artifactId>jcts</artifactId>
+    <artifactId>rapid</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
-    <name>jcts</name>
+    <name>rapid</name>
 
     <url>https://cygnuxltb.io</url>
     <licenses>
@@ -26,10 +26,10 @@
     </developers>
 
     <modules>
-        <module>api</module>
+        <module>core</module>
         <module>adaptor</module>
         <module>console</module>
-        <module>display</module>
+        <module>dashboard</module>
         <module>engine</module>
         <module>example</module>
     </modules>
@@ -39,9 +39,9 @@
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>3.1.0</spring-boot.version>
+        <spring-boot.version>3.1.2</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
-        <avro.version>1.11.1</avro.version>
+        <avro.version>1.11.2</avro.version>
     </properties>
 
     <build>
@@ -123,6 +123,11 @@
                 <artifactId>serialization-avro</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-sbe</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
             <!-- mercury transport -->
             <dependency>
                 <groupId>io.mercury</groupId>
@@ -133,17 +138,6 @@
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-rabbitmq</artifactId>
                 <version>${mercury.version}</version>
-            </dependency>
-            <!-- API -->
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>market-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>trader-api</artifactId>
-                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

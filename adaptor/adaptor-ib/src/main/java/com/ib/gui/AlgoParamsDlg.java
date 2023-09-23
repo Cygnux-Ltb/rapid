@@ -3,12 +3,8 @@
 
 package com.ib.gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Window;
-import java.io.Serial;
-import java.util.ArrayList;
-import java.util.List;
+import com.ib.client.Order;
+import com.ib.client.TagValue;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,9 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-
-import com.ib.client.Order;
-import com.ib.client.TagValue;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Window;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlgoParamsDlg extends JDialog {
     @Serial

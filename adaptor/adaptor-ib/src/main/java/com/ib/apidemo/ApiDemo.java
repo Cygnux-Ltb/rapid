@@ -247,6 +247,7 @@ public class ApiDemo implements IConnectionHandler {
     }
 
     private static class Logger implements ILogger {
+
         private final JTextArea m_area;
 
         Logger(JTextArea area) {

@@ -2,22 +2,17 @@ package io.cygnuxltb.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.cygnuxltb.adaptor.ctp.CtpAdaptor;
-import io.cygnuxltb.adaptor.ctp.CtpConfiguration;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.market.instrument.InstrumentKeeper;
-import io.horizon.trader.account.Account;
-import io.horizon.market.handler.MarketDataRecorder.LoggerMarketDataRecorder;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.thread.ThreadSupport;
 import io.mercury.common.util.StringSupport;
 import org.slf4j.Logger;
 
 import java.io.File;
 
-import static io.horizon.market.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
-import static io.horizon.market.utils.MarketTradableTime.registerCloseTime;
+import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
+import static io.cygnuxltb.jcts.core.util.MarketTradableTime.registerCloseTime;
 import static io.mercury.common.datetime.pattern.DateTimePattern.YYYYMMDD_L_HHMMSS;
 
 public final class CtpAdaptorStartup {
@@ -56,21 +51,22 @@ public final class CtpAdaptorStartup {
 
         registerCloseTime(nextCloseTime());
 
-        if (mode.equals("zmq")) {
-            try (// CtpZmqHandler module = new CtpZmqHandler(config);
-                 var recorder = new LoggerMarketDataRecorder(instruments);
-                 var adaptor = new CtpAdaptor(new Account(config), CtpConfiguration.with(config),
-                         recorder)) {
-                recorder.setAdaptor(adaptor);
-                adaptor.startup();
-                ThreadSupport.join();
-            } catch (Exception e) {
-                log.error("exception message -> {}", e.getMessage(), e);
-            }
-        } else if (mode.equals("rmq")) {
-            // TODO
-            throw new UnsupportedOperationException("The current version does not support [rmq] mode");
-        }
+//        if (mode.equals("zmq")) {
+//            try (// CtpZmqHandler module = new CtpZmqHandler(config);
+//                 MarketDataHandler<MarketData> recorder = new MarketDataRecorder.LoggerMarketDataRecorder(null, instruments);
+//                 var adaptor = new CtpAdaptor(new Account(config), CtpConfiguration.with(config),
+//                        ConnectionType.OnlyMarketData,
+//                          recorder)) {
+//                recorder.setAdaptor(adaptor);
+//                adaptor.startup();
+//                ThreadSupport.join();
+//            } catch (Exception e) {
+//                log.error("exception message -> {}", e.getMessage(), e);
+//            }
+//        } else if (mode.equals("rmq")) {
+//            // TODO
+//            throw new UnsupportedOperationException("The current version does not support [rmq] mode");
+//        }
 
     }
 

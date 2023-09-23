@@ -1,8 +1,8 @@
 package io.cygnuxltb.adaptor.ctp.converter;
 
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
+import io.cygnuxltb.jcts.core.mkd.FastMarketData;
 import io.mercury.common.datetime.TimeConst;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -11,12 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static io.horizon.market.data.impl.BasicMarketData.newLevel5;
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.datetime.pattern.TimePattern.HH_MM_SS;
 
 /**
- * FtdcDepthMarketData -> BasicMarketData
+ * FtdcDepthMarketData -> FastMarketData
  *
  * @author yellow013
  */
@@ -31,31 +30,33 @@ public final class MarketDataConverter {
     /**
      * 转换
      *
-     * @param depthMarketData <pre>
-     * @return BasicMarketData
+     * @param depthMarketData FtdcDepthMarketData
+     * @return FastMarketData
      */
-    public BasicMarketData withFtdcDepthMarketData(FtdcDepthMarketData depthMarketData) {
-
+    public FastMarketData withFtdcDepthMarketData(FtdcDepthMarketData depthMarketData) {
         // 业务日期
-        var actionDay = LocalDate.parse(depthMarketData.getActionDay(), actionDayFormatter);
-
+        var actionDay = LocalDate
+                .parse(depthMarketData.getActionDay(), actionDayFormatter);
         // 最后修改时间
-        var updateTime = LocalTime.parse(depthMarketData.getUpdateTime(), updateTimeFormatter)
+        var updateTime = LocalTime
+                .parse(depthMarketData.getUpdateTime(), updateTimeFormatter)
                 .plusNanos(depthMarketData.getUpdateMillisec() * TimeConst.NANOS_PER_MILLIS);
-
-        var instrument = InstrumentKeeper.getInstrument(depthMarketData.getInstrumentID());
+        // 最后修改时间
+        var instrument = InstrumentKeeper
+                .getInstrument(depthMarketData.getInstrumentID());
 
         log.info("Convert depthMarketData apply -> InstrumentCode==[{}], actionDay==[{}], updateTime==[{}]",
                 instrument.getInstrumentCode(), actionDay, updateTime);
         var multiplier = instrument.getSymbol().getMultiplier();
-
-        return newLevel5(
+        return new FastMarketData()
                 // 交易标的
-                instrument,
-                // 交易日
-                actionDay,
-                // 时间
-                updateTime)
+                .setInstrumentCode(instrument.getInstrumentCode())
+                // 业务日期
+                .setActionDay(depthMarketData.getActionDay())
+                // 最后修改时间
+                .setUpdateTime(depthMarketData.getUpdateTime())
+                // 最后修改时间毫秒数
+                .setUpdateMillisec(depthMarketData.getUpdateMillisec())
                 // 最新价
                 .setLastPrice(multiplier.toLong(depthMarketData.getLastPrice()))
                 // 成交量

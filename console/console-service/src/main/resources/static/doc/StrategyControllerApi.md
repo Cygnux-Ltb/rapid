@@ -137,7 +137,7 @@ curl -X GET -i /strategy/param?strategyName=
 
 **URL:** `/strategy/param`
 
-**Type:** `PUT`
+**Type:** `POST`
 
 
 **Content-Type:** `APPLICATION_JSON_UTF8`
@@ -155,7 +155,7 @@ curl -X GET -i /strategy/param?strategyName=
 
 **Request-example:**
 ```
-curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/param --data 'strategyId=0'
+curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/param --data 'strategyId=0'
 ```
 
 **Response-example:**

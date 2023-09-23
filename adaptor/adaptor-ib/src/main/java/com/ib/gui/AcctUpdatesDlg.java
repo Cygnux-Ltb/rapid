@@ -4,8 +4,14 @@
 
 package com.ib.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
 
 class AcctUpdatesDlg extends JDialog {
     private final JTextField m_txtAcctCode = new JTextField(10);
@@ -21,7 +27,6 @@ class AcctUpdatesDlg extends JDialog {
 
         m_txtAcctCode.setMaximumSize(m_txtAcctCode.getPreferredSize());
 
-
         Box row1 = Box.createHorizontalBox();
         row1.add(new JLabel(" Enter the account code for the FA managed \n account you wish to receive updates for :"));
 
@@ -36,7 +41,6 @@ class AcctUpdatesDlg extends JDialog {
         row3.add(Box.createHorizontalStrut(10));
         JButton btnUnSubscribe = new JButton("UnSubscribe");
         row3.add(btnUnSubscribe);
-
 
         Box vbox = Box.createVerticalBox();
         vbox.add(Box.createVerticalStrut(10));

@@ -25,126 +25,140 @@ import java.util.List;
 
 public class ContractSearchDlg extends JDialog {
 
-	@Serial
-	private static final long serialVersionUID = -5154315674822414221L;
-	private final ContractPanel m_contractPanel;
-	private Contract m_contract = new Contract();
-	private final DefaultListModel<Contract> m_contractList = new DefaultListModel<>();
-	private final JList<Contract> m_contracts = new JList<>(m_contractList);
-	private final ContractLookuper m_lookuper;
-	
-	private List<ContractDetails> lookupContract() {
-		//return com.ib.client.Util.lookupContract(ApiDemo.INSTANCE.controller(), m_contract);
-		return m_lookuper.lookupContract(m_contract);
-	}
+    @Serial
+    private static final long serialVersionUID = -5154315674822414221L;
+    private final ContractPanel m_contractPanel;
+    private Contract m_contract = new Contract();
+    private final DefaultListModel<Contract> m_contractList = new DefaultListModel<>();
+    private final JList<Contract> m_contracts = new JList<>(m_contractList);
+    private final ContractLookuper m_lookuper;
 
-	ContractSearchDlg(int conId, String exchange, ContractLookuper lookuper) {
-		m_lookuper = lookuper;
-		
-		if (conId > 0 && !exchange.isEmpty()) {
-			m_contract.conid(conId);
-			m_contract.exchange(exchange);
-			
-			List<ContractDetails> list = lookupContract();
-			
-			if (!list.isEmpty()) {
-				m_contract = list.get(0).contract();
-			}
-		}
-		
-		m_contractPanel = new ContractPanel(m_contract);
-		
-		JPanel buttons = new JPanel( new FlowLayout( FlowLayout.CENTER, 15, 5));
-		
-		buttons.add(new HtmlButton("search") {
-			@Serial
-			private static final long serialVersionUID = -5115057957595389294L;
+    private List<ContractDetails> lookupContract() {
+        //return com.ib.client.Util.lookupContract(ApiDemo.INSTANCE.controller(), m_contract);
+        return m_lookuper.lookupContract(m_contract);
+    }
 
-			@Override protected void actionPerformed() {
-				onSearch();
-			}
-		});
-		
-		m_contracts.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> onGetListCellRenderer(value, isSelected));
-		
-		m_contracts.addMouseListener(new MouseListener() {
-			
-			@Override public void mouseReleased(MouseEvent e) { }
-			@Override public void mousePressed(MouseEvent e) { }
-			@Override public void mouseExited(MouseEvent e) { }
-			@Override public void mouseEntered(MouseEvent e) { }
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() > 1) {
-					dispose();
-				}
-			}
-		});
-		
-		add(m_contractPanel, BorderLayout.NORTH);
-		add(buttons, BorderLayout.CENTER);	
-		add(m_contracts, BorderLayout.SOUTH);
-	
-		pack();
-		setModalityType(ModalityType.APPLICATION_MODAL);
-		Util.closeOnEsc(this);
-	}
-	
-	public boolean isSucceeded() { return m_contractList.size() > 0 && m_contracts.getSelectedIndex() >= 0; }
-	
-	private Contract selectedContract() {
-		if (m_contractList.isEmpty() || m_contracts.getSelectedIndex() < 0)
-			return m_contract;
-		
-		return (m_contractList.get(m_contracts.getSelectedIndex()));
-	}
+    ContractSearchDlg(int conId, String exchange, ContractLookuper lookuper) {
+        m_lookuper = lookuper;
 
-	int refConId() {
-		return selectedContract().conid(); 
-	}
-	
-	String refExchId() {
-		return selectedContract().exchange(); 
-	}
-	
-	String refContract() {
-		if (selectedContract().conid() == 0 || selectedContract().exchange().isEmpty())
-			return null;
-		
-		return selectedContract().symbol() + " " + selectedContract().exchange() + " " + selectedContract().secType() + " " + selectedContract().currency();
-	}
+        if (conId > 0 && !exchange.isEmpty()) {
+            m_contract.conid(conId);
+            m_contract.exchange(exchange);
 
-	private void onSearch() {
-		m_contractPanel.onOK();
+            List<ContractDetails> list = lookupContract();
 
-		m_contract.conid(0);
-		m_contract.tradingClass(null);
+            if (!list.isEmpty()) {
+                m_contract = list.get(0).contract();
+            }
+        }
 
-		List<ContractDetails> list = lookupContract();
+        m_contractPanel = new ContractPanel(m_contract);
 
-		m_contractList.clear();
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
 
-		for (ContractDetails el : list) {
-			m_contractList.addElement(el.contract());						
-		}
+        buttons.add(new HtmlButton("search") {
+            @Serial
+            private static final long serialVersionUID = -5115057957595389294L;
 
-		m_contracts.updateUI();
-		pack();
-	}
+            @Override
+            protected void actionPerformed() {
+                onSearch();
+            }
+        });
 
-	private Component onGetListCellRenderer(Contract value, boolean isSelected) {
-		JPanel panel = new JPanel();
-		
-		panel.add(new JLabel(value.symbol()));
-		panel.add(new JLabel(value.exchange()));
-		panel.add(new JLabel(value.secType().toString()));
-		panel.add(new JLabel(value.currency()));
-		
-		if (isSelected) {
-			panel.setBackground(Color.LIGHT_GRAY);
-		}
-		
-		return panel;
-	}
+        m_contracts.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> onGetListCellRenderer(value, isSelected));
+
+        m_contracts.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    dispose();
+                }
+            }
+        });
+
+        add(m_contractPanel, BorderLayout.NORTH);
+        add(buttons, BorderLayout.CENTER);
+        add(m_contracts, BorderLayout.SOUTH);
+
+        pack();
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        Util.closeOnEsc(this);
+    }
+
+    public boolean isSucceeded() {
+        return !m_contractList.isEmpty() && m_contracts.getSelectedIndex() >= 0;
+    }
+
+    private Contract selectedContract() {
+        if (m_contractList.isEmpty() || m_contracts.getSelectedIndex() < 0)
+            return m_contract;
+
+        return (m_contractList.get(m_contracts.getSelectedIndex()));
+    }
+
+    int refConId() {
+        return selectedContract().conid();
+    }
+
+    String refExchId() {
+        return selectedContract().exchange();
+    }
+
+    String refContract() {
+        if (selectedContract().conid() == 0 || selectedContract().exchange().isEmpty())
+            return null;
+
+        return selectedContract().symbol() + " " + selectedContract().exchange() + " " + selectedContract().secType() + " " + selectedContract().currency();
+    }
+
+    private void onSearch() {
+        m_contractPanel.onOK();
+
+        m_contract.conid(0);
+        m_contract.tradingClass(null);
+
+        List<ContractDetails> list = lookupContract();
+
+        m_contractList.clear();
+
+        for (ContractDetails el : list) {
+            m_contractList.addElement(el.contract());
+        }
+
+        m_contracts.updateUI();
+        pack();
+    }
+
+    private Component onGetListCellRenderer(Contract value, boolean isSelected) {
+        JPanel panel = new JPanel();
+
+        panel.add(new JLabel(value.symbol()));
+        panel.add(new JLabel(value.exchange()));
+        panel.add(new JLabel(value.secType().toString()));
+        panel.add(new JLabel(value.currency()));
+
+        if (isSelected) {
+            panel.setBackground(Color.LIGHT_GRAY);
+        }
+
+        return panel;
+    }
 }

@@ -63,7 +63,7 @@ public class UpperField extends JTextField {
 	public double getDouble() {
 		try {
 			String str = super.getText();
-			return str == null || str.length() == 0
+			return str == null || str.isEmpty()
 				 ? m_dval : Double.parseDouble( super.getText().trim() );
 		}
 		catch( Exception e) {
@@ -74,7 +74,7 @@ public class UpperField extends JTextField {
 	public int getInt() {
 		try {
 			String str = super.getText();
-			return str == null || str.length() == 0
+			return str == null || str.isEmpty()
 				 ? m_ival : Integer.parseInt( super.getText().trim() );
 		}
 		catch( Exception e) {

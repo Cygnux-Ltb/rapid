@@ -3,9 +3,9 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.service.InstrumentService;
-import io.cygnuxltb.protocol.http.inbound.InstrumentPrice;
-import io.cygnuxltb.protocol.http.outbound.InstrumentDTO;
-import io.cygnuxltb.protocol.http.outbound.InstrumentSettlementDTO;
+import io.cygnuxltb.protocol.http.request.InstrumentPrice;
+import io.cygnuxltb.protocol.http.response.InstrumentDTO;
+import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
@@ -26,7 +26,9 @@ import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * 交易标的查询接口
+ * 交易标的服务
+ *
+ * @apiNote
  */
 @RestController
 @RequestMapping(path = "/instrument", produces = APPLICATION_JSON_UTF8)
@@ -40,7 +42,7 @@ public final class InstrumentController {
     /**
      * 获取结算信息
      *
-     * @param instrumentCode 交易标的 [查询多个标的使用','分割]
+     * @param instrumentCode 交易标的 () [查询多个标的使用','分割]
      * @param tradingDay     int
      * @return List<InstrumentSettlementDTO>
      */
@@ -52,7 +54,6 @@ public final class InstrumentController {
             return null;
         return service.getInstrumentSettlement(tradingDay, instrumentCode);
     }
-
 
     /**
      * 获取最新价格

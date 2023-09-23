@@ -9,6 +9,7 @@ import com.ib.client.ContractLookuper;
 import java.io.Serial;
 
 public class ContractConditionPanel<T extends ContractCondition> extends OperatorConditionPanel<T> {
+
     @Serial
     private static final long serialVersionUID = -8284094642803182534L;
 

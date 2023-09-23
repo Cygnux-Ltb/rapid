@@ -307,7 +307,7 @@ public class OrderSamples {
         parent.orderType("LMT");
         parent.totalQuantity(quantity);
         parent.lmtPrice(limitPrice);
-        //The parent and children orders will need this attribute set to false to prevent accidental executions.
+        //The parent and children orders will need this attribute set too false to prevent accidental executions.
         //The LAST CHILD will have it set to true.
         parent.transmit(false);
 
@@ -569,7 +569,7 @@ public class OrderSamples {
         order.parentId(parent.orderId());
         //When trigger price is penetrated
         order.triggerPrice(triggerPrice);
-        //The parent order will be turned into a STP order
+        //The parent order will be turned into an STP order
         order.adjustedOrderType(OrderType.STP);
         //With the given STP price
         order.adjustedStopPrice(adjustStopPrice);
@@ -587,7 +587,7 @@ public class OrderSamples {
         order.parentId(parent.orderId());
         //When trigger price is penetrated
         order.triggerPrice(triggerPrice);
-        //The parent order will be turned into a STP LMT order
+        //The parent order will be turned into an STP LMT order
         order.adjustedOrderType(OrderType.STP_LMT);
         //With the given stop price
         order.adjustedStopPrice(adjustStopPrice);

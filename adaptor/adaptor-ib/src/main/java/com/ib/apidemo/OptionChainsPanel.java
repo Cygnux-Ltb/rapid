@@ -77,7 +77,9 @@ public class OptionChainsPanel extends JPanel {
         };
 
         m_marketDataType.addActionListener(event ->
-                ApiDemo.INSTANCE.controller().reqMktDataType(MarketDataType.getField(m_marketDataType.getSelectedItem())));
+                ApiDemo.INSTANCE.controller()
+                        .reqMktDataType(MarketDataType
+                                .getField(m_marketDataType.getSelectedItem())));
 
         VerticalPanel topPanel = new VerticalPanel();
         topPanel.add("Symbol", m_symbol);
@@ -285,7 +287,7 @@ public class OptionChainsPanel extends JPanel {
                 };
             }
 
-            private class ChainRow extends TopMktDataAdapter implements IOptHandler {
+            private static class ChainRow extends TopMktDataAdapter implements IOptHandler {
                 Contract m_c;
                 double m_bid;
                 double m_ask;

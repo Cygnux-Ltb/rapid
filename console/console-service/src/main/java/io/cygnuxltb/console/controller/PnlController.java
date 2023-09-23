@@ -2,10 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblPnl;
+import io.cygnuxltb.console.persistence.entity.TblTrdPnl;
 import io.cygnuxltb.console.service.PnlService;
-import io.cygnuxltb.protocol.http.outbound.PnlDTO;
-import io.cygnuxltb.protocol.http.outbound.PnlSettlementDTO;
+import io.cygnuxltb.protocol.http.response.PnlDTO;
+import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
- * PNL服务接口
+ * PNL(盈亏)服务
  */
 @RestController
 @RequestMapping(path = "/pnl", produces = APPLICATION_JSON_UTF8)
@@ -36,7 +36,7 @@ public final class PnlController {
     private PnlService service;
 
     /**
-     * 查询PNL
+     * 查询PNL (查询盈亏)
      *
      * @param tradingDay 交易日
      * @param strategyId 策略ID
@@ -51,21 +51,21 @@ public final class PnlController {
     }
 
     /**
-     * 更新PNL, 策略引擎调用 (内部接口)
+     * 更新PNL (内部接口, 策略引擎调用)
      *
      * @param request HttpServletRequest
      * @return ResponseStatus
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnl = ControllerUtil.bodyToObject(request, TblPnl.class);
+        var pnl = ControllerUtil.bodyToObject(request, TblTrdPnl.class);
         return pnl == null
                 ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;
     }
 
     /**
-     * 查询结算PNL
+     * 查询结算PNL (查询结算盈亏)
      *
      * @param tradingDay 交易日
      * @param strategyId 策略ID

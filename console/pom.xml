@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.cygnuxltb</groupId>
-        <artifactId>jcts</artifactId>
+        <artifactId>rapid</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -27,7 +27,7 @@
     </developers>
 
     <modules>
-        <module>console-hc</module>
+        <module>console-client</module>
         <module>console-service</module>
         <module>protocol</module>
         <module>websocket</module>

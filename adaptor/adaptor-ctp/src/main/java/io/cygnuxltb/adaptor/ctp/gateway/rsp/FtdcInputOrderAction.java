@@ -1,5 +1,6 @@
 package io.cygnuxltb.adaptor.ctp.gateway.rsp;
 
+import ctp.thostapi.CThostFtdcInputOrderActionField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -59,5 +60,42 @@ public final class FtdcInputOrderAction {
 
     /// MAC地址
     private String MacAddress;
+
+    public FtdcInputOrderAction load(CThostFtdcInputOrderActionField field) {
+        return this
+                .setBrokerID(field.getBrokerID())
+
+                .setInvestorID(field.getInvestorID())
+
+                .setOrderActionRef(field.getOrderActionRef())
+
+                .setOrderRef(field.getOrderRef())
+
+                .setRequestID(field.getRequestID())
+
+                .setFrontID(field.getFrontID())
+
+                .setSessionID(field.getSessionID())
+
+                .setExchangeID(field.getExchangeID())
+
+                .setOrderSysID(field.getOrderSysID())
+
+                .setActionFlag(field.getActionFlag())
+
+                .setLimitPrice(field.getLimitPrice())
+
+                .setVolumeChange(field.getVolumeChange())
+
+                .setUserID(field.getUserID())
+
+                .setInstrumentID(field.getInstrumentID())
+
+                .setInvestUnitID(field.getInvestUnitID())
+
+                .setIPAddress(field.getIPAddress())
+
+                .setMacAddress(field.getMacAddress());
+    }
 
 }

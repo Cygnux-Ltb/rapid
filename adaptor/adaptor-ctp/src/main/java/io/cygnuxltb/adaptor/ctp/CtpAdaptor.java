@@ -7,29 +7,34 @@ import io.cygnuxltb.adaptor.ctp.converter.FtdcOrderConverter;
 import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
 import io.cygnuxltb.adaptor.ctp.converter.OrderReportConverter;
 import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspMsg;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspProcessor;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
-import io.horizon.market.data.impl.BasicMarketData;
-import io.horizon.market.handler.MarketDataHandler;
-import io.horizon.market.instrument.Instrument;
-import io.horizon.trader.account.Account;
-import io.horizon.trader.adaptor.AbstractAdaptor;
-import io.horizon.trader.adaptor.ConnectionType;
-import io.horizon.trader.adaptor.AdaptorType;
-import io.horizon.trader.handler.AdaptorEventHandler;
-import io.horizon.trader.handler.InboundHandler;
-import io.horizon.trader.handler.InboundHandler.InboundSchedulerWrapper;
-import io.horizon.trader.handler.OrderEventHandler;
-import io.horizon.trader.serialization.avro.enums.AvroAdaptorStatus;
-import io.horizon.trader.serialization.avro.receive.AvroAdaptorEvent;
-import io.horizon.trader.serialization.avro.send.AvroCancelOrder;
-import io.horizon.trader.serialization.avro.send.AvroNewOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryBalance;
-import io.horizon.trader.serialization.avro.send.AvroQueryOrder;
-import io.horizon.trader.serialization.avro.send.AvroQueryPositions;
+import io.cygnuxltb.jcts.core.account.Account;
+import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
+import io.cygnuxltb.jcts.core.adaptor.Adaptor;
+import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
+import io.cygnuxltb.jcts.core.adaptor.ConnectionMode;
+import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
+import io.cygnuxltb.jcts.core.adaptor.TraderAdaptor;
+import io.cygnuxltb.jcts.core.handler.AdaptorEventHandler;
+import io.cygnuxltb.jcts.core.handler.InboundHandler;
+import io.cygnuxltb.jcts.core.handler.InboundHandler.InboundSchedulerWrapper;
+import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
+import io.cygnuxltb.jcts.core.handler.OrderEventHandler;
+import io.cygnuxltb.jcts.core.handler.OrderHandler;
+import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.cygnuxltb.jcts.core.ser.enums.AdaptorStatus;
+import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
+import io.cygnuxltb.jcts.core.ser.req.NewOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
+import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
+import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
+import io.mercury.common.concurrent.ring.RingEventbus;
 import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
@@ -55,6 +60,11 @@ import static io.mercury.common.thread.ThreadSupport.startNewThread;
  */
 public class CtpAdaptor extends AbstractAdaptor {
 
+    @Override
+    public MarketDataFeed setMarketDataHandler(MarketDataHandler handler) {
+        return null;
+    }
+
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpAdaptor.class);
 
     // 行情转换器
@@ -64,7 +74,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final OrderReportConverter orderReportConverter = new OrderReportConverter();
 
     // Ftdc Config
-    private final CtpConfiguration config;
+    private final CtpConfig config;
 
     // TODO 两个INT类型可以合并
     private volatile int frontId;
@@ -74,52 +84,45 @@ public class CtpAdaptor extends AbstractAdaptor {
     private volatile boolean isTraderAvailable;
 
     // FTDC RSP 消息处理器
-    private final Handler<FtdcRspMsg> handler;
+    private final FtdcRspProcessor processor;
 
     // 队列缓冲区
-    private Queue<FtdcRspMsg> queue;
+    private Queue<FtdcEvent> queue;
 
 
     /**
      * 传入MarketDataHandler, OrderReportHandler, AdaptorReportHandler实现,
      * 由构造函数内部转换为MPSC队列缓冲区
      *
-     * @param account              Account
-     * @param config               CtpConfig
-     * @param marketDataHandler    MarketDataHandler<BasicMarketData>
-     * @param orderEventHandler   OrderReportHandler
-     * @param adaptorEventHandler AdaptorReportHandler
+     * @param account  Account
+     * @param config   CtpConfig
+     * @param eventBus RingEventBus<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account,
-                      @Nonnull CtpConfiguration config,
-                      @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
-                      @Nonnull OrderEventHandler orderEventHandler,
-                      @Nonnull AdaptorEventHandler adaptorEventHandler) {
-        this(account, config, ConnectionType.Normal, marketDataHandler, orderEventHandler, adaptorEventHandler);
+    private CtpAdaptor(@Nonnull Account account,
+                       @Nonnull CtpConfig config,
+                       @Nonnull RingEventbus<FtdcEvent> eventBus) {
+        this(account, config, ConnectionMode.Normal, eventBus);
     }
 
     /**
      * 传入MarketDataHandler, OrderReportHandler, AdaptorReportHandler实现,
      * 由构造函数内部转换为MPSC队列缓冲区
      *
-     * @param account              Account
-     * @param config               CtpConfig
-     * @param mode                 AdaptorRunMode
-     * @param marketDataHandler    MarketDataHandler<BasicMarketData>
+     * @param account             Account
+     * @param config              CtpConfig
+     * @param mode                AdaptorRunMode
+     * @param marketDataHandler   MarketDataHandler<BasicMarketData>
      * @param orderEventHandler   OrderReportHandler
      * @param adaptorEventHandler AdaptorReportHandler
      */
-    public CtpAdaptor(@Nonnull Account account,
-                      @Nonnull CtpConfiguration config,
-                      @Nonnull ConnectionType mode,
-                      @Nonnull MarketDataHandler<BasicMarketData> marketDataHandler,
-                      @Nonnull OrderEventHandler orderEventHandler,
-                      @Nonnull AdaptorEventHandler adaptorEventHandler) {
-        this(account, config, mode,
-                new InboundSchedulerWrapper<>(
-                        marketDataHandler,
-                        orderEventHandler,
-                        adaptorEventHandler, log));
+    private CtpAdaptor(@Nonnull Account account,
+                       @Nonnull CtpConfig config,
+                       @Nonnull ConnectionMode mode,
+                       @Nonnull MarketDataHandler marketDataHandler,
+                       @Nonnull OrderEventHandler orderEventHandler,
+                       @Nonnull AdaptorEventHandler adaptorEventHandler) {
+        this(account, config, mode, new InboundSchedulerWrapper(
+                marketDataHandler, orderEventHandler, adaptorEventHandler));
     }
 
     /**
@@ -129,39 +132,41 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config    CtpConfig
      * @param scheduler InboundHandler<BasicMarketData>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull InboundHandler<BasicMarketData> scheduler) {
-        this(account, config, ConnectionType.Normal, scheduler);
+    private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+                       @Nonnull InboundHandler scheduler) {
+        this(account, config, ConnectionMode.Normal, scheduler);
     }
 
     /**
      * 传入InboundScheduler实现, 由构造函数在内部转换为MPSC队列缓冲区
      *
-     * @param account   Account
-     * @param config    CtpConfig
-     * @param mode      AdaptorRunMode
-     * @param scheduler InboundHandler<BasicMarketData>
+     * @param account  Account
+     * @param config   CtpConfig
+     * @param mode     AdaptorRunMode
+     * @param eventBus InboundHandler<BasicMarketData>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull ConnectionType mode,
-                      @Nonnull InboundHandler<BasicMarketData> scheduler) {
+    private CtpAdaptor(@Nonnull Account account,
+                       @Nonnull CtpConfig config,
+                       @Nonnull ConnectionMode mode,
+                       @Nonnull RingEventbus<FtdcEvent> eventBus) {
         super(CtpAdaptor.class.getSimpleName(), account);
         // 创建队列缓冲区
         this.queue = ScQueueWithJCT
                 .mpscQueue(this.getClass().getSimpleName() + "-Buf")
-                .capacity(32).process(msg -> {
+                .capacity(32)
+                .process(msg -> {
                     switch (msg.getType()) {
                         case MdConnect -> {
                             var mdConnect = msg.getMdConnect();
-                            this.mdAvailable = mdConnect.available();
+                            this.mdAvailable = mdConnect.getAvailable();
                             log.info("Adaptor buf processed FtdcMdConnect, isMdAvailable==[{}]", mdAvailable);
-                            final AvroAdaptorEvent mdReport;
+                            final AdaptorEvent mdReport;
                             if (mdAvailable)
-                                mdReport = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(AvroAdaptorStatus.MD_ENABLE).build();
+                                mdReport = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AdaptorStatus.MD_ENABLE).build();
                             else
-                                mdReport = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
-                                        .setStatus(AvroAdaptorStatus.MD_DISABLE).build();
+                                mdReport = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis()).setAdaptorId(getAdaptorId())
+                                        .setStatus(AdaptorStatus.MD_DISABLE).build();
                             scheduler.onAdaptorEvent(mdReport);
                         }
                         case TraderConnect -> {
@@ -172,13 +177,13 @@ public class CtpAdaptor extends AbstractAdaptor {
                             log.info(
                                     "Adaptor buf processed FtdcTraderConnect, isTraderAvailable==[{}], frontId==[{}], sessionId==[{}]",
                                     isTraderAvailable, frontId, sessionId);
-                            final AvroAdaptorEvent adaptorEvent;
+                            final AdaptorEvent adaptorEvent;
                             if (isTraderAvailable)
-                                adaptorEvent = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_ENABLE).build();
+                                adaptorEvent = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AdaptorStatus.TRADER_ENABLE).build();
                             else
-                                adaptorEvent = AvroAdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
-                                        .setAdaptorId(getAdaptorId()).setStatus(AvroAdaptorStatus.TRADER_DISABLE).build();
+                                adaptorEvent = AdaptorEvent.newBuilder().setEpochMillis(getEpochMillis())
+                                        .setAdaptorId(getAdaptorId()).setStatus(AdaptorStatus.TRADER_DISABLE).build();
                             scheduler.onAdaptorEvent(adaptorEvent);
                         }
                         case DepthMarketData -> {
@@ -225,9 +230,9 @@ public class CtpAdaptor extends AbstractAdaptor {
                         default -> log.warn("Adaptor buf unprocessed [FtdcRspMsg] -> {}", JsonWrapper.toJson(msg));
                     }
                 });
-        this.handler = queue::enqueue;
+        this.processor = queue::enqueue;
         this.config = config;
-        this.type = mode;
+        this.mode = mode;
         initializer();
     }
 
@@ -238,9 +243,9 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param config  CtpConfig
      * @param queue   Queue<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull Queue<FtdcRspMsg> queue) {
-        this(account, config, ConnectionType.Normal, queue);
+    private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+                       @Nonnull Queue<FtdcEvent> queue) {
+        this(account, config, ConnectionMode.Normal, queue);
     }
 
     /**
@@ -251,8 +256,8 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param mode    AdaptorRunMode
      * @param queue   Queue<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull ConnectionType mode, @Nonnull Queue<FtdcRspMsg> queue) {
+    private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+                       @Nonnull ConnectionMode mode, @Nonnull Queue<FtdcEvent> queue) {
         this(account, config, mode,
                 // 使用入队函数实现Handler<FtdcRspMsg>
                 queue::enqueue);
@@ -262,29 +267,29 @@ public class CtpAdaptor extends AbstractAdaptor {
     /**
      * 使用正常模式和指定的FTDC消息处理器构建Adaptor
      *
-     * @param account Account
-     * @param config  CtpConfig
-     * @param handler Handler<FtdcRspMsg>
+     * @param account   Account
+     * @param config    CtpConfig
+     * @param processor Handler<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config,
-                      @Nonnull Handler<FtdcRspMsg> handler) {
-        this(account, config, ConnectionType.Normal, handler);
+    private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
+                       @Nonnull Handler<FtdcEvent> processor) {
+        this(account, config, ConnectionMode.Normal, processor);
     }
 
     /**
      * 使用指定的运行模式和FTDC消息处理器构建Adaptor
      *
-     * @param account Account
-     * @param config  CtpConfig
-     * @param mode    AdaptorRunMode
-     * @param handler Handler<FtdcRspMsg>
+     * @param account   Account
+     * @param config    CtpConfig
+     * @param mode      AdaptorRunMode
+     * @param processor Handler<FtdcRspMsg>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfiguration config, ConnectionType mode,
-                      @Nonnull Handler<FtdcRspMsg> handler) {
+    private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config, ConnectionMode mode,
+                       @Nonnull Handler<FtdcEvent> processor) {
         super(CtpAdaptor.class.getSimpleName(), account);
-        this.handler = handler;
+        this.processor = processor;
         this.config = config;
-        this.type = mode;
+        this.mode = mode;
         initializer();
     }
 
@@ -303,7 +308,8 @@ public class CtpAdaptor extends AbstractAdaptor {
         this.gatewayId = config.getBrokerId() + "-" + config.getInvestorId();
         // 创建Gateway
         log.info("Try create gateway, gatewayId -> {}", gatewayId);
-        this.gateway = new CtpGateway(gatewayId, config, type, handler);
+        this.gateway = new CtpGateway(gatewayId, config, mode,
+                processor::handle);
         log.info("Create gateway success, gatewayId -> {}", gatewayId);
     }
 
@@ -323,9 +329,10 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final MutableSet<String> subscribedInstrumentCodes = MutableSets.newUnifiedSet();
 
     @Override
-    public AdaptorType getAdaptorType() {
-        return CtpAdaptorType.INSTANCE;
+    public AdaptorAvailableTime getAvailableTime() {
+        return CtpAdaptorAvailableTime.INSTANCE;
     }
+
 
     /**
      * 订阅行情实现
@@ -373,9 +380,9 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@Nonnull AvroNewOrder order) {
+    public boolean newOrder(@Nonnull NewOrder order) {
         try {
-            CThostFtdcInputOrderField field = orderConverter.convertToInputOrder(order);
+            CThostFtdcInputOrderField field = orderConverter.toFtdcInputOrder(order);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
             // 设置OrderRef
             field.setOrderRef(orderRef);
@@ -389,9 +396,9 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull AvroCancelOrder order) {
+    public boolean cancelOrder(@Nonnull CancelOrder order) {
         try {
-            CThostFtdcInputOrderActionField field = orderConverter.convertToInputOrderAction(order);
+            CThostFtdcInputOrderActionField field = orderConverter.toFtdcInputOrderAction(order);
             String orderRef = OrderRefKeeper.getOrderRef(order.getOrdSysId());
             // 目前使用orderRef进行撤单
             field.setOrderRef(orderRef);
@@ -411,17 +418,17 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final Object mutex = new Object();
 
     // 查询间隔, 依据CTP规定限制
-    private final long queryInterval = 1100L;
+    private final long queryInterval = 1050L;
 
     @Override
-    public boolean queryOrder(@Nonnull AvroQueryOrder req) {
+    public boolean queryOrder(@Nonnull QueryOrder query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryOrder(req.getExchangeCode(), req.getInstrumentCode());
+                        gateway.ReqQryOrder(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -435,14 +442,14 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull AvroQueryPositions req) {
+    public boolean queryPositions(@Nonnull QueryPositions query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryInvestorPosition(req.getExchangeCode(), req.getInstrumentCode());
+                        gateway.ReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -456,7 +463,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull AvroQueryBalance query) {
+    public boolean queryBalance(@Nonnull QueryBalance query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {
@@ -492,5 +499,26 @@ public class CtpAdaptor extends AbstractAdaptor {
             throw new IOException(e);
         }
     }
+
+    @Override
+    public TraderAdaptor setOrderHandler(OrderHandler handler) {
+        return null;
+    }
+
+
+    public static DSL dsl() {
+        return new DSL();
+    }
+
+
+    public static class DSL {
+
+
+        public Adaptor build() {
+            return null;
+        }
+
+    }
+
 
 }

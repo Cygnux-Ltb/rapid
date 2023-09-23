@@ -338,7 +338,7 @@ class NewsPanel extends JPanel {
             table.getSelectionModel().addListSelectionListener(event -> {
                 if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                     NewsTickRow newsTickRow = m_rows.get(table.getSelectedRow());
-                    if (newsTickRow.m_providerCode.length() > 0 && newsTickRow.m_articleId.length() > 0) {
+                    if (!newsTickRow.m_providerCode.isEmpty() && !newsTickRow.m_articleId.isEmpty()) {
                         m_requestPanels.select("News Article");
                         m_newsArticleRequestPanel.m_requestPanel.setProviderCode(newsTickRow.m_providerCode);
                         m_newsArticleRequestPanel.m_requestPanel.setArticleId(newsTickRow.m_articleId);
@@ -418,7 +418,7 @@ class NewsPanel extends JPanel {
             }
         }
 
-        class NewsTickRow {
+        static class NewsTickRow {
             String m_timeStamp;
             String m_providerCode;
             String m_articleId;
@@ -490,7 +490,7 @@ class NewsPanel extends JPanel {
             table.getSelectionModel().addListSelectionListener(event -> {
                 if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                     HistoricalNewsRow historicalNewsRow = m_rows.get(table.getSelectedRow());
-                    if (historicalNewsRow.m_providerCode.length() > 0 && historicalNewsRow.m_articleId.length() > 0) {
+                    if (!historicalNewsRow.m_providerCode.isEmpty() && !historicalNewsRow.m_articleId.isEmpty()) {
                         m_requestPanels.select("News Article");
                         m_newsArticleRequestPanel.m_requestPanel.setProviderCode(historicalNewsRow.m_providerCode);
                         m_newsArticleRequestPanel.m_requestPanel.setArticleId(historicalNewsRow.m_articleId);
@@ -576,7 +576,7 @@ class NewsPanel extends JPanel {
             }
         }
 
-        class HistoricalNewsRow {
+        static class HistoricalNewsRow {
             String m_time;
             String m_providerCode;
             String m_articleId;

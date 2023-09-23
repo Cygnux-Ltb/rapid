@@ -32,18 +32,11 @@ class TickByTickModel extends AbstractTableModel {
     public int getColumnCount() {
         int columnCount = 0;
         switch (m_tickType) {
-            case None:
-                break;
-            case Last:
-            case AllLast:
-                columnCount = 6;
-                break;
-            case BidAsk:
-                columnCount = 6;
-                break;
-            case MidPoint:
-                columnCount = 2;
-                break;
+            case None -> {
+            }
+            case Last, AllLast -> columnCount = 6;
+            case BidAsk -> columnCount = 6;
+            case MidPoint -> columnCount = 2;
         }
         return columnCount;
     }
@@ -53,10 +46,9 @@ class TickByTickModel extends AbstractTableModel {
         TickByTick row = m_rows.get(rowIndex);
 
         switch (m_tickType) {
-            case None:
-                break;
-            case Last:
-            case AllLast:
+            case None -> {
+            }
+            case Last, AllLast -> {
                 switch (columnIndex) {
                     case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
@@ -77,8 +69,8 @@ class TickByTickModel extends AbstractTableModel {
                         return row.specialConditions();
                     }
                 }
-                break;
-            case BidAsk:
+            }
+            case BidAsk -> {
                 switch (columnIndex) {
                     case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
@@ -99,8 +91,8 @@ class TickByTickModel extends AbstractTableModel {
                         return row.tickAttribBidAskStr();
                     }
                 }
-                break;
-            case MidPoint:
+            }
+            case MidPoint -> {
                 switch (columnIndex) {
                     case 0 -> {
                         return Util.UnixSecondsToString(row.time(), "yyyyMMdd-HH:mm:ss zzz");
@@ -109,7 +101,7 @@ class TickByTickModel extends AbstractTableModel {
                         return row.midPoint();
                     }
                 }
-                break;
+            }
         }
 
         return null;
@@ -118,10 +110,9 @@ class TickByTickModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         switch (m_tickType) {
-            case None:
-                break;
-            case Last:
-            case AllLast:
+            case None -> {
+            }
+            case Last, AllLast -> {
                 switch (column) {
                     case 0 -> {
                         return "Time";
@@ -142,8 +133,8 @@ class TickByTickModel extends AbstractTableModel {
                         return "Spec Cond";
                     }
                 }
-                break;
-            case BidAsk:
+            }
+            case BidAsk -> {
                 switch (column) {
                     case 0 -> {
                         return "Time";
@@ -164,8 +155,8 @@ class TickByTickModel extends AbstractTableModel {
                         return "Bid/Ask Tick Attribs";
                     }
                 }
-                break;
-            case MidPoint:
+            }
+            case MidPoint -> {
                 switch (column) {
                     case 0 -> {
                         return "Time";
@@ -174,7 +165,7 @@ class TickByTickModel extends AbstractTableModel {
                         return "Mid Point";
                     }
                 }
-                break;
+            }
         }
 
         return super.getColumnName(column);

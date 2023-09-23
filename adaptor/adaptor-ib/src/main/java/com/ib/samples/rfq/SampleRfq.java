@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 
 public class SampleRfq extends SimpleWrapper {
+    
     private enum Status {None, SecDef, SecDefFMF, Rfq, Ticks, Done, Error}
 
     private static final int MaskBidPrice = 1;

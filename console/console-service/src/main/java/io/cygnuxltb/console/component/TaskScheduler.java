@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.component;
 
 import io.cygnuxltb.console.service.ProductService;
-import io.cygnuxltb.protocol.http.outbound.ProductDTO;
+import io.cygnuxltb.protocol.http.response.ProductDTO;
 import io.mercury.common.datetime.pattern.TimePattern;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -25,7 +25,7 @@ public class TaskScheduler {
 
     @Scheduled(fixedRate = 20000)
     public void task() {
-        String checkPoint = TimePattern.HHMM.format(LocalTime.now());
+        String checkPoint = TimePattern.HHMM.fmt(LocalTime.now());
         if (isTimeUp(checkPoint))
             sendEndTimeBars();
     }

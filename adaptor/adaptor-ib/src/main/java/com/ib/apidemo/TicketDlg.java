@@ -611,7 +611,7 @@ class TicketDlg extends JDialog {
 				}
 				UpperField field = m_fields[param.ordinal()];
 				String val = field.getText();
-				if (val != null && val.length() > 0) {
+				if (val != null && !val.isEmpty()) {
 					TagValue tv = new TagValue( param.toString(), val);
 					m_order.smartComboRoutingParams().add( tv);
 				}
@@ -665,7 +665,7 @@ class TicketDlg extends JDialog {
 			m_order.algoParams().clear();
 			for (AlgoParam param : AlgoParam.values() ) {
 				String val = m_params[param.ordinal()].getText();
-				if (val != null && val.length() > 0) {
+				if (val != null && !val.isEmpty()) {
 					m_order.algoParams().add( new TagValue( param.toString(), val) );
 				}
 			}

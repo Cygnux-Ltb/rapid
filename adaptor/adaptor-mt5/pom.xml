@@ -10,6 +10,7 @@
 
     <artifactId>adaptor-mt5</artifactId>
     <name>adaptor-mt5</name>
+    <description>MetaTrader Adaptor</description>
 
     <dependencies>
         <dependency>

@@ -104,7 +104,7 @@ class ContractInfoPanel extends JPanel {
         @Override
         public void contractDetails(List<ContractDetails> list) {
             // set label
-            if (list.size() == 0) {
+            if (list.isEmpty()) {
                 m_label.setText("No matching contracts were found");
             } else if (list.size() > 1) {
                 m_label.setText(list.size() + " contracts returned; showing first contract only");
@@ -113,16 +113,17 @@ class ContractInfoPanel extends JPanel {
             }
 
             // set text
-            if (list.size() == 0) {
+            if (list.isEmpty()) {
                 m_text.setText(null);
             } else {
                 m_text.setText(list.get(0).toString());
             }
-            if (list.size() > 0 && list.get(0).marketRuleIds() != null) {
+            if (!list.isEmpty() && list.get(0).marketRuleIds() != null) {
                 for (String s : list.get(0).marketRuleIds().split(",")) {
                     m_marketRuleIds.add(Integer.parseInt(s));
                 }
-                m_marketRuleRequestPanel.m_marketRuleIdCombo.setModel(new DefaultComboBoxModel<>(m_marketRuleIds.toArray(new Integer[m_marketRuleIds.size()])));
+                m_marketRuleRequestPanel.m_marketRuleIdCombo
+                        .setModel(new DefaultComboBoxModel<>(m_marketRuleIds.toArray(new Integer[m_marketRuleIds.size()])));
             }
         }
     }

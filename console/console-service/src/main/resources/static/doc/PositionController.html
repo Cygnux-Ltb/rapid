@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1687845200242"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1691074478092"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -54,118 +54,196 @@
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="BarController.html#header">3.&nbsp;历史行情接口</a>
+            <li class=""><a class="dd" href="BarController.html#header">3.&nbsp;历史行情服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
                             href="BarController.html#_3_1_获取1分钟BAR">3.1.&nbsp;获取1分钟BAR</a>
                     </li>
 
                     <li><a
-                            href="BarController.html#_3_2_更新BAR (內部接口)">3.2.&nbsp;更新BAR (內部接口)</a>
+                            href="BarController.html#_3_2_更新BAR [內部接口]">3.2.&nbsp;更新BAR [內部接口]</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="PnlController.html#header">4.&nbsp;PNL服务接口</a>
+            <li class=""><a class="dd" href="PnlController.html#header">4.&nbsp;PNL(盈亏)服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="PnlController.html#_4_1_查询PNL">4.1.&nbsp;查询PNL</a>
+                            href="PnlController.html#_4_1_查询PNL (查询盈亏)">4.1.&nbsp;查询PNL (查询盈亏)</a>
                     </li>
 
                     <li><a
-                            href="PnlController.html#_4_2_更新PNL, 策略引擎调用 (内部接口)">4.2.&nbsp;更新PNL, 策略引擎调用 (内部接口)</a>
+                            href="PnlController.html#_4_2_更新PNL (内部接口, 策略引擎调用)">4.2.&nbsp;更新PNL (内部接口, 策略引擎调用)</a>
                     </li>
 
                     <li><a
-                            href="PnlController.html#_4_3_查询结算PNL">4.3.&nbsp;查询结算PNL</a>
+                            href="PnlController.html#_4_3_查询结算PNL (查询结算盈亏)">4.3.&nbsp;查询结算PNL (查询结算盈亏)</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="CommandController.html#header">5.&nbsp;系统指令服务</a>
+            <li class=""><a class="dd" href="DictionaryController.html#header">5.&nbsp;辞典</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="CommandController.html#_5_1_更新参数">5.1.&nbsp;更新参数</a>
-                    </li>
-
-                    <li><a
-                            href="CommandController.html#_5_2_安全更新参数">5.2.&nbsp;安全更新参数</a>
+                            href="DictionaryController.html#_5_1_Page1:
+/-
+/-1.交易执行
+/--(1).策略下拉列表 -> 策略服务:获取全部策略
+/--(2).证券代码下拉列表 -> 交易标的查询接口:获取可交易标的
+/--(3).委托按钮 -> 订单服务接口:创建订单[开仓/平仓/一键平仓接口]
+----------------------------------------------------------------------------
+/-2.持仓
+/--(1).列表 -> 仓位查询接口:查询当前持仓
+----------------------------------------------------------------------------
+/-3.当日委托
+/--(1).列表 -> 订单服务接口:查询Order
+----------------------------------------------------------------------------
+/-4.当日成交
+/--(1).列表 -> 订单服务接口:查询Order
+============================================================================
+============================================================================
+Page2:
+/-
+/-1.目标池
+/--(1).策略名称 -> 投资组合接口:获取用户投资组合
+/--(2).添加股票 -> 交易标的接口:
+/--(3).股票名称代码 -> 交易标的查询接口
+/--(4).现价 -> 交易标的查询接口:获取最新价格
+/--(5).持仓 -> 仓位查询接口:查询当前持仓
+/--(6).涨幅 -> 交易标的查询接口:获取结算信息
+/--(7).操作 -> 订单服务接口:创建订单[开仓/平仓/一键平仓接口]
+----------------------------------------------------------------------------
+/-2.添加策略
+/--(1).添加策略 -> 策略服务:
+----------------------------------------------------------------------------
+/-3.当前订单:一键清仓 -> 订单服务接口:创建订单[开仓/平仓/一键平仓接口]
+----------------------------------------------------------------------------
+/-4.当前订单
+/--(1).名称 -> 订单服务接口:获取订单最新状态
+/--(2).持仓 -> 仓位查询接口:查询当前持仓
+/--(3).盈亏 -> PNL服务接口:查询结算PNL
+/--(4).操作作 -> 订单服务接口:创建订单[开仓/平仓/一键平仓接口]
+============================================================================
+============================================================================
+Page3:
+/-
+/-1.技术指标
+/--(1).
+/-2.左上页面
+/--(1).策略服务:根据策略名称获取策略相关参数
+/-2.左下页面
+/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]">5.1.&nbsp;Page1:<br>/-<br>/-1.交易执行<br>/--(1).策略下拉列表 -&gt; 策略服务:获取全部策略<br>/--(2).证券代码下拉列表 -&gt; 交易标的查询接口:获取可交易标的<br>/--(3).委托按钮 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-2.持仓<br>/--(1).列表 -&gt; 仓位查询接口:查询当前持仓<br>----------------------------------------------------------------------------<br>/-3.当日委托<br>/--(1).列表 -&gt; 订单服务接口:查询Order<br>----------------------------------------------------------------------------<br>/-4.当日成交<br>/--(1).列表 -&gt; 订单服务接口:查询Order<br>============================================================================<br>============================================================================<br>Page2:<br>/-<br>/-1.目标池<br>/--(1).策略名称 -&gt; 投资组合接口:获取用户投资组合<br>/--(2).添加股票 -&gt; 交易标的接口:<br>/--(3).股票名称代码 -&gt; 交易标的查询接口<br>/--(4).现价 -&gt; 交易标的查询接口:获取最新价格<br>/--(5).持仓 -&gt; 仓位查询接口:查询当前持仓<br>/--(6).涨幅 -&gt; 交易标的查询接口:获取结算信息<br>/--(7).操作 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-2.添加策略<br>/--(1).添加策略 -&gt; 策略服务:<br>----------------------------------------------------------------------------<br>/-3.当前订单:一键清仓 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-4.当前订单<br>/--(1).名称 -&gt; 订单服务接口:获取订单最新状态<br>/--(2).持仓 -&gt; 仓位查询接口:查询当前持仓<br>/--(3).盈亏 -&gt; PNL服务接口:查询结算PNL<br>/--(4).操作作 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>============================================================================<br>============================================================================<br>Page3:<br>/-<br>/-1.技术指标<br>/--(1).<br>/-2.左上页面<br>/--(1).策略服务:根据策略名称获取策略相关参数<br>/-2.左下页面<br>/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="ProductController.html#header">6.&nbsp;产品服务接口</a>
+            <li class=""><a class="dd" href="CommandController.html#header">6.&nbsp;系统指令服务[X]</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="ProductController.html#_6_1_获取全部产品">6.1.&nbsp;获取全部产品</a>
+                            href="CommandController.html#_6_1_更新参数 [内部接口]">6.1.&nbsp;更新参数 [内部接口]</a>
                     </li>
 
                     <li><a
-                            href="ProductController.html#_6_2_获取指定产品信息">6.2.&nbsp;获取指定产品信息</a>
-                    </li>
-
-                    <li><a
-                            href="ProductController.html#_6_3_产品初始化">6.3.&nbsp;产品初始化</a>
+                            href="CommandController.html#_6_2_安全更新参数">6.2.&nbsp;安全更新参数</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="StatusController.html#header">7.&nbsp;交易系统状态服务接口</a>
+            <li class=""><a class="dd" href="ProductController.html#header">7.&nbsp;产品服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="StatusController.html#_7_1_获取全部策略状态">7.1.&nbsp;获取全部策略状态</a>
+                            href="ProductController.html#_7_1_获取全部产品">7.1.&nbsp;获取全部产品</a>
                     </li>
 
                     <li><a
-                            href="StatusController.html#_7_2_发送状态指令">7.2.&nbsp;发送状态指令</a>
+                            href="ProductController.html#_7_2_获取指定产品信息">7.2.&nbsp;获取指定产品信息</a>
                     </li>
 
                     <li><a
-                            href="StatusController.html#_7_3_更新状态">7.3.&nbsp;更新状态</a>
+                            href="ProductController.html#_7_3_产品初始化">7.3.&nbsp;产品初始化</a>
                     </li>
                 </ul>
             </li>
-            <li class="open"><a class="dd" href="PositionController.html#header">8.&nbsp;仓位查询接口</a>
-                <ul class="sectlevel2" style="display: block">                </ul>
-            </li>
-            <li class=""><a class="dd" href="InstrumentController.html#header">9.&nbsp;交易标的查询接口</a>
+            <li class=""><a class="dd" href="StatusController.html#header">8.&nbsp;交易系统状态服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="InstrumentController.html#_9_1_获取结算信息">9.1.&nbsp;获取结算信息</a>
+                            href="StatusController.html#_8_1_获取全部策略状态">8.1.&nbsp;获取全部策略状态</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_9_2_获取最新价格">9.2.&nbsp;获取最新价格</a>
+                            href="StatusController.html#_8_2_发送状态指令">8.2.&nbsp;发送状态指令</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_9_3_更新最新价格 (內部接口)">9.3.&nbsp;更新最新价格 (內部接口)</a>
-                    </li>
-
-                    <li><a
-                            href="InstrumentController.html#_9_4_获取交易费用">9.4.&nbsp;获取交易费用</a>
-                    </li>
-
-                    <li><a
-                            href="InstrumentController.html#_9_5_获取可交易标的">9.5.&nbsp;获取可交易标的</a>
+                            href="StatusController.html#_8_3_更新状态">8.3.&nbsp;更新状态</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="PortfolioController.html#header">10.&nbsp;投资组合接口</a>
-                <ul class="sectlevel2" style="display: none">
+            <li class="open"><a class="dd" href="PositionController.html#header">9.&nbsp;仓位服务</a>
+                <ul class="sectlevel2" style="display: block">
                     <li><a
-                            href="PortfolioController.html#_10_1_获取用户投资组合">10.1.&nbsp;获取用户投资组合</a>
+                            href="PositionController.html#_9_1_查询当前持仓">9.1.&nbsp;查询当前持仓</a>
                     </li>
                 </ul>
             </li>
-            <li class=""><a class="dd" href="OrderController.html#header">11.&nbsp;订单服务接口</a>
+            <li class=""><a class="dd" href="InstrumentController.html#header">10.&nbsp;交易标的服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="OrderController.html#_11_1_查询Order">11.1.&nbsp;查询Order</a>
+                            href="InstrumentController.html#_10_1_获取结算信息">10.1.&nbsp;获取结算信息</a>
                     </li>
 
                     <li><a
-                            href="OrderController.html#_11_2_获取订单最新状态">11.2.&nbsp;获取订单最新状态</a>
+                            href="InstrumentController.html#_10_2_获取最新价格">10.2.&nbsp;获取最新价格</a>
                     </li>
 
                     <li><a
-                            href="OrderController.html#_11_3_新增订单">11.3.&nbsp;新增订单</a>
+                            href="InstrumentController.html#_10_3_更新最新价格 (內部接口)">10.3.&nbsp;更新最新价格 (內部接口)</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#_10_4_获取交易费用">10.4.&nbsp;获取交易费用</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#_10_5_获取可交易标的">10.5.&nbsp;获取可交易标的</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="PortfolioController.html#header">11.&nbsp;投资组合(股票池/目标池)服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="PortfolioController.html#_11_1_获取用户投资组合
+[股票池/目标池]">11.1.&nbsp;获取用户投资组合<br>[股票池/目标池]</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#_11_2_获取用户第一投资组合 (左侧优先股票池)">11.2.&nbsp;获取用户第一投资组合 (左侧优先股票池)</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#_11_3_获取用户第二投资组合 (右侧次优股票池)">11.3.&nbsp;获取用户第二投资组合 (右侧次优股票池)</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="SimulateController.html#header">12.&nbsp;模拟测试</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="SimulateController.html#_12_1_">12.1.&nbsp;</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="OrderController.html#header">13.&nbsp;订单服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="OrderController.html#_13_1_查询订单">13.1.&nbsp;查询订单</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#_13_2_获取订单最新状态">13.2.&nbsp;获取订单最新状态</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#_13_3_创建订单 [前端调用: 开仓, 平仓, 一键平仓]">13.3.&nbsp;创建订单 [前端调用: 开仓, 平仓, 一键平仓]</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#_13_4_新增订单 [非前端界面调用]">13.4.&nbsp;新增订单 [非前端界面调用]</a>
                     </li>
                 </ul>
             </li>
@@ -173,16 +251,137 @@
     </div>
 </div>
 <div id="content">
-    <div class="sect1"><h2 id="_仓位查询接口"><a class="anchor" href="#_仓位查询接口"></a><a class="link" href="#_仓位查询接口">8.&nbsp;仓位查询接口</a>
+    <div class="sect1"><h2 id="_仓位服务"><a class="anchor" href="#_仓位服务"></a><a class="link" href="#_仓位服务">9.&nbsp;仓位服务</a>
     </h2>
-        <div class="sectionbody">        </div>
+        <div class="sectionbody">
+            <div class="sect2"><h3 id="_9_1_查询当前持仓">
+                <a class="anchor" href="#_9_1_查询当前持仓"></a>
+                <a class="link" href="#_9_1_查询当前持仓">9.1.&nbsp;查询当前持仓</a>
+            </h3>
+                <div class="paragraph"><p><strong>URL:</strong><a href="/position/current" class="bare">&nbsp;/position/current</a>
+                </p></div>
+                <div class="paragraph"><p><strong>Type:</strong>&nbsp;GET</p></div>
+                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;application/x-www-form-urlencoded;charset=UTF-8</p></div>
+                <div class="paragraph"><p><strong>Description:</strong>&nbsp;查询当前持仓</p></div>
+                <div class="paragraph"><p><strong>Query-parameters:</strong></p></div>
+                <table class="tableblock frame-all grid-all spread">
+                    <colgroup>
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Parameter</th>
+                        <th class="tableblock halign-left valign-top">Type</th>
+                        <th class="tableblock halign-left valign-top">Description</th>
+                        <th class="tableblock halign-left valign-top">Required</th>
+                        <th class="tableblock halign-left valign-top">Since</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">userId</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">用户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="paragraph"><p><strong>Request-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="bash">curl -X GET -i /position/current?userId=0</code></pre>
+                    </div>
+                </div>
+                <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
+                <table class="tableblock frame-all grid-all spread">
+                    <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Field</th>
+                        <th class="tableblock halign-left valign-top">Type</th>
+                        <th class="tableblock halign-left valign-top">Description</th>
+                        <th class="tableblock halign-left valign-top">Since</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">userId</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">用户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">positions</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">头寸列表</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─instrumentCode</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">标的代码</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─longPos</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">多头头寸</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─shortPos</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">空头头寸</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─netPos</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">净头寸</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="paragraph"><p><strong>Response-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="json">{
+  "userId": 0,
+  "positions": [
+    {
+      "instrumentCode": "",
+      "longPos": 0,
+      "shortPos": 0,
+      "netPos": 0
+    }
+  ]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-06-27 14:53:20</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-08-03 23:54:38</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1687845200242"></script>
+<script src="search.js?v=1691074478092"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

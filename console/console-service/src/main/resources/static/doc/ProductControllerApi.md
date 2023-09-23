@@ -1,5 +1,5 @@
 
-# 产品服务接口
+# 产品服务
 ## 获取全部产品
 
 **URL:** `/product`
@@ -93,7 +93,7 @@ curl -X GET -i /product/get?productId=0
 
 **URL:** `/product/init`
 
-**Type:** `PUT`
+**Type:** `GET`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
@@ -102,11 +102,17 @@ curl -X GET -i /product/get?productId=0
 
 
 
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|strategyId|int32|true|No comments found.|-|
+|status|int32|true|No comments found.|-|
 
 
 **Request-example:**
 ```
-curl -X PUT -i /product/init
+curl -X GET -i /product/init?strategyId=0&status=0
 ```
 
 **Response-example:**

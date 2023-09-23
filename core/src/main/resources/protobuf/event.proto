@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package io.cygnuxltb.jcts.core.protobuf.event;
+
+message QueryOrder {
+  // Epoch Millisecond Unit
+  int64 generateTime = 1;
+  // Epoch Millisecond Unit
+  int64 sendTime = 2;
+  int64 ordSysId = 3;
+  string exchangeCode = 4;
+  string instrumentCode = 5;
+  string brokerId = 6;
+  int32 accountId = 7;
+  int32 subAccountId = 8;
+  int32 strategyId = 9;
+  string operatorId = 10;
+}

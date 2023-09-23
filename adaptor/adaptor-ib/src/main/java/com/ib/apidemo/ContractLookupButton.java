@@ -13,6 +13,7 @@ public abstract class ContractLookupButton extends HtmlButton {
 
     @Serial
     private static final long serialVersionUID = 1303710268651852678L;
+
     final ContractSearchDlg m_contractSearchDlg;
 
     public ContractLookupButton(int conId, String exchange, ContractLookuper lookuper) {

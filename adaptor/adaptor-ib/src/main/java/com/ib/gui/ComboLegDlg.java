@@ -66,7 +66,7 @@ public class ComboLegDlg extends JDialog {
         m_comboLegsModel.orderComboLegData().addAll(orderComboLegs);
         pLegList.add(new JScrollPane(m_comboTable));
 
-        if (orderExchange != null && orderExchange.length() > 0) {
+        if (orderExchange != null && !orderExchange.isEmpty()) {
             m_exchange.setText(orderExchange);
         }
 
@@ -129,7 +129,7 @@ public class ComboLegDlg extends JDialog {
             int ratio = Integer.parseInt(m_ratio.getText());
             int openClose = Integer.parseInt(m_openClose.getText());
             int shortSaleSlot = Integer.parseInt(m_shortSaleSlot.getText());
-            int exemptCode = Integer.parseInt(m_exemptCode.getText().length() != 0 ? m_exemptCode.getText() : "-1");
+            int exemptCode = Integer.parseInt(!m_exemptCode.getText().isEmpty() ? m_exemptCode.getText() : "-1");
             double price = parseStringToMaxDouble(m_price.getText());
             m_comboLegsModel.addComboLeg(new ComboLeg(conId, ratio,
                             m_action.getText(), m_exchange.getText(), openClose,
@@ -182,7 +182,7 @@ public class ComboLegDlg extends JDialog {
     }
 
     private static double parseStringToMaxDouble(String value) {
-        if (value.trim().length() == 0) {
+        if (value.trim().isEmpty()) {
             return Double.MAX_VALUE;
         }
         return Double.parseDouble(value);

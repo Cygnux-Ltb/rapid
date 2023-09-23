@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.cygnuxltb</groupId>
-        <artifactId>jcts</artifactId>
+        <artifactId>rapid</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -36,7 +36,9 @@
         </dependency>
         <dependency>
             <groupId>io.cygnuxltb</groupId>
-            <artifactId>trader-api</artifactId>
+            <artifactId>core</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
