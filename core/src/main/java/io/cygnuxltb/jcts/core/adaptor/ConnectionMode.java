@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.core.adaptor;
 
-public enum ConnectionType {
+public enum ConnectionMode {
 
     Normal,
 

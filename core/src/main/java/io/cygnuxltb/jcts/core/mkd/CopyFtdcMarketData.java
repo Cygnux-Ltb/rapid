@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 @Getter
 @Setter
 @Accessors(chain = true)
-public final class RecordFtdcMarketData implements JsonSerializable {
+public final class CopyFtdcMarketData implements JsonSerializable {
 
     // 交易日
     private String TradingDay;

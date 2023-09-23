@@ -4,8 +4,8 @@ import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventTranslatorOneArg;
 import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
-import io.mercury.common.concurrent.disruptor.RingMulticaster;
-import io.mercury.common.concurrent.disruptor.RingMulticaster.Builder;
+import io.mercury.common.concurrent.ring.RingMulticaster;
+import io.mercury.common.concurrent.ring.RingMulticaster.Builder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.RunnableComponent;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.io.IOException;
 
-import static io.mercury.common.concurrent.disruptor.CommonWaitStrategy.BusySpin;
+import static io.mercury.common.concurrent.ring.base.WaitStrategyOption.BusySpin;
 import static io.mercury.common.thread.RunnableComponent.StartMode.manual;
 
 public final class MarketDataMulticaster<In>

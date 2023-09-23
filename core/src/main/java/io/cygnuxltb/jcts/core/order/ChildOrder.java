@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.core.order;
 
 import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.account.AccountFinder;
+import io.cygnuxltb.jcts.core.account.AccountStorage;
 import io.cygnuxltb.jcts.core.account.SubAccount;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
@@ -125,7 +125,7 @@ public class ChildOrder extends AbstractOrder {
      * @return ChildOrder
      */
     public static ChildOrder newExternalOrder(OrderEvent event) {
-        var account = AccountFinder.getAccountByInvestorId(event.getInvestorId());
+        var account = AccountStorage.getAccountByInvestorId(event.getInvestorId());
         var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
         var direction = TrdDirection.valueOf(event.getDirection());
         var action = TrdAction.valueOf(event.getAction());

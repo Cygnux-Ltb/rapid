@@ -23,13 +23,13 @@ import java.util.stream.Stream;
  * @author yellow013
  */
 @NotThreadSafe
-public final class AccountFinder implements Serializable {
+public final class AccountStorage implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -6883109944757142986L;
 
     // logger
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountFinder.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountStorage.class);
 
     // 存储Account信息, 一对一关系,以accountId索引
     private static final MutableIntObjectMap<Account> Accounts = MutableMaps.newIntObjectHashMap();
@@ -47,7 +47,7 @@ public final class AccountFinder implements Serializable {
     @Deprecated
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
-    private AccountFinder() {
+    private AccountStorage() {
     }
 
     @Deprecated
@@ -56,10 +56,10 @@ public final class AccountFinder implements Serializable {
             try {
                 Asserter.requiredLength(subAccounts, 1, "subAccounts");
                 // 建立subAccount相关索引
-                Stream.of(subAccounts).collect(Collectors2.toSet()).each(AccountFinder::putSubAccount);
+                Stream.of(subAccounts).collect(Collectors2.toSet()).each(AccountStorage::putSubAccount);
                 // 建立account相关索引
                 Stream.of(subAccounts).map(SubAccount::getAccount).collect(Collectors2.toSet())
-                        .each(AccountFinder::putAccount);
+                        .each(AccountStorage::putAccount);
             } catch (Exception e) {
                 isInitialized.set(false);
                 IllegalStateException se = new IllegalStateException("AccountKeeper initialization failed", e);
@@ -94,7 +94,7 @@ public final class AccountFinder implements Serializable {
     }
 
     @Nonnull
-    public static Account getAccount(int accountId) throws AccountException {
+    public static Account getAccountByAccountId(int accountId) throws AccountException {
         var account = Accounts.get(accountId);
         if (account == null)
             throw new AccountException("Account error in mapping : accountId[" + accountId + "] no mapped instance");
@@ -128,17 +128,15 @@ public final class AccountFinder implements Serializable {
     }
 
     public static void setAccountNotTradable(int accountId) {
-        getAccount(accountId)
-                .disable();
+        getAccountByAccountId(accountId).disable();
     }
 
     public static void setAccountTradable(int accountId) {
-        getAccount(accountId)
-                .enable();
+        getAccountByAccountId(accountId).enable();
     }
 
     public static boolean isAccountTradable(int accountId) {
-        return getAccount(accountId).isEnabled();
+        return getAccountByAccountId(accountId).isEnabled();
     }
 
     public static SubAccount setSubAccountNotTradable(int subAccountId) {

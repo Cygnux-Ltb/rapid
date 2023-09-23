@@ -36,16 +36,12 @@ public interface InboundHandler extends
         private final OrderEventHandler orderEventHandler;
         private final AdaptorEventHandler adaptorEventHandler;
 
-        private final Logger logger;
-
         public InboundSchedulerWrapper(@Nullable MarketDataHandler marketDataHandler,
                                        @Nullable OrderEventHandler orderEventHandler,
-                                       @Nullable AdaptorEventHandler adaptorEventHandler,
-                                       @Nullable Logger logger) {
+                                       @Nullable AdaptorEventHandler adaptorEventHandler) {
             this.marketDataHandler = marketDataHandler;
             this.orderEventHandler = orderEventHandler;
             this.adaptorEventHandler = adaptorEventHandler;
-            this.logger = logger;
         }
 
         @Override
@@ -69,37 +65,8 @@ public interface InboundHandler extends
 
         @Override
         public void close() throws IOException {
-            try {
-                ResourceUtil.close(marketDataHandler);
-            } catch (Exception e) {
-                if (marketDataHandler != null) {
-                    if (logger != null) {
-                        logger.error("Close MarketDataHandler -> {} throw {}",
-                                marketDataHandler.getClass().getSimpleName(),
-                                e.getClass().getSimpleName(), e);
-                    }
-                }
-            }
-            if (orderEventHandler != null) {
-                try {
-                    ResourceUtil.close(orderEventHandler);
-                } catch (Exception e) {
-                    if (logger != null)
-                        logger.error("Close OrderReportHandler -> {} throw {}",
-                                orderEventHandler.getClass().getSimpleName(),
-                                e.getClass().getSimpleName(), e);
-                }
-            }
-            if (adaptorEventHandler != null) {
-                try {
-                    ResourceUtil.close(adaptorEventHandler);
-                } catch (Exception e) {
-                    if (logger != null)
-                        logger.error("Close AdaptorReportHandler -> {} throw {}",
-                                adaptorEventHandler.getClass().getSimpleName(),
-                                e.getClass().getSimpleName(), e);
-                }
-            }
+            ResourceUtil.closeIgnoreException(marketDataHandler,
+                    orderEventHandler, adaptorEventHandler);
         }
     }
 

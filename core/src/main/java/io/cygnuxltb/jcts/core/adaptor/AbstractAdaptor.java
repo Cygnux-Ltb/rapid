@@ -29,7 +29,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
     /**
      * Normal
      */
-    protected ConnectionType type = ConnectionType.Normal;
+    protected ConnectionMode mode = ConnectionMode.Normal;
 
     /**
      * @param prefix  String
@@ -40,7 +40,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         Asserter.nonNull(account, "account");
         this.account = account;
         this.adaptorId = prefix + "[" + account.getBrokerName() + ":" + account.getInvestorId() + "]";
-        AdaptorFinder.putAdaptor(this);
+        AdaptorStorage.putAdaptor(this);
     }
 
     @Nonnull

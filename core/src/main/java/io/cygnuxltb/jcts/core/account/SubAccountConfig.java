@@ -13,7 +13,9 @@ public enum SubAccountConfig implements ConfigOption {
 
     SubBalance("sys.subBalance"),
 
-    SubCredit("sys.subCredit");
+    SubCredit("sys.subCredit"),
+
+    ;
 
     private final String configName;
 

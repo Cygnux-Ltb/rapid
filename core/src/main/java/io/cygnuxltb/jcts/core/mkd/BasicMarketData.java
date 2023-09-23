@@ -4,14 +4,11 @@ import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.mercury.common.datetime.Timestamp;
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonWrapper;
+import lombok.Getter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-import static io.mercury.common.datetime.Timestamp.withDateTime;
 import static io.mercury.common.datetime.Timestamp.withEpochMillis;
 
 /**
@@ -22,23 +19,40 @@ import static io.mercury.common.datetime.Timestamp.withEpochMillis;
 public class BasicMarketData implements JsonSerializable {
 
     // Required
+    @Getter
     protected final Instrument instrument;
+
     // Required
+    @Getter
     protected final long epochMillis;
 
     /**
      * base info
      **/
     protected Timestamp timestamp;
+
+    @Getter
     protected double lastPrice;
+
+    @Getter
     protected int volume;
+
+    @Getter
     protected long turnover;
 
+    @Getter
     protected final double[] bidPrices;
+
+    @Getter
     protected final int[] bidVolumes;
+
+    @Getter
     protected final double[] askPrices;
+
+    @Getter
     protected final int[] askVolumes;
 
+    @Getter
     protected final int depth;
 
     protected BasicMarketData(@Nonnull Instrument instrument, long epochMillis, int depth) {
@@ -57,134 +71,19 @@ public class BasicMarketData implements JsonSerializable {
         this.askVolumes = new int[depth];
     }
 
-    /**
-     * @param instrument  Instrument
-     * @param epochMillis long
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel5(@Nonnull Instrument instrument,
-                                            long epochMillis) {
-        Timestamp timestamp = withEpochMillis(epochMillis);
-        return new BasicMarketData(instrument, epochMillis, timestamp, 5);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param datetime   LocalDateTime
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel5(@Nonnull Instrument instrument,
-                                            @Nonnull LocalDateTime datetime) {
-        Timestamp timestamp = withDateTime(datetime, instrument.getZoneOffset());
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 5);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param date       LocalDate
-     * @param time       LocalTime
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel5(@Nonnull Instrument instrument,
-                                            @Nonnull LocalDate date,
-                                            @Nonnull LocalTime time) {
-        Timestamp timestamp = withDateTime(date, time, instrument.getZoneOffset());
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 5);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param timestamp  Timestamp
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel5(@Nonnull Instrument instrument, @Nonnull Timestamp timestamp) {
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 5);
-    }
-
-    /**
-     * @param instrument  Instrument
-     * @param epochMillis long
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel10(@Nonnull Instrument instrument, long epochMillis) {
-        Timestamp timestamp = withEpochMillis(epochMillis);
-        return new BasicMarketData(instrument, epochMillis, timestamp, 10);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param datetime   LocalDateTime
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel10(@Nonnull Instrument instrument, @Nonnull LocalDateTime datetime) {
-        Timestamp timestamp = withDateTime(datetime, instrument.getZoneOffset());
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 10);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param date       LocalDate
-     * @param time       LocalTime
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel10(@Nonnull Instrument instrument, @Nonnull LocalDate date,
-                                             @Nonnull LocalTime time) {
-        Timestamp timestamp = withDateTime(date, time, instrument.getZoneOffset());
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 10);
-    }
-
-    /**
-     * @param instrument Instrument
-     * @param timestamp  Timestamp
-     * @return BasicMarketData
-     */
-    public static BasicMarketData newLevel10(@Nonnull Instrument instrument, @Nonnull Timestamp timestamp) {
-        return new BasicMarketData(instrument, timestamp.getEpoch(), timestamp, 10);
-    }
-
-
     public int getInstrumentId() {
         return instrument.getInstrumentId();
     }
 
-
     public String getInstrumentCode() {
         return instrument.getInstrumentCode();
     }
-
-
-    public long getEpochMillis() {
-        return epochMillis;
-    }
-
 
     public Timestamp getTimestamp() {
         if (timestamp == null)
             this.timestamp = withEpochMillis(epochMillis);
         return timestamp;
     }
-
-
-    public double getLastPrice() {
-        return lastPrice;
-    }
-
-
-    public int getVolume() {
-        return volume;
-    }
-
-
-    public long getTurnover() {
-        return turnover;
-    }
-
-
-    public int getDepth() {
-        return depth;
-    }
-
-
 
 
     public double getBidPrice1() {
@@ -212,9 +111,6 @@ public class BasicMarketData implements JsonSerializable {
     }
 
 
-
-
-
     public int getBidVolume1() {
         return bidVolumes[0];
     }
@@ -240,8 +136,6 @@ public class BasicMarketData implements JsonSerializable {
     }
 
 
-
-
     public double getAskPrice1() {
         return askPrices[0];
     }
@@ -265,9 +159,6 @@ public class BasicMarketData implements JsonSerializable {
     public double getAskPrice5() {
         return askPrices[4];
     }
-
-
-
 
 
     public int getAskVolume1() {
