@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
 import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.account.AccountFinder;
+import io.cygnuxltb.jcts.core.account.AccountStorage;
 import io.cygnuxltb.jcts.core.account.SubAccount;
 import io.cygnuxltb.jcts.core.adaptor.OrderAgent;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
@@ -97,7 +97,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         this.name = name;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
-        this.account = AccountFinder.getAccountBySubAccountId(subAccount.getSubAccountId());
+        this.account = AccountStorage.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
         this.queryPositions = QueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
@@ -213,12 +213,12 @@ public abstract class BaseStrategy<K extends ParamKey>
 
     @Override
     public void enableAccount(int accountId) {
-        AccountFinder.setAccountTradable(accountId);
+        AccountStorage.setAccountTradable(accountId);
     }
 
     @Override
     public void disableAccount(int accountId) {
-        AccountFinder.setAccountNotTradable(accountId);
+        AccountStorage.setAccountNotTradable(accountId);
     }
 
     @Override

@@ -5,11 +5,11 @@
 
     <!-- This is parent cygnux pom.xml -->
     <groupId>io.cygnuxltb</groupId>
-    <artifactId>jcts</artifactId>
+    <artifactId>rapid</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
-    <name>jcts</name>
+    <name>rapid</name>
 
     <url>https://cygnuxltb.io</url>
     <licenses>

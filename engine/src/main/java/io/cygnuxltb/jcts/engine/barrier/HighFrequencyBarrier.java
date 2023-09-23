@@ -15,13 +15,10 @@ public final class HighFrequencyBarrier implements OrderBarrier {
 	@Override
 	public boolean filter(ChildOrder order) {
 		switch (order.getDirection()) {
-			case Long -> {
+			case Long, Short -> {
 				return false;
 			}
-			case Short -> {
-				return false;
-			}
-			default -> {
+            default -> {
 				log.error("");
 				return false;
 			}

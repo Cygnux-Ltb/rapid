@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
 import io.cygnuxltb.jcts.core.account.SubAccount;
-import io.cygnuxltb.jcts.core.adaptor.OrderAgent;
+import io.cygnuxltb.jcts.core.adaptor.TraderAdaptor;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.strategy.Strategy;
@@ -22,7 +22,7 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
 
     private static final Logger log = getLogger(SingleInstrumentStrategy.class);
 
-    private OrderAgent agent;
+    protected TraderAdaptor adaptor;
 
     /**
      * @param strategyId   int
@@ -58,17 +58,15 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
         return instruments;
     }
 
-    public Strategy addAdaptor(@Nonnull OrderAgent agent) {
-        Asserter.nonNull(agent, "agent");
+
+    public Strategy addAdaptor(@Nonnull TraderAdaptor adaptor) {
+        Asserter.nonNull(adaptor, "adaptor");
         log.info("added adaptor, strategyId -> {}, strategyName -> {}, investorId -> {}",
-                id, name, agent.account().getInvestorId());
-        this.agent = agent;
+                id, name, adaptor.account().getInvestorId());
+        this.adaptor = adaptor;
         return this;
     }
 
-    protected OrderAgent getAgent(@Nonnull Instrument instrument) {
-        return agent;
-    }
 
     @Override
     public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
@@ -86,11 +84,11 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
 //			adaptor.queryOrder(null);
 //			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
 //					event.getAdaptorId());
-                agent.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
+                adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
                         .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getStrategyName(),
                         event.getAdaptorId());
-                agent.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
+                adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
                 log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getStrategyName(),
                         event.getAdaptorId());
             }

@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.manager;
 
-import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
@@ -26,9 +26,8 @@ public final class SyncMultiStrategyManager extends MultiStrategyManager {
     public void onMarketData(@Nonnull FastMarketData marketData) {
         MarketDataKeeper.onMarketDate(marketData);
         subscribedMap.get(marketData.getInstrumentCode()).each(strategy -> {
-            if (strategy.isEnabled()) {
+            if (strategy.isEnabled())
                 strategy.onMarketData(marketData);
-            }
         });
     }
 
@@ -38,8 +37,8 @@ public final class SyncMultiStrategyManager extends MultiStrategyManager {
                 event.getOrdSysId());
         var order = OrderKeeper.handleOrderReport(event);
         log.info("Search Order OK. brokerUniqueId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
-                event.getBrokerOrdSysId(), order.getStrategyId(), order.getInstrument().getInstrumentCode(),
-                event.getOrdSysId());
+                event.getBrokerOrdSysId(), order.getStrategyId(),
+                order.getInstrument().getInstrumentCode(), event.getOrdSysId());
         strategyMap.get(order.getStrategyId()).onOrder(order);
     }
 

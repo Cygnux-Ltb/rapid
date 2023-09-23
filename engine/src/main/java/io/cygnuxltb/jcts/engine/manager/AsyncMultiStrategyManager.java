@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.manager;
 
-import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
 import io.cygnuxltb.jcts.core.order.ChildOrder;
 import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
 import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
@@ -37,11 +37,11 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                         case MarketData -> {
                             FastMarketData marketData = msg.getMarketData();
                             MarketDataKeeper.onMarketDate(marketData);
-                            subscribedMap.get(marketData.getInstrumentCode()).each(strategy -> {
-                                if (strategy.isEnabled()) {
-                                    strategy.onMarketData(marketData);
-                                }
-                            });
+                            subscribedMap.get(marketData.getInstrumentCode())
+                                    .each(strategy -> {
+                                        if (strategy.isEnabled())
+                                            strategy.onMarketData(marketData);
+                                    });
                         }
                         case OrderReport -> {
                             var event = msg.getOrderEvent();
