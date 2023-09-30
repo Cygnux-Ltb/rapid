@@ -17,7 +17,7 @@ public class CtpAdaptorAvailableTime implements AdaptorAvailableTime {
 
     @Override
     public LocalTime[] getStartTimes() {
-        return new LocalTime[]{of(8, 55), of(22, 55)};
+        return new LocalTime[]{of(8, 50), of(22, 50)};
     }
 
     @Override

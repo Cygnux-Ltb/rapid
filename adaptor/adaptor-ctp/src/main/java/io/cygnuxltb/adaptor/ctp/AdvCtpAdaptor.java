@@ -286,11 +286,8 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     public void close() throws IOException {
         try {
             gateway.close();
-            if (queue != null) {
-                while (!queue.isEmpty())
-                    idleStrategy.idle();
-            }
-            log.info("{} -> already closed", adaptorId);
+            publisher.publish(false);
+            publisher.publish(false, -1, -1);
         } catch (Exception e) {
             log.error("{} -> exec close has exception -> {}", gatewayId, e.getMessage(), e);
             throw new IOException(e);

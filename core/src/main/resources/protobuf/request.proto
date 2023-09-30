@@ -1,11 +1,11 @@
-syntax = "proto3";
+syntax = "proto3";LEVEL10
 
 package io.cygnuxltb.jcts.core.protobuf.request;
 
 import "enums.proto";
 
 message MarketDataSubscribe {
-  MarketDataType type = 0;
+  repeated io.cygnuxltb.jcts.core.protobuf.enums.MarketDataType type = io.cygnuxltb.jcts.core.protobuf.enums.MarketDataType.LEVEL10;
   repeated string instrumentCodes = 1;
   string recvAddr = 2;
 }

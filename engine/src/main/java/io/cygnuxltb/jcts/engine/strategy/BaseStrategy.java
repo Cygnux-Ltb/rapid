@@ -3,7 +3,7 @@ package io.cygnuxltb.jcts.engine.strategy;
 import io.cygnuxltb.jcts.core.account.Account;
 import io.cygnuxltb.jcts.core.account.AccountStorage;
 import io.cygnuxltb.jcts.core.account.SubAccount;
-import io.cygnuxltb.jcts.core.adaptor.OrderAgent;
+import io.cygnuxltb.jcts.core.adaptor.TraderAdaptor;
 import io.cygnuxltb.jcts.core.instrument.Instrument;
 import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
 import io.cygnuxltb.jcts.core.mkd.FastMarketData;
@@ -392,7 +392,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         childOrder.printLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAgent().newOrder(childOrder.toNewOrder());
+        getTraderAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
@@ -483,7 +483,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         childOrder.printLog(log, "Close position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAgent().newOrder(childOrder.toNewOrder());
+        getTraderAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, "Close position [ChildOrder] has been sent");
     }
 
@@ -498,11 +498,11 @@ public abstract class BaseStrategy<K extends ParamKey>
 
 
     /**
-     * 由策略自行决定在交易不同Instrument时使用哪个Adaptor
+     * 由策略自行决定在交易不同Instrument时使用哪个TraderAdaptor
      *
      * @return Adaptor
      */
-    protected OrderAgent getAgent() {
+    protected TraderAdaptor getTraderAdaptor() {
         //TODO
         return null;
     }

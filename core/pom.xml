@@ -11,6 +11,9 @@
     <artifactId>core</artifactId>
     <name>core</name>
 
+    <properties>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -21,31 +24,87 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.avro</groupId>-->
+            <!--                <artifactId>avro-maven-plugin</artifactId>-->
+            <!--                <version>${avro.version}</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>schemas</id>-->
+            <!--                        <phase>generate-sources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>schema</goal>-->
+            <!--                            <goal>protocol</goal>-->
+            <!--                            <goal>idl-protocol</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <stringType>String</stringType>-->
+            <!--                            <createOptionalGetters>false</createOptionalGetters>-->
+            <!--                            <optionalGettersForNullableFieldsOnly>true</optionalGettersForNullableFieldsOnly>-->
+            <!--                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>-->
+            <!--                            <sourceDirectory>${project.basedir}/src/main/resources/avro/schema</sourceDirectory>-->
+            <!--                            <templateDirectory>${project.basedir}/src/main/resources/avro/template/</templateDirectory>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-maven-plugin</artifactId>
-                <version>${avro.version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>schemas</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>schema</goal>
-                            <goal>protocol</goal>
-                            <goal>idl-protocol</goal>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeProjectDependencies>false</includeProjectDependencies>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <mainClass>uk.co.real_logic.sbe.SbeTool</mainClass>
+                    <systemProperties>
+                        <systemProperty>
+                            <key>sbe.output.dir</key>
+                            <value>${project.build.sourceDirectory}</value>
+                        </systemProperty>
+                    </systemProperties>
+                    <arguments>
+                        <!--suppress UnresolvedMavenProperty-->
+                        <argument>${project.build.sourceDirectory}/../resources/common.xml</argument>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <argument>${project.build.sourceDirectory}/../resources/extension.xml</argument>
+                    </arguments>
+                    <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>uk.co.real-logic</groupId>
+                        <artifactId>sbe-tool</artifactId>
+                        <version>1.29.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
                         </goals>
                         <configuration>
-                            <stringType>String</stringType>
-                            <createOptionalGetters>false</createOptionalGetters>
-                            <optionalGettersForNullableFieldsOnly>true</optionalGettersForNullableFieldsOnly>
-                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
-                            <sourceDirectory>${project.basedir}/src/main/resources/avro/schema</sourceDirectory>
-                            <templateDirectory>${project.basedir}/src/main/resources/avro/template/</templateDirectory>
+                            <sources>
+                                <source>${project.build.sourceDirectory}</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
