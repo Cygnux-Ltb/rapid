@@ -19,8 +19,8 @@
     <dependencies>
         <dependency>
             <groupId>io.cygnuxltb</groupId>
-            <artifactId>console-hc</artifactId>
-            <version>${project.version}</version>
+            <artifactId>console-client</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>io.cygnuxltb</groupId>
