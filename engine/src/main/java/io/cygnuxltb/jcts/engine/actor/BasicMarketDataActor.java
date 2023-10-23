@@ -1,7 +1,7 @@
 package io.cygnuxltb.jcts.engine.actor;
 
 
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.mkd.FastMarketData;
 
 import javax.annotation.Nonnull;
 

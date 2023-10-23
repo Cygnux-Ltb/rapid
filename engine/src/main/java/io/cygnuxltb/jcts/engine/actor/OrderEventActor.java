@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.actor;
 
 
-import io.cygnuxltb.jcts.core.handler.OrderEventHandler;
-import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
+import io.rapid.core.handler.OrderEventHandler;
+import io.rapid.core.protocol.avro.event.OrderEvent;
 
 import javax.annotation.Nonnull;
 

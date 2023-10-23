@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.barrier;
 
 
-import io.cygnuxltb.jcts.core.order.ChildOrder;
-import io.cygnuxltb.jcts.core.risk.OrderBarrier;
+import io.rapid.core.order.ChildOrder;
+import io.rapid.core.risk.OrderBarrier;
 
 import javax.annotation.concurrent.NotThreadSafe;
 

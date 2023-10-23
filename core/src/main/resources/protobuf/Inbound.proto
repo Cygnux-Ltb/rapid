@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package io.rapid.core.proto.event;
+
+
+
+/* */
+message OrderEvent {
+  int64 epochMicros = 1;
+  int64 ordSysId = 2;
+  int32 tradingDay = 3;
+  string brokerId = 4;
+  string investorId = 5;
+  string orderRef = 6;
+  string brokerOrdSysId = 7;
+  string exchangeCode = 8;
+  string instrumentCode = 9;
+  int32 status = 10;
+  int32 direction = 11;
+  int32 action = 12;
+  int32 offerQty = 13;
+  int32 filledQty = 14;
+  int64 offerPrice = 15;
+  int64 tradePrice = 16;
+  string offerTime = 17;
+  string updateTime = 18;
+  string msg = 19;
+}
