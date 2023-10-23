@@ -16,7 +16,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /strategy
 ```
 
@@ -30,7 +30,7 @@ curl -X GET -i /strategy
 |strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "strategyId": 0,
@@ -62,7 +62,7 @@ curl -X GET -i /strategy
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /strategy/get?strategyId=0
 ```
 
@@ -76,7 +76,7 @@ curl -X GET -i /strategy/get?strategyId=0
 |strategyInfo|string|策略相关信息|-|
 
 **Response-example:**
-```
+```json
 {
   "strategyId": 0,
   "strategyName": "",
@@ -106,7 +106,7 @@ curl -X GET -i /strategy/get?strategyId=0
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /strategy/param?strategyName=
 ```
 
@@ -121,7 +121,7 @@ curl -X GET -i /strategy/param?strategyName=
 |paramValue|string|参数值|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "group": "",
@@ -154,12 +154,12 @@ curl -X GET -i /strategy/param?strategyName=
 
 
 **Request-example:**
-```
+```bash
 curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /strategy/param --data 'strategyId=0'
 ```
 
 **Response-example:**
-```
+```json
 true
 ```
 

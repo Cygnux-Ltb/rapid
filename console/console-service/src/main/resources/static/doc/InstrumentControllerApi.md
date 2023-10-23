@@ -22,7 +22,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /instrument/settlement?td=0&code=
 ```
 
@@ -37,7 +37,7 @@ curl -X GET -i /instrument/settlement?td=0&code=
 |settlementPrice|double|结算价|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "instrumentCode": "",
@@ -70,7 +70,7 @@ curl -X GET -i /instrument/settlement?td=0&code=
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /instrument/price?code=
 ```
 
@@ -82,7 +82,7 @@ curl -X GET -i /instrument/price?code=
 |lastPrice|double|最新价格|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "instrumentCode": "",
@@ -107,12 +107,12 @@ curl -X GET -i /instrument/price?code=
 
 
 **Request-example:**
-```
+```bash
 curl -X PUT -i /instrument/price
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 
@@ -137,7 +137,7 @@ OK
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /instrument/fee?code=
 ```
 
@@ -152,7 +152,7 @@ curl -X GET -i /instrument/fee?code=
 |tradable|boolean|可交易标识|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "instrumentCode": "",
@@ -186,12 +186,12 @@ curl -X GET -i /instrument/fee?code=
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /instrument/tradable?td=0&code=
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 

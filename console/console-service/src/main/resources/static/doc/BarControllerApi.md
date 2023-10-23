@@ -22,7 +22,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /bar?td=0&code=
 ```
 
@@ -42,7 +42,7 @@ curl -X GET -i /bar?td=0&code=
 |turnover|double|成交额|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "instrumentCode": "",
@@ -75,12 +75,12 @@ curl -X GET -i /bar?td=0&code=
 
 
 **Request-example:**
-```
+```bash
 curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /bar
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 

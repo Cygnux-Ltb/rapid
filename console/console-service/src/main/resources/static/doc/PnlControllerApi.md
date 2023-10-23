@@ -22,7 +22,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /pnl?td=0&strategyId=0
 ```
 
@@ -47,7 +47,7 @@ curl -X GET -i /pnl?td=0&strategyId=0
 |approved|int32|认证状态|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "strategyId": 0,
@@ -85,12 +85,12 @@ curl -X GET -i /pnl?td=0&strategyId=0
 
 
 **Request-example:**
-```
+```bash
 curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /pnl
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 
@@ -116,7 +116,7 @@ OK
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /pnl/settlement?td=0&strategyId=0
 ```
 
@@ -135,7 +135,7 @@ curl -X GET -i /pnl/settlement?td=0&strategyId=0
 |approved|int32|认证状态|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "strategyId": 0,

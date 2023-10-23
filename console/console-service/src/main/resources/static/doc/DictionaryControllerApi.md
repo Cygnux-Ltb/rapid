@@ -68,12 +68,12 @@ Page3:
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /mapping?key=
 ```
 
 **Response-example:**
-```
+```json
 string
 ```
 

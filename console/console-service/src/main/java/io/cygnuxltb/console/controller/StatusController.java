@@ -2,8 +2,8 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.protocol.http.pack.OutboxMessage;
-import io.cygnuxltb.protocol.http.pack.OutboxTitle;
+import io.cygnuxltb.protocol.http.wrap.OutboxMessage;
+import io.cygnuxltb.protocol.http.wrap.OutboxTitle;
 import io.cygnuxltb.protocol.http.request.StrategySwitch;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

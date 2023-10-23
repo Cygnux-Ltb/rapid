@@ -23,12 +23,12 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X POST -i /start
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 

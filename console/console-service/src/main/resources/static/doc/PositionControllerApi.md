@@ -21,7 +21,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /position/current?userId=0
 ```
 
@@ -37,7 +37,7 @@ curl -X GET -i /position/current?userId=0
 |└─netPos|int32|净头寸|-|
 
 **Response-example:**
-```
+```json
 {
   "userId": 0,
   "positions": [

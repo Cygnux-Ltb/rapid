@@ -23,7 +23,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /portfolio?userId=0&portfolio=
 ```
 
@@ -36,7 +36,7 @@ curl -X GET -i /portfolio?userId=0&portfolio=
 |instrumentCodes|array|交易标的(股票/期货)列表|-|
 
 **Response-example:**
-```
+```json
 {
   "userId": 0,
   "portfolioName": "",
@@ -67,7 +67,7 @@ curl -X GET -i /portfolio?userId=0&portfolio=
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /portfolio/first?userId=0
 ```
 
@@ -80,7 +80,7 @@ curl -X GET -i /portfolio/first?userId=0
 |instrumentCodes|array|交易标的(股票/期货)列表|-|
 
 **Response-example:**
-```
+```json
 {
   "userId": 0,
   "portfolioName": "",
@@ -111,7 +111,7 @@ curl -X GET -i /portfolio/first?userId=0
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /portfolio/second?userId=0
 ```
 
@@ -124,7 +124,7 @@ curl -X GET -i /portfolio/second?userId=0
 |instrumentCodes|array|交易标的(股票/期货)列表|-|
 
 **Response-example:**
-```
+```json
 {
   "userId": 0,
   "portfolioName": "",
