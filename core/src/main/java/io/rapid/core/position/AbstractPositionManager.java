@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.position;
+package io.rapid.core.position;
 
 import io.rapid.core.account.AccountPosition;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;

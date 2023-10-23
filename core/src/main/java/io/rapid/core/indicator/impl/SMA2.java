@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator.impl;
+package io.rapid.core.indicator.impl;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 
-import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
-import io.cygnuxltb.jcts.core.indicator.impl.SMA.SmaEvent;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.instrument.base.TradablePeriod;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
-import io.cygnuxltb.jcts.core.pool.TradablePeriodPool;
+import io.rapid.core.indicator.base.FixedPeriodIndicator;
+import io.rapid.core.indicator.impl.SMA.SmaEvent;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.mkd.FastMarketData;
+import io.rapid.core.pool.TradablePeriodPool;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 

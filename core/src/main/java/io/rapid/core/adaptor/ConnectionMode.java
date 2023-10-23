@@ -1,11 +1,11 @@
-package io.cygnuxltb.jcts.core.adaptor;
+package io.rapid.core.adaptor;
 
 public enum ConnectionMode {
 
-    Normal,
+    ALL,
 
-    OnlyMarketData,
+    MARKET_DATA,
 
-    OnlyTrade,
+    TRADE,
 
 }

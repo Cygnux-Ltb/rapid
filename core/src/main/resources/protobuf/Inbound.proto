@@ -1,10 +1,9 @@
 syntax = "proto3";
 
-package io.rapid.core.proto.event;
+package io.rapid.core.proto;
 
+import "Enums.proto";
 
-
-/* */
 message OrderEvent {
   int64 epochMicros = 1;
   int64 ordSysId = 2;
@@ -15,9 +14,9 @@ message OrderEvent {
   string brokerOrdSysId = 7;
   string exchangeCode = 8;
   string instrumentCode = 9;
-  int32 status = 10;
-  int32 direction = 11;
-  int32 action = 12;
+  io.rapid.core.proto.OrdStatus status = 10;
+  io.rapid.core.proto.TrdDirection direction = 11;
+  io.rapid.core.proto.TrdAction action = 12;
   int32 offerQty = 13;
   int32 filledQty = 14;
   int64 offerPrice = 15;

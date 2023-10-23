@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.indicator.base;
+package io.rapid.core.indicator.base;
 
-import io.cygnuxltb.jcts.core.indicator.Point;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.indicator.Point;
+import io.rapid.core.mkd.FastMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.lang.Asserter;
 

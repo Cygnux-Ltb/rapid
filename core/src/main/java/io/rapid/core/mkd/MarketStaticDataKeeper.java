@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd;
+package io.rapid.core.mkd;
 
 public final class MarketStaticDataKeeper {
 

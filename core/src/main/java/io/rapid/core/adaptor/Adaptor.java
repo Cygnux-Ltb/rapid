@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.adaptor;
+package io.rapid.core.adaptor;
 
 public interface Adaptor extends MarketDataFeed, TraderAdaptor {
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator;
+package io.rapid.core.indicator;
 
 import io.mercury.common.sequence.Serial;
 

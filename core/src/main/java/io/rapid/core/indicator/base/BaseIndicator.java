@@ -1,11 +1,11 @@
-package io.cygnuxltb.jcts.core.indicator.base;
+package io.rapid.core.indicator.base;
 
-import io.cygnuxltb.jcts.core.indicator.Indicator;
-import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
-import io.cygnuxltb.jcts.core.indicator.Point;
-import io.cygnuxltb.jcts.core.indicator.PointSet;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.indicator.Indicator;
+import io.rapid.core.indicator.IndicatorEvent;
+import io.rapid.core.indicator.Point;
+import io.rapid.core.indicator.PointSet;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mkd.FastMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableLists;

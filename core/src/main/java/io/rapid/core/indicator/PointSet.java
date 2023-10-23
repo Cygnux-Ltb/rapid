@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator;
+package io.rapid.core.indicator;
 
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableLists;

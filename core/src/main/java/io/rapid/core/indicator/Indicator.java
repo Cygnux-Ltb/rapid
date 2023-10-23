@@ -1,8 +1,8 @@
-package io.cygnuxltb.jcts.core.indicator;
+package io.rapid.core.indicator;
 
 
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mkd.FastMarketData;
 
 /**
  * 

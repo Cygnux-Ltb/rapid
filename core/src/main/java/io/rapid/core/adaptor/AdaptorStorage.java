@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.adaptor;
+package io.rapid.core.adaptor;
 
-import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.account.SubAccount;
+import io.rapid.core.account.Account;
+import io.rapid.core.account.SubAccount;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 

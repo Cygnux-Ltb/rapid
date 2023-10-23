@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator;
+package io.rapid.core.indicator;
 
 public interface TimeEvent {
 

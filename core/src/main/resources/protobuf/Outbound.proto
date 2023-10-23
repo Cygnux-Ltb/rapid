@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package io.rapid.core.proto.request;
+package io.rapid.core.proto;
 
-import "enums.proto";
+import "Enums.proto";
 
 message MarketDataSubscribe {
-  io.rapid.core.proto.enums.MarketDataType type = 1;
+  io.rapid.core.proto.MarketDataType type = 1;
   string instrumentCodes = 2;
   string receivingAddress = 3;
 }

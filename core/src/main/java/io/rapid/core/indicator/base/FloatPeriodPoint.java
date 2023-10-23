@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator.base;
+package io.rapid.core.indicator.base;
 
 import io.mercury.common.sequence.TimePoint;
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.util;
+package io.rapid.core.util;
 
 import org.eclipse.collections.api.block.predicate.primitive.DoubleDoublePredicate;
 import org.eclipse.collections.api.block.predicate.primitive.LongLongPredicate;

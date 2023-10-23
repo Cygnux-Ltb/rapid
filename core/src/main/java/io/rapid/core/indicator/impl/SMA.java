@@ -1,12 +1,12 @@
-package io.cygnuxltb.jcts.core.indicator.impl;
+package io.rapid.core.indicator.impl;
 
 import java.time.Duration;
 
-import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
-import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
-import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
+import io.rapid.core.indicator.IndicatorEvent;
+import io.rapid.core.indicator.base.FixedPeriodIndicator;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mkd.FastMarketData;
+import io.rapid.core.pool.TimeWindowPool;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 
 import io.mercury.common.collections.window.LongRingWindow;

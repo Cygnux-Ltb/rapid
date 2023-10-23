@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd.copy;
+package io.rapid.core.mkd.copy;
 
 import com.google.common.collect.ImmutableList;
 

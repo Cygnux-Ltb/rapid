@@ -1,15 +1,5 @@
-package io.cygnuxltb.jcts.core.mkd.copy;
+package io.rapid.core.mkd.copy;
 
-
-import io.cygnuxltb.jcts.core.mkd.copy.DefaultMarketDataSnapshot;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataDeleteOrder;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataEvent;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataIncrement;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataMessage;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataNewOrder;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataReplaceOrder;
-import io.cygnuxltb.jcts.core.mkd.copy.MarketDataSnapshot;
-import io.cygnuxltb.jcts.core.mkd.copy.Visitor;
 
 import java.util.HashMap;
 import java.util.List;

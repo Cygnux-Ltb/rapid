@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.adaptor;
+package io.rapid.core.adaptor;
 
-import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
+import io.rapid.core.account.Account;
+import io.rapid.core.instrument.InstrumentKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.common.lang.Asserter;
@@ -29,7 +29,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
     /**
      * Normal
      */
-    protected ConnectionMode mode = ConnectionMode.Normal;
+    protected ConnectionMode mode = ConnectionMode.ALL;
 
     /**
      * @param prefix  String

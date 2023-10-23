@@ -1,7 +1,6 @@
-package io.cygnuxltb.jcts.core.account;
+package io.rapid.core.account;
 
-import io.cygnuxltb.jcts.core.account.Account.AccountException;
-import io.cygnuxltb.jcts.core.account.SubAccount.SubAccountException;
+import io.rapid.core.account.Account.AccountException;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -119,10 +118,10 @@ public final class AccountStorage implements Serializable {
     }
 
     @Nonnull
-    public static SubAccount getSubAccount(int subAccountId) throws SubAccountException {
+    public static SubAccount getSubAccount(int subAccountId) throws SubAccount.SubAccountException {
         var subAccount = SubAccounts.get(subAccountId);
         if (subAccount == null)
-            throw new SubAccountException(
+            throw new SubAccount.SubAccountException(
                     "SubAccount error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
         return subAccount;
     }

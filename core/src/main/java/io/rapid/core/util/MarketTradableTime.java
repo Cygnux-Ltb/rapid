@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.util;
+package io.rapid.core.util;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.ScheduleTaskExecutor;

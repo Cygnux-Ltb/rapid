@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.pool;
+package io.rapid.core.pool;
 
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;

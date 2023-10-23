@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.handler;
+package io.rapid.core.handler;
 
-import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.rapid.core.protocol.avro.event.AdaptorEvent;
 
 import javax.annotation.Nonnull;
 

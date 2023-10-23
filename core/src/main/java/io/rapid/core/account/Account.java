@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.account;
+package io.rapid.core.account;
 
 import com.typesafe.config.Config;
 import io.mercury.common.collections.MutableSets;

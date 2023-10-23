@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.indicator.structure;
+package io.rapid.core.indicator.structure;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonWrapper;

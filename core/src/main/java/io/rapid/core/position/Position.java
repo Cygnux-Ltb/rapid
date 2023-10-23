@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.position;
+package io.rapid.core.position;
 
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.order.Order;

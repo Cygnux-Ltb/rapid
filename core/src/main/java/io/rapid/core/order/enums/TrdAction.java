@@ -52,7 +52,7 @@ public enum TrdAction {
         };
     }
 
-    public static TrdAction valueOf(io.cygnuxltb.jcts.core.ser.enums.TrdAction action) {
+    public static TrdAction valueOf(io.rapid.core.protocol.avro.enums.TrdAction action) {
         return switch (action) {
             case OPEN -> Open;
             case CLOSE -> Close;

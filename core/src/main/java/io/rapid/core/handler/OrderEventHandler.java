@@ -1,6 +1,6 @@
-package io.cygnuxltb.jcts.core.handler;
+package io.rapid.core.handler;
 
-import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
+import io.rapid.core.protocol.avro.event.OrderEvent;
 
 import javax.annotation.Nonnull;
 

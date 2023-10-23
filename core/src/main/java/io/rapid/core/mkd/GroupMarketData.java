@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd;
+package io.rapid.core.mkd;
 
 import org.eclipse.collections.api.set.MutableSet;
 

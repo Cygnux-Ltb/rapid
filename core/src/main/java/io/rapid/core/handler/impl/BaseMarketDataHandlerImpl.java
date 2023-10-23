@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.handler.impl;
+package io.rapid.core.handler.impl;
 
-import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.handler.MarketDataHandler;
+import io.rapid.core.mkd.FastMarketData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;

@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.indicator.impl;
+package io.rapid.core.indicator.impl;
 
-import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
+import io.rapid.core.indicator.base.FixedPeriodPoint;
+import io.rapid.core.instrument.Instrument;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 

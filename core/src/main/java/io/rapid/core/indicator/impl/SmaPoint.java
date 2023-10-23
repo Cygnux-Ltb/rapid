@@ -1,9 +1,9 @@
-package io.cygnuxltb.jcts.core.indicator.impl;
+package io.rapid.core.indicator.impl;
 
 import java.time.Duration;
 
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mkd.FastMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 

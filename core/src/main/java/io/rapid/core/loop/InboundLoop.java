@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.loop;
+package io.rapid.core.loop;
 
 public class InboundLoop {
 

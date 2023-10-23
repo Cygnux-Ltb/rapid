@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.risk;
+package io.rapid.core.risk;
 
 public interface CircuitBreaker {
 

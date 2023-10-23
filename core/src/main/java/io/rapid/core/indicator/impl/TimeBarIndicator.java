@@ -1,12 +1,12 @@
-package io.cygnuxltb.jcts.core.indicator.impl;
+package io.rapid.core.indicator.impl;
 
-import io.cygnuxltb.jcts.core.indicator.IndicatorEvent;
-import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodIndicator;
-import io.cygnuxltb.jcts.core.indicator.base.FixedPeriodPoint;
-import io.cygnuxltb.jcts.core.indicator.structure.Bar;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
-import io.cygnuxltb.jcts.core.pool.TimeWindowPool;
+import io.rapid.core.indicator.IndicatorEvent;
+import io.rapid.core.indicator.base.FixedPeriodIndicator;
+import io.rapid.core.indicator.base.FixedPeriodPoint;
+import io.rapid.core.indicator.structure.Bar;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mkd.FastMarketData;
+import io.rapid.core.pool.TimeWindowPool;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

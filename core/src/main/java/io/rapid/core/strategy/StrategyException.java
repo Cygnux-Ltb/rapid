@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.strategy;
+package io.rapid.core.strategy;
 
 import java.io.Serial;
 

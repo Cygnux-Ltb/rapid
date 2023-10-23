@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.strategy;
+package io.rapid.core.strategy;
 
 public interface StrategyEvent {
 

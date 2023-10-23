@@ -1,7 +1,7 @@
-package io.cygnuxltb.jcts.core.mkd;
+package io.rapid.core.mkd;
 
 import io.rapid.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.ser.event.FastMarketDataEvent;
+import io.rapid.core.protocol.avro.event.FastMarketDataEvent;
 import io.mercury.common.datetime.Timestamp;
 
 public final class FastMarketDataBridge  {

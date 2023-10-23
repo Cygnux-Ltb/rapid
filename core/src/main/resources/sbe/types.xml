@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
-                   package="sbe.common" id="1" version="0" semanticVersion="5.2"
-                   description="Example base schema which can be extended.">
+                   package="io.rapid.core.sbe" id="1" version="0" semanticVersion="5.2"
+                   description="Common types with Rapid Core">
     <types>
+        <!-- 价格(Long) -->
+        <type name="PriceL" primitiveType="int64"/>
+        <!-- 价格(Double) -->
+        <type name="PriceD" primitiveType="double"/>
+        <!-- 数量 -->
+        <type name="Qty" primitiveType="int32"/>
+        <!-- 版本 -->
+        <type name="Version" primitiveType="int32"/>
+        <enum name="OrdType" encodingType="int32">
+            <!-- 无效 -->
+            <validValue name="INVALID">-1</validValue>
+            <!-- 限价单 -->
+            <validValue name="LIMITED">1</validValue>
+            <!-- 市价单 -->
+            <validValue name="MARKET">2</validValue>
+            <!-- Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活为限价单. -->
+            <validValue name="LIMITED_STOP">3</validValue>
+            <!-- Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活为市价单. -->
+            <validValue name="MARKET_STOP">4</validValue>
+            <!-- Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单. -->
+            <validValue name="MTL">5</validValue>
+            <!-- Best Price, 不限定价格, 按照市场中存在的最好价格买入或者卖出. -->
+            <validValue name="BP">6</validValue>
+            <!-- Average Price, 限定最终成交平均价格. -->
+            <validValue name="AP">7</validValue>
+            <!-- Kill Or Kill, 表示要求立即全部成交, 否则全部取消. -->
+            <validValue name="FOK">8</validValue>
+            <!-- Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消. -->
+            <validValue name="FAK">9</validValue>
+            <!-- Minimum Volume, 要求满足成交量达到最小成交量, 否则就取消. -->
+            <validValue name="MV">10</validValue>
+        </enum>
         <composite name="messageHeader"
                    description="Message identifiers and length of message root.">
             <type name="blockLength" primitiveType="uint16"/>

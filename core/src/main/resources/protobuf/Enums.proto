@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package io.cygnuxltb.jcts.core.protobuf.enums;
+package io.rapid.core.proto;
 
 enum MarketDataType {
   DEPTH = 0; FAST = 1; LEVEL10 = 2; LEVEL20 = 3; LEVEL30 = 4;
@@ -8,4 +8,125 @@ enum MarketDataType {
 
 enum SubscribeStatus {
   SUCCEED = 0; PART_SUCCEED = 1; FAILED = 2;
+}
+
+enum OrdType {
+  // 无效
+  OT_INVALID = 0;
+  // 限价单
+  OT_LIMITED = 1;
+  // 市价单
+  OT_MARKET = 2;
+  // Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
+  OT_LIMITED_STOP = 3;
+  // Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
+  OT_MARKET_STOP = 4;
+  // Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
+  OT_MTL = 5;
+  // Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
+  OT_BP = 6;
+  // Average Price, 限定最终成交平均价格的报单.
+  OT_AP = 7;
+  // Kill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
+  OT_FOK = 8;
+  // Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
+  OT_FAK = 9;
+  // Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
+  OT_MV = 10;
+}
+
+enum OrdValid {
+  //Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
+  OV_GTC = 0;
+  //Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
+  OV_GTD = 1;
+  //Good For Day, 只在当日的交易时段有效, 一旦当前交易时段结束, 自动取消的报单.
+  OV_GFD = 2;
+}
+
+enum OrdSide {
+  //无效
+  OS_INVALID = 0;
+  //买
+  OS_BUY = 1;
+  //卖
+  OS_SELL = 2;
+  //融资买入
+  OS_MARGIN_BUY = 3;
+  //融券卖出
+  OS_SHORT_SELL = 4;
+}
+
+enum OrdStatus {
+  // 无效
+  INVALID = 0;
+  // 新订单未确认
+  PENDING_NEW = 1;
+  // 新订单
+  NEW = 2;
+  // 新订单已拒绝
+  NEW_REJECTED = 3;
+  // 部分成交
+  PARTIALLY_FILLED = 4;
+  // 全部成交
+  FILLED = 5;
+  // 未确认撤单
+  PENDING_CANCEL = 6;
+  // 已撤单
+  CANCELED = 7;
+  // 撤单已拒绝
+  CANCEL_REJECTED = 8;
+  // 未确认修改订单
+  PENDING_REPLACE = 9;
+  // 已修改
+  REPLACED = 10;
+  // 已暂停
+  SUSPENDED = 11;
+  // 未提供
+  UNPROVIDED = 12;
+}
+
+enum OrdLevel {
+  //子订单
+  OL_CHILD = 0;
+  //父订单
+  OL_PARENT = 1;
+  //策略订单
+  OL_STRATEGY = 2;
+  //组订单
+  OL_GROUP = 3;
+}
+
+enum TrdDirection {
+  TD_INVALID = 0;
+  TD_LONG = 1;
+  TD_SHORT = 2;
+}
+
+enum TrdAction {
+  // 无效
+  TA_INVALID = 0;
+  // 开仓
+  TA_OPEN = 1;
+  // 平仓
+  TA_CLOSE = 2;
+  // 平今仓
+  TA_CLOSE_TODAY = 3;
+  // 平昨仓
+  TA_CLOSE_YESTERDAY = 4;
+}
+
+enum AdaptorStatus {
+  // 无效
+  AS_INVALID = 0;
+  // 不可用
+  AS_UNAVAILABLE = 1;
+  // 行情启用
+  AS_MD_ENABLE = 2;
+  // 行情禁用
+  AS_MD_DISABLE = 3;
+  // 交易启用
+  AS_TRADER_ENABLE = 4;
+  // 交易禁用
+  AS_TRADER_DISABLE = 5;
 }

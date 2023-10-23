@@ -164,7 +164,7 @@ public enum OrdStatus {
      * @param status io.cygnuxltb.jcts.core.ser.enums.OrdStatus
      * @return OrdStatus
      */
-    public static OrdStatus valueOf(io.cygnuxltb.jcts.core.ser.enums.OrdStatus status) {
+    public static OrdStatus valueOf(io.rapid.core.protocol.avro.enums.OrdStatus status) {
         return switch (status) {
             // 未确认新订单
             case PENDING_NEW -> PendingNew;

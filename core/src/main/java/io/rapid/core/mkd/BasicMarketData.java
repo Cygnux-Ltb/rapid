@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.core.mkd;
+package io.rapid.core.mkd;
 
 import io.rapid.core.instrument.Instrument;
 import io.mercury.common.datetime.Timestamp;
