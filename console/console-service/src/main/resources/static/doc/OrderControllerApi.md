@@ -48,7 +48,6 @@ curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
 |offerPrice|double|委托价格|-|
 |offerQty|int32|委托数量|-|
 |insertTime|string|创建时间|-|
-|updateTime|string|更新时间|-|
 |cancelTime|string|取消时间|-|
 |frontId|int32|前置机ID|-|
 |sessionId|int32|会话ID|-|
@@ -76,7 +75,6 @@ curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
     "offerPrice": 0.0,
     "offerQty": 0,
     "insertTime": "yyyy-MM-dd HH:mm:ss",
-    "updateTime": "yyyy-MM-dd HH:mm:ss",
     "cancelTime": "yyyy-MM-dd HH:mm:ss",
     "frontId": 0,
     "sessionId": 0,
@@ -140,9 +138,8 @@ curl -X GET -i /order/event?td=0&strategyId=0
 |price|double|price double 19_4|-|
 |tradeId|string|trade_id varchar 21|-|
 |ordRejReason|int32|ord_rej_reason|-|
-|insertTime|int32|insert_time|-|
-|updateTime|int32|update_time|-|
-|cancelTime|int32|cancel_time|-|
+|updateTime|string|update_time|-|
+|cancelTime|string|cancel_time|-|
 |remark|string|remark|-|
 
 **Response-example:**
@@ -172,9 +169,8 @@ curl -X GET -i /order/event?td=0&strategyId=0
     "price": 0.0,
     "tradeId": "",
     "ordRejReason": 0,
-    "insertTime": 0,
-    "updateTime": 0,
-    "cancelTime": 0,
+    "updateTime": "yyyy-MM-dd HH:mm:ss",
+    "cancelTime": "yyyy-MM-dd HH:mm:ss",
     "remark": ""
   }
 ]
