@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class FtdcTraderConnectState {
 
-    // 可用状态
+    /// 可用状态
     private boolean available;
 
     ///交易日

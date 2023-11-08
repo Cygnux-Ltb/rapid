@@ -93,9 +93,7 @@ public class GroupsDlg extends JDialog {
     }
 
     void onQueryDisplayGroups() {
-
         try {
-
             m_cmbDisplayGroups.removeAllItems();
             enableFields(false);
 

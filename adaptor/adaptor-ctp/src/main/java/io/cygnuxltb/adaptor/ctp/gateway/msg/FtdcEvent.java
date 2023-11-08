@@ -46,28 +46,28 @@ public final class FtdcEvent {
     private final FtdcMdConnectState mdConnect = new FtdcMdConnectState();
 
     // 返回行情
-    private final FtdcDepthMarketData depthMarketData = new FtdcDepthMarketData();
+    private final FtdcDepthMarketData ftdcDepthMarketData = new FtdcDepthMarketData();
 
     // 返回持仓
-    private final FtdcInvestorPosition investorPosition = new FtdcInvestorPosition();
+    private final FtdcInvestorPosition ftdcInvestorPosition = new FtdcInvestorPosition();
 
     // 报单推送
-    private final FtdcOrder order = new FtdcOrder();
+    private final FtdcOrder ftdcOrder = new FtdcOrder();
 
     // 成交推送
-    private final FtdcTrade trade = new FtdcTrade();
+    private final FtdcTrade ftdcTrade = new FtdcTrade();
 
     // 返回报单错误
-    private final FtdcInputOrder inputOrder = new FtdcInputOrder();
+    private final FtdcInputOrder ftdcInputOrder = new FtdcInputOrder();
 
     // 返回撤单提交错误
-    private final FtdcInputOrderAction inputOrderAction = new FtdcInputOrderAction();
+    private final FtdcInputOrderAction ftdcInputOrderAction = new FtdcInputOrderAction();
 
     // 返回撤单错误
-    private final FtdcOrderAction orderAction = new FtdcOrderAction();
+    private final FtdcOrderAction ftdcOrderAction = new FtdcOrderAction();
 
     // 错误消息
-    private final FtdcRspInfo rspInfo = new FtdcRspInfo();
+    private final FtdcRspInfo ftdcRspInfo = new FtdcRspInfo();
 
     private FtdcEvent() {
         // For EventFactory call
@@ -78,11 +78,11 @@ public final class FtdcEvent {
      */
     public enum FtdcRspType {
 
+        MdConnectState,
+
+        TraderConnectState,
+
         DepthMarketData,
-
-        TraderConnect,
-
-        MdConnect,
 
         InvestorPosition,
 

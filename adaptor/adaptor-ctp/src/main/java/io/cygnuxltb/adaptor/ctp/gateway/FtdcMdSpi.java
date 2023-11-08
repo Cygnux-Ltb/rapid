@@ -7,7 +7,9 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
+import io.mercury.common.annotation.NativeSpiImpl;
 
+@NativeSpiImpl
 public final class FtdcMdSpi extends CThostFtdcMdSpi {
 
     private final FtdcMdCallback callback;
@@ -21,9 +23,8 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnFrontConnected() {
-        callback.onFrontConnected();
+        callback.fireFrontConnected();
     }
-
 
     /**
      * ///当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后, API会自动重新连接, 客户端可不做处理.
@@ -37,7 +38,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnFrontDisconnected(int Reason) {
-        callback.onFrontDisconnected(Reason);
+        callback.fireFrontDisconnected(Reason);
     }
 
     /**
@@ -47,7 +48,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnHeartBeatWarning(int TimeLapse) {
-        callback.onHeartBeatWarning(TimeLapse);
+        callback.fireHeartBeatWarning(TimeLapse);
     }
 
     /**
@@ -61,7 +62,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserLogin(RspUserLogin, RspInfo, RequestID, IsLast);
+        callback.fireRspUserLogin(RspUserLogin, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -75,7 +76,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspUserLogout(CThostFtdcUserLogoutField UserLogout,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserLogout(UserLogout, RspInfo, RequestID, IsLast);
+        callback.fireRspUserLogout(UserLogout, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -87,7 +88,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspError(RspInfo, RequestID, IsLast);
+        callback.fireRspError(RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -101,7 +102,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspSubMarketData(SpecificInstrument, RspInfo, RequestID, IsLast);
+        callback.fireRspSubMarketData(SpecificInstrument, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -115,7 +116,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUnSubMarketData(SpecificInstrument, RspInfo, RequestID, IsLast);
+        callback.fireRspUnSubMarketData(SpecificInstrument, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -129,7 +130,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspSubForQuoteRsp(SpecificInstrument, RspInfo, RequestID, IsLast);
+        callback.fireRspSubForQuoteRsp(SpecificInstrument, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -143,7 +144,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUnSubForQuoteRsp(SpecificInstrument, RspInfo, RequestID, IsLast);
+        callback.fireRspUnSubForQuoteRsp(SpecificInstrument, RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -153,7 +154,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnRtnDepthMarketData(CThostFtdcDepthMarketDataField DepthMarketData) {
-        callback.onRtnDepthMarketData(DepthMarketData);
+        callback.fireRtnDepthMarketData(DepthMarketData);
     }
 
     /**
@@ -163,7 +164,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
      */
     @Override
     public void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField ForQuoteRsp) {
-        callback.onRtnForQuoteRsp(ForQuoteRsp);
+        callback.fireRtnForQuoteRsp(ForQuoteRsp);
     }
 
 }

@@ -105,7 +105,7 @@ public final class FtdcDepthMarketData {
     // 业务日期
     private String ActionDay;
 
-    public FtdcDepthMarketData copy(CThostFtdcDepthMarketDataField field) {
+    public FtdcDepthMarketData load(CThostFtdcDepthMarketDataField field) {
         return this
                 // 交易日, 合约ID, 交易所ID, 合约在交易所的代码
                 .setTradingDay(field.getTradingDay())

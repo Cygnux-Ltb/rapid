@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.msg;
+package io.cygnuxltb.adaptor.ctp.gateway.msg.deleted;
 
 @Deprecated
 public class ReqCancelOrder {

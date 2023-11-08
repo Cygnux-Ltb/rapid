@@ -13,7 +13,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-
 public class VerticalPanel extends JPanel {
     private static class FlowPanel extends JPanel {
         FlowPanel(Component[] comps) {

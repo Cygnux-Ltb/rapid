@@ -156,7 +156,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 .capacity(32)
                 .process(msg -> {
                     switch (msg.getType()) {
-                        case MdConnect -> {
+                        case MdConnectState -> {
                             var mdConnect = msg.getMdConnect();
                             this.mdAvailable = mdConnect.getAvailable();
                             log.info("Adaptor buf processed FtdcMdConnect, isMdAvailable==[{}]", mdAvailable);
@@ -169,7 +169,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                                         .setStatus(AdaptorStatus.MD_DISABLE).build();
                             scheduler.onAdaptorEvent(mdReport);
                         }
-                        case TraderConnect -> {
+                        case TraderConnectState -> {
                             var traderConnect = msg.getTraderConnect();
                             this.isTraderAvailable = traderConnect.isAvailable();
                             this.frontId = traderConnect.getFrontId();
@@ -190,12 +190,12 @@ public class CtpAdaptor extends AbstractAdaptor {
                             // 行情处理
                             // TODO
                             // multicaster.publish(rspMsg.getDepthMarketData());
-                            var marketData = marketDataConverter.withFtdcDepthMarketData(msg.getDepthMarketData());
+                            var marketData = marketDataConverter.withFtdcDepthMarketData(msg.getFtdcDepthMarketData());
                             scheduler.onMarketData(marketData);
                         }
                         case Order -> {
                             // 报单回报处理
-                            FtdcOrder ftdcOrder = msg.getOrder();
+                            FtdcOrder ftdcOrder = msg.getFtdcOrder();
                             log.info(
                                     "Adaptor buf in FtdcOrder, InstrumentID==[{}], InvestorID==[{}], "
                                             + "OrderRef==[{}], LimitPrice==[{}], VolumeTotalOriginal==[{}], OrderStatus==[{}]",
@@ -206,7 +206,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                         }
                         case Trade -> {
                             // 成交回报处理
-                            var ftdcTrade = msg.getTrade();
+                            var ftdcTrade = msg.getFtdcTrade();
                             log.info("Adaptor buf in FtdcTrade, InstrumentID==[{}], InvestorID==[{}], OrderRef==[{}]",
                                     ftdcTrade.getInstrumentID(), ftdcTrade.getInvestorID(), ftdcTrade.getOrderRef());
                             var report1 = orderReportConverter.withFtdcTrade(ftdcTrade);
@@ -214,17 +214,17 @@ public class CtpAdaptor extends AbstractAdaptor {
                         }
                         case InputOrder -> {
                             // TODO 报单错误处理
-                            var ftdcInputOrder = msg.getInputOrder();
+                            var ftdcInputOrder = msg.getFtdcInputOrder();
                             log.info("Adaptor buf in [FtdcInputOrder] -> {}", JsonWrapper.toJson(ftdcInputOrder));
                         }
                         case InputOrderAction -> {
                             // TODO 撤单错误处理1
-                            var ftdcInputOrderAction = msg.getInputOrderAction();
+                            var ftdcInputOrderAction = msg.getFtdcInputOrderAction();
                             log.info("Adaptor buf in [FtdcInputOrderAction] -> {}", JsonWrapper.toJson(ftdcInputOrderAction));
                         }
                         case OrderAction -> {
                             // TODO 撤单错误处理2
-                            var ftdcOrderAction = msg.getOrderAction();
+                            var ftdcOrderAction = msg.getFtdcOrderAction();
                             log.info("Adaptor buf in [FtdcOrderAction] -> {}", JsonWrapper.toJson(ftdcOrderAction));
                         }
                         default -> log.warn("Adaptor buf unprocessed [FtdcRspMsg] -> {}", JsonWrapper.toJson(msg));

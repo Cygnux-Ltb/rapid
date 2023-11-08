@@ -15,7 +15,6 @@ import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.*;
 
 public interface FtdcConstant {
 
-
     /**
      * ///TFtdcActionFlagType是一个操作标志类型<br>
      * <br>
@@ -35,7 +34,6 @@ public interface FtdcConstant {
          */
         char MODIFY = THOST_FTDC_AF_Modify;
     }
-
 
     /**
      * ///TFtdcContingentConditionType是一个触发条件类型<br>
@@ -107,7 +105,6 @@ public interface FtdcConstant {
         char PARKED_ORDER = THOST_FTDC_CC_ParkedOrder;
     }
 
-
     /**
      * TFtdcDirectionType是一个买卖方向类型 <br>
      * <br>
@@ -127,7 +124,6 @@ public interface FtdcConstant {
          */
         char SELL = THOST_FTDC_D_Sell;
     }
-
 
     /**
      * ///TFtdcForceCloseReasonType是一个强平原因类型<br>
@@ -163,7 +159,6 @@ public interface FtdcConstant {
         char NOT_FORCE_CLOSE = THOST_FTDC_FCC_NotForceClose;
     }
 
-
     /**
      * ///TFtdcHedgeFlagType是一个投机套保标志类型<br>
      * <br>
@@ -195,7 +190,6 @@ public interface FtdcConstant {
          */
         String SPECULATION_STR = String.valueOf(THOST_FTDC_HF_Speculation);
     }
-
 
     /**
      * ///TFtdcOffsetFlagType是一个开平标志类型<br>
@@ -255,7 +249,6 @@ public interface FtdcConstant {
          */
         String CLOSE_YESTERDAY_STR = String.valueOf(THOST_FTDC_OF_CloseYesterday);
     }
-
 
     /**
      * ///TFtdcOrderPriceTypeType是一个报单价格条件类型 <br>
@@ -334,7 +327,6 @@ public interface FtdcConstant {
          */
         char BID_PRICE1 = THOST_FTDC_OPT_BidPrice1;
     }
-
 
     /**
      * ///TFtdcOrderStatusType是一个报单状态类型<br>

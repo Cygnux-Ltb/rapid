@@ -9,7 +9,7 @@ public final class FtdcTraderMsgHandler {
 
 
     private final EventTranslatorOneArg<FtdcEvent, CThostFtdcDepthMarketDataField> translatorWithDepthMarketDataField =
-            (msg, sequence, arg) -> msg.getDepthMarketData().copy(arg);
+            (msg, sequence, arg) -> msg.getFtdcDepthMarketData().load(arg);
 
     public FtdcTraderMsgHandler(RingEventbus<FtdcEvent> eventBus) {
 

@@ -100,7 +100,7 @@ public final class FtdcInputOrder {
     /// MAC地址
     private String MacAddress;
 
-    public FtdcInputOrder copy(CThostFtdcInputOrderField field) {
+    public FtdcInputOrder load(CThostFtdcInputOrderField field) {
         return this
                 .setBrokerID(field.getBrokerID())
                 .setInvestorID(field.getInvestorID())

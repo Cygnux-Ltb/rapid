@@ -56,7 +56,6 @@ public final class FtdcConst {
     HashSet<String> STATUS_WORKING = new HashSet<>() {
         @Serial
         private static final long serialVersionUID = 909683985291870766L;
-
         {
             add(FtdcConst.STATUS_UNKNOWN);
             add(FtdcConst.STATUS_NOT_TRADED);

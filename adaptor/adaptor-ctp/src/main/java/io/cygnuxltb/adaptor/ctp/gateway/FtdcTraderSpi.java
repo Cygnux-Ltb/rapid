@@ -94,12 +94,14 @@ import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
+import io.mercury.common.annotation.NativeSpiImpl;
 
-public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
+@NativeSpiImpl
+public final class FtdcTraderSpi extends CThostFtdcTraderSpi {
 
     private final FtdcTraderCallback callback;
 
-    FtdcTraderSpi0(FtdcTraderCallback callback) {
+    FtdcTraderSpi(FtdcTraderCallback callback) {
         this.callback = callback;
     }
 
@@ -108,7 +110,7 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnFrontConnected() {
-        callback.onFrontConnected();
+        callback.fireFrontConnected();
     }
 
     /**
@@ -123,7 +125,7 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnFrontDisconnected(int Reason) {
-        callback.onFrontDisconnected(Reason);
+        callback.fireFrontDisconnected(Reason);
     }
 
     /**
@@ -133,9 +135,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnHeartBeatWarning(int TimeLapse) {
-        callback.onHeartBeatWarning(TimeLapse);
+        callback.fireHeartBeatWarning(TimeLapse);
     }
-
 
     /**
      * ///客户端认证响应
@@ -148,9 +149,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspAuthenticate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspAuthenticate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///登录请求响应
@@ -163,9 +163,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspUserLogin(CThostFtdcRspUserLoginField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserLogin(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspUserLogin(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///登出请求响应
@@ -178,9 +177,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspUserLogout(CThostFtdcUserLogoutField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserLogout(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspUserLogout(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///用户口令更新请求响应
@@ -193,9 +191,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserPasswordUpdate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspUserPasswordUpdate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///资金账户口令更新请求响应
@@ -208,9 +205,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField Field,
                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspTradingAccountPasswordUpdate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspTradingAccountPasswordUpdate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///查询用户当前支持的认证模式的回复
@@ -223,9 +219,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspUserAuthMethod(CThostFtdcRspUserAuthMethodField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspUserAuthMethod(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspUserAuthMethod(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///获取图形验证码请求的回复
@@ -238,9 +233,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspGenUserCaptcha(CThostFtdcRspGenUserCaptchaField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspGenUserCaptcha(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspGenUserCaptcha(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///获取短信验证码请求的回复
@@ -253,9 +247,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspGenUserText(CThostFtdcRspGenUserTextField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspGenUserText(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspGenUserText(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///报单录入请求响应
@@ -268,9 +261,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspOrderInsert(CThostFtdcInputOrderField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspOrderInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspOrderInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///预埋单录入请求响应
@@ -283,9 +275,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspParkedOrderInsert(CThostFtdcParkedOrderField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspParkedOrderInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspParkedOrderInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///预埋撤单录入请求响应
@@ -298,9 +289,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspParkedOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///报单操作请求响应
@@ -313,9 +303,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspOrderAction(CThostFtdcInputOrderActionField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///查询最大报单数量响应
@@ -328,9 +317,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQueryMaxOrderVolume(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQueryMaxOrderVolume(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///投资者结算结果确认响应
@@ -343,9 +331,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspSettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspSettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///删除预埋单响应
@@ -358,9 +345,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspRemoveParkedOrder(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspRemoveParkedOrder(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///删除预埋撤单响应
@@ -373,9 +359,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspRemoveParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspRemoveParkedOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///执行宣告录入请求响应
@@ -388,9 +373,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspExecOrderInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspExecOrderInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///执行宣告操作请求响应
@@ -403,9 +387,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspExecOrderAction(CThostFtdcInputExecOrderActionField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspExecOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspExecOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///询价录入请求响应
@@ -418,9 +401,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspForQuoteInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspForQuoteInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///报价录入请求响应
@@ -433,9 +415,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQuoteInsert(CThostFtdcInputQuoteField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQuoteInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQuoteInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///报价操作请求响应
@@ -448,9 +429,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQuoteAction(CThostFtdcInputQuoteActionField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQuoteAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQuoteAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///批量报单操作请求响应
@@ -463,9 +443,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspBatchOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspBatchOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///期权自对冲录入请求响应
@@ -478,9 +457,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspOptionSelfCloseInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspOptionSelfCloseInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///期权自对冲操作请求响应
@@ -493,9 +471,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspOptionSelfCloseAction(CThostFtdcInputOptionSelfCloseActionField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspOptionSelfCloseAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspOptionSelfCloseAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///申请组合录入请求响应
@@ -508,9 +485,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspCombActionInsert(CThostFtdcInputCombActionField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspCombActionInsert(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspCombActionInsert(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询报单响应
@@ -523,9 +499,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryOrder(CThostFtdcOrderField Field,
                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryOrder(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryOrder(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询成交响应
@@ -538,9 +513,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTrade(CThostFtdcTradeField Field, CThostFtdcRspInfoField RspInfo,
                               int RequestID, boolean IsLast) {
-        callback.onRspQryTrade(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTrade(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者持仓响应
@@ -553,9 +527,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestorPosition(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestorPosition(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询资金账户响应
@@ -568,9 +541,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTradingAccount(CThostFtdcTradingAccountField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryTradingAccount(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTradingAccount(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者响应
@@ -583,9 +555,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestor(CThostFtdcInvestorField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestor(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestor(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询交易编码响应
@@ -598,9 +569,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTradingCode(CThostFtdcTradingCodeField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryTradingCode(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTradingCode(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询合约保证金率响应
@@ -613,9 +583,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInstrumentMarginRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInstrumentMarginRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询合约手续费率响应
@@ -628,9 +597,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询交易所响应
@@ -643,9 +611,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryExchange(CThostFtdcExchangeField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryExchange(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryExchange(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询产品响应
@@ -658,9 +625,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryProduct(CThostFtdcProductField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryProduct(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryProduct(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询合约响应
@@ -673,9 +639,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInstrument(CThostFtdcInstrumentField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInstrument(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInstrument(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询行情响应
@@ -688,9 +653,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryDepthMarketData(CThostFtdcDepthMarketDataField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryDepthMarketData(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryDepthMarketData(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者结算结果响应
@@ -703,9 +667,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySettlementInfo(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySettlementInfo(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询转帐银行响应
@@ -718,9 +681,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTransferBank(CThostFtdcTransferBankField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryTransferBank(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTransferBank(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者持仓明细响应
@@ -733,9 +695,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestorPositionDetail(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestorPositionDetail(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询客户通知响应
@@ -748,9 +709,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryNotice(CThostFtdcNoticeField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryNotice(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryNotice(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询结算信息确认响应
@@ -763,9 +723,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者持仓明细响应
@@ -778,9 +737,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField Field,
                                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestorPositionCombineDetail(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestorPositionCombineDetail(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///查询保证金监管系统经纪公司资金账户密钥响应
@@ -793,9 +751,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryCFMMCTradingAccountKey(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryCFMMCTradingAccountKey(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询仓单折抵信息响应
@@ -808,9 +765,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryEWarrantOffset(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryEWarrantOffset(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资者品种/跨品种保证金响应
@@ -823,9 +779,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestorProductGroupMargin(CThostFtdcInvestorProductGroupMarginField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestorProductGroupMargin(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestorProductGroupMargin(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询交易所保证金率响应
@@ -838,9 +793,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryExchangeMarginRate(CThostFtdcExchangeMarginRateField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryExchangeMarginRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryExchangeMarginRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询交易所调整保证金率响应
@@ -853,9 +807,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryExchangeMarginRateAdjust(CThostFtdcExchangeMarginRateAdjustField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryExchangeMarginRateAdjust(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryExchangeMarginRateAdjust(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询汇率响应
@@ -868,9 +821,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryExchangeRate(CThostFtdcExchangeRateField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryExchangeRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryExchangeRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询二级代理操作员银期权限响应
@@ -883,9 +835,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySecAgentACIDMap(CThostFtdcSecAgentACIDMapField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySecAgentACIDMap(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySecAgentACIDMap(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询产品报价汇率
@@ -898,9 +849,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryProductExchRate(CThostFtdcProductExchRateField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryProductExchRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryProductExchRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询产品组
@@ -913,9 +863,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryProductGroup(CThostFtdcProductGroupField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryProductGroup(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryProductGroup(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询做市商合约手续费率响应
@@ -928,9 +877,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryMMInstrumentCommissionRate(CThostFtdcMMInstrumentCommissionRateField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryMMInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryMMInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询做市商期权合约手续费响应
@@ -943,9 +891,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryMMOptionInstrCommRate(CThostFtdcMMOptionInstrCommRateField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryMMOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryMMOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询报单手续费响应
@@ -958,9 +905,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInstrumentOrderCommRate(CThostFtdcInstrumentOrderCommRateField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInstrumentOrderCommRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInstrumentOrderCommRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询资金账户响应
@@ -973,9 +919,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySecAgentTradingAccount(CThostFtdcTradingAccountField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySecAgentTradingAccount(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySecAgentTradingAccount(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询二级代理商资金校验模式响应
@@ -988,9 +933,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySecAgentCheckMode(CThostFtdcSecAgentCheckModeField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySecAgentCheckMode(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySecAgentCheckMode(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询二级代理商信息响应
@@ -1003,9 +947,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQrySecAgentTradeInfo(CThostFtdcSecAgentTradeInfoField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQrySecAgentTradeInfo(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQrySecAgentTradeInfo(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询期权交易成本响应
@@ -1018,9 +961,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryOptionInstrTradeCost(CThostFtdcOptionInstrTradeCostField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryOptionInstrTradeCost(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryOptionInstrTradeCost(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询期权合约手续费响应
@@ -1033,9 +975,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryOptionInstrCommRate(CThostFtdcOptionInstrCommRateField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询执行宣告响应
@@ -1048,9 +989,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryExecOrder(CThostFtdcExecOrderField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryExecOrder(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryExecOrder(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询询价响应
@@ -1063,9 +1003,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryForQuote(CThostFtdcForQuoteField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryForQuote(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryForQuote(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询报价响应
@@ -1078,9 +1017,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryQuote(CThostFtdcQuoteField Field,
                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryQuote(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryQuote(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询期权自对冲响应
@@ -1093,9 +1031,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryOptionSelfClose(CThostFtdcOptionSelfCloseField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryOptionSelfClose(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryOptionSelfClose(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询投资单元响应
@@ -1108,9 +1045,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryInvestUnit(CThostFtdcInvestUnitField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryInvestUnit(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryInvestUnit(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询组合合约安全系数响应
@@ -1123,9 +1059,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryCombInstrumentGuard(CThostFtdcCombInstrumentGuardField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryCombInstrumentGuard(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryCombInstrumentGuard(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询申请组合响应
@@ -1138,9 +1073,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryCombAction(CThostFtdcCombActionField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryCombAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryCombAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询转帐流水响应
@@ -1153,9 +1087,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTransferSerial(CThostFtdcTransferSerialField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryTransferSerial(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTransferSerial(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询银期签约关系响应
@@ -1168,9 +1101,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryAccountregister(CThostFtdcAccountregisterField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryAccountregister(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryAccountregister(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///错误应答
@@ -1181,9 +1113,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspError(RspInfo, RequestID, IsLast);
+        callback.fireRspError(RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///报单通知
@@ -1192,9 +1123,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnOrder(CThostFtdcOrderField Order) {
-        callback.onRtnOrder(Order);
+        callback.fireRtnOrder(Order);
     }
-
 
     /**
      * ///成交通知
@@ -1203,9 +1133,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnTrade(CThostFtdcTradeField Trade) {
-        callback.onRtnTrade(Trade);
+        callback.fireRtnTrade(Trade);
     }
-
 
     /**
      * ///报单录入错误回报
@@ -1216,9 +1145,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnOrderInsert(CThostFtdcInputOrderField Field,
                                     CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnOrderInsert(Field, RspInfo);
+        callback.fireErrRtnOrderInsert(Field, RspInfo);
     }
-
 
     /**
      * ///报单操作错误回报
@@ -1229,9 +1157,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnOrderAction(CThostFtdcOrderActionField Field,
                                     CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnOrderAction(Field, RspInfo);
+        callback.fireErrRtnOrderAction(Field, RspInfo);
     }
-
 
     /**
      * ///合约交易状态通知
@@ -1240,9 +1167,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
-        callback.onRtnInstrumentStatus(Field);
+        callback.fireRtnInstrumentStatus(Field);
     }
-
 
     /**
      * ///交易所公告通知
@@ -1251,9 +1177,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnBulletin(CThostFtdcBulletinField Field) {
-        callback.onRtnBulletin(Field);
+        callback.fireRtnBulletin(Field);
     }
-
 
     /**
      * ///交易通知
@@ -1262,9 +1187,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnTradingNotice(CThostFtdcTradingNoticeInfoField Field) {
-        callback.onRtnTradingNotice(Field);
+        callback.fireRtnTradingNotice(Field);
     }
-
 
     /**
      * ///提示条件单校验错误
@@ -1273,9 +1197,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField Field) {
-        callback.onRtnErrorConditionalOrder(Field);
+        callback.fireRtnErrorConditionalOrder(Field);
     }
-
 
     /**
      * ///执行宣告通知
@@ -1284,9 +1207,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnExecOrder(CThostFtdcExecOrderField Field) {
-        callback.onRtnExecOrder(Field);
+        callback.fireRtnExecOrder(Field);
     }
-
 
     /**
      * ///执行宣告录入错误回报
@@ -1297,9 +1219,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                         CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnExecOrderInsert(Field, RspInfo);
+        callback.fireErrRtnExecOrderInsert(Field, RspInfo);
     }
-
 
     /**
      * ///执行宣告操作错误回报
@@ -1310,9 +1231,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnExecOrderAction(CThostFtdcExecOrderActionField Field,
                                         CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnExecOrderAction(Field, RspInfo);
+        callback.fireErrRtnExecOrderAction(Field, RspInfo);
     }
-
 
     /**
      * ///询价录入错误回报
@@ -1323,9 +1243,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                        CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnForQuoteInsert(Field, RspInfo);
+        callback.fireErrRtnForQuoteInsert(Field, RspInfo);
     }
-
 
     /**
      * ///报价通知
@@ -1334,9 +1253,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnQuote(CThostFtdcQuoteField Field) {
-        callback.onRtnQuote(Field);
+        callback.fireRtnQuote(Field);
     }
-
 
     /**
      * ///报价录入错误回报
@@ -1347,9 +1265,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnQuoteInsert(CThostFtdcInputQuoteField Field,
                                     CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnQuoteInsert(Field, RspInfo);
+        callback.fireErrRtnQuoteInsert(Field, RspInfo);
     }
-
 
     /**
      * ///报价操作错误回报
@@ -1360,9 +1277,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnQuoteAction(CThostFtdcQuoteActionField Field,
                                     CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnQuoteAction(Field, RspInfo);
+        callback.fireErrRtnQuoteAction(Field, RspInfo);
     }
-
 
     /**
      * ///询价通知
@@ -1371,9 +1287,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField Field) {
-        callback.onRtnForQuoteRsp(Field);
+        callback.fireRtnForQuoteRsp(Field);
     }
-
 
     /**
      * ///保证金监控中心用户令牌
@@ -1382,9 +1297,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnCFMMCTradingAccountToken(CThostFtdcCFMMCTradingAccountTokenField Field) {
-        callback.onRtnCFMMCTradingAccountToken(Field);
+        callback.fireRtnCFMMCTradingAccountToken(Field);
     }
-
 
     /**
      * ///批量报单操作错误回报
@@ -1395,9 +1309,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
                                          CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnBatchOrderAction(Field, RspInfo);
+        callback.fireErrRtnBatchOrderAction(Field, RspInfo);
     }
-
 
     /**
      * ///期权自对冲通知
@@ -1406,9 +1319,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnOptionSelfClose(CThostFtdcOptionSelfCloseField Field) {
-        callback.onRtnOptionSelfClose(Field);
+        callback.fireRtnOptionSelfClose(Field);
     }
-
 
     /**
      * ///期权自对冲录入错误回报
@@ -1419,9 +1331,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                               CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnOptionSelfCloseInsert(Field, RspInfo);
+        callback.fireErrRtnOptionSelfCloseInsert(Field, RspInfo);
     }
-
 
     /**
      * ///期权自对冲操作错误回报
@@ -1432,9 +1343,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnOptionSelfCloseAction(CThostFtdcOptionSelfCloseActionField Field,
                                               CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnOptionSelfCloseAction(Field, RspInfo);
+        callback.fireErrRtnOptionSelfCloseAction(Field, RspInfo);
     }
-
 
     /**
      * ///申请组合通知
@@ -1443,9 +1353,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnCombAction(CThostFtdcCombActionField Field) {
-        callback.onRtnCombAction(Field);
+        callback.fireRtnCombAction(Field);
     }
-
 
     /**
      * ///申请组合录入错误回报
@@ -1456,9 +1365,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnCombActionInsert(CThostFtdcInputCombActionField Field,
                                          CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnCombActionInsert(Field, RspInfo);
+        callback.fireErrRtnCombActionInsert(Field, RspInfo);
     }
-
 
     /**
      * ///请求查询签约银行响应
@@ -1471,9 +1379,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryContractBank(CThostFtdcContractBankField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryContractBank(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryContractBank(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询预埋单响应
@@ -1486,9 +1393,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryParkedOrder(CThostFtdcParkedOrderField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryParkedOrder(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryParkedOrder(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询预埋撤单响应
@@ -1501,9 +1407,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryParkedOrderAction(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询交易通知响应
@@ -1516,9 +1421,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryTradingNotice(CThostFtdcTradingNoticeField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryTradingNotice(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryTradingNotice(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询经纪公司交易参数响应
@@ -1531,9 +1435,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryBrokerTradingParams(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryBrokerTradingParams(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询经纪公司交易算法响应
@@ -1546,9 +1449,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQryBrokerTradingAlgos(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQryBrokerTradingAlgos(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///请求查询监控中心用户令牌
@@ -1561,9 +1463,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQueryCFMMCTradingAccountToken(CThostFtdcQueryCFMMCTradingAccountTokenField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQueryCFMMCTradingAccountToken(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQueryCFMMCTradingAccountToken(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///银行发起银行资金转期货通知
@@ -1572,9 +1473,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnFromBankToFutureByBank(CThostFtdcRspTransferField Field) {
-        callback.onRtnFromBankToFutureByBank(Field);
+        callback.fireRtnFromBankToFutureByBank(Field);
     }
-
 
     /**
      * ///银行发起期货资金转银行通知
@@ -1583,9 +1483,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnFromFutureToBankByBank(CThostFtdcRspTransferField Field) {
-        callback.onRtnFromFutureToBankByBank(Field);
+        callback.fireRtnFromFutureToBankByBank(Field);
     }
-
 
     /**
      * ///银行发起冲正银行转期货通知
@@ -1594,9 +1493,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromBankToFutureByBank(Field);
+        callback.fireRtnRepealFromBankToFutureByBank(Field);
     }
-
 
     /**
      * ///银行发起冲正期货转银行通知
@@ -1605,9 +1503,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromFutureToBankByBank(Field);
+        callback.fireRtnRepealFromFutureToBankByBank(Field);
     }
-
 
     /**
      * ///期货发起银行资金转期货通知
@@ -1616,9 +1513,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnFromBankToFutureByFuture(CThostFtdcRspTransferField Field) {
-        callback.onRtnFromBankToFutureByFuture(Field);
+        callback.fireRtnFromBankToFutureByFuture(Field);
     }
-
 
     /**
      * ///期货发起期货资金转银行通知
@@ -1627,9 +1523,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnFromFutureToBankByFuture(CThostFtdcRspTransferField Field) {
-        callback.onRtnFromFutureToBankByFuture(Field);
+        callback.fireRtnFromFutureToBankByFuture(Field);
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
@@ -1638,9 +1533,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromBankToFutureByFutureManual(Field);
+        callback.fireRtnRepealFromBankToFutureByFutureManual(Field);
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
@@ -1649,9 +1543,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromFutureToBankByFutureManual(Field);
+        callback.fireRtnRepealFromFutureToBankByFutureManual(Field);
     }
-
 
     /**
      * ///期货发起查询银行余额通知
@@ -1660,9 +1553,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField Field) {
-        callback.onRtnQueryBankBalanceByFuture(Field);
+        callback.fireRtnQueryBankBalanceByFuture(Field);
     }
-
 
     /**
      * ///期货发起银行资金转期货错误回报
@@ -1673,9 +1565,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                              CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnBankToFutureByFuture(Field, RspInfo);
+        callback.fireErrRtnBankToFutureByFuture(Field, RspInfo);
     }
-
 
     /**
      * ///期货发起期货资金转银行错误回报
@@ -1686,9 +1577,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                              CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnFutureToBankByFuture(Field, RspInfo);
+        callback.fireErrRtnFutureToBankByFuture(Field, RspInfo);
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正银行转期货错误回报
@@ -1699,9 +1589,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField Field,
                                                          CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnRepealBankToFutureByFutureManual(Field, RspInfo);
+        callback.fireErrRtnRepealBankToFutureByFutureManual(Field, RspInfo);
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正期货转银行错误回报
@@ -1712,9 +1601,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField Field,
                                                          CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnRepealFutureToBankByFutureManual(Field, RspInfo);
+        callback.fireErrRtnRepealFutureToBankByFutureManual(Field, RspInfo);
     }
-
 
     /**
      * ///期货发起查询银行余额错误回报
@@ -1725,9 +1613,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField Field,
                                                  CThostFtdcRspInfoField RspInfo) {
-        callback.onErrRtnQueryBankBalanceByFuture(Field, RspInfo);
+        callback.fireErrRtnQueryBankBalanceByFuture(Field, RspInfo);
     }
-
 
     /**
      * ///期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
@@ -1736,9 +1623,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromBankToFutureByFuture(Field);
+        callback.fireRtnRepealFromBankToFutureByFuture(Field);
     }
-
 
     /**
      * ///期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
@@ -1747,9 +1633,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField Field) {
-        callback.onRtnRepealFromFutureToBankByFuture(Field);
+        callback.fireRtnRepealFromFutureToBankByFuture(Field);
     }
-
 
     /**
      * ///期货发起银行资金转期货应答
@@ -1762,9 +1647,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspFromBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspFromBankToFutureByFuture(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspFromBankToFutureByFuture(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///期货发起期货资金转银行应答
@@ -1777,9 +1661,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspFromFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspFromFutureToBankByFuture(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspFromFutureToBankByFuture(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///期货发起查询银行余额应答
@@ -1792,9 +1675,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
     @Override
     public void OnRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        callback.onRspQueryBankAccountMoneyByFuture(Field, RspInfo, RequestID, IsLast);
+        callback.fireRspQueryBankAccountMoneyByFuture(Field, RspInfo, RequestID, IsLast);
     }
-
 
     /**
      * ///银行发起银期开户通知
@@ -1803,9 +1685,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnOpenAccountByBank(CThostFtdcOpenAccountField Field) {
-        callback.onRtnOpenAccountByBank(Field);
+        callback.fireRtnOpenAccountByBank(Field);
     }
-
 
     /**
      * ///银行发起银期销户通知
@@ -1814,9 +1695,8 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnCancelAccountByBank(CThostFtdcCancelAccountField Field) {
-        callback.onRtnCancelAccountByBank(Field);
+        callback.fireRtnCancelAccountByBank(Field);
     }
-
 
     /**
      * ///银行发起变更银行账号通知
@@ -1825,7 +1705,7 @@ public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
      */
     @Override
     public void OnRtnChangeAccountByBank(CThostFtdcChangeAccountField Field) {
-        callback.onRtnChangeAccountByBank(Field);
+        callback.fireRtnChangeAccountByBank(Field);
     }
 
 }

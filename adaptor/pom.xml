@@ -16,7 +16,7 @@
         <module>adaptor-ctp</module>
         <module>adaptor-fix</module>
         <module>adaptor-ib</module>
-        <module>adaptor-mt5</module>
+        <module>adaptor-mt</module>
     </modules>
 
     <properties>
@@ -49,19 +49,12 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.28</version>
-            </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
-            <!-- mercury persistence -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>persistence-h2</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- mercury serialization -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>serialization-json</artifactId>
@@ -72,7 +65,11 @@
                 <artifactId>serialization-avro</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- mercury transport -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-aeron</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-zmq</artifactId>
@@ -87,13 +84,8 @@
             <!-- API -->
             <dependency>
                 <groupId>io.cygnuxltb</groupId>
-                <artifactId>market-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.cygnuxltb</groupId>
-                <artifactId>trader-api</artifactId>
-                <version>${project.version}</version>
+                <artifactId>core</artifactId>
+                <version>1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
