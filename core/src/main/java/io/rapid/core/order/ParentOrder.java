@@ -1,8 +1,8 @@
 package io.rapid.core.order;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.attr.OrdPrice;
-import io.rapid.core.order.attr.OrdQty;
+import io.rapid.core.order.attribute.OrdPrice;
+import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdDirection;
 import org.eclipse.collections.api.list.MutableList;

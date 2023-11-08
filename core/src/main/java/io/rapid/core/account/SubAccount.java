@@ -41,7 +41,6 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     /**
      * 账户余额
      */
-
     private long balance;
 
     /**

@@ -1,6 +1,6 @@
 package io.cygnuxltb.adaptor.ctp;
 
-import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
+import io.rapid.core.adaptor.AdaptorAvailableTime;
 
 import java.time.LocalTime;
 

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.cygnuxltb.jcts.core.adaptor.ConnectionMode.Normal;
+import static io.rapid.core.adaptor.ConnectionMode.ALL;
 
 public class CtpGatewayTest {
 
@@ -70,7 +70,7 @@ public class CtpGatewayTest {
                     }
                 });
 
-        try (CtpGateway gateway = new CtpGateway(GatewayId, config, Normal, queue::enqueue)) {
+        try (CtpGateway gateway = new CtpGateway(GatewayId, config, ALL, queue::enqueue)) {
             gateway.startup();
             gateway.SubscribeMarketData(new String[]{"rb2010"});
             ThreadSupport.join();

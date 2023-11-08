@@ -61,7 +61,7 @@ public final class FtdcInputOrderAction {
     /// MAC地址
     private String MacAddress;
 
-    public FtdcInputOrderAction load(CThostFtdcInputOrderActionField field) {
+    public FtdcInputOrderAction copy(CThostFtdcInputOrderActionField field) {
         return this
                 .setBrokerID(field.getBrokerID())
 

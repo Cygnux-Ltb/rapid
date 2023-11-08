@@ -15,7 +15,6 @@ import java.io.IOException;
  */
 public abstract class AbstractAdaptor extends EnableableComponent implements Adaptor {
 
-
     /**
      * Adaptor标识
      */

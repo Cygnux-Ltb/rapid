@@ -12,9 +12,9 @@ import io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag;
 import io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderPrice;
 import io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcTimeCondition;
 import io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcVolumeCondition;
-import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
-import io.cygnuxltb.jcts.core.ser.req.NewOrder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.protocol.avro.request.CancelOrder;
+import io.rapid.core.protocol.avro.request.NewOrder;
 import org.slf4j.Logger;
 
 /**

@@ -8,8 +8,8 @@ import io.mercury.common.concurrent.ring.RingEventbus;
 public final class FtdcTraderMsgHandler {
 
 
-    private EventTranslatorOneArg<FtdcEvent, CThostFtdcDepthMarketDataField> translatorWithDepthMarketDataField =
-            (msg, sequence, arg) -> msg.getDepthMarketData().load(arg);
+    private final EventTranslatorOneArg<FtdcEvent, CThostFtdcDepthMarketDataField> translatorWithDepthMarketDataField =
+            (msg, sequence, arg) -> msg.getDepthMarketData().copy(arg);
 
     public FtdcTraderMsgHandler(RingEventbus<FtdcEvent> eventBus) {
 

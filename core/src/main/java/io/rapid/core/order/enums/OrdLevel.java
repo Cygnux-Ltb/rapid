@@ -27,15 +27,14 @@ public enum OrdLevel implements TdxProvider<io.rapid.core.protocol.avro.enums.Or
     Group('G', io.rapid.core.protocol.avro.enums.OrdLevel.GROUP);
 
     private final char code;
-    private final io.rapid.core.protocol.avro.enums.OrdLevel tdxValue;
+    private final io.rapid.core.protocol.avro.enums.OrdLevel protocolValue;
 
     public char getCode() {
         return code;
     }
 
-    @Override
-    public io.rapid.core.protocol.avro.enums.OrdLevel getTdxValue() {
-        return tdxValue;
+    public io.rapid.core.protocol.avro.enums.OrdLevel getProtocolValue() {
+        return protocolValue;
     }
 
 }

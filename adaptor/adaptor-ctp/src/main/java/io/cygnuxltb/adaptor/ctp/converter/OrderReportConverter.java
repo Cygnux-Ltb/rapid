@@ -6,18 +6,18 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcInputOrderAction;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
-import io.cygnuxltb.jcts.core.ser.enums.OrdStatus;
-import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.protocol.avro.enums.OrdStatus;
+import io.rapid.core.protocol.avro.event.OrderEvent;
 import org.slf4j.Logger;
 
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.withDirection;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.withOffsetFlag;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.withOrderStatus;
-import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.FixedMultiplier;
-import static io.cygnuxltb.jcts.core.ser.event.OrderEvent.newBuilder;
 import static io.mercury.common.datetime.EpochTime.getEpochMicros;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
+import static io.rapid.core.instrument.futures.ChinaFutures.FixedMultiplier;
+import static io.rapid.core.protocol.avro.event.OrderEvent.newBuilder;
 import static java.lang.Integer.parseInt;
 
 /**

@@ -1,5 +1,6 @@
 package io.rapid.core.adaptor;
 
+import io.mercury.common.lang.exception.ComponentStartupException;
 import io.rapid.core.account.Account;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.protocol.avro.request.CancelOrder;
@@ -7,7 +8,6 @@ import io.rapid.core.protocol.avro.request.NewOrder;
 import io.rapid.core.protocol.avro.request.QueryBalance;
 import io.rapid.core.protocol.avro.request.QueryOrder;
 import io.rapid.core.protocol.avro.request.QueryPositions;
-import io.mercury.common.lang.exception.ComponentStartupException;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -75,8 +75,8 @@ public interface TraderAdaptor {
     boolean startup() throws IOException, IllegalStateException, ComponentStartupException;
 
     /**
-     * @param handler
-     * @return
+     * @param handler OrderHandler
+     * @return TraderAdaptor
      */
     TraderAdaptor setOrderHandler(OrderHandler handler);
 

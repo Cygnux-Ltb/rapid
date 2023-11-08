@@ -1,9 +1,9 @@
 package io.rapid.core.adaptor;
 
-import io.rapid.core.handler.MarketDataHandler;
-import io.rapid.core.instrument.Instrument;
 import io.mercury.common.fsm.Enableable;
 import io.mercury.common.lang.exception.ComponentStartupException;
+import io.rapid.core.handler.MarketDataHandler;
+import io.rapid.core.instrument.Instrument;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
@@ -27,6 +27,10 @@ public interface MarketDataFeed extends Closeable, Enableable {
      */
     boolean subscribeMarketData(@Nonnull Instrument... instruments);
 
+    /**
+     * @param handler MarketDataHandler
+     * @return MarketDataFeed
+     */
     MarketDataFeed setMarketDataHandler(MarketDataHandler handler);
 
 }

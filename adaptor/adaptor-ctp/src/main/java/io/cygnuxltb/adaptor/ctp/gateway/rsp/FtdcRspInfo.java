@@ -19,7 +19,10 @@ public class FtdcRspInfo {
     // 请求码
     private int RequestID;
 
-    public FtdcRspInfo load(CThostFtdcRspInfoField field) {
-        return this;
+    public FtdcRspInfo copy(CThostFtdcRspInfoField field, int RequestID) {
+        return this
+                .setErrorID(field.getErrorID())
+                .setErrorMsg(field.getErrorMsg())
+                .setRequestID(RequestID);
     }
 }

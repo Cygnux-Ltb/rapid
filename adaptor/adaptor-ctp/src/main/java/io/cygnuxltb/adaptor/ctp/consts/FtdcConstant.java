@@ -1,25 +1,17 @@
 package io.cygnuxltb.adaptor.ctp.consts;
 
 
-import io.cygnuxltb.jcts.core.ser.enums.OrdStatus;
-import io.cygnuxltb.jcts.core.ser.enums.TrdAction;
-import io.cygnuxltb.jcts.core.ser.enums.TrdDirection;
+import io.rapid.core.protocol.avro.enums.OrdStatus;
+import io.rapid.core.protocol.avro.enums.TrdAction;
+import io.rapid.core.protocol.avro.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 
 import static ctp.thostapi.thosttraderapiConstants.*;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.BUY;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.SELL;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_TODAY;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_YESTERDAY;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.OPEN;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.ALL_TRADED;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.CANCELED;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.*;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.*;
 
 public interface FtdcConstant {
 

@@ -1,10 +1,10 @@
 package io.rapid.core.order;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.attr.OrdPrice;
-import io.rapid.core.order.attr.OrdQty;
-import io.rapid.core.order.attr.OrdRemark;
-import io.rapid.core.order.attr.OrdTimestamp;
+import io.rapid.core.order.attribute.OrdPrice;
+import io.rapid.core.order.attribute.OrdQty;
+import io.rapid.core.order.attribute.OrdRemark;
+import io.rapid.core.order.attribute.OrdTimestamp;
 import io.rapid.core.order.enums.OrdStatus;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.OrdValid;

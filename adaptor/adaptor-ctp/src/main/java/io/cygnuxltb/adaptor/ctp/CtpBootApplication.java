@@ -9,8 +9,8 @@ public class CtpBootApplication {
 
     static {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CTP ADAPTOR START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        Log4j2Configurator.setLogFolder("cytrader");
-        Log4j2Configurator.setLogFilename("console");
+        Log4j2Configurator.setLogFolder("rapid");
+        Log4j2Configurator.setLogFilename("adaptor-ctp");
         Log4j2Configurator.setLogLevel(Log4j2Configurator.LogLevel.INFO);
     }
 

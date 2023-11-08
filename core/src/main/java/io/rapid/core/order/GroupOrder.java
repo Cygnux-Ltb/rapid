@@ -1,6 +1,6 @@
 package io.rapid.core.order;
 
-import io.rapid.core.order.attr.OrdTimestamp;
+import io.rapid.core.order.attribute.OrdTimestamp;
 import org.eclipse.collections.api.set.ImmutableSet;
 
 import static io.mercury.common.collections.ImmutableSets.newImmutableSet;

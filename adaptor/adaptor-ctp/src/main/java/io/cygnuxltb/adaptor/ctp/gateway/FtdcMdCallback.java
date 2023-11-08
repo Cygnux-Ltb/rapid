@@ -7,8 +7,7 @@ import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 
-public interface IFtdcMdCallback {
-
+public interface FtdcMdCallback {
 
     ///当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
     void onFrontConnected();

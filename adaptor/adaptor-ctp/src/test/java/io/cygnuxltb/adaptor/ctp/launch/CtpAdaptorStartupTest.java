@@ -1,13 +1,11 @@
 package io.cygnuxltb.adaptor.ctp.launch;
 
-import java.io.File;
-
-import org.junit.Test;
-
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-
 import io.mercury.common.sys.SysProperties;
+import org.junit.Test;
+
+import java.io.File;
 
 public class CtpAdaptorStartupTest {
 

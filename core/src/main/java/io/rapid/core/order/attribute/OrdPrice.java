@@ -1,4 +1,4 @@
-package io.rapid.core.order.attr;
+package io.rapid.core.order.attribute;
 
 import io.rapid.core.order.ChildOrder;
 import io.rapid.core.order.TradeRecord;

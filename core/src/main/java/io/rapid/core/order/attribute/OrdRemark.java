@@ -1,4 +1,4 @@
-package io.rapid.core.order.attr;
+package io.rapid.core.order.attribute;
 
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.serialization.specific.JsonSerializable;

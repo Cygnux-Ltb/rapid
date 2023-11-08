@@ -98,9 +98,8 @@ public final class FtdcOrderAction {
     private String MacAddress;
 
 
-    public FtdcOrderAction load(CThostFtdcOrderActionField field) {
+    public FtdcOrderAction copy(CThostFtdcOrderActionField field) {
         return this
-
                 .setBrokerID(field.getBrokerID())
 
                 .setInvestorID(field.getInvestorID())

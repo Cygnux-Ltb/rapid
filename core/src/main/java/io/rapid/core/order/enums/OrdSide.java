@@ -1,7 +1,7 @@
 package io.rapid.core.order.enums;
 
-import io.rapid.core.order.TdxProvider;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.order.TdxProvider;
 import org.slf4j.Logger;
 
 public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.OrdSide> {
@@ -35,7 +35,7 @@ public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.Ord
 
     private final char code;
 
-    private final io.rapid.core.protocol.avro.enums.OrdSide tdxValue;
+    private final io.rapid.core.protocol.avro.enums.OrdSide protocolValue;
 
     private final TrdDirection direction;
 
@@ -43,9 +43,9 @@ public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.Ord
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrdSide.class);
 
-    OrdSide(char code, io.rapid.core.protocol.avro.enums.OrdSide tdxValue, TrdDirection direction) {
+    OrdSide(char code, io.rapid.core.protocol.avro.enums.OrdSide protocolValue, TrdDirection direction) {
         this.code = code;
-        this.tdxValue = tdxValue;
+        this.protocolValue = protocolValue;
         this.direction = direction;
         this.str = name() + "[" + code + "-" + direction + "]";
     }
@@ -80,8 +80,8 @@ public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.Ord
     }
 
     @Override
-    public io.rapid.core.protocol.avro.enums.OrdSide getTdxValue() {
-        return tdxValue;
+    public io.rapid.core.protocol.avro.enums.OrdSide getProtocolValue() {
+        return protocolValue;
     }
 
     public interface OrdSideCode {

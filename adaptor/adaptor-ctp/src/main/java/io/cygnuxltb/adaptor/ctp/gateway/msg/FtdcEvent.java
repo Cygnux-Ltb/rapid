@@ -9,19 +9,21 @@ import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrderAction;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcRspInfo;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
-import io.cygnuxltb.adaptor.ctp.gateway.rsp.state.FtdcMdConnect;
-import io.cygnuxltb.adaptor.ctp.gateway.rsp.state.FtdcTraderConnect;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.state.FtdcMdConnectState;
+import io.cygnuxltb.adaptor.ctp.gateway.rsp.state.FtdcTraderConnectState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
+ * 事件循环使用Event类型
+ *
  * @author yellow013
  */
 @Getter
 public final class FtdcEvent {
 
-    public static final EventFactory<FtdcEvent> EVENT_FACTORY = FtdcEvent::new;
+    public static final EventFactory<FtdcEvent> FTDC_EVENT_FACTORY = FtdcEvent::new;
 
     @Setter
     @Accessors(chain = true)
@@ -32,11 +34,16 @@ public final class FtdcEvent {
     @Accessors(chain = true)
     private boolean isLast = false;
 
+    // 请求编号
+    @Setter
+    @Accessors(chain = true)
+    private int RequestID = 0;
+
     // 返回交易接口连接信息
-    private final FtdcTraderConnect traderConnect = new FtdcTraderConnect();
+    private final FtdcTraderConnectState traderConnect = new FtdcTraderConnectState();
 
     // 返回行情接口连接信息
-    private final FtdcMdConnect mdConnect = new FtdcMdConnect();
+    private final FtdcMdConnectState mdConnect = new FtdcMdConnectState();
 
     // 返回行情
     private final FtdcDepthMarketData depthMarketData = new FtdcDepthMarketData();

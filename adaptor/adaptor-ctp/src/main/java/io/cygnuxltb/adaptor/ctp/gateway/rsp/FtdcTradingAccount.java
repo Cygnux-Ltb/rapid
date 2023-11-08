@@ -158,7 +158,7 @@ public final class FtdcTradingAccount {
     private double RemainSwap;
 
 
-    public FtdcTradingAccount load(CThostFtdcTradingAccountField field) {
+    public FtdcTradingAccount copy(CThostFtdcTradingAccountField field) {
         return this
                 .setBrokerID(field.getBrokerID())
 

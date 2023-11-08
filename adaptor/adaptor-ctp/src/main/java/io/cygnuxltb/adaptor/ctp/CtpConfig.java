@@ -1,7 +1,7 @@
 package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
-import io.mercury.common.config.ConfigWrapper;
+import io.mercury.common.cfg.ConfigWrapper;
 import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;
 import lombok.Getter;
@@ -13,9 +13,9 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.time.LocalDateTime;
 
-import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
+import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
 
 @Getter
 @Setter

@@ -8,29 +8,8 @@ import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
 import io.cygnuxltb.adaptor.ctp.converter.OrderReportConverter;
 import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcRspProcessor;
+import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEventHandler;
 import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
-import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
-import io.cygnuxltb.jcts.core.adaptor.Adaptor;
-import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
-import io.cygnuxltb.jcts.core.adaptor.ConnectionMode;
-import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
-import io.cygnuxltb.jcts.core.adaptor.TraderAdaptor;
-import io.cygnuxltb.jcts.core.handler.AdaptorEventHandler;
-import io.cygnuxltb.jcts.core.handler.InboundHandler;
-import io.cygnuxltb.jcts.core.handler.InboundHandler.InboundSchedulerWrapper;
-import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
-import io.cygnuxltb.jcts.core.handler.OrderEventHandler;
-import io.cygnuxltb.jcts.core.handler.OrderHandler;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.ser.enums.AdaptorStatus;
-import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
-import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
-import io.cygnuxltb.jcts.core.ser.req.NewOrder;
-import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
-import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
-import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
@@ -39,6 +18,27 @@ import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
 import io.mercury.serialization.json.JsonWrapper;
+import io.rapid.core.account.Account;
+import io.rapid.core.adaptor.AbstractAdaptor;
+import io.rapid.core.adaptor.Adaptor;
+import io.rapid.core.adaptor.AdaptorAvailableTime;
+import io.rapid.core.adaptor.ConnectionMode;
+import io.rapid.core.adaptor.MarketDataFeed;
+import io.rapid.core.adaptor.TraderAdaptor;
+import io.rapid.core.protocol.avro.enums.AdaptorStatus;
+import io.rapid.core.protocol.avro.event.AdaptorEvent;
+import io.rapid.core.protocol.avro.request.CancelOrder;
+import io.rapid.core.protocol.avro.request.NewOrder;
+import io.rapid.core.protocol.avro.request.QueryBalance;
+import io.rapid.core.protocol.avro.request.QueryOrder;
+import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.handler.AdaptorEventHandler;
+import io.rapid.core.handler.InboundHandler;
+import io.rapid.core.handler.InboundHandler.InboundSchedulerWrapper;
+import io.rapid.core.handler.MarketDataHandler;
+import io.rapid.core.handler.OrderEventHandler;
+import io.rapid.core.handler.OrderHandler;
+import io.rapid.core.instrument.Instrument;
 import jakarta.annotation.PostConstruct;
 import org.agrona.concurrent.IdleStrategy;
 import org.agrona.concurrent.SleepingIdleStrategy;
@@ -84,7 +84,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private volatile boolean isTraderAvailable;
 
     // FTDC RSP 消息处理器
-    private final FtdcRspProcessor processor;
+    private final FtdcEventHandler processor;
 
     // 队列缓冲区
     private Queue<FtdcEvent> queue;
@@ -101,7 +101,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private CtpAdaptor(@Nonnull Account account,
                        @Nonnull CtpConfig config,
                        @Nonnull RingEventbus<FtdcEvent> eventBus) {
-        this(account, config, ConnectionMode.Normal, eventBus);
+        this(account, config, ConnectionMode.ALL, eventBus);
     }
 
     /**
@@ -134,7 +134,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
                        @Nonnull InboundHandler scheduler) {
-        this(account, config, ConnectionMode.Normal, scheduler);
+        this(account, config, ConnectionMode.ALL, scheduler);
     }
 
     /**
@@ -171,9 +171,9 @@ public class CtpAdaptor extends AbstractAdaptor {
                         }
                         case TraderConnect -> {
                             var traderConnect = msg.getTraderConnect();
-                            this.isTraderAvailable = traderConnect.available();
-                            this.frontId = traderConnect.frontId();
-                            this.sessionId = traderConnect.sessionId();
+                            this.isTraderAvailable = traderConnect.isAvailable();
+                            this.frontId = traderConnect.getFrontId();
+                            this.sessionId = traderConnect.getSessionId();
                             log.info(
                                     "Adaptor buf processed FtdcTraderConnect, isTraderAvailable==[{}], frontId==[{}], sessionId==[{}]",
                                     isTraderAvailable, frontId, sessionId);
@@ -245,7 +245,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
                        @Nonnull Queue<FtdcEvent> queue) {
-        this(account, config, ConnectionMode.Normal, queue);
+        this(account, config, ConnectionMode.ALL, queue);
     }
 
     /**
@@ -273,7 +273,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     private CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
                        @Nonnull Handler<FtdcEvent> processor) {
-        this(account, config, ConnectionMode.Normal, processor);
+        this(account, config, ConnectionMode.ALL, processor);
     }
 
     /**

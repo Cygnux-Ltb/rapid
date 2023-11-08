@@ -1,242 +1,1831 @@
 package io.cygnuxltb.adaptor.ctp.gateway;
 
+import ctp.thostapi.CThostFtdcAccountregisterField;
+import ctp.thostapi.CThostFtdcBatchOrderActionField;
+import ctp.thostapi.CThostFtdcBrokerTradingAlgosField;
+import ctp.thostapi.CThostFtdcBrokerTradingParamsField;
+import ctp.thostapi.CThostFtdcBulletinField;
+import ctp.thostapi.CThostFtdcCFMMCTradingAccountKeyField;
+import ctp.thostapi.CThostFtdcCFMMCTradingAccountTokenField;
+import ctp.thostapi.CThostFtdcCancelAccountField;
+import ctp.thostapi.CThostFtdcChangeAccountField;
+import ctp.thostapi.CThostFtdcCombActionField;
+import ctp.thostapi.CThostFtdcCombInstrumentGuardField;
+import ctp.thostapi.CThostFtdcContractBankField;
+import ctp.thostapi.CThostFtdcDepthMarketDataField;
+import ctp.thostapi.CThostFtdcEWarrantOffsetField;
+import ctp.thostapi.CThostFtdcErrorConditionalOrderField;
+import ctp.thostapi.CThostFtdcExchangeField;
+import ctp.thostapi.CThostFtdcExchangeMarginRateAdjustField;
+import ctp.thostapi.CThostFtdcExchangeMarginRateField;
+import ctp.thostapi.CThostFtdcExchangeRateField;
+import ctp.thostapi.CThostFtdcExecOrderActionField;
+import ctp.thostapi.CThostFtdcExecOrderField;
+import ctp.thostapi.CThostFtdcForQuoteField;
+import ctp.thostapi.CThostFtdcForQuoteRspField;
+import ctp.thostapi.CThostFtdcInputBatchOrderActionField;
+import ctp.thostapi.CThostFtdcInputCombActionField;
+import ctp.thostapi.CThostFtdcInputExecOrderActionField;
+import ctp.thostapi.CThostFtdcInputExecOrderField;
+import ctp.thostapi.CThostFtdcInputForQuoteField;
+import ctp.thostapi.CThostFtdcInputOptionSelfCloseActionField;
+import ctp.thostapi.CThostFtdcInputOptionSelfCloseField;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
+import ctp.thostapi.CThostFtdcInputQuoteActionField;
+import ctp.thostapi.CThostFtdcInputQuoteField;
+import ctp.thostapi.CThostFtdcInstrumentCommissionRateField;
 import ctp.thostapi.CThostFtdcInstrumentField;
+import ctp.thostapi.CThostFtdcInstrumentMarginRateField;
+import ctp.thostapi.CThostFtdcInstrumentOrderCommRateField;
+import ctp.thostapi.CThostFtdcInstrumentStatusField;
+import ctp.thostapi.CThostFtdcInvestUnitField;
+import ctp.thostapi.CThostFtdcInvestorField;
+import ctp.thostapi.CThostFtdcInvestorPositionCombineDetailField;
+import ctp.thostapi.CThostFtdcInvestorPositionDetailField;
 import ctp.thostapi.CThostFtdcInvestorPositionField;
+import ctp.thostapi.CThostFtdcInvestorProductGroupMarginField;
+import ctp.thostapi.CThostFtdcMMInstrumentCommissionRateField;
+import ctp.thostapi.CThostFtdcMMOptionInstrCommRateField;
+import ctp.thostapi.CThostFtdcNoticeField;
+import ctp.thostapi.CThostFtdcNotifyQueryAccountField;
+import ctp.thostapi.CThostFtdcOpenAccountField;
+import ctp.thostapi.CThostFtdcOptionInstrCommRateField;
+import ctp.thostapi.CThostFtdcOptionInstrTradeCostField;
+import ctp.thostapi.CThostFtdcOptionSelfCloseActionField;
+import ctp.thostapi.CThostFtdcOptionSelfCloseField;
 import ctp.thostapi.CThostFtdcOrderActionField;
 import ctp.thostapi.CThostFtdcOrderField;
+import ctp.thostapi.CThostFtdcParkedOrderActionField;
+import ctp.thostapi.CThostFtdcParkedOrderField;
+import ctp.thostapi.CThostFtdcProductExchRateField;
+import ctp.thostapi.CThostFtdcProductField;
+import ctp.thostapi.CThostFtdcProductGroupField;
+import ctp.thostapi.CThostFtdcQueryCFMMCTradingAccountTokenField;
+import ctp.thostapi.CThostFtdcQueryMaxOrderVolumeField;
+import ctp.thostapi.CThostFtdcQuoteActionField;
+import ctp.thostapi.CThostFtdcQuoteField;
+import ctp.thostapi.CThostFtdcRemoveParkedOrderActionField;
+import ctp.thostapi.CThostFtdcRemoveParkedOrderField;
+import ctp.thostapi.CThostFtdcReqQueryAccountField;
+import ctp.thostapi.CThostFtdcReqRepealField;
+import ctp.thostapi.CThostFtdcReqTransferField;
 import ctp.thostapi.CThostFtdcRspAuthenticateField;
+import ctp.thostapi.CThostFtdcRspGenUserCaptchaField;
+import ctp.thostapi.CThostFtdcRspGenUserTextField;
 import ctp.thostapi.CThostFtdcRspInfoField;
+import ctp.thostapi.CThostFtdcRspRepealField;
+import ctp.thostapi.CThostFtdcRspTransferField;
+import ctp.thostapi.CThostFtdcRspUserAuthMethodField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
+import ctp.thostapi.CThostFtdcSecAgentACIDMapField;
+import ctp.thostapi.CThostFtdcSecAgentCheckModeField;
+import ctp.thostapi.CThostFtdcSecAgentTradeInfoField;
+import ctp.thostapi.CThostFtdcSettlementInfoConfirmField;
 import ctp.thostapi.CThostFtdcSettlementInfoField;
 import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTraderSpi;
 import ctp.thostapi.CThostFtdcTradingAccountField;
+import ctp.thostapi.CThostFtdcTradingAccountPasswordUpdateField;
+import ctp.thostapi.CThostFtdcTradingCodeField;
+import ctp.thostapi.CThostFtdcTradingNoticeField;
+import ctp.thostapi.CThostFtdcTradingNoticeInfoField;
+import ctp.thostapi.CThostFtdcTransferBankField;
+import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.adaptor.ctp.gateway.FtdcGateway.FtdcTraderGateway.FtdcTraderCallback;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import org.slf4j.Logger;
+import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
 
-import static io.cygnuxltb.adaptor.ctp.gateway.utils.FtdcRspInfoHandler.nonError;
-
-public final class FtdcTraderSpiImpl extends CThostFtdcTraderSpi {
-
-    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcTraderSpiImpl.class);
+public final class FtdcTraderSpi0 extends CThostFtdcTraderSpi {
 
     private final FtdcTraderCallback callback;
 
-    FtdcTraderSpiImpl(FtdcTraderCallback callback) {
+    FtdcTraderSpi0(FtdcTraderCallback callback) {
         this.callback = callback;
     }
 
+    /**
+     * ///当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
+     */
     @Override
     public void OnFrontConnected() {
-        log.info("FtdcTraderSpi::OnFrontConnected");
         callback.onFrontConnected();
     }
 
+    /**
+     * ///当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后. API会自动重新连接, 客户端可不做处理.
+     *
+     * @param Reason 错误原因
+     *               <br> 0x1001 网络读失败
+     *               <br> 0x1002 网络写失败
+     *               <br> 0x2001 接收心跳超时
+     *               <br> 0x2002 发送心跳失败
+     *               <br> 0x2003 收到错误报文
+     */
     @Override
     public void OnFrontDisconnected(int Reason) {
-        log.error("FtdcTraderSpi::OnFrontDisconnected, Reason==[{}]", Reason);
-        callback.onFrontDisconnected();
+        callback.onFrontDisconnected(Reason);
     }
 
+    /**
+     * ///心跳超时警告. 当长时间未收到报文时, 该方法被调用.
+     *
+     * @param TimeLapse 距离上次接收报文的时间
+     */
     @Override
-    public void OnRspAuthenticate(CThostFtdcRspAuthenticateField RspAuthenticate,
-                                  CThostFtdcRspInfoField RspInfo,
-                                  int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspAuthenticate", RspInfo))
-            if (RspAuthenticate != null)
-                callback.onRspAuthenticate(RspAuthenticate);
-            else
-                log.warn("FtdcTraderSpi::OnRspAuthenticate return null");
-
+    public void OnHeartBeatWarning(int TimeLapse) {
+        callback.onHeartBeatWarning(TimeLapse);
     }
 
+
+    /**
+     * ///客户端认证响应
+     *
+     * @param Field     CThostFtdcRspAuthenticateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
     @Override
-    public void OnRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
-                               CThostFtdcRspInfoField RspInfo,
-                               int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspUserLogin, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspUserLogin", RspInfo)) {
-            if (RspUserLogin != null)
-                callback.onRspUserLogin(RspUserLogin);
-            else
-                log.error("FtdcTraderSpi::OnRspUserLogin return null");
-        }
+    public void OnRspAuthenticate(CThostFtdcRspAuthenticateField Field,
+                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspAuthenticate(Field, RspInfo, RequestID, IsLast);
     }
 
+
+    /**
+     * ///登录请求响应
+     *
+     * @param Field     CThostFtdcRspUserLoginField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
     @Override
-    public void OnRspUserLogout(CThostFtdcUserLogoutField UserLogout,
-                                CThostFtdcRspInfoField RspInfo,
-                                int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspUserLogout", RspInfo))
-            if (UserLogout != null)
-                // TODO 处理用户登出
-                log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
-                        UserLogout.getUserID());
-            else
-                log.error("FtdcTraderSpi::OnRspUserLogout return null");
-
-
+    public void OnRspUserLogin(CThostFtdcRspUserLoginField Field,
+                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspUserLogin(Field, RspInfo, RequestID, IsLast);
     }
 
+
+    /**
+     * ///登出请求响应
+     *
+     * @param Field     CThostFtdcUserLogoutField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
     @Override
-    public void OnRspQryOrder(CThostFtdcOrderField Order,
-                              CThostFtdcRspInfoField RspInfo,
+    public void OnRspUserLogout(CThostFtdcUserLogoutField Field,
+                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspUserLogout(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///用户口令更新请求响应
+     *
+     * @param Field     CThostFtdcUserPasswordUpdateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspUserPasswordUpdate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///资金账户口令更新请求响应
+     *
+     * @param Field     CThostFtdcTradingAccountPasswordUpdateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField Field,
+                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspTradingAccountPasswordUpdate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///查询用户当前支持的认证模式的回复
+     *
+     * @param Field     CThostFtdcRspUserAuthMethodField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspUserAuthMethod(CThostFtdcRspUserAuthMethodField Field,
+                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspUserAuthMethod(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///获取图形验证码请求的回复
+     *
+     * @param Field     CThostFtdcRspGenUserCaptchaField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspGenUserCaptcha(CThostFtdcRspGenUserCaptchaField Field,
+                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspGenUserCaptcha(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///获取短信验证码请求的回复
+     *
+     * @param Field     CThostFtdcRspGenUserTextField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspGenUserText(CThostFtdcRspGenUserTextField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspGenUserText(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///报单录入请求响应
+     *
+     * @param Field     CThostFtdcInputOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspOrderInsert(CThostFtdcInputOrderField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspOrderInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///预埋单录入请求响应
+     *
+     * @param Field     CThostFtdcParkedOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspParkedOrderInsert(CThostFtdcParkedOrderField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspParkedOrderInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///预埋撤单录入请求响应
+     *
+     * @param Field     CThostFtdcParkedOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspParkedOrderAction(CThostFtdcParkedOrderActionField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///报单操作请求响应
+     *
+     * @param Field     CThostFtdcInputOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspOrderAction(CThostFtdcInputOrderActionField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///查询最大报单数量响应
+     *
+     * @param Field     CThostFtdcQueryMaxOrderVolumeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField Field,
+                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQueryMaxOrderVolume(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///投资者结算结果确认响应
+     *
+     * @param Field     CThostFtdcSettlementInfoConfirmField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
+                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspSettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///删除预埋单响应
+     *
+     * @param Field     CThostFtdcRemoveParkedOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspRemoveParkedOrder(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///删除预埋撤单响应
+     *
+     * @param Field     CThostFtdcRemoveParkedOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField Field,
+                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspRemoveParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///执行宣告录入请求响应
+     *
+     * @param Field     CThostFtdcInputExecOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspExecOrderInsert(CThostFtdcInputExecOrderField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspExecOrderInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///执行宣告操作请求响应
+     *
+     * @param Field     CThostFtdcInputExecOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspExecOrderAction(CThostFtdcInputExecOrderActionField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspExecOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///询价录入请求响应
+     *
+     * @param Field     CThostFtdcInputForQuoteField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspForQuoteInsert(CThostFtdcInputForQuoteField Field,
+                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspForQuoteInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///报价录入请求响应
+     *
+     * @param Field     CThostFtdcInputQuoteField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQuoteInsert(CThostFtdcInputQuoteField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQuoteInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///报价操作请求响应
+     *
+     * @param Field     CThostFtdcInputQuoteActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQuoteAction(CThostFtdcInputQuoteActionField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQuoteAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///批量报单操作请求响应
+     *
+     * @param Field     CThostFtdcInputBatchOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
+                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspBatchOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///期权自对冲录入请求响应
+     *
+     * @param Field     CThostFtdcInputOptionSelfCloseField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
+                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspOptionSelfCloseInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///期权自对冲操作请求响应
+     *
+     * @param Field     CThostFtdcInputOptionSelfCloseActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspOptionSelfCloseAction(CThostFtdcInputOptionSelfCloseActionField Field,
+                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspOptionSelfCloseAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///申请组合录入请求响应
+     *
+     * @param Field     CThostFtdcInputCombActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspCombActionInsert(CThostFtdcInputCombActionField Field,
+                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspCombActionInsert(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询报单响应
+     *
+     * @param Field     CThostFtdcOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryOrder(CThostFtdcOrderField Field,
+                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryOrder(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询成交响应
+     *
+     * @param Field     CThostFtdcTradeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryTrade(CThostFtdcTradeField Field, CThostFtdcRspInfoField RspInfo,
                               int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryOrder", RspInfo))
-            if (Order != null)
-                callback.onRspQryOrder(Order, IsLast);
-            else
-                log.error("FtdcTraderSpi::OnRspQryOrder return null");
-
-
+        callback.onRspQryTrade(Field, RspInfo, RequestID, IsLast);
     }
 
-    @Override
-    public void OnRspQryTradingAccount(CThostFtdcTradingAccountField TradingAccount,
-                                       CThostFtdcRspInfoField RspInfo,
-                                       int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryTradingAccount, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryTradingAccount", RspInfo))
-            if (TradingAccount != null)
-                callback.onQryTradingAccount(TradingAccount, IsLast);
-            else
-                log.error("FtdcTraderSpi::OnRspQryTradingAccount return null");
-    }
-
-    @Override
-    public void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField InvestorPosition,
-                                         CThostFtdcRspInfoField RspInfo,
-                                         int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryInvestorPosition", RspInfo))
-            if (InvestorPosition != null)
-                callback.onRspQryInvestorPosition(InvestorPosition, IsLast);
-            else
-                log.error("FtdcTraderSpi::OnRspQryInvestorPosition return null");
-    }
-
-    @Override
-    public void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField SettlementInfo,
-                                       CThostFtdcRspInfoField RspInfo,
-                                       int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQrySettlementInfo", RspInfo))
-            if (SettlementInfo != null)
-                log.info(
-                        """
-                                OnRspQrySettlementInfo -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
-                                SettlementID==[{}], TradingDay==[{}], CurrencyID==[{}]
-                                <<<<<<<<<<<<<<<< CONTENT TEXT >>>>>>>>>>>>>>>>
-                                {}
-                                """,
-                        SettlementInfo.getBrokerID(), SettlementInfo.getAccountID(), SettlementInfo.getInvestorID(),
-                        SettlementInfo.getSettlementID(), SettlementInfo.getTradingDay(),
-                        SettlementInfo.getCurrencyID(), SettlementInfo.getContent());
-            else
-                log.error("FtdcTraderSpi::OnRspQrySettlementInfo return null");
-    }
-
-    @Override
-    public void OnRspQryInstrument(CThostFtdcInstrumentField Instrument,
-                                   CThostFtdcRspInfoField RspInfo,
-                                   int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryInstrument, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryInstrument", RspInfo))
-            if (Instrument != null)
-                log.info("Output :: OnRspQryInstrument, ExchangeID==[{}], InstrumentID==[{}]",
-                        Instrument.getExchangeID(), Instrument.getInstrumentID());
-            else
-                log.error("FtdcTraderSpi::OnRspQryInstrument return null");
-    }
-
-    @Override
-    public void OnRtnOrder(CThostFtdcOrderField Order) {
-        if (Order != null)
-            callback.onRtnOrder(Order);
-        else
-            log.error("FtdcTraderSpi::OnRtnOrder return null");
-    }
-
-    @Override
-    public void OnRtnTrade(CThostFtdcTradeField Trade) {
-        if (Trade != null)
-            callback.onRtnTrade(Trade);
-        else
-            log.error("FtdcTraderSpi::OnRtnTrade return null");
-    }
 
     /**
-     * 报单错误回调:1
+     * ///请求查询投资者持仓响应
+     *
+     * @param Field     CThostFtdcInvestorPositionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      */
     @Override
-    public void OnRspOrderInsert(CThostFtdcInputOrderField InputOrder,
-                                 CThostFtdcRspInfoField RspInfo,
-                                 int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspOrderInsert", RspInfo))
-            if (InputOrder != null)
-                callback.onRspOrderInsert(InputOrder);
-            else
-                log.error("FtdcTraderSpi::OnRspOrderInsert return null");
+    public void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
+                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestorPosition(Field, RspInfo, RequestID, IsLast);
     }
 
+
     /**
-     * 报单错误回调:2
+     * ///请求查询资金账户响应
+     *
+     * @param Field     CThostFtdcTradingAccountField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      */
     @Override
-    public void OnErrRtnOrderInsert(CThostFtdcInputOrderField InputOrder,
-                                    CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderSpi::OnErrRtnOrderInsert");
-        if (nonError("TraderSpi::OnErrRtnOrderInsert", RspInfo))
-            if (InputOrder != null)
-                callback.onErrRtnOrderInsert(InputOrder);
-            else
-                log.error("TraderSpi::OnErrRtnOrderInsert return null");
+    public void OnRspQryTradingAccount(CThostFtdcTradingAccountField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryTradingAccount(Field, RspInfo, RequestID, IsLast);
     }
 
+
     /**
-     * 撤单错误回调:1
+     * ///请求查询投资者响应
+     *
+     * @param Field     CThostFtdcInvestorField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      */
     @Override
-    public void OnRspOrderAction(CThostFtdcInputOrderActionField InputOrderAction,
-                                 CThostFtdcRspInfoField RspInfo,
-                                 int RequestID, boolean IsLast) {
-        log.info("TraderSpi::OnRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("TraderSpi::OnRspOrderAction", RspInfo))
-            if (InputOrderAction != null)
-                callback.onRspOrderAction(InputOrderAction);
-            else
-                log.error("TraderSpi::OnRspOrderAction return null");
+    public void OnRspQryInvestor(CThostFtdcInvestorField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestor(Field, RspInfo, RequestID, IsLast);
     }
 
+
     /**
-     * 撤单错误回调:2
+     * ///请求查询交易编码响应
+     *
+     * @param Field     CThostFtdcTradingCodeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      */
     @Override
-    public void OnErrRtnOrderAction(CThostFtdcOrderActionField OrderAction,
-                                    CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderSpi::OnErrRtnOrderAction");
-        if (nonError("TraderSpi::OnErrRtnOrderAction", RspInfo))
-            if (OrderAction != null)
-                callback.onErrRtnOrderAction(OrderAction);
-            else
-                log.error("TraderSpi::OnErrRtnOrderAction return null");
+    public void OnRspQryTradingCode(CThostFtdcTradingCodeField Field,
+                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryTradingCode(Field, RspInfo, RequestID, IsLast);
     }
 
+
     /**
-     * 错误回调
+     * ///请求查询合约保证金率响应
+     *
+     * @param Field     CThostFtdcInstrumentMarginRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField Field,
+                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInstrumentMarginRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询合约手续费率响应
+     *
+     * @param Field     CThostFtdcInstrumentCommissionRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField Field,
+                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询交易所响应
+     *
+     * @param Field     CThostFtdcExchangeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryExchange(CThostFtdcExchangeField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryExchange(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询产品响应
+     *
+     * @param Field     CThostFtdcProductField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryProduct(CThostFtdcProductField Field,
+                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryProduct(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询合约响应
+     *
+     * @param Field     CThostFtdcInstrumentField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInstrument(CThostFtdcInstrumentField Field,
+                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInstrument(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询行情响应
+     *
+     * @param Field     CThostFtdcDepthMarketDataField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryDepthMarketData(CThostFtdcDepthMarketDataField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryDepthMarketData(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询投资者结算结果响应
+     *
+     * @param Field     CThostFtdcSettlementInfoField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySettlementInfo(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询转帐银行响应
+     *
+     * @param Field     CThostFtdcTransferBankField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryTransferBank(CThostFtdcTransferBankField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryTransferBank(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询投资者持仓明细响应
+     *
+     * @param Field     CThostFtdcInvestorPositionDetailField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
+                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestorPositionDetail(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询客户通知响应
+     *
+     * @param Field     CThostFtdcNoticeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryNotice(CThostFtdcNoticeField Field,
+                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryNotice(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询结算信息确认响应
+     *
+     * @param Field     CThostFtdcSettlementInfoConfirmField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
+                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySettlementInfoConfirm(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询投资者持仓明细响应
+     *
+     * @param Field     CThostFtdcInvestorPositionCombineDetailField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField Field,
+                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestorPositionCombineDetail(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///查询保证金监管系统经纪公司资金账户密钥响应
+     *
+     * @param Field     CThostFtdcCFMMCTradingAccountKeyField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField Field,
+                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryCFMMCTradingAccountKey(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询仓单折抵信息响应
+     *
+     * @param Field     CThostFtdcEWarrantOffsetField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryEWarrantOffset(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询投资者品种/跨品种保证金响应
+     *
+     * @param Field     CThostFtdcInvestorProductGroupMarginField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInvestorProductGroupMargin(CThostFtdcInvestorProductGroupMarginField Field,
+                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestorProductGroupMargin(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询交易所保证金率响应
+     *
+     * @param Field     CThostFtdcExchangeMarginRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryExchangeMarginRate(CThostFtdcExchangeMarginRateField Field,
+                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryExchangeMarginRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询交易所调整保证金率响应
+     *
+     * @param Field     CThostFtdcExchangeMarginRateAdjustField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryExchangeMarginRateAdjust(CThostFtdcExchangeMarginRateAdjustField Field,
+                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryExchangeMarginRateAdjust(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询汇率响应
+     *
+     * @param Field     CThostFtdcExchangeRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryExchangeRate(CThostFtdcExchangeRateField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryExchangeRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询二级代理操作员银期权限响应
+     *
+     * @param Field     CThostFtdcSecAgentACIDMapField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySecAgentACIDMap(CThostFtdcSecAgentACIDMapField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySecAgentACIDMap(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询产品报价汇率
+     *
+     * @param Field     CThostFtdcProductExchRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryProductExchRate(CThostFtdcProductExchRateField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryProductExchRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询产品组
+     *
+     * @param Field     CThostFtdcProductGroupField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryProductGroup(CThostFtdcProductGroupField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryProductGroup(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询做市商合约手续费率响应
+     *
+     * @param Field     CThostFtdcMMInstrumentCommissionRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryMMInstrumentCommissionRate(CThostFtdcMMInstrumentCommissionRateField Field,
+                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryMMInstrumentCommissionRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询做市商期权合约手续费响应
+     *
+     * @param Field     CThostFtdcMMOptionInstrCommRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryMMOptionInstrCommRate(CThostFtdcMMOptionInstrCommRateField Field,
+                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryMMOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询报单手续费响应
+     *
+     * @param Field     CThostFtdcInstrumentOrderCommRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInstrumentOrderCommRate(CThostFtdcInstrumentOrderCommRateField Field,
+                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInstrumentOrderCommRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询资金账户响应
+     *
+     * @param Field     CThostFtdcTradingAccountField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySecAgentTradingAccount(CThostFtdcTradingAccountField Field,
+                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySecAgentTradingAccount(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询二级代理商资金校验模式响应
+     *
+     * @param Field     CThostFtdcSecAgentCheckModeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySecAgentCheckMode(CThostFtdcSecAgentCheckModeField Field,
+                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySecAgentCheckMode(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询二级代理商信息响应
+     *
+     * @param Field     CThostFtdcSecAgentTradeInfoField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQrySecAgentTradeInfo(CThostFtdcSecAgentTradeInfoField Field,
+                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQrySecAgentTradeInfo(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询期权交易成本响应
+     *
+     * @param Field     CThostFtdcOptionInstrTradeCostField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryOptionInstrTradeCost(CThostFtdcOptionInstrTradeCostField Field,
+                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryOptionInstrTradeCost(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询期权合约手续费响应
+     *
+     * @param Field     CThostFtdcOptionInstrCommRateField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryOptionInstrCommRate(CThostFtdcOptionInstrCommRateField Field,
+                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryOptionInstrCommRate(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询执行宣告响应
+     *
+     * @param Field     CThostFtdcExecOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryExecOrder(CThostFtdcExecOrderField Field,
+                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryExecOrder(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询询价响应
+     *
+     * @param Field     CThostFtdcForQuoteField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryForQuote(CThostFtdcForQuoteField Field,
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryForQuote(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询报价响应
+     *
+     * @param Field     CThostFtdcQuoteField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryQuote(CThostFtdcQuoteField Field,
+                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryQuote(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询期权自对冲响应
+     *
+     * @param Field     CThostFtdcOptionSelfCloseField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryOptionSelfClose(CThostFtdcOptionSelfCloseField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryOptionSelfClose(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询投资单元响应
+     *
+     * @param Field     CThostFtdcInvestUnitField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryInvestUnit(CThostFtdcInvestUnitField Field,
+                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryInvestUnit(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询组合合约安全系数响应
+     *
+     * @param Field     CThostFtdcCombInstrumentGuardField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryCombInstrumentGuard(CThostFtdcCombInstrumentGuardField Field,
+                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryCombInstrumentGuard(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询申请组合响应
+     *
+     * @param Field     CThostFtdcCombActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryCombAction(CThostFtdcCombActionField Field,
+                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryCombAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询转帐流水响应
+     *
+     * @param Field     CThostFtdcTransferSerialField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryTransferSerial(CThostFtdcTransferSerialField Field,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryTransferSerial(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询银期签约关系响应
+     *
+     * @param Field     CThostFtdcAccountregisterField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryAccountregister(CThostFtdcAccountregisterField Field,
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryAccountregister(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///错误应答
+     *
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      */
     @Override
     public void OnRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::OnRspError, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         callback.onRspError(RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///报单通知
+     *
+     * @param Order CThostFtdcOrderField
+     */
+    @Override
+    public void OnRtnOrder(CThostFtdcOrderField Order) {
+        callback.onRtnOrder(Order);
+    }
+
+
+    /**
+     * ///成交通知
+     *
+     * @param Trade CThostFtdcTradeField
+     */
+    @Override
+    public void OnRtnTrade(CThostFtdcTradeField Trade) {
+        callback.onRtnTrade(Trade);
+    }
+
+
+    /**
+     * ///报单录入错误回报
+     *
+     * @param Field   CThostFtdcInputOrderField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnOrderInsert(CThostFtdcInputOrderField Field,
+                                    CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnOrderInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///报单操作错误回报
+     *
+     * @param Field   CThostFtdcOrderActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnOrderAction(CThostFtdcOrderActionField Field,
+                                    CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnOrderAction(Field, RspInfo);
+    }
+
+
+    /**
+     * ///合约交易状态通知
+     *
+     * @param Field CThostFtdcInstrumentStatusField
+     */
+    @Override
+    public void OnRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
+        callback.onRtnInstrumentStatus(Field);
+    }
+
+
+    /**
+     * ///交易所公告通知
+     *
+     * @param Field CThostFtdcBulletinField
+     */
+    @Override
+    public void OnRtnBulletin(CThostFtdcBulletinField Field) {
+        callback.onRtnBulletin(Field);
+    }
+
+
+    /**
+     * ///交易通知
+     *
+     * @param Field CThostFtdcTradingNoticeInfoField
+     */
+    @Override
+    public void OnRtnTradingNotice(CThostFtdcTradingNoticeInfoField Field) {
+        callback.onRtnTradingNotice(Field);
+    }
+
+
+    /**
+     * ///提示条件单校验错误
+     *
+     * @param Field CThostFtdcErrorConditionalOrderField
+     */
+    @Override
+    public void OnRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField Field) {
+        callback.onRtnErrorConditionalOrder(Field);
+    }
+
+
+    /**
+     * ///执行宣告通知
+     *
+     * @param Field CThostFtdcExecOrderField
+     */
+    @Override
+    public void OnRtnExecOrder(CThostFtdcExecOrderField Field) {
+        callback.onRtnExecOrder(Field);
+    }
+
+
+    /**
+     * ///执行宣告录入错误回报
+     *
+     * @param Field   CThostFtdcInputExecOrderField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnExecOrderInsert(CThostFtdcInputExecOrderField Field,
+                                        CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnExecOrderInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///执行宣告操作错误回报
+     *
+     * @param Field   CThostFtdcExecOrderActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnExecOrderAction(CThostFtdcExecOrderActionField Field,
+                                        CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnExecOrderAction(Field, RspInfo);
+    }
+
+
+    /**
+     * ///询价录入错误回报
+     *
+     * @param Field   CThostFtdcInputForQuoteField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnForQuoteInsert(CThostFtdcInputForQuoteField Field,
+                                       CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnForQuoteInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///报价通知
+     *
+     * @param Field CThostFtdcQuoteField
+     */
+    @Override
+    public void OnRtnQuote(CThostFtdcQuoteField Field) {
+        callback.onRtnQuote(Field);
+    }
+
+
+    /**
+     * ///报价录入错误回报
+     *
+     * @param Field   CThostFtdcInputQuoteField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnQuoteInsert(CThostFtdcInputQuoteField Field,
+                                    CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnQuoteInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///报价操作错误回报
+     *
+     * @param Field   CThostFtdcQuoteActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnQuoteAction(CThostFtdcQuoteActionField Field,
+                                    CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnQuoteAction(Field, RspInfo);
+    }
+
+
+    /**
+     * ///询价通知
+     *
+     * @param Field CThostFtdcForQuoteRspField
+     */
+    @Override
+    public void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField Field) {
+        callback.onRtnForQuoteRsp(Field);
+    }
+
+
+    /**
+     * ///保证金监控中心用户令牌
+     *
+     * @param Field CThostFtdcCFMMCTradingAccountTokenField
+     */
+    @Override
+    public void OnRtnCFMMCTradingAccountToken(CThostFtdcCFMMCTradingAccountTokenField Field) {
+        callback.onRtnCFMMCTradingAccountToken(Field);
+    }
+
+
+    /**
+     * ///批量报单操作错误回报
+     *
+     * @param Field   CThostFtdcBatchOrderActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
+                                         CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnBatchOrderAction(Field, RspInfo);
+    }
+
+
+    /**
+     * ///期权自对冲通知
+     *
+     * @param Field CThostFtdcOptionSelfCloseField
+     */
+    @Override
+    public void OnRtnOptionSelfClose(CThostFtdcOptionSelfCloseField Field) {
+        callback.onRtnOptionSelfClose(Field);
+    }
+
+
+    /**
+     * ///期权自对冲录入错误回报
+     *
+     * @param Field   CThostFtdcInputOptionSelfCloseField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
+                                              CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnOptionSelfCloseInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///期权自对冲操作错误回报
+     *
+     * @param Field   CThostFtdcOptionSelfCloseActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnOptionSelfCloseAction(CThostFtdcOptionSelfCloseActionField Field,
+                                              CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnOptionSelfCloseAction(Field, RspInfo);
+    }
+
+
+    /**
+     * ///申请组合通知
+     *
+     * @param Field CThostFtdcCombActionField
+     */
+    @Override
+    public void OnRtnCombAction(CThostFtdcCombActionField Field) {
+        callback.onRtnCombAction(Field);
+    }
+
+
+    /**
+     * ///申请组合录入错误回报
+     *
+     * @param Field   CThostFtdcInputCombActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnCombActionInsert(CThostFtdcInputCombActionField Field,
+                                         CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnCombActionInsert(Field, RspInfo);
+    }
+
+
+    /**
+     * ///请求查询签约银行响应
+     *
+     * @param Field     CThostFtdcContractBankField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryContractBank(CThostFtdcContractBankField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryContractBank(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询预埋单响应
+     *
+     * @param Field     CThostFtdcParkedOrderField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryParkedOrder(CThostFtdcParkedOrderField Field,
+                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryParkedOrder(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询预埋撤单响应
+     *
+     * @param Field     CThostFtdcParkedOrderActionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryParkedOrderAction(CThostFtdcParkedOrderActionField Field,
+                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryParkedOrderAction(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询交易通知响应
+     *
+     * @param Field     CThostFtdcTradingNoticeField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryTradingNotice(CThostFtdcTradingNoticeField Field,
+                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryTradingNotice(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询经纪公司交易参数响应
+     *
+     * @param Field     CThostFtdcBrokerTradingParamsField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField Field,
+                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryBrokerTradingParams(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询经纪公司交易算法响应
+     *
+     * @param Field     CThostFtdcBrokerTradingAlgosField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField Field,
+                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQryBrokerTradingAlgos(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///请求查询监控中心用户令牌
+     *
+     * @param Field     CThostFtdcQueryCFMMCTradingAccountTokenField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQueryCFMMCTradingAccountToken(CThostFtdcQueryCFMMCTradingAccountTokenField Field,
+                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQueryCFMMCTradingAccountToken(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///银行发起银行资金转期货通知
+     *
+     * @param Field CThostFtdcRspTransferField
+     */
+    @Override
+    public void OnRtnFromBankToFutureByBank(CThostFtdcRspTransferField Field) {
+        callback.onRtnFromBankToFutureByBank(Field);
+    }
+
+
+    /**
+     * ///银行发起期货资金转银行通知
+     *
+     * @param Field CThostFtdcRspTransferField
+     */
+    @Override
+    public void OnRtnFromFutureToBankByBank(CThostFtdcRspTransferField Field) {
+        callback.onRtnFromFutureToBankByBank(Field);
+    }
+
+
+    /**
+     * ///银行发起冲正银行转期货通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromBankToFutureByBank(Field);
+    }
+
+
+    /**
+     * ///银行发起冲正期货转银行通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromFutureToBankByBank(Field);
+    }
+
+
+    /**
+     * ///期货发起银行资金转期货通知
+     *
+     * @param Field CThostFtdcRspTransferField
+     */
+    @Override
+    public void OnRtnFromBankToFutureByFuture(CThostFtdcRspTransferField Field) {
+        callback.onRtnFromBankToFutureByFuture(Field);
+    }
+
+
+    /**
+     * ///期货发起期货资金转银行通知
+     *
+     * @param Field CThostFtdcRspTransferField
+     */
+    @Override
+    public void OnRtnFromFutureToBankByFuture(CThostFtdcRspTransferField Field) {
+        callback.onRtnFromFutureToBankByFuture(Field);
+    }
+
+
+    /**
+     * ///系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromBankToFutureByFutureManual(Field);
+    }
+
+
+    /**
+     * ///系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromFutureToBankByFutureManual(Field);
+    }
+
+
+    /**
+     * ///期货发起查询银行余额通知
+     *
+     * @param Field CThostFtdcNotifyQueryAccountField
+     */
+    @Override
+    public void OnRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField Field) {
+        callback.onRtnQueryBankBalanceByFuture(Field);
+    }
+
+
+    /**
+     * ///期货发起银行资金转期货错误回报
+     *
+     * @param Field   CThostFtdcReqTransferField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnBankToFutureByFuture(CThostFtdcReqTransferField Field,
+                                             CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnBankToFutureByFuture(Field, RspInfo);
+    }
+
+
+    /**
+     * ///期货发起期货资金转银行错误回报
+     *
+     * @param Field   CThostFtdcReqTransferField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnFutureToBankByFuture(CThostFtdcReqTransferField Field,
+                                             CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnFutureToBankByFuture(Field, RspInfo);
+    }
+
+
+    /**
+     * ///系统运行时期货端手工发起冲正银行转期货错误回报
+     *
+     * @param Field   CThostFtdcReqRepealField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField Field,
+                                                         CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnRepealBankToFutureByFutureManual(Field, RspInfo);
+    }
+
+
+    /**
+     * ///系统运行时期货端手工发起冲正期货转银行错误回报
+     *
+     * @param Field   CThostFtdcReqRepealField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField Field,
+                                                         CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnRepealFutureToBankByFutureManual(Field, RspInfo);
+    }
+
+
+    /**
+     * ///期货发起查询银行余额错误回报
+     *
+     * @param Field   CThostFtdcReqQueryAccountField
+     * @param RspInfo CThostFtdcRspInfoField
+     */
+    @Override
+    public void OnErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField Field,
+                                                 CThostFtdcRspInfoField RspInfo) {
+        callback.onErrRtnQueryBankBalanceByFuture(Field, RspInfo);
+    }
+
+
+    /**
+     * ///期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromBankToFutureByFuture(Field);
+    }
+
+
+    /**
+     * ///期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
+     *
+     * @param Field CThostFtdcRspRepealField
+     */
+    @Override
+    public void OnRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField Field) {
+        callback.onRtnRepealFromFutureToBankByFuture(Field);
+    }
+
+
+    /**
+     * ///期货发起银行资金转期货应答
+     *
+     * @param Field     CThostFtdcReqTransferField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspFromBankToFutureByFuture(CThostFtdcReqTransferField Field,
+                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspFromBankToFutureByFuture(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///期货发起期货资金转银行应答
+     *
+     * @param Field     CThostFtdcReqTransferField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspFromFutureToBankByFuture(CThostFtdcReqTransferField Field,
+                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspFromFutureToBankByFuture(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///期货发起查询银行余额应答
+     *
+     * @param Field     CThostFtdcReqQueryAccountField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void OnRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField Field,
+                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        callback.onRspQueryBankAccountMoneyByFuture(Field, RspInfo, RequestID, IsLast);
+    }
+
+
+    /**
+     * ///银行发起银期开户通知
+     *
+     * @param Field CThostFtdcOpenAccountField
+     */
+    @Override
+    public void OnRtnOpenAccountByBank(CThostFtdcOpenAccountField Field) {
+        callback.onRtnOpenAccountByBank(Field);
+    }
+
+
+    /**
+     * ///银行发起银期销户通知
+     *
+     * @param Field CThostFtdcCancelAccountField
+     */
+    @Override
+    public void OnRtnCancelAccountByBank(CThostFtdcCancelAccountField Field) {
+        callback.onRtnCancelAccountByBank(Field);
+    }
+
+
+    /**
+     * ///银行发起变更银行账号通知
+     *
+     * @param Field CThostFtdcChangeAccountField
+     */
+    @Override
+    public void OnRtnChangeAccountByBank(CThostFtdcChangeAccountField Field) {
+        callback.onRtnChangeAccountByBank(Field);
     }
 
 }

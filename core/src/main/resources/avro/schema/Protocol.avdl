@@ -321,6 +321,16 @@ protocol Protocol {
 	@namespace("io.rapid.core.protocol.avro.request")
 	record MarketDataSubscribe {
 		io.rapid.core.protocol.avro.enums.MarketDataType type;
+		string instrumentCode;
+		string recvAddr;
+	}
+
+	/**
+	 * 行情订阅多个
+	 */
+	@namespace("io.rapid.core.protocol.avro.request")
+	record MultiMarketDataSubscribe {
+		io.rapid.core.protocol.avro.enums.MarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;
 	}

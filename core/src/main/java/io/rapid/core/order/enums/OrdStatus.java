@@ -161,7 +161,7 @@ public enum OrdStatus {
     }
 
     /**
-     * @param status io.cygnuxltb.jcts.core.ser.enums.OrdStatus
+     * @param status io.rapid.core.protocol.avro.enums.OrdStatus
      * @return OrdStatus
      */
     public static OrdStatus valueOf(io.rapid.core.protocol.avro.enums.OrdStatus status) {
@@ -191,12 +191,12 @@ public enum OrdStatus {
             // 未提供
             case UNPROVIDED -> Unprovided;
             // 没有匹配项
-            default ->
-                // log.error("OrdStatus valueOf error, return OrdStatus -> [Invalid], input TOrdStatus==[{}]", status);
-                    Invalid;
+            default -> {
+                log.error("OrdStatus valueOf error, return OrdStatus -> [Invalid], input TOrdStatus==[{}]", status);
+                yield Invalid;
+            }
         };
     }
-
 
     public interface OrdStatusCode {
         // 无效

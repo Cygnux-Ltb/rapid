@@ -1,6 +1,6 @@
 package io.cygnuxltb.adaptor.ctp;
 
-import io.mercury.common.config.ConfigOption;
+import io.mercury.common.cfg.ConfigOption;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params.ValueType;
 
