@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.pack;
+package io.cygnuxltb.protocol.http.wrap;
 
 import io.mercury.common.codec.Envelope;
 import lombok.Getter;

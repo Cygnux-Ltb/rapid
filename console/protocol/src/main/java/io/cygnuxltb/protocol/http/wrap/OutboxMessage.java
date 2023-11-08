@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.pack;
+package io.cygnuxltb.protocol.http.wrap;
 
 import io.cygnuxltb.protocol.http.request.StrategySwitch;
 import lombok.Getter;
