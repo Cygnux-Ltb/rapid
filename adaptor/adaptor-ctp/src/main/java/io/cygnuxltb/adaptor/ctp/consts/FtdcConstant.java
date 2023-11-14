@@ -7,11 +7,52 @@ import io.rapid.core.protocol.avro.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 
-import static ctp.thostapi.thosttraderapiConstants.*;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_AF_Delete;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_AF_Modify;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_Immediately;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_ParkedOrder;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_Touch;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_TouchProfit;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_D_Buy;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_D_Sell;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_FCC_NotForceClose;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_HF_Speculation;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_Close;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_CloseToday;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_CloseYesterday;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_Open;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_AnyPrice;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_AskPrice1;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_BestPrice;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_BidPrice1;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_LastPrice;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_LimitPrice;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_AllTraded;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_Canceled;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_NoTradeNotQueueing;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_NoTradeQueueing;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_NotTouched;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_PartTradedNotQueueing;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_PartTradedQueueing;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_Touched;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OST_Unknown;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_TC_GFD;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_TC_IOC;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_AV;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_CV;
+import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_MV;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.BUY;
 import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.SELL;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.*;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.*;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_TODAY;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_YESTERDAY;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.OPEN;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.ALL_TRADED;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.CANCELED;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
+import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_QUEUEING;
 
 public interface FtdcConstant {
 

@@ -1,25 +1,16 @@
 package io.cygnuxltb.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcBatchOrderActionField;
-import ctp.thostapi.CThostFtdcCFMMCTradingAccountKeyField;
-import ctp.thostapi.CThostFtdcEWarrantOffsetField;
-import ctp.thostapi.CThostFtdcExchangeMarginRateAdjustField;
-import ctp.thostapi.CThostFtdcExchangeMarginRateField;
-import ctp.thostapi.CThostFtdcExchangeRateField;
 import ctp.thostapi.CThostFtdcInputBatchOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import ctp.thostapi.CThostFtdcInstrumentField;
 import ctp.thostapi.CThostFtdcInstrumentStatusField;
 import ctp.thostapi.CThostFtdcInvestorField;
-import ctp.thostapi.CThostFtdcInvestorPositionCombineDetailField;
 import ctp.thostapi.CThostFtdcInvestorPositionDetailField;
 import ctp.thostapi.CThostFtdcInvestorPositionField;
-import ctp.thostapi.CThostFtdcInvestorProductGroupMarginField;
-import ctp.thostapi.CThostFtdcNoticeField;
 import ctp.thostapi.CThostFtdcOrderActionField;
 import ctp.thostapi.CThostFtdcOrderField;
-import ctp.thostapi.CThostFtdcProductExchRateField;
 import ctp.thostapi.CThostFtdcQryInstrumentField;
 import ctp.thostapi.CThostFtdcQryInvestorPositionField;
 import ctp.thostapi.CThostFtdcQryOrderField;
@@ -30,23 +21,23 @@ import ctp.thostapi.CThostFtdcReqUserLoginField;
 import ctp.thostapi.CThostFtdcRspAuthenticateField;
 import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSecAgentACIDMapField;
 import ctp.thostapi.CThostFtdcSettlementInfoConfirmField;
 import ctp.thostapi.CThostFtdcSettlementInfoField;
 import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTraderApi;
 import ctp.thostapi.CThostFtdcTraderSpi;
 import ctp.thostapi.CThostFtdcTradingAccountField;
-import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEventPublisher;
-import io.cygnuxltb.adaptor.ctp.gateway.utils.NativeLibraryManager;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
+import io.cygnuxltb.adaptor.ctp.gateway.event.listener.BaseFtdcTraderListener;
+import io.cygnuxltb.adaptor.ctp.gateway.spi.FtdcTraderSpi;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
+import lombok.Getter;
 import org.slf4j.Logger;
 
 import java.io.Closeable;
@@ -57,19 +48,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static ctp.thostapi.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
-import static io.cygnuxltb.adaptor.ctp.gateway.utils.FtdcRspInfoHandler.nonError;
+import static io.cygnuxltb.adaptor.ctp.gateway.util.FtdcRspInfoHandler.nonError;
+import static io.cygnuxltb.adaptor.ctp.gateway.util.NativeLibraryManager.tryLoad;
+import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.thread.SleepSupport.sleep;
 import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 
-public final class FtdcTraderGateway extends FtdcTraderCallback implements Closeable {
+public final class FtdcTraderGateway extends BaseFtdcTraderListener implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcTraderGateway.class);
 
     // 静态加载FtdcLibrary
     static {
         try {
-            NativeLibraryManager.tryLoad();
+            tryLoad();
         } catch (NativeLibraryException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -78,7 +71,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     }
 
     @Native
-    private CThostFtdcTraderApi api;
+    private CThostFtdcTraderApi NativeApi;
 
     private final String callbackName = FtdcMdGateway.class.getSimpleName();
 
@@ -97,18 +90,19 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     private volatile int sessionID;
 
     // 交易请求ID
-    private final AtomicInteger requestId = new AtomicInteger(-1);
+    private final AtomicInteger requestIdGetter = new AtomicInteger(-1);
+
+    @Getter
     private final String gatewayId;
 
     private final CtpConfig config;
 
     private final FtdcEventPublisher publisher;
 
-
-    public FtdcTraderGateway(String gatewayId, CtpConfig config, FtdcEventPublisher publisher) {
-        this.gatewayId = gatewayId;
-        this.config = config;
-        this.publisher = publisher;
+    public FtdcTraderGateway(CtpConfig config, FtdcEventPublisher publisher) {
+        this.config = nonNull(config, "config");
+        this.publisher = nonNull(publisher, "publisher");
+        this.gatewayId = "GATEWAY-TD-" + config.getBrokerId() + "-" + config.getInvestorId();
     }
 
     /**
@@ -116,11 +110,11 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     public void startup() {
         if (isInitialize.compareAndSet(false, true)) {
-            log.info("CThostFtdcTraderApi.version() -> {}", CThostFtdcTraderApi.GetApiVersion());
+            log.info("CThostFtdcTraderApi.GetApiVersion() -> {}", CThostFtdcTraderApi.GetApiVersion());
             try {
-                startNewMaxPriorityThread("FtdcTrader-Thread", this::initAndJoin);
+                startNewMaxPriorityThread(gatewayId + "-Thread", this::initAndJoin);
             } catch (Exception e) {
-                log.error("Method initAndJoin throw Exception -> {}", e.getMessage(), e);
+                log.error("FtdcTraderGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
                 isInitialize.set(false);
                 throw new RuntimeException(e);
             }
@@ -129,31 +123,37 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
 
     private void initAndJoin() {
         // 创建CTP数据文件临时目录
-        File tempDir = FileUtil.mkdirInTmp(gatewayId + "-" + DateTimeUtil.date());
-        log.info("Gateway -> [{}] trader temp dir : {}", gatewayId, tempDir.getAbsolutePath());
+        var tempDir = FileUtil.mkdirInTmp(gatewayId + "-" + DateTimeUtil.date());
+        log.info("{} -> use trader tempDir: {}", gatewayId, tempDir.getAbsolutePath());
         // 指定trader临时文件地址
-        String tempFile = new File(tempDir, "trader").getAbsolutePath();
-        log.info("Gateway -> [{}] trader temp file : {}", gatewayId, tempFile);
+        var tempFile = new File(tempDir, "trader").getAbsolutePath();
+        log.info("{} -> use trader tempFile : {}", gatewayId, tempFile);
         // 创建traderApi
-        this.api = CThostFtdcTraderApi.CreateFtdcTraderApi(tempFile);
+        this.NativeApi = CThostFtdcTraderApi.CreateFtdcTraderApi(tempFile);
+        log.info("{} -> call native CThostFtdcTraderApi::CreateFtdcTraderApi", gatewayId);
         // 创建traderSpi
-        CThostFtdcTraderSpi traderSpi = new FtdcTraderSpi(this);
-        // 将traderSpi注册到traderApi
-        api.RegisterSpi(traderSpi);
+        CThostFtdcTraderSpi Spi = new FtdcTraderSpi(this);
+        log.info("{} -> created CThostFtdcTraderSpi with FtdcTraderSpi", gatewayId);
+        // 将Spi注册到CThostFtdcTraderApi
+        NativeApi.RegisterSpi(Spi);
+        log.info("{} -> call native CThostFtdcTraderApi::RegisterSpi", gatewayId);
         // 注册到trader前置机
-        api.RegisterFront(config.getTraderAddr());
+        NativeApi.RegisterFront(config.getTraderAddr());
+        log.info("{} -> call native CThostFtdcTraderApi::RegisterFront", gatewayId);
         /// THOST_TERT_RESTART:从本交易日开始重传
         /// THOST_TERT_RESUME:从上次收到的续传
         /// THOST_TERT_QUICK:只传送登录后私有流的内容
-        // 订阅公有流和私有流
-        api.SubscribePublicTopic(THOST_TERT_RESUME);
-        api.SubscribePrivateTopic(THOST_TERT_RESUME);
+        // 订阅公有流和私有流, 设置为[THOST_TERT_RESUME]
+        NativeApi.SubscribePublicTopic(THOST_TERT_RESUME);
+        log.info("{} -> call native CThostFtdcTraderApi::SubscribePublicTopic(THOST_TERT_RESUME)", gatewayId);
+        NativeApi.SubscribePrivateTopic(THOST_TERT_RESUME);
+        log.info("{} -> call native CThostFtdcTraderApi::SubscribePrivateTopic(THOST_TERT_RESUME)", gatewayId);
         // 初始化traderApi
-        log.info("Call native CThostFtdcTraderApi::Init()");
-        api.Init();
+        NativeApi.Init();
+        log.info("{} -> call native CThostFtdcTraderApi::Init", gatewayId);
         // 阻塞当前线程
-        log.info("Gateway -> [{}] calling native function CThostFtdcTraderApi::Join", gatewayId);
-        api.Join();
+        log.info("{} -> call native CThostFtdcTraderApi::Join", gatewayId);
+        NativeApi.Join();
     }
 
     /**
@@ -164,8 +164,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     public int ReqOrderInsert(CThostFtdcInputOrderField field) {
         if (isTraderLogin) {
             // 设置账号信息
-            int RequestID = requestId.incrementAndGet();
-            api.ReqOrderInsert(field, RequestID);
+            int RequestID = requestIdGetter.incrementAndGet();
+            NativeApi.ReqOrderInsert(field, RequestID);
             log.info("Send TraderApi::ReqOrderInsert OK ->  RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], "
                             + "CombOffsetFlag==[{}], Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
                     RequestID, field.getOrderRef(), field.getInstrumentID(), field.getCombOffsetFlag(),
@@ -184,8 +184,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     public int ReqOrderAction(CThostFtdcInputOrderActionField field) {
         if (isTraderLogin) {
-            int RequestID = requestId.incrementAndGet();
-            api.ReqOrderAction(field, RequestID);
+            int RequestID = requestIdGetter.incrementAndGet();
+            NativeApi.ReqOrderAction(field, RequestID);
             log.info("Send TraderApi::ReqOrderAction OK -> RequestID==[{}], OrderRef==[{}], OrderActionRef==[{}], "
                             + "BrokerID==[{}], InvestorID==[{}], InstrumentID==[{}]",
                     RequestID, field.getOrderRef(), field.getOrderActionRef(), field.getBrokerID(),
@@ -210,8 +210,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         field.setInvestorID(config.getInvestorId());
         field.setExchangeID(exchangeCode);
         field.setInstrumentID(instrumentCode);
-        int RequestID = requestId.incrementAndGet();
-        api.ReqQryOrder(field, RequestID);
+        int RequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqQryOrder(field, RequestID);
         log.info(
                 "Send TraderApi::ReqQryOrder OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
                 RequestID, field.getBrokerID(), field.getInvestorID(), field.getExchangeID(), field.getInstrumentID());
@@ -244,8 +244,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         field.setAccountID(config.getAccountId());
         field.setInvestorID(config.getInvestorId());
         field.setCurrencyID(config.getCurrencyId());
-        int RequestID = requestId.incrementAndGet();
-        api.ReqQryTradingAccount(field, RequestID);
+        int RequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqQryTradingAccount(field, RequestID);
         log.info(
                 "Send TraderApi::ReqQryTradingAccount OK -> RequestID==[{}], BrokerID==[{}], AccountID==[{}], InvestorID==[{}], CurrencyID==[{}]",
                 RequestID, field.getBrokerID(), field.getAccountID(), field.getInvestorID(), field.getCurrencyID());
@@ -264,8 +264,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         field.setInvestorID(config.getInvestorId());
         field.setExchangeID(exchangeCode);
         field.setInstrumentID(instrumentCode);
-        int RequestID = requestId.incrementAndGet();
-        api.ReqQryInvestorPosition(field, RequestID);
+        int RequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqQryInvestorPosition(field, RequestID);
         log.info(
                 "Send TraderApi::ReqQryInvestorPosition OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
                 RequestID, field.getBrokerID(), field.getInvestorID(), field.getExchangeID(), field.getInstrumentID());
@@ -284,7 +284,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      * ///投资者代码
      * TThostFtdcInvestorIDType	InvestorID;
      * ///交易日
-     * TThostFtdcDateType	TradingDay;
+     * TThostFtdcDateType	    TradingDay;
      * ///投资者帐号
      * TThostFtdcAccountIDType	AccountID;
      * ///币种代码
@@ -299,8 +299,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         field.setTradingDay(config.getTradingDay());
         field.setAccountID(config.getAccountId());
         field.setCurrencyID(config.getCurrencyId());
-        int RequestID = requestId.incrementAndGet();
-        api.ReqQrySettlementInfo(field, RequestID);
+        int RequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqQrySettlementInfo(field, RequestID);
         log.info("Send TraderApi::ReqQrySettlementInfo OK -> RequestID==[{}]", RequestID);
         return RequestID;
     }
@@ -315,8 +315,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         CThostFtdcQryInstrumentField field = new CThostFtdcQryInstrumentField();
         field.setExchangeID(exchangeCode);
         field.setInstrumentID(instrumentCode);
-        int RequestID = requestId.incrementAndGet();
-        api.ReqQryInstrument(field, RequestID);
+        int RequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqQryInstrument(field, RequestID);
         log.info("Send TraderApi::ReqQryInstrument OK -> RequestID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
                 RequestID, field.getExchangeID(), field.getInstrumentID());
         return RequestID;
@@ -327,26 +327,24 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     public void close() throws IOException {
         startNewThread("TraderApi-Release", () -> {
             log.info("CThostFtdcTraderApi start release");
-            if (api != null) api.Release();
+            if (NativeApi != null) NativeApi.Release();
             log.info("CThostFtdcTraderApi is released");
         });
         sleep(1000);
     }
 
-//***********************************************************************************************//
-//***********************************************************************************************//
-//**************************************** EVENT TRIGGER ****************************************//
-//***********************************************************************************************//
-//***********************************************************************************************//
+//*******************************************************************************************************//
+//*******************************************************************************************************//
+//******************************************** EVENT TRIGGER ********************************************//
+//*******************************************************************************************************//
+//*******************************************************************************************************//
 
     /**
      * 交易前置机连接回调
      */
     @Override
     public void fireFrontConnected() {
-        log.info("FtdcTraderSpi::OnFrontConnected");
-
-        log.info("FtdcCallback::onTraderFrontConnected");
+        log.info("TraderSpi::fireFrontConnected");
         if (StringSupport.nonEmpty(config.getAuthCode()) && !isAuthenticate) {
             // 发送认证请求
             CThostFtdcReqAuthenticateField field = new CThostFtdcReqAuthenticateField();
@@ -354,8 +352,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
             field.setUserID(config.getUserId());
             field.setBrokerID(config.getBrokerId());
             field.setAuthCode(config.getAuthCode());
-            int RequestID = requestId.incrementAndGet();
-            api.ReqAuthenticate(field, RequestID);
+            int RequestID = requestIdGetter.incrementAndGet();
+            NativeApi.ReqAuthenticate(field, RequestID);
             log.info(
                     "Send TraderApi::ReqAuthenticate OK -> RequestID==[{}], BrokerID==[{}], UserID==[{}], AppID==[{}], AuthCode==[{}]",
                     RequestID, field.getBrokerID(), field.getUserID(), field.getAppID(), field.getAuthCode());
@@ -377,9 +375,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
-        log.error("FtdcTraderSpi::OnFrontDisconnected, Reason==[{}]", Reason);
-
-        log.warn("FtdcCallback::onTraderFrontDisconnected");
+        log.warn("TraderSpi::fireFrontDisconnected");
         isTraderLogin = false;
         isAuthenticate = false;
         // 交易前置断开处理
@@ -394,7 +390,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
-
+        log.info("TraderSpi::fireHeartBeatWarning");
     }
 
     /**
@@ -408,7 +404,6 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
         log.info("FtdcTraderSpi::OnRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError("FtdcTraderSpi::OnRspAuthenticate", RspInfo)) {
             if (Field != null) {
@@ -421,13 +416,14 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                 loginField.setPassword(config.getPassword());
                 loginField.setClientIPAddress(config.getIpAddr());
                 loginField.setMacAddress(config.getMacAddr());
-                int newRequestID = requestId.incrementAndGet();
-                api.ReqUserLogin(loginField, newRequestID);
+                int newRequestID = requestIdGetter.incrementAndGet();
+                NativeApi.ReqUserLogin(loginField, newRequestID);
                 log.info("Send TraderApi::ReqUserLogin OK -> RequestID==[{}]", newRequestID);
-
             } else {
                 log.error("FtdcTraderSpi::OnRspAuthenticate return null");
             }
+        } else {
+            log.error("");
         }
     }
 
@@ -451,12 +447,12 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                 frontID = Field.getFrontID();
                 sessionID = Field.getSessionID();
                 isTraderLogin = true;
-                publisher.publish(isTraderLogin, frontID, sessionID);
+                publisher.publishMdAvailable(Field, RspInfo, RequestID, IsLast);
             } else {
                 log.error("FtdcTraderSpi::OnRspUserLogin return null");
             }
         } else {
-
+            log.error("");
         }
     }
 
@@ -474,14 +470,15 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         log.info("FtdcTraderSpi::OnRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError("FtdcTraderSpi::OnRspUserLogout", RspInfo)) {
             if (Field != null) {
-                log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
+                log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
                 // TODO 处理用户登出
+                publisher.publishTrader();
             } else {
                 log.error("FtdcTraderSpi::OnRspUserLogout return null");
             }
         } else {
-
+            log.error("");
         }
     }
 
@@ -500,19 +497,19 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
         log.info("FtdcTraderSpi::OnRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError("FtdcTraderSpi::OnRspOrderInsert", RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::onRspOrderInsert -> OrderRef==[{}]", field.getOrderRef());
+                log.info("FtdcCallback::onRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
                 publisher.publish(Field);
             } else {
                 log.error("FtdcTraderSpi::OnRspOrderInsert return null");
             }
         } else {
-
+            log.error("");
         }
     }
 
 
     /**
-     * ///报单操作请求响应
+     * ///报单操作请求响应-[撤单错误回调: 1]
      *
      * @param Field     CThostFtdcInputOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -524,6 +521,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
         log.info("TraderSpi::OnRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+
         if (nonError("TraderSpi::OnRspOrderAction", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
@@ -535,6 +533,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                 log.error("TraderSpi::OnRspOrderAction return null");
             }
         } else {
+            log.error("");
         }
     }
 
@@ -550,7 +549,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
+        log.info("TraderSpi::fireRspBatchOrderAction");
     }
 
 
@@ -590,7 +589,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireRspQryTrade(CThostFtdcTradeField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
+        log.info("TraderSpi::fireRspQryTrade");
     }
 
     /**
@@ -616,6 +615,20 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                 log.error("FtdcTraderSpi::OnRspQryInvestorPosition return null");
             }
         }
+    }
+
+    /**
+     * ///请求查询投资者持仓明细响应
+     *
+     * @param Field     CThostFtdcInvestorPositionDetailField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
+     */
+    @Override
+    public void fireRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
+                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.info("TraderSpi::fireRspQryInvestorPositionDetail");
     }
 
     /**
@@ -653,7 +666,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireRspQryInvestor(CThostFtdcInvestorField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
+        log.info("TraderSpi::fireRspQryInvestor");
     }
 
 
@@ -707,47 +720,6 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                 log.error("FtdcTraderSpi::OnRspQrySettlementInfo return null");
     }
 
-    /**
-     * ///请求查询转帐银行响应
-     *
-     * @param Field     CThostFtdcTransferBankField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryTransferBank(CThostFtdcTransferBankField Field,
-                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询投资者持仓明细响应
-     *
-     * @param Field     CThostFtdcInvestorPositionDetailField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
-                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询客户通知响应
-     *
-     * @param Field     CThostFtdcNoticeField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryNotice(CThostFtdcNoticeField Field,
-                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
 
     /**
      * ///请求查询结算信息确认响应
@@ -760,133 +732,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询投资者持仓明细响应
-     *
-     * @param Field     CThostFtdcInvestorPositionCombineDetailField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField Field,
-                                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///查询保证金监管系统经纪公司资金账户密钥响应
-     *
-     * @param Field     CThostFtdcCFMMCTradingAccountKeyField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField Field,
-                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询仓单折抵信息响应
-     *
-     * @param Field     CThostFtdcEWarrantOffsetField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField Field,
-                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询投资者品种/跨品种保证金响应
-     *
-     * @param Field     CThostFtdcInvestorProductGroupMarginField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryInvestorProductGroupMargin(CThostFtdcInvestorProductGroupMarginField Field,
-                                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询交易所保证金率响应
-     *
-     * @param Field     CThostFtdcExchangeMarginRateField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryExchangeMarginRate(CThostFtdcExchangeMarginRateField Field,
-                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询交易所调整保证金率响应
-     *
-     * @param Field     CThostFtdcExchangeMarginRateAdjustField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryExchangeMarginRateAdjust(CThostFtdcExchangeMarginRateAdjustField Field,
-                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询汇率响应
-     *
-     * @param Field     CThostFtdcExchangeRateField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryExchangeRate(CThostFtdcExchangeRateField Field,
-                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询二级代理操作员银期权限响应
-     *
-     * @param Field     CThostFtdcSecAgentACIDMapField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQrySecAgentACIDMap(CThostFtdcSecAgentACIDMapField Field,
-                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
-    }
-
-    /**
-     * ///请求查询产品报价汇率
-     *
-     * @param Field     CThostFtdcProductExchRateField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryProductExchRate(CThostFtdcProductExchRateField Field,
-                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-
+        log.info("TraderSpi::fireRspQrySettlementInfoConfirm");
     }
 
 
@@ -899,12 +745,13 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::OnRspError, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-
+        log.info("TraderSpi::fireRspError, ErrorID=[{}], ErrorMsg=[{}], RequestID==[{}], IsLast==[{}]",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
+        publisher.publishRspError(RspInfo, RequestID, IsLast);
     }
 
     // 报单推送消息模板
-    private static final String OnRtnOrderMsg = "FtdcCallback::onRtnOrder -> OrderRef==[{}], " +
+    private static final String OnRtnOrderMsg = "FtdcTraderSpi::fireRtnOrder -> OrderRef==[{}], " +
             "AccountID==[{}], OrderSysID==[{}], InstrumentID==[{}], OrderStatus==[{}], " +
             "Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]";
 
@@ -921,11 +768,11 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
                     Order.getVolumeTotalOriginal(), Order.getLimitPrice());
             publisher.publish(Order, true);
         } else
-            log.error("FtdcTraderSpi::OnRtnOrder return null");
+            log.error("FtdcTraderSpi::fireRtnOrder return null");
     }
 
     // 成交推送消息模板
-    private static final String OnRtnTradeMsg = "FtdcCallback::onRtnTrade -> OrderRef==[{}], " +
+    private static final String OnRtnTradeMsg = "FtdcTraderSpi::fireRtnTrade -> OrderRef==[{}], " +
             "OrderSysID==[{}], InstrumentID==[{}], Direction==[{}], Price==[{}], Volume==[{}]";
 
     /**
@@ -939,9 +786,8 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
             log.info(OnRtnTradeMsg, Trade.getOrderRef(), Trade.getOrderSysID(), Trade.getInstrumentID(),
                     Trade.getDirection(), Trade.getPrice(), Trade.getVolume());
             publisher.publish(Trade);
-        } else {
-            log.error("FtdcTraderSpi::onRtnTrade return null");
-        }
+        } else
+            log.error("FtdcTraderSpi::fireRtnTrade return null");
     }
 
     /**
@@ -967,7 +813,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     }
 
     /**
-     * ///报单操作错误回报
+     * ///报单操作错误回报 - [撤单错误回调: 2]
      *
      * @param Field   CThostFtdcOrderActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1000,7 +846,7 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
      */
     @Override
     public void fireRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
-
+        publisher.publish(Field);
     }
 
 
@@ -1013,7 +859,11 @@ public final class FtdcTraderGateway extends FtdcTraderCallback implements Close
     @Override
     public void fireErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
                                            CThostFtdcRspInfoField RspInfo) {
-
+        // TODO 批量撤单回调当前未实现
     }
 
+    @Override
+    public String toString() {
+        return gatewayId;
+    }
 }

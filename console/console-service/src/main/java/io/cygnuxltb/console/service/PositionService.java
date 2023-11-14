@@ -1,13 +1,13 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.protocol.http.response.PositionDTO;
+import io.cygnuxltb.protocol.http.response.PositionsDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public final class PositionService {
 
-    public PositionDTO getPosition(int userId) {
-        return new PositionDTO();
+    public PositionsDTO getPosition(int userId) {
+        return new PositionsDTO();
     }
 
 }

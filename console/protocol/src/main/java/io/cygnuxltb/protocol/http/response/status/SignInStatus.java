@@ -7,16 +7,21 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class StrategyStatus {
+public class SignInStatus {
 
     /**
-     * 策略ID
+     * 是否已验证
      */
-    private int strategyId;
+    private boolean authenticated;
 
     /**
-     * 策略状态
+     * 消息内容
      */
-    private int status;
+    private String message;
+
+    /**
+     * 安全码
+     */
+    private long securityCode;
 
 }

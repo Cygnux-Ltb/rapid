@@ -1,39 +1,12 @@
 package io.cygnuxltb.adaptor.ctp.gateway;
 
-import ctp.thostapi.CThostFtdcDepthMarketDataField;
-import ctp.thostapi.CThostFtdcForQuoteRspField;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import ctp.thostapi.CThostFtdcInvestorPositionField;
-import ctp.thostapi.CThostFtdcMdApi;
-import ctp.thostapi.CThostFtdcMdSpi;
-import ctp.thostapi.CThostFtdcOrderActionField;
-import ctp.thostapi.CThostFtdcOrderField;
-import ctp.thostapi.CThostFtdcQryInstrumentField;
-import ctp.thostapi.CThostFtdcQryInvestorPositionField;
-import ctp.thostapi.CThostFtdcQryOrderField;
-import ctp.thostapi.CThostFtdcQrySettlementInfoField;
-import ctp.thostapi.CThostFtdcQryTradingAccountField;
-import ctp.thostapi.CThostFtdcReqAuthenticateField;
-import ctp.thostapi.CThostFtdcReqUserLoginField;
-import ctp.thostapi.CThostFtdcRspAuthenticateField;
 import ctp.thostapi.CThostFtdcRspInfoField;
-import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import ctp.thostapi.CThostFtdcTradeField;
-import ctp.thostapi.CThostFtdcTraderApi;
-import ctp.thostapi.CThostFtdcTraderSpi;
-import ctp.thostapi.CThostFtdcTradingAccountField;
-import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEventPublisher;
-import io.cygnuxltb.adaptor.ctp.gateway.utils.NativeLibraryManager;
-import io.mercury.common.datetime.DateTimeUtil;
-import io.mercury.common.file.FileUtil;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.mercury.common.lang.Asserter;
-import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.util.StringSupport;
 import io.rapid.core.adaptor.ConnectionMode;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -41,24 +14,14 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Native;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import static ctp.thostapi.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
-import static io.cygnuxltb.adaptor.ctp.gateway.utils.FtdcRspInfoHandler.nonError;
 import static io.mercury.common.thread.SleepSupport.sleep;
-import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
-import static io.mercury.common.thread.ThreadSupport.startNewThread;
 
 @NotThreadSafe
 public final class FtdcGateway implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcGateway.class);
-
-
 
     // gatewayId
     private final String gatewayId;
@@ -75,8 +38,7 @@ public final class FtdcGateway implements Closeable {
     // FtdcEvent 事件发布器
     private final FtdcEventPublisher publisher;
 
-    // 查询间隔
-    private final long REQUEST_INTERVAL = 750;
+
 
     /**
      * @param gatewayId String
@@ -97,29 +59,10 @@ public final class FtdcGateway implements Closeable {
 
     @PostConstruct
     private void initializer(ConnectionMode type) {
-        switch (type) {
-            case MARKET_DATA -> this.mdGateway = new FtdcMdGateway();
-            case TRADE -> this.traderGateway = new FtdcTraderGateway();
-            default -> {
-                this.mdGateway = new FtdcMdGateway();
-                this.traderGateway = new FtdcTraderGateway();
-            }
-        }
+
     }
 
-    /**
-     * 启动并挂起线程
-     */
-    public void startup() {
-        if (mdGateway != null) {
-            mdGateway.startup();
-            sleep(REQUEST_INTERVAL);
-        }
-        if (traderGateway != null) {
-            traderGateway.startup();
-            sleep(REQUEST_INTERVAL);
-        }
-    }
+
 
     /**
      * 行情订阅接口
@@ -206,11 +149,6 @@ public final class FtdcGateway implements Closeable {
             sleep(REQUEST_INTERVAL);
         }
     }
-
-
-
-
-
 
 
     abstract static class AbstractFtdcCallback {

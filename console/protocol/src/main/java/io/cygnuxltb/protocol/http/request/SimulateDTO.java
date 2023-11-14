@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 public class SimulateDTO {
 
     /**
-     *
+     * 用户ID
      */
     public int userId;
 

@@ -8,11 +8,20 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class StrategySwitch implements Comparable<StrategySwitch> {
-    
+
+    /**
+     *
+     */
     private int productId;
 
+    /**
+     *
+     */
     private int strategyId;
 
+    /**
+     *
+     */
     private String instrumentCode;
 
     private boolean tradable;

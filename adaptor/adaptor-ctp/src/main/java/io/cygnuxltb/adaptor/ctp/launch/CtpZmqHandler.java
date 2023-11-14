@@ -1,7 +1,7 @@
 package io.cygnuxltb.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.functional.Handler;

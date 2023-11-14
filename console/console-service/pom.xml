@@ -12,7 +12,7 @@
     <name>console-service</name>
 
     <build>
-        <finalName>rapid-console</finalName>
+        <finalName>console-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
