@@ -94,15 +94,15 @@ import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
-import io.cygnuxltb.adaptor.ctp.gateway.event.listener.BaseFtdcTraderListener;
+import io.cygnuxltb.adaptor.ctp.gateway.event.listener.FtdcTraderListener;
 import io.mercury.common.annotation.NativeSpiImpl;
 
 @NativeSpiImpl
 public final class FtdcTraderSpi extends CThostFtdcTraderSpi {
 
-    private final BaseFtdcTraderListener listener;
+    private final FtdcTraderListener listener;
 
-    public FtdcTraderSpi(BaseFtdcTraderListener listener) {
+    public FtdcTraderSpi(FtdcTraderListener listener) {
         this.listener = listener;
     }
 

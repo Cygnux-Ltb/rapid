@@ -37,12 +37,12 @@ public final class PnlSettlementDTO {
     /**
      * 盈亏
      */
-    private double pnlTotal;
+    private double totalPnl;
 
     /**
      * 净盈亏
      */
-    private double pnlNet;
+    private double netPnl;
 
     /**
      * 交易成本

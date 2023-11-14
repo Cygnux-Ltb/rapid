@@ -73,8 +73,6 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Native
     private CThostFtdcTraderApi NativeApi;
 
-    private final String callbackName = FtdcMdGateway.class.getSimpleName();
-
     // 是否已初始化
     private final AtomicBoolean isInitialize = new AtomicBoolean(false);
 

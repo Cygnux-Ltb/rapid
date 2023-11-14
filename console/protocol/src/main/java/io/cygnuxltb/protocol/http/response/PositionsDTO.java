@@ -35,6 +35,16 @@ public class PositionsDTO {
         private String instrumentCode;
 
         /**
+         * 净盈亏
+         */
+        private double netPnl;
+
+        /**
+         * 成本价
+         */
+        private double costPrice;
+
+        /**
          * 多头头寸
          */
         private int longPos;
@@ -48,6 +58,11 @@ public class PositionsDTO {
          * 净头寸
          */
         private int netPos;
+
+        /**
+         * 持仓时间
+         */
+        private int duration;
 
     }
 
