@@ -1,11 +1,11 @@
 package io.cygnuxltb.console.controller;
 
+import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.TblTrdOrder;
 import io.cygnuxltb.console.service.OrderService;
 import io.cygnuxltb.protocol.http.request.NewOrderDTO;
-import io.cygnuxltb.protocol.http.response.OrderDTO;
 import io.cygnuxltb.protocol.http.response.OrderEventDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.cygnuxltb.console.controller.base.HttpParam.ACCOUNT_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.controller.base.HttpParam.INVESTOR_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
@@ -42,32 +42,33 @@ public final class OrderController {
     /**
      * 查询订单
      *
-     * @param strategyId     策略ID
-     * @param tradingDay     交易日
-     * @param investorId     交易账户
-     * @param instrumentCode 交易标的(股票代码/期货代码)
+     * @param accountId      交易账户ID [int 必须项]
+     * @param strategyId     策略ID [int 可选项]
+     * @param tradingDay     交易日 [int 可选项, 8位日期格式:YYYYMMDD]
+     * @param instrumentCode 交易标的 [String 股票代码/期货代码]
      * @return List<OrderEntity>
      */
     @GetMapping
-    public List<OrderDTO> getOrder(@RequestParam(TRADING_DAY) int tradingDay,
-                                   @RequestParam(STRATEGY_ID) int strategyId,
-                                   @RequestParam(INVESTOR_ID) String investorId,
-                                   @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        if (ControllerUtil.paramIsNull(strategyId, tradingDay, investorId, instrumentCode))
-            return null;
-        return service.getOrders(strategyId, investorId, instrumentCode, tradingDay);
+    public ResponseBean getOrder(@RequestParam(ACCOUNT_ID) int accountId,
+                                 @RequestParam(STRATEGY_ID) int strategyId,
+                                 @RequestParam(INSTRUMENT_CODE) String instrumentCode,
+                                 @RequestParam(TRADING_DAY) int tradingDay) {
+        if (ControllerUtil.paramIsNull(accountId))
+            return ResponseStatus.BAD_REQUEST.response("参数错误, [accountId]不可为空.");
+        return ResponseStatus.OK.responseOf(
+                service.getOrders(accountId, strategyId, instrumentCode, tradingDay));
     }
 
     /**
      * 获取订单最新状态
      *
+     * @param strategyId 策略ID [int 必须项]
      * @param tradingDay 交易日
-     * @param strategyId 策略ID
      * @return List<OrderEventDTO>
      */
     @GetMapping(path = "/event")
-    public List<OrderEventDTO> getOrderEvents(@RequestParam(TRADING_DAY) int tradingDay,
-                                              @RequestParam(STRATEGY_ID) int strategyId) {
+    public List<OrderEventDTO> getOrderEvents(@RequestParam(STRATEGY_ID) int strategyId,
+                                              @RequestParam(TRADING_DAY) int tradingDay) {
         if (ControllerUtil.paramIsNull(strategyId, tradingDay))
             return null;
         // TODO 过滤最后的订单

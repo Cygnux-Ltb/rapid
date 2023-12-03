@@ -60,12 +60,12 @@ curl -X GET -i /product
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|productId|int32|true|int|-|
+|prodId|int32|true|int|-|
 
 
 **Request-example:**
 ```bash
-curl -X GET -i /product/get?productId=0
+curl -X GET -i /product/get?prodId=0
 ```
 
 **Response-fields:**

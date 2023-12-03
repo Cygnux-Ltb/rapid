@@ -13,14 +13,14 @@ import lombok.experimental.Accessors;
 
 import java.util.Date;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.BROKER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.ColumnConst.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.ColumnConst.USER_ID;
 import static io.mercury.persistence.rdb.ColumnDefinition.TIME;
 
 /**
@@ -136,30 +136,6 @@ public final class TblTrdOrder {
      */
     @Column(name = "INSERT_TIME", columnDefinition = TIME)
     private Date insertTime;
-
-    /**
-     * updateTime
-     */
-    @Column(name = "UPDATE_TIME", columnDefinition = TIME)
-    private Date updateTime;
-
-    /**
-     * cancelTime
-     */
-    @Column(name = "CANCEL_TIME", columnDefinition = TIME)
-    private Date cancelTime;
-
-    /**
-     * frontId
-     */
-    @Column(name = "FRONT_ID")
-    private int frontId;
-
-    /**
-     * sessionId
-     */
-    @Column(name = "SESSION_ID")
-    private int sessionId;
 
     /**
      * fee double 19_4

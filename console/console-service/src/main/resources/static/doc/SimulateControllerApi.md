@@ -1,15 +1,15 @@
 
 # 模拟测试
-## 
+## 提交测试请求
 
-**URL:** `/start`
+**URL:** `/simulate/start`
 
 **Type:** `POST`
 
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 
+**Description:** 提交测试请求
 
 
 
@@ -17,14 +17,14 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|userId|int32|false||-|
+|userId|int32|false|用户ID|-|
 |strategyId|int32|false||-|
 |tradingDay|int32|false||-|
 
 
 **Request-example:**
 ```bash
-curl -X POST -i /start
+curl -X POST -i /simulate/start
 ```
 
 **Response-example:**

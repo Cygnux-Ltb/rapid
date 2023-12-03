@@ -55,6 +55,14 @@ public final class ControllerUtil {
         return JsonParser.toList(body, clazz);
     }
 
+    public static boolean illegalAccountId(int accountId, Logger logger) {
+        if (accountId < 0) {
+            logger.error("illegal param -> accountId=={}", accountId);
+            return true;
+        }
+        return false;
+    }
+
     public static boolean illegalStrategyId(int strategyId, Logger logger) {
         if (strategyId < 0) {
             logger.error("illegal param -> strategyId=={}", strategyId);
@@ -90,15 +98,6 @@ public final class ControllerUtil {
         return false;
     }
 
-    public static boolean illegalStringParam(String paramName,
-                                             String paramValue, Logger logger) {
-        if (StringSupport.isNullOrEmpty(paramValue)) {
-            logger.error("illegal param -> {}=={}", paramName, paramValue);
-            return true;
-        }
-        return false;
-    }
-
     public static boolean illegalStrategyName(String strategyName, Logger logger) {
         return illegalStringParam("strategyName", strategyName, logger);
     }
@@ -114,5 +113,14 @@ public final class ControllerUtil {
     public static boolean illegalBrokerId(String brokerId, Logger logger) {
         return illegalStringParam("brokerId", brokerId, logger);
     }
-    
+
+    public static boolean illegalStringParam(String paramName,
+                                             String paramValue, Logger logger) {
+        if (StringSupport.isNullOrEmpty(paramValue)) {
+            logger.error("illegal param -> {}=={}", paramName, paramValue);
+            return true;
+        }
+        return false;
+    }
+
 }

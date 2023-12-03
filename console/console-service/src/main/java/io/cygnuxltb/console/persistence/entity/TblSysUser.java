@@ -11,8 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.USER_ID;
 
 /**
  * 用户表

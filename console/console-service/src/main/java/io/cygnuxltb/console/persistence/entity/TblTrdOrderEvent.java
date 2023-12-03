@@ -11,14 +11,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.BROKER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.ColumnConst.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.ColumnConst.USER_ID;
 
 /**
  * 订单事件表
@@ -86,7 +86,6 @@ public final class TblTrdOrderEvent {
     @Column(name = USER_ID)
     private int userId;
 
-
     /**
      * ord_sys_id [*]
      */
@@ -135,36 +134,11 @@ public final class TblTrdOrderEvent {
     @Column(name = "STATUS_MSG")
     private String statusMsg;
 
-
     /**
      * brokerSysID
      */
     @Column(name = "BROKER_SYS_ID")
     private Long brokerSysID;
-
-    /**
-     * volume int
-     */
-    @Column(name = "VOLUME")
-    private int volume;
-
-    /**
-     * volume_filled int
-     */
-    @Column(name = "VOLUME_FILLED")
-    private int volumeFilled;
-
-    /**
-     * volume_remained int
-     */
-    @Column(name = "VOLUME_REMAINED")
-    private int volumeRemained;
-
-    /**
-     * price double 19_4
-     */
-    @Column(name = "PRICE")
-    private double price;
 
     /**
      * trade_id varchar 21

@@ -6,11 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-<<<<<<< HEAD
-    <link rel="stylesheet" href="AllInOne.css?v=1698065942871"/>
-=======
-    <link rel="stylesheet" href="AllInOne.css?v=1698407795731"/>
->>>>>>> dee541329d8a9ee665652972bdfaf06eec456b41
+    <link rel="stylesheet" href="AllInOne.css?v=1701103975312"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -202,7 +198,7 @@ Page3:
             <li class=""><a class="dd" href="SimulateController.html#header">10.&nbsp;模拟测试</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="SimulateController.html#_10_1_">10.1.&nbsp;</a>
+                            href="SimulateController.html#_10_1_提交测试请求">10.1.&nbsp;提交测试请求</a>
                     </li>
                 </ul>
             </li>
@@ -287,17 +283,17 @@ Page3:
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">td</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">    交易日</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">code</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">标的代码 (不支持查询多个标的)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">code</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">标的代码 (不支持查询多个标的)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">td</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">    交易日</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -327,72 +323,37 @@ Page3:
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">code</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">No comments found.</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的代码</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">No comments found.</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易日</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">No comments found.</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">actualDate</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">实际日期</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">No comments found.</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">timePoint</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">时间点</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">open</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">开盘价</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">high</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">最高价</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">low</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">最低价</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">close</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">收盘价</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">volume</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交量</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">turnover</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">成交额</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">data</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">No comments found.</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
                     </tbody>
@@ -400,20 +361,13 @@ Page3:
                 <div class="paragraph"><p><strong>Response-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="json">[
-  {
-    "instrumentCode": "",
-    "tradingDay": 0,
-    "actualDate": 0,
-    "timePoint": 0,
-    "open": 0.0,
-    "high": 0.0,
-    "low": 0.0,
-    "close": 0.0,
-    "volume": 0.0,
-    "turnover": 0.0
-  }
-]</code></pre>
+                        <pre><code class="json">{
+  "code": 0,
+  "message": "",
+  "info": "",
+  "array": true,
+  "data": {}
+}</code></pre>
                     </div>
                 </div>
             </div>
@@ -442,20 +396,12 @@ Page3:
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-10-23 21:59:02</span><span
-=======
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-10-27 20:56:35</span><span
->>>>>>> dee541329d8a9ee665652972bdfaf06eec456b41
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-11-28 01:52:55</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<<<<<<< HEAD
-<script src="search.js?v=1698065942871"></script>
-=======
-<script src="search.js?v=1698407795731"></script>
->>>>>>> dee541329d8a9ee665652972bdfaf06eec456b41
+<script src="search.js?v=1701103975312"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

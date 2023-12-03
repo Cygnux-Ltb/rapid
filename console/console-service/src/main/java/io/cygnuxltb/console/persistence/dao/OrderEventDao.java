@@ -2,6 +2,7 @@ package io.cygnuxltb.console.persistence.dao;
 
 import io.cygnuxltb.console.persistence.entity.TblTrdOrderEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,11 +16,17 @@ import java.util.List;
 public interface OrderEventDao extends JpaRepository<TblTrdOrderEvent, Long> {
 
     /**
-     * @param strategyId int
-     * @param tradingDay int
-     * @return List<OrderEventEntity>
+     * @param strategyId      int
+     * @param startTradingDay int
+     * @param endTradingDay   int
+     * @return List<TblTrdOrderEvent>
      */
-    List<TblTrdOrderEvent> queryByStrategyIdAndTradingDay(int strategyId, int tradingDay);
+    @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1 "
+            + " AND (:strategyId = 0 OR e.strategyId = :strategyId) "
+            + " AND (:startTradingDay = 0 OR e.tradingDay >= :startTradingDay) "
+            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) "
+    )
+    List<TblTrdOrderEvent> queryBy(int strategyId, int startTradingDay, int endTradingDay);
 
     /**
      * @param tradingDay int

@@ -11,10 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.BROKER_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INVESTOR_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.BROKER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.INVESTOR_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
 
 /**
  * 交易账户表

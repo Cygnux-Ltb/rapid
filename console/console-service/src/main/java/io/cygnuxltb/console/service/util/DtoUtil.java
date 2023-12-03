@@ -27,7 +27,7 @@ import io.cygnuxltb.protocol.http.response.StrategyDTO;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
 
-public class DtoConverter {
+public class DtoUtil {
 
     public static BarDTO toDto(TblMkdBar entity) {
         var dto = new BarDTO();

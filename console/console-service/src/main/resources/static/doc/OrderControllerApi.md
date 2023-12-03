@@ -17,72 +17,36 @@
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|td|int32|true|    交易日|-|
-|strategyId|int32|true|    策略ID|-|
-|investorId|string|true|    交易账户|-|
-|code|string|true|交易标的(股票代码/期货代码)|-|
+|accountId|int32|true|     交易账户ID [int 必须项]|-|
+|strategyId|int32|true|    策略ID [int 可选项]|-|
+|code|string|true|交易标的 [String 股票代码/期货代码]|-|
+|td|int32|true|    交易日 [int 可选项, 8位日期格式:YYYYMMDD]|-|
 
 
 **Request-example:**
 ```bash
-curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
+curl -X GET -i /order?accountId=0&strategyId=0&td=0&code=
 ```
 
 **Response-fields:**
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|tradingDay|int32|交易日|-|
-|strategyId|int32|策略ID|-|
-|instrumentCode|string|交易标的代码|-|
-|investorId|string|投资者ID|-|
-|brokerId|string|经纪商ID|-|
-|accountId|int32|交易账户ID|-|
-|subAccountId|int32|子账户ID|-|
-|userId|int32|用户ID|-|
-|ordSysId|int64|订单系统编号 [*]|-|
-|ordType|string|订单类型|-|
-|orderRef|string|订单引用|-|
-|direction|string|订单方向|-|
-|side|string|订单交易类型|-|
-|offerPrice|double|委托价格|-|
-|offerQty|int32|委托数量|-|
-|insertTime|string|创建时间|-|
-|cancelTime|string|取消时间|-|
-|frontId|int32|前置机ID|-|
-|sessionId|int32|会话ID|-|
-|fee|double|交易费用|-|
-|channelType|string|交易通道类型|-|
-|remark|string|备注|-|
+|code|int32|No comments found.|-|
+|message|string|No comments found.|-|
+|info|string|No comments found.|-|
+|array|boolean|No comments found.|-|
+|data|object|No comments found.|-|
 
 **Response-example:**
 ```json
-[
-  {
-    "tradingDay": 0,
-    "strategyId": 0,
-    "instrumentCode": "",
-    "investorId": "",
-    "brokerId": "",
-    "accountId": 0,
-    "subAccountId": 0,
-    "userId": 0,
-    "ordSysId": 0,
-    "ordType": "",
-    "orderRef": "",
-    "direction": "",
-    "side": "",
-    "offerPrice": 0.0,
-    "offerQty": 0,
-    "insertTime": "yyyy-MM-dd HH:mm:ss",
-    "cancelTime": "yyyy-MM-dd HH:mm:ss",
-    "frontId": 0,
-    "sessionId": 0,
-    "fee": 0.0,
-    "channelType": "",
-    "remark": ""
-  }
-]
+{
+  "code": 0,
+  "message": "",
+  "info": "",
+  "array": true,
+  "data": {}
+}
 ```
 
 ## 获取订单最新状态
@@ -102,13 +66,13 @@ curl -X GET -i /order?td=0&strategyId=0&investorId=&code=
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
+|strategyId|int32|true|策略ID [int 必须项]|-|
 |td|int32|true|交易日|-|
-|strategyId|int32|true|策略ID|-|
 
 
 **Request-example:**
 ```bash
-curl -X GET -i /order/event?td=0&strategyId=0
+curl -X GET -i /order/event?strategyId=0&td=0
 ```
 
 **Response-fields:**
@@ -123,24 +87,24 @@ curl -X GET -i /order/event?td=0&strategyId=0
 |accountId|int32|accountId [*]|-|
 |subAccountId|int32|subAccountId [*]|-|
 |userId|int32|userId [*]|-|
-|ordSysId|int64|ord_sys_id [*]|-|
-|orderRef|string|order_ref|-|
-|orderMsgType|int32|order_msg_type|-|
-|ordOffset|string|ord_offset|-|
-|direction|string|direction|-|
-|limitPrice|double|limit_price double 19_4|-|
-|status|int32|order_status char|-|
-|statusMsg|string|status_msg|-|
-|brokerSysID|int64|brokerSysID|-|
-|volume|int32|volume int|-|
-|volumeFilled|int32|volume_filled int|-|
-|volumeRemained|int32|volume_remained int|-|
-|price|double|price double 19_4|-|
-|tradeId|string|trade_id varchar 21|-|
-|ordRejReason|int32|ord_rej_reason|-|
-|updateTime|string|update_time|-|
-|cancelTime|string|cancel_time|-|
-|remark|string|remark|-|
+|ordSysId|int64|ordSysId [*]|-|
+|orderRef|string|订单引用|-|
+|orderMsgType|int32|订单消息类型|-|
+|offset|string|买/卖|-|
+|direction|string|方向|-|
+|limitPrice|double|指定价格|-|
+|status|int32|订单状态|-|
+|statusMsg|string|状态信息|-|
+|brokerSysID|int64|经纪商系统ID|-|
+|volume|int32|数量|-|
+|volumeFilled|int32|成交数量|-|
+|volumeRemained|int32|剩余数量|-|
+|price|double|价格|-|
+|tradeId|string|成交ID|-|
+|ordRejReason|int32|订单拒绝理由|-|
+|updateTime|string|更新时间|-|
+|cancelTime|string|取消时间|-|
+|remark|string|备注|-|
 
 **Response-example:**
 ```json
@@ -157,7 +121,7 @@ curl -X GET -i /order/event?td=0&strategyId=0
     "ordSysId": 0,
     "orderRef": "",
     "orderMsgType": 0,
-    "ordOffset": "",
+    "offset": "",
     "direction": "",
     "limitPrice": 0.0,
     "status": 0,

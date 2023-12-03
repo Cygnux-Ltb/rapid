@@ -76,7 +76,7 @@ public final class PnlController {
                                                    @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             throw new IllegalArgumentException("tradingDay");
-        return (service.getPnlSettlement(strategyId, tradingDay));
+        return service.getPnlSettlement(strategyId, tradingDay);
     }
 
 }

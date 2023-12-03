@@ -1,22 +1,14 @@
-INSERT INTO "PUBLIC"."TBL_SYS_PARAM" ("OWNER_GROUP", "OWNER_NAME", "PARAM_GROUP", "PARAM_NAME", "PARAM_TYPE", "PARAM_VALUE")
-VALUES ('CTP', 'SIMNOW', 'ChinaTelecom0', 'TradeAddr', 'STRING', '180.168.146.187'),
-       ('CTP', 'SIMNOW', 'ChinaTelecom0', 'MdPort', 'INT', '10201'),
-       ('CTP', 'SIMNOW', 'ChinaTelecom0', 'TdPort', 'INT', '10211'),
-       ('CTP', 'SIMNOW', 'ChinaTelecom1', 'Param4', 'STRING', 'Value4'),
-       ('CTP', 'SIMNOW', 'ChinaTelecom1', 'Param5', 'Type5', 'Value5'),
-       ('CTP', 'SIMNOW', 'ChinaTelecom1', 'Param6', 'Type6', 'Value6'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param7', 'Type7', 'Value7'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param8', 'Type8', 'Value8'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param9', 'Type9', 'Value9'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param10', 'Type10', 'Value10'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param11', 'Type11', 'Value11'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param12', 'Type12', 'Value12'),
-       ('CTP', 'SIMNOW', 'TradeAddrCT0', 'Param13', 'Type13', 'Value13'),
-       ('Group5', 'Owner5', 'Param14', 'Type14', 'Value14'),
-       ('Group5', 'Owner5', 'Param15', 'Type15', 'Value15'),
-       ('Group6', 'Owner6', 'Param16', 'Type16', 'Value16'),
-       ('Group6', 'Owner6', 'Param17', 'Type17', 'Value17'),
-       ('Group6', 'Owner6', 'Param18', 'Type18', 'Value18'),
-       ('Group7', 'Owner7', 'Param19', 'Type19', 'Value19'),
-       ('Group7', 'Owner7', 'Param20', 'Type20', 'Value20');
+INSERT INTO "PUBLIC"."TBL_SYS_PARAM"
+("OWNER_GROUP", "OWNER_NAME", "PARAM_GROUP", "PARAM_NAME", "PARAM_TYPE", "PARAM_VALUE")
+VALUES ('SIMNOW', 'TRADE', '电信1', 'traderAddr', 'STRING', '180.168.146.187:10201')
+     , ('SIMNOW', 'TRADE', '电信1', 'mdAddr', 'STRING', '180.168.146.187:10211')
+     , ('SIMNOW', 'TRADE', '电信2', 'traderAddr', 'STRING', '180.168.146.187:10202')
+     , ('SIMNOW', 'TRADE', '电信2', 'mdAddr', 'STRING', '180.168.146.187:10212')
+     , ('SIMNOW', 'TRADE', '移动1', 'traderAddr', 'STRING', '218.202.237.33:10203')
+     , ('SIMNOW', 'TRADE', '移动1', 'mdAddr', 'STRING', '218.202.237.33:10213')
+     , ('SIMNOW', 'TEST', '测试1', 'traderAddr', 'STRING', '180.168.146.187:10130')
+     , ('SIMNOW', 'TEST', '测试1', 'mdAddr', 'STRING', '180.168.146.187:10131')
+     , ('SIMNOW', 'COMMON', '公用', 'appId', 'STRING', 'simnow_client_test')
+     , ('SIMNOW', 'COMMON', '公用', 'authCode', 'STRING', '0000000000000000')
+;
 

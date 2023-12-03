@@ -2,7 +2,7 @@ package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.BarDao;
 import io.cygnuxltb.console.persistence.entity.TblMkdBar;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.BarDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public final class BarService {
         return select(TblMkdBar.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 

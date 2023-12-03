@@ -76,6 +76,7 @@ curl -X POST -i /user/signup
 |-------|------|-------------|-------|
 |code|int32|No comments found.|-|
 |message|string|No comments found.|-|
+|info|string|No comments found.|-|
 |array|boolean|No comments found.|-|
 |data|object|No comments found.|-|
 
@@ -84,6 +85,7 @@ curl -X POST -i /user/signup
 {
   "code": 0,
   "message": "",
+  "info": "",
   "array": true,
   "data": {}
 }

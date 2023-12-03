@@ -11,9 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.ColumnConst.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.ColumnConst.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
 
 /**
  * 盈亏表

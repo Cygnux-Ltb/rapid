@@ -13,6 +13,8 @@ public class ResponseBean {
 
     private String message;
 
+    private String info;
+
     private boolean isArray;
 
     private Object data;

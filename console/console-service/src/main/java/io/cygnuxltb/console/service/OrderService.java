@@ -1,12 +1,13 @@
 package io.cygnuxltb.console.service;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblTrdOrder;
-import io.cygnuxltb.console.persistence.entity.TblTrdOrderEvent;
+import io.cygnuxltb.console.persistence.dao.OrderDao;
 import io.cygnuxltb.console.persistence.dao.OrderEventDao;
 import io.cygnuxltb.console.persistence.dao.OrderExtDao;
-import io.cygnuxltb.console.persistence.dao.OrderDao;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.persistence.entity.TblTrdOrder;
+import io.cygnuxltb.console.persistence.entity.TblTrdOrderEvent;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.OrderDTO;
 import io.cygnuxltb.protocol.http.response.OrderEventDTO;
 import io.mercury.common.lang.Throws;
@@ -14,18 +15,22 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalAccountId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
-import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInvestorId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalOrdSysId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalTradingDay;
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
+import static io.mercury.common.collections.MutableLists.newFastList;
+import static io.mercury.common.lang.Throws.illegalArgument;
 
 @Service
 public final class OrderService {
@@ -41,42 +46,51 @@ public final class OrderService {
     @Resource
     private OrderEventDao eventDao;
 
+    @Value("")
+    private final boolean isMock = true;
+
     /**
+     * @param accountId      int
      * @param strategyId     int
-     * @param investorId     String
      * @param instrumentCode String
      * @param tradingDay     int
-     * @return List<TOrder>
+     * @return List<OrderDTO>
      */
-    public List<OrderDTO> getOrders(int strategyId, String investorId,
+    public List<OrderDTO> getOrders(int accountId, int strategyId,
                                     String instrumentCode, int tradingDay) {
-        return getOrders(strategyId, investorId, instrumentCode, tradingDay, tradingDay);
+        return getOrders(strategyId, accountId, instrumentCode, tradingDay, tradingDay);
     }
 
     /**
+     * @param accountId       int
      * @param strategyId      int
-     * @param investorId      String
      * @param instrumentCode  String
      * @param startTradingDay int
      * @param endTradingDay   int
      * @return List<TOrder>
      */
-    public List<OrderDTO> getOrders(int strategyId, String investorId, String instrumentCode,
+    public List<OrderDTO> getOrders(int accountId, int strategyId, String instrumentCode,
                                     int startTradingDay, int endTradingDay) {
-        // String errMsg = "[OrderService::getOrders] param error";
+        if (illegalAccountId(accountId, log))
+            illegalArgument("accountId");
         if (illegalStrategyId(strategyId, log))
-            Throws.illegalArgument("strategyId");
-        if (illegalTradingDay(startTradingDay, endTradingDay, log))
-            Throws.illegalArgument("startTradingDay & endTradingDay");
-        if (illegalInvestorId(investorId, log))
-            Throws.illegalArgument("investorId");
+            illegalArgument("strategyId");
         if (illegalInstrumentCode(instrumentCode, log))
-            Throws.illegalArgument("instrumentCode");
+            illegalArgument("instrumentCode");
+        if (illegalTradingDay(startTradingDay, endTradingDay, log))
+            illegalArgument("startTradingDay & endTradingDay");
+        if (isMock) {
+            var mockData = new ArrayList<OrderDTO>();
+            mockData.add(JMockData.mock(OrderDTO.class));
+            mockData.add(JMockData.mock(OrderDTO.class));
+            mockData.add(JMockData.mock(OrderDTO.class));
+            return mockData;
+        }
         return select(TblTrdOrder.class,
-                () -> dao.queryBy(strategyId, investorId, instrumentCode,
+                () -> dao.queryBy(accountId, strategyId, instrumentCode,
                         startTradingDay, endTradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -86,11 +100,11 @@ public final class OrderService {
      */
     public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
-            return new FastList<>();
+            return newFastList();
         return select(TblTrdOrderEvent.class,
                 () -> eventDao.queryByOrdSysId(ordSysId))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -102,9 +116,9 @@ public final class OrderService {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             return new FastList<>();
         return select(TblTrdOrderEvent.class,
-                () -> eventDao.queryByTradingDay(tradingDay))
+                () -> eventDao.queryBy(0, tradingDay, tradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 

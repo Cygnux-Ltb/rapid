@@ -1,10 +1,10 @@
 package io.cygnuxltb.console.controller;
 
+import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.TblMkdBar;
 import io.cygnuxltb.console.service.BarService;
-import io.cygnuxltb.protocol.http.response.BarDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -37,17 +36,19 @@ public final class BarController {
     /**
      * 获取1分钟BAR
      *
-     * @param tradingDay     交易日
      * @param instrumentCode 标的代码 (不支持查询多个标的)
+     * @param tradingDay     交易日
      * @return List<BarEntity>
      * @apiNote 获取1分钟BAR
      */
     @GetMapping
-    public List<BarDTO> getBars(@RequestParam(TRADING_DAY) int tradingDay,
-                                @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        log.info("get bars with : tradingDay -> {}, instrumentCode -> {}",
-                tradingDay, instrumentCode);
-        return service.getBars(instrumentCode, tradingDay);
+    public ResponseBean getBars(@RequestParam(INSTRUMENT_CODE) String instrumentCode,
+                                @RequestParam(TRADING_DAY) int tradingDay) {
+        log.info("get bars with : instrumentCode -> {}, tradingDay -> {}",
+                instrumentCode, tradingDay);
+        if (illegalInstrumentCode(instrumentCode, log))
+            return ResponseStatus.BAD_REQUEST.response("[instrumentCode]不可为空");
+        return ResponseStatus.OK.responseOf(service.getBars(instrumentCode, tradingDay));
     }
 
     /**

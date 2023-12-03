@@ -181,6 +181,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.jsonzou</groupId>
+            <artifactId>jmockdata</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
         <!-- The AspectJ weaver applies aspects to Java classes.
              It can be used as a Java agent in order to apply load-time weaving
              (LTW) during class-loading and also contains the AspectJ runtime classes. -->

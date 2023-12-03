@@ -11,8 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.SUB_ACCOUNT_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.USER_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.USER_ID;
 
 /**
  * 交易产品表
@@ -38,11 +38,11 @@ public final class TblSysProduct {
     @Column(name = "PRODUCT_NAME")
     private String productName;
 
-    @Column(name = SUB_ACCOUNT_ID)
-    private String subAccountId;
-
     @Column(name = USER_ID)
     private String userId;
+
+    @Column(name = SUB_ACCOUNT_ID)
+    private String subAccountId;
 
     @Column(name = "ADAPTOR_TYPE")
     private String interfaceType;

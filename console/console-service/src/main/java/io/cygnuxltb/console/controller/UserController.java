@@ -34,11 +34,19 @@ public class UserController {
      */
     @PostMapping(path = "/signin")
     public SignInStatus signin(String sign, String password) {
-        boolean signIn = service.signIn(sign, password);
-        return new SignInStatus()
-                .setAuthenticated(signIn)
-                .setSecurityCode(EpochTime.getEpochMillis())
-                .setMessage(signIn ? "SUCCESSFUL" : "FAILED");
+        int signIn = service.signIn(sign, password);
+        SignInStatus status = new SignInStatus()
+                .setAuthenticated(false)
+                .setSecurityCode(EpochTime.getEpochMillis());
+        return switch (signIn) {
+            case -1 -> status
+                    .setMessage("密码错误");
+            case 0 -> status
+                    .setMessage("用户不存在");
+            default -> status
+                    .setAuthenticated(true)
+                    .setMessage("验证成功");
+        };
     }
 
     /**

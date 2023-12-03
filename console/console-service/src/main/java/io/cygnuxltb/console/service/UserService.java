@@ -15,12 +15,12 @@ public final class UserService {
     @Resource
     private UserDao dao;
 
-    public boolean signIn(String sign, String password) {
+    public int signIn(String sign, String password) {
         TblSysUser user = getUser(sign);
         if (user == null)
-            return false;
+            return 0;
         else
-            return user.getPassword().equals(password);
+            return user.getPassword().equals(password) ? 1 : -1;
     }
 
 

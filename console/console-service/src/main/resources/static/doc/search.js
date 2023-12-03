@@ -167,7 +167,7 @@ api.push({
 })
 api[9].list.push({
     order: '1',
-    desc: '',
+    desc: '提交测试请求',
 });
 api.push({
     alias: 'StatusController',

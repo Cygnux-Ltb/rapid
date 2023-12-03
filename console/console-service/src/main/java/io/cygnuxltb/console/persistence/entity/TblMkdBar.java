@@ -11,8 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.ColumnConst.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
 
 /**
  * K线表
@@ -42,8 +42,8 @@ public final class TblMkdBar {
     @Column(name = "ACTUAL_DATE")
     private int actualDate;
 
-    @Column(name = "TIME_POINT")
-    private int timePoint;
+    @Column(name = "ACTUAL_TIME")
+    private int actualTime;
 
     @Column(name = "OPEN")
     private double open;

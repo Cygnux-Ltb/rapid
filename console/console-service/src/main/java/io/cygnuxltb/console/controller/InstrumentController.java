@@ -1,14 +1,13 @@
 package io.cygnuxltb.console.controller;
 
+import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.service.InstrumentService;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
 import io.cygnuxltb.protocol.http.response.InstrumentDTO;
 import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
-import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.util.StringSupport;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -23,6 +22,7 @@ import java.util.List;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -62,11 +62,11 @@ public final class InstrumentController {
      * @return List<InstrumentPrice>
      */
     @GetMapping(path = "/price")
-    public List<InstrumentPrice> getLastPrice(
+    public ResponseBean getLastPrice(
             @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        if (StringSupport.isNullOrEmpty(instrumentCode))
-            Throws.illegalArgument("instrumentCodes");
-        return service.getLastPrice(instrumentCode.split(","));
+        if (illegalInstrumentCode(instrumentCode, log))
+            return ResponseStatus.BAD_REQUEST.response("[instrumentCode]不可为空");
+        return ResponseStatus.OK.responseOf(service.getLastPrice(instrumentCode.split(",")));
     }
 
     /**

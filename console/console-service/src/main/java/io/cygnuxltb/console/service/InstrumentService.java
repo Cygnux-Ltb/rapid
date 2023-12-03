@@ -4,7 +4,7 @@ import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
 import io.cygnuxltb.console.persistence.entity.TblMkdInstrument;
 import io.cygnuxltb.console.persistence.entity.TblMkdInstrumentSettlement;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
 import io.cygnuxltb.protocol.http.response.InstrumentDTO;
 import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
@@ -45,7 +45,7 @@ public final class InstrumentService {
         return select(TblMkdInstrument.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -58,9 +58,9 @@ public final class InstrumentService {
             int tradingDay, @Nonnull String instrumentCode) {
         return select(TblMkdInstrumentSettlement.class,
                 () -> settlementDao
-                        .queryBy(tradingDay, instrumentCode))
+                        .queryBy(instrumentCode, tradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +87,7 @@ public final class InstrumentService {
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentStatic(@Nonnull TblMkdInstrumentSettlement entity) {
+    public boolean putInstrumentSettlement(@Nonnull TblMkdInstrumentSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

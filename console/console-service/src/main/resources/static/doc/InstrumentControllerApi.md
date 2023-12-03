@@ -78,17 +78,21 @@ curl -X GET -i /instrument/price?code=
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|instrumentCode|string|交易标的|-|
-|lastPrice|double|最新价格|-|
+|code|int32|No comments found.|-|
+|message|string|No comments found.|-|
+|info|string|No comments found.|-|
+|array|boolean|No comments found.|-|
+|data|object|No comments found.|-|
 
 **Response-example:**
 ```json
-[
-  {
-    "instrumentCode": "",
-    "lastPrice": 0.0
-  }
-]
+{
+  "code": 0,
+  "message": "",
+  "info": "",
+  "array": true,
+  "data": {}
+}
 ```
 
 ## 更新最新价格 (內部接口)
