@@ -39,4 +39,9 @@ public final class AccountDTO {
      */
     private String investorId;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
 }

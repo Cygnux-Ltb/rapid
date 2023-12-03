@@ -1,2 +1,3 @@
-# JCTS
-Java Comprehensive Trade System
+# Rapid
+
+Rapid Comprehensive Strategy Trade System
