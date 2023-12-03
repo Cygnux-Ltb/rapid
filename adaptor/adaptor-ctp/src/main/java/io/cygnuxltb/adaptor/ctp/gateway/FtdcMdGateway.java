@@ -149,14 +149,10 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     @Override
     public void fireFrontConnected() {
         log.info("FtdcMdGateway::fireFrontConnected");
-        CThostFtdcReqUserLoginField field = new CThostFtdcReqUserLoginField();
-        field.setBrokerID(config.getBrokerId());
-        field.setUserID(config.getUserId());
-        field.setClientIPAddress(config.getIpAddr());
-        field.setMacAddress(config.getMacAddr());
-        int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqUserLogin(field, RequestID);
-        log.info("Send CThostFtdcMdApi::ReqUserLogin OK ->  nRequestID==[{}]", RequestID);
+        CThostFtdcReqUserLoginField ReqField = config.getReqUserLoginField();
+        int newRequestID = requestIdGetter.incrementAndGet();
+        NativeApi.ReqUserLogin(ReqField, newRequestID);
+        log.info("Send CThostFtdcMdApi::ReqUserLogin OK ->  nRequestID==[{}]", newRequestID);
     }
 
     /**
@@ -207,10 +203,10 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
         if (nonError("FtdcMdSpi::OnRspUserLogout", RspInfo)) {
             if (UserLogout != null) {
                 // TODO 处理用户登出
-                log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
+                log.info("FtdcMdGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
                         UserLogout.getUserID());
             } else {
-                log.error("FtdcMdSpi::OnRspUserLogin return null");
+                log.error("FtdcMdGateway::OnRspUserLogin return null");
             }
         }
 
@@ -220,7 +216,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspError, ErrorID==[{}], ErrorMsg==[{}], RequestID==[{}], IsLast==[{}]",
                 RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
-        publisher.publishRspError(RspInfo, RequestID, IsLast);
+        publisher.publish(RspInfo, RequestID, IsLast);
     }
 
     /**
@@ -276,4 +272,8 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
             log.error("FtdcMdGateway::fireRtnDepthMarketData return null");
     }
 
+    @Override
+    public String toString() {
+        return "FtdcMdGateway{gatewayId='" + gatewayId + "'}";
+    }
 }

@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event.received;
+package io.cygnuxltb.adaptor.ctp.gateway.event.received.md;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import lombok.Getter;

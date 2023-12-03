@@ -1,6 +1,6 @@
 package io.cygnuxltb.adaptor.ctp.converter;
 
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcDepthMarketData;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
 import io.mercury.common.datetime.TimeConst;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.instrument.InstrumentKeeper;

@@ -1,6 +1,8 @@
 package io.cygnuxltb.adaptor.ctp;
 
 import com.typesafe.config.Config;
+import ctp.thostapi.CThostFtdcReqAuthenticateField;
+import ctp.thostapi.CThostFtdcReqUserLoginField;
 import io.mercury.common.cfg.ConfigWrapper;
 import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;
@@ -134,4 +136,23 @@ public class CtpConfig {
                 .setTradingDay(params.getString(TradingDay));
     }
 
+    public CThostFtdcReqAuthenticateField getReqAuthenticateField() {
+        CThostFtdcReqAuthenticateField ReqField = new CThostFtdcReqAuthenticateField();
+        ReqField.setAppID(this.getAppId());
+        ReqField.setUserID(this.getUserId());
+        ReqField.setBrokerID(this.getBrokerId());
+        ReqField.setAuthCode(this.getAuthCode());
+        return ReqField;
+    }
+
+    public CThostFtdcReqUserLoginField getReqUserLoginField() {
+        CThostFtdcReqUserLoginField ReqField = new CThostFtdcReqUserLoginField();
+        ReqField.setBrokerID(this.getBrokerId());
+        ReqField.setUserID(this.getUserId());
+        ReqField.setPassword(this.getPassword());
+        ReqField.setClientIPAddress(this.getIpAddr());
+        ReqField.setMacAddress(this.getMacAddr());
+        return ReqField;
+    }
+    
 }

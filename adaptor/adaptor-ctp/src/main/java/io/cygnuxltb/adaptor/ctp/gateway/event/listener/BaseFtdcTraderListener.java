@@ -93,8 +93,12 @@ import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import org.slf4j.Logger;
 
 public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
+
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcTraderListener.class);
 
     protected BaseFtdcTraderListener() {
     }
@@ -104,6 +108,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireFrontConnected() {
+        log.warn("TraderSpi::fireFrontConnected Unsupported");
     }
 
 
@@ -119,6 +124,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
+        log.warn("TraderSpi::fireFrontDisconnected Unsupported");
     }
 
 
@@ -129,6 +135,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
+        log.warn("TraderSpi::fireHeartBeatWarning Unsupported");
     }
 
 
@@ -143,6 +150,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspAuthenticate Unsupported");
     }
 
 
@@ -157,6 +165,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspUserLogin Unsupported");
     }
 
 
@@ -171,6 +180,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspUserLogout Unsupported");
     }
 
 
@@ -185,6 +195,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspUserPasswordUpdate Unsupported");
     }
 
 
@@ -199,6 +210,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField Field,
                                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspTradingAccountPasswordUpdate Unsupported");
     }
 
 
@@ -213,6 +225,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspUserAuthMethod(CThostFtdcRspUserAuthMethodField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspUserAuthMethod Unsupported");
     }
 
 
@@ -227,6 +240,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspGenUserCaptcha(CThostFtdcRspGenUserCaptchaField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspGenUserCaptcha Unsupported");
     }
 
 
@@ -241,6 +255,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspGenUserText(CThostFtdcRspGenUserTextField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspGenUserText Unsupported");
     }
 
 
@@ -255,6 +270,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspOrderInsert(CThostFtdcInputOrderField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspOrderInsert Unsupported");
     }
 
 
@@ -269,6 +285,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspParkedOrderInsert(CThostFtdcParkedOrderField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspParkedOrderInsert Unsupported");
     }
 
 
@@ -283,6 +300,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspParkedOrderAction Unsupported");
     }
 
 
@@ -297,6 +315,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspOrderAction(CThostFtdcInputOrderActionField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspOrderAction Unsupported");
     }
 
 
@@ -311,6 +330,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQueryMaxOrderVolume Unsupported");
     }
 
 
@@ -325,6 +345,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspSettlementInfoConfirm Unsupported");
     }
 
 
@@ -339,6 +360,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspRemoveParkedOrder Unsupported");
     }
 
 
@@ -353,6 +375,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspRemoveParkedOrderAction Unsupported");
     }
 
 
@@ -367,6 +390,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspExecOrderInsert Unsupported");
     }
 
 
@@ -381,6 +405,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspExecOrderAction(CThostFtdcInputExecOrderActionField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspExecOrderAction Unsupported");
     }
 
 
@@ -395,6 +420,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspForQuoteInsert Unsupported");
     }
 
 
@@ -409,6 +435,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQuoteInsert(CThostFtdcInputQuoteField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQuoteInsert Unsupported");
     }
 
 
@@ -423,6 +450,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQuoteAction(CThostFtdcInputQuoteActionField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQuoteAction Unsupported");
     }
 
 
@@ -437,6 +465,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspBatchOrderAction Unsupported");
     }
 
 
@@ -451,6 +480,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspOptionSelfCloseInsert Unsupported");
     }
 
 
@@ -465,6 +495,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspOptionSelfCloseAction(CThostFtdcInputOptionSelfCloseActionField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspOptionSelfCloseAction Unsupported");
     }
 
 
@@ -479,6 +510,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspCombActionInsert(CThostFtdcInputCombActionField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspCombActionInsert Unsupported");
     }
 
 
@@ -493,6 +525,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryOrder(CThostFtdcOrderField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryOrder Unsupported");
     }
 
 
@@ -507,6 +540,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTrade(CThostFtdcTradeField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTrade Unsupported");
     }
 
 
@@ -521,6 +555,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestorPosition Unsupported");
     }
 
 
@@ -535,6 +570,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTradingAccount(CThostFtdcTradingAccountField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTradingAccount Unsupported");
     }
 
 
@@ -549,6 +585,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestor(CThostFtdcInvestorField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestor Unsupported");
     }
 
 
@@ -563,6 +600,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTradingCode(CThostFtdcTradingCodeField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTradingCode Unsupported");
     }
 
 
@@ -577,6 +615,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInstrumentMarginRate Unsupported");
     }
 
 
@@ -591,6 +630,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInstrumentCommissionRate Unsupported");
     }
 
 
@@ -605,6 +645,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryExchange(CThostFtdcExchangeField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryExchange Unsupported");
     }
 
 
@@ -619,6 +660,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryProduct(CThostFtdcProductField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryProduct Unsupported");
     }
 
 
@@ -633,6 +675,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInstrument(CThostFtdcInstrumentField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInstrument Unsupported");
     }
 
 
@@ -647,6 +690,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryDepthMarketData(CThostFtdcDepthMarketDataField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryDepthMarketData Unsupported");
     }
 
 
@@ -661,6 +705,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySettlementInfo(CThostFtdcSettlementInfoField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySettlementInfo Unsupported");
     }
 
 
@@ -675,6 +720,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTransferBank(CThostFtdcTransferBankField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTransferBank Unsupported");
     }
 
 
@@ -689,6 +735,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestorPositionDetail Unsupported");
     }
 
 
@@ -703,6 +750,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryNotice(CThostFtdcNoticeField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryNotice Unsupported");
     }
 
 
@@ -717,6 +765,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySettlementInfoConfirm Unsupported");
     }
 
 
@@ -731,6 +780,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField Field,
                                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestorPositionCombineDetail Unsupported");
     }
 
 
@@ -745,6 +795,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryCFMMCTradingAccountKey Unsupported");
     }
 
 
@@ -759,6 +810,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryEWarrantOffset Unsupported");
     }
 
 
@@ -773,6 +825,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestorProductGroupMargin(CThostFtdcInvestorProductGroupMarginField Field,
                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestorProductGroupMargin Unsupported");
     }
 
 
@@ -787,6 +840,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryExchangeMarginRate(CThostFtdcExchangeMarginRateField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryExchangeMarginRate Unsupported");
     }
 
 
@@ -801,6 +855,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryExchangeMarginRateAdjust(CThostFtdcExchangeMarginRateAdjustField Field,
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryExchangeMarginRateAdjust Unsupported");
     }
 
 
@@ -815,6 +870,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryExchangeRate(CThostFtdcExchangeRateField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryExchangeRate Unsupported");
     }
 
 
@@ -829,6 +885,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySecAgentACIDMap(CThostFtdcSecAgentACIDMapField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySecAgentACIDMap Unsupported");
     }
 
 
@@ -843,6 +900,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryProductExchRate(CThostFtdcProductExchRateField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryProductExchRate Unsupported");
     }
 
 
@@ -857,6 +915,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryProductGroup(CThostFtdcProductGroupField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryProductGroup Unsupported");
     }
 
 
@@ -871,6 +930,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryMMInstrumentCommissionRate(CThostFtdcMMInstrumentCommissionRateField Field,
                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryMMInstrumentCommissionRate Unsupported");
     }
 
 
@@ -885,6 +945,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryMMOptionInstrCommRate(CThostFtdcMMOptionInstrCommRateField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryMMOptionInstrCommRate Unsupported");
     }
 
 
@@ -899,6 +960,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInstrumentOrderCommRate(CThostFtdcInstrumentOrderCommRateField Field,
                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInstrumentOrderCommRate Unsupported");
     }
 
 
@@ -913,6 +975,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySecAgentTradingAccount(CThostFtdcTradingAccountField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySecAgentTradingAccount Unsupported");
     }
 
 
@@ -927,6 +990,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySecAgentCheckMode(CThostFtdcSecAgentCheckModeField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySecAgentCheckMode Unsupported");
     }
 
 
@@ -941,6 +1005,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQrySecAgentTradeInfo(CThostFtdcSecAgentTradeInfoField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQrySecAgentTradeInfo Unsupported");
     }
 
 
@@ -955,6 +1020,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryOptionInstrTradeCost(CThostFtdcOptionInstrTradeCostField Field,
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryOptionInstrTradeCost Unsupported");
     }
 
 
@@ -969,6 +1035,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryOptionInstrCommRate(CThostFtdcOptionInstrCommRateField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryOptionInstrCommRate Unsupported");
     }
 
 
@@ -983,6 +1050,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryExecOrder(CThostFtdcExecOrderField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryExecOrder Unsupported");
     }
 
 
@@ -997,6 +1065,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryForQuote(CThostFtdcForQuoteField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryForQuote Unsupported");
     }
 
 
@@ -1011,6 +1080,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryQuote(CThostFtdcQuoteField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryQuote Unsupported");
     }
 
 
@@ -1025,6 +1095,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryOptionSelfClose(CThostFtdcOptionSelfCloseField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryOptionSelfClose Unsupported");
     }
 
 
@@ -1039,6 +1110,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryInvestUnit(CThostFtdcInvestUnitField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryInvestUnit Unsupported");
     }
 
 
@@ -1053,6 +1125,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryCombInstrumentGuard(CThostFtdcCombInstrumentGuardField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryCombInstrumentGuard Unsupported");
     }
 
 
@@ -1067,6 +1140,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryCombAction(CThostFtdcCombActionField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryCombAction Unsupported");
     }
 
 
@@ -1081,6 +1155,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTransferSerial(CThostFtdcTransferSerialField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTransferSerial Unsupported");
     }
 
 
@@ -1095,6 +1170,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryAccountregister(CThostFtdcAccountregisterField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryAccountregister Unsupported");
     }
 
 
@@ -1107,26 +1183,29 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspError Unsupported");
     }
 
 
     /**
-     * ///报单通知
+     * ///报单通知 ***
      *
      * @param Order CThostFtdcOrderField
      */
     @Override
     public void fireRtnOrder(CThostFtdcOrderField Order) {
+        log.warn("TraderSpi::fireRtnOrder Unsupported");
     }
 
 
     /**
-     * ///成交通知
+     * ///成交通知 ***
      *
      * @param Trade CThostFtdcTradeField
      */
     @Override
     public void fireRtnTrade(CThostFtdcTradeField Trade) {
+        log.warn("TraderSpi::fireRtnTrade Unsupported");
     }
 
 
@@ -1139,6 +1218,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field,
                                       CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnOrderInsert Unsupported");
     }
 
 
@@ -1151,6 +1231,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnOrderAction(CThostFtdcOrderActionField Field,
                                       CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnOrderAction Unsupported");
     }
 
 
@@ -1161,6 +1242,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
+        log.warn("TraderSpi::fireRtnInstrumentStatus Unsupported");
     }
 
 
@@ -1171,6 +1253,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnBulletin(CThostFtdcBulletinField Field) {
+        log.warn("TraderSpi::fireRtnBulletin Unsupported");
     }
 
 
@@ -1181,6 +1264,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnTradingNotice(CThostFtdcTradingNoticeInfoField Field) {
+        log.warn("TraderSpi::fireRtnTradingNotice Unsupported");
     }
 
 
@@ -1191,6 +1275,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField Field) {
+        log.warn("TraderSpi::fireRtnErrorConditionalOrder Unsupported");
     }
 
 
@@ -1201,6 +1286,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnExecOrder(CThostFtdcExecOrderField Field) {
+        log.warn("TraderSpi::fireRtnExecOrder Unsupported");
     }
 
 
@@ -1213,6 +1299,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                           CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnExecOrderInsert Unsupported");
     }
 
 
@@ -1225,6 +1312,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnExecOrderAction(CThostFtdcExecOrderActionField Field,
                                           CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnExecOrderAction Unsupported");
     }
 
 
@@ -1237,6 +1325,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                          CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnForQuoteInsert Unsupported");
     }
 
 
@@ -1247,6 +1336,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnQuote(CThostFtdcQuoteField Field) {
+        log.warn("TraderSpi::fireRtnQuote Unsupported");
     }
 
 
@@ -1259,6 +1349,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnQuoteInsert(CThostFtdcInputQuoteField Field,
                                       CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnQuoteInsert Unsupported");
     }
 
 
@@ -1271,6 +1362,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnQuoteAction(CThostFtdcQuoteActionField Field,
                                       CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnQuoteAction Unsupported");
     }
 
 
@@ -1281,6 +1373,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnForQuoteRsp(CThostFtdcForQuoteRspField Field) {
+        log.warn("TraderSpi::fireRtnForQuoteRsp Unsupported");
     }
 
 
@@ -1291,6 +1384,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnCFMMCTradingAccountToken(CThostFtdcCFMMCTradingAccountTokenField Field) {
+        log.warn("TraderSpi::fireRtnCFMMCTradingAccountToken Unsupported");
     }
 
 
@@ -1303,6 +1397,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
                                            CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnBatchOrderAction Unsupported");
     }
 
 
@@ -1313,6 +1408,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnOptionSelfClose(CThostFtdcOptionSelfCloseField Field) {
+        log.warn("TraderSpi::fireRtnOptionSelfClose Unsupported");
     }
 
 
@@ -1325,6 +1421,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                                 CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnOptionSelfCloseInsert Unsupported");
     }
 
 
@@ -1337,6 +1434,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnOptionSelfCloseAction(CThostFtdcOptionSelfCloseActionField Field,
                                                 CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnOptionSelfCloseAction Unsupported");
     }
 
 
@@ -1347,6 +1445,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnCombAction(CThostFtdcCombActionField Field) {
+        log.warn("TraderSpi::fireRtnCombAction Unsupported");
     }
 
 
@@ -1359,6 +1458,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnCombActionInsert(CThostFtdcInputCombActionField Field,
                                            CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnCombActionInsert Unsupported");
     }
 
 
@@ -1373,6 +1473,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryContractBank(CThostFtdcContractBankField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryContractBank Unsupported");
     }
 
 
@@ -1387,6 +1488,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryParkedOrder(CThostFtdcParkedOrderField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryParkedOrder Unsupported");
     }
 
 
@@ -1401,6 +1503,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryParkedOrderAction Unsupported");
     }
 
 
@@ -1415,6 +1518,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryTradingNotice(CThostFtdcTradingNoticeField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryTradingNotice Unsupported");
     }
 
 
@@ -1429,6 +1533,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryBrokerTradingParams Unsupported");
     }
 
 
@@ -1443,6 +1548,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQryBrokerTradingAlgos Unsupported");
     }
 
 
@@ -1457,6 +1563,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQueryCFMMCTradingAccountToken(CThostFtdcQueryCFMMCTradingAccountTokenField Field,
                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQueryCFMMCTradingAccountToken Unsupported");
     }
 
 
@@ -1467,6 +1574,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnFromBankToFutureByBank(CThostFtdcRspTransferField Field) {
+        log.warn("TraderSpi::fireRtnFromBankToFutureByBank Unsupported");
     }
 
 
@@ -1477,6 +1585,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnFromFutureToBankByBank(CThostFtdcRspTransferField Field) {
+        log.warn("TraderSpi::fireRtnFromFutureToBankByBank Unsupported");
     }
 
 
@@ -1487,6 +1596,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromBankToFutureByBank Unsupported");
     }
 
 
@@ -1497,6 +1607,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromFutureToBankByBank Unsupported");
     }
 
 
@@ -1507,6 +1618,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnFromBankToFutureByFuture(CThostFtdcRspTransferField Field) {
+        log.warn("TraderSpi::fireRtnFromBankToFutureByFuture Unsupported");
     }
 
 
@@ -1517,6 +1629,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnFromFutureToBankByFuture(CThostFtdcRspTransferField Field) {
+        log.warn("TraderSpi::fireRtnFromFutureToBankByFuture Unsupported");
     }
 
 
@@ -1527,6 +1640,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromBankToFutureByFutureManual Unsupported");
     }
 
 
@@ -1537,6 +1651,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromFutureToBankByFutureManual Unsupported");
     }
 
 
@@ -1547,6 +1662,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField Field) {
+        log.warn("TraderSpi::fireRtnQueryBankBalanceByFuture Unsupported");
     }
 
 
@@ -1559,6 +1675,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                                CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnBankToFutureByFuture Unsupported");
     }
 
 
@@ -1571,6 +1688,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                                CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnFutureToBankByFuture Unsupported");
     }
 
 
@@ -1583,6 +1701,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField Field,
                                                            CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnRepealBankToFutureByFutureManual Unsupported");
     }
 
 
@@ -1595,6 +1714,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField Field,
                                                            CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnRepealFutureToBankByFutureManual Unsupported");
     }
 
 
@@ -1607,6 +1727,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField Field,
                                                    CThostFtdcRspInfoField RspInfo) {
+        log.warn("TraderSpi::fireErrRtnQueryBankBalanceByFuture Unsupported");
     }
 
 
@@ -1617,6 +1738,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromBankToFutureByFuture Unsupported");
     }
 
 
@@ -1627,6 +1749,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField Field) {
+        log.warn("TraderSpi::fireRtnRepealFromFutureToBankByFuture Unsupported");
     }
 
 
@@ -1641,6 +1764,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspFromBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspFromBankToFutureByFuture Unsupported");
     }
 
 
@@ -1655,6 +1779,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspFromFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspFromFutureToBankByFuture Unsupported");
     }
 
 
@@ -1669,6 +1794,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     @Override
     public void fireRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField Field,
                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("TraderSpi::fireRspQueryBankAccountMoneyByFuture Unsupported");
     }
 
 
@@ -1679,6 +1805,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnOpenAccountByBank(CThostFtdcOpenAccountField Field) {
+        log.warn("TraderSpi::fireRtnOpenAccountByBank Unsupported");
     }
 
 
@@ -1689,6 +1816,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnCancelAccountByBank(CThostFtdcCancelAccountField Field) {
+        log.warn("TraderSpi::fireRtnCancelAccountByBank Unsupported");
     }
 
 
@@ -1699,6 +1827,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
      */
     @Override
     public void fireRtnChangeAccountByBank(CThostFtdcChangeAccountField Field) {
+        log.warn("TraderSpi::fireRtnChangeAccountByBank Unsupported");
     }
 
 }

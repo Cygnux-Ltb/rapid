@@ -6,8 +6,6 @@ import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import ctp.thostapi.CThostFtdcInstrumentField;
 import ctp.thostapi.CThostFtdcInstrumentStatusField;
-import ctp.thostapi.CThostFtdcInvestorField;
-import ctp.thostapi.CThostFtdcInvestorPositionDetailField;
 import ctp.thostapi.CThostFtdcInvestorPositionField;
 import ctp.thostapi.CThostFtdcOrderActionField;
 import ctp.thostapi.CThostFtdcOrderField;
@@ -157,17 +155,17 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     /**
      * 报单请求
      *
-     * @param field CThostFtdcInputOrderField
+     * @param Field CThostFtdcInputOrderField
      */
-    public int ReqOrderInsert(CThostFtdcInputOrderField field) {
+    public int ReqOrderInsert(CThostFtdcInputOrderField Field) {
         if (isTraderLogin) {
             // 设置账号信息
             int RequestID = requestIdGetter.incrementAndGet();
-            NativeApi.ReqOrderInsert(field, RequestID);
+            NativeApi.ReqOrderInsert(Field, RequestID);
             log.info("Send TraderApi::ReqOrderInsert OK ->  RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], "
                             + "CombOffsetFlag==[{}], Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
-                    RequestID, field.getOrderRef(), field.getInstrumentID(), field.getCombOffsetFlag(),
-                    field.getDirection(), field.getVolumeTotalOriginal(), field.getLimitPrice());
+                    RequestID, Field.getOrderRef(), Field.getInstrumentID(), Field.getCombOffsetFlag(),
+                    Field.getDirection(), Field.getVolumeTotalOriginal(), Field.getLimitPrice());
             return RequestID;
         } else {
             log.error("TraderApi::ReqOrderInsert call error :: TraderApi is not login");
@@ -178,16 +176,16 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     /**
      * 撤单请求
      *
-     * @param field CThostFtdcInputOrderActionField
+     * @param Field CThostFtdcInputOrderActionField
      */
-    public int ReqOrderAction(CThostFtdcInputOrderActionField field) {
+    public int ReqOrderAction(CThostFtdcInputOrderActionField Field) {
         if (isTraderLogin) {
             int RequestID = requestIdGetter.incrementAndGet();
-            NativeApi.ReqOrderAction(field, RequestID);
+            NativeApi.ReqOrderAction(Field, RequestID);
             log.info("Send TraderApi::ReqOrderAction OK -> RequestID==[{}], OrderRef==[{}], OrderActionRef==[{}], "
                             + "BrokerID==[{}], InvestorID==[{}], InstrumentID==[{}]",
-                    RequestID, field.getOrderRef(), field.getOrderActionRef(), field.getBrokerID(),
-                    field.getInvestorID(), field.getInstrumentID());
+                    RequestID, Field.getOrderRef(), Field.getOrderActionRef(), Field.getBrokerID(),
+                    Field.getInvestorID(), Field.getInstrumentID());
             return RequestID;
         } else {
             log.error("TraderApi::ReqOrderAction call error :: TraderApi is not login");
@@ -203,16 +201,16 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * @param instrumentCode String
      */
     public int ReqQryOrder(String exchangeCode, String instrumentCode) {
-        CThostFtdcQryOrderField field = new CThostFtdcQryOrderField();
-        field.setBrokerID(config.getBrokerId());
-        field.setInvestorID(config.getInvestorId());
-        field.setExchangeID(exchangeCode);
-        field.setInstrumentID(instrumentCode);
+        CThostFtdcQryOrderField ReqField = new CThostFtdcQryOrderField();
+        ReqField.setBrokerID(config.getBrokerId());
+        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setExchangeID(exchangeCode);
+        ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqQryOrder(field, RequestID);
+        NativeApi.ReqQryOrder(ReqField, RequestID);
         log.info(
                 "Send TraderApi::ReqQryOrder OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, field.getBrokerID(), field.getInvestorID(), field.getExchangeID(), field.getInstrumentID());
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(), ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -237,16 +235,16 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * </pre>
      */
     public int ReqQryTradingAccount() {
-        CThostFtdcQryTradingAccountField field = new CThostFtdcQryTradingAccountField();
-        field.setBrokerID(config.getBrokerId());
-        field.setAccountID(config.getAccountId());
-        field.setInvestorID(config.getInvestorId());
-        field.setCurrencyID(config.getCurrencyId());
+        CThostFtdcQryTradingAccountField ReqField = new CThostFtdcQryTradingAccountField();
+        ReqField.setBrokerID(config.getBrokerId());
+        ReqField.setAccountID(config.getAccountId());
+        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setCurrencyID(config.getCurrencyId());
         int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqQryTradingAccount(field, RequestID);
+        NativeApi.ReqQryTradingAccount(ReqField, RequestID);
         log.info(
                 "Send TraderApi::ReqQryTradingAccount OK -> RequestID==[{}], BrokerID==[{}], AccountID==[{}], InvestorID==[{}], CurrencyID==[{}]",
-                RequestID, field.getBrokerID(), field.getAccountID(), field.getInvestorID(), field.getCurrencyID());
+                RequestID, ReqField.getBrokerID(), ReqField.getAccountID(), ReqField.getInvestorID(), ReqField.getCurrencyID());
         return RequestID;
     }
 
@@ -257,16 +255,16 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * @param instrumentCode String
      */
     public int ReqQryInvestorPosition(String exchangeCode, String instrumentCode) {
-        CThostFtdcQryInvestorPositionField field = new CThostFtdcQryInvestorPositionField();
-        field.setBrokerID(config.getBrokerId());
-        field.setInvestorID(config.getInvestorId());
-        field.setExchangeID(exchangeCode);
-        field.setInstrumentID(instrumentCode);
+        CThostFtdcQryInvestorPositionField ReqField = new CThostFtdcQryInvestorPositionField();
+        ReqField.setBrokerID(config.getBrokerId());
+        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setExchangeID(exchangeCode);
+        ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqQryInvestorPosition(field, RequestID);
+        NativeApi.ReqQryInvestorPosition(ReqField, RequestID);
         log.info(
                 "Send TraderApi::ReqQryInvestorPosition OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, field.getBrokerID(), field.getInvestorID(), field.getExchangeID(), field.getInstrumentID());
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(), ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -291,14 +289,14 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * </pre>
      */
     public int ReqQrySettlementInfo() {
-        CThostFtdcQrySettlementInfoField field = new CThostFtdcQrySettlementInfoField();
-        field.setBrokerID(config.getBrokerId());
-        field.setInvestorID(config.getInvestorId());
-        field.setTradingDay(config.getTradingDay());
-        field.setAccountID(config.getAccountId());
-        field.setCurrencyID(config.getCurrencyId());
+        CThostFtdcQrySettlementInfoField ReqField = new CThostFtdcQrySettlementInfoField();
+        ReqField.setBrokerID(config.getBrokerId());
+        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setTradingDay(config.getTradingDay());
+        ReqField.setAccountID(config.getAccountId());
+        ReqField.setCurrencyID(config.getCurrencyId());
         int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqQrySettlementInfo(field, RequestID);
+        NativeApi.ReqQrySettlementInfo(ReqField, RequestID);
         log.info("Send TraderApi::ReqQrySettlementInfo OK -> RequestID==[{}]", RequestID);
         return RequestID;
     }
@@ -310,13 +308,13 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * @param instrumentCode String
      */
     public int ReqQryInstrument(String exchangeCode, String instrumentCode) {
-        CThostFtdcQryInstrumentField field = new CThostFtdcQryInstrumentField();
-        field.setExchangeID(exchangeCode);
-        field.setInstrumentID(instrumentCode);
+        CThostFtdcQryInstrumentField ReqField = new CThostFtdcQryInstrumentField();
+        ReqField.setExchangeID(exchangeCode);
+        ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdGetter.incrementAndGet();
-        NativeApi.ReqQryInstrument(field, RequestID);
+        NativeApi.ReqQryInstrument(ReqField, RequestID);
         log.info("Send TraderApi::ReqQryInstrument OK -> RequestID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, field.getExchangeID(), field.getInstrumentID());
+                RequestID, ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -342,19 +340,15 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      */
     @Override
     public void fireFrontConnected() {
-        log.info("TraderSpi::fireFrontConnected");
+        log.info("TraderGateway::fireFrontConnected");
         if (StringSupport.nonEmpty(config.getAuthCode()) && !isAuthenticate) {
             // 发送认证请求
-            CThostFtdcReqAuthenticateField field = new CThostFtdcReqAuthenticateField();
-            field.setAppID(config.getAppId());
-            field.setUserID(config.getUserId());
-            field.setBrokerID(config.getBrokerId());
-            field.setAuthCode(config.getAuthCode());
-            int RequestID = requestIdGetter.incrementAndGet();
-            NativeApi.ReqAuthenticate(field, RequestID);
+            CThostFtdcReqAuthenticateField ReqField = config.getReqAuthenticateField();
+            int newRequestID = requestIdGetter.incrementAndGet();
+            NativeApi.ReqAuthenticate(ReqField, newRequestID);
             log.info(
                     "Send TraderApi::ReqAuthenticate OK -> RequestID==[{}], BrokerID==[{}], UserID==[{}], AppID==[{}], AuthCode==[{}]",
-                    RequestID, field.getBrokerID(), field.getUserID(), field.getAppID(), field.getAuthCode());
+                    newRequestID, ReqField.getBrokerID(), ReqField.getUserID(), ReqField.getAppID(), ReqField.getAuthCode());
         } else {
             log.error("Cannot sent TraderApi::ReqAuthenticate, authCode==[{}], isAuthenticate==[{}]",
                     config.getAuthCode(), isAuthenticate);
@@ -373,7 +367,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
-        log.warn("TraderSpi::fireFrontDisconnected");
+        log.warn("TraderGateway::fireFrontDisconnected");
         isTraderLogin = false;
         isAuthenticate = false;
         // 交易前置断开处理
@@ -388,7 +382,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
-        log.info("TraderSpi::fireHeartBeatWarning");
+        log.info("TraderGateway::fireHeartBeatWarning");
     }
 
     /**
@@ -402,26 +396,19 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspAuthenticate", RspInfo)) {
+        log.info("TraderGateway::fireRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspAuthenticate", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
                 isAuthenticate = true;
-                CThostFtdcReqUserLoginField loginField = new CThostFtdcReqUserLoginField();
-                loginField.setBrokerID(config.getBrokerId());
-                loginField.setUserID(config.getUserId());
-                loginField.setPassword(config.getPassword());
-                loginField.setClientIPAddress(config.getIpAddr());
-                loginField.setMacAddress(config.getMacAddr());
+                CThostFtdcReqUserLoginField ReqField = config.getReqUserLoginField();
                 int newRequestID = requestIdGetter.incrementAndGet();
-                NativeApi.ReqUserLogin(loginField, newRequestID);
+                NativeApi.ReqUserLogin(ReqField, newRequestID);
                 log.info("Send TraderApi::ReqUserLogin OK -> RequestID==[{}]", newRequestID);
             } else {
-                log.error("FtdcTraderSpi::OnRspAuthenticate return null");
+                log.error("TraderGateway::OnRspAuthenticate return null");
             }
-        } else {
-            log.error("");
         }
     }
 
@@ -436,18 +423,18 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspUserLogin, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspUserLogin", RspInfo)) {
+        log.info("TraderGateway::fireRspUserLogin, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::fireRspUserLogin", RspInfo)) {
             if (Field != null) {
                 log.info(
-                        "FtdcCallback::onTraderRspUserLogin -> BrokerID==[{}], UserID==[{}], LoginTime==[{}], MaxOrderRef==[{}]",
+                        "TraderGateway::fireRspUserLogin -> BrokerID==[{}], UserID==[{}], LoginTime==[{}], MaxOrderRef==[{}]",
                         Field.getBrokerID(), Field.getUserID(), Field.getLoginTime(), Field.getMaxOrderRef());
                 frontID = Field.getFrontID();
                 sessionID = Field.getSessionID();
                 isTraderLogin = true;
-                publisher.publishMdAvailable(Field, RspInfo, RequestID, IsLast);
+                publisher.publishTraderAvailable(Field, RspInfo, RequestID, IsLast);
             } else {
-                log.error("FtdcTraderSpi::OnRspUserLogin return null");
+                log.error("TraderGateway::fireRspUserLogin return null");
             }
         } else {
             log.error("");
@@ -465,18 +452,16 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspUserLogout", RspInfo)) {
+        log.warn("TraderGateway::fireRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::fireRspUserLogout", RspInfo)) {
             if (Field != null) {
-                log.info("Output :: OnRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
+                log.info("TraderGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
                 // TODO 处理用户登出
-                publisher.publishTrader();
+                publisher.publishTraderUserLogout(Field, RequestID, IsLast);
             } else {
-                log.error("FtdcTraderSpi::OnRspUserLogout return null");
+                log.error("TraderGateway::fireRspUserLogout return null");
             }
-        } else {
-            log.error("");
         }
     }
 
@@ -492,13 +477,13 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspOrderInsert(CThostFtdcInputOrderField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspOrderInsert", RspInfo)) {
+        log.info("TraderGateway::OnRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspOrderInsert", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
                 publisher.publish(Field);
             } else {
-                log.error("FtdcTraderSpi::OnRspOrderInsert return null");
+                log.error("TraderGateway::OnRspOrderInsert return null");
             }
         } else {
             log.error("");
@@ -518,9 +503,9 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspOrderAction(CThostFtdcInputOrderActionField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
-        log.info("TraderSpi::OnRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        log.info("TraderGateway::OnRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
 
-        if (nonError("TraderSpi::OnRspOrderAction", RspInfo)) {
+        if (nonError("TraderGateway::OnRspOrderAction", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
@@ -528,7 +513,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                         Field.getOrderActionRef(), Field.getInstrumentID());
                 publisher.publish(Field);
             } else {
-                log.error("TraderSpi::OnRspOrderAction return null");
+                log.error("TraderGateway::OnRspOrderAction return null");
             }
         } else {
             log.error("");
@@ -547,7 +532,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspBatchOrderAction");
+        log.info("TraderGateway::fireRspBatchOrderAction");
     }
 
 
@@ -562,14 +547,14 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspQryOrder(CThostFtdcOrderField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryOrder", RspInfo)) {
+        log.info("TraderGateway::OnRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspQryOrder", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspQryOrder -> AccountID==[{}], OrderRef==[{}], isLast==[{}]",
                         Field.getAccountID(), Field.getOrderRef(), IsLast);
                 publisher.publish(Field, IsLast);
             } else {
-                log.error("FtdcTraderSpi::OnRspQryOrder return null");
+                log.error("TraderGateway::OnRspQryOrder return null");
             }
         } else {
 
@@ -587,7 +572,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspQryTrade(CThostFtdcTradeField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspQryTrade");
+        log.info("TraderGateway::fireRspQryTrade");
     }
 
     /**
@@ -601,8 +586,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryInvestorPosition", RspInfo)) {
+        log.info("TraderGateway::OnRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspQryInvestorPosition", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspQryInvestorPosition -> InvestorID==[{}], ExchangeID==[{}], " +
                                 "InstrumentID==[{}], Position==[{}], isLast==[{}]",
@@ -610,23 +595,9 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                         Field.getInstrumentID(), Field.getPosition(), IsLast);
                 publisher.publish(Field, IsLast);
             } else {
-                log.error("FtdcTraderSpi::OnRspQryInvestorPosition return null");
+                log.error("TraderGateway::OnRspQryInvestorPosition return null");
             }
         }
-    }
-
-    /**
-     * ///请求查询投资者持仓明细响应
-     *
-     * @param Field     CThostFtdcInvestorPositionDetailField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
-                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspQryInvestorPositionDetail");
     }
 
     /**
@@ -641,8 +612,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspQryTradingAccount(CThostFtdcTradingAccountField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
-        log.info("FtdcTraderSpi::OnRspQryTradingAccount, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryTradingAccount", RspInfo))
+        log.info("TraderGateway::OnRspQryTradingAccount, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspQryTradingAccount", RspInfo))
             if (Field != null) {
                 log.info("FtdcCallback::onQryTradingAccount -> AccountID==[{}], Balance==[{}], " +
                                 "Available==[{}], Credit==[{}], WithdrawQuota==[{}], isLast==[{}]",
@@ -650,23 +621,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                         Field.getAvailable(), Field.getCredit(), Field.getWithdrawQuota(), IsLast);
                 publisher.publish(Field);
             } else
-                log.error("FtdcTraderSpi::OnRspQryTradingAccount return null");
+                log.error("TraderGateway::OnRspQryTradingAccount return null");
     }
-
-    /**
-     * ///请求查询投资者响应
-     *
-     * @param Field     CThostFtdcInvestorField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
-     */
-    @Override
-    public void fireRspQryInvestor(CThostFtdcInvestorField Field,
-                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspQryInvestor");
-    }
-
 
     /**
      * ///请求查询合约响应
@@ -679,13 +635,13 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspQryInstrument(CThostFtdcInstrumentField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("FtdcTraderSpi::OnRspQryInstrument, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQryInstrument", RspInfo))
+        log.info("TraderGateway::OnRspQryInstrument, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspQryInstrument", RspInfo))
             if (Field != null)
                 log.info("Output :: OnRspQryInstrument, ExchangeID==[{}], InstrumentID==[{}]",
                         Field.getExchangeID(), Field.getInstrumentID());
             else
-                log.error("FtdcTraderSpi::OnRspQryInstrument return null");
+                log.error("TraderGateway::OnRspQryInstrument return null");
     }
 
 
@@ -701,8 +657,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspQrySettlementInfo(CThostFtdcSettlementInfoField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
-        log.info("FtdcTraderSpi::OnRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError("FtdcTraderSpi::OnRspQrySettlementInfo", RspInfo))
+        log.info("TraderGateway::OnRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        if (nonError("TraderGateway::OnRspQrySettlementInfo", RspInfo))
             if (Field != null)
                 log.info(
                         """
@@ -715,7 +671,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                         Field.getSettlementID(), Field.getTradingDay(),
                         Field.getCurrencyID(), Field.getContent());
             else
-                log.error("FtdcTraderSpi::OnRspQrySettlementInfo return null");
+                log.error("TraderGateway::OnRspQrySettlementInfo return null");
     }
 
 
@@ -730,7 +686,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspQrySettlementInfoConfirm");
+        log.info("TraderGateway::fireRspQrySettlementInfoConfirm");
     }
 
 
@@ -743,13 +699,13 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderSpi::fireRspError, ErrorID=[{}], ErrorMsg=[{}], RequestID==[{}], IsLast==[{}]",
+        log.info("TraderGateway::fireRspError, ErrorID=[{}], ErrorMsg=[{}], RequestID==[{}], IsLast==[{}]",
                 RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
-        publisher.publishRspError(RspInfo, RequestID, IsLast);
+        publisher.publish(RspInfo, RequestID, IsLast);
     }
 
     // 报单推送消息模板
-    private static final String OnRtnOrderMsg = "FtdcTraderSpi::fireRtnOrder -> OrderRef==[{}], " +
+    private static final String OnRtnOrderMsg = "TraderGateway::fireRtnOrder -> OrderRef==[{}], " +
             "AccountID==[{}], OrderSysID==[{}], InstrumentID==[{}], OrderStatus==[{}], " +
             "Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]";
 
@@ -766,11 +722,11 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                     Order.getVolumeTotalOriginal(), Order.getLimitPrice());
             publisher.publish(Order, true);
         } else
-            log.error("FtdcTraderSpi::fireRtnOrder return null");
+            log.error("TraderGateway::fireRtnOrder return null");
     }
 
     // 成交推送消息模板
-    private static final String OnRtnTradeMsg = "FtdcTraderSpi::fireRtnTrade -> OrderRef==[{}], " +
+    private static final String OnRtnTradeMsg = "TraderGateway::fireRtnTrade -> OrderRef==[{}], " +
             "OrderSysID==[{}], InstrumentID==[{}], Direction==[{}], Price==[{}], Volume==[{}]";
 
     /**
@@ -785,7 +741,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                     Trade.getDirection(), Trade.getPrice(), Trade.getVolume());
             publisher.publish(Trade);
         } else
-            log.error("FtdcTraderSpi::fireRtnTrade return null");
+            log.error("TraderGateway::fireRtnTrade return null");
     }
 
     /**
@@ -795,18 +751,18 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      * @param RspInfo CThostFtdcRspInfoField
      */
     @Override
-    public void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field,
-                                      CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderSpi::OnErrRtnOrderInsert");
-        if (nonError("TraderSpi::OnErrRtnOrderInsert", RspInfo)) {
+    public void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field, CThostFtdcRspInfoField RspInfo) {
+        log.info("TraderGateway::OnErrRtnOrderInsert");
+        if (nonError("TraderGateway::OnErrRtnOrderInsert", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onErrRtnOrderInsert -> OrderRef==[{}], RequestID==[{}]", Field.getOrderRef(),
                         Field.getRequestID());
                 publisher.publish(Field);
             } else {
-                log.error("TraderSpi::OnErrRtnOrderInsert return null");
+                log.error("TraderGateway::OnErrRtnOrderInsert return null");
             }
         } else {
+
         }
     }
 
@@ -819,8 +775,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireErrRtnOrderAction(CThostFtdcOrderActionField Field,
                                       CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderSpi::OnErrRtnOrderAction");
-        if (nonError("TraderSpi::OnErrRtnOrderAction", RspInfo)) {
+        log.info("TraderGateway::OnErrRtnOrderAction");
+        if (nonError("TraderGateway::OnErrRtnOrderAction", RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onErrRtnOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
@@ -828,7 +784,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                         Field.getOrderActionRef(), Field.getInstrumentID());
                 publisher.publish(Field);
             } else {
-                log.error("TraderSpi::OnErrRtnOrderAction return null");
+                log.error("TraderGateway::OnErrRtnOrderAction return null");
             }
         } else {
 
@@ -844,7 +800,8 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
      */
     @Override
     public void fireRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
-        publisher.publish(Field);
+        log.info("");
+        publisher.publishInstrumentStatus(Field);
     }
 
 
@@ -857,11 +814,12 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
                                            CThostFtdcRspInfoField RspInfo) {
-        // TODO 批量撤单回调当前未实现
+
     }
 
     @Override
     public String toString() {
-        return gatewayId;
+        return "FtdcTraderGateway{gatewayId='" + gatewayId + "'}";
     }
+
 }

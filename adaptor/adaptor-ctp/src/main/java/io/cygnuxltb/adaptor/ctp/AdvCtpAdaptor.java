@@ -335,8 +335,8 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     @Override
     public void close() throws IOException {
         try {
-            publisher.publishMdUnavailable();
-            publisher.publishTraderUnavailable();
+            publisher.publishMdUnavailable(-1);
+            publisher.publishTraderUnavailable(-1);
             mdGateway.close();
             traderGateway.close();
         } catch (Exception e) {

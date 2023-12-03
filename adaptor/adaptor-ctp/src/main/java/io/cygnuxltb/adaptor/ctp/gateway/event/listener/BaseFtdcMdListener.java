@@ -6,10 +6,15 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import org.slf4j.Logger;
 
 public abstract class BaseFtdcMdListener implements FtdcMdListener {
 
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcMdListener.class);
+
     protected BaseFtdcMdListener() {
+
     }
 
     /**
@@ -17,6 +22,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireFrontConnected() {
+        log.warn("MdSpi::fireFrontConnected Unsupported");
     }
 
     /**
@@ -31,6 +37,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
+        log.warn("MdSpi::fireFrontDisconnected Unsupported");
     }
 
     /**
@@ -40,6 +47,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
+        log.warn("MdSpi::fireHeartBeatWarning Unsupported");
     }
 
     /**
@@ -53,6 +61,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspUserLogin Unsupported");
     }
 
     /**
@@ -66,6 +75,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField UserLogout,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspUserLogout Unsupported");
     }
 
     /**
@@ -77,6 +87,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspError Unsupported");
     }
 
     /**
@@ -90,6 +101,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspSubMarketData Unsupported");
     }
 
     /**
@@ -103,6 +115,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUnSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspUnSubMarketData Unsupported");
     }
 
     /**
@@ -116,6 +129,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast) {
+        log.warn("MdSpi::fireRspSubForQuoteRsp Unsupported");
     }
 
     /**
@@ -129,6 +143,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast) {
+        log.warn("MdSpi::fireRspUnSubForQuoteRsp Unsupported");
     }
 
     /**
@@ -138,6 +153,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireRtnDepthMarketData(CThostFtdcDepthMarketDataField DepthMarketData) {
+        log.warn("MdSpi::fireRtnDepthMarketData Unsupported");
     }
 
     /**
@@ -147,6 +163,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireRtnForQuoteRsp(CThostFtdcForQuoteRspField ForQuoteRsp) {
+        log.warn("MdSpi::fireRtnForQuoteRsp Unsupported");
     }
 
 }

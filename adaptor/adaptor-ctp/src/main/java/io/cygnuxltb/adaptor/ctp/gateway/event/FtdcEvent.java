@@ -1,16 +1,16 @@
 package io.cygnuxltb.adaptor.ctp.gateway.event;
 
 import com.lmax.disruptor.EventFactory;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcDepthMarketData;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcInputOrder;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcInputOrderAction;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcInvestorPosition;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcOrder;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcConnectionStatus;
 import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcRspInfo;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.FtdcTrade;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.state.FtdcMdConnectState;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.state.FtdcTraderConnectState;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcInputOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcInvestorPosition;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcOrderAction;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcTradingAccount;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -25,49 +25,90 @@ public final class FtdcEvent {
 
     public static final EventFactory<FtdcEvent> FTDC_EVENT_FACTORY = FtdcEvent::new;
 
+    /**
+     * 事件类型
+     */
     @Setter
     @Accessors(chain = true)
-    private FtdcRspType type = FtdcRspType.Other;
+    private FtdcRspType type = FtdcRspType.Unsupported;
 
-    // 是否最后一条
+    /**
+     * 是否最后一条
+     */
     @Setter
     @Accessors(chain = true)
-    private boolean isLast = false;
+    private boolean last = true;
 
-    // 请求编号
+    /**
+     * 请求编号
+     */
     @Setter
     @Accessors(chain = true)
-    private int RequestID = 0;
+    private int requestId = 0;
 
-    // 返回交易接口连接信息
-    private final FtdcTraderConnectState traderConnect = new FtdcTraderConnectState();
+    /**
+     * 距离上次接收报文的时间
+     */
+    @Setter
+    @Accessors(chain = true)
+    private int timeLapse = 0;
 
-    // 返回行情接口连接信息
-    private final FtdcMdConnectState mdConnect = new FtdcMdConnectState();
+    /**
+     * 错误原因
+     */
+    @Setter
+    @Accessors(chain = true)
+    private int reason;
 
-    // 返回行情
-    private final FtdcDepthMarketData ftdcDepthMarketData = new FtdcDepthMarketData();
+    /**
+     * 接口连接信息
+     */
+    private final FtdcConnectionStatus connectionStatus = new FtdcConnectionStatus();
 
-    // 返回持仓
-    private final FtdcInvestorPosition ftdcInvestorPosition = new FtdcInvestorPosition();
+    /**
+     * 行情
+     */
+    private final FtdcDepthMarketData depthMarketData = new FtdcDepthMarketData();
 
-    // 报单推送
-    private final FtdcOrder ftdcOrder = new FtdcOrder();
+    /**
+     * 返回账户信息
+     */
+    private final FtdcTradingAccount tradingAccount = new FtdcTradingAccount();
 
-    // 成交推送
-    private final FtdcTrade ftdcTrade = new FtdcTrade();
+    /**
+     * 返回持仓信息
+     */
+    private final FtdcInvestorPosition investorPosition = new FtdcInvestorPosition();
 
-    // 返回报单错误
-    private final FtdcInputOrder ftdcInputOrder = new FtdcInputOrder();
+    /**
+     * 报单推送
+     */
+    private final FtdcOrder order = new FtdcOrder();
 
-    // 返回撤单提交错误
-    private final FtdcInputOrderAction ftdcInputOrderAction = new FtdcInputOrderAction();
+    /**
+     * 成交推送
+     */
+    private final FtdcTrade trade = new FtdcTrade();
 
-    // 返回撤单错误
-    private final FtdcOrderAction ftdcOrderAction = new FtdcOrderAction();
+    /**
+     * 返回报单错误
+     */
+    private final FtdcInputOrder inputOrder = new FtdcInputOrder();
 
-    // 错误消息
-    private final FtdcRspInfo ftdcRspInfo = new FtdcRspInfo();
+    /**
+     * 返回撤单提交错误
+     */
+    private final FtdcInputOrderAction inputOrderAction = new FtdcInputOrderAction();
+
+    /**
+     * 返回撤单错误
+     */
+    private final FtdcOrderAction orderAction = new FtdcOrderAction();
+
+    /**
+     * 错误消息
+     */
+    private final FtdcRspInfo rspInfo = new FtdcRspInfo();
 
     private FtdcEvent() {
         // For EventFactory call
@@ -78,11 +119,15 @@ public final class FtdcEvent {
      */
     public enum FtdcRspType {
 
-        MdConnectState,
+        HeartBeatWarning,
 
-        TraderConnectState,
+        MdConnectionStatus,
+
+        TraderConnectionStatus,
 
         DepthMarketData,
+
+        TradingAccount,
 
         InvestorPosition,
 
@@ -98,7 +143,7 @@ public final class FtdcEvent {
 
         RspInfo,
 
-        Other
+        Unsupported
 
     }
 

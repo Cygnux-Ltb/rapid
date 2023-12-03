@@ -8,10 +8,10 @@ public final class FtdcRspInfoHandler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspInfoHandler.class);
 
-    public static boolean nonError(String funcName, CThostFtdcRspInfoField RspInfo) {
+    public static boolean nonError(String FuncName, CThostFtdcRspInfoField RspInfo) {
         if (RspInfo != null && RspInfo.getErrorID() != 0) {
-            log.error("Error func -> {}, ErrorID == [{}], ErrorMsg == [{}]",
-                    funcName, RspInfo.getErrorID(), RspInfo.getErrorMsg());
+            log.error("Error Func -> [{}], ErrorID == [{}], ErrorMsg == [{}]",
+                    FuncName, RspInfo.getErrorID(), RspInfo.getErrorMsg());
             return false;
         } else {
             return true;

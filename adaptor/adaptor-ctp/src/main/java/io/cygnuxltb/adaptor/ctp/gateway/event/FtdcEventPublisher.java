@@ -1,6 +1,5 @@
 package io.cygnuxltb.adaptor.ctp.gateway.event;
 
-import com.lmax.disruptor.EventTranslatorOneArg;
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
@@ -12,6 +11,7 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
+import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType;
 import io.mercury.common.concurrent.ring.RingEventbus;
 
@@ -23,52 +23,72 @@ public final class FtdcEventPublisher {
         this.eventbus = eventbus;
     }
 
+    /**
+     * @param field     CThostFtdcRspInfoField
+     * @param requestId int
+     * @param isLast    boolean
+     */
     public void publish(CThostFtdcRspInfoField field, int requestId, boolean isLast) {
-        eventbus.publish(
-                (event, sequence, arg0, arg1, arg2) ->
-                        event.setType(FtdcRspType.RspInfo)
-                                .setLast(arg2)
-                                .getFtdcRspInfo().load(arg0, arg1),
-                field, requestId, isLast);
-    }
-
-
-    public void publish(CThostFtdcDepthMarketDataField field) {
-        eventbus.publish(
-                (event, sequence, arg0) ->
-                        event.setType(FtdcRspType.DepthMarketData)
-                                .getFtdcDepthMarketData().load(arg0),
-                field);
-    }
-
-
-    public void publish(CThostFtdcOrderField field) {
-        eventbus.publish((event, sequence, arg0) ->
-                        event.setType(FtdcRspType.Order).getFtdcOrder().load(arg0),
-                field);
-    }
-
-
-    public void publish(CThostFtdcTradeField field) {
-        eventbus.publish((event, sequence, arg0) ->
-                        event.setType(FtdcRspType.Trade).getFtdcTrade().load(arg0),
-                field);
-    }
-
-    private final EventTranslatorOneArg<FtdcEvent, CThostFtdcInputOrderActionField> InputOrderActionTranslator =
-            (event, sequence, arg0) -> {
-                event.getFtdcInputOrderAction().load(arg0);
-                event.setType(FtdcRspType.InputOrderAction);
-            };
-
-    public void publishMdAvailable(CThostFtdcRspUserLoginField userLogin,
-                                   CThostFtdcRspInfoField rspInfo, int requestID, boolean isLast) {
-
-        eventbus.publish();
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.RspInfo)
+                        .setRequestId(requestId)
+                        .setLast(isLast)
+                        .getRspInfo()
+                        .load(field));
     }
 
     /**
-     * 发布行情可用事件
+     * @param field CThostFtdcDepthMarketDataField
+     */
+    public void publish(CThostFtdcDepthMarketDataField field) {
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.DepthMarketData)
+                        .getDepthMarketData()
+                        .load(field));
+    }
+
+
+    /**
+     * @param field  CThostFtdcOrderField
+     * @param isLast boolean
+     */
+    public void publish(CThostFtdcOrderField field, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.Order)
+                        .setLast(isLast)
+                        .getOrder()
+                        .load(field));
+    }
+
+    /**
+     * @param field CThostFtdcTradeField
+     */
+    public void publish(CThostFtdcTradeField field) {
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.Trade)
+                        .getTrade()
+                        .load(field));
+    }
+
+    /**
+     * @param field     CThostFtdcRspUserLoginField
+     * @param rspInfo   CThostFtdcRspInfoField
+     * @param requestId requestId
+     * @param isLast    isLast
+     */
+    public void publishMdAvailable(CThostFtdcRspUserLoginField field,
+                                   CThostFtdcRspInfoField rspInfo,
+                                   int requestId, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.MdConnectionStatus)
+                        .setRequestId(requestId)
+                        .setLast(isLast)
+                        .getConnectionStatus()
+                        .load(field));
+    }
+
+    /**
+     * 发布行情不可用事件
      *
      * @param reason int
      */
@@ -76,39 +96,56 @@ public final class FtdcEventPublisher {
 
     }
 
-    public void publishTraderAvailable(boolean available, int frontId, int sessionId) {
-
+    /**
+     * @param field     CThostFtdcRspUserLoginField
+     * @param rspInfo   CThostFtdcRspInfoField
+     * @param requestId int
+     * @param isLast    boolean
+     */
+    public void publishTraderAvailable(CThostFtdcRspUserLoginField field,
+                                       CThostFtdcRspInfoField rspInfo,
+                                       int requestId, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.TraderConnectionStatus)
+                        .setRequestId(requestId)
+                        .setLast(isLast)
+                        .getConnectionStatus()
+                        .load(field));
     }
 
 
-    public void publishTraderUnavailable() {
+    public void publishTraderUnavailable(int reason) {
 
     }
 
-    public void publishTraderRspUserLogin() {
-        CThostFtdcRspUserLoginField field;
-    }
-
-
+    /**
+     * @param field CThostFtdcInputOrderField
+     */
     public void publish(CThostFtdcInputOrderField field) {
-
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.InputOrder)
+                        .getInputOrder()
+                        .load(field));
     }
 
-
-    public void publish(CThostFtdcOrderField field, boolean isLast) {
-
-    }
-
-
+    /**
+     * @param field CThostFtdcInputOrderActionField
+     */
     public void publish(CThostFtdcInputOrderActionField field) {
-        eventbus.publish((event, sequence, arg0) ->
-                        event.setType(FtdcRspType.InputOrderAction)
-                                .getFtdcInputOrderAction().load(arg0),
-                field);
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.InputOrderAction)
+                        .getInputOrderAction()
+                        .load(field));
     }
 
+    /**
+     * @param field CThostFtdcOrderActionField
+     */
     public void publish(CThostFtdcOrderActionField field) {
-
+        eventbus.publish((event, sequence) ->
+                event.setType(FtdcRspType.OrderAction)
+                        .getOrderAction()
+                        .load(field));
     }
 
 
@@ -121,15 +158,13 @@ public final class FtdcEventPublisher {
 
     }
 
-    public void publishRspError(CThostFtdcRspInfoField rspInfo, int requestId, boolean isLast) {
-        eventbus.publish((event, sequence, arg0, arg1, arg2) ->
-                        event.setType(FtdcRspType.RspInfo)
-                                .setLast(arg2)
-                                .getFtdcRspInfo().load(arg0, arg1),
-                rspInfo, requestId, isLast);
-    }
 
-    public void publish(CThostFtdcInstrumentStatusField field) {
+    public void publishInstrumentStatus(CThostFtdcInstrumentStatusField field) {
 
     }
+
+    public void publishTraderUserLogout(CThostFtdcUserLogoutField field, int requestID, boolean isLast) {
+    }
+
+
 }
