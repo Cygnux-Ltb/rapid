@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class FtdcMdConnectState {
+public class FtdcConnectionStatus {
 
     /// 可用状态
     private boolean available;
@@ -28,5 +28,4 @@ public class FtdcMdConnectState {
     private int SessionID;
     ///最大报单引用
     private String MaxOrderRef;
-
 }
