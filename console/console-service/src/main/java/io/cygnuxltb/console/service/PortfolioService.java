@@ -1,5 +1,6 @@
 package io.cygnuxltb.console.service;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.persistence.dao.PortfolioDao;
 import io.cygnuxltb.console.persistence.entity.TblTrdPortfolio;
 import io.cygnuxltb.protocol.http.response.PortfolioDTO;
@@ -16,17 +17,26 @@ public final class PortfolioService {
     @Resource
     private PortfolioDao dao;
 
+    private final boolean isMock = true;
+
     public PortfolioDTO getPortfolio(int userId, String portfolioName) {
-        List<TblTrdPortfolio> entities = dao.queryBy(userId, portfolioName);
+        List<String> instrumentCodes = new ArrayList<>();
+        if (isMock) {
+            instrumentCodes.add(JMockData.mock(String.class));
+            instrumentCodes.add(JMockData.mock(String.class));
+            instrumentCodes.add(JMockData.mock(String.class));
+            instrumentCodes.add(JMockData.mock(String.class));
+            instrumentCodes.add(JMockData.mock(String.class));
+        } else {
+            instrumentCodes = dao.queryBy(userId, portfolioName).stream()
+                    .map(TblTrdPortfolio::getInstrumentCode)
+                    .collect(Collectors.toList());
+        }
         return new PortfolioDTO()
                 .setUserId(userId)
                 .setPortfolioName(portfolioName)
-                .setInstrumentCodes(entities == null
-                        ? new ArrayList<>()
-                        : entities
-                        .stream()
-                        .map(TblTrdPortfolio::getInstrumentCode)
-                        .collect(Collectors.toList()));
+                .setInstrumentCodes(instrumentCodes
+                );
     }
 
 }

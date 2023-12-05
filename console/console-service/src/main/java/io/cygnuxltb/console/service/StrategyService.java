@@ -26,6 +26,8 @@ public final class StrategyService {
     @Resource
     private StrategyDao dao;
 
+    private final boolean isMock = true;
+
     /**
      * @return List<StrategyEntity>
      */

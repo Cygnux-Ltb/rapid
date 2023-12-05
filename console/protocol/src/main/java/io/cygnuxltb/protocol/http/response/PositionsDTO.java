@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class PositionsDTO {
     /**
      * 头寸列表
      */
-    private List<Position> positions;
+    private List<Position> positions = new ArrayList<>();
 
     /**
      * 头寸对象

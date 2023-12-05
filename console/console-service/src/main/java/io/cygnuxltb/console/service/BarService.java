@@ -9,16 +9,18 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public final class BarService {
 
     @Resource
     private BarDao dao;
+
+    private final boolean isMock = true;
 
     /**
      * @param instrumentCode String
@@ -40,7 +42,7 @@ public final class BarService {
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**

@@ -19,8 +19,7 @@ public interface BarDao extends JpaRepository<TblMkdBar, Long> {
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.instrumentCode = :instrumentCode "
             + " AND e.tradingDay >= :startTradingDay "
-            + " AND e.tradingDay <= :endTradingDay "
-    )
+            + " AND e.tradingDay <= :endTradingDay ")
     List<TblMkdBar> queryBy(@Param("instrumentCode") String instrumentCode,
                             @Param("startTradingDay") int startTradingDay,
                             @Param("endTradingDay") int endTradingDay);

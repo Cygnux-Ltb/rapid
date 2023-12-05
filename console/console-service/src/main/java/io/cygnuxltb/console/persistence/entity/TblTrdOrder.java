@@ -1,10 +1,8 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -21,7 +19,10 @@ import static io.cygnuxltb.console.persistence.ColumnConst.STRATEGY_ID;
 import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
 import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
 import static io.cygnuxltb.console.persistence.ColumnConst.USER_ID;
+import static io.mercury.persistence.rdb.ColumnDefinition.DECIMAL_19_4;
 import static io.mercury.persistence.rdb.ColumnDefinition.TIME;
+import static io.mercury.persistence.rdb.ColumnDefinition.UID;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 /**
  * 订单基本信息表
@@ -37,8 +38,8 @@ import static io.mercury.persistence.rdb.ColumnDefinition.TIME;
 public final class TblTrdOrder {
 
     @Id
-    @Column(name = ColumnDefinition.UID)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = UID)
+    @GeneratedValue(strategy = IDENTITY)
     private long uid;
 
     /**
@@ -122,7 +123,7 @@ public final class TblTrdOrder {
     /**
      * offerPrice
      */
-    @Column(name = "OFFER_PRICE", columnDefinition = ColumnDefinition.DECIMAL_19_4)
+    @Column(name = "OFFER_PRICE", columnDefinition = DECIMAL_19_4)
     private double offerPrice;
 
     /**

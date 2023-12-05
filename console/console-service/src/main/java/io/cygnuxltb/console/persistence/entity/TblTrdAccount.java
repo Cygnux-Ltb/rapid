@@ -1,10 +1,8 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -15,6 +13,8 @@ import static io.cygnuxltb.console.persistence.ColumnConst.ACCOUNT_ID;
 import static io.cygnuxltb.console.persistence.ColumnConst.BROKER_ID;
 import static io.cygnuxltb.console.persistence.ColumnConst.INVESTOR_ID;
 import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
+import static io.mercury.persistence.rdb.ColumnDefinition.UID;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 /**
  * 交易账户表
@@ -31,8 +31,8 @@ import static io.cygnuxltb.console.persistence.ColumnConst.SUB_ACCOUNT_ID;
 public final class TblTrdAccount {
 
     @Id
-    @Column(name = ColumnDefinition.UID)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = UID)
+    @GeneratedValue(strategy = IDENTITY)
     private long uid;
 
     @Column(name = ACCOUNT_ID)

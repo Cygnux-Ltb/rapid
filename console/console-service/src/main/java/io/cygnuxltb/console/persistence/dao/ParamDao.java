@@ -28,8 +28,7 @@ public interface ParamDao extends JpaRepository<TblSysParam, Long> {
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.ownerGroup = :ownerGroup "
-            + " AND e.ownerName = :ownerName "
-    )
+            + " AND e.ownerName = :ownerName ")
     List<TblSysParam> queryBy(@Param("ownerGroup") String ownerGroup,
                               @Param("ownerName") String ownerName);
 

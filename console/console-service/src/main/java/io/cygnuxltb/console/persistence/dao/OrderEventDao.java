@@ -24,8 +24,7 @@ public interface OrderEventDao extends JpaRepository<TblTrdOrderEvent, Long> {
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1 "
             + " AND (:strategyId = 0 OR e.strategyId = :strategyId) "
             + " AND (:startTradingDay = 0 OR e.tradingDay >= :startTradingDay) "
-            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) "
-    )
+            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) ")
     List<TblTrdOrderEvent> queryBy(int strategyId, int startTradingDay, int endTradingDay);
 
     /**

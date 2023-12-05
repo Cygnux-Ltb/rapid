@@ -29,8 +29,7 @@ public interface OrderDao extends JpaRepository<TblTrdOrder, Long> {
             + " AND (:strategyId = 0 OR e.strategyId = :strategyId) "
             + " AND (:instrumentCode IS NULL OR e.instrumentCode = :instrumentCode) "
             + " AND (:startTradingDay = 0 OR e.tradingDay >= :startTradingDay) "
-            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) "
-    )
+            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) ")
     List<TblTrdOrder> queryBy(@Param("accountId") int accountId,
                               @Param("strategyId") int strategyId,
                               @Param("instrumentCode") String instrumentCode,

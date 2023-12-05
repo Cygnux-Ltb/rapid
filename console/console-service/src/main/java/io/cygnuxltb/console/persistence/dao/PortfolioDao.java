@@ -24,8 +24,7 @@ public interface PortfolioDao extends JpaRepository<TblTrdPortfolio, Long> {
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.userId = :userId "
-            + " AND e.portfolioName = :portfolioName "
-    )
+            + " AND e.portfolioName = :portfolioName ")
     List<TblTrdPortfolio> queryBy(@Param("userId") int userId,
                                   @Param("portfolioName") String portfolioName);
 

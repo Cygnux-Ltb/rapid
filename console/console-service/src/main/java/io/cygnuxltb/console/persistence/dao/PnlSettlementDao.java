@@ -23,8 +23,7 @@ public interface PnlSettlementDao extends JpaRepository<TblTrdPnlSettlement, Lon
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.strategyId = :strategyId "
-            + " AND e.tradingDay = :tradingDay "
-    )
+            + " AND e.tradingDay = :tradingDay ")
     List<TblTrdPnlSettlement> queryBy(@Param("strategyId") int strategyId,
                                       @Param("tradingDay") int tradingDay);
 

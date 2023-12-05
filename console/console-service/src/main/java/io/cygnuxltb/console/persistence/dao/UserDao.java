@@ -17,8 +17,7 @@ public interface UserDao extends JpaRepository<TblSysUser, Long> {
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND e.username = :username "
             + " OR e.email = :email "
-            + " OR e.phone = :phone "
-    )
+            + " OR e.phone = :phone ")
     TblSysUser queryBy(@Param("username") String username,
                        @Param("email") String email,
                        @Param("phone") String phone);

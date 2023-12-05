@@ -10,12 +10,10 @@ import io.cygnuxltb.console.persistence.entity.TblTrdOrderEvent;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.OrderDTO;
 import io.cygnuxltb.protocol.http.response.OrderEventDTO;
-import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public final class OrderService {
     @Resource
     private OrderEventDao eventDao;
 
-    @Value("")
+
     private final boolean isMock = true;
 
     /**

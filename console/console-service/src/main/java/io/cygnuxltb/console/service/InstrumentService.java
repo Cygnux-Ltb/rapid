@@ -1,5 +1,6 @@
 package io.cygnuxltb.console.service;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
 import io.cygnuxltb.console.persistence.entity.TblMkdInstrument;
@@ -14,12 +15,13 @@ import org.eclipse.collections.api.map.ConcurrentMutableMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public final class InstrumentService {
@@ -30,7 +32,12 @@ public final class InstrumentService {
     @Resource
     private InstrumentSettlementDao settlementDao;
 
-    // LastPrices Cache
+    private final boolean isMock = true;
+
+
+    /**
+     * LastPrices Cache
+     */
     private final ConcurrentMutableMap<String, InstrumentPrice> cacheMap = MutableMaps.newConcurrentHashMap();
 
     private InstrumentPrice getInstrumentPrice(String instrumentCode) {
@@ -42,11 +49,20 @@ public final class InstrumentService {
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
+        // TODO 通过枚举返回
+        if (isMock) {
+            var list = new ArrayList<InstrumentDTO>();
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            return list;
+        }
         return select(TblMkdInstrument.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
                 .map(DtoUtil::toDto)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**
@@ -56,12 +72,20 @@ public final class InstrumentService {
      */
     public List<InstrumentSettlementDTO> getInstrumentSettlement(
             int tradingDay, @Nonnull String instrumentCode) {
+        if (isMock) {
+            var list = new ArrayList<InstrumentSettlementDTO>();
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            return list;
+        }
         return select(TblMkdInstrumentSettlement.class,
                 () -> settlementDao
                         .queryBy(instrumentCode, tradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**
@@ -71,7 +95,7 @@ public final class InstrumentService {
     public List<InstrumentPrice> getLastPrice(String... instrumentCodes) {
         return stream(instrumentCodes)
                 .map(this::getInstrumentPrice)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
 
