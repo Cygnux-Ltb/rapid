@@ -115,10 +115,6 @@
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
-            <artifactId>commons-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
             <artifactId>serialization-json</artifactId>
         </dependency>
         <dependency>

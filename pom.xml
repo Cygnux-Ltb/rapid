@@ -39,7 +39,7 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring-boot.version>3.1.6</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
         <avro.version>1.11.3</avro.version>
     </properties>
@@ -94,11 +94,6 @@
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>commons-core</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>commons-config</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>

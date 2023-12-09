@@ -1,18 +1,18 @@
 package io.rapid.core.instrument.futures;
 
-import io.rapid.core.instrument.Exchange;
-import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.Symbol;
-import io.rapid.core.instrument.enums.PriceMultiplier;
-import io.rapid.core.instrument.enums.PriorityCloseType;
-import io.rapid.core.instrument.base.TradablePeriod;
-import io.rapid.core.instrument.base.BaseFutures;
 import io.mercury.common.collections.ImmutableLists;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.util.StringSupport;
 import io.mercury.serialization.json.JsonWrapper;
+import io.rapid.core.instrument.Exchange;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.Symbol;
+import io.rapid.core.instrument.base.BaseFutures;
+import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.enums.PriceMultiplier;
+import io.rapid.core.instrument.enums.PriorityCloseType;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
@@ -48,7 +48,7 @@ public final class ChinaFutures {
     public static final PriceMultiplier FixedMultiplier = PriceMultiplier.MULTIPLIER_4;
 
     /**
-     * 交易日分割点
+     * 交易日分割点, 此时间之后的事件, 头寸, 订单, 行情等归入下一个交易日.
      */
     public static final LocalTime TradingDayDividingPoint = LocalTime.of(17, 0);
 
@@ -898,6 +898,8 @@ public final class ChinaFutures {
             System.out.println(parseInstrumentTerm("rb1901"));
             ChinaFuturesSymbol rb1901 = ChinaFuturesSymbol.of(parseSymbolCode("rb1901"));
             System.out.println(rb1901);
+
+            ChinaFuturesSymbol.RB.instruments.stream().forEach(System.out::println);
 
         }
     }
