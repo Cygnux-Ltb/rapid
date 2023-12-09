@@ -23,11 +23,10 @@ public final class JpaExecutor {
      * @return List<T>
      */
     public static <T> List<T> select(Class<T> type, Supplier<List<T>> func) {
-        return exec(func,
-                result -> {
+        return exec(func, result -> {
                     if (isEmpty(result))
                         log.warn("query [{}] return 0 row", type.getSimpleName());
-                    else if (result.size() > 3)
+                    else if (result.size() > 2)
                         log.info("query [{}] return {} row", type.getSimpleName(), result.size());
                     else
                         log.info("query [{}] return {} row, result -> {}", type.getSimpleName(),

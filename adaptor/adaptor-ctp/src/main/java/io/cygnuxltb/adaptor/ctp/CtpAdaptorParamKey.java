@@ -1,6 +1,6 @@
 package io.cygnuxltb.adaptor.ctp;
 
-import io.mercury.common.config.ConfigOption;
+import io.mercury.common.cfg.ConfigOption;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params.ValueType;
 
@@ -16,79 +16,78 @@ public enum CtpAdaptorParamKey implements ParamKey, ConfigOption {
     /**
      * 交易服务器地址
      */
-    TraderAddr("traderAddr", STRING),
+    TraderAddr("traderAddr"),
 
     /**
      * 行情服务器地址
      */
-    MdAddr("mdAddr", STRING),
+    MdAddr("mdAddr"),
 
     /**
      * 应用ID
      */
-    AppId("appId", STRING),
+    AppId("appId"),
 
     /**
      * 经纪商ID
      */
-    BrokerId("brokerId", STRING),
+    BrokerId("brokerId"),
 
     /**
      * 投资者ID
      */
-    InvestorId("investorId", STRING),
+    InvestorId("investorId"),
 
     /**
      * 账号ID
      */
-    AccountId("accountId", STRING),
+    AccountId("accountId"),
 
     /**
      * 用户ID
      */
-    UserId("userId", STRING),
+    UserId("userId"),
 
     /**
      * 密码
      */
-    Password("password", STRING),
+    Password("password"),
 
     /**
      * 认证码
      */
-    AuthCode("authCode", STRING),
+    AuthCode("authCode"),
 
     /**
      * 客户端IP地址
      */
-    IpAddr("ipAddr", STRING),
+    IpAddr("ipAddr"),
 
     /**
      * 客户端MAC地址
      */
-    MacAddr("macAddr", STRING),
+    MacAddr("macAddr"),
 
     /**
      * 结算货币
      */
-    CurrencyId("currencyId", STRING),
+    CurrencyId("currencyId"),
 
     /**
      * 交易日
      */
-    TradingDay("tradingDay", STRING),
+    TradingDay("tradingDay"),
 
     ;
 
     private final String paramName;
 
-    private final ValueType valueType;
+    private final ValueType valueType = STRING;
 
     private final String configName;
 
-    CtpAdaptorParamKey(String paramName, ValueType valueType) {
+    CtpAdaptorParamKey(String paramName) {
         this.paramName = paramName;
-        this.valueType = valueType;
         this.configName = "ctp." + paramName;
     }
 

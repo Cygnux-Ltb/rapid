@@ -1,25 +1,31 @@
 package io.cygnuxltb.console.service;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
 import io.cygnuxltb.console.persistence.entity.TblMkdInstrument;
 import io.cygnuxltb.console.persistence.entity.TblMkdInstrumentSettlement;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
 import io.cygnuxltb.protocol.http.response.InstrumentDTO;
 import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
 import io.mercury.common.collections.MutableMaps;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesSymbol;
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.ConcurrentMutableMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public final class InstrumentService {
@@ -30,8 +36,30 @@ public final class InstrumentService {
     @Resource
     private InstrumentSettlementDao settlementDao;
 
-    // LastPrices Cache
+    private final boolean isMock = true;
+
+    /**
+     * LastPrices Cache
+     */
     private final ConcurrentMutableMap<String, InstrumentPrice> cacheMap = MutableMaps.newConcurrentHashMap();
+
+    @PostConstruct
+    private void init() {
+        Stream.of(ChinaFuturesSymbol.values())
+                .flatMap(symbol -> symbol.getInstruments().stream())
+                .forEach(this::putInstrument);
+    }
+
+    private void putInstrument(Instrument instrument) {
+        TblMkdInstrument entity = new TblMkdInstrument();
+        entity.setInstrumentCode(instrument.getInstrumentCode())
+                .setInstrumentType(instrument.getType().name())
+                .setExchangeCode(instrument.getExchangeCode())
+                .setFee(1)
+                .setTradable(true);
+        putInstrument(entity);
+    }
+
 
     private InstrumentPrice getInstrumentPrice(String instrumentCode) {
         return cacheMap.putIfAbsent(instrumentCode, new InstrumentPrice(instrumentCode));
@@ -42,11 +70,20 @@ public final class InstrumentService {
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
+        // TODO 通过枚举返回
+        if (isMock) {
+            var list = new ArrayList<InstrumentDTO>();
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            list.add(JMockData.mock(InstrumentDTO.class));
+            return list;
+        }
         return select(TblMkdInstrument.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
-                .map(DtoConverter::toDTO)
-                .collect(Collectors.toList());
+                .map(DtoUtil::toDto)
+                .collect(toList());
     }
 
     /**
@@ -56,12 +93,20 @@ public final class InstrumentService {
      */
     public List<InstrumentSettlementDTO> getInstrumentSettlement(
             int tradingDay, @Nonnull String instrumentCode) {
+        if (isMock) {
+            var list = new ArrayList<InstrumentSettlementDTO>();
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            list.add(JMockData.mock(InstrumentSettlementDTO.class));
+            return list;
+        }
         return select(TblMkdInstrumentSettlement.class,
                 () -> settlementDao
-                        .queryBy(tradingDay, instrumentCode))
+                        .queryBy(instrumentCode, tradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
-                .collect(Collectors.toList());
+                .map(DtoUtil::toDto)
+                .collect(toList());
     }
 
     /**
@@ -71,7 +116,7 @@ public final class InstrumentService {
     public List<InstrumentPrice> getLastPrice(String... instrumentCodes) {
         return stream(instrumentCodes)
                 .map(this::getInstrumentPrice)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
 
@@ -87,7 +132,7 @@ public final class InstrumentService {
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentStatic(@Nonnull TblMkdInstrumentSettlement entity) {
+    public boolean putInstrumentSettlement(@Nonnull TblMkdInstrumentSettlement entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

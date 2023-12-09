@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
-import io.cygnuxltb.jcts.core.account.SubAccount;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.strategy.Strategy;
+import io.rapid.core.account.SubAccount;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.strategy.Strategy;
 
 public final class StrategyDSL {
 

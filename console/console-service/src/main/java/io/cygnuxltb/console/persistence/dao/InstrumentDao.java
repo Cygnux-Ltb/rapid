@@ -21,8 +21,7 @@ public interface InstrumentDao extends JpaRepository<TblMkdInstrument, Long> {
      * @return List<InstrumentEntity>
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
-            + " AND e.instrumentCode LIKE :instrumentCode% "
-    )
+            + " AND e.instrumentCode LIKE :instrumentCode% ")
     List<TblMkdInstrument> queryBy(@Param("instrumentCode") String instrumentCode);
 
 }

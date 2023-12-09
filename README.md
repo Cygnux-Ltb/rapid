@@ -1,2 +1,4 @@
 # Rapid
-Java Comprehensive Trade System
+
+Rapid Comprehensive Strategy Trade System
+

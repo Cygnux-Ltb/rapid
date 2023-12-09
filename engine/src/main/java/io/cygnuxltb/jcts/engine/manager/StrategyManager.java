@@ -1,8 +1,8 @@
 package io.cygnuxltb.jcts.engine.manager;
 
 
-import io.cygnuxltb.jcts.core.handler.InboundHandler;
-import io.cygnuxltb.jcts.core.strategy.Strategy;
+import io.rapid.core.handler.InboundHandler;
+import io.rapid.core.strategy.Strategy;
 
 /**
  * 

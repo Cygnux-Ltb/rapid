@@ -1,15 +1,17 @@
 package io.cygnuxltb.console.service;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
 import io.cygnuxltb.console.persistence.entity.TblTrdPnl;
 import io.cygnuxltb.console.persistence.entity.TblTrdPnlSettlement;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.PnlDTO;
 import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +27,25 @@ public final class PnlService {
     @Resource
     private PnlSettlementDao settlementDao;
 
+    private final boolean isMock = true;
+
     /**
      * @param strategyId int
      * @param tradingDay int
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
+        if (isMock) {
+            var mockData = new ArrayList<PnlDTO>();
+            mockData.add(JMockData.mock(PnlDTO.class));
+            mockData.add(JMockData.mock(PnlDTO.class));
+            mockData.add(JMockData.mock(PnlDTO.class));
+            return mockData;
+        }
         return select(TblTrdPnl.class,
                 () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -44,10 +55,17 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
+        if (isMock) {
+            var mockData = new ArrayList<PnlSettlementDTO>();
+            mockData.add(JMockData.mock(PnlSettlementDTO.class));
+            mockData.add(JMockData.mock(PnlSettlementDTO.class));
+            mockData.add(JMockData.mock(PnlSettlementDTO.class));
+            return mockData;
+        }
         return select(TblTrdPnlSettlement.class,
                 () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
-                .map(DtoConverter::toDTO)
+                .map(DtoUtil::toDto)
                 .collect(Collectors.toList())
                 ;
     }

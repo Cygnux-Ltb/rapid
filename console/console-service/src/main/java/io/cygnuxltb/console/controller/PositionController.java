@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.service.PositionService;
-import io.cygnuxltb.protocol.http.response.PositionDTO;
+import io.cygnuxltb.protocol.http.response.PositionsDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class PositionController {
      * @return PositionDTO
      */
     @GetMapping("/current")
-    public PositionDTO getCurrentPosition(@RequestParam(USER_ID) int userId) {
+    public PositionsDTO getCurrentPosition(@RequestParam(USER_ID) int userId) {
         return service.getPosition(userId);
     }
 

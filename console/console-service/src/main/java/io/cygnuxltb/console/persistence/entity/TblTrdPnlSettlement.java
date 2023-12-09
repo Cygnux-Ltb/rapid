@@ -1,19 +1,19 @@
 package io.cygnuxltb.console.persistence.entity;
 
-import io.mercury.persistence.rdb.ColumnDefinition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import static io.cygnuxltb.console.persistence.CommonConst.Column.INSTRUMENT_CODE;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.STRATEGY_ID;
-import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
+import static io.cygnuxltb.console.persistence.ColumnConst.INSTRUMENT_CODE;
+import static io.cygnuxltb.console.persistence.ColumnConst.STRATEGY_ID;
+import static io.cygnuxltb.console.persistence.ColumnConst.TRADING_DAY;
+import static io.mercury.persistence.rdb.ColumnDefinition.UID;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 /**
  * 盈亏结算表
@@ -29,8 +29,8 @@ import static io.cygnuxltb.console.persistence.CommonConst.Column.TRADING_DAY;
 public final class TblTrdPnlSettlement {
 
     @Id
-    @Column(name = ColumnDefinition.UID)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = UID)
+    @GeneratedValue(strategy = IDENTITY)
     private long uid;
 
     /**

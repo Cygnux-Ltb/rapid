@@ -1,24 +1,24 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
-import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.account.AccountStorage;
-import io.cygnuxltb.jcts.core.account.SubAccount;
-import io.cygnuxltb.jcts.core.adaptor.OrderAgent;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
-import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
-import io.cygnuxltb.jcts.core.order.ChildOrder;
-import io.cygnuxltb.jcts.core.order.OrdSysIdAllocator;
-import io.cygnuxltb.jcts.core.order.Order;
-import io.cygnuxltb.jcts.core.order.enums.OrdType;
-import io.cygnuxltb.jcts.core.order.enums.TrdAction;
-import io.cygnuxltb.jcts.core.order.enums.TrdDirection;
-import io.cygnuxltb.jcts.core.risk.CircuitBreaker;
-import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
-import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
-import io.cygnuxltb.jcts.core.strategy.Strategy;
-import io.cygnuxltb.jcts.core.strategy.StrategyEvent;
+import io.rapid.core.account.Account;
+import io.rapid.core.account.AccountStorage;
+import io.rapid.core.account.SubAccount;
+import io.rapid.core.adaptor.TraderAdaptor;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.mkd.FastMarketData;
+import io.rapid.core.mkd.MarketDataKeeper;
+import io.rapid.core.order.ChildOrder;
+import io.rapid.core.order.OrdSysIdAllocator;
+import io.rapid.core.order.Order;
+import io.rapid.core.order.enums.OrdType;
+import io.rapid.core.order.enums.TrdAction;
+import io.rapid.core.order.enums.TrdDirection;
+import io.rapid.core.risk.CircuitBreaker;
+import io.rapid.core.protocol.avro.request.QueryBalance;
+import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.strategy.Strategy;
+import io.rapid.core.strategy.StrategyEvent;
 import io.cygnuxltb.jcts.engine.position.PositionKeeper;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.annotation.AbstractFunction;
@@ -392,7 +392,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         childOrder.printLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAgent().newOrder(childOrder.toNewOrder());
+        getTraderAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
@@ -483,7 +483,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         childOrder.printLog(log, "Close position generate [ChildOrder]");
         saveOrder(childOrder);
 
-        getAgent().newOrder(childOrder.toNewOrder());
+        getTraderAdaptor().newOrder(childOrder.toNewOrder());
         childOrder.printLog(log, "Close position [ChildOrder] has been sent");
     }
 
@@ -498,11 +498,11 @@ public abstract class BaseStrategy<K extends ParamKey>
 
 
     /**
-     * 由策略自行决定在交易不同Instrument时使用哪个Adaptor
+     * 由策略自行决定在交易不同Instrument时使用哪个TraderAdaptor
      *
      * @return Adaptor
      */
-    protected OrderAgent getAgent() {
+    protected TraderAdaptor getTraderAdaptor() {
         //TODO
         return null;
     }

@@ -11,7 +11,6 @@ public enum ResponseStatus {
 
     UPDATED(204, "已更新"),
 
-
     /* 错误状态码 */
     BAD_REQUEST(400, "客户端请求错误"),
 
@@ -44,12 +43,20 @@ public enum ResponseStatus {
                 .setArray(false);
     }
 
+    public ResponseBean response(String info) {
+        return response().setInfo(info);
+    }
+
     public ResponseBean responseOf(Object data) {
         return new ResponseBean()
                 .setCode(code)
                 .setMessage(message)
                 .setArray(data instanceof Collection)
                 .setData(data);
+    }
+
+    public ResponseBean responseOf(Object data, String info) {
+        return responseOf(data).setInfo(info);
     }
 
 }

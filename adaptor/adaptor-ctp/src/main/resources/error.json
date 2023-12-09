@@ -114,7 +114,7 @@
       {
         "id": "DUPLICATE_ORDER_REF",
         "value": "22",
-        "prompt": "CTP:报单错误：不允许重复报单"
+        "prompt": "CTP:报单错误-不允许重复报单"
       },
       {
         "id": "BAD_ORDER_ACTION_FIELD",
@@ -124,7 +124,7 @@
       {
         "id": "DUPLICATE_ORDER_ACTION_REF",
         "value": "24",
-        "prompt": "CTP:撤单已报送，不允许重复撤单"
+        "prompt": "CTP:撤单已报送, 不允许重复撤单"
       },
       {
         "id": "ORDER_NOT_FOUND",
@@ -134,7 +134,7 @@
       {
         "id": "INSUITABLE_ORDER_STATUS",
         "value": "26",
-        "prompt": "CTP:报单已全成交或已撤销，不能再撤"
+        "prompt": "CTP:报单已全成交或已撤销, 不能再撤"
       },
       {
         "id": "UNSUPPORTED_FUNCTION",
@@ -339,7 +339,7 @@
       {
         "id": "DUPLICATE_EXECORDER_REF",
         "value": "67",
-        "prompt": "CTP:执行宣告错误，不允许重复执行"
+        "prompt": "CTP:执行宣告错误, 不允许重复执行"
       },
       {
         "id": "RESEND_EXECORDER_BROKERINVESTOR_NOTMATCH",
@@ -364,7 +364,7 @@
       {
         "id": "DUPLICATE_EXECORDER_ACTION_REF",
         "value": "72",
-        "prompt": "CTP:执行宣告撤单已报送，不允许重复撤单"
+        "prompt": "CTP:执行宣告撤单已报送, 不允许重复撤单"
       },
       {
         "id": "EXECORDER_NOT_FOUND",
@@ -379,7 +379,7 @@
       {
         "id": "LOGIN_FORBIDDEN",
         "value": "75",
-        "prompt": "CTP:连续登录失败次数超限，登录被禁止"
+        "prompt": "CTP:连续登录失败次数超限, 登录被禁止"
       },
       {
         "id": "INVALID_TRANSFER_AGENT",
@@ -454,12 +454,12 @@
       {
         "id": "NEED_RETRY",
         "value": "90",
-        "prompt": "CTP：查询未就绪，请稍后重试"
+        "prompt": "CTP:查询未就绪, 请稍后重试"
       },
       {
         "id": "EXCHANGE_RTNERROR",
         "value": "91",
-        "prompt": "CTP：交易所返回的错误"
+        "prompt": "CTP:交易所返回的错误"
       },
       {
         "id": "QUOTE_DERIVEDORDER_ACTIONERROR",
@@ -514,7 +514,7 @@
       {
         "id": "WEAK_PASSWORD",
         "value": "131",
-        "prompt": "CTP：您当前密码为弱密码，请修改成强密码后重新登录"
+        "prompt": "CTP:您当前密码为弱密码, 请修改成强密码后重新登录"
       },
       {
         "id": "EXEC_FORBIDDEN_TIME",
@@ -524,12 +524,12 @@
       {
         "id": "FIRST_LOGIN",
         "value": "140",
-        "prompt": "CTP:首次登录必须修改密码，请修改密码后重新登录"
+        "prompt": "CTP:首次登录必须修改密码, 请修改密码后重新登录"
       },
       {
         "id": "PWD_OUT_OF_DATE",
         "value": "141",
-        "prompt": "CTP:您当前密码已过期，请修改后登录"
+        "prompt": "CTP:您当前密码已过期, 请修改后登录"
       },
       {
         "id": "PWD_MUST_DIFF",
@@ -539,127 +539,127 @@
       {
         "id": "IP_FORBIDDEN",
         "value": "143",
-        "prompt": "CTP:您登录失败次数过多，IP被禁止登入CTP"
+        "prompt": "CTP:您登录失败次数过多, IP被禁止登入CTP"
       },
       {
         "id": "IP_BLACK",
         "value": "144",
-        "prompt": "CTP:您当前IP在黑名单中，被禁止登入CTP"
+        "prompt": "CTP:您当前IP在黑名单中, 被禁止登入CTP"
       },
       {
         "id": "SEND_INSTITUTION_CODE_ERROR",
         "value": "1000",
-        "prompt": "CTP:银期转账：发送机构代码错误"
+        "prompt": "CTP:银期转账-发送机构代码错误"
       },
       {
         "id": "NO_GET_PLATFORM_SN",
         "value": "1001",
-        "prompt": "CTP:银期转账：取平台流水号错误"
+        "prompt": "CTP:银期转账-取平台流水号错误"
       },
       {
         "id": "ILLEGAL_TRANSFER_BANK",
         "value": "1002",
-        "prompt": "CTP:银期转账：不合法的转账银行"
+        "prompt": "CTP:银期转账-不合法的转账银行"
       },
       {
         "id": "ALREADY_OPEN_ACCOUNT",
         "value": "1003",
-        "prompt": "CTP:银期转账：已经开户"
+        "prompt": "CTP:银期转账-已经开户"
       },
       {
         "id": "NOT_OPEN_ACCOUNT",
         "value": "1004",
-        "prompt": "CTP:银期转账：未开户"
+        "prompt": "CTP:银期转账-未开户"
       },
       {
         "id": "PROCESSING",
         "value": "1005",
-        "prompt": "CTP:银期转账：处理中"
+        "prompt": "CTP:银期转账-处理中"
       },
       {
         "id": "OVERTIME",
         "value": "1006",
-        "prompt": "CTP:银期转账：交易超时"
+        "prompt": "CTP:银期转账-交易超时"
       },
       {
         "id": "RECORD_NOT_FOUND",
         "value": "1007",
-        "prompt": "CTP:银期转账：找不到记录"
+        "prompt": "CTP:银期转账-找不到记录"
       },
       {
         "id": "NO_FOUND_REVERSAL_ORIGINAL_TRANSACTION",
         "value": "1008",
-        "prompt": "CTP:银期转账：找不到被冲正的原始交易"
+        "prompt": "CTP:银期转账-找不到被冲正的原始交易"
       },
       {
         "id": "CONNECT_HOST_FAILED",
         "value": "1009",
-        "prompt": "CTP:银期转账：连接主机失败"
+        "prompt": "CTP:银期转账-连接主机失败"
       },
       {
         "id": "SEND_FAILED",
         "value": "1010",
-        "prompt": "CTP:银期转账：发送失败"
+        "prompt": "CTP:银期转账-发送失败"
       },
       {
         "id": "LATE_RESPONSE",
         "value": "1011",
-        "prompt": "CTP:银期转账：迟到应答"
+        "prompt": "CTP:银期转账-迟到应答"
       },
       {
         "id": "REVERSAL_BANKID_NOT_MATCH",
         "value": "1012",
-        "prompt": "CTP:银期转账：冲正交易银行代码错误"
+        "prompt": "CTP:银期转账-冲正交易银行代码错误"
       },
       {
         "id": "REVERSAL_BANKACCOUNT_NOT_MATCH",
         "value": "1013",
-        "prompt": "CTP:银期转账：冲正交易银行账户错误"
+        "prompt": "CTP:银期转账-冲正交易银行账户错误"
       },
       {
         "id": "REVERSAL_BROKERID_NOT_MATCH",
         "value": "1014",
-        "prompt": "CTP:银期转账：冲正交易经纪公司代码错误"
+        "prompt": "CTP:银期转账-冲正交易经纪公司代码错误"
       },
       {
         "id": "REVERSAL_ACCOUNTID_NOT_MATCH",
         "value": "1015",
-        "prompt": "CTP:银期转账：冲正交易资金账户错误"
+        "prompt": "CTP:银期转账-冲正交易资金账户错误"
       },
       {
         "id": "REVERSAL_AMOUNT_NOT_MATCH",
         "value": "1016",
-        "prompt": "CTP:银期转账：冲正交易交易金额错误"
+        "prompt": "CTP:银期转账-冲正交易交易金额错误"
       },
       {
         "id": "DB_OPERATION_FAILED",
         "value": "1017",
-        "prompt": "CTP:银期转账：数据库操作错误"
+        "prompt": "CTP:银期转账-数据库操作错误"
       },
       {
         "id": "SEND_ASP_FAILURE",
         "value": "1018",
-        "prompt": "CTP:银期转账：发送到交易系统失败"
+        "prompt": "CTP:银期转账-发送到交易系统失败"
       },
       {
         "id": "NOT_SIGNIN",
         "value": "1019",
-        "prompt": "CTP:银期转账：没有签到"
+        "prompt": "CTP:银期转账-没有签到"
       },
       {
         "id": "ALREADY_SIGNIN",
         "value": "1020",
-        "prompt": "CTP:银期转账：已经签到"
+        "prompt": "CTP:银期转账-已经签到"
       },
       {
         "id": "AMOUNT_OR_TIMES_OVER",
         "value": "1021",
-        "prompt": "CTP:银期转账：金额或次数超限"
+        "prompt": "CTP:银期转账-金额或次数超限"
       },
       {
         "id": "NOT_IN_TRANSFER_TIME",
         "value": "1022",
-        "prompt": "CTP:银期转账：这一时间段不能转账"
+        "prompt": "CTP:银期转账-这一时间段不能转账"
       },
       {
         "id": "BANK_SERVER_ERROR",
@@ -669,97 +669,97 @@
       {
         "id": "BANK_SERIAL_IS_REPEALED",
         "value": "1024",
-        "prompt": "CTP:银期转账：银行已经冲正"
+        "prompt": "CTP:银期转账-银行已经冲正"
       },
       {
         "id": "BANK_SERIAL_NOT_EXIST",
         "value": "1025",
-        "prompt": "CTP:银期转账：银行流水不存在"
+        "prompt": "CTP:银期转账-银行流水不存在"
       },
       {
         "id": "NOT_ORGAN_MAP",
         "value": "1026",
-        "prompt": "CTP:银期转账：机构没有签约"
+        "prompt": "CTP:银期转账-机构没有签约"
       },
       {
         "id": "EXIST_TRANSFER",
         "value": "1027",
-        "prompt": "CTP:银期转账：存在转账，不能销户"
+        "prompt": "CTP:银期转账-存在转账, 不能销户"
       },
       {
         "id": "BANK_FORBID_REVERSAL",
         "value": "1028",
-        "prompt": "CTP:银期转账：银行不支持冲正"
+        "prompt": "CTP:银期转账-银行不支持冲正"
       },
       {
         "id": "DUP_BANK_SERIAL",
         "value": "1029",
-        "prompt": "CTP:银期转账：重复的银行流水"
+        "prompt": "CTP:银期转账-重复的银行流水"
       },
       {
         "id": "FBT_SYSTEM_BUSY",
         "value": "1030",
-        "prompt": "CTP:银期转账：转账系统忙，稍后再试"
+        "prompt": "CTP:银期转账-转账系统忙, 稍后再试"
       },
       {
         "id": "MACKEY_SYNCING",
         "value": "1031",
-        "prompt": "CTP:银期转账：MAC密钥正在同步"
+        "prompt": "CTP:银期转账-MAC密钥正在同步"
       },
       {
         "id": "ACCOUNTID_ALREADY_REGISTER",
         "value": "1032",
-        "prompt": "CTP:银期转账：资金账户已经登记"
+        "prompt": "CTP:银期转账-资金账户已经登记"
       },
       {
         "id": "BANKACCOUNT_ALREADY_REGISTER",
         "value": "1033",
-        "prompt": "CTP:银期转账：银行账户已经登记"
+        "prompt": "CTP:银期转账-银行账户已经登记"
       },
       {
         "id": "DUP_BANK_SERIAL_REDO_OK",
         "value": "1034",
-        "prompt": "CTP:银期转账：重复的银行流水,重发成功"
+        "prompt": "CTP:银期转账-重复的银行流水,重发成功"
       },
       {
         "id": "CURRENCYID_NOT_SUPPORTED",
         "value": "1035",
-        "prompt": "CTP:银期转账：该币种代码不支持"
+        "prompt": "CTP:银期转账-该币种代码不支持"
       },
       {
         "id": "INVALID_MAC",
         "value": "1036",
-        "prompt": "CTP:银期转账：MAC值验证失败"
+        "prompt": "CTP:银期转账-MAC值验证失败"
       },
       {
         "id": "NOT_SUPPORT_SECAGENT_BY_BANK",
         "value": "1037",
-        "prompt": "CTP:银期转账：不支持银行端发起的二级代理商转账和查询"
+        "prompt": "CTP:银期转账-不支持银行端发起的二级代理商转账和查询"
       },
       {
         "id": "PINKEY_SYNCING",
         "value": "1038",
-        "prompt": "CTP:银期转账：PIN密钥正在同步"
+        "prompt": "CTP:银期转账-PIN密钥正在同步"
       },
       {
         "id": "SECAGENT_QUERY_BY_CCB",
         "value": "1039",
-        "prompt": "CTP:银期转账：建行发起的二级代理商查询"
+        "prompt": "CTP:银期转账-建行发起的二级代理商查询"
       },
       {
         "id": "BANKACCOUNT_NOT_EMPTY",
         "value": "1040",
-        "prompt": "CTP:银期转账：银行账户不能为空"
+        "prompt": "CTP:银期转账-银行账户不能为空"
       },
       {
         "id": "INVALID_RESERVE_OPEN_ACCOUNT",
         "value": "1041",
-        "prompt": "CTP:银期转账：资金账户存在，预约开户失败"
+        "prompt": "CTP:银期转账-资金账户存在, 预约开户失败"
       },
       {
         "id": "OPEN_ACCOUNT_NOT_DEFAULT_ACCOUNT",
         "value": "1042",
-        "prompt": "CTP:银期转账：开户请求的银行卡号和预留的账号不同"
+        "prompt": "CTP:银期转账-开户请求的银行卡号和预留的账号不同"
       },
       {
         "id": "BANK_SYSTEM_INTERNAL_ERROR",
@@ -849,112 +849,112 @@
       {
         "id": "FBE_NO_GET_PLATFORM_SN",
         "value": "3001",
-        "prompt": "CTP:银期换汇：取平台流水号错误"
+        "prompt": "CTP:银期换汇-取平台流水号错误"
       },
       {
         "id": "FBE_ILLEGAL_TRANSFER_BANK",
         "value": "3002",
-        "prompt": "CTP:银期换汇：不合法的转账银行"
+        "prompt": "CTP:银期换汇-不合法的转账银行"
       },
       {
         "id": "FBE_PROCESSING",
         "value": "3005",
-        "prompt": "CTP:银期换汇：处理中"
+        "prompt": "CTP:银期换汇-处理中"
       },
       {
         "id": "FBE_OVERTIME",
         "value": "3006",
-        "prompt": "CTP:银期换汇：交易超时"
+        "prompt": "CTP:银期换汇-交易超时"
       },
       {
         "id": "FBE_RECORD_NOT_FOUND",
         "value": "3007",
-        "prompt": "CTP:银期换汇：找不到记录"
+        "prompt": "CTP:银期换汇-找不到记录"
       },
       {
         "id": "FBE_CONNECT_HOST_FAILED",
         "value": "3009",
-        "prompt": "CTP:银期换汇：连接主机失败"
+        "prompt": "CTP:银期换汇-连接主机失败"
       },
       {
         "id": "FBE_SEND_FAILED",
         "value": "3010",
-        "prompt": "CTP:银期换汇：发送失败"
+        "prompt": "CTP:银期换汇-发送失败"
       },
       {
         "id": "FBE_LATE_RESPONSE",
         "value": "3011",
-        "prompt": "CTP:银期换汇：迟到应答"
+        "prompt": "CTP:银期换汇-迟到应答"
       },
       {
         "id": "FBE_DB_OPERATION_FAILED",
         "value": "3017",
-        "prompt": "CTP:银期换汇：数据库操作错误"
+        "prompt": "CTP:银期换汇-数据库操作错误"
       },
       {
         "id": "FBE_NOT_SIGNIN",
         "value": "3019",
-        "prompt": "CTP:银期换汇：没有签到"
+        "prompt": "CTP:银期换汇-没有签到"
       },
       {
         "id": "FBE_ALREADY_SIGNIN",
         "value": "3020",
-        "prompt": "CTP:银期换汇：已经签到"
+        "prompt": "CTP:银期换汇-已经签到"
       },
       {
         "id": "FBE_AMOUNT_OR_TIMES_OVER",
         "value": "3021",
-        "prompt": "CTP:银期换汇：金额或次数超限"
+        "prompt": "CTP:银期换汇-金额或次数超限"
       },
       {
         "id": "FBE_NOT_IN_TRANSFER_TIME",
         "value": "3022",
-        "prompt": "CTP:银期换汇：这一时间段不能换汇"
+        "prompt": "CTP:银期换汇-这一时间段不能换汇"
       },
       {
         "id": "FBE_BANK_SERVER_ERROR",
         "value": "3023",
-        "prompt": "CTP:银期换汇：银行主机错"
+        "prompt": "CTP:银期换汇-银行主机错"
       },
       {
         "id": "FBE_NOT_ORGAN_MAP",
         "value": "3026",
-        "prompt": "CTP:银期换汇：机构没有签约"
+        "prompt": "CTP:银期换汇-机构没有签约"
       },
       {
         "id": "FBE_SYSTEM_BUSY",
         "value": "3030",
-        "prompt": "CTP:银期换汇：换汇系统忙，稍后再试"
+        "prompt": "CTP:银期换汇-换汇系统忙, 稍后再试"
       },
       {
         "id": "FBE_CURRENCYID_NOT_SUPPORTED",
         "value": "3035",
-        "prompt": "CTP:银期换汇：该币种代码不支持"
+        "prompt": "CTP:银期换汇-该币种代码不支持"
       },
       {
         "id": "FBE_WRONG_BANK_ACCOUNT",
         "value": "3036",
-        "prompt": "CTP:银期换汇：银行帐号不正确"
+        "prompt": "CTP:银期换汇-银行帐号不正确"
       },
       {
         "id": "FBE_BANK_ACCOUNT_NO_FUNDS",
         "value": "3037",
-        "prompt": "CTP:银期换汇：银行帐户余额不足"
+        "prompt": "CTP:银期换汇-银行帐户余额不足"
       },
       {
         "id": "FBE_DUP_CERT_NO",
         "value": "3038",
-        "prompt": "CTP:银期换汇：凭证号重复"
+        "prompt": "CTP:银期换汇-凭证号重复"
       },
       {
         "id": "API_UNSUPPORTED_VERSION",
         "value": "3039",
-        "prompt": "CTP: 不支持该API版本"
+        "prompt": "CTP:不支持该API版本"
       },
       {
         "id": "API_INVALID_KEY",
         "value": "3040",
-        "prompt": "CTP: 无效的API KEY"
+        "prompt": "CTP:无效的API KEY"
       },
       {
         "id": "OPTION_SELF_CLOSE_NOT_OPTION",
@@ -979,12 +979,12 @@
       {
         "id": "OPTION_SELF_CLOSE_STATUS_ERR",
         "value": "3045",
-        "prompt": "CTP:期权对冲,履约对冲:对冲状态不对，不能撤销"
+        "prompt": "CTP:期权对冲,履约对冲:对冲状态不对, 不能撤销"
       },
       {
         "id": "OPTION_SELF_CLOSE_DOUBLE_SET_ERR",
         "value": "3046",
-        "prompt": "CTP:期权对冲,履约对冲:不能重复设置，只能先撤销再设置"
+        "prompt": "CTP:期权对冲,履约对冲:不能重复设置, 只能先撤销再设置"
       },
       {
         "id": "QUOTE_WRONG_HEDGE_TYPE",

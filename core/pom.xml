@@ -4,12 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.cygnuxltb</groupId>
-        <artifactId>jcts</artifactId>
+        <artifactId>rapid</artifactId>
         <version>1.0</version>
     </parent>
 
     <artifactId>core</artifactId>
     <name>core</name>
+
+    <properties>
+    </properties>
 
     <build>
         <plugins>
@@ -45,7 +48,63 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <!--            <plugin>-->
+            <!--                <groupId>org.codehaus.mojo</groupId>-->
+            <!--                <artifactId>exec-maven-plugin</artifactId>-->
+            <!--                <version>3.1.0</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <phase>generate-sources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>java</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                <configuration>-->
+            <!--                    <includeProjectDependencies>false</includeProjectDependencies>-->
+            <!--                    <includePluginDependencies>true</includePluginDependencies>-->
+            <!--                    <mainClass>uk.co.real_logic.sbe.SbeTool</mainClass>-->
+            <!--                    <systemProperties>-->
+            <!--                        <systemProperty>-->
+            <!--                            <key>sbe.output.dir</key>-->
+            <!--                            <value>${project.build.sourceDirectory}</value>-->
+            <!--                        </systemProperty>-->
+            <!--                    </systemProperties>-->
+            <!--                    <arguments>-->
+            <!--                        &lt;!&ndash;suppress UnresolvedMavenProperty&ndash;&gt;-->
+            <!--                        <argument>${project.build.sourceDirectory}/../resources/common.xml</argument>-->
+            <!--                        &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+            <!--                        <argument>${project.build.sourceDirectory}/../resources/extension.xml</argument>-->
+            <!--                    </arguments>-->
+            <!--                    <workingDirectory>${project.build.sourceDirectory}</workingDirectory>-->
+            <!--                </configuration>-->
+            <!--                <dependencies>-->
+            <!--                    <dependency>-->
+            <!--                        <groupId>uk.co.real-logic</groupId>-->
+            <!--                        <artifactId>sbe-tool</artifactId>-->
+            <!--                        <version>1.29.0</version>-->
+            <!--                    </dependency>-->
+            <!--                </dependencies>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.codehaus.mojo</groupId>-->
+            <!--                <artifactId>build-helper-maven-plugin</artifactId>-->
+            <!--                <version>3.4.0</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>add-source</id>-->
+            <!--                        <phase>generate-sources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>add-source</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <sources>-->
+            <!--                                <source>${project.build.sourceDirectory}</source>-->
+            <!--                            </sources>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 
@@ -53,10 +112,6 @@
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-sbe</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>commons-config</artifactId>
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
@@ -75,7 +130,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.28</version>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

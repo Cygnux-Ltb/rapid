@@ -26,17 +26,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>7.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>transport-rabbitmq</artifactId>
         </dependency>
@@ -104,7 +93,7 @@
         <dependency>
             <groupId>io.cygnuxltb</groupId>
             <artifactId>core</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

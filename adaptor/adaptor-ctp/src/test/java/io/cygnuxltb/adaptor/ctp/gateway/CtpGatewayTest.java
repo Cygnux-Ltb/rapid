@@ -1,10 +1,10 @@
 package io.cygnuxltb.adaptor.ctp.gateway;
 
 import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEvent;
-import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcDepthMarketData;
-import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcOrder;
-import io.cygnuxltb.adaptor.ctp.gateway.rsp.FtdcTrade;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
+import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.cygnuxltb.jcts.core.adaptor.ConnectionMode.Normal;
+import static io.rapid.core.adaptor.ConnectionMode.ALL;
 
 public class CtpGatewayTest {
 
@@ -58,7 +58,7 @@ public class CtpGatewayTest {
                                     depthMarketData.getBidPrice1());
                         }
                         case Order -> {
-                            FtdcOrder order = msg.getOrder();
+                            FtdcOrder order = msg.getoOrder();
                             log.info("Handle RtnOrder -> OrderRef==[{}]", order.getOrderRef());
                         }
                         case Trade -> {
@@ -70,7 +70,7 @@ public class CtpGatewayTest {
                     }
                 });
 
-        try (CtpGateway gateway = new CtpGateway(GatewayId, config, Normal, queue::enqueue)) {
+        try (CtpGateway gateway = new CtpGateway(GatewayId, config, ALL, queue::enqueue)) {
             gateway.startup();
             gateway.SubscribeMarketData(new String[]{"rb2010"});
             ThreadSupport.join();

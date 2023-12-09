@@ -42,12 +42,12 @@ public final class PnlDTO {
     /**
      * 多头数量
      */
-    private int buyQuantity;
+    private int buyQty;
 
     /**
      * 空头数量
      */
-    private int sellQuantity;
+    private int sellQty;
 
     /**
      * 今多头数量

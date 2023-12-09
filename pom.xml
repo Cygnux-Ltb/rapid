@@ -35,13 +35,13 @@
     </modules>
 
     <properties>
-        <java.version>20</java.version>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>3.1.2</spring-boot.version>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <spring-boot.version>3.1.6</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
-        <avro.version>1.11.2</avro.version>
+        <avro.version>1.11.3</avro.version>
     </properties>
 
     <build>
@@ -87,18 +87,13 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.28</version>
+                <version>1.18.30</version>
             </dependency>
             <!-- see https://github.com/yellow013/mercury.git -->
             <!-- mercury commons -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>commons-core</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
-                <artifactId>commons-config</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>

@@ -79,7 +79,7 @@ public final class StrategyController {
     public boolean putParamsByStrategyId(@RequestParam(STRATEGY_ID) int strategyId,
                                          @RequestBody HttpServletRequest request) {
         var params = ControllerUtil.bodyToObject(request, TblSysParam.class);
-        log.info("putParamsByStrategyId recv : {}", params);
+        log.info("func -> putParamsByStrategyId received : {}", params);
         return params != null && paramService.putStrategyParam(params);
     }
 

@@ -5,11 +5,10 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 订单基本信息
- * [*] 为不可为空字段
+ * [*] 不可为空字段
  *
  * @author yellow013
  */

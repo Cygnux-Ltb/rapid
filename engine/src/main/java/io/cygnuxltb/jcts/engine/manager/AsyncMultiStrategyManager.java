@@ -1,10 +1,10 @@
 package io.cygnuxltb.jcts.engine.manager;
 
-import io.cygnuxltb.jcts.core.mkd.FastMarketData;
-import io.cygnuxltb.jcts.core.mkd.MarketDataKeeper;
-import io.cygnuxltb.jcts.core.order.ChildOrder;
-import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
-import io.cygnuxltb.jcts.core.ser.event.OrderEvent;
+import io.rapid.core.mkd.FastMarketData;
+import io.rapid.core.mkd.MarketDataKeeper;
+import io.rapid.core.order.ChildOrder;
+import io.rapid.core.protocol.avro.event.AdaptorEvent;
+import io.rapid.core.protocol.avro.event.OrderEvent;
 import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
@@ -78,7 +78,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull io.cygnuxltb.jcts.core.ser.event.AdaptorEvent report) {
+    public void onAdaptorEvent(@Nonnull io.rapid.core.protocol.avro.event.AdaptorEvent report) {
         queue.enqueue(new QueueMsg(report));
     }
 

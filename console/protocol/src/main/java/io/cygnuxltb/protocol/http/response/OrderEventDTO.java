@@ -58,93 +58,93 @@ public final class OrderEventDTO {
     private int userId;
 
     /**
-     * ord_sys_id [*]
+     * ordSysId [*]
      */
     private long ordSysId;
 
     /**
-     * order_ref
+     * 订单引用
      */
     private String orderRef;
 
     /**
-     * order_msg_type
+     * 订单消息类型
      */
     private int orderMsgType;
 
     /**
-     * ord_offset
+     * 买/卖
      */
-    private char ordOffset;
+    private char offset;
 
     /**
-     * direction
+     * 方向
      */
     private char direction;
 
     /**
-     * limit_price double 19_4
+     * 指定价格
      */
     private double limitPrice;
 
     /**
-     * order_status char
+     * 订单状态
      */
     private int status;
 
     /**
-     * status_msg
+     * 状态信息
      */
     private String statusMsg;
 
 
     /**
-     * brokerSysID
+     * 经纪商系统ID
      */
     private long brokerSysID;
 
     /**
-     * volume int
+     * 数量
      */
     private int volume;
 
     /**
-     * volume_filled int
+     * 成交数量
      */
     private int volumeFilled;
 
     /**
-     * volume_remained int
+     * 剩余数量
      */
     private int volumeRemained;
 
     /**
-     * price double 19_4
+     * 价格
      */
     private double price;
 
     /**
-     * trade_id varchar 21
+     * 成交ID
      */
     private String tradeId;
 
     /**
-     * ord_rej_reason
+     * 订单拒绝理由
      */
     private int ordRejReason;
 
     /**
-     * update_time
+     * 更新时间
      */
     private LocalDateTime updateTime;
 
     /**
-     * cancel_time
+     * 取消时间
      */
     private LocalDateTime cancelTime;
 
     /**
-     * remark
+     * 备注
      */
     private String remark;
 

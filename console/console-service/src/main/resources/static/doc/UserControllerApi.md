@@ -22,7 +22,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X POST -i /user/signin
 ```
 
@@ -35,7 +35,7 @@ curl -X POST -i /user/signin
 |securityCode|int64|安全码|-|
 
 **Response-example:**
-```
+```json
 {
   "authenticated": true,
   "message": "",
@@ -66,7 +66,7 @@ curl -X POST -i /user/signin
 
 
 **Request-example:**
-```
+```bash
 curl -X POST -i /user/signup
 ```
 
@@ -76,14 +76,16 @@ curl -X POST -i /user/signup
 |-------|------|-------------|-------|
 |code|int32|No comments found.|-|
 |message|string|No comments found.|-|
+|info|string|No comments found.|-|
 |array|boolean|No comments found.|-|
 |data|object|No comments found.|-|
 
 **Response-example:**
-```
+```json
 {
   "code": 0,
   "message": "",
+  "info": "",
   "array": true,
   "data": {}
 }

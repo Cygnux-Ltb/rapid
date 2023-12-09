@@ -9,8 +9,14 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class StrategyStatus {
 
+    /**
+     * 策略ID
+     */
     private int strategyId;
 
+    /**
+     * 策略状态
+     */
     private int status;
 
 }

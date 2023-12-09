@@ -3,7 +3,7 @@ package io.cygnuxltb.console.service;
 import io.cygnuxltb.console.persistence.entity.TblTrdStrategy;
 import io.cygnuxltb.console.persistence.dao.StrategyDao;
 import io.cygnuxltb.console.persistence.JpaExecutor;
-import io.cygnuxltb.console.service.util.DtoConverter;
+import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.StrategyDTO;
 import io.mercury.common.lang.Throws;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -26,13 +26,15 @@ public final class StrategyService {
     @Resource
     private StrategyDao dao;
 
+    private final boolean isMock = true;
+
     /**
      * @return List<StrategyEntity>
      */
     public List<StrategyDTO> getAllStrategy() {
         return select(TblTrdStrategy.class,
                 () -> dao.findAll())
-                .stream().map(DtoConverter::toDTO)
+                .stream().map(DtoUtil::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +48,7 @@ public final class StrategyService {
         TblTrdStrategy entity = dao.queryByStrategyId(strategyId);
         if (entity == null)
             log.warn("entity == null where strategyId -> {}", strategyId);
-        return DtoConverter.toDTO(entity);
+        return DtoUtil.toDto(entity);
     }
 
     /**
@@ -59,7 +61,7 @@ public final class StrategyService {
         TblTrdStrategy entity = dao.queryByStrategyName(strategyName);
         if (entity == null)
             log.warn("entity == null where strategyName -> {}", strategyName);
-        return DtoConverter.toDTO(entity);
+        return DtoUtil.toDto(entity);
     }
 
 

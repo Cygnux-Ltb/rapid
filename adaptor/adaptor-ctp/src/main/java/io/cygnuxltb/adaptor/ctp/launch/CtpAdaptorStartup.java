@@ -2,18 +2,18 @@ package io.cygnuxltb.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.instrument.InstrumentKeeper;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.InstrumentKeeper;
 import org.slf4j.Logger;
 
 import java.io.File;
 
-import static io.cygnuxltb.jcts.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
-import static io.cygnuxltb.jcts.core.util.MarketTradableTime.registerCloseTime;
 import static io.mercury.common.datetime.pattern.DateTimePattern.YYYYMMDD_L_HHMMSS;
+import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
+import static io.rapid.core.util.MarketTradableTime.registerCloseTime;
 
 public final class CtpAdaptorStartup {
 

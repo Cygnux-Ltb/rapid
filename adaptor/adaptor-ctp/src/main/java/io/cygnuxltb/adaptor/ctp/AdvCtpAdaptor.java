@@ -3,29 +3,32 @@ package io.cygnuxltb.adaptor.ctp;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.cygnuxltb.adaptor.ctp.OrderRefKeeper.OrderRefNotFoundException;
-import io.cygnuxltb.adaptor.ctp.converter.FtdcOrderConverter;
 import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
-import io.cygnuxltb.adaptor.ctp.converter.OrderReportConverter;
-import io.cygnuxltb.adaptor.ctp.gateway.CtpGateway;
-import io.cygnuxltb.adaptor.ctp.gateway.msg.FtdcEventPublisher;
-import io.cygnuxltb.jcts.core.account.Account;
-import io.cygnuxltb.jcts.core.adaptor.AbstractAdaptor;
-import io.cygnuxltb.jcts.core.adaptor.Adaptor;
-import io.cygnuxltb.jcts.core.adaptor.AdaptorAvailableTime;
-import io.cygnuxltb.jcts.core.adaptor.ConnectionMode;
-import io.cygnuxltb.jcts.core.adaptor.MarketDataFeed;
-import io.cygnuxltb.jcts.core.adaptor.TraderAdaptor;
-import io.cygnuxltb.jcts.core.handler.MarketDataHandler;
-import io.cygnuxltb.jcts.core.handler.OrderHandler;
-import io.cygnuxltb.jcts.core.instrument.Instrument;
-import io.cygnuxltb.jcts.core.ser.req.CancelOrder;
-import io.cygnuxltb.jcts.core.ser.req.NewOrder;
-import io.cygnuxltb.jcts.core.ser.req.QueryBalance;
-import io.cygnuxltb.jcts.core.ser.req.QueryOrder;
-import io.cygnuxltb.jcts.core.ser.req.QueryPositions;
+import io.cygnuxltb.adaptor.ctp.converter.OrderConverter;
+import io.cygnuxltb.adaptor.ctp.converter.OrderEventConverter;
+import io.cygnuxltb.adaptor.ctp.gateway.FtdcMdGateway;
+import io.cygnuxltb.adaptor.ctp.gateway.FtdcTraderGateway;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
+import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.mercury.common.collections.MutableSets;
+import io.mercury.common.concurrent.ring.RingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
+import io.rapid.core.account.Account;
+import io.rapid.core.adaptor.AbstractAdaptor;
+import io.rapid.core.adaptor.Adaptor;
+import io.rapid.core.adaptor.AdaptorAvailableTime;
+import io.rapid.core.adaptor.ConnectionMode;
+import io.rapid.core.adaptor.MarketDataFeed;
+import io.rapid.core.adaptor.TraderAdaptor;
+import io.rapid.core.handler.MarketDataHandler;
+import io.rapid.core.handler.OrderHandler;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.protocol.avro.request.CancelOrder;
+import io.rapid.core.protocol.avro.request.NewOrder;
+import io.rapid.core.protocol.avro.request.QueryBalance;
+import io.rapid.core.protocol.avro.request.QueryOrder;
+import io.rapid.core.protocol.avro.request.QueryPositions;
 import jakarta.annotation.PostConstruct;
 import org.agrona.concurrent.IdleStrategy;
 import org.agrona.concurrent.SleepingIdleStrategy;
@@ -58,7 +61,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     private final MarketDataConverter marketDataConverter = new MarketDataConverter();
 
     // 转换订单回报
-    private final OrderReportConverter orderReportConverter = new OrderReportConverter();
+    private final OrderEventConverter orderEventConverter = new OrderEventConverter();
 
     // CTP Config
     private final CtpConfig config;
@@ -76,51 +79,98 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     /**
      * 传入InboundScheduler实现, 由构造函数在内部转换为MPSC队列缓冲区
      *
-     * @param account   Account
-     * @param config    CtpConfig
-     * @param mode      AdaptorRunMode
-     * @param publisher FtdcEventPublisher
+     * @param account  Account
+     * @param config   CtpConfig
+     * @param mode     ConnectionMode
+     * @param eventbus RingEventbus<FtdcEvent>
      */
     private AdvCtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
-                          @Nonnull ConnectionMode mode, @Nonnull FtdcEventPublisher publisher) {
+                          @Nonnull ConnectionMode mode, @Nonnull RingEventbus<FtdcEvent> eventbus) {
         super(AdvCtpAdaptor.class.getSimpleName(), account);
         this.config = config;
         this.mode = mode;
-        this.publisher = publisher;
+        this.publisher = new FtdcEventPublisher(eventbus);
         initializer();
     }
 
-    // GatewayId
-    private String gatewayId;
+    // FtdcMdGateway
+    private FtdcMdGateway mdGateway;
+    private String mdGatewayId;
 
-    // CtpGateway
-    private CtpGateway gateway;
+    // FtdcTraderGateway
+    private FtdcTraderGateway traderGateway;
+    private String traderGatewayId;
 
     // FTDC报单请求转换器
-    private FtdcOrderConverter orderConverter;
+    private OrderConverter orderConverter;
 
     @PostConstruct
     private void initializer() {
         // 创建FtdcOrderConverter
-        this.orderConverter = new FtdcOrderConverter(config);
-        // 创建GatewayId
-        this.gatewayId = config.getBrokerId() + "-" + config.getInvestorId();
-        // 创建Gateway
-        log.info("Try create gateway, gatewayId -> {}", gatewayId);
-        this.gateway = new CtpGateway(gatewayId, config, mode, publisher);
-        log.info("Create gateway success, gatewayId -> {}", gatewayId);
+        this.orderConverter = new OrderConverter(config);
+        // 根据连接模式创建相应的Gateway
+        switch (mode) {
+            case MARKET_DATA -> {
+                this.mdGateway = new FtdcMdGateway(config, publisher);
+                this.mdGatewayId = mdGateway.getGatewayId();
+                log.info("Create md gateway success, gatewayId -> {}", mdGatewayId);
+            }
+            case TRADE -> {
+                this.traderGateway = new FtdcTraderGateway(config, publisher);
+                this.traderGatewayId = traderGateway.getGatewayId();
+                log.info("Create td gateway success, gatewayId -> {}", traderGatewayId);
+            }
+            default -> {
+                this.mdGateway = new FtdcMdGateway(config, publisher);
+                this.mdGatewayId = mdGateway.getGatewayId();
+                log.info("Create md gateway success, gatewayId -> {}", mdGatewayId);
+                this.traderGateway = new FtdcTraderGateway(config, publisher);
+                this.traderGatewayId = traderGateway.getGatewayId();
+                log.info("Create td gateway success, gatewayId -> {}", traderGatewayId);
+            }
+        }
     }
 
+    // 查询间隔
+    private final long REQUEST_INTERVAL = 750;
+
+    /**
+     * 启动并挂起线程
+     */
     @Override
     protected boolean startup0() {
-        try {
-            gateway.startup();
-            log.info("{} -> bootstrap finish", gatewayId);
-            return true;
-        } catch (Exception e) {
-            log.error("Gateway exception -> {}", e.getMessage(), e);
-            return false;
+        switch (mode) {
+            case MARKET_DATA -> {
+                try {
+                    mdGateway.startup();
+                    return true;
+                } catch (Exception e) {
+                    log.error("");
+                    return false;
+                }
+            }
+            case TRADE -> {
+                try {
+                    traderGateway.startup();
+                    return true;
+                } catch (Exception e) {
+                    log.error("");
+                    return false;
+                }
+            }
+            default -> {
+                try {
+                    mdGateway.startup();
+                    traderGateway.startup();
+                    return true;
+                } catch (Exception e) {
+                    log.error("");
+                    return false;
+                }
+            }
         }
+
+
     }
 
     // 存储已订阅合约
@@ -150,7 +200,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
                         String[] instrumentCodes = new String[subscribedInstrumentCodes.size()];
                         log.info("Add subscribe instrument code -> Count==[{}]", subscribedInstrumentCodes.size());
                         subscribedInstrumentCodes.toArray(instrumentCodes);
-                        gateway.SubscribeMarketData(instrumentCodes);
+                        mdGateway.SubscribeMarketData(instrumentCodes);
                         return true;
                     }
                 } else {
@@ -160,18 +210,18 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
                         log.info("Add subscribe instrument -> instrumentCode==[{}]", instrumentCodes[i]);
                         subscribedInstrumentCodes.add(instrumentCodes[i]);
                     }
-                    gateway.SubscribeMarketData(instrumentCodes);
+                    mdGateway.SubscribeMarketData(instrumentCodes);
                     return true;
                 }
             } else {
                 stream(instruments)
                         .forEach(instrument -> subscribedInstrumentCodes.add(instrument.getInstrumentCode()));
-                log.warn("{} -> market not available, already recorded instrument code", gatewayId);
+                log.warn("{} -> market not available, already recorded instrument code", mdGatewayId);
                 log.info("subscribed instrument codes -> {}", toJson(subscribedInstrumentCodes));
                 return false;
             }
         } catch (Exception e) {
-            log.error("{} -> exec SubscribeMarketData has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec SubscribeMarketData has exception -> {}", mdGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -184,10 +234,10 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             // 设置OrderRef
             field.setOrderRef(orderRef);
             OrderRefKeeper.put(orderRef, order.getOrdSysId());
-            gateway.ReqOrderInsert(field);
+            traderGateway.ReqOrderInsert(field);
             return true;
         } catch (Exception e) {
-            log.error("{} -> exec ReqOrderInsert has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec ReqOrderInsert has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -200,13 +250,13 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             // 目前使用orderRef进行撤单
             field.setOrderRef(orderRef);
             field.setOrderActionRef(OrderRefKeeper.nextOrderRef());
-            gateway.ReqOrderAction(field);
+            traderGateway.ReqOrderAction(field);
             return true;
         } catch (OrderRefNotFoundException e) {
             log.error(e.getMessage(), e);
             return false;
         } catch (Exception e) {
-            log.error("{} -> exec ReqOrderAction has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec ReqOrderAction has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -225,7 +275,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryOrder(query.getExchangeCode(), query.getInstrumentCode());
+                        traderGateway.ReqQryOrder(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -233,7 +283,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> exec ReqQryOrder has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec ReqQryOrder has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -246,7 +296,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
+                        traderGateway.ReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -254,7 +304,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> exec ReqQryInvestorPosition has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec ReqQryInvestorPosition has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -267,7 +317,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryTradingAccount, Waiting...", adaptorId);
                         sleep(queryInterval);
-                        gateway.ReqQryTradingAccount();
+                        traderGateway.ReqQryTradingAccount();
                         log.info("{} -> Has been sent ReqQryTradingAccount", adaptorId);
                     }
                 });
@@ -275,7 +325,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> exec ReqQryTradingAccount has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec ReqQryTradingAccount has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -285,14 +335,12 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     @Override
     public void close() throws IOException {
         try {
-            gateway.close();
-            if (queue != null) {
-                while (!queue.isEmpty())
-                    idleStrategy.idle();
-            }
-            log.info("{} -> already closed", adaptorId);
+            publisher.publishMdUnavailable(-1);
+            publisher.publishTraderUnavailable(-1);
+            mdGateway.close();
+            traderGateway.close();
         } catch (Exception e) {
-            log.error("{} -> exec close has exception -> {}", gatewayId, e.getMessage(), e);
+            log.error("{} -> exec close has exception -> {}", traderGatewayId, e.getMessage(), e);
             throw new IOException(e);
         }
     }

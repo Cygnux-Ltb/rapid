@@ -131,7 +131,6 @@ public class AccountDlg extends JDialog {
     }
 }
 
-
 class PortfolioTable extends AbstractTableModel {
 
     @Serial
@@ -233,7 +232,8 @@ class PortfolioTable extends AbstractTableModel {
                 case 1 -> m_contract.symbol();
                 case 2 -> m_contract.secType();
                 case 3 -> m_contract.lastTradeDateOrContractMonth();
-                case 4 -> m_contract.lastTradeDateOrContractMonth() == null ? null : String.valueOf(m_contract.strike());
+                case 4 ->
+                        m_contract.lastTradeDateOrContractMonth() == null ? null : String.valueOf(m_contract.strike());
                 case 5 -> (m_contract.getRight() != null && m_contract.getRight().equals("???"))
                         ? null : m_contract.getRight();
                 case 6 -> m_contract.multiplier();

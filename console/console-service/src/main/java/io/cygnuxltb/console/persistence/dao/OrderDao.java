@@ -17,22 +17,21 @@ import java.util.List;
 public interface OrderDao extends JpaRepository<TblTrdOrder, Long> {
 
     /**
-     * @param strategyId      int
-     * @param investorId      String
-     * @param instrumentCode  String
-     * @param startTradingDay int
-     * @param endTradingDay   int
+     * @param strategyId      int [策略ID, 可为空]
+     * @param accountId       int [账户ID, 不可为空]
+     * @param instrumentCode  String [标的ID]
+     * @param startTradingDay int [开始日]
+     * @param endTradingDay   int [结束日]
      * @return List<OrderEntity>
      */
-    @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
-            + " AND e.strategyId = :strategyId "
-            + " AND e.investorId = :investorId "
-            + " AND e.instrumentCode = :instrumentCode "
-            + " AND e.tradingDay >= :startTradingDay "
-            + " AND e.tradingDay <= :endTradingDay "
-    )
-    List<TblTrdOrder> queryBy(@Param("strategyId") int strategyId,
-                              @Param("investorId") String investorId,
+    @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1 "
+            + " AND (e.accountId = :accountId) "
+            + " AND (:strategyId = 0 OR e.strategyId = :strategyId) "
+            + " AND (:instrumentCode IS NULL OR e.instrumentCode = :instrumentCode) "
+            + " AND (:startTradingDay = 0 OR e.tradingDay >= :startTradingDay) "
+            + " AND (:endTradingDay = 0 OR e.tradingDay <= :endTradingDay) ")
+    List<TblTrdOrder> queryBy(@Param("accountId") int accountId,
+                              @Param("strategyId") int strategyId,
                               @Param("instrumentCode") String instrumentCode,
                               @Param("startTradingDay") int startTradingDay,
                               @Param("endTradingDay") int endTradingDay);

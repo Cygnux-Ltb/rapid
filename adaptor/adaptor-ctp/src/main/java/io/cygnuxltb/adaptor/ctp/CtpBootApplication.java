@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CtpBootApplication {
 
     static {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CTP CHANNEL START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        Log4j2Configurator.setLogFolder("cytrader");
-        Log4j2Configurator.setLogFilename("console");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CTP ADAPTOR START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        Log4j2Configurator.setLogFolder("rapid");
+        Log4j2Configurator.setLogFilename("adaptor-ctp");
         Log4j2Configurator.setLogLevel(Log4j2Configurator.LogLevel.INFO);
     }
 

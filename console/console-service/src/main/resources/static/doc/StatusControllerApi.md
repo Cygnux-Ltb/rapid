@@ -16,7 +16,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /status
 ```
 
@@ -24,13 +24,13 @@ curl -X GET -i /status
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|productId|int32|No comments found.|-|
-|strategyId|int32|No comments found.|-|
-|instrumentCode|string|No comments found.|-|
+|productId|int32||-|
+|strategyId|int32||-|
+|instrumentCode|string||-|
 |tradable|boolean|No comments found.|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "productId": 0,
@@ -57,12 +57,12 @@ curl -X GET -i /status
 
 
 **Request-example:**
-```
+```bash
 curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /status/command
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 
@@ -83,16 +83,16 @@ OK
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|productId|int32|true|int|-|
+|prodId|int32|true|int|-|
 
 
 **Request-example:**
-```
+```bash
 curl -X PUT -i /status/update
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 

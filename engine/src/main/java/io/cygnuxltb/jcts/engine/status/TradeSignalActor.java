@@ -1,6 +1,6 @@
 package io.cygnuxltb.jcts.engine.status;
 
-import io.cygnuxltb.jcts.core.order.TradeSignal;
+import io.rapid.core.order.TradeSignal;
 import org.eclipse.collections.api.list.MutableList;
 
 import io.mercury.common.collections.MutableLists;

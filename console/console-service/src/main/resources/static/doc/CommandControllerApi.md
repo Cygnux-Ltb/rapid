@@ -32,7 +32,7 @@
 |paramValue|string|false|No comments found.|-|
 
 **Request-example:**
-```
+```bash
 curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/param?productId=0 --data '[
   {
     "uid": 0,
@@ -47,7 +47,7 @@ curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/param?productI
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 
@@ -67,12 +67,12 @@ OK
 
 
 **Request-example:**
-```
+```bash
 curl -X PUT -H 'Content-Type: APPLICATION_JSON_UTF8' -i /command/safe
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 

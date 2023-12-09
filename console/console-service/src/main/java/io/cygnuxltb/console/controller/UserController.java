@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.service.UserService;
-import io.cygnuxltb.protocol.http.response.status.SigninStatus;
+import io.cygnuxltb.protocol.http.response.status.SignInStatus;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.http.MimeType;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -33,12 +33,20 @@ public class UserController {
      * @return SignInStatus
      */
     @PostMapping(path = "/signin")
-    public SigninStatus signin(String sign, String password) {
-        boolean signIn = service.signIn(sign, password);
-        return new SigninStatus()
-                .setAuthenticated(signIn)
-                .setSecurityCode(EpochTime.getEpochMillis())
-                .setMessage(signIn ? "SUCCESSFUL" : "FAILED");
+    public SignInStatus signin(String sign, String password) {
+        int signIn = service.signIn(sign, password);
+        SignInStatus status = new SignInStatus()
+                .setAuthenticated(false)
+                .setSecurityCode(EpochTime.getEpochMillis());
+        return switch (signIn) {
+            case -1 -> status
+                    .setMessage("密码错误");
+            case 0 -> status
+                    .setMessage("用户不存在");
+            default -> status
+                    .setAuthenticated(true)
+                    .setMessage("验证成功");
+        };
     }
 
     /**

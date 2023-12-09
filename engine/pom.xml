@@ -38,7 +38,11 @@
             <groupId>io.cygnuxltb</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.6.0</version>
         </dependency>
     </dependencies>
 

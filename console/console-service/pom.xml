@@ -12,7 +12,7 @@
     <name>console-service</name>
 
     <build>
-        <finalName>jcts-console</finalName>
+        <finalName>console-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -43,7 +43,7 @@
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>2.6.9</version>
+                <version>2.7.7</version>
                 <configuration>
                     <!--指定生成文档的使用的配置文件, 配置文件放在自己的项目中-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>2.0</version>
+            <version>2.2</version>
         </dependency>
         <!-- Starter for using Undertow as the embedded servlet container. -->
         <!-- An alternative to spring-boot-starter-tomcat -->
@@ -181,6 +181,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.jsonzou</groupId>
+            <artifactId>jmockdata</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
         <!-- The AspectJ weaver applies aspects to Java classes.
              It can be used as a Java agent in order to apply load-time weaving
              (LTW) during class-loading and also contains the AspectJ runtime classes. -->
@@ -213,6 +219,11 @@
         <dependency>
             <groupId>io.cygnuxltb</groupId>
             <artifactId>protocol</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cygnuxltb</groupId>
+            <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

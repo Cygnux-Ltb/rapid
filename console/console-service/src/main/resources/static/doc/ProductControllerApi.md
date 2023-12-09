@@ -16,7 +16,7 @@
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /product
 ```
 
@@ -31,7 +31,7 @@ curl -X GET -i /product
 |interfaceType|string|接口名称|-|
 
 **Response-example:**
-```
+```json
 [
   {
     "productId": 0,
@@ -60,12 +60,12 @@ curl -X GET -i /product
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|productId|int32|true|int|-|
+|prodId|int32|true|int|-|
 
 
 **Request-example:**
-```
-curl -X GET -i /product/get?productId=0
+```bash
+curl -X GET -i /product/get?prodId=0
 ```
 
 **Response-fields:**
@@ -79,7 +79,7 @@ curl -X GET -i /product/get?productId=0
 |interfaceType|string|接口名称|-|
 
 **Response-example:**
-```
+```json
 {
   "productId": 0,
   "productName": "",
@@ -111,12 +111,12 @@ curl -X GET -i /product/get?productId=0
 
 
 **Request-example:**
-```
+```bash
 curl -X GET -i /product/init?strategyId=0&status=0
 ```
 
 **Response-example:**
-```
+```json
 OK
 ```
 
