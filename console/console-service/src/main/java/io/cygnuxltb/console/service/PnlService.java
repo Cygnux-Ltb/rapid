@@ -1,10 +1,11 @@
 package io.cygnuxltb.console.service;
 
 import com.github.jsonzou.jmockdata.JMockData;
+import io.cygnuxltb.console.SysConfiguration;
 import io.cygnuxltb.console.persistence.dao.PnlDao;
 import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TblTrdPnl;
-import io.cygnuxltb.console.persistence.entity.TblTrdPnlSettlement;
+import io.cygnuxltb.console.persistence.entity.TrdPnlEntity;
+import io.cygnuxltb.console.persistence.entity.TrdPnlSettlementEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.PnlDTO;
 import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
@@ -27,7 +28,8 @@ public final class PnlService {
     @Resource
     private PnlSettlementDao settlementDao;
 
-    private final boolean isMock = true;
+    @Resource
+    private SysConfiguration configuration;
 
     /**
      * @param strategyId int
@@ -35,14 +37,14 @@ public final class PnlService {
      * @return List<PnlEntity>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
-        if (isMock) {
+        if (configuration.isMock()) {
             var mockData = new ArrayList<PnlDTO>();
             mockData.add(JMockData.mock(PnlDTO.class));
             mockData.add(JMockData.mock(PnlDTO.class));
             mockData.add(JMockData.mock(PnlDTO.class));
             return mockData;
         }
-        return select(TblTrdPnl.class,
+        return select(TrdPnlEntity.class,
                 () -> dao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -55,14 +57,14 @@ public final class PnlService {
      * @return List<PnlSettlementEntity>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
-        if (isMock) {
+        if (configuration.isMock()) {
             var mockData = new ArrayList<PnlSettlementDTO>();
             mockData.add(JMockData.mock(PnlSettlementDTO.class));
             mockData.add(JMockData.mock(PnlSettlementDTO.class));
             mockData.add(JMockData.mock(PnlSettlementDTO.class));
             return mockData;
         }
-        return select(TblTrdPnlSettlement.class,
+        return select(TrdPnlSettlementEntity.class,
                 () -> settlementDao.queryBy(strategyId, tradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -74,7 +76,7 @@ public final class PnlService {
      * @param entity PnlEntity
      * @return boolean
      */
-    public boolean putPnl(TblTrdPnl entity) {
+    public boolean putPnl(TrdPnlEntity entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -82,7 +84,7 @@ public final class PnlService {
      * @param entity PnlSettlementEntity
      * @return boolean
      */
-    public boolean putPnlSettlement(TblTrdPnlSettlement entity) {
+    public boolean putPnlSettlement(TrdPnlSettlementEntity entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 

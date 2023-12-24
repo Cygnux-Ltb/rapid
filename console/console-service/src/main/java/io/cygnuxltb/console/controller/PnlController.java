@@ -2,7 +2,7 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblTrdPnl;
+import io.cygnuxltb.console.persistence.entity.TrdPnlEntity;
 import io.cygnuxltb.console.service.PnlService;
 import io.cygnuxltb.protocol.http.response.PnlDTO;
 import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
@@ -21,13 +21,14 @@ import java.util.List;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.protocol.http.ServiceURI.PNL;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * PNL(盈亏)服务
  */
 @RestController
-@RequestMapping(path = "/pnl", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = PNL, produces = APPLICATION_JSON_UTF8)
 public final class PnlController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PnlController.class);
@@ -58,7 +59,7 @@ public final class PnlController {
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putPnl(@RequestBody HttpServletRequest request) {
-        var pnl = ControllerUtil.bodyToObject(request, TblTrdPnl.class);
+        var pnl = ControllerUtil.bodyToObject(request, TrdPnlEntity.class);
         return pnl == null
                 ? ResponseStatus.BAD_REQUEST : service.putPnl(pnl)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;

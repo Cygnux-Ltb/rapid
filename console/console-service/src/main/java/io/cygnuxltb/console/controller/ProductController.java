@@ -17,13 +17,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.PRODUCT_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
+import static io.cygnuxltb.protocol.http.ServiceURI.PRODUCT;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 产品服务
  */
 @RestController
-@RequestMapping(path = "/product", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = PRODUCT, produces = APPLICATION_JSON_UTF8)
 public final class ProductController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(ProductController.class);

@@ -23,7 +23,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Accessors(chain = true)
 @Entity
 @Table(name = "SYS_PARAM")
-public final class SysParam {
+public final class SysParamEntity {
 
     @Id
     @Column(name = UID)

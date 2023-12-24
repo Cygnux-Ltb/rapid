@@ -30,8 +30,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TBL_TRD_ORDER_EVENT")
-public final class TblTrdOrderEvent {
+@Table(name = "TRD_ORDER_EVENT")
+public final class TrdOrderEventEntity {
 
     @Id
     @Column(name = UID)

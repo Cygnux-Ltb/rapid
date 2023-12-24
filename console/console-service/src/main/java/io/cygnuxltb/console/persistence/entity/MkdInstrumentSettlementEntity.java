@@ -24,8 +24,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TBL_MKD_INSTRUMENT_SETTLEMENT")
-public final class TblMkdInstrumentSettlement {
+@Table(name = "MKD_INSTRUMENT_SETTLEMENT")
+public final class MkdInstrumentSettlementEntity {
 
     @Id
     @Column(name = UID)

@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static io.cygnuxltb.protocol.http.ServiceURI.USER;
+
 /**
  * 用户服务
  */
 @RestController
-@RequestMapping(path = "/user", produces = MimeType.APPLICATION_JSON_UTF8)
+@RequestMapping(path = USER, produces = MimeType.APPLICATION_JSON_UTF8)
 public class UserController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(UserController.class);

@@ -1,2 +1,4 @@
-package io.cygnuxltb.protocol.http.response;public class TargetPoolDTO {
+package io.cygnuxltb.protocol.http.response;
+
+public class TargetPoolDTO {
 }

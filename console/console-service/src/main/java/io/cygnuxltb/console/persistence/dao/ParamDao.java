@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TblSysParam;
+import io.cygnuxltb.console.persistence.entity.SysParamEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static io.cygnuxltb.console.persistence.ParamGroup.MARKET;
+import static io.cygnuxltb.console.persistence.ParamGroup.ADAPTOR;
 import static io.cygnuxltb.console.persistence.ParamGroup.STRATEGY;
 import static io.cygnuxltb.console.persistence.ParamGroup.SYSTEM;
-import static io.cygnuxltb.console.persistence.ParamGroup.TRADER;
 
 /**
  * Param Repository
@@ -19,7 +18,7 @@ import static io.cygnuxltb.console.persistence.ParamGroup.TRADER;
  * @author yellow013
  */
 @Repository
-public interface ParamDao extends JpaRepository<TblSysParam, Long> {
+public interface ParamDao extends JpaRepository<SysParamEntity, Long> {
 
     /**
      * @param ownerGroup String
@@ -27,25 +26,23 @@ public interface ParamDao extends JpaRepository<TblSysParam, Long> {
      * @return List<ParamEntity>
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
-            + " AND e.ownerGroup = :ownerGroup "
-            + " AND e.ownerName = :ownerName ")
-    List<TblSysParam> queryBy(@Param("ownerGroup") String ownerGroup,
-                              @Param("ownerName") String ownerName);
+            + " AND (e.ownerGroup = :ownerGroup) "
+            + " AND (e.ownerName = :ownerName) "
+            + " AND (:paramGroup = NULL OR :paramGroup = '' OR e.paramGroup = :paramGroup) ")
+    List<SysParamEntity> queryBy(@Param("ownerGroup") String ownerGroup,
+                                 @Param("ownerName") String ownerName,
+                                 @Param("paramGroup") String paramGroup);
 
-    default List<TblSysParam> queryStrategyParam(String name) {
-        return queryBy(STRATEGY, name);
+    default List<SysParamEntity> queryStrategyParam(String ownerName, String paramGroup) {
+        return queryBy(STRATEGY, ownerName, paramGroup);
     }
 
-    default List<TblSysParam> queryMarketParam(String name) {
-        return queryBy(MARKET, name);
+    default List<SysParamEntity> queryAdaptorParam(String ownerName, String paramGroup) {
+        return queryBy(ADAPTOR, ownerName, paramGroup);
     }
 
-    default List<TblSysParam> queryTraderParam(String name) {
-        return queryBy(TRADER, name);
-    }
-
-    default List<TblSysParam> querySystemParam(String name) {
-        return queryBy(SYSTEM, name);
+    default List<SysParamEntity> querySystemParam(String ownerName, String paramGroup) {
+        return queryBy(SYSTEM, ownerName, paramGroup);
     }
 
 }

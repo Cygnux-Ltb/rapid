@@ -23,6 +23,7 @@ import java.util.List;
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
+import static io.cygnuxltb.protocol.http.ServiceURI.INSTRUMENT;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -31,13 +32,39 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * @apiNote
  */
 @RestController
-@RequestMapping(path = "/instrument", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = INSTRUMENT, produces = APPLICATION_JSON_UTF8)
 public final class InstrumentController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentController.class);
 
     @Resource
     private InstrumentService service;
+
+
+    /**
+     * 获取交易标的
+     *
+     * @return List<InstrumentDTO>
+     */
+    @GetMapping(path = "/all")
+    public List<InstrumentDTO> getAllInstrument() {
+        return service.getAllInstrument();
+    }
+
+    /**
+     * 获取交易标的
+     *
+     * @param instrumentCode 交易标的 () [查询多个标的使用','分割]
+     * @return List<InstrumentSettlementDTO>
+     */
+    @GetMapping
+    public List<InstrumentDTO> getInstrument(
+            @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
+        if (ControllerUtil.paramIsNull(instrumentCode))
+            return null;
+        return service.getInstrument(instrumentCode);
+    }
+
 
     /**
      * 获取结算信息
@@ -95,7 +122,6 @@ public final class InstrumentController {
             @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
         return service.getInstrument(instrumentCode);
     }
-
 
     /**
      * 获取可交易标的

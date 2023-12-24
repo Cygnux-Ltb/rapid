@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static io.cygnuxltb.protocol.http.ServiceURI.SIMULATE;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 模拟测试
  */
 @RestController
-@RequestMapping(path = "/simulate", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = SIMULATE, produces = APPLICATION_JSON_UTF8)
 public class SimulateController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(SimulateController.class);

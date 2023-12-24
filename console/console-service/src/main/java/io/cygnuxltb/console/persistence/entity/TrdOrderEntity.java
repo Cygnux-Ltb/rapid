@@ -34,8 +34,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TBL_TRD_ORDER")
-public final class TblTrdOrder {
+@Table(name = "TRD_ORDER")
+public final class TrdOrderEntity {
 
     @Id
     @Column(name = UID)

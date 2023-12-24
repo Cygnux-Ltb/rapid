@@ -24,8 +24,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TBL_SYS_PRODUCT")
-public final class TblSysProduct {
+@Table(name = "SYS_PRODUCT")
+public final class SysProductEntity {
 
     @Id
     @Column(name = UID)

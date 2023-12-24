@@ -19,8 +19,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "TBL_TRD_PORTFOLIO")
-public final class TblTrdPortfolio {
+@Table(name = "TRD_PORTFOLIO")
+public final class TrdPortfolioEntity {
 
     @Id
     @Column(name = UID)

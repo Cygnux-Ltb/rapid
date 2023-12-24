@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
+import static io.cygnuxltb.protocol.http.ServiceURI.PORTFOLIO;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 投资组合(股票池/目标池)服务
  */
 @RestController
-@RequestMapping(path = "/portfolio", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = PORTFOLIO, produces = APPLICATION_JSON_UTF8)
 public class PortfolioController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PortfolioController.class);
@@ -40,7 +41,7 @@ public class PortfolioController {
     }
 
     /**
-     * 获取用户第一投资组合 (左侧优先股票池)
+     * 获取用户第一投资组合 ([page2.jpg]左侧优先股票池)
      *
      * @param userId 用户ID
      * @return PortfolioDTO
@@ -51,7 +52,7 @@ public class PortfolioController {
     }
 
     /**
-     * 获取用户第二投资组合 (右侧次优股票池)
+     * 获取用户第二投资组合 ([page2.jpg]右侧次优股票池)
      *
      * @param userId 用户ID
      * @return PortfolioDTO

@@ -26,7 +26,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Accessors(chain = true)
 @Entity
 @Table(name = "MKD_BAR")
-public final class MkdBar {
+public final class MkdBarEntity {
 
     @Id
     @Column(name = UID)

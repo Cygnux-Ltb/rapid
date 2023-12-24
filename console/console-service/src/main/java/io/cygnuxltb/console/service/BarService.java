@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.BarDao;
-import io.cygnuxltb.console.persistence.entity.TblMkdBar;
+import io.cygnuxltb.console.persistence.entity.MkdBarEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.BarDTO;
 import jakarta.annotation.Resource;
@@ -20,8 +20,6 @@ public final class BarService {
     @Resource
     private BarDao dao;
 
-    private final boolean isMock = true;
-
     /**
      * @param instrumentCode String
      * @param tradingDay     int
@@ -38,7 +36,7 @@ public final class BarService {
      * @return List<BarEntity>
      */
     public List<BarDTO> getBars(@Nonnull String instrumentCode, int startTradingDay, int endTradingDay) {
-        return select(TblMkdBar.class,
+        return select(MkdBarEntity.class,
                 () -> dao.queryBy(instrumentCode, startTradingDay, endTradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -49,7 +47,7 @@ public final class BarService {
      * @param entity BarEntity
      * @return boolean
      */
-    public boolean putBar(@Nonnull TblMkdBar entity) {
+    public boolean putBar(@Nonnull MkdBarEntity entity) {
         return insertOrUpdate(dao, entity);
     }
 

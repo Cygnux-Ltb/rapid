@@ -1,6 +1,6 @@
 package io.cygnuxltb.protocol.http;
 
-public interface ResourcesURI {
+public interface ServiceURI {
 
     String SYS = "/sys";
 

@@ -1,12 +1,13 @@
 package io.cygnuxltb.console.service;
 
 import com.github.jsonzou.jmockdata.JMockData;
+import io.cygnuxltb.console.SysConfiguration;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.dao.OrderDao;
 import io.cygnuxltb.console.persistence.dao.OrderEventDao;
 import io.cygnuxltb.console.persistence.dao.OrderExtDao;
-import io.cygnuxltb.console.persistence.entity.TblTrdOrder;
-import io.cygnuxltb.console.persistence.entity.TblTrdOrderEvent;
+import io.cygnuxltb.console.persistence.entity.TrdOrderEntity;
+import io.cygnuxltb.console.persistence.entity.TrdOrderEventEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.OrderDTO;
 import io.cygnuxltb.protocol.http.response.OrderEventDTO;
@@ -44,8 +45,8 @@ public final class OrderService {
     @Resource
     private OrderEventDao eventDao;
 
-
-    private final boolean isMock = true;
+    @Resource
+    private SysConfiguration configuration;
 
     /**
      * @param accountId      int
@@ -77,14 +78,14 @@ public final class OrderService {
             illegalArgument("instrumentCode");
         if (illegalTradingDay(startTradingDay, endTradingDay, log))
             illegalArgument("startTradingDay & endTradingDay");
-        if (isMock) {
+        if (configuration.isMock()) {
             var mockData = new ArrayList<OrderDTO>();
             mockData.add(JMockData.mock(OrderDTO.class));
             mockData.add(JMockData.mock(OrderDTO.class));
             mockData.add(JMockData.mock(OrderDTO.class));
             return mockData;
         }
-        return select(TblTrdOrder.class,
+        return select(TrdOrderEntity.class,
                 () -> dao.queryBy(accountId, strategyId, instrumentCode,
                         startTradingDay, endTradingDay))
                 .stream()
@@ -99,7 +100,7 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
             return newFastList();
-        return select(TblTrdOrderEvent.class,
+        return select(TrdOrderEventEntity.class,
                 () -> eventDao.queryByOrdSysId(ordSysId))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -113,7 +114,7 @@ public final class OrderService {
     public List<OrderEventDTO> getOrderEventsByTradingDay(int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
             return new FastList<>();
-        return select(TblTrdOrderEvent.class,
+        return select(TrdOrderEventEntity.class,
                 () -> eventDao.queryBy(0, tradingDay, tradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -124,7 +125,7 @@ public final class OrderService {
      * @param entity OrderEntity
      * @return boolean
      */
-    public boolean putOrder(TblTrdOrder entity) {
+    public boolean putOrder(TrdOrderEntity entity) {
         return insertOrUpdate(dao, entity);
     }
 
@@ -132,7 +133,7 @@ public final class OrderService {
      * @param entity OrderEventEntity
      * @return boolean
      */
-    public boolean putOrderEvent(TblTrdOrderEvent entity) {
+    public boolean putOrderEvent(TrdOrderEventEntity entity) {
         return insertOrUpdate(eventDao, entity);
     }
 

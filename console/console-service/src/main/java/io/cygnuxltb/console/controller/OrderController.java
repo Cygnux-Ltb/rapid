@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblTrdOrder;
+import io.cygnuxltb.console.persistence.entity.TrdOrderEntity;
 import io.cygnuxltb.console.service.OrderService;
 import io.cygnuxltb.protocol.http.request.NewOrderDTO;
 import io.cygnuxltb.protocol.http.response.OrderEventDTO;
@@ -25,13 +25,14 @@ import static io.cygnuxltb.console.controller.base.HttpParam.ACCOUNT_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.protocol.http.ServiceURI.ORDER;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 订单服务
  */
 @RestController
-@RequestMapping(path = "/order", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = ORDER, produces = APPLICATION_JSON_UTF8)
 public final class OrderController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderController.class);
@@ -95,7 +96,7 @@ public final class OrderController {
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putOrder(@RequestBody HttpServletRequest request) {
-        var order = ControllerUtil.bodyToObject(request, TblTrdOrder.class);
+        var order = ControllerUtil.bodyToObject(request, TrdOrderEntity.class);
         return order == null
                 ? ResponseStatus.BAD_REQUEST : service.putOrder(order)
                 ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;

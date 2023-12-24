@@ -3,14 +3,13 @@ package io.cygnuxltb.console.service;
 import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.persistence.dao.InstrumentDao;
 import io.cygnuxltb.console.persistence.dao.InstrumentSettlementDao;
-import io.cygnuxltb.console.persistence.entity.TblMkdInstrument;
-import io.cygnuxltb.console.persistence.entity.TblMkdInstrumentSettlement;
+import io.cygnuxltb.console.persistence.entity.MkdInstrumentEntity;
+import io.cygnuxltb.console.persistence.entity.MkdInstrumentSettlementEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
 import io.cygnuxltb.protocol.http.response.InstrumentDTO;
 import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
 import io.mercury.common.collections.MutableMaps;
-import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesSymbol;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -47,30 +46,32 @@ public final class InstrumentService {
     private void init() {
         Stream.of(ChinaFuturesSymbol.values())
                 .flatMap(symbol -> symbol.getInstruments().stream())
+                .map(instrument -> new MkdInstrumentEntity()
+                        .setInstrumentCode(instrument.getInstrumentCode())
+                        .setInstrumentType(instrument.getType().name())
+                        .setExchangeCode(instrument.getExchangeCode())
+                        .setFee(0.001D).setTradable(true))
                 .forEach(this::putInstrument);
     }
-
-    private void putInstrument(Instrument instrument) {
-        TblMkdInstrument entity = new TblMkdInstrument();
-        entity.setInstrumentCode(instrument.getInstrumentCode())
-                .setInstrumentType(instrument.getType().name())
-                .setExchangeCode(instrument.getExchangeCode())
-                .setFee(1)
-                .setTradable(true);
-        putInstrument(entity);
-    }
-
 
     private InstrumentPrice getInstrumentPrice(String instrumentCode) {
         return cacheMap.putIfAbsent(instrumentCode, new InstrumentPrice(instrumentCode));
     }
+
+    public List<InstrumentDTO> getAllInstrument() {
+        return select(MkdInstrumentEntity.class,
+                () -> dao.findAll())
+                .stream()
+                .map(DtoUtil::toDto)
+                .collect(toList());
+    }
+
 
     /**
      * @param instrumentCode String
      * @return List<InstrumentEntity>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
-        // TODO 通过枚举返回
         if (isMock) {
             var list = new ArrayList<InstrumentDTO>();
             list.add(JMockData.mock(InstrumentDTO.class));
@@ -79,7 +80,7 @@ public final class InstrumentService {
             list.add(JMockData.mock(InstrumentDTO.class));
             return list;
         }
-        return select(TblMkdInstrument.class,
+        return select(MkdInstrumentEntity.class,
                 () -> dao.queryBy(instrumentCode))
                 .stream()
                 .map(DtoUtil::toDto)
@@ -101,9 +102,8 @@ public final class InstrumentService {
             list.add(JMockData.mock(InstrumentSettlementDTO.class));
             return list;
         }
-        return select(TblMkdInstrumentSettlement.class,
-                () -> settlementDao
-                        .queryBy(instrumentCode, tradingDay))
+        return select(MkdInstrumentSettlementEntity.class,
+                () -> settlementDao.queryBy(instrumentCode, tradingDay))
                 .stream()
                 .map(DtoUtil::toDto)
                 .collect(toList());
@@ -124,15 +124,24 @@ public final class InstrumentService {
      * @param entity InstrumentEntity
      * @return boolean
      */
-    public boolean putInstrument(@Nonnull TblMkdInstrument entity) {
+    public boolean putInstrument(@Nonnull MkdInstrumentEntity entity) {
         return insertOrUpdate(dao, entity);
+    }
+
+
+    /**
+     * @param entities List<TblMkdInstrument>
+     * @return boolean
+     */
+    public boolean putInstrument(@Nonnull List<MkdInstrumentEntity> entities) {
+        return insertOrUpdate(dao, entities);
     }
 
     /**
      * @param entity InstrumentSettlementEntity
      * @return boolean
      */
-    public boolean putInstrumentSettlement(@Nonnull TblMkdInstrumentSettlement entity) {
+    public boolean putInstrumentSettlement(@Nonnull MkdInstrumentSettlementEntity entity) {
         return insertOrUpdate(settlementDao, entity);
     }
 
