@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.ui;
+package io.cygnuxltb.rapid.ui;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 public class SwingApp extends JFrame {
 
     public SwingApp() {
+
         // 设置窗口标题
         super("Swing App");
 
@@ -67,11 +68,6 @@ public class SwingApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SwingApp();
-            }
-        });
+        SwingUtilities.invokeLater(SwingApp::new);
     }
 }

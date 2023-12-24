@@ -5,9 +5,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
 
-public class OrderTableFrame extends JFrame {
-    public OrderTableFrame() {
-        super("Order Table");
+public class OrderWindow extends JFrame {
+    public OrderWindow() {
+        super("Order Window");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -25,7 +25,7 @@ public class OrderTableFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        OrderTableFrame frame = new OrderTableFrame();
+        OrderWindow frame = new OrderWindow();
         frame.setVisible(true);
     }
 

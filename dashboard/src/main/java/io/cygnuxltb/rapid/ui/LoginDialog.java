@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.ui;
+package io.cygnuxltb.rapid.ui;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;

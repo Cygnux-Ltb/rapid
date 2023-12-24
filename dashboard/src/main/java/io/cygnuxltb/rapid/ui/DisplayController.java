@@ -1,4 +1,17 @@
 package io.cygnuxltb.rapid.ui;
 
-public class DisplayController {
+import io.mercury.swing.LoginDialog;
+
+public final class DisplayController {
+
+    private LoginDialog loginDialog;
+
+    private MainWindow mainWindow;
+
+    private OrderWindow tableFrame;
+
+    private StrategyTable strategyTable;
+
+    private PositionsTable positionsTable;
+
 }
