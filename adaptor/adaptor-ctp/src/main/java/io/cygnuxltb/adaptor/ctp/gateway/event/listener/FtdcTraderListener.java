@@ -98,12 +98,10 @@ import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
 
 public interface FtdcTraderListener {
 
-
     /**
      * ///当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
      */
     void fireFrontConnected();
-
 
     /**
      * ///当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后. API会自动重新连接, 客户端可不做处理.
@@ -117,14 +115,12 @@ public interface FtdcTraderListener {
      */
     void fireFrontDisconnected(int Reason);
 
-
     /**
      * ///心跳超时警告. 当长时间未收到报文时, 该方法被调用.
      *
      * @param TimeLapse 距离上次接收报文的时间
      */
     void fireHeartBeatWarning(int TimeLapse);
-
 
     /**
      * ///客户端认证响应
@@ -137,7 +133,6 @@ public interface FtdcTraderListener {
     void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///登录请求响应
      *
@@ -148,7 +143,6 @@ public interface FtdcTraderListener {
      */
     void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///登出请求响应
@@ -161,7 +155,6 @@ public interface FtdcTraderListener {
     void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///用户口令更新请求响应
      *
@@ -172,7 +165,6 @@ public interface FtdcTraderListener {
      */
     void fireRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///资金账户口令更新请求响应
@@ -185,7 +177,6 @@ public interface FtdcTraderListener {
     void fireRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField Field,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///查询用户当前支持的认证模式的回复
      *
@@ -196,7 +187,6 @@ public interface FtdcTraderListener {
      */
     void fireRspUserAuthMethod(CThostFtdcRspUserAuthMethodField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///获取图形验证码请求的回复
@@ -209,7 +199,6 @@ public interface FtdcTraderListener {
     void fireRspGenUserCaptcha(CThostFtdcRspGenUserCaptchaField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///获取短信验证码请求的回复
      *
@@ -220,7 +209,6 @@ public interface FtdcTraderListener {
      */
     void fireRspGenUserText(CThostFtdcRspGenUserTextField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///报单录入请求响应
@@ -233,7 +221,6 @@ public interface FtdcTraderListener {
     void fireRspOrderInsert(CThostFtdcInputOrderField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///预埋单录入请求响应
      *
@@ -244,7 +231,6 @@ public interface FtdcTraderListener {
      */
     void fireRspParkedOrderInsert(CThostFtdcParkedOrderField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///预埋撤单录入请求响应
@@ -257,7 +243,6 @@ public interface FtdcTraderListener {
     void fireRspParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///报单操作请求响应
      *
@@ -268,7 +253,6 @@ public interface FtdcTraderListener {
      */
     void fireRspOrderAction(CThostFtdcInputOrderActionField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///查询最大报单数量响应
@@ -281,7 +265,6 @@ public interface FtdcTraderListener {
     void fireRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///投资者结算结果确认响应
      *
@@ -292,7 +275,6 @@ public interface FtdcTraderListener {
      */
     void fireRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///删除预埋单响应
@@ -305,7 +287,6 @@ public interface FtdcTraderListener {
     void fireRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///删除预埋撤单响应
      *
@@ -316,7 +297,6 @@ public interface FtdcTraderListener {
      */
     void fireRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///执行宣告录入请求响应
@@ -329,7 +309,6 @@ public interface FtdcTraderListener {
     void fireRspExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///执行宣告操作请求响应
      *
@@ -340,7 +319,6 @@ public interface FtdcTraderListener {
      */
     void fireRspExecOrderAction(CThostFtdcInputExecOrderActionField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///询价录入请求响应
@@ -353,7 +331,6 @@ public interface FtdcTraderListener {
     void fireRspForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///报价录入请求响应
      *
@@ -364,7 +341,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQuoteInsert(CThostFtdcInputQuoteField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///报价操作请求响应
@@ -377,7 +353,6 @@ public interface FtdcTraderListener {
     void fireRspQuoteAction(CThostFtdcInputQuoteActionField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///批量报单操作请求响应
      *
@@ -388,7 +363,6 @@ public interface FtdcTraderListener {
      */
     void fireRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///期权自对冲录入请求响应
@@ -401,7 +375,6 @@ public interface FtdcTraderListener {
     void fireRspOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///期权自对冲操作请求响应
      *
@@ -412,7 +385,6 @@ public interface FtdcTraderListener {
      */
     void fireRspOptionSelfCloseAction(CThostFtdcInputOptionSelfCloseActionField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///申请组合录入请求响应
@@ -425,7 +397,6 @@ public interface FtdcTraderListener {
     void fireRspCombActionInsert(CThostFtdcInputCombActionField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询报单响应
      *
@@ -436,7 +407,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryOrder(CThostFtdcOrderField Field,
                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询成交响应
@@ -449,7 +419,6 @@ public interface FtdcTraderListener {
     void fireRspQryTrade(CThostFtdcTradeField Field,
                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询投资者持仓响应
      *
@@ -460,7 +429,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询资金账户响应
@@ -473,7 +441,6 @@ public interface FtdcTraderListener {
     void fireRspQryTradingAccount(CThostFtdcTradingAccountField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询投资者响应
      *
@@ -484,7 +451,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInvestor(CThostFtdcInvestorField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询交易编码响应
@@ -497,7 +463,6 @@ public interface FtdcTraderListener {
     void fireRspQryTradingCode(CThostFtdcTradingCodeField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询合约保证金率响应
      *
@@ -508,7 +473,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询合约手续费率响应
@@ -521,7 +485,6 @@ public interface FtdcTraderListener {
     void fireRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询交易所响应
      *
@@ -532,7 +495,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryExchange(CThostFtdcExchangeField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询产品响应
@@ -545,7 +507,6 @@ public interface FtdcTraderListener {
     void fireRspQryProduct(CThostFtdcProductField Field,
                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询合约响应
      *
@@ -556,7 +517,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInstrument(CThostFtdcInstrumentField Field,
                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询行情响应
@@ -569,7 +529,6 @@ public interface FtdcTraderListener {
     void fireRspQryDepthMarketData(CThostFtdcDepthMarketDataField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询投资者结算结果响应
      *
@@ -580,7 +539,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQrySettlementInfo(CThostFtdcSettlementInfoField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询转帐银行响应
@@ -593,7 +551,6 @@ public interface FtdcTraderListener {
     void fireRspQryTransferBank(CThostFtdcTransferBankField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询投资者持仓明细响应
      *
@@ -604,7 +561,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询客户通知响应
@@ -617,7 +573,6 @@ public interface FtdcTraderListener {
     void fireRspQryNotice(CThostFtdcNoticeField Field,
                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询结算信息确认响应
      *
@@ -628,7 +583,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询投资者持仓明细响应
@@ -641,7 +595,6 @@ public interface FtdcTraderListener {
     void fireRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField Field,
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///查询保证金监管系统经纪公司资金账户密钥响应
      *
@@ -652,7 +605,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询仓单折抵信息响应
@@ -665,7 +617,6 @@ public interface FtdcTraderListener {
     void fireRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询投资者品种/跨品种保证金响应
      *
@@ -676,7 +627,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryInvestorProductGroupMargin(CThostFtdcInvestorProductGroupMarginField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询交易所保证金率响应
@@ -689,7 +639,6 @@ public interface FtdcTraderListener {
     void fireRspQryExchangeMarginRate(CThostFtdcExchangeMarginRateField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询交易所调整保证金率响应
      *
@@ -700,7 +649,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryExchangeMarginRateAdjust(CThostFtdcExchangeMarginRateAdjustField Field,
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询汇率响应
@@ -713,7 +661,6 @@ public interface FtdcTraderListener {
     void fireRspQryExchangeRate(CThostFtdcExchangeRateField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询二级代理操作员银期权限响应
      *
@@ -724,7 +671,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQrySecAgentACIDMap(CThostFtdcSecAgentACIDMapField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询产品报价汇率
@@ -737,7 +683,6 @@ public interface FtdcTraderListener {
     void fireRspQryProductExchRate(CThostFtdcProductExchRateField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询产品组
      *
@@ -748,7 +693,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryProductGroup(CThostFtdcProductGroupField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询做市商合约手续费率响应
@@ -761,7 +705,6 @@ public interface FtdcTraderListener {
     void fireRspQryMMInstrumentCommissionRate(CThostFtdcMMInstrumentCommissionRateField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询做市商期权合约手续费响应
      *
@@ -772,7 +715,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryMMOptionInstrCommRate(CThostFtdcMMOptionInstrCommRateField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询报单手续费响应
@@ -785,7 +727,6 @@ public interface FtdcTraderListener {
     void fireRspQryInstrumentOrderCommRate(CThostFtdcInstrumentOrderCommRateField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询资金账户响应
      *
@@ -796,7 +737,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQrySecAgentTradingAccount(CThostFtdcTradingAccountField Field,
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询二级代理商资金校验模式响应
@@ -809,7 +749,6 @@ public interface FtdcTraderListener {
     void fireRspQrySecAgentCheckMode(CThostFtdcSecAgentCheckModeField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询二级代理商信息响应
      *
@@ -820,7 +759,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQrySecAgentTradeInfo(CThostFtdcSecAgentTradeInfoField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询期权交易成本响应
@@ -833,7 +771,6 @@ public interface FtdcTraderListener {
     void fireRspQryOptionInstrTradeCost(CThostFtdcOptionInstrTradeCostField Field,
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询期权合约手续费响应
      *
@@ -844,7 +781,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryOptionInstrCommRate(CThostFtdcOptionInstrCommRateField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询执行宣告响应
@@ -857,7 +793,6 @@ public interface FtdcTraderListener {
     void fireRspQryExecOrder(CThostFtdcExecOrderField Field,
                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询询价响应
      *
@@ -868,7 +803,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryForQuote(CThostFtdcForQuoteField Field,
                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询报价响应
@@ -881,7 +815,6 @@ public interface FtdcTraderListener {
     void fireRspQryQuote(CThostFtdcQuoteField Field,
                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询期权自对冲响应
      *
@@ -892,7 +825,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryOptionSelfClose(CThostFtdcOptionSelfCloseField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询投资单元响应
@@ -905,7 +837,6 @@ public interface FtdcTraderListener {
     void fireRspQryInvestUnit(CThostFtdcInvestUnitField Field,
                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询组合合约安全系数响应
      *
@@ -916,7 +847,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryCombInstrumentGuard(CThostFtdcCombInstrumentGuardField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询申请组合响应
@@ -929,7 +859,6 @@ public interface FtdcTraderListener {
     void fireRspQryCombAction(CThostFtdcCombActionField Field,
                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询转帐流水响应
      *
@@ -940,7 +869,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryTransferSerial(CThostFtdcTransferSerialField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询银期签约关系响应
@@ -953,7 +881,6 @@ public interface FtdcTraderListener {
     void fireRspQryAccountregister(CThostFtdcAccountregisterField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///错误应答
      *
@@ -963,7 +890,6 @@ public interface FtdcTraderListener {
      */
     void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///报单通知
      *
@@ -971,14 +897,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnOrder(CThostFtdcOrderField Order);
 
-
     /**
      * ///成交通知
      *
      * @param Trade CThostFtdcTradeField
      */
     void fireRtnTrade(CThostFtdcTradeField Trade);
-
 
     /**
      * ///报单录入错误回报
@@ -989,7 +913,6 @@ public interface FtdcTraderListener {
     void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field,
                                CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///报单操作错误回报
      *
@@ -999,14 +922,12 @@ public interface FtdcTraderListener {
     void fireErrRtnOrderAction(CThostFtdcOrderActionField Field,
                                CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///合约交易状态通知
      *
      * @param Field CThostFtdcInstrumentStatusField
      */
     void fireRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field);
-
 
     /**
      * ///交易所公告通知
@@ -1015,14 +936,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnBulletin(CThostFtdcBulletinField Field);
 
-
     /**
      * ///交易通知
      *
      * @param Field CThostFtdcTradingNoticeInfoField
      */
     void fireRtnTradingNotice(CThostFtdcTradingNoticeInfoField Field);
-
 
     /**
      * ///提示条件单校验错误
@@ -1031,14 +950,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField Field);
 
-
     /**
      * ///执行宣告通知
      *
      * @param Field CThostFtdcExecOrderField
      */
     void fireRtnExecOrder(CThostFtdcExecOrderField Field);
-
 
     /**
      * ///执行宣告录入错误回报
@@ -1049,7 +966,6 @@ public interface FtdcTraderListener {
     void fireErrRtnExecOrderInsert(CThostFtdcInputExecOrderField Field,
                                    CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///执行宣告操作错误回报
      *
@@ -1058,7 +974,6 @@ public interface FtdcTraderListener {
      */
     void fireErrRtnExecOrderAction(CThostFtdcExecOrderActionField Field,
                                    CThostFtdcRspInfoField RspInfo);
-
 
     /**
      * ///询价录入错误回报
@@ -1069,14 +984,12 @@ public interface FtdcTraderListener {
     void fireErrRtnForQuoteInsert(CThostFtdcInputForQuoteField Field,
                                   CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///报价通知
      *
      * @param Field CThostFtdcQuoteField
      */
     void fireRtnQuote(CThostFtdcQuoteField Field);
-
 
     /**
      * ///报价录入错误回报
@@ -1087,7 +1000,6 @@ public interface FtdcTraderListener {
     void fireErrRtnQuoteInsert(CThostFtdcInputQuoteField Field,
                                CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///报价操作错误回报
      *
@@ -1097,7 +1009,6 @@ public interface FtdcTraderListener {
     void fireErrRtnQuoteAction(CThostFtdcQuoteActionField Field,
                                CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///询价通知
      *
@@ -1105,14 +1016,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnForQuoteRsp(CThostFtdcForQuoteRspField Field);
 
-
     /**
      * ///保证金监控中心用户令牌
      *
      * @param Field CThostFtdcCFMMCTradingAccountTokenField
      */
     void fireRtnCFMMCTradingAccountToken(CThostFtdcCFMMCTradingAccountTokenField Field);
-
 
     /**
      * ///批量报单操作错误回报
@@ -1123,14 +1032,12 @@ public interface FtdcTraderListener {
     void fireErrRtnBatchOrderAction(CThostFtdcBatchOrderActionField Field,
                                     CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///期权自对冲通知
      *
      * @param Field CThostFtdcOptionSelfCloseField
      */
     void fireRtnOptionSelfClose(CThostFtdcOptionSelfCloseField Field);
-
 
     /**
      * ///期权自对冲录入错误回报
@@ -1141,7 +1048,6 @@ public interface FtdcTraderListener {
     void fireErrRtnOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField Field,
                                          CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///期权自对冲操作错误回报
      *
@@ -1151,14 +1057,12 @@ public interface FtdcTraderListener {
     void fireErrRtnOptionSelfCloseAction(CThostFtdcOptionSelfCloseActionField Field,
                                          CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///申请组合通知
      *
      * @param Field CThostFtdcCombActionField
      */
     void fireRtnCombAction(CThostFtdcCombActionField Field);
-
 
     /**
      * ///申请组合录入错误回报
@@ -1168,7 +1072,6 @@ public interface FtdcTraderListener {
      */
     void fireErrRtnCombActionInsert(CThostFtdcInputCombActionField Field,
                                     CThostFtdcRspInfoField RspInfo);
-
 
     /**
      * ///请求查询签约银行响应
@@ -1181,7 +1084,6 @@ public interface FtdcTraderListener {
     void fireRspQryContractBank(CThostFtdcContractBankField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询预埋单响应
      *
@@ -1192,7 +1094,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryParkedOrder(CThostFtdcParkedOrderField Field,
                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询预埋撤单响应
@@ -1205,7 +1106,6 @@ public interface FtdcTraderListener {
     void fireRspQryParkedOrderAction(CThostFtdcParkedOrderActionField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询交易通知响应
      *
@@ -1216,7 +1116,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryTradingNotice(CThostFtdcTradingNoticeField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询经纪公司交易参数响应
@@ -1229,7 +1128,6 @@ public interface FtdcTraderListener {
     void fireRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///请求查询经纪公司交易算法响应
      *
@@ -1240,7 +1138,6 @@ public interface FtdcTraderListener {
      */
     void fireRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField Field,
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///请求查询监控中心用户令牌
@@ -1253,14 +1150,12 @@ public interface FtdcTraderListener {
     void fireRspQueryCFMMCTradingAccountToken(CThostFtdcQueryCFMMCTradingAccountTokenField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///银行发起银行资金转期货通知
      *
      * @param Field CThostFtdcRspTransferField
      */
     void fireRtnFromBankToFutureByBank(CThostFtdcRspTransferField Field);
-
 
     /**
      * ///银行发起期货资金转银行通知
@@ -1269,14 +1164,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnFromFutureToBankByBank(CThostFtdcRspTransferField Field);
 
-
     /**
      * ///银行发起冲正银行转期货通知
      *
      * @param Field CThostFtdcRspRepealField
      */
     void fireRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField Field);
-
 
     /**
      * ///银行发起冲正期货转银行通知
@@ -1285,14 +1178,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField Field);
 
-
     /**
      * ///期货发起银行资金转期货通知
      *
      * @param Field CThostFtdcRspTransferField
      */
     void fireRtnFromBankToFutureByFuture(CThostFtdcRspTransferField Field);
-
 
     /**
      * ///期货发起期货资金转银行通知
@@ -1301,14 +1192,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnFromFutureToBankByFuture(CThostFtdcRspTransferField Field);
 
-
     /**
      * ///系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
     void fireRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField Field);
-
 
     /**
      * ///系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
@@ -1317,14 +1206,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField Field);
 
-
     /**
      * ///期货发起查询银行余额通知
      *
      * @param Field CThostFtdcNotifyQueryAccountField
      */
     void fireRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField Field);
-
 
     /**
      * ///期货发起银行资金转期货错误回报
@@ -1335,7 +1222,6 @@ public interface FtdcTraderListener {
     void fireErrRtnBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                         CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///期货发起期货资金转银行错误回报
      *
@@ -1344,7 +1230,6 @@ public interface FtdcTraderListener {
      */
     void fireErrRtnFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                         CThostFtdcRspInfoField RspInfo);
-
 
     /**
      * ///系统运行时期货端手工发起冲正银行转期货错误回报
@@ -1355,7 +1240,6 @@ public interface FtdcTraderListener {
     void fireErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField Field,
                                                     CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///系统运行时期货端手工发起冲正期货转银行错误回报
      *
@@ -1364,7 +1248,6 @@ public interface FtdcTraderListener {
      */
     void fireErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField Field,
                                                     CThostFtdcRspInfoField RspInfo);
-
 
     /**
      * ///期货发起查询银行余额错误回报
@@ -1375,7 +1258,6 @@ public interface FtdcTraderListener {
     void fireErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField Field,
                                             CThostFtdcRspInfoField RspInfo);
 
-
     /**
      * ///期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
@@ -1383,14 +1265,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField Field);
 
-
     /**
      * ///期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
     void fireRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField Field);
-
 
     /**
      * ///期货发起银行资金转期货应答
@@ -1403,7 +1283,6 @@ public interface FtdcTraderListener {
     void fireRspFromBankToFutureByFuture(CThostFtdcReqTransferField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///期货发起期货资金转银行应答
      *
@@ -1414,7 +1293,6 @@ public interface FtdcTraderListener {
      */
     void fireRspFromFutureToBankByFuture(CThostFtdcReqTransferField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
-
 
     /**
      * ///期货发起查询银行余额应答
@@ -1427,7 +1305,6 @@ public interface FtdcTraderListener {
     void fireRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField Field,
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
-
     /**
      * ///银行发起银期开户通知
      *
@@ -1435,14 +1312,12 @@ public interface FtdcTraderListener {
      */
     void fireRtnOpenAccountByBank(CThostFtdcOpenAccountField Field);
 
-
     /**
      * ///银行发起银期销户通知
      *
      * @param Field CThostFtdcCancelAccountField
      */
     void fireRtnCancelAccountByBank(CThostFtdcCancelAccountField Field);
-
 
     /**
      * ///银行发起变更银行账号通知

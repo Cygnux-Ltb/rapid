@@ -7,7 +7,7 @@ import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.Order;
-import io.cygnuxltb.jcts.core.ser.event.AdaptorEvent;
+import io.rapid.core.protocol.avro.event.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
@@ -52,11 +52,11 @@ public class StrategyImpl implements Strategy {
 //					event.getAdaptorId());
                 //adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
                 //       .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default", getStrategyName(),
-                        event.getAdaptorId());
+                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default",
+                        getStrategyName(), event.getAdaptorId());
                 // adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default", getStrategyName(),
-                        event.getAdaptorId());
+                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default",
+                        getStrategyName(), event.getAdaptorId());
             }
             default -> log.warn("{} unhandled event received {}", getStrategyName(), event);
         }

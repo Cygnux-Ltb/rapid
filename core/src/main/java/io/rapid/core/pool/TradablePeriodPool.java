@@ -2,7 +2,7 @@ package io.rapid.core.pool;
 
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
-import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.base.TradingPeriod;
 import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
@@ -19,11 +19,11 @@ public final class TradablePeriodPool {
     }
 
     // Map<symbolId, ImmutableList<TradablePeriod>>
-    private static ImmutableIntObjectMap<ImmutableList<TradablePeriod>> Pool;
+    private static ImmutableIntObjectMap<ImmutableList<TradingPeriod>> Pool;
 
     public synchronized static void register(Symbol[] symbols) {
         requiredLength(symbols, 1, "symbols");
-        var map = MutableMaps.<ImmutableList<TradablePeriod>>newIntObjectHashMap();
+        var map = MutableMaps.<ImmutableList<TradingPeriod>>newIntObjectHashMap();
         if (Pool != null)
             Pool.forEachKeyValue(map::put);
         for (var symbol : symbols) {
@@ -39,7 +39,7 @@ public final class TradablePeriodPool {
      * @param instrument Instrument
      * @return ImmutableList<TradablePeriod>
      */
-    public static synchronized ImmutableList<TradablePeriod> getTradingPeriods(Instrument instrument) {
+    public static synchronized ImmutableList<TradingPeriod> getTradingPeriods(Instrument instrument) {
         return Pool.get(instrument.getSymbol().getSymbolId());
     }
 
@@ -49,7 +49,7 @@ public final class TradablePeriodPool {
      * @param symbol Symbol
      * @return ImmutableList<TradablePeriod>
      */
-    public static synchronized ImmutableList<TradablePeriod> getTradingPeriods(Symbol symbol) {
+    public static synchronized ImmutableList<TradingPeriod> getTradingPeriods(Symbol symbol) {
         return Pool.get(symbol.getSymbolId());
     }
 
@@ -58,7 +58,7 @@ public final class TradablePeriodPool {
      * @param time       LocalTime
      * @return TradablePeriod
      */
-    public static synchronized TradablePeriod nextTradingPeriod(Instrument instrument, LocalTime time) {
+    public static synchronized TradingPeriod nextTradingPeriod(Instrument instrument, LocalTime time) {
         return nextTradingPeriod(instrument.getSymbol(), time);
     }
 
@@ -69,9 +69,9 @@ public final class TradablePeriodPool {
      * @param time   LocalTime
      * @return TradablePeriod
      */
-    public static synchronized TradablePeriod nextTradingPeriod(Symbol symbol, LocalTime time) {
+    public static synchronized TradingPeriod nextTradingPeriod(Symbol symbol, LocalTime time) {
         var tradingPeriods = getTradingPeriods(symbol);
-        TradablePeriod result = null;
+        TradingPeriod result = null;
         int baseTime = time.toSecondOfDay();
         int baseDiff = Integer.MAX_VALUE;
         for (var period : tradingPeriods) {

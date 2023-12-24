@@ -1,12 +1,12 @@
 package io.cygnuxltb.console;
 
+import io.cygnuxltb.protocol.http.ServiceURI;
 import io.cygnuxltb.protocol.http.response.BarDTO;
 import io.cygnuxltb.protocol.http.response.OrderDTO;
 import io.cygnuxltb.protocol.http.response.ParamDTO;
 import io.cygnuxltb.protocol.http.response.PnlDTO;
 import io.cygnuxltb.protocol.http.response.ProductDTO;
 import io.cygnuxltb.protocol.http.response.StrategyDTO;
-import io.mercury.common.http.JreHttpClient;
 import io.mercury.common.http.PathParams.PathParam;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sys.SysProperties;
@@ -20,8 +20,6 @@ import java.util.Properties;
 public final class HttpClient extends BaseHttpClient {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseHttpClient.class);
-
-    private JreHttpClient http;
 
     private String sysUri;
     private String barUri;
@@ -37,18 +35,17 @@ public final class HttpClient extends BaseHttpClient {
                 prop.load(HttpClient.class.getResourceAsStream("config.properties"));
             } else {
                 FileInputStream fileInputStream = new FileInputStream(
-                        SysProperties.USER_HOME + "/config/config.properties");
+                        STR."\{SysProperties.USER_HOME}/config/config.properties");
                 prop.load(fileInputStream);
             }
-            var baseUrl = prop.getProperty("baseUrl");
-            this.sysUri = baseUrl + "/sys";
-            this.barUri = baseUrl + "/bar";
-            this.pnlUri = baseUrl + "/pnl";
-            this.orderUri = baseUrl + "/order";
-            this.strategyUri = baseUrl + "/strategy";
+            var baseUrl = prop.getProperty("baseUrl", "http://127.0.0.1:8088/");
+            this.sysUri = baseUrl + ServiceURI.SYS;
+            this.barUri = baseUrl + ServiceURI.BAR;
+            this.pnlUri = baseUrl + ServiceURI.PNL;
+            this.orderUri = baseUrl + ServiceURI.ORDER;
+            this.strategyUri = baseUrl + ServiceURI.STRATEGY;
         } catch (IOException e) {
             log.error("read config file has IOException -> {}", e.getMessage(), e);
-            e.printStackTrace();
         }
     }
 
@@ -70,13 +67,13 @@ public final class HttpClient extends BaseHttpClient {
     }
 
     public List<StrategyDTO> getStrategyById(int sysId) {
-        return sendGetRequest(StrategyDTO.class, sysUri + "/strategy",
+        return sendGetRequest(StrategyDTO.class, STR."\{sysUri}/strategy",
                 new PathParam("sysId", Integer.toString(sysId)));
     }
 
 
     public List<OrderDTO> getOrdersByInit(String tradingDay, int strategyId) {
-        return sendGetRequest(OrderDTO.class, orderUri + "/init",
+        return sendGetRequest(OrderDTO.class, STR."\{orderUri}/init",
                 new PathParam("tradingDay", tradingDay),
                 new PathParam("strategyId", strategyId));
     }
@@ -103,12 +100,12 @@ public final class HttpClient extends BaseHttpClient {
     }
 
     public List<ParamDTO> getParamByStrategyId(Integer strategyId) {
-        return sendGetRequest(ParamDTO.class, strategyUri + "/param",
+        return sendGetRequest(ParamDTO.class, STR."\{strategyUri}/param",
                 new PathParam("strategyId", strategyId.toString()));
     }
 
     public boolean putParamByStrategyId(Integer strategyId, ParamDTO param) {
-        return sendPutRequest(param, strategyUri + "/param",
+        return sendPutRequest(param, STR."\{strategyUri}/param",
                 new PathParam("strategyId", strategyId.toString()));
     }
 

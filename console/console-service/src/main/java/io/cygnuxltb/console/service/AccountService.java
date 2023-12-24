@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.service;
 
 import io.cygnuxltb.console.persistence.dao.AccountDao;
-import io.cygnuxltb.console.persistence.entity.TblTrdAccount;
+import io.cygnuxltb.console.persistence.entity.TrdAccountEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.AccountDTO;
 import jakarta.annotation.Resource;
@@ -19,7 +19,8 @@ public final class AccountService {
     private AccountDao dao;
 
     public List<AccountDTO> getAccount(int accountId) {
-        return select(TblTrdAccount.class, () -> dao.queryByAccountId(accountId))
+        return select(TrdAccountEntity.class,
+                () -> dao.queryByAccountId(accountId))
                 .stream()
                 .map(DtoUtil::toDto)
                 .collect(toList());

@@ -1,7 +1,7 @@
 package io.rapid.core.instrument;
 
 import io.rapid.core.instrument.enums.PriceMultiplier;
-import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.base.TradingPeriod;
 import io.mercury.common.functional.Formatter;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -13,7 +13,7 @@ public interface Symbol extends Formatter<String> {
 
     String getSymbolCode();
 
-    ImmutableList<TradablePeriod> getTradablePeriods();
+    ImmutableList<TradingPeriod> getTradablePeriods();
 
     ImmutableList<Instrument> getInstruments();
 

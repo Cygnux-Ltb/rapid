@@ -2,9 +2,9 @@ package io.rapid.core.order;
 
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.enums.TrdDirection;
-import io.mercury.common.sequence.Serial;
+import io.mercury.common.sequence.SerialObj;
 
-public class StopLoss implements Serial<StopLoss> {
+public class StopLoss implements SerialObj<StopLoss> {
 
     /**
      * ordSysId

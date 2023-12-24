@@ -1,0 +1,4 @@
+INSERT INTO "PUBLIC"."SYS_PARAM"
+    ("EMAIL", "PASSWORD", "PHONE", "SUB_ACCOUNT_ID", "USER_ID", "USERNAME")
+VALUES ('admin@mail.com	', 'admin', '18877779999', '50000', '10000', 'admin')
+;

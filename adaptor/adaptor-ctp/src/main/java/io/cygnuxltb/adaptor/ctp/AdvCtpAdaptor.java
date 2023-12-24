@@ -229,7 +229,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
     @Override
     public boolean newOrder(@Nonnull NewOrder order) {
         try {
-            CThostFtdcInputOrderField field = orderConverter.toFtdcInputOrder(order);
+            CThostFtdcInputOrderField field = orderConverter.toInputOrder(order);
             String orderRef = Integer.toString(OrderRefKeeper.nextOrderRef());
             // 设置OrderRef
             field.setOrderRef(orderRef);
@@ -358,12 +358,26 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
 
     public static class DSL {
 
+        private Account account;
+        private CtpConfig config;
+        private ConnectionMode mode = ConnectionMode.ALL;
 
-        public Adaptor build() {
-            return null;
+        public void account(Account account) {
+            this.account = account;
+        }
+
+        public void config(CtpConfig config) {
+            this.config = config;
+        }
+
+        public void mode(ConnectionMode mode) {
+            this.mode = mode;
+        }
+
+        public Adaptor build(RingEventbus<FtdcEvent> eventbus) {
+            return new AdvCtpAdaptor(account, config, mode, eventbus);
         }
 
     }
-
 
 }

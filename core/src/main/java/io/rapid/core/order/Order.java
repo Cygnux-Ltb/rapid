@@ -1,5 +1,6 @@
 package io.rapid.core.order;
 
+import io.mercury.common.sequence.SerialObj;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
@@ -9,16 +10,17 @@ import io.rapid.core.order.enums.OrdStatus;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.OrdValid;
 import io.rapid.core.order.enums.TrdDirection;
-import io.mercury.common.sequence.Serial;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 
+import static java.lang.Long.compare;
+
 /**
  * @author yellow013
  */
-public interface Order extends Serial<Order>, Serializable {
+public interface Order extends SerialObj<Order>, Serializable {
 
     /**
      * ordSysId构成, 使用雪花算法实现<br>
@@ -146,7 +148,7 @@ public interface Order extends Serial<Order>, Serializable {
     default int compareTo(Order o) {
         return getOrdLevel() > o.getOrdLevel() ? -1
                 : getOrdLevel() < o.getOrdLevel() ? 1
-                : Long.compare(getOrdSysId(), o.getOrdSysId());
+                : compare(getOrdSysId(), o.getOrdSysId());
     }
 
     /**

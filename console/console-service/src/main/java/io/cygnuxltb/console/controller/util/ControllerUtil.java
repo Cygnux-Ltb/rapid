@@ -114,8 +114,8 @@ public final class ControllerUtil {
         return illegalStringParam("brokerId", brokerId, logger);
     }
 
-    public static boolean illegalStringParam(String paramName,
-                                             String paramValue, Logger logger) {
+    public static boolean illegalStringParam(String paramName, String paramValue,
+                                             Logger logger) {
         if (StringSupport.isNullOrEmpty(paramValue)) {
             logger.error("illegal param -> {}=={}", paramName, paramValue);
             return true;

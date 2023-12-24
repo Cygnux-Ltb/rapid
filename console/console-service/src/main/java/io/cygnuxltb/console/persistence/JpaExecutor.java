@@ -23,7 +23,11 @@ public final class JpaExecutor {
      * @return List<T>
      */
     public static <T> List<T> select(Class<T> type, Supplier<List<T>> func) {
-        return exec(func, result -> {
+        return exec(
+                // SQL execution process
+                func,
+                // Query result processing
+                result -> {
                     if (isEmpty(result))
                         log.warn("query [{}] return 0 row", type.getSimpleName());
                     else if (result.size() > 2)
@@ -33,6 +37,7 @@ public final class JpaExecutor {
                                 result.size(), JsonWrapper.toJson(result));
                     return result;
                 },
+                // Log for case of failure
                 e -> log.error("query [{}], an exception occurred -> {}", type.getSimpleName(),
                         e.getMessage(), e));
     }
@@ -44,19 +49,51 @@ public final class JpaExecutor {
      */
     public static <T> boolean insertOrUpdate(JpaRepository<T, Long> repository, T entity) {
         return execBool(
+                // SQL execution process
                 () -> {
                     if (entity == null)
                         Throws.illegalArgument("entity");
                     return repository.saveAndFlush(entity);
                 },
+                // Log for case of success
                 o -> {
                     log.info("insert or update [{}] success, entity -> {}",
                             entity.getClass().getSimpleName(), entity);
                     return true;
                 },
+                // Log for case of failure
                 e -> {
                     log.error("insert or update [{}] failure, entity -> {}, exception message -> {}",
                             entity.getClass().getSimpleName(), entity, e.getMessage(), e);
+                    return false;
+                });
+    }
+
+
+    /**
+     * @param repository JpaRepository<T, Long>
+     * @param entities   List<T>
+     * @param <T>        T
+     * @return boolean
+     */
+    public static <T> boolean insertOrUpdate(JpaRepository<T, Long> repository, List<T> entities) {
+        return execBool(
+                // SQL execution process
+                () -> {
+                    if (entities == null)
+                        Throws.illegalArgument("entity");
+                    return repository.saveAllAndFlush(entities);
+                },
+                // Log for case of success
+                o -> {
+                    log.info("insert or update [{}] success, count -> {}",
+                            entities.getFirst().getClass().getSimpleName(), entities.size());
+                    return true;
+                },
+                // Log for case of failure
+                e -> {
+                    log.error("insert or update [{}] failure, entity -> {}, exception message -> {}",
+                            entities.getFirst().getClass().getSimpleName(), e.getMessage(), e);
                     return false;
                 });
     }

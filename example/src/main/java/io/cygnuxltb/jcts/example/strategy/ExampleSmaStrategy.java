@@ -51,13 +51,11 @@ public final class ExampleSmaStrategy extends SingleInstrumentStrategy<ParamKey>
 
     @Override
     public String getEventName() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void close() {
-        // TODO Auto-generated method stub
 
     }
 

@@ -1,6 +1,6 @@
 package io.cygnuxltb.console.persistence.dao;
 
-import io.cygnuxltb.console.persistence.entity.TblTrdPortfolio;
+import io.cygnuxltb.console.persistence.entity.TrdPortfolioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author yellow013
  */
 @Repository
-public interface PortfolioDao extends JpaRepository<TblTrdPortfolio, Long> {
+public interface PortfolioDao extends JpaRepository<TrdPortfolioEntity, Long> {
 
 
     /**
@@ -23,9 +23,9 @@ public interface PortfolioDao extends JpaRepository<TblTrdPortfolio, Long> {
      * @return List<PortfolioEntity>
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
-            + " AND e.userId = :userId "
-            + " AND e.portfolioName = :portfolioName ")
-    List<TblTrdPortfolio> queryBy(@Param("userId") int userId,
-                                  @Param("portfolioName") String portfolioName);
+            + " AND (e.userId = :userId) "
+            + " AND (e.portfolioName = :portfolioName) ")
+    List<TrdPortfolioEntity> queryBy(@Param("userId") int userId,
+                                     @Param("portfolioName") String portfolioName);
 
 }

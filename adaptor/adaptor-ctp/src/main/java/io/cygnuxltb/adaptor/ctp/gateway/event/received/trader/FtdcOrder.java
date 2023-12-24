@@ -199,7 +199,7 @@ public final class FtdcOrder {
     /// MAC地址
     private String MacAddress;
 
-    public FtdcOrder load(CThostFtdcOrderField field) {
+    public FtdcOrder read(CThostFtdcOrderField field) {
         return this
                 .setBrokerID(field.getBrokerID())
                 .setInvestorID(field.getInvestorID())

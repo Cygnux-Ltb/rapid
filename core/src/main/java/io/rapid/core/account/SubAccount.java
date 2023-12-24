@@ -89,8 +89,7 @@ public final class SubAccount extends EnableableComponent implements Comparable<
         if (StringSupport.nonEmpty(subAccountName))
             this.subAccountName = subAccountName;
         else
-            this.subAccountName = "SubAccount[" + subAccountId + "]=>Account[" + account.getBrokerName() + ":"
-                    + account.getRemark() + "]";
+            this.subAccountName = STR."SubAccount[\{subAccountId}]=>Account[\{account.getBrokerName()}:\{account.getRemark()}]";
         account.addSubAccount(this);
         AccountStorage.putSubAccount(this);
         enable();

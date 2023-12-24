@@ -9,7 +9,7 @@ import java.time.ZoneOffset;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.impl.SMA.SmaEvent;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.base.TradingPeriod;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.pool.TradablePeriodPool;
 import io.mercury.common.collections.window.LongRingWindow;
@@ -23,7 +23,7 @@ public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent> {
 	public SMA2(Instrument instrument, Duration duration, int cycle) {
 		super(instrument, duration, cycle);
 		this.historyPriceWindow = new LongRingWindow(cycle);
-		TradablePeriod tradingPeriod = TradablePeriodPool.nextTradingPeriod(instrument, LocalTime.now());
+		TradingPeriod tradingPeriod = TradablePeriodPool.nextTradingPeriod(instrument, LocalTime.now());
 		LocalDate date = LocalDate.now();
 		ZoneOffset offset = instrument.getZoneOffset();
 		TimeWindow timePeriod = TimeWindow.with(LocalDateTime.of(date, tradingPeriod.getStart()),

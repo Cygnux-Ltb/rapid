@@ -52,7 +52,7 @@ public final class OrdPrice implements JsonSerializable {
     public OrdPrice calcAvgTradePrice(@Nonnull ChildOrder order) {
         var records = order.getRecords();
         if (records.size() == 1) {
-            this.avgTradePrice = records.get(0).tradePrice();
+            this.avgTradePrice = records.getFirst().tradePrice();
         }
         if (records.size() > 1) {
             var multiplier = order.getInstrument().getMultiplier();

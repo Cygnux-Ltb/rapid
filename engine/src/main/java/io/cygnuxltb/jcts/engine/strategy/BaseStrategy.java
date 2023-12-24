@@ -1,5 +1,16 @@
 package io.cygnuxltb.jcts.engine.strategy;
 
+import io.cygnuxltb.jcts.engine.position.PositionKeeper;
+import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
+import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.ImmutableSets;
+import io.mercury.common.collections.MutableMaps;
+import io.mercury.common.fsm.EnableableComponent;
+import io.mercury.common.lang.Asserter;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.mercury.common.param.ParamKey;
+import io.mercury.common.param.Params;
+import io.mercury.common.sequence.SnowflakeAlgo;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountStorage;
 import io.rapid.core.account.SubAccount;
@@ -14,22 +25,11 @@ import io.rapid.core.order.Order;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
-import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.protocol.avro.request.QueryBalance;
 import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
-import io.cygnuxltb.jcts.engine.position.PositionKeeper;
-import io.cygnuxltb.jcts.engine.trader.OrderKeeper;
-import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.collections.ImmutableSets;
-import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.fsm.EnableableComponent;
-import io.mercury.common.lang.Asserter;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.param.ParamKey;
-import io.mercury.common.param.Params;
-import io.mercury.common.sequence.SnowflakeAlgo;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.slf4j.Logger;
@@ -90,7 +90,7 @@ public abstract class BaseStrategy<K extends ParamKey>
                            @Nonnull SubAccount subAccount,
                            @Nonnull Params<K> params,
                            @Nonnull Instrument... instruments) {
-        Asserter.atWithinRange(id, 1, StrategyCount.MAX_STRATEGY_ID, "strategyId");
+        Asserter.atWithinRange(id, 1, MAX_STRATEGY_ID, "strategyId");
         Asserter.nonEmpty(name, "strategyName");
         Asserter.nonNull(subAccount, "subAccount");
         this.id = id;

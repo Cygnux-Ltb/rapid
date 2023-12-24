@@ -152,7 +152,7 @@ public final class FtdcInvestorPosition {
     private double PositionCostOffset;
 
 
-    public FtdcInvestorPosition load(CThostFtdcInvestorPositionField field) {
+    public FtdcInvestorPosition read(CThostFtdcInvestorPositionField field) {
         return this
                 /// 合约代码
                 .setInstrumentID(field.getInstrumentID())

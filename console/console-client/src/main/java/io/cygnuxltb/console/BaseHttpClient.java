@@ -22,14 +22,14 @@ class BaseHttpClient {
             int statusCode = response.statusCode();
             if (statusCode > 307)
                 throw new RuntimeException(
-                        "GET request uri: [" + uri + "] return status code: [" + statusCode + "]");
+                        STR."GET request uri: [\{uri}] return status code: [\{statusCode}]");
             String body = response.body();
             return StringSupport.isNullOrEmpty(body)
                     ? new ArrayList<>()
                     : JsonParser.toList(body, type);
         } catch (Exception e) {
             log.error("catch exception message -> {}", e.getMessage(), e);
-            throw new RuntimeException("Exception Message -> " + e.getMessage(), e);
+            throw new RuntimeException(STR."Exception Message -> \{e.getMessage()}", e);
         }
     }
 
@@ -47,7 +47,7 @@ class BaseHttpClient {
             return true;
         } catch (Exception e) {
             log.error("catch exception message -> {}", e.getMessage(), e);
-            throw new RuntimeException("Exception Message -> " + e.getMessage(), e);
+            throw new RuntimeException(STR."Exception Message -> \{e.getMessage()}", e);
         }
     }
 

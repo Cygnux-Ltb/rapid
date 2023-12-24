@@ -3,7 +3,7 @@ package io.cygnuxltb.console.controller;
 import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
-import io.cygnuxltb.console.persistence.entity.TblMkdBar;
+import io.cygnuxltb.console.persistence.entity.MkdBarEntity;
 import io.cygnuxltb.console.service.BarService;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -19,13 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
+import static io.cygnuxltb.protocol.http.ServiceURI.BAR;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 历史行情服务
  */
 @RestController
-@RequestMapping(path = "/bar", produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = BAR, produces = APPLICATION_JSON_UTF8)
 public final class BarController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BarController.class);
@@ -60,7 +61,7 @@ public final class BarController {
      */
     @PostMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putBar(@RequestBody HttpServletRequest request) {
-        var bar = ControllerUtil.bodyToObject(request, TblMkdBar.class);
+        var bar = ControllerUtil.bodyToObject(request, MkdBarEntity.class);
         log.info("put bar -> {}", bar);
         return bar == null ? ResponseStatus.BAD_REQUEST
                 : service.putBar(bar)

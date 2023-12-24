@@ -11,7 +11,7 @@ public class ConsoleApplication {
 
     static {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>[CONSOLE START]<<<<<<<<<<<<<<<<<<<<<");
-        Log4j2Configurator.setLogFolder("jcts");
+        Log4j2Configurator.setLogFolder("rapid");
         Log4j2Configurator.setLogFilename("console");
         Log4j2Configurator.setLogLevel(LogLevel.INFO);
     }

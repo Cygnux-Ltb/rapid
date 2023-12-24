@@ -13,14 +13,9 @@ public enum ParamGroup {
     public static final String STRATEGY = "STRATEGY";
 
     /**
-     * 交易
+     * 适配器
      */
-    public static final String TRADER = "TRADER";
-
-    /**
-     * 市场
-     */
-    public static final String MARKET = "MARKET";
+    public static final String ADAPTOR = "ADAPTOR";
 
     /**
      * 系统

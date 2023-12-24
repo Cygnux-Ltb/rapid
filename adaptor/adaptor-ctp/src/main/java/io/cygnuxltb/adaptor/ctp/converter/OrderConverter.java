@@ -125,7 +125,7 @@ public final class OrderConverter {
      * };<br>
      *         </pre>
      */
-    public CThostFtdcInputOrderField toFtdcInputOrder(NewOrder order) {
+    public CThostFtdcInputOrderField toInputOrder(NewOrder order) {
         // 创建FTDC报单类型
         var field = new CThostFtdcInputOrderField();
         // 经纪公司代码
@@ -174,7 +174,7 @@ public final class OrderConverter {
             case INVALID -> {
                 // 无效订单动作
                 log.error("order action is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order action is invalid -> ordSysId == " + order.getOrdSysId());
+                throw new IllegalStateException(STR."order action is invalid -> ordSysId == \{order.getOrdSysId()}");
             }
         }
         // 设置投机标识
@@ -195,7 +195,7 @@ public final class OrderConverter {
             case INVALID -> {
                 // 无效订单方向
                 log.error("order direction is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order direction is invalid -> ordSysId == " + order.getOrdSysId());
+                throw new IllegalStateException(STR."order direction is invalid -> ordSysId == \{order.getOrdSysId()}");
             }
         }
         // 设置价格

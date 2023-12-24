@@ -1,8 +1,5 @@
 package io.cygnuxltb.console.controller.base;
 
-import com.github.jsonzou.jmockdata.JMockData;
-import io.cygnuxltb.protocol.http.response.PnlDTO;
-
 public enum HttpParam {
 
     ;

@@ -10,7 +10,7 @@ import io.rapid.core.instrument.Exchange;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
 import io.rapid.core.instrument.base.BaseFutures;
-import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.base.TradingPeriod;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import io.rapid.core.instrument.enums.PriorityCloseType;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -86,13 +86,13 @@ public final class ChinaFutures {
         CU(SHFE, "cu", 1, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 铜期货交易时段
 
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(1, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0))
                 // 主力合约月份代码
                 // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -103,13 +103,13 @@ public final class ChinaFutures {
          */
         AL(SHFE, "al", 2, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 铝期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(1, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -120,13 +120,13 @@ public final class ChinaFutures {
          */
         ZN(SHFE, "zn", 3, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 锌期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(1, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -137,13 +137,13 @@ public final class ChinaFutures {
          */
         NI(SHFE, "ni", 4, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 镍期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(1, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -154,13 +154,13 @@ public final class ChinaFutures {
          */
         AU(SHFE, "au", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_4,
                 // 黄金期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(2, 30, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         /// "06", "12"
@@ -171,13 +171,13 @@ public final class ChinaFutures {
          */
         AG(SHFE, "ag", 6, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 白银期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(2, 30, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "06", "12"
@@ -188,13 +188,13 @@ public final class ChinaFutures {
          */
         RB(SHFE, "rb", 7, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 螺纹钢期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "10"
@@ -205,13 +205,13 @@ public final class ChinaFutures {
          */
         HC(SHFE, "hc", 8, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 热卷扎板期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "10"
@@ -222,13 +222,13 @@ public final class ChinaFutures {
          */
         RU(SHFE, "ru", 9, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 橡胶期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -239,13 +239,13 @@ public final class ChinaFutures {
          */
         FU(SHFE, "fu", 10, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 燃油期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -257,13 +257,13 @@ public final class ChinaFutures {
          */
         SC(SHINE, "sc", 1, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 原油期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(1, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -275,13 +275,13 @@ public final class ChinaFutures {
          */
         A(DCE, "a", 1, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 大豆期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -292,13 +292,13 @@ public final class ChinaFutures {
          */
         M(DCE, "m", 2, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 豆粕期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -309,13 +309,13 @@ public final class ChinaFutures {
          */
         Y(DCE, "y", 3, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 豆油期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -326,13 +326,13 @@ public final class ChinaFutures {
          */
         P(DCE, "p", 4, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 棕榈油期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -343,13 +343,13 @@ public final class ChinaFutures {
          */
         C(DCE, "c", 4, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 棕榈油期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -360,13 +360,13 @@ public final class ChinaFutures {
          */
         I(DCE, "i", 5, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 铁矿石期货交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -379,13 +379,13 @@ public final class ChinaFutures {
          */
         CF(ZCE, "CF", 1, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 棉花交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(3, LocalTime.of(13, 30, 0),
+                new TradingPeriod(3, LocalTime.of(13, 30, 0),
                         LocalTime.of(15, 0, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -396,11 +396,11 @@ public final class ChinaFutures {
          */
         SR(ZCE, "SR", 2, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 白糖交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -411,11 +411,11 @@ public final class ChinaFutures {
          */
         TA(ZCE, "TA", 3, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // PTA交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -427,11 +427,11 @@ public final class ChinaFutures {
         MA(ZCE, "MA", 4, PriorityCloseType.NONE, PriceMultiplier.NONE,
 
                 // 乙醇交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -442,11 +442,11 @@ public final class ChinaFutures {
          */
         RM(ZCE, "RM", 5, PriorityCloseType.NONE, PriceMultiplier.NONE,
                 // 菜粕交易时段
-                new TradablePeriod(0, LocalTime.of(21, 0, 0),
+                new TradingPeriod(0, LocalTime.of(21, 0, 0),
                         LocalTime.of(23, 0, 0)),
-                new TradablePeriod(1, LocalTime.of(9, 0, 0),
+                new TradingPeriod(1, LocalTime.of(9, 0, 0),
                         LocalTime.of(10, 15, 0)),
-                new TradablePeriod(2, LocalTime.of(10, 30, 0),
+                new TradingPeriod(2, LocalTime.of(10, 30, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "05", "09"
@@ -458,9 +458,9 @@ public final class ChinaFutures {
          */
         IF(CFFEX, "IF", 1, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
-                new TradablePeriod(0, LocalTime.of(9, 15, 0),
+                new TradingPeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(1, LocalTime.of(13, 0, 0),
+                new TradingPeriod(1, LocalTime.of(13, 0, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -471,9 +471,9 @@ public final class ChinaFutures {
          */
         IH(CFFEX, "IH", 2, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
-                new TradablePeriod(0, LocalTime.of(9, 15, 0),
+                new TradingPeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(1, LocalTime.of(13, 0, 0),
+                new TradingPeriod(1, LocalTime.of(13, 0, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -484,9 +484,9 @@ public final class ChinaFutures {
          */
         IC(CFFEX, "IC", 3, PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
                 // 股指期货交易时段
-                new TradablePeriod(0, LocalTime.of(9, 15, 0),
+                new TradingPeriod(0, LocalTime.of(9, 15, 0),
                         LocalTime.of(11, 30, 0)),
-                new TradablePeriod(1, LocalTime.of(13, 0, 0),
+                new TradingPeriod(1, LocalTime.of(13, 0, 0),
                         LocalTime.of(15, 15, 0)))
         // 主力合约月份代码
         // "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
@@ -516,7 +516,7 @@ public final class ChinaFutures {
         private final ImmutableList<Instrument> instruments;
 
         // 交易时间段
-        private final ImmutableList<TradablePeriod> tradablePeriods;
+        private final ImmutableList<TradingPeriod> tradablePeriods;
 
         /**
          * @param exchange          Exchange
@@ -524,17 +524,17 @@ public final class ChinaFutures {
          * @param serialInExchange  int
          * @param priorityCloseType PriorityCloseType
          * @param multiplier        PriceMultiplier
-         * @param tradablePeriods   TradablePeriod...
+         * @param tradingPeriods   TradablePeriod...
          */
         ChinaFuturesSymbol(Exchange exchange, String symbolCode, int serialInExchange,
                            PriorityCloseType priorityCloseType, PriceMultiplier multiplier,
-                           TradablePeriod... tradablePeriods) {
+                           TradingPeriod... tradingPeriods) {
             this.exchange = exchange;
             this.symbolId = BaseFutures.generateSymbolId(exchange.getExchangeId(), serialInExchange);
             this.symbolCode = symbolCode;
             this.priorityCloseType = priorityCloseType;
             this.multiplier = multiplier;
-            this.tradablePeriods = ImmutableLists.newImmutableList(tradablePeriods);
+            this.tradablePeriods = ImmutableLists.newImmutableList(tradingPeriods);
             this.instruments = generateInstruments();
         }
 
@@ -601,7 +601,7 @@ public final class ChinaFutures {
             return instruments;
         }
 
-        public ImmutableList<TradablePeriod> getTradablePeriods() {
+        public ImmutableList<TradingPeriod> getTradablePeriods() {
             return tradablePeriods;
         }
 

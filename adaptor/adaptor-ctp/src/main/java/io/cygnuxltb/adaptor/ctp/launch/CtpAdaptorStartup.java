@@ -19,7 +19,7 @@ public final class CtpAdaptorStartup {
 
     static {
         Log4j2Configurator.setLogLevel(Log4j2Configurator.LogLevel.INFO);
-        Log4j2Configurator.setLogFilename("ctp-" + YYYYMMDD_L_HHMMSS.now());
+        Log4j2Configurator.setLogFilename(STR."ctp-\{YYYYMMDD_L_HHMMSS.now()}");
     }
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpAdaptorStartup.class);
@@ -34,7 +34,7 @@ public final class CtpAdaptorStartup {
             System.out.println("Config file path cannot be empty");
             throw new IllegalArgumentException("File path is empty");
         }
-        System.out.println("Config file path -> " + filePath);
+        System.out.println(STR."Config file path -> \{filePath}");
         File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("Config file does not exist");

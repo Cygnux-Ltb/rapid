@@ -1,8 +1,8 @@
 package io.cygnuxltb.console.service;
 
-import io.cygnuxltb.console.persistence.entity.TblTrdStrategy;
+import io.cygnuxltb.console.SysConfiguration;
 import io.cygnuxltb.console.persistence.dao.StrategyDao;
-import io.cygnuxltb.console.persistence.JpaExecutor;
+import io.cygnuxltb.console.persistence.entity.TrdStrategyEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.response.StrategyDTO;
 import io.mercury.common.lang.Throws;
@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyId;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyName;
+import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 
 @Service
@@ -26,13 +27,14 @@ public final class StrategyService {
     @Resource
     private StrategyDao dao;
 
-    private final boolean isMock = true;
+    @Resource
+    private SysConfiguration configuration;
 
     /**
      * @return List<StrategyEntity>
      */
     public List<StrategyDTO> getAllStrategy() {
-        return select(TblTrdStrategy.class,
+        return select(TrdStrategyEntity.class,
                 () -> dao.findAll())
                 .stream().map(DtoUtil::toDto)
                 .collect(Collectors.toList());
@@ -45,7 +47,7 @@ public final class StrategyService {
     public StrategyDTO getStrategy(int strategyId) {
         if (illegalStrategyId(strategyId, log))
             Throws.illegalArgument("strategyId");
-        TblTrdStrategy entity = dao.queryByStrategyId(strategyId);
+        TrdStrategyEntity entity = dao.queryByStrategyId(strategyId);
         if (entity == null)
             log.warn("entity == null where strategyId -> {}", strategyId);
         return DtoUtil.toDto(entity);
@@ -58,7 +60,7 @@ public final class StrategyService {
     public StrategyDTO getStrategy(String strategyName) {
         if (illegalStrategyName(strategyName, log))
             Throws.illegalArgument("strategyName");
-        TblTrdStrategy entity = dao.queryByStrategyName(strategyName);
+        TrdStrategyEntity entity = dao.queryByStrategyName(strategyName);
         if (entity == null)
             log.warn("entity == null where strategyName -> {}", strategyName);
         return DtoUtil.toDto(entity);
@@ -69,9 +71,8 @@ public final class StrategyService {
      * @param entity StrategyEntity
      * @return boolean
      */
-    public boolean putStrategy(TblTrdStrategy entity) {
-        return JpaExecutor.insertOrUpdate(dao, entity);
+    public boolean putStrategy(TrdStrategyEntity entity) {
+        return insertOrUpdate(dao, entity);
     }
-
 
 }

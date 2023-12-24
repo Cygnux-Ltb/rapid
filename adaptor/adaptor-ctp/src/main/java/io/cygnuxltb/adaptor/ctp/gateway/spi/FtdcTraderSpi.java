@@ -512,8 +512,8 @@ public final class FtdcTraderSpi extends CThostFtdcTraderSpi {
      * @param IsLast    boolean
      */
     @Override
-    public void OnRspQryTrade(CThostFtdcTradeField Field, CThostFtdcRspInfoField RspInfo,
-                              int RequestID, boolean IsLast) {
+    public void OnRspQryTrade(CThostFtdcTradeField Field,
+                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         listener.fireRspQryTrade(Field, RspInfo, RequestID, IsLast);
     }
 

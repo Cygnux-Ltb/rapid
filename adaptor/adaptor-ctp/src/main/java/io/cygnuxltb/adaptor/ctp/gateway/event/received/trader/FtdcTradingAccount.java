@@ -158,7 +158,7 @@ public final class FtdcTradingAccount {
     private double RemainSwap;
 
 
-    public FtdcTradingAccount load(CThostFtdcTradingAccountField field) {
+    public FtdcTradingAccount read(CThostFtdcTradingAccountField field) {
         return this
                 .setBrokerID(field.getBrokerID())
 
@@ -257,7 +257,6 @@ public final class FtdcTradingAccount {
                 .setFrozenSwap(field.getFrozenSwap())
 
                 .setRemainSwap(field.getRemainSwap())
-
                 ;
     }
 
