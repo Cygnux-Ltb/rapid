@@ -1,4 +1,4 @@
-package com.cyanspring.common;
+package io.rapid.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -273,4 +273,5 @@ public class ErrorSchema {
     public static void setDefaultLanguage(String defaultLanguage) {
         ErrorSchema.defaultLanguage = defaultLanguage;
     }
+
 }

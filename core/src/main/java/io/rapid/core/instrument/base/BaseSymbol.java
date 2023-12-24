@@ -15,10 +15,10 @@ public abstract class BaseSymbol implements Symbol {
 
     protected final PriceMultiplier priceMultiplier;
 
-    protected final ImmutableList<TradablePeriod> tradablePeriods;
+    protected final ImmutableList<TradingPeriod> tradablePeriods;
 
     public BaseSymbol(int symbolId, String symbolCode, Exchange exchange, PriceMultiplier priceMultiplier,
-                      ImmutableList<TradablePeriod> tradablePeriods) {
+                      ImmutableList<TradingPeriod> tradablePeriods) {
         this.symbolId = symbolId;
         this.symbolCode = symbolCode;
         this.exchange = exchange;
@@ -47,7 +47,7 @@ public abstract class BaseSymbol implements Symbol {
     }
 
     @Override
-    public ImmutableList<TradablePeriod> getTradablePeriods() {
+    public ImmutableList<TradingPeriod> getTradablePeriods() {
         return tradablePeriods;
     }
 

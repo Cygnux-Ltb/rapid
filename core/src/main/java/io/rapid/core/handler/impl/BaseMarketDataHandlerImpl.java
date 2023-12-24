@@ -13,6 +13,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 public abstract class BaseMarketDataHandlerImpl implements MarketDataHandler {
 
     protected FastMarketData curr;
+
     protected FastMarketData prev;
 
     @Override

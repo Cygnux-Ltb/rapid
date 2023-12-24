@@ -1,7 +1,10 @@
-package io.rapid.core.instrument;
+package io.rapid.core.instrument.stock;
 
+import io.rapid.core.instrument.Exchange;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.Symbol;
 import io.rapid.core.instrument.enums.PriceMultiplier;
-import io.rapid.core.instrument.base.TradablePeriod;
+import io.rapid.core.instrument.base.TradingPeriod;
 import io.rapid.core.instrument.base.BaseStock;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -19,7 +22,7 @@ public final class ChinaStock {
 
         public ChinaStockInstrument(int instrumentId, String instrumentCode,
                                     Exchange exchange, PriceMultiplier multiplier,
-                                    ImmutableList<TradablePeriod> tradablePeriods) {
+                                    ImmutableList<TradingPeriod> tradablePeriods) {
             super(instrumentId, instrumentCode, exchange, multiplier, 1, tradablePeriods);
         }
 
@@ -30,7 +33,7 @@ public final class ChinaStock {
         }
 
         @Override
-        public ImmutableList<TradablePeriod> getTradablePeriods() {
+        public ImmutableList<TradingPeriod> getTradablePeriods() {
             // TODO Auto-generated method stub
             return null;
         }

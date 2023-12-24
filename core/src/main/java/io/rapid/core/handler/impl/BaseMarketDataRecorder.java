@@ -1,11 +1,11 @@
 package io.rapid.core.handler.impl;
 
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.MarketDataFeed;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataRecorder;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.protocol.avro.event.AdaptorEvent;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -15,8 +15,7 @@ import javax.annotation.Nonnull;
  *
  * @author yellow013
  */
-public abstract class BaseMarketDataRecorder
-        implements MarketDataRecorder, AdaptorEventHandler {
+public abstract class BaseMarketDataRecorder implements MarketDataRecorder, AdaptorEventHandler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseMarketDataRecorder.class);
 

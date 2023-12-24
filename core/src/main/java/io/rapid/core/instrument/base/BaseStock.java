@@ -12,7 +12,7 @@ public abstract class BaseStock extends BaseInstrument implements Symbol {
 
     protected BaseStock(int instrumentId, String instrumentCode, Exchange exchange,
                         PriceMultiplier priceMultiplier, int tickSize,
-                        ImmutableList<TradablePeriod> tradablePeriods) {
+                        ImmutableList<TradingPeriod> tradablePeriods) {
         super(instrumentId, instrumentCode, exchange);
         this.tickSize = tickSize;
     }

@@ -1,4 +1,4 @@
-package com.cyanspring.common;
+package io.rapid.core;
 
 public record ErrorMsg(
         int code,
@@ -7,7 +7,7 @@ public record ErrorMsg(
 
     @Override
     public String toString() {
-        return code + ":" + language + ":" + message;
+        return STR."\{code}:\{language}:\{message}";
     }
 
 }

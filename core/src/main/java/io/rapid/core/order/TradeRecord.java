@@ -1,6 +1,6 @@
 package io.rapid.core.order;
 
-import io.mercury.common.sequence.Serial;
+import io.mercury.common.sequence.SerialObj;
 
 public record TradeRecord(
         // 订单编号
@@ -12,7 +12,7 @@ public record TradeRecord(
         // 成交价格
         double tradePrice,
         // 成交数量
-        int tradeQty) implements Serial<TradeRecord> {
+        int tradeQty) implements SerialObj<TradeRecord> {
 
     @Override
     public int compareTo(TradeRecord o) {

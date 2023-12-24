@@ -1,13 +1,12 @@
 package io.rapid.core.strategy;
 
+import io.mercury.common.fsm.Enableable;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.instrument.Instrument;
-import io.mercury.common.fsm.Enableable;
-import io.mercury.common.lang.NonInstantiable;
 import org.eclipse.collections.api.set.ImmutableSet;
 
 import javax.annotation.Nonnull;
@@ -31,12 +30,10 @@ public interface Strategy extends
         // 用于资源清理
         Closeable {
 
-    final class StrategyCount extends NonInstantiable {
-        /**
-         * 系统可允许的最大策略ID
-         */
-        public final static int MAX_STRATEGY_ID = 1023;
-    }
+    /**
+     * 系统可允许的最大策略ID
+     */
+    int MAX_STRATEGY_ID = 1023;
 
     int getStrategyId();
 

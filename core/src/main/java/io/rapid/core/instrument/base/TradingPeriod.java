@@ -1,7 +1,7 @@
 package io.rapid.core.instrument.base;
 
 import io.mercury.common.datetime.TimeZone;
-import io.mercury.common.sequence.Serial;
+import io.mercury.common.sequence.SerialObj;
 import io.mercury.common.sequence.TimeWindow;
 import io.mercury.serialization.json.JsonWrapper;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -20,7 +20,7 @@ import static io.mercury.common.lang.Asserter.nonNull;
  *
  * @author yellow013
  */
-public final class TradablePeriod implements Serial<TradablePeriod> {
+public final class TradingPeriod implements SerialObj<TradingPeriod> {
 
     private final int serialId;
 
@@ -31,10 +31,10 @@ public final class TradablePeriod implements Serial<TradablePeriod> {
     private final Duration duration;
 
     // 全天交易
-    public static TradablePeriod TRADING_ALL_DAY = new TradablePeriod(0,
+    public static TradingPeriod TRADING_ALL_DAY = new TradingPeriod(0,
             LocalTime.of(0, 0, 0), LocalTime.of(0, 0, 0));
 
-    public TradablePeriod(int serialId, LocalTime start, LocalTime end) {
+    public TradingPeriod(int serialId, LocalTime start, LocalTime end) {
         nonNull(start, "start");
         nonNull(end, "end");
         this.serialId = serialId;
@@ -77,7 +77,6 @@ public final class TradablePeriod implements Serial<TradablePeriod> {
         return TimeWindow.segmentationWindow(date, start, end, offset, duration);
     }
 
-
     @Override
     public String toString() {
         return JsonWrapper.toJson(this);
@@ -85,10 +84,10 @@ public final class TradablePeriod implements Serial<TradablePeriod> {
 
     public static void main(String[] args) {
 
-        TradablePeriod tradingPeriod = new TradablePeriod(0, LocalTime.of(21, 0, 0), LocalTime.of(2, 30, 0));
+        TradingPeriod tradingPeriod = new TradingPeriod(0, LocalTime.of(21, 0, 0), LocalTime.of(2, 30, 0));
 
         tradingPeriod.segmentation(LocalDate.now(), TimeZone.CST, Duration.ofMinutes(45))
-                .each(timePeriod -> System.out.println(timePeriod.getStart() + " - " + timePeriod.getEnd()));
+                .each(timePeriod -> System.out.println(STR."\{timePeriod.getStart()} - \{timePeriod.getEnd()}"));
 
         LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 55, 30));
 

@@ -38,7 +38,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         Asserter.nonNull(prefix, "prefix");
         Asserter.nonNull(account, "account");
         this.account = account;
-        this.adaptorId = prefix + "[" + account.getBrokerName() + ":" + account.getInvestorId() + "]";
+        this.adaptorId = STR."\{prefix}[\{account.getBrokerName()}:\{account.getInvestorId()}]";
         AdaptorStorage.putAdaptor(this);
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         } catch (IOException ioe) {
             throw ioe;
         } catch (Exception e) {
-            throw new ComponentStartupException(adaptorId + " -> " + e.getMessage(), e);
+            throw new ComponentStartupException(STR."\{adaptorId} -> \{e.getMessage()}", e);
         }
     }
 

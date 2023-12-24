@@ -30,7 +30,7 @@ public final class AccountStorage implements Serializable {
     // logger
     private static final Logger log = Log4j2LoggerFactory.getLogger(AccountStorage.class);
 
-    // 存储Account信息, 一对一关系,以accountId索引
+    // 存储Account信息, 一对一关系, 以accountId索引
     private static final MutableIntObjectMap<Account> Accounts = MutableMaps.newIntObjectHashMap();
 
     // 存储Account信息, 一对一关系, 以investorId索引
@@ -96,7 +96,7 @@ public final class AccountStorage implements Serializable {
     public static Account getAccountByAccountId(int accountId) throws AccountException {
         var account = Accounts.get(accountId);
         if (account == null)
-            throw new AccountException("Account error in mapping : accountId[" + accountId + "] no mapped instance");
+            throw new AccountException(STR."Account error in mapping : accountId[\{accountId}] no mapped instance");
         return account;
     }
 
@@ -105,7 +105,7 @@ public final class AccountStorage implements Serializable {
         var account = AccountsBySubAccountId.get(subAccountId);
         if (account == null)
             throw new AccountException(
-                    "Account error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
+                    STR."Account error in mapping : subAccountId[\{subAccountId}] no mapped instance");
         return account;
     }
 
@@ -113,7 +113,7 @@ public final class AccountStorage implements Serializable {
     public static Account getAccountByInvestorId(String investorId) throws AccountException {
         var account = AccountsByInvestorId.get(investorId);
         if (account == null)
-            throw new AccountException("Account error in mapping : investorId[" + investorId + "] no mapped instance");
+            throw new AccountException(STR."Account error in mapping : investorId[\{investorId}] no mapped instance");
         return account;
     }
 
@@ -122,7 +122,7 @@ public final class AccountStorage implements Serializable {
         var subAccount = SubAccounts.get(subAccountId);
         if (subAccount == null)
             throw new SubAccount.SubAccountException(
-                    "SubAccount error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
+                    STR."SubAccount error in mapping : subAccountId[\{subAccountId}] no mapped instance");
         return subAccount;
     }
 
