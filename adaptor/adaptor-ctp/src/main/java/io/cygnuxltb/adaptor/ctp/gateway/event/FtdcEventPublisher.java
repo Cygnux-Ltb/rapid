@@ -34,7 +34,7 @@ public final class FtdcEventPublisher {
                         .setRequestId(requestId)
                         .setLast(isLast)
                         .getRspInfo()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -44,7 +44,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(FtdcRspType.DepthMarketData)
                         .getDepthMarketData()
-                        .load(field));
+                        .read(field));
     }
 
 
@@ -57,7 +57,7 @@ public final class FtdcEventPublisher {
                 event.setType(FtdcRspType.Order)
                         .setLast(isLast)
                         .getOrder()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -67,7 +67,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(FtdcRspType.Trade)
                         .getTrade()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -84,7 +84,7 @@ public final class FtdcEventPublisher {
                         .setRequestId(requestId)
                         .setLast(isLast)
                         .getConnectionStatus()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -110,7 +110,7 @@ public final class FtdcEventPublisher {
                         .setRequestId(requestId)
                         .setLast(isLast)
                         .getConnectionStatus()
-                        .load(field));
+                        .read(field));
     }
 
 
@@ -125,7 +125,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(FtdcRspType.InputOrder)
                         .getInputOrder()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -135,7 +135,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(FtdcRspType.InputOrderAction)
                         .getInputOrderAction()
-                        .load(field));
+                        .read(field));
     }
 
     /**
@@ -145,7 +145,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(FtdcRspType.OrderAction)
                         .getOrderAction()
-                        .load(field));
+                        .read(field));
     }
 
 

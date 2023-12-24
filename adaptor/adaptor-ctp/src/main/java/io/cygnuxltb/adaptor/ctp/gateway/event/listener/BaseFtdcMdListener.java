@@ -14,7 +14,6 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcMdListener.class);
 
     protected BaseFtdcMdListener() {
-
     }
 
     /**

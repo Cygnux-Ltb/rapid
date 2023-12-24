@@ -53,7 +53,7 @@ public class FtdcConnectionStatus {
     private String INETime;
 
 
-    public FtdcConnectionStatus load(CThostFtdcRspUserLoginField field) {
+    public FtdcConnectionStatus read(CThostFtdcRspUserLoginField field) {
         return this
                 //交易日, 登录成功时间
                 .setTradingDay(field.getTradingDay())

@@ -153,7 +153,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspAuthenticate Unsupported");
     }
 
-
     /**
      * ///登录请求响应
      *
@@ -167,7 +166,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspUserLogin Unsupported");
     }
-
 
     /**
      * ///登出请求响应
@@ -183,7 +181,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspUserLogout Unsupported");
     }
 
-
     /**
      * ///用户口令更新请求响应
      *
@@ -197,7 +194,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspUserPasswordUpdate Unsupported");
     }
-
 
     /**
      * ///资金账户口令更新请求响应
@@ -213,7 +209,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspTradingAccountPasswordUpdate Unsupported");
     }
 
-
     /**
      * ///查询用户当前支持的认证模式的回复
      *
@@ -227,7 +222,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspUserAuthMethod Unsupported");
     }
-
 
     /**
      * ///获取图形验证码请求的回复
@@ -243,7 +237,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspGenUserCaptcha Unsupported");
     }
 
-
     /**
      * ///获取短信验证码请求的回复
      *
@@ -257,7 +250,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspGenUserText Unsupported");
     }
-
 
     /**
      * ///报单录入请求响应
@@ -273,7 +265,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspOrderInsert Unsupported");
     }
 
-
     /**
      * ///预埋单录入请求响应
      *
@@ -287,7 +278,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspParkedOrderInsert Unsupported");
     }
-
 
     /**
      * ///预埋撤单录入请求响应
@@ -303,7 +293,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspParkedOrderAction Unsupported");
     }
 
-
     /**
      * ///报单操作请求响应
      *
@@ -317,7 +306,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspOrderAction Unsupported");
     }
-
 
     /**
      * ///查询最大报单数量响应
@@ -333,7 +321,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQueryMaxOrderVolume Unsupported");
     }
 
-
     /**
      * ///投资者结算结果确认响应
      *
@@ -347,7 +334,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspSettlementInfoConfirm Unsupported");
     }
-
 
     /**
      * ///删除预埋单响应
@@ -363,7 +349,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspRemoveParkedOrder Unsupported");
     }
 
-
     /**
      * ///删除预埋撤单响应
      *
@@ -377,7 +362,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspRemoveParkedOrderAction Unsupported");
     }
-
 
     /**
      * ///执行宣告录入请求响应
@@ -393,7 +377,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspExecOrderInsert Unsupported");
     }
 
-
     /**
      * ///执行宣告操作请求响应
      *
@@ -407,7 +390,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspExecOrderAction Unsupported");
     }
-
 
     /**
      * ///询价录入请求响应
@@ -423,7 +405,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspForQuoteInsert Unsupported");
     }
 
-
     /**
      * ///报价录入请求响应
      *
@@ -437,7 +418,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQuoteInsert Unsupported");
     }
-
 
     /**
      * ///报价操作请求响应
@@ -453,7 +433,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQuoteAction Unsupported");
     }
 
-
     /**
      * ///批量报单操作请求响应
      *
@@ -467,7 +446,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspBatchOrderAction Unsupported");
     }
-
 
     /**
      * ///期权自对冲录入请求响应
@@ -483,7 +461,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspOptionSelfCloseInsert Unsupported");
     }
 
-
     /**
      * ///期权自对冲操作请求响应
      *
@@ -497,7 +474,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspOptionSelfCloseAction Unsupported");
     }
-
 
     /**
      * ///申请组合录入请求响应
@@ -513,7 +489,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspCombActionInsert Unsupported");
     }
 
-
     /**
      * ///请求查询报单响应
      *
@@ -527,7 +502,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryOrder Unsupported");
     }
-
 
     /**
      * ///请求查询成交响应
@@ -543,7 +517,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryTrade Unsupported");
     }
 
-
     /**
      * ///请求查询投资者持仓响应
      *
@@ -557,7 +530,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInvestorPosition Unsupported");
     }
-
 
     /**
      * ///请求查询资金账户响应
@@ -573,7 +545,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryTradingAccount Unsupported");
     }
 
-
     /**
      * ///请求查询投资者响应
      *
@@ -587,7 +558,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInvestor Unsupported");
     }
-
 
     /**
      * ///请求查询交易编码响应
@@ -603,7 +573,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryTradingCode Unsupported");
     }
 
-
     /**
      * ///请求查询合约保证金率响应
      *
@@ -617,7 +586,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInstrumentMarginRate Unsupported");
     }
-
 
     /**
      * ///请求查询合约手续费率响应
@@ -633,7 +601,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryInstrumentCommissionRate Unsupported");
     }
 
-
     /**
      * ///请求查询交易所响应
      *
@@ -647,7 +614,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryExchange Unsupported");
     }
-
 
     /**
      * ///请求查询产品响应
@@ -663,7 +629,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryProduct Unsupported");
     }
 
-
     /**
      * ///请求查询合约响应
      *
@@ -677,7 +642,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInstrument Unsupported");
     }
-
 
     /**
      * ///请求查询行情响应
@@ -693,7 +657,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryDepthMarketData Unsupported");
     }
 
-
     /**
      * ///请求查询投资者结算结果响应
      *
@@ -707,7 +670,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQrySettlementInfo Unsupported");
     }
-
 
     /**
      * ///请求查询转帐银行响应
@@ -723,7 +685,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryTransferBank Unsupported");
     }
 
-
     /**
      * ///请求查询投资者持仓明细响应
      *
@@ -737,7 +698,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInvestorPositionDetail Unsupported");
     }
-
 
     /**
      * ///请求查询客户通知响应
@@ -753,7 +713,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryNotice Unsupported");
     }
 
-
     /**
      * ///请求查询结算信息确认响应
      *
@@ -767,7 +726,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQrySettlementInfoConfirm Unsupported");
     }
-
 
     /**
      * ///请求查询投资者持仓明细响应
@@ -783,7 +741,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryInvestorPositionCombineDetail Unsupported");
     }
 
-
     /**
      * ///查询保证金监管系统经纪公司资金账户密钥响应
      *
@@ -797,7 +754,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryCFMMCTradingAccountKey Unsupported");
     }
-
 
     /**
      * ///请求查询仓单折抵信息响应
@@ -813,7 +769,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryEWarrantOffset Unsupported");
     }
 
-
     /**
      * ///请求查询投资者品种/跨品种保证金响应
      *
@@ -827,7 +782,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryInvestorProductGroupMargin Unsupported");
     }
-
 
     /**
      * ///请求查询交易所保证金率响应
@@ -843,7 +797,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryExchangeMarginRate Unsupported");
     }
 
-
     /**
      * ///请求查询交易所调整保证金率响应
      *
@@ -857,7 +810,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryExchangeMarginRateAdjust Unsupported");
     }
-
 
     /**
      * ///请求查询汇率响应
@@ -873,7 +825,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryExchangeRate Unsupported");
     }
 
-
     /**
      * ///请求查询二级代理操作员银期权限响应
      *
@@ -887,7 +838,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQrySecAgentACIDMap Unsupported");
     }
-
 
     /**
      * ///请求查询产品报价汇率
@@ -903,7 +853,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryProductExchRate Unsupported");
     }
 
-
     /**
      * ///请求查询产品组
      *
@@ -917,7 +866,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryProductGroup Unsupported");
     }
-
 
     /**
      * ///请求查询做市商合约手续费率响应
@@ -933,7 +881,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryMMInstrumentCommissionRate Unsupported");
     }
 
-
     /**
      * ///请求查询做市商期权合约手续费响应
      *
@@ -947,7 +894,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryMMOptionInstrCommRate Unsupported");
     }
-
 
     /**
      * ///请求查询报单手续费响应
@@ -963,7 +909,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryInstrumentOrderCommRate Unsupported");
     }
 
-
     /**
      * ///请求查询资金账户响应
      *
@@ -977,7 +922,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQrySecAgentTradingAccount Unsupported");
     }
-
 
     /**
      * ///请求查询二级代理商资金校验模式响应
@@ -993,7 +937,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQrySecAgentCheckMode Unsupported");
     }
 
-
     /**
      * ///请求查询二级代理商信息响应
      *
@@ -1007,7 +950,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                             CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQrySecAgentTradeInfo Unsupported");
     }
-
 
     /**
      * ///请求查询期权交易成本响应
@@ -1023,7 +965,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryOptionInstrTradeCost Unsupported");
     }
 
-
     /**
      * ///请求查询期权合约手续费响应
      *
@@ -1037,7 +978,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryOptionInstrCommRate Unsupported");
     }
-
 
     /**
      * ///请求查询执行宣告响应
@@ -1053,7 +993,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryExecOrder Unsupported");
     }
 
-
     /**
      * ///请求查询询价响应
      *
@@ -1067,7 +1006,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryForQuote Unsupported");
     }
-
 
     /**
      * ///请求查询报价响应
@@ -1083,7 +1021,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryQuote Unsupported");
     }
 
-
     /**
      * ///请求查询期权自对冲响应
      *
@@ -1097,7 +1034,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryOptionSelfClose Unsupported");
     }
-
 
     /**
      * ///请求查询投资单元响应
@@ -1113,7 +1049,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryInvestUnit Unsupported");
     }
 
-
     /**
      * ///请求查询组合合约安全系数响应
      *
@@ -1127,7 +1062,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryCombInstrumentGuard Unsupported");
     }
-
 
     /**
      * ///请求查询申请组合响应
@@ -1143,7 +1077,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryCombAction Unsupported");
     }
 
-
     /**
      * ///请求查询转帐流水响应
      *
@@ -1157,7 +1090,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryTransferSerial Unsupported");
     }
-
 
     /**
      * ///请求查询银期签约关系响应
@@ -1173,7 +1105,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryAccountregister Unsupported");
     }
 
-
     /**
      * ///错误应答
      *
@@ -1186,7 +1117,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspError Unsupported");
     }
 
-
     /**
      * ///报单通知 ***
      *
@@ -1197,7 +1127,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnOrder Unsupported");
     }
 
-
     /**
      * ///成交通知 ***
      *
@@ -1207,7 +1136,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnTrade(CThostFtdcTradeField Trade) {
         log.warn("TraderSpi::fireRtnTrade Unsupported");
     }
-
 
     /**
      * ///报单录入错误回报
@@ -1221,7 +1149,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnOrderInsert Unsupported");
     }
 
-
     /**
      * ///报单操作错误回报
      *
@@ -1234,7 +1161,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnOrderAction Unsupported");
     }
 
-
     /**
      * ///合约交易状态通知
      *
@@ -1244,7 +1170,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
         log.warn("TraderSpi::fireRtnInstrumentStatus Unsupported");
     }
-
 
     /**
      * ///交易所公告通知
@@ -1256,7 +1181,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnBulletin Unsupported");
     }
 
-
     /**
      * ///交易通知
      *
@@ -1266,7 +1190,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnTradingNotice(CThostFtdcTradingNoticeInfoField Field) {
         log.warn("TraderSpi::fireRtnTradingNotice Unsupported");
     }
-
 
     /**
      * ///提示条件单校验错误
@@ -1278,7 +1201,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnErrorConditionalOrder Unsupported");
     }
 
-
     /**
      * ///执行宣告通知
      *
@@ -1288,7 +1210,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnExecOrder(CThostFtdcExecOrderField Field) {
         log.warn("TraderSpi::fireRtnExecOrder Unsupported");
     }
-
 
     /**
      * ///执行宣告录入错误回报
@@ -1302,7 +1223,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnExecOrderInsert Unsupported");
     }
 
-
     /**
      * ///执行宣告操作错误回报
      *
@@ -1314,7 +1234,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                           CThostFtdcRspInfoField RspInfo) {
         log.warn("TraderSpi::fireErrRtnExecOrderAction Unsupported");
     }
-
 
     /**
      * ///询价录入错误回报
@@ -1328,7 +1247,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnForQuoteInsert Unsupported");
     }
 
-
     /**
      * ///报价通知
      *
@@ -1338,7 +1256,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnQuote(CThostFtdcQuoteField Field) {
         log.warn("TraderSpi::fireRtnQuote Unsupported");
     }
-
 
     /**
      * ///报价录入错误回报
@@ -1352,7 +1269,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnQuoteInsert Unsupported");
     }
 
-
     /**
      * ///报价操作错误回报
      *
@@ -1365,7 +1281,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnQuoteAction Unsupported");
     }
 
-
     /**
      * ///询价通知
      *
@@ -1376,7 +1291,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnForQuoteRsp Unsupported");
     }
 
-
     /**
      * ///保证金监控中心用户令牌
      *
@@ -1386,7 +1300,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnCFMMCTradingAccountToken(CThostFtdcCFMMCTradingAccountTokenField Field) {
         log.warn("TraderSpi::fireRtnCFMMCTradingAccountToken Unsupported");
     }
-
 
     /**
      * ///批量报单操作错误回报
@@ -1400,7 +1313,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnBatchOrderAction Unsupported");
     }
 
-
     /**
      * ///期权自对冲通知
      *
@@ -1410,7 +1322,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnOptionSelfClose(CThostFtdcOptionSelfCloseField Field) {
         log.warn("TraderSpi::fireRtnOptionSelfClose Unsupported");
     }
-
 
     /**
      * ///期权自对冲录入错误回报
@@ -1424,7 +1335,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnOptionSelfCloseInsert Unsupported");
     }
 
-
     /**
      * ///期权自对冲操作错误回报
      *
@@ -1437,7 +1347,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnOptionSelfCloseAction Unsupported");
     }
 
-
     /**
      * ///申请组合通知
      *
@@ -1447,7 +1356,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnCombAction(CThostFtdcCombActionField Field) {
         log.warn("TraderSpi::fireRtnCombAction Unsupported");
     }
-
 
     /**
      * ///申请组合录入错误回报
@@ -1460,7 +1368,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                            CThostFtdcRspInfoField RspInfo) {
         log.warn("TraderSpi::fireErrRtnCombActionInsert Unsupported");
     }
-
 
     /**
      * ///请求查询签约银行响应
@@ -1476,7 +1383,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryContractBank Unsupported");
     }
 
-
     /**
      * ///请求查询预埋单响应
      *
@@ -1490,7 +1396,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryParkedOrder Unsupported");
     }
-
 
     /**
      * ///请求查询预埋撤单响应
@@ -1506,7 +1411,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryParkedOrderAction Unsupported");
     }
 
-
     /**
      * ///请求查询交易通知响应
      *
@@ -1520,7 +1424,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                         CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryTradingNotice Unsupported");
     }
-
 
     /**
      * ///请求查询经纪公司交易参数响应
@@ -1536,7 +1439,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQryBrokerTradingParams Unsupported");
     }
 
-
     /**
      * ///请求查询经纪公司交易算法响应
      *
@@ -1550,7 +1452,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspQryBrokerTradingAlgos Unsupported");
     }
-
 
     /**
      * ///请求查询监控中心用户令牌
@@ -1566,7 +1467,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQueryCFMMCTradingAccountToken Unsupported");
     }
 
-
     /**
      * ///银行发起银行资金转期货通知
      *
@@ -1576,7 +1476,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnFromBankToFutureByBank(CThostFtdcRspTransferField Field) {
         log.warn("TraderSpi::fireRtnFromBankToFutureByBank Unsupported");
     }
-
 
     /**
      * ///银行发起期货资金转银行通知
@@ -1588,7 +1487,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnFromFutureToBankByBank Unsupported");
     }
 
-
     /**
      * ///银行发起冲正银行转期货通知
      *
@@ -1598,7 +1496,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField Field) {
         log.warn("TraderSpi::fireRtnRepealFromBankToFutureByBank Unsupported");
     }
-
 
     /**
      * ///银行发起冲正期货转银行通知
@@ -1610,7 +1507,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnRepealFromFutureToBankByBank Unsupported");
     }
 
-
     /**
      * ///期货发起银行资金转期货通知
      *
@@ -1620,7 +1516,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnFromBankToFutureByFuture(CThostFtdcRspTransferField Field) {
         log.warn("TraderSpi::fireRtnFromBankToFutureByFuture Unsupported");
     }
-
 
     /**
      * ///期货发起期货资金转银行通知
@@ -1632,7 +1527,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnFromFutureToBankByFuture Unsupported");
     }
 
-
     /**
      * ///系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
@@ -1642,7 +1536,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField Field) {
         log.warn("TraderSpi::fireRtnRepealFromBankToFutureByFutureManual Unsupported");
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
@@ -1654,7 +1547,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnRepealFromFutureToBankByFutureManual Unsupported");
     }
 
-
     /**
      * ///期货发起查询银行余额通知
      *
@@ -1664,7 +1556,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField Field) {
         log.warn("TraderSpi::fireRtnQueryBankBalanceByFuture Unsupported");
     }
-
 
     /**
      * ///期货发起银行资金转期货错误回报
@@ -1678,7 +1569,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnBankToFutureByFuture Unsupported");
     }
 
-
     /**
      * ///期货发起期货资金转银行错误回报
      *
@@ -1690,7 +1580,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                CThostFtdcRspInfoField RspInfo) {
         log.warn("TraderSpi::fireErrRtnFutureToBankByFuture Unsupported");
     }
-
 
     /**
      * ///系统运行时期货端手工发起冲正银行转期货错误回报
@@ -1704,7 +1593,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnRepealBankToFutureByFutureManual Unsupported");
     }
 
-
     /**
      * ///系统运行时期货端手工发起冲正期货转银行错误回报
      *
@@ -1716,7 +1604,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                            CThostFtdcRspInfoField RspInfo) {
         log.warn("TraderSpi::fireErrRtnRepealFutureToBankByFutureManual Unsupported");
     }
-
 
     /**
      * ///期货发起查询银行余额错误回报
@@ -1730,7 +1617,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireErrRtnQueryBankBalanceByFuture Unsupported");
     }
 
-
     /**
      * ///期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
@@ -1741,7 +1627,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnRepealFromBankToFutureByFuture Unsupported");
     }
 
-
     /**
      * ///期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
      *
@@ -1751,7 +1636,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField Field) {
         log.warn("TraderSpi::fireRtnRepealFromFutureToBankByFuture Unsupported");
     }
-
 
     /**
      * ///期货发起银行资金转期货应答
@@ -1767,7 +1651,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspFromBankToFutureByFuture Unsupported");
     }
 
-
     /**
      * ///期货发起期货资金转银行应答
      *
@@ -1781,7 +1664,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderSpi::fireRspFromFutureToBankByFuture Unsupported");
     }
-
 
     /**
      * ///期货发起查询银行余额应答
@@ -1797,7 +1679,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRspQueryBankAccountMoneyByFuture Unsupported");
     }
 
-
     /**
      * ///银行发起银期开户通知
      *
@@ -1808,7 +1689,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
         log.warn("TraderSpi::fireRtnOpenAccountByBank Unsupported");
     }
 
-
     /**
      * ///银行发起银期销户通知
      *
@@ -1818,7 +1698,6 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     public void fireRtnCancelAccountByBank(CThostFtdcCancelAccountField Field) {
         log.warn("TraderSpi::fireRtnCancelAccountByBank Unsupported");
     }
-
 
     /**
      * ///银行发起变更银行账号通知

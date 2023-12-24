@@ -16,7 +16,7 @@ public class FtdcRspInfo {
     /// 错误信息
     private String ErrorMsg;
 
-    public FtdcRspInfo load(CThostFtdcRspInfoField field) {
+    public FtdcRspInfo read(CThostFtdcRspInfoField field) {
         return this
                 .setErrorID(field.getErrorID())
                 .setErrorMsg(field.getErrorMsg());

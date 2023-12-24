@@ -58,7 +58,7 @@ public class CtpGatewayTest {
                                     depthMarketData.getBidPrice1());
                         }
                         case Order -> {
-                            FtdcOrder order = msg.getoOrder();
+                            FtdcOrder order = msg.getOrder();
                             log.info("Handle RtnOrder -> OrderRef==[{}]", order.getOrderRef());
                         }
                         case Trade -> {

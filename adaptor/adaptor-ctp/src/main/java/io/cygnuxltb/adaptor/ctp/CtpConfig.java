@@ -137,22 +137,22 @@ public class CtpConfig {
     }
 
     public CThostFtdcReqAuthenticateField getReqAuthenticateField() {
-        CThostFtdcReqAuthenticateField ReqField = new CThostFtdcReqAuthenticateField();
-        ReqField.setAppID(this.getAppId());
-        ReqField.setUserID(this.getUserId());
-        ReqField.setBrokerID(this.getBrokerId());
-        ReqField.setAuthCode(this.getAuthCode());
-        return ReqField;
+        CThostFtdcReqAuthenticateField Field = new CThostFtdcReqAuthenticateField();
+        Field.setAppID(this.getAppId());
+        Field.setUserID(this.getUserId());
+        Field.setBrokerID(this.getBrokerId());
+        Field.setAuthCode(this.getAuthCode());
+        return Field;
     }
 
     public CThostFtdcReqUserLoginField getReqUserLoginField() {
-        CThostFtdcReqUserLoginField ReqField = new CThostFtdcReqUserLoginField();
-        ReqField.setBrokerID(this.getBrokerId());
-        ReqField.setUserID(this.getUserId());
-        ReqField.setPassword(this.getPassword());
-        ReqField.setClientIPAddress(this.getIpAddr());
-        ReqField.setMacAddress(this.getMacAddr());
-        return ReqField;
+        CThostFtdcReqUserLoginField Field = new CThostFtdcReqUserLoginField();
+        Field.setBrokerID(this.getBrokerId());
+        Field.setUserID(this.getUserId());
+        Field.setPassword(this.getPassword());
+        Field.setClientIPAddress(this.getIpAddr());
+        Field.setMacAddress(this.getMacAddr());
+        return Field;
     }
-    
+
 }

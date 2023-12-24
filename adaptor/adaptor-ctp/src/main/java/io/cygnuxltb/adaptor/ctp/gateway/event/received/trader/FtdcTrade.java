@@ -104,7 +104,7 @@ public final class FtdcTrade {
     private String InvestUnitID;
 
 
-    public FtdcTrade load(CThostFtdcTradeField field) {
+    public FtdcTrade read(CThostFtdcTradeField field) {
         return this
                 .setBrokerID(field.getBrokerID())
 

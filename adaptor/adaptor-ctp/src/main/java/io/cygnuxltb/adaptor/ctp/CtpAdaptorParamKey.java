@@ -88,7 +88,7 @@ public enum CtpAdaptorParamKey implements ParamKey, ConfigOption {
 
     CtpAdaptorParamKey(String paramName) {
         this.paramName = paramName;
-        this.configName = "ctp." + paramName;
+        this.configName = STR."ctp.\{paramName}";
     }
 
     @Override
@@ -113,7 +113,7 @@ public enum CtpAdaptorParamKey implements ParamKey, ConfigOption {
 
     public static void main(String[] args) {
         for (CtpAdaptorParamKey key : CtpAdaptorParamKey.values())
-            System.out.println(key.getConfigName() + "=");
+            System.out.println(STR."\{key.getConfigName()}=");
     }
 
 }

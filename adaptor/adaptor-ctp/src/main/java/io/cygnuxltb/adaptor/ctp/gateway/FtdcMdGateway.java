@@ -71,7 +71,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public FtdcMdGateway(CtpConfig config, FtdcEventPublisher publisher) {
         this.config = nonNull(config, "config");
         this.publisher = nonNull(publisher, "publisher");
-        this.gatewayId = "GATEWAY-MD-" + config.getBrokerId() + "-" + config.getInvestorId();
+        this.gatewayId = STR."GATEWAY-MD-\{config.getBrokerId()}-\{config.getInvestorId()}";
     }
 
     /**
@@ -81,7 +81,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
         if (isInitialize.compareAndSet(false, true)) {
             log.info("CThostFtdcMdApi.GetApiVersion() -> {}", CThostFtdcMdApi.GetApiVersion());
             try {
-                startNewMaxPriorityThread(gatewayId + "-Thread", this::initAndJoin);
+                startNewMaxPriorityThread(STR."\{gatewayId}-Thread", this::initAndJoin);
             } catch (Exception e) {
                 log.error("FtdcMdGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
                 isInitialize.set(false);
@@ -92,7 +92,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
 
     private void initAndJoin() {
         // 创建CTP数据文件临时目录
-        var tempDir = FileUtil.mkdirInTmp(gatewayId + "-" + date());
+        var tempDir = FileUtil.mkdirInTmp(STR."\{gatewayId}-\{date()}");
         log.info("{} -> use md tempDir: {}", gatewayId, tempDir.getAbsolutePath());
         // 指定md临时文件地址
         var tempFile = new File(tempDir, "md").getAbsolutePath();
@@ -185,7 +185,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspUserLogin");
-        if (nonError("FtdcMdSpi::OnRspUserLogin", RspInfo)) {
+        if (nonError(RspInfo)) {
             if (RspUserLogin != null) {
                 log.info("FtdcMdGateway::fireRspUserLogin -> FrontID==[{}], SessionID==[{}], TradingDay==[{}]",
                         RspUserLogin.getFrontID(), RspUserLogin.getSessionID(), RspUserLogin.getTradingDay());
@@ -200,7 +200,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspUserLogout(CThostFtdcUserLogoutField UserLogout,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspUserLogout");
-        if (nonError("FtdcMdSpi::OnRspUserLogout", RspInfo)) {
+        if (nonError(RspInfo)) {
             if (UserLogout != null) {
                 // TODO 处理用户登出
                 log.info("FtdcMdGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
@@ -231,7 +231,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspSubMarketData");
-        if (nonError("FtdcMdSpi::OnRspSubMarketData", RspInfo)) {
+        if (nonError(RspInfo)) {
             if (SpecificInstrument != null) {
                 log.info("FtdcMdGateway::fireRspSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
                         RequestID, IsLast, SpecificInstrument.getInstrumentID());
@@ -274,6 +274,6 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
 
     @Override
     public String toString() {
-        return "FtdcMdGateway{gatewayId='" + gatewayId + "'}";
+        return gatewayId;
     }
 }

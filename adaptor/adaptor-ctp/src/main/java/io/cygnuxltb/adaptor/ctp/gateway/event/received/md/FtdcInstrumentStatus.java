@@ -58,7 +58,7 @@ public class FtdcInstrumentStatus {
      */
     private char EnterReason;
 
-    public FtdcInstrumentStatus load(CThostFtdcInstrumentStatusField field) {
+    public FtdcInstrumentStatus read(CThostFtdcInstrumentStatusField field) {
         return this
                 // 交易所代码, 合约在交易所的代码, 结算组代码, 合约代码
                 .setExchangeID(field.getExchangeID())
