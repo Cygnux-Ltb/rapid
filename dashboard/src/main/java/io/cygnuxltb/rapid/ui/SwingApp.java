@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
 
 public class SwingApp extends JFrame {
 
-    private JButton startButton;
-    private JButton stopButton;
-    private JButton disconnectButton;
-
     public SwingApp() {
         // 设置窗口标题
         super("Swing App");
@@ -25,9 +21,9 @@ public class SwingApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // 创建按钮
-        startButton = new JButton("Start");
-        stopButton = new JButton("Stop");
-        disconnectButton = new JButton("Disconnect");
+        JButton startButton = new JButton("Start");
+        JButton stopButton = new JButton("Stop");
+        JButton disconnectButton = new JButton("Disconnect");
 
         // 设置按钮的监听器
         startButton.addActionListener(new ActionListener() {

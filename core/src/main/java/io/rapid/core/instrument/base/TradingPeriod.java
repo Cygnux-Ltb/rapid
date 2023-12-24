@@ -30,6 +30,10 @@ public final class TradablePeriod implements Serial<TradablePeriod> {
 
     private final Duration duration;
 
+    // 全天交易
+    public static TradablePeriod TRADING_ALL_DAY = new TradablePeriod(0,
+            LocalTime.of(0, 0, 0), LocalTime.of(0, 0, 0));
+
     public TradablePeriod(int serialId, LocalTime start, LocalTime end) {
         nonNull(start, "start");
         nonNull(end, "end");
