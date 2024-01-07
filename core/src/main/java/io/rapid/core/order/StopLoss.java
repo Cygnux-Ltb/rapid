@@ -1,8 +1,8 @@
 package io.rapid.core.order;
 
+import io.mercury.common.sequence.SerialObj;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.enums.TrdDirection;
-import io.mercury.common.sequence.SerialObj;
 
 public class StopLoss implements SerialObj<StopLoss> {
 
@@ -66,7 +66,7 @@ public class StopLoss implements SerialObj<StopLoss> {
         return ordSysId;
     }
 
-        public final boolean isStopLoss(FastMarketData marketData) {
+    public final boolean isStopLoss(FastMarketData marketData) {
         return switch (direction) {
             case Long -> stopPrice < marketData.getAskPrice1();
             case Short -> stopPrice > marketData.getBidPrice1();

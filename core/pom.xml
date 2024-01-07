@@ -22,6 +22,8 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <compilerArgument>--enable-preview</compilerArgument>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>

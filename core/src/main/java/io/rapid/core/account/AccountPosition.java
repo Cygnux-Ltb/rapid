@@ -3,11 +3,12 @@ package io.rapid.core.account;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.position.Position;
 import io.rapid.core.position.PositionProducer;
-import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
 
 /**
  * 管理一个实际账户的持仓集合
@@ -24,7 +25,7 @@ public final class AccountPosition<P extends Position> {
     /**
      * Map<instrumentId, Position>
      */
-    private final MutableIntObjectMap<P> positionMap = MutableMaps.newIntObjectHashMap();
+    private final MutableIntObjectMap<P> positionMap = newIntObjectHashMap();
 
     /**
      * 仓位对象生产者

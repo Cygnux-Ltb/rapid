@@ -1,12 +1,8 @@
 package io.rapid.core.account;
 
-import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.lang.Asserter;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.account.Account.AccountException;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
-import org.eclipse.collections.impl.collector.Collectors2;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -15,6 +11,12 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
+
+import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
+import static io.mercury.common.lang.Asserter.requiredLength;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+import static org.eclipse.collections.impl.collector.Collectors2.toSet;
 
 /**
  * 用于全局管理Account
@@ -28,19 +30,19 @@ public final class AccountStorage implements Serializable {
     private static final long serialVersionUID = -6883109944757142986L;
 
     // logger
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountStorage.class);
+    private static final Logger log = getLogger(AccountStorage.class);
 
     // 存储Account信息, 一对一关系, 以accountId索引
-    private static final MutableIntObjectMap<Account> Accounts = MutableMaps.newIntObjectHashMap();
+    private static final MutableIntObjectMap<Account> Accounts = newIntObjectHashMap();
 
     // 存储Account信息, 一对一关系, 以investorId索引
-    private static final MutableMap<String, Account> AccountsByInvestorId = MutableMaps.newUnifiedMap();
+    private static final MutableMap<String, Account> AccountsByInvestorId = newUnifiedMap();
 
     // 存储Account信息, 多对一关系, 以subAccountId索引
-    private static final MutableIntObjectMap<Account> AccountsBySubAccountId = MutableMaps.newIntObjectHashMap();
+    private static final MutableIntObjectMap<Account> AccountsBySubAccountId = newIntObjectHashMap();
 
     // 存储SubAccount信息, 一对一关系, 以subAccountId索引
-    private static final MutableIntObjectMap<SubAccount> SubAccounts = MutableMaps.newIntObjectHashMap();
+    private static final MutableIntObjectMap<SubAccount> SubAccounts = newIntObjectHashMap();
 
     // 初始化标识
     @Deprecated
@@ -53,11 +55,11 @@ public final class AccountStorage implements Serializable {
     public static void initialize(@Nonnull SubAccount... subAccounts) throws IllegalStateException {
         if (isInitialized.compareAndSet(false, true)) {
             try {
-                Asserter.requiredLength(subAccounts, 1, "subAccounts");
+                requiredLength(subAccounts, 1, "subAccounts");
                 // 建立subAccount相关索引
-                Stream.of(subAccounts).collect(Collectors2.toSet()).each(AccountStorage::putSubAccount);
+                Stream.of(subAccounts).collect(toSet()).each(AccountStorage::putSubAccount);
                 // 建立account相关索引
-                Stream.of(subAccounts).map(SubAccount::getAccount).collect(Collectors2.toSet())
+                Stream.of(subAccounts).map(SubAccount::getAccount).collect(toSet())
                         .each(AccountStorage::putAccount);
             } catch (Exception e) {
                 isInitialized.set(false);

@@ -1,11 +1,10 @@
 package io.rapid.core.instrument;
 
-import io.rapid.core.instrument.futures.ChinaFutures;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonWrapper;
+import io.rapid.core.instrument.futures.ChinaFutures;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -17,6 +16,8 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+
 /**
  * 管理全局Instrument状态
  *
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
 public final class InstrumentKeeper {
 
     // Logger
-    private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentKeeper.class);
+    private static final Logger log = getLogger(InstrumentKeeper.class);
 
     /**
      * 存储instrument, 以instrumentId索引

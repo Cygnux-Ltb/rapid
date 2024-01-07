@@ -9,13 +9,13 @@ import javax.annotation.concurrent.NotThreadSafe;
 import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
 
 @NotThreadSafe
-public abstract class AbstractPositionManager<P extends Position> implements PositionManager<P> {
+public abstract class BasePositionManager<P extends Position> implements PositionManager<P> {
 
     private final MutableIntObjectMap<AccountPosition<P>> accountPositionMap = newIntObjectHashMap();
 
     private final PositionProducer<P> producer;
 
-    protected AbstractPositionManager(@Nonnull PositionProducer<P> producer) {
+    protected BasePositionManager(@Nonnull PositionProducer<P> producer) {
         this.producer = producer;
     }
 

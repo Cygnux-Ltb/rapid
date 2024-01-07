@@ -1,10 +1,11 @@
 package io.rapid.core.handler;
 
 import io.rapid.core.mkd.FastMarketData;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 @FunctionalInterface
 public interface MarketDataHandler {
@@ -21,7 +22,7 @@ public interface MarketDataHandler {
         private final Logger log;
 
         public MarketDataLogger(Logger log) {
-            this.log = log == null ? Log4j2LoggerFactory.getLogger(getClass()) : log;
+            this.log = log == null ? getLogger(getClass()) : log;
         }
 
         @Override

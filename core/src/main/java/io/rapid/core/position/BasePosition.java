@@ -10,7 +10,7 @@ import java.io.Serial;
  *
  * @author yellow013
  */
-public abstract class AbstractPosition implements Position {
+public abstract class BasePosition implements Position {
 
     @Serial
     private static final long serialVersionUID = 7464979857942714749L;
@@ -21,12 +21,12 @@ public abstract class AbstractPosition implements Position {
 
     private int currentQty;
 
-    protected AbstractPosition(int accountId, Instrument instrument) {
+    protected BasePosition(int accountId, Instrument instrument) {
         this.accountId = accountId;
         this.instrument = instrument;
     }
 
-    protected AbstractPosition(int accountId, Instrument instrument, int currentQty) {
+    protected BasePosition(int accountId, Instrument instrument, int currentQty) {
         this.accountId = accountId;
         this.instrument = instrument;
         this.currentQty = currentQty;

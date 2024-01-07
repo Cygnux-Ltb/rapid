@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.io.Serial;
 
-import static io.rapid.core.account.SubAccount.ExternalOrderSubAccount;
 import static io.mercury.common.collections.MutableLists.newFastList;
+import static io.rapid.core.account.SubAccount.ExternalOrderSubAccount;
 
 /**
  * 实际执行订单的最小执行单元, 不可再进行拆分, 可能根据合规, 账户情况等由ParentOrder拆分出多个ChildOrder
@@ -63,19 +63,13 @@ public class ChildOrder extends AbstractOrder {
      * @param action       交易动作
      */
     protected ChildOrder(
-            // 订单唯一ID
-            // 策略ID
+            // 订单唯一ID, 策略ID
             long ordSysId, int strategyId,
-            // 子账户ID
-            // 账户ID
-            // 交易标的
+            // 子账户ID, 账户ID, 交易标的
             int subAccountId, int accountId, @Nonnull Instrument instrument,
-            // 数量
-            // 价格
+            // 数量, 价格
             @Nonnull OrdQty qty, @Nonnull OrdPrice price,
-            // 订单类型
-            // 交易方向
-            // 交易动作
+            // 订单类型, 交易方向, 交易动作
             @Nonnull OrdType type, @Nonnull TrdDirection direction, @Nonnull TrdAction action) {
         super(ordSysId, strategyId, subAccountId, accountId, instrument, qty, price, type, direction);
         this.action = action;

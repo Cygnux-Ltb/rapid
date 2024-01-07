@@ -15,11 +15,29 @@ public interface Position extends Comparable<Position>, Serializable {
     int getAccountId();
 
     /**
-     * 获取Instrument
+     * 获取[Instrument]
      *
      * @return Instrument
      */
     Instrument getInstrument();
+
+    /**
+     * 获取[Instrument ID]
+     *
+     * @return int
+     */
+    default int getInstrumentId() {
+        return getInstrument().getInstrumentId();
+    }
+
+    /**
+     * 获取[Instrument Code]
+     *
+     * @return String
+     */
+    default String getInstrumentCode() {
+        return getInstrument().getInstrumentCode();
+    }
 
     /**
      * 获取当前仓位

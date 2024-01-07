@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+
 /**
  * Logger implements AdaptorEventHandler
  *
@@ -17,7 +19,7 @@ public class AdaptorEventLogger implements AdaptorEventHandler {
     private final Logger log;
 
     public AdaptorEventLogger(Logger log) {
-        this.log = log == null ? Log4j2LoggerFactory.getLogger(getClass()) : log;
+        this.log = log == null ? getLogger(getClass()) : log;
     }
 
     @Override

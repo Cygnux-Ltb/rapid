@@ -1,22 +1,23 @@
 package io.rapid.core.indicator.base;
 
+import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.Capacity;
 import io.rapid.core.indicator.Indicator;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.Point;
 import io.rapid.core.indicator.PointSet;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
-import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.collections.Capacity;
-import io.mercury.common.collections.MutableLists;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
+
+import static io.mercury.common.collections.MutableLists.newFastList;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 public abstract class BaseIndicator<P extends BasePoint & Point,
         E extends IndicatorEvent> implements Indicator<P, E> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseIndicator.class);
+    private static final Logger log = getLogger(BaseIndicator.class);
 
     /**
      * 指标对应的标的
@@ -46,7 +47,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point,
     /**
      * 存储事件的集合
      */
-    protected MutableList<E> events = MutableLists.newFastList(8);
+    protected MutableList<E> events = newFastList(8);
 
     protected BaseIndicator(Instrument instrument) {
         this(instrument, Capacity.L08_SIZE);
