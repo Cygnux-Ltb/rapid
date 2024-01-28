@@ -2,10 +2,9 @@ package io.cygnuxltb.console.service;
 
 import com.github.jsonzou.jmockdata.JMockData;
 import io.cygnuxltb.console.SysConfiguration;
-import io.cygnuxltb.protocol.http.response.PositionsDTO;
-import io.cygnuxltb.protocol.http.response.PositionsDTO.Position;
+import io.cygnuxltb.protocol.http.response.dto.PositionsDTO;
+import io.cygnuxltb.protocol.http.response.dto.PositionsDTO.Position;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +15,10 @@ public final class PositionService {
     @Resource
     private SysConfiguration configuration;
 
+    /**
+     * @param userId int
+     * @return PositionsDTO
+     */
     public PositionsDTO getPosition(int userId) {
         // TODO IS MOCK
         var positions = new ArrayList<Position>();

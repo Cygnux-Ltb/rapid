@@ -7,9 +7,8 @@ import io.cygnuxltb.console.persistence.entity.MkdInstrumentEntity;
 import io.cygnuxltb.console.persistence.entity.MkdInstrumentSettlementEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
-import io.cygnuxltb.protocol.http.response.InstrumentDTO;
-import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
-import io.mercury.common.collections.MutableMaps;
+import io.cygnuxltb.protocol.http.response.dto.InstrumentDTO;
+import io.cygnuxltb.protocol.http.response.dto.InstrumentSettlementDTO;
 import io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesSymbol;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -23,6 +22,7 @@ import java.util.stream.Stream;
 
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
+import static io.mercury.common.collections.MutableMaps.newConcurrentHashMap;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
@@ -40,7 +40,7 @@ public final class InstrumentService {
     /**
      * LastPrices Cache
      */
-    private final ConcurrentMutableMap<String, InstrumentPrice> cacheMap = MutableMaps.newConcurrentHashMap();
+    private final ConcurrentMutableMap<String, InstrumentPrice> cacheMap = newConcurrentHashMap();
 
     @PostConstruct
     private void init() {
@@ -58,6 +58,9 @@ public final class InstrumentService {
         return cacheMap.putIfAbsent(instrumentCode, new InstrumentPrice(instrumentCode));
     }
 
+    /**
+     * @return List<InstrumentDTO>
+     */
     public List<InstrumentDTO> getAllInstrument() {
         return select(MkdInstrumentEntity.class,
                 () -> dao.findAll())
@@ -69,7 +72,7 @@ public final class InstrumentService {
 
     /**
      * @param instrumentCode String
-     * @return List<InstrumentEntity>
+     * @return List<InstrumentDTO>
      */
     public List<InstrumentDTO> getInstrument(@Nonnull String instrumentCode) {
         if (isMock) {
@@ -90,10 +93,9 @@ public final class InstrumentService {
     /**
      * @param tradingDay     int
      * @param instrumentCode String
-     * @return List<InstrumentSettlementEntity>
+     * @return List<InstrumentSettlementDTO>
      */
-    public List<InstrumentSettlementDTO> getInstrumentSettlement(
-            int tradingDay, @Nonnull String instrumentCode) {
+    public List<InstrumentSettlementDTO> getInstrumentSettlement(int tradingDay, @Nonnull String instrumentCode) {
         if (isMock) {
             var list = new ArrayList<InstrumentSettlementDTO>();
             list.add(JMockData.mock(InstrumentSettlementDTO.class));
@@ -121,7 +123,7 @@ public final class InstrumentService {
 
 
     /**
-     * @param entity InstrumentEntity
+     * @param entity MkdInstrumentEntity
      * @return boolean
      */
     public boolean putInstrument(@Nonnull MkdInstrumentEntity entity) {
@@ -130,7 +132,7 @@ public final class InstrumentService {
 
 
     /**
-     * @param entities List<TblMkdInstrument>
+     * @param entities List<MkdInstrumentEntity>
      * @return boolean
      */
     public boolean putInstrument(@Nonnull List<MkdInstrumentEntity> entities) {
@@ -138,7 +140,7 @@ public final class InstrumentService {
     }
 
     /**
-     * @param entity InstrumentSettlementEntity
+     * @param entity MkdInstrumentSettlementEntity
      * @return boolean
      */
     public boolean putInstrumentSettlement(@Nonnull MkdInstrumentSettlementEntity entity) {

@@ -46,7 +46,7 @@ curl -X GET -i /portfolio?userId=0&portfolio=
 }
 ```
 
-## 获取用户第一投资组合 (左侧优先股票池)
+## 获取用户第一投资组合 ([page2.jpg]左侧优先股票池)
 
 **URL:** `/portfolio/first`
 
@@ -55,7 +55,7 @@ curl -X GET -i /portfolio?userId=0&portfolio=
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 获取用户第一投资组合 (左侧优先股票池)
+**Description:** 获取用户第一投资组合 ([page2.jpg]左侧优先股票池)
 
 
 
@@ -77,20 +77,31 @@ curl -X GET -i /portfolio/first?userId=0
 |-------|------|-------------|-------|
 |userId|int32|用户ID|-|
 |portfolioName|string|投资组合(股票池/目标池)名称|-|
-|instrumentCodes|array|交易标的(股票/期货)列表|-|
+|targetList|array|目标池股票列表|-|
+|└─instrumentCode|string|标的代码|-|
+|└─instrumentName|string|标的名称|-|
+|└─currentPrice|double|现价|-|
+|└─netPos|double|净持仓|-|
+|└─change|int32|涨跌幅|-|
 
 **Response-example:**
 ```json
 {
   "userId": 0,
   "portfolioName": "",
-  "instrumentCodes": [
-    ""
+  "targetList": [
+    {
+      "instrumentCode": "",
+      "instrumentName": "",
+      "currentPrice": 0.0,
+      "netPos": 0.0,
+      "change": 0
+    }
   ]
 }
 ```
 
-## 获取用户第二投资组合 (右侧次优股票池)
+## 获取用户第二投资组合 ([page2.jpg]右侧次优股票池)
 
 **URL:** `/portfolio/second`
 
@@ -99,7 +110,7 @@ curl -X GET -i /portfolio/first?userId=0
 
 **Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
 
-**Description:** 获取用户第二投资组合 (右侧次优股票池)
+**Description:** 获取用户第二投资组合 ([page2.jpg]右侧次优股票池)
 
 
 
@@ -121,15 +132,26 @@ curl -X GET -i /portfolio/second?userId=0
 |-------|------|-------------|-------|
 |userId|int32|用户ID|-|
 |portfolioName|string|投资组合(股票池/目标池)名称|-|
-|instrumentCodes|array|交易标的(股票/期货)列表|-|
+|targetList|array|目标池股票列表|-|
+|└─instrumentCode|string|标的代码|-|
+|└─instrumentName|string|标的名称|-|
+|└─currentPrice|double|现价|-|
+|└─netPos|double|净持仓|-|
+|└─change|int32|涨跌幅|-|
 
 **Response-example:**
 ```json
 {
   "userId": 0,
   "portfolioName": "",
-  "instrumentCodes": [
-    ""
+  "targetList": [
+    {
+      "instrumentCode": "",
+      "instrumentName": "",
+      "currentPrice": 0.0,
+      "netPos": 0.0,
+      "change": 0
+    }
   ]
 }
 ```

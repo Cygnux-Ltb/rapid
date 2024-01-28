@@ -1,2 +1,4 @@
-package io.cygnuxltb.protocol.http.response.status;public class AccountStatus {
+package io.cygnuxltb.protocol.http.response.status;
+
+public class AccountStatus {
 }

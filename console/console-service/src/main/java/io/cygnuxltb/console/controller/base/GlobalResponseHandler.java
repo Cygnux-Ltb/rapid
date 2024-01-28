@@ -13,10 +13,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+
 @RestControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(GlobalResponseHandler.class);
+    private static final Logger log = getLogger(GlobalResponseHandler.class);
 
     @Override
     public boolean supports(@Nonnull MethodParameter parameter,

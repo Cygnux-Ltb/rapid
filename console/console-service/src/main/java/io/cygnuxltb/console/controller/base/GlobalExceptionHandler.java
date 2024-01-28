@@ -4,6 +4,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static io.cygnuxltb.console.controller.base.ResponseStatus.BAD_REQUEST;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.INTERNAL_ERROR;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.NOT_FOUND;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -11,15 +15,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseBean handleException(Exception e) {
         if (e instanceof NullPointerException)
-            return ResponseStatus
-                    .NOT_FOUND.response()
+            return NOT_FOUND.response()
                     .setMessage(e.getMessage());
         if (e instanceof IllegalArgumentException)
-            return ResponseStatus
-                    .BAD_REQUEST.response()
+            return BAD_REQUEST.response()
                     .setMessage(e.getMessage());
-        return ResponseStatus
-                .INTERNAL_ERROR.response();
+        return INTERNAL_ERROR.response();
     }
 
 }

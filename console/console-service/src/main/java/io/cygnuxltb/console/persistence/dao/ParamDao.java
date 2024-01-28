@@ -20,10 +20,12 @@ import static io.cygnuxltb.console.persistence.ParamGroup.SYSTEM;
 @Repository
 public interface ParamDao extends JpaRepository<SysParamEntity, Long> {
 
+
     /**
      * @param ownerGroup String
      * @param ownerName  String
-     * @return List<ParamEntity>
+     * @param paramGroup String
+     * @return List<SysParamEntity>
      */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND (e.ownerGroup = :ownerGroup) "
@@ -33,14 +35,29 @@ public interface ParamDao extends JpaRepository<SysParamEntity, Long> {
                                  @Param("ownerName") String ownerName,
                                  @Param("paramGroup") String paramGroup);
 
+    /**
+     * @param ownerName  String
+     * @param paramGroup String
+     * @return List<SysParamEntity>
+     */
     default List<SysParamEntity> queryStrategyParam(String ownerName, String paramGroup) {
         return queryBy(STRATEGY, ownerName, paramGroup);
     }
 
+    /**
+     * @param ownerName  String
+     * @param paramGroup String
+     * @return List<SysParamEntity>
+     */
     default List<SysParamEntity> queryAdaptorParam(String ownerName, String paramGroup) {
         return queryBy(ADAPTOR, ownerName, paramGroup);
     }
 
+    /**
+     * @param ownerName  String
+     * @param paramGroup String
+     * @return List<SysParamEntity>
+     */
     default List<SysParamEntity> querySystemParam(String ownerName, String paramGroup) {
         return queryBy(SYSTEM, ownerName, paramGroup);
     }

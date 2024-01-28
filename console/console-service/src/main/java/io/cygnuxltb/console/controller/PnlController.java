@@ -4,8 +4,8 @@ import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.TrdPnlEntity;
 import io.cygnuxltb.console.service.PnlService;
-import io.cygnuxltb.protocol.http.response.PnlDTO;
-import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
+import io.cygnuxltb.protocol.http.response.dto.PnlDTO;
+import io.cygnuxltb.protocol.http.response.dto.PnlSettlementDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,14 +21,14 @@ import java.util.List;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
-import static io.cygnuxltb.protocol.http.ServiceURI.PNL;
+import static io.cygnuxltb.protocol.http.ServiceURI.pnl;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * PNL(盈亏)服务
  */
 @RestController
-@RequestMapping(path = PNL, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = pnl, produces = APPLICATION_JSON_UTF8)
 public final class PnlController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PnlController.class);
@@ -47,7 +47,7 @@ public final class PnlController {
     public List<PnlDTO> getPnl(@RequestParam(TRADING_DAY) int tradingDay,
                                @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.paramIsNull(tradingDay))
-            throw new IllegalArgumentException("get pnl param error -> " + tradingDay);
+            throw new IllegalArgumentException(STR."get pnl param error -> \{tradingDay}");
         return service.getPnl(strategyId, tradingDay);
     }
 

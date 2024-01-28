@@ -9,9 +9,8 @@ import io.cygnuxltb.console.persistence.dao.OrderExtDao;
 import io.cygnuxltb.console.persistence.entity.TrdOrderEntity;
 import io.cygnuxltb.console.persistence.entity.TrdOrderEventEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
-import io.cygnuxltb.protocol.http.response.OrderDTO;
-import io.cygnuxltb.protocol.http.response.OrderEventDTO;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.cygnuxltb.protocol.http.response.dto.OrderDTO;
+import io.cygnuxltb.protocol.http.response.dto.OrderEventDTO;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.slf4j.Logger;
@@ -30,11 +29,12 @@ import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
 import static io.mercury.common.collections.MutableLists.newFastList;
 import static io.mercury.common.lang.Throws.illegalArgument;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 @Service
 public final class OrderService {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(OrderService.class);
+    private static final Logger log = getLogger(OrderService.class);
 
     @Resource
     private OrderDao dao;
@@ -66,7 +66,7 @@ public final class OrderService {
      * @param instrumentCode  String
      * @param startTradingDay int
      * @param endTradingDay   int
-     * @return List<TOrder>
+     * @return List<OrderDTO>
      */
     public List<OrderDTO> getOrders(int accountId, int strategyId, String instrumentCode,
                                     int startTradingDay, int endTradingDay) {
@@ -95,7 +95,7 @@ public final class OrderService {
 
     /**
      * @param ordSysId long
-     * @return List<TOrderEvent>
+     * @return List<OrderEventDTO>
      */
     public List<OrderEventDTO> getOrderEventsByOrderSysId(long ordSysId) {
         if (illegalOrdSysId(ordSysId, log))
@@ -109,7 +109,7 @@ public final class OrderService {
 
     /**
      * @param tradingDay int
-     * @return List<OrderEventEntity>
+     * @return List<OrderEventDTO>
      */
     public List<OrderEventDTO> getOrderEventsByTradingDay(int tradingDay) {
         if (ControllerUtil.illegalTradingDay(tradingDay, log))
@@ -122,7 +122,7 @@ public final class OrderService {
     }
 
     /**
-     * @param entity OrderEntity
+     * @param entity TrdOrderEntity
      * @return boolean
      */
     public boolean putOrder(TrdOrderEntity entity) {
@@ -130,7 +130,7 @@ public final class OrderService {
     }
 
     /**
-     * @param entity OrderEventEntity
+     * @param entity TrdOrderEventEntity
      * @return boolean
      */
     public boolean putOrderEvent(TrdOrderEventEntity entity) {

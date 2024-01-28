@@ -2,9 +2,8 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.service.ProductService;
-import io.cygnuxltb.protocol.http.response.ProductDTO;
+import io.cygnuxltb.protocol.http.response.dto.ProductDTO;
 import io.cygnuxltb.protocol.http.response.status.StrategyStatus;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +16,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.PRODUCT_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
-import static io.cygnuxltb.protocol.http.ServiceURI.PRODUCT;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.OK;
+import static io.cygnuxltb.protocol.http.ServiceURI.product;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * 产品服务
  */
 @RestController
-@RequestMapping(path = PRODUCT, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = product, produces = APPLICATION_JSON_UTF8)
 public final class ProductController {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(ProductController.class);
+    private static final Logger log = getLogger(ProductController.class);
 
     /**
      * 执行具体操作的executor
@@ -40,7 +41,7 @@ public final class ProductController {
     /**
      * 获取全部产品
      *
-     * @return ResponseEntity<List < ProductEntity>>
+     * @return List<ProductDTO>
      */
     @GetMapping
     public List<ProductDTO> getProduct() {
@@ -51,7 +52,7 @@ public final class ProductController {
      * 获取指定产品信息
      *
      * @param productId int
-     * @return ResponseEntity<ProductEntity>
+     * @return ProductDTO
      */
     @GetMapping("/get")
     public ProductDTO getProduct(@RequestParam(PRODUCT_ID) int productId) {
@@ -61,14 +62,14 @@ public final class ProductController {
     /**
      * 产品初始化
      *
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @GetMapping("/init")
     public ResponseStatus putInitFinish(@RequestParam(STRATEGY_ID) int strategyId,
                                         @RequestParam("status") int status) {
         StrategyStatus strategyStatus = StrategyStatusMap.putIfAbsent(strategyId,
                 new StrategyStatus().setStrategyId(strategyId).setStatus(status));
-        return ResponseStatus.OK;
+        return OK;
     }
 
 }
