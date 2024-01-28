@@ -1,10 +1,9 @@
 package io.rapid.core.mkd;
 
+import io.mercury.common.collections.MutableMaps;
+import io.mercury.serialization.json.JsonWrapper;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
-import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.serialization.json.JsonWrapper;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.slf4j.Logger;
 
@@ -12,6 +11,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.Serial;
 import java.io.Serializable;
+
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * 管理当前最新行情<br>
@@ -31,7 +32,7 @@ public final class MarketDataKeeper implements Serializable {
     private static final long serialVersionUID = 2145644316828652275L;
 
     // Logger
-    private static final Logger log = Log4j2LoggerFactory.getLogger(MarketDataKeeper.class);
+    private static final Logger log = getLogger(MarketDataKeeper.class);
 
     // LastMarkerDataMap
     private final ImmutableMap<String, MarketDataSnapshot> map;

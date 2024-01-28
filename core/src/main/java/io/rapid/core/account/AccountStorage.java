@@ -29,22 +29,31 @@ public final class AccountStorage implements Serializable {
     @Serial
     private static final long serialVersionUID = -6883109944757142986L;
 
-    // logger
     private static final Logger log = getLogger(AccountStorage.class);
 
-    // 存储Account信息, 一对一关系, 以accountId索引
+    /**
+     * 存储Account信息, 一对一关系, 以accountId索引
+     */
     private static final MutableIntObjectMap<Account> Accounts = newIntObjectHashMap();
 
-    // 存储Account信息, 一对一关系, 以investorId索引
+    /**
+     * 存储Account信息, 一对一关系, 以investorId索引
+     */
     private static final MutableMap<String, Account> AccountsByInvestorId = newUnifiedMap();
 
-    // 存储Account信息, 多对一关系, 以subAccountId索引
+    /**
+     * 存储Account信息, 多对一关系, 以subAccountId索引
+     */
     private static final MutableIntObjectMap<Account> AccountsBySubAccountId = newIntObjectHashMap();
 
-    // 存储SubAccount信息, 一对一关系, 以subAccountId索引
+    /**
+     * 存储SubAccount信息, 一对一关系, 以subAccountId索引
+     */
     private static final MutableIntObjectMap<SubAccount> SubAccounts = newIntObjectHashMap();
 
-    // 初始化标识
+    /**
+     * 初始化标识
+     */
     @Deprecated
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
@@ -98,7 +107,7 @@ public final class AccountStorage implements Serializable {
     public static Account getAccountByAccountId(int accountId) throws AccountException {
         var account = Accounts.get(accountId);
         if (account == null)
-            throw new AccountException(STR."Account error in mapping : accountId[\{accountId}] no mapped instance");
+            throw new AccountException("Account error in mapping : accountId[" + accountId + "] no mapped instance");
         return account;
     }
 
@@ -107,7 +116,7 @@ public final class AccountStorage implements Serializable {
         var account = AccountsBySubAccountId.get(subAccountId);
         if (account == null)
             throw new AccountException(
-                    STR."Account error in mapping : subAccountId[\{subAccountId}] no mapped instance");
+                    "Account error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
         return account;
     }
 
@@ -115,7 +124,7 @@ public final class AccountStorage implements Serializable {
     public static Account getAccountByInvestorId(String investorId) throws AccountException {
         var account = AccountsByInvestorId.get(investorId);
         if (account == null)
-            throw new AccountException(STR."Account error in mapping : investorId[\{investorId}] no mapped instance");
+            throw new AccountException("Account error in mapping : investorId[" + investorId + "] no mapped instance");
         return account;
     }
 
@@ -124,7 +133,7 @@ public final class AccountStorage implements Serializable {
         var subAccount = SubAccounts.get(subAccountId);
         if (subAccount == null)
             throw new SubAccount.SubAccountException(
-                    STR."SubAccount error in mapping : subAccountId[\{subAccountId}] no mapped instance");
+                    "SubAccount error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
         return subAccount;
     }
 

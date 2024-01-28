@@ -5,6 +5,8 @@ import io.rapid.core.order.Order;
 
 import java.io.Serializable;
 
+import static java.lang.Integer.compare;
+
 public interface Position extends Comparable<Position>, Serializable {
 
     /**
@@ -78,7 +80,7 @@ public interface Position extends Comparable<Position>, Serializable {
     default int compareTo(Position o) {
         return this.getAccountId() < o.getAccountId() ? -1
                 : this.getAccountId() > o.getAccountId() ? 1
-                : Integer.compare(this.getInstrument().getInstrumentId(),
+                : compare(this.getInstrument().getInstrumentId(),
                 o.getInstrument().getInstrumentId());
     }
 

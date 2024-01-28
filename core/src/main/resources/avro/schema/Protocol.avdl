@@ -29,25 +29,25 @@ protocol Protocol {
 
 	@namespace("io.rapid.core.protocol.avro.enums")
 	enum OrdValid {
-		//Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
+		// Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
 		GTC,
-		//Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
+		// Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
 		GTD,
-		//Good For Day, 只在当日的交易时段有效, 一旦当前交易时段结束, 自动取消的报单.
+		// Good For Day, 只在当日的交易时段有效, 一旦当前交易时段结束, 自动取消的报单.
 		GFD
 	}
 
 	@namespace("io.rapid.core.protocol.avro.enums")
 	enum OrdSide {
-		//无效
+		// 无效
 		INVALID,
-		//买
+		// 买
 		BUY,
-		//卖
+		// 卖
 		SELL,
-		//融资买入
+		// 融资买入
 		MARGIN_BUY,
-		//融券卖出
+		// 融券卖出
 		SHORT_SELL
 	}
 
@@ -83,13 +83,13 @@ protocol Protocol {
 
 	@namespace("io.rapid.core.protocol.avro.enums")
 	enum OrdLevel {
-		//子订单
+		// 子订单
 		CHILD,
-		//父订单
+		// 父订单
 		PARENT,
-		//策略订单
+		// 策略订单
 		STRATEGY,
-		//组订单
+		// 组订单
 		GROUP
 	}
 
@@ -316,20 +316,20 @@ protocol Protocol {
 	}
 
 	/**
-	 * 行情订阅
+	 * 订阅行情
 	 */
 	@namespace("io.rapid.core.protocol.avro.request")
-	record MarketDataSubscribe {
+	record SubscribeMarketData {
 		io.rapid.core.protocol.avro.enums.MarketDataType type;
 		string instrumentCode;
 		string recvAddr;
 	}
 
 	/**
-	 * 行情订阅多个
+	 * 订阅多个行情
 	 */
 	@namespace("io.rapid.core.protocol.avro.request")
-	record MultiMarketDataSubscribe {
+	record SubscribeMultiMarketData {
 		io.rapid.core.protocol.avro.enums.MarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;

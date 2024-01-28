@@ -10,7 +10,9 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
 import org.apache.avro.specific.SpecificData;
 
-/** 行情订阅多个 */
+/**
+ * 行情订阅多个
+ */
 @org.apache.avro.specific.AvroGenerated
 public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
     private static final long serialVersionUID = 4318669078575820321L;
@@ -32,6 +34,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Return the BinaryMessageEncoder instance used by this class.
+     *
      * @return the message encoder used by this class
      */
     public static BinaryMessageEncoder<MultiMarketDataSubscribe> getEncoder() {
@@ -40,6 +43,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Return the BinaryMessageDecoder instance used by this class.
+     *
      * @return the message decoder used by this class
      */
     public static BinaryMessageDecoder<MultiMarketDataSubscribe> getDecoder() {
@@ -48,6 +52,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+     *
      * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
      * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
      */
@@ -57,6 +62,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Serializes this MultiMarketDataSubscribe to a ByteBuffer.
+     *
      * @return a buffer holding the serialized data for this instance
      * @throws java.io.IOException if this instance could not be serialized
      */
@@ -66,6 +72,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Deserializes a MultiMarketDataSubscribe from a ByteBuffer.
+     *
      * @param b a byte buffer holding serialized data for an instance of this class
      * @return a MultiMarketDataSubscribe instance decoded from the given buffer
      * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
@@ -89,9 +96,10 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * All-args constructor.
-     * @param type The new value for type
+     *
+     * @param type            The new value for type
      * @param instrumentCodes The new value for instrumentCodes
-     * @param recvAddr The new value for recvAddr
+     * @param recvAddr        The new value for recvAddr
      */
     public MultiMarketDataSubscribe(io.rapid.core.protocol.avro.enums.MarketDataType type, java.util.List<java.lang.String> instrumentCodes, java.lang.String recvAddr) {
         this.type = type;
@@ -109,16 +117,12 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     // Used by DatumWriter.  Applications should not call.
     public java.lang.Object get(int field$) {
-        switch (field$) {
-            case 0:
-                return type;
-            case 1:
-                return instrumentCodes;
-            case 2:
-                return recvAddr;
-            default:
-                throw new IndexOutOfBoundsException("Invalid index: " + field$);
-        }
+        return switch (field$) {
+            case 0 -> type;
+            case 1 -> instrumentCodes;
+            case 2 -> recvAddr;
+            default -> throw new IndexOutOfBoundsException("Invalid index: " + field$);
+        };
     }
 
     // Used by DatumReader.  Applications should not call.
@@ -140,6 +144,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Gets the value of the 'type' field.
+     *
      * @return The value of the 'type' field.
      */
     public io.rapid.core.protocol.avro.enums.MarketDataType getType() {
@@ -149,6 +154,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Sets the value of the 'type' field.
+     *
      * @param value the value to set.
      */
     public MultiMarketDataSubscribe setType(io.rapid.core.protocol.avro.enums.MarketDataType value) {
@@ -158,6 +164,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Gets the value of the 'instrumentCodes' field.
+     *
      * @return The value of the 'instrumentCodes' field.
      */
     public java.util.List<java.lang.String> getInstrumentCodes() {
@@ -167,6 +174,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Sets the value of the 'instrumentCodes' field.
+     *
      * @param value the value to set.
      */
     public MultiMarketDataSubscribe setInstrumentCodes(java.util.List<java.lang.String> value) {
@@ -176,6 +184,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Gets the value of the 'recvAddr' field.
+     *
      * @return The value of the 'recvAddr' field.
      */
     public java.lang.String getRecvAddr() {
@@ -185,6 +194,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Sets the value of the 'recvAddr' field.
+     *
      * @param value the value to set.
      */
     public MultiMarketDataSubscribe setRecvAddr(java.lang.String value) {
@@ -194,6 +204,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Creates a new MultiMarketDataSubscribe RecordBuilder.
+     *
      * @return A new MultiMarketDataSubscribe RecordBuilder
      */
     public static io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe.Builder newBuilder() {
@@ -202,6 +213,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Creates a new MultiMarketDataSubscribe RecordBuilder by copying an existing Builder.
+     *
      * @param other The existing builder to copy.
      * @return A new MultiMarketDataSubscribe RecordBuilder
      */
@@ -215,6 +227,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
     /**
      * Creates a new MultiMarketDataSubscribe RecordBuilder by copying an existing MultiMarketDataSubscribe instance.
+     *
      * @param other The existing instance to copy.
      * @return A new MultiMarketDataSubscribe RecordBuilder
      */
@@ -237,13 +250,16 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
         private java.util.List<java.lang.String> instrumentCodes;
         private java.lang.String recvAddr;
 
-        /** Creates a new Builder */
+        /**
+         * Creates a new Builder
+         */
         private Builder() {
             super(SCHEMA$, MODEL$);
         }
 
         /**
          * Creates a Builder by copying an existing Builder.
+         *
          * @param other The existing Builder to copy.
          */
         private Builder(io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe.Builder other) {
@@ -264,6 +280,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Creates a Builder by copying an existing MultiMarketDataSubscribe instance
+         *
          * @param other The existing instance to copy.
          */
         private Builder(io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe other) {
@@ -284,6 +301,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Gets the value of the 'type' field.
+         *
          * @return The value.
          */
         public io.rapid.core.protocol.avro.enums.MarketDataType getType() {
@@ -293,6 +311,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Sets the value of the 'type' field.
+         *
          * @param value The value of 'type'.
          * @return This builder.
          */
@@ -305,6 +324,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Checks whether the 'type' field has been set.
+         *
          * @return True if the 'type' field has been set, false otherwise.
          */
         public boolean hasType() {
@@ -314,6 +334,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Clears the value of the 'type' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe.Builder clearType() {
@@ -324,6 +345,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Gets the value of the 'instrumentCodes' field.
+         *
          * @return The value.
          */
         public java.util.List<java.lang.String> getInstrumentCodes() {
@@ -333,6 +355,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Sets the value of the 'instrumentCodes' field.
+         *
          * @param value The value of 'instrumentCodes'.
          * @return This builder.
          */
@@ -345,6 +368,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Checks whether the 'instrumentCodes' field has been set.
+         *
          * @return True if the 'instrumentCodes' field has been set, false otherwise.
          */
         public boolean hasInstrumentCodes() {
@@ -354,6 +378,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Clears the value of the 'instrumentCodes' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe.Builder clearInstrumentCodes() {
@@ -364,6 +389,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Gets the value of the 'recvAddr' field.
+         *
          * @return The value.
          */
         public java.lang.String getRecvAddr() {
@@ -373,6 +399,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Sets the value of the 'recvAddr' field.
+         *
          * @param value The value of 'recvAddr'.
          * @return This builder.
          */
@@ -385,6 +412,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Checks whether the 'recvAddr' field has been set.
+         *
          * @return True if the 'recvAddr' field has been set, false otherwise.
          */
         public boolean hasRecvAddr() {
@@ -394,6 +422,7 @@ public class MultiMarketDataSubscribe extends org.apache.avro.specific.SpecificR
 
         /**
          * Clears the value of the 'recvAddr' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MultiMarketDataSubscribe.Builder clearRecvAddr() {

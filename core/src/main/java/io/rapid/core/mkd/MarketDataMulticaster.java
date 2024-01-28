@@ -3,11 +3,10 @@ package io.rapid.core.mkd;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventTranslatorOneArg;
-import io.rapid.core.handler.MarketDataHandler;
 import io.mercury.common.concurrent.ring.RingMulticaster;
 import io.mercury.common.concurrent.ring.RingMulticaster.Builder;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.RunnableComponent;
+import io.rapid.core.handler.MarketDataHandler;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -15,12 +14,13 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import static io.mercury.common.concurrent.ring.base.WaitStrategyOption.BusySpin;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.mercury.common.thread.RunnableComponent.StartMode.manual;
 
-public final class MarketDataMulticaster<In> {}
+public final class MarketDataMulticaster<In>{}
 //        extends RunnableComponent implements Closeable {
 //
-//    private static final Logger log = Log4j2LoggerFactory.getLogger(MarketDataMulticaster.class);
+//    private static final Logger log = getLogger(MarketDataMulticaster.class);
 //
 //    private RingMulticaster<FastMarketData, In> multicaster;
 //
@@ -35,7 +35,7 @@ public final class MarketDataMulticaster<In> {}
 //                // 设置缓冲区大小
 //                .size(64)
 //                // 设置AdaptorName加后缀
-//                .setName(STR."\{adaptorName}-md-multicaster")
+//                .setName(adaptorName + "-md-multicaster")
 //                // 设置启动模式
 //                .setStartMode(manual())
 //                // 设置使用自旋等待策略

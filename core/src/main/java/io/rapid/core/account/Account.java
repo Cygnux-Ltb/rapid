@@ -19,7 +19,9 @@ import java.io.Serial;
 
 public final class Account extends EnableableComponent implements Comparable<Account> {
 
-    // 账户ID
+    /**
+     * 账户ID
+     */
     private final int accountId;
 
     // 经纪商ID
@@ -209,7 +211,6 @@ public final class Account extends EnableableComponent implements Comparable<Acc
         Account account = new Account(1, "ZSQH", "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
-
     }
 
 }

@@ -10,7 +10,9 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
 import org.apache.avro.specific.SpecificData;
 
-/** 行情订阅 */
+/**
+ * 行情订阅
+ */
 @org.apache.avro.specific.AvroGenerated
 public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
     private static final long serialVersionUID = -9219399208746832346L;
@@ -32,6 +34,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Return the BinaryMessageEncoder instance used by this class.
+     *
      * @return the message encoder used by this class
      */
     public static BinaryMessageEncoder<MarketDataSubscribe> getEncoder() {
@@ -40,6 +43,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Return the BinaryMessageDecoder instance used by this class.
+     *
      * @return the message decoder used by this class
      */
     public static BinaryMessageDecoder<MarketDataSubscribe> getDecoder() {
@@ -48,6 +52,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+     *
      * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
      * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
      */
@@ -57,6 +62,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Serializes this MarketDataSubscribe to a ByteBuffer.
+     *
      * @return a buffer holding the serialized data for this instance
      * @throws java.io.IOException if this instance could not be serialized
      */
@@ -66,6 +72,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Deserializes a MarketDataSubscribe from a ByteBuffer.
+     *
      * @param b a byte buffer holding serialized data for an instance of this class
      * @return a MarketDataSubscribe instance decoded from the given buffer
      * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
@@ -89,9 +96,10 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * All-args constructor.
-     * @param type The new value for type
+     *
+     * @param type           The new value for type
      * @param instrumentCode The new value for instrumentCode
-     * @param recvAddr The new value for recvAddr
+     * @param recvAddr       The new value for recvAddr
      */
     public MarketDataSubscribe(io.rapid.core.protocol.avro.enums.MarketDataType type, java.lang.String instrumentCode, java.lang.String recvAddr) {
         this.type = type;
@@ -109,16 +117,12 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     // Used by DatumWriter.  Applications should not call.
     public java.lang.Object get(int field$) {
-        switch (field$) {
-            case 0:
-                return type;
-            case 1:
-                return instrumentCode;
-            case 2:
-                return recvAddr;
-            default:
-                throw new IndexOutOfBoundsException("Invalid index: " + field$);
-        }
+        return switch (field$) {
+            case 0 -> type;
+            case 1 -> instrumentCode;
+            case 2 -> recvAddr;
+            default -> throw new IndexOutOfBoundsException("Invalid index: " + field$);
+        };
     }
 
     // Used by DatumReader.  Applications should not call.
@@ -140,6 +144,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'type' field.
+     *
      * @return The value of the 'type' field.
      */
     public io.rapid.core.protocol.avro.enums.MarketDataType getType() {
@@ -149,6 +154,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'type' field.
+     *
      * @param value the value to set.
      */
     public MarketDataSubscribe setType(io.rapid.core.protocol.avro.enums.MarketDataType value) {
@@ -158,6 +164,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'instrumentCode' field.
+     *
      * @return The value of the 'instrumentCode' field.
      */
     public java.lang.String getInstrumentCode() {
@@ -167,6 +174,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'instrumentCode' field.
+     *
      * @param value the value to set.
      */
     public MarketDataSubscribe setInstrumentCode(java.lang.String value) {
@@ -176,6 +184,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'recvAddr' field.
+     *
      * @return The value of the 'recvAddr' field.
      */
     public java.lang.String getRecvAddr() {
@@ -185,6 +194,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'recvAddr' field.
+     *
      * @param value the value to set.
      */
     public MarketDataSubscribe setRecvAddr(java.lang.String value) {
@@ -194,6 +204,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Creates a new MarketDataSubscribe RecordBuilder.
+     *
      * @return A new MarketDataSubscribe RecordBuilder
      */
     public static io.rapid.core.protocol.avro.request.MarketDataSubscribe.Builder newBuilder() {
@@ -202,6 +213,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Creates a new MarketDataSubscribe RecordBuilder by copying an existing Builder.
+     *
      * @param other The existing builder to copy.
      * @return A new MarketDataSubscribe RecordBuilder
      */
@@ -215,6 +227,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Creates a new MarketDataSubscribe RecordBuilder by copying an existing MarketDataSubscribe instance.
+     *
      * @param other The existing instance to copy.
      * @return A new MarketDataSubscribe RecordBuilder
      */
@@ -237,13 +250,16 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
         private java.lang.String instrumentCode;
         private java.lang.String recvAddr;
 
-        /** Creates a new Builder */
+        /**
+         * Creates a new Builder
+         */
         private Builder() {
             super(SCHEMA$, MODEL$);
         }
 
         /**
          * Creates a Builder by copying an existing Builder.
+         *
          * @param other The existing Builder to copy.
          */
         private Builder(io.rapid.core.protocol.avro.request.MarketDataSubscribe.Builder other) {
@@ -264,6 +280,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Creates a Builder by copying an existing MarketDataSubscribe instance
+         *
          * @param other The existing instance to copy.
          */
         private Builder(io.rapid.core.protocol.avro.request.MarketDataSubscribe other) {
@@ -284,6 +301,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Gets the value of the 'type' field.
+         *
          * @return The value.
          */
         public io.rapid.core.protocol.avro.enums.MarketDataType getType() {
@@ -293,6 +311,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Sets the value of the 'type' field.
+         *
          * @param value The value of 'type'.
          * @return This builder.
          */
@@ -305,6 +324,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Checks whether the 'type' field has been set.
+         *
          * @return True if the 'type' field has been set, false otherwise.
          */
         public boolean hasType() {
@@ -314,6 +334,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Clears the value of the 'type' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MarketDataSubscribe.Builder clearType() {
@@ -324,6 +345,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Gets the value of the 'instrumentCode' field.
+         *
          * @return The value.
          */
         public java.lang.String getInstrumentCode() {
@@ -333,6 +355,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Sets the value of the 'instrumentCode' field.
+         *
          * @param value The value of 'instrumentCode'.
          * @return This builder.
          */
@@ -345,6 +368,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Checks whether the 'instrumentCode' field has been set.
+         *
          * @return True if the 'instrumentCode' field has been set, false otherwise.
          */
         public boolean hasInstrumentCode() {
@@ -354,6 +378,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Clears the value of the 'instrumentCode' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MarketDataSubscribe.Builder clearInstrumentCode() {
@@ -364,6 +389,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Gets the value of the 'recvAddr' field.
+         *
          * @return The value.
          */
         public java.lang.String getRecvAddr() {
@@ -373,6 +399,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Sets the value of the 'recvAddr' field.
+         *
          * @param value The value of 'recvAddr'.
          * @return This builder.
          */
@@ -385,6 +412,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Checks whether the 'recvAddr' field has been set.
+         *
          * @return True if the 'recvAddr' field has been set, false otherwise.
          */
         public boolean hasRecvAddr() {
@@ -394,6 +422,7 @@ public class MarketDataSubscribe extends org.apache.avro.specific.SpecificRecord
 
         /**
          * Clears the value of the 'recvAddr' field.
+         *
          * @return This builder.
          */
         public io.rapid.core.protocol.avro.request.MarketDataSubscribe.Builder clearRecvAddr() {

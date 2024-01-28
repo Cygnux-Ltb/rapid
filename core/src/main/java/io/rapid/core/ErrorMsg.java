@@ -7,7 +7,7 @@ public record ErrorMsg(
 
     @Override
     public String toString() {
-        return STR."\{code}:\{language}:\{message}";
+        return code + ":" + language + ":" + message;
     }
 
 }

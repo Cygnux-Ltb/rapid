@@ -87,7 +87,7 @@ public final class TradingPeriod implements SerialObj<TradingPeriod> {
         TradingPeriod tradingPeriod = new TradingPeriod(0, LocalTime.of(21, 0, 0), LocalTime.of(2, 30, 0));
 
         tradingPeriod.segmentation(LocalDate.now(), TimeZone.CST, Duration.ofMinutes(45))
-                .each(timePeriod -> System.out.println(STR."\{timePeriod.getStart()} - \{timePeriod.getEnd()}"));
+                .each(timePeriod -> System.out.println(timePeriod.getStart() + " - " + timePeriod.getEnd()));
 
         LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 55, 30));
 
