@@ -11,7 +11,7 @@ public enum OutboxTitle implements Envelope {
 
     Heartbeat,
 
-    TimeBars,
+    Bars,
 
     SysInfo,
 
@@ -39,7 +39,7 @@ public enum OutboxTitle implements Envelope {
 
     UpdateStrategyParams,
 
-    EndTimeBar,
+    EndBars,
 
     UpdateStrategySignals,
 

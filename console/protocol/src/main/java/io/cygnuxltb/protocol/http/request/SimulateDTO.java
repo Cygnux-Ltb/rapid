@@ -15,13 +15,18 @@ public class SimulateDTO {
     public int userId;
 
     /**
-     *
+     * 策略ID
      */
     public int strategyId;
 
     /**
-     *
+     * 开始交易日
      */
-    public int tradingDay;
+    public int startTradingDay;
+
+    /**
+     * 结束交易日
+     */
+    public int endTradingDay;
 
 }

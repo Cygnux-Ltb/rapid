@@ -5,6 +5,8 @@ import io.rapid.core.order.Order;
 
 import java.io.Serializable;
 
+import static java.lang.Integer.compare;
+
 public interface Position extends Comparable<Position>, Serializable {
 
     /**
@@ -15,11 +17,29 @@ public interface Position extends Comparable<Position>, Serializable {
     int getAccountId();
 
     /**
-     * 获取Instrument
+     * 获取[Instrument]
      *
      * @return Instrument
      */
     Instrument getInstrument();
+
+    /**
+     * 获取[Instrument ID]
+     *
+     * @return int
+     */
+    default int getInstrumentId() {
+        return getInstrument().getInstrumentId();
+    }
+
+    /**
+     * 获取[Instrument Code]
+     *
+     * @return String
+     */
+    default String getInstrumentCode() {
+        return getInstrument().getInstrumentCode();
+    }
 
     /**
      * 获取当前仓位
@@ -60,7 +80,7 @@ public interface Position extends Comparable<Position>, Serializable {
     default int compareTo(Position o) {
         return this.getAccountId() < o.getAccountId() ? -1
                 : this.getAccountId() > o.getAccountId() ? 1
-                : Integer.compare(this.getInstrument().getInstrumentId(),
+                : compare(this.getInstrument().getInstrumentId(),
                 o.getInstrument().getInstrumentId());
     }
 

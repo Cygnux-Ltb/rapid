@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ErrorSchema {
+
     private static String defaultLanguage = "CN";
+
     private static final Map<String, ErrorMsg> map = new HashMap<>();
+
     private static boolean isBuilt = false;
 
     public static void build() throws Exception {
@@ -237,15 +240,14 @@ public class ErrorSchema {
         ErrorMsg errorMsg = new ErrorMsg(code, language, msg);
         ErrorMsg existing = map.put(getKey(code, language), errorMsg);
         if (null != existing)
-            throw new Exception("Duplicate error message: " + errorMsg);
+            throw new Exception("Duplicate error message:" + errorMsg);
     }
 
     public static String getMsg(int code, String language) {
         if (!isBuilt) {
             try {
                 build();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
         ErrorMsg errorMsg = map.get(getKey(code, language));
@@ -259,8 +261,7 @@ public class ErrorSchema {
         if (!isBuilt) {
             try {
                 build();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
         return getMsg(code, defaultLanguage);

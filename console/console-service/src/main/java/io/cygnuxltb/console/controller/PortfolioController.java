@@ -1,7 +1,8 @@
 package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.service.PortfolioService;
-import io.cygnuxltb.protocol.http.response.PortfolioDTO;
+import io.cygnuxltb.protocol.http.response.dto.PortfolioDTO;
+import io.cygnuxltb.protocol.http.response.dto.TargetPoolDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -11,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.USER_ID;
-import static io.cygnuxltb.protocol.http.ServiceURI.PORTFOLIO;
+import static io.cygnuxltb.protocol.http.ServiceURI.portfolio;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 投资组合(股票池/目标池)服务
  */
 @RestController
-@RequestMapping(path = PORTFOLIO, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = portfolio, produces = APPLICATION_JSON_UTF8)
 public class PortfolioController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PortfolioController.class);
@@ -44,22 +45,22 @@ public class PortfolioController {
      * 获取用户第一投资组合 ([page2.jpg]左侧优先股票池)
      *
      * @param userId 用户ID
-     * @return PortfolioDTO
+     * @return TargetPoolDTO
      */
     @GetMapping("/first")
-    public PortfolioDTO getFirstPortfolio(@RequestParam(USER_ID) int userId) {
-        return service.getPortfolio(userId, "FIRST");
+    public TargetPoolDTO getFirstPortfolio(@RequestParam(USER_ID) int userId) {
+        return service.getTargetPool(userId, "FIRST");
     }
 
     /**
      * 获取用户第二投资组合 ([page2.jpg]右侧次优股票池)
      *
      * @param userId 用户ID
-     * @return PortfolioDTO
+     * @return TargetPoolDTO
      */
     @GetMapping("/second")
-    public PortfolioDTO getSecondPortfolio(@RequestParam(USER_ID) int userId) {
-        return service.getPortfolio(userId, "SECOND");
+    public TargetPoolDTO getSecondPortfolio(@RequestParam(USER_ID) int userId) {
+        return service.getTargetPool(userId, "SECOND");
     }
 
 }

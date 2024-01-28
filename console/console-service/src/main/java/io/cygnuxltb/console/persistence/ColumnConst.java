@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.persistence;
 
 public enum ColumnConst {
-    
+
     ;
 
     /**

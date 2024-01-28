@@ -27,16 +27,25 @@ public class MetricDataDTO {
 
     @Override
     public String toString() {
-        return keyId + ","
-                + interfaceType + ","
-                + exchangeCode + ","
-                + strategyId + ","
-                + lastPoint + "<->"
-                + currPoint + ","
-                + lastPoint + ","
-                + currPoint + ","
-                + epochTime + ","
-                + epochTimeDiff;
+        return keyId
+                + "," +
+                interfaceType
+                + "," +
+                exchangeCode
+                + "," +
+                strategyId
+                + "," +
+                lastPoint
+                + "<->" +
+                currPoint
+                + "," +
+                lastPoint
+                + "," +
+                currPoint
+                + "," +
+                epochTime
+                + "," +
+                epochTimeDiff;
     }
 
 }

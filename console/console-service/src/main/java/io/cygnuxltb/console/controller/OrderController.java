@@ -1,12 +1,12 @@
 package io.cygnuxltb.console.controller;
 
-import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.TrdOrderEntity;
 import io.cygnuxltb.console.service.OrderService;
 import io.cygnuxltb.protocol.http.request.NewOrderDTO;
-import io.cygnuxltb.protocol.http.response.OrderEventDTO;
+import io.cygnuxltb.protocol.http.response.dto.OrderDTO;
+import io.cygnuxltb.protocol.http.response.dto.OrderEventDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,14 +25,17 @@ import static io.cygnuxltb.console.controller.base.HttpParam.ACCOUNT_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.STRATEGY_ID;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
-import static io.cygnuxltb.protocol.http.ServiceURI.ORDER;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.BAD_REQUEST;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.INTERNAL_ERROR;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.OK;
+import static io.cygnuxltb.protocol.http.ServiceURI.order;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
  * 订单服务
  */
 @RestController
-@RequestMapping(path = ORDER, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = order, produces = APPLICATION_JSON_UTF8)
 public final class OrderController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrderController.class);
@@ -47,17 +50,18 @@ public final class OrderController {
      * @param strategyId     策略ID [int 可选项]
      * @param tradingDay     交易日 [int 可选项, 8位日期格式:YYYYMMDD]
      * @param instrumentCode 交易标的 [String 股票代码/期货代码]
-     * @return List<OrderEntity>
+     * @param status         订单状态 [int 可选项`, 1:委托状态, 2:成交状态, 0或不传为全部状态订单]
+     * @return ResponseBean
      */
     @GetMapping
-    public ResponseBean getOrder(@RequestParam(ACCOUNT_ID) int accountId,
-                                 @RequestParam(STRATEGY_ID) int strategyId,
-                                 @RequestParam(INSTRUMENT_CODE) String instrumentCode,
-                                 @RequestParam(TRADING_DAY) int tradingDay) {
+    public List<OrderDTO> getOrder(@RequestParam(ACCOUNT_ID) int accountId,
+                                   @RequestParam(STRATEGY_ID) int strategyId,
+                                   @RequestParam(INSTRUMENT_CODE) String instrumentCode,
+                                   @RequestParam(TRADING_DAY) int tradingDay,
+                                   @RequestParam("status") int status) {
         if (ControllerUtil.paramIsNull(accountId))
-            return ResponseStatus.BAD_REQUEST.response("参数错误, [accountId]不可为空.");
-        return ResponseStatus.OK.responseOf(
-                service.getOrders(accountId, strategyId, instrumentCode, tradingDay));
+            return null;
+        return service.getOrders(accountId, strategyId, instrumentCode, tradingDay);
     }
 
     /**
@@ -85,21 +89,21 @@ public final class OrderController {
      */
     @PostMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus newOrder(NewOrderDTO newOrderDTO) {
-        return ResponseStatus.OK;
+        return OK;
     }
 
     /**
      * 新增订单 [非前端界面调用]
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<Object>
+     * @return ResponseStatus
      */
     @PutMapping(consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus putOrder(@RequestBody HttpServletRequest request) {
         var order = ControllerUtil.bodyToObject(request, TrdOrderEntity.class);
         return order == null
-                ? ResponseStatus.BAD_REQUEST : service.putOrder(order)
-                ? ResponseStatus.OK : ResponseStatus.INTERNAL_ERROR;
+                ? BAD_REQUEST : service.putOrder(order)
+                ? OK : INTERNAL_ERROR;
     }
 
 }

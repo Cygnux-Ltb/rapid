@@ -1,7 +1,7 @@
 package io.cygnuxltb.console.component;
 
 import io.cygnuxltb.console.service.ProductService;
-import io.cygnuxltb.protocol.http.response.ProductDTO;
+import io.cygnuxltb.protocol.http.response.dto.ProductDTO;
 import io.mercury.common.datetime.pattern.TimePattern;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;

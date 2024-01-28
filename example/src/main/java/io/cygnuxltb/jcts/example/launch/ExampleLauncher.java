@@ -7,7 +7,7 @@ import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
 public class ExampleLauncher {
 
 	static {
-		Log4j2Configurator.setLogFilename("example-" + DateTimeUtil.datetimeOfSecond());
+		Log4j2Configurator.setLogFilename(STR."example-\{DateTimeUtil.datetimeOfSecond()}");
 		Log4j2Configurator.setLogLevel(LogLevel.INFO);
 	}
 

@@ -1,8 +1,5 @@
 package io.cygnuxltb.console.persistence;
 
-import io.mercury.common.lang.Throws;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.serialization.json.JsonWrapper;
 import org.slf4j.Logger;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,11 +8,14 @@ import java.util.function.Supplier;
 
 import static io.mercury.common.functional.Functions.exec;
 import static io.mercury.common.functional.Functions.execBool;
+import static io.mercury.common.lang.Throws.illegalArgument;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+import static io.mercury.serialization.json.JsonWrapper.toJson;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 public final class JpaExecutor {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(JpaExecutor.class);
+    private static final Logger log = getLogger(JpaExecutor.class);
 
     /**
      * @param func Supplier<List<T>>
@@ -34,7 +34,7 @@ public final class JpaExecutor {
                         log.info("query [{}] return {} row", type.getSimpleName(), result.size());
                     else
                         log.info("query [{}] return {} row, result -> {}", type.getSimpleName(),
-                                result.size(), JsonWrapper.toJson(result));
+                                result.size(), toJson(result));
                     return result;
                 },
                 // Log for case of failure
@@ -52,7 +52,7 @@ public final class JpaExecutor {
                 // SQL execution process
                 () -> {
                     if (entity == null)
-                        Throws.illegalArgument("entity");
+                        illegalArgument("entity");
                     return repository.saveAndFlush(entity);
                 },
                 // Log for case of success
@@ -81,7 +81,7 @@ public final class JpaExecutor {
                 // SQL execution process
                 () -> {
                     if (entities == null)
-                        Throws.illegalArgument("entity");
+                        illegalArgument("entity");
                     return repository.saveAllAndFlush(entities);
                 },
                 // Log for case of success

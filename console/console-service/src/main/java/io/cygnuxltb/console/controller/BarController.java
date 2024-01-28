@@ -5,7 +5,6 @@ import io.cygnuxltb.console.controller.base.ResponseStatus;
 import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.persistence.entity.MkdBarEntity;
 import io.cygnuxltb.console.service.BarService;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -18,18 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.BAD_REQUEST;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.CREATED;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.INTERNAL_ERROR;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.OK;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
-import static io.cygnuxltb.protocol.http.ServiceURI.BAR;
+import static io.cygnuxltb.protocol.http.ServiceURI.bar;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * 历史行情服务
  */
 @RestController
-@RequestMapping(path = BAR, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = bar, produces = APPLICATION_JSON_UTF8)
 public final class BarController {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(BarController.class);
+    private static final Logger log = getLogger(BarController.class);
 
     @Resource
     private BarService service;
@@ -39,7 +43,7 @@ public final class BarController {
      *
      * @param instrumentCode 标的代码 (不支持查询多个标的)
      * @param tradingDay     交易日
-     * @return List<BarEntity>
+     * @return ResponseBean
      * @apiNote 获取1分钟BAR
      */
     @GetMapping
@@ -48,8 +52,8 @@ public final class BarController {
         log.info("get bars with : instrumentCode -> {}, tradingDay -> {}",
                 instrumentCode, tradingDay);
         if (illegalInstrumentCode(instrumentCode, log))
-            return ResponseStatus.BAD_REQUEST.response("[instrumentCode]不可为空");
-        return ResponseStatus.OK.responseOf(service.getBars(instrumentCode, tradingDay));
+            return BAD_REQUEST.response("[instrumentCode]不可为空");
+        return OK.responseOf(service.getBars(instrumentCode, tradingDay));
     }
 
     /**
@@ -63,10 +67,8 @@ public final class BarController {
     public ResponseStatus putBar(@RequestBody HttpServletRequest request) {
         var bar = ControllerUtil.bodyToObject(request, MkdBarEntity.class);
         log.info("put bar -> {}", bar);
-        return bar == null ? ResponseStatus.BAD_REQUEST
-                : service.putBar(bar)
-                ? ResponseStatus.CREATED
-                : ResponseStatus.INTERNAL_ERROR;
+        return bar == null ? BAD_REQUEST : service.putBar(bar)
+                ? CREATED : INTERNAL_ERROR;
     }
 
 }

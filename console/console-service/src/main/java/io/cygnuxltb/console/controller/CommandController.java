@@ -7,7 +7,6 @@ import io.cygnuxltb.console.persistence.entity.SysParamEntity;
 import io.cygnuxltb.console.service.ParamService;
 import io.cygnuxltb.protocol.http.wrap.OutboxMessage;
 import io.cygnuxltb.protocol.http.wrap.OutboxTitle;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonWrapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,17 +23,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import static io.cygnuxltb.protocol.http.ServiceURI.COMMAND;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.BAD_REQUEST;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.INTERNAL_ERROR;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.UPDATED;
+import static io.cygnuxltb.protocol.http.ServiceURI.command;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * 系统指令服务[X]
  */
 @RestController
-@RequestMapping(path = COMMAND, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = command, produces = APPLICATION_JSON_UTF8)
 public final class CommandController {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(CommandController.class);
+    private static final Logger log = getLogger(CommandController.class);
 
     @Resource
     private CommandDispatcher dispatcher;
@@ -64,7 +67,7 @@ public final class CommandController {
         // 发送消息
         //publisher.publish(msg);
         // 返回Put成功标识
-        return ResponseStatus.UPDATED;
+        return UPDATED;
     }
 
     /**
@@ -79,15 +82,15 @@ public final class CommandController {
     public ResponseStatus updateParamSafe(@RequestBody HttpServletRequest request) {
         var strategyParam = ControllerUtil.bodyToObject(request, SysParamEntity.class);
         if (strategyParam == null)
-            return ResponseStatus.BAD_REQUEST;
+            return BAD_REQUEST;
         log.info("method updateParamSafe recv : {}", strategyParam);
         return switch (service.updateParamSafe(strategyParam)) {
             // 更新成功返回Ok状态码
-            case 0 -> ResponseStatus.UPDATED;
+            case 0 -> UPDATED;
             // 返回错误参数状态码
-            case -1 -> ResponseStatus.BAD_REQUEST;
+            case -1 -> BAD_REQUEST;
             // 否则返回服务器内部错误状态码
-            default -> ResponseStatus.INTERNAL_ERROR;
+            default -> INTERNAL_ERROR;
         };
     }
 

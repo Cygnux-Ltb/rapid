@@ -16,6 +16,12 @@ import java.util.List;
 @Repository
 public interface BarDao extends JpaRepository<MkdBarEntity, Long> {
 
+    /**
+     * @param instrumentCode  String
+     * @param startTradingDay int
+     * @param endTradingDay   int
+     * @return List<MkdBarEntity>
+     */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND (e.instrumentCode = :instrumentCode) "
             + " AND (e.tradingDay >= :startTradingDay) "

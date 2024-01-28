@@ -2,30 +2,30 @@ package io.cygnuxltb.protocol.http;
 
 public interface ServiceURI {
 
-    String SYS = "/sys";
+    String sys = "/sys";
 
-    String STATUS = "/status";
+    String status = "/status";
 
-    String COMMAND = "/command";
+    String command = "/command";
 
-    String USER = "/user";
+    String user = "/user";
 
-    String BAR = "/bar";
+    String bar = "/bar";
 
-    String INSTRUMENT = "/instrument";
+    String instrument = "/instrument";
 
-    String POSITION = "/position";
+    String position = "/position";
 
-    String PNL = "/pnl";
+    String pnl = "/pnl";
 
-    String ORDER = "/order";
+    String order = "/order";
 
-    String PRODUCT = "/product";
+    String product = "/product";
 
-    String STRATEGY = "/strategy";
+    String strategy = "/strategy";
 
-    String PORTFOLIO = "/portfolio";
+    String portfolio = "/portfolio";
 
-    String SIMULATE = "/simulate";
+    String simulate = "/simulate";
 
 }

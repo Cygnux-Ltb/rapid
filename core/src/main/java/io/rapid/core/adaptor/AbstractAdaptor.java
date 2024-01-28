@@ -1,11 +1,11 @@
 package io.rapid.core.adaptor;
 
-import io.rapid.core.account.Account;
-import io.rapid.core.instrument.InstrumentKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.fsm.EnableableComponent;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.lang.exception.ComponentStartupException;
+import io.rapid.core.account.Account;
+import io.rapid.core.instrument.InstrumentKeeper;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         Asserter.nonNull(prefix, "prefix");
         Asserter.nonNull(account, "account");
         this.account = account;
-        this.adaptorId = STR."\{prefix}[\{account.getBrokerName()}:\{account.getInvestorId()}]";
+        this.adaptorId = prefix + "[" + account.getBrokerName() + ":" + account.getInvestorId() + "]";
         AdaptorStorage.putAdaptor(this);
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         } catch (IOException ioe) {
             throw ioe;
         } catch (Exception e) {
-            throw new ComponentStartupException(STR."\{adaptorId} -> \{e.getMessage()}", e);
+            throw new ComponentStartupException(adaptorId + "->" + e.getMessage(), e);
         }
     }
 

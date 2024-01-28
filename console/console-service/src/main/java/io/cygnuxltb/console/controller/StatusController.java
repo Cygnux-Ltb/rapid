@@ -26,7 +26,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.PRODUCT_ID;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.OK;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * 交易系统状态服务
@@ -35,7 +37,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 @RequestMapping(path = "/status", produces = APPLICATION_JSON_UTF8)
 public final class StatusController {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(StatusController.class);
+    private static final Logger log = getLogger(StatusController.class);
 
     private final ConcurrentMap<Integer, StrategySwitch> StrategySwitchMap = MutableMaps.newConcurrentHashMap();
 
@@ -53,7 +55,7 @@ public final class StatusController {
      * 发送状态指令
      *
      * @param request HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping(path = "/command", consumes = APPLICATION_JSON_UTF8)
     public ResponseStatus statusCommand(@RequestBody HttpServletRequest request) {
@@ -83,7 +85,7 @@ public final class StatusController {
             log.info("StrategySwitch : {}", msg);
             //publisher.publish(msg);
         }
-        return ResponseStatus.OK;
+        return OK;
     }
 
     /**
@@ -91,7 +93,7 @@ public final class StatusController {
      *
      * @param productId int
      * @param request   HttpServletRequest
-     * @return ResponseEntity<?>
+     * @return ResponseStatus
      */
     @PutMapping("/update")
     public ResponseStatus updateStatus(@RequestParam(PRODUCT_ID) int productId,
@@ -100,7 +102,7 @@ public final class StatusController {
         Objects.requireNonNull(strategySwitch, "Input StrategySwitch is null");
         strategySwitch.setProductId(productId);
         StrategySwitchMap.put(productId, strategySwitch);
-        return ResponseStatus.OK;
+        return OK;
     }
 
 }

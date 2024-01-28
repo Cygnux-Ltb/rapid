@@ -18,8 +18,9 @@
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
 |userId|int32|false|用户ID|-|
-|strategyId|int32|false||-|
-|tradingDay|int32|false||-|
+|strategyId|int32|false|策略ID|-|
+|startTradingDay|int32|false|开始交易日|-|
+|endTradingDay|int32|false|结束交易日|-|
 
 
 **Request-example:**

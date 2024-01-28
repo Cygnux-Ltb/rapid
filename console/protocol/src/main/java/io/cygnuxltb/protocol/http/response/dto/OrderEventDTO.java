@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.response;
+package io.cygnuxltb.protocol.http.response.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public final class OrderEventDTO {
     private int tradingDay;
 
     /**
-     * strategyId [*]
+     * Strategy ID [*]
      */
     private int strategyId;
 
@@ -33,37 +33,37 @@ public final class OrderEventDTO {
     private String instrumentCode;
 
     /**
-     * investorId [*]
+     * Investor ID [*]
      */
     private String investorId;
 
     /**
-     * brokerId [*]
+     * Broker ID [*]
      */
     private String brokerId;
 
     /**
-     * accountId [*]
+     * Account ID [*]
      */
     private int accountId;
 
     /**
-     * subAccountId [*]
+     * SubAccount ID [*]
      */
     private int subAccountId;
 
     /**
-     * userId [*]
+     * User ID [*]
      */
     private int userId;
 
     /**
-     * ordSysId [*]
+     * Order System ID [*]
      */
     private long ordSysId;
 
     /**
-     * 订单引用
+     * 订单引用(Order Reference)
      */
     private String orderRef;
 

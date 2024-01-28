@@ -1,14 +1,17 @@
 package io.rapid.core.indicator;
 
 import io.mercury.common.collections.Capacity;
-import io.mercury.common.collections.MutableLists;
-import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.util.Optional;
+
+import static io.mercury.common.collections.MutableLists.newFastList;
+import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
 
 @NotThreadSafe
 public final class PointSet<P extends Point> {
@@ -18,8 +21,8 @@ public final class PointSet<P extends Point> {
     private final MutableLongObjectMap<P> map;
 
     private PointSet(Capacity capacity) {
-        this.list = MutableLists.newFastList(capacity.value());
-        this.map = MutableMaps.newLongObjectHashMap(capacity.value());
+        this.list = newFastList(capacity.value());
+        this.map = newLongObjectHashMap(capacity.value());
     }
 
     /**
@@ -75,7 +78,7 @@ public final class PointSet<P extends Point> {
      * @return Optional<P>
      */
     public Optional<P> get(int index) {
-        return index < list.size() ? Optional.ofNullable(list.get(index)) : Optional.empty();
+        return index < list.size() ? ofNullable(list.get(index)) : empty();
     }
 
     /**

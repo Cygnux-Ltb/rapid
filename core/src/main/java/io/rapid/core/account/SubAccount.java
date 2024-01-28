@@ -3,11 +3,14 @@ package io.rapid.core.account;
 import com.typesafe.config.Config;
 import io.mercury.common.cfg.ConfigWrapper;
 import io.mercury.common.fsm.EnableableComponent;
-import io.mercury.common.lang.Asserter;
-import io.mercury.common.util.StringSupport;
 
 import javax.annotation.Nonnull;
 import java.io.Serial;
+
+import static io.mercury.common.lang.Asserter.atWithinRange;
+import static io.mercury.common.lang.Asserter.nonNull;
+import static io.mercury.common.util.StringSupport.nonEmpty;
+import static io.rapid.core.account.AccountStorage.putSubAccount;
 
 /**
  * 系統內使用的虚拟账户
@@ -80,18 +83,18 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     }
 
     public SubAccount(int subAccountId, String subAccountName, long balance, long credit, @Nonnull Account account) {
-        Asserter.atWithinRange(subAccountId, 1, MaxSubAccountId, "subAccountId");
-        Asserter.nonNull(account, "account");
+        atWithinRange(subAccountId, 1, MaxSubAccountId, "subAccountId");
+        nonNull(account, "account");
         this.subAccountId = subAccountId;
         this.account = account;
         this.balance = balance;
         this.credit = credit;
-        if (StringSupport.nonEmpty(subAccountName))
+        if (nonEmpty(subAccountName))
             this.subAccountName = subAccountName;
         else
-            this.subAccountName = STR."SubAccount[\{subAccountId}]=>Account[\{account.getBrokerName()}:\{account.getRemark()}]";
+            this.subAccountName = "SubAccount[" + subAccountId + "]=>Account[" + account.getBrokerName() + ":" + account.getRemark() + "]";
         account.addSubAccount(this);
-        AccountStorage.putSubAccount(this);
+        putSubAccount(this);
         enable();
     }
 

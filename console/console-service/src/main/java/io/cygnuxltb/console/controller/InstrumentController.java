@@ -2,11 +2,10 @@ package io.cygnuxltb.console.controller;
 
 import io.cygnuxltb.console.controller.base.ResponseBean;
 import io.cygnuxltb.console.controller.base.ResponseStatus;
-import io.cygnuxltb.console.controller.util.ControllerUtil;
 import io.cygnuxltb.console.service.InstrumentService;
 import io.cygnuxltb.protocol.http.request.InstrumentPrice;
-import io.cygnuxltb.protocol.http.response.InstrumentDTO;
-import io.cygnuxltb.protocol.http.response.InstrumentSettlementDTO;
+import io.cygnuxltb.protocol.http.response.dto.InstrumentDTO;
+import io.cygnuxltb.protocol.http.response.dto.InstrumentSettlementDTO;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,8 +21,12 @@ import java.util.List;
 
 import static io.cygnuxltb.console.controller.base.HttpParam.INSTRUMENT_CODE;
 import static io.cygnuxltb.console.controller.base.HttpParam.TRADING_DAY;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.BAD_REQUEST;
+import static io.cygnuxltb.console.controller.base.ResponseStatus.OK;
+import static io.cygnuxltb.console.controller.util.ControllerUtil.bodyToObject;
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalInstrumentCode;
-import static io.cygnuxltb.protocol.http.ServiceURI.INSTRUMENT;
+import static io.cygnuxltb.console.controller.util.ControllerUtil.paramIsNull;
+import static io.cygnuxltb.protocol.http.ServiceURI.instrument;
 import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
 
 /**
@@ -32,7 +35,7 @@ import static io.mercury.common.http.MimeType.APPLICATION_JSON_UTF8;
  * @apiNote
  */
 @RestController
-@RequestMapping(path = INSTRUMENT, produces = APPLICATION_JSON_UTF8)
+@RequestMapping(path = instrument, produces = APPLICATION_JSON_UTF8)
 public final class InstrumentController {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentController.class);
@@ -55,12 +58,12 @@ public final class InstrumentController {
      * 获取交易标的
      *
      * @param instrumentCode 交易标的 () [查询多个标的使用','分割]
-     * @return List<InstrumentSettlementDTO>
+     * @return List<InstrumentDTO>
      */
     @GetMapping
     public List<InstrumentDTO> getInstrument(
             @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        if (ControllerUtil.paramIsNull(instrumentCode))
+        if (paramIsNull(instrumentCode))
             return null;
         return service.getInstrument(instrumentCode);
     }
@@ -77,7 +80,7 @@ public final class InstrumentController {
     public List<InstrumentSettlementDTO> getSettlementPrice(
             @RequestParam(TRADING_DAY) int tradingDay,
             @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        if (ControllerUtil.paramIsNull(tradingDay, instrumentCode))
+        if (paramIsNull(tradingDay, instrumentCode))
             return null;
         return service.getInstrumentSettlement(tradingDay, instrumentCode);
     }
@@ -86,14 +89,14 @@ public final class InstrumentController {
      * 获取最新价格
      *
      * @param instrumentCode 交易标的 [查询多个标的使用','分割]
-     * @return List<InstrumentPrice>
+     * @return ResponseBean
      */
     @GetMapping(path = "/price")
     public ResponseBean getLastPrice(
             @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
         if (illegalInstrumentCode(instrumentCode, log))
-            return ResponseStatus.BAD_REQUEST.response("[instrumentCode]不可为空");
-        return ResponseStatus.OK.responseOf(service.getLastPrice(instrumentCode.split(",")));
+            return BAD_REQUEST.response("[instrumentCode]不可为空");
+        return OK.responseOf(service.getLastPrice(instrumentCode.split(",")));
     }
 
     /**
@@ -104,11 +107,11 @@ public final class InstrumentController {
      */
     @PutMapping(path = "/price", produces = APPLICATION_JSON_UTF8)
     public ResponseStatus putLastPrice(@RequestBody HttpServletRequest request) {
-        var price = ControllerUtil.bodyToObject(request, InstrumentPrice.class);
+        var price = bodyToObject(request, InstrumentPrice.class);
         if (price == null)
-            return ResponseStatus.BAD_REQUEST;
+            return BAD_REQUEST;
         service.putLastPrice(price.getInstrumentCode(), price.getLastPrice());
-        return ResponseStatus.OK;
+        return OK;
     }
 
     /**
@@ -133,7 +136,7 @@ public final class InstrumentController {
     @GetMapping(path = "/tradable")
     public ResponseStatus getTradableInstrument(@RequestParam(TRADING_DAY) int tradingDay,
                                                 @RequestParam(INSTRUMENT_CODE) String instrumentCode) {
-        return ResponseStatus.OK;
+        return OK;
     }
 
 }

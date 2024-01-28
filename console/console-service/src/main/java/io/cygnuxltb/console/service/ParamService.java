@@ -4,10 +4,9 @@ import io.cygnuxltb.console.persistence.dao.ParamDao;
 import io.cygnuxltb.console.persistence.entity.SysParamEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
 import io.cygnuxltb.console.service.util.ValidationRule;
-import io.cygnuxltb.protocol.http.response.ParamDTO;
+import io.cygnuxltb.protocol.http.response.dto.ParamDTO;
 import io.mercury.common.character.Charsets;
 import io.mercury.common.lang.Throws;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonParser;
 import jakarta.annotation.Resource;
 import org.apache.commons.io.IOUtils;
@@ -26,11 +25,12 @@ import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalBrokerI
 import static io.cygnuxltb.console.controller.util.ControllerUtil.illegalStrategyName;
 import static io.cygnuxltb.console.persistence.JpaExecutor.insertOrUpdate;
 import static io.cygnuxltb.console.persistence.JpaExecutor.select;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 @Service
 public final class ParamService {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(ParamService.class);
+    private static final Logger log = getLogger(ParamService.class);
 
     private static final Map<String, ValidationRule> validationRuleMap = new HashMap<>();
 
@@ -52,7 +52,7 @@ public final class ParamService {
     }
 
     /**
-     * @param param ParamEntity
+     * @param param SysParamEntity
      * @return int
      */
     public int updateParamSafe(SysParamEntity param) {

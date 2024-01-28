@@ -7,8 +7,8 @@ import io.cygnuxltb.console.persistence.dao.PnlSettlementDao;
 import io.cygnuxltb.console.persistence.entity.TrdPnlEntity;
 import io.cygnuxltb.console.persistence.entity.TrdPnlSettlementEntity;
 import io.cygnuxltb.console.service.util.DtoUtil;
-import io.cygnuxltb.protocol.http.response.PnlDTO;
-import io.cygnuxltb.protocol.http.response.PnlSettlementDTO;
+import io.cygnuxltb.protocol.http.response.dto.PnlDTO;
+import io.cygnuxltb.protocol.http.response.dto.PnlSettlementDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public final class PnlService {
     /**
      * @param strategyId int
      * @param tradingDay int
-     * @return List<PnlEntity>
+     * @return List<PnlDTO>
      */
     public List<PnlDTO> getPnl(int strategyId, int tradingDay) {
         if (configuration.isMock()) {
@@ -54,7 +54,7 @@ public final class PnlService {
     /**
      * @param strategyId int
      * @param tradingDay int
-     * @return List<PnlSettlementEntity>
+     * @return List<PnlSettlementDTO>
      */
     public List<PnlSettlementDTO> getPnlSettlement(int strategyId, int tradingDay) {
         if (configuration.isMock()) {

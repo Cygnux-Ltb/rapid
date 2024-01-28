@@ -13,7 +13,7 @@ public class SysConfiguration {
 
     @PostConstruct
     private void init() {
-        System.out.println(STR."SysConfiguration -> mock == \{mock}");
+        System.out.println(STR."### SysConfiguration -> mock == \{mock}");
     }
 
     public boolean isMock() {

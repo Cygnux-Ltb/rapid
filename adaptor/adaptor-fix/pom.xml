@@ -31,12 +31,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- High-Performance FIX Gateway -->
         <dependency>
-            <groupId>uk.co.real-logic</groupId>
-            <artifactId>artio-core</artifactId>
-            <version>0.144</version>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-aeron</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.paritytrading.philadelphia</groupId>
+            <artifactId>philadelphia-core</artifactId>
+            <version>${philadelphia.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.paritytrading.philadelphia</groupId>
+            <artifactId>philadelphia-fixlatest</artifactId>
+            <version>${philadelphia.version}</version>
         </dependency>
 
     </dependencies>

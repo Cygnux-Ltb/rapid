@@ -1,7 +1,6 @@
 package io.cygnuxltb.console.controller.util;
 
 import io.mercury.common.character.Charsets;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
 import io.mercury.serialization.json.JsonParser;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,9 +10,11 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+
 public final class ControllerUtil {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(ControllerUtil.class);
+    private static final Logger log = getLogger(ControllerUtil.class);
 
     /**
      * 检查参数列表

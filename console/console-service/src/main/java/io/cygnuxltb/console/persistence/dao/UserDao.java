@@ -14,6 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDao extends JpaRepository<SysUserEntity, Long> {
 
+    /**
+     * @param username String
+     * @param email    String
+     * @param phone    String
+     * @return SysUserEntity
+     */
     @Query("SELECT e FROM #{#entityName} e WHERE 1 = 1"
             + " AND (e.username = :username OR e.email = :email OR e.phone = :phone) ")
     SysUserEntity queryBy(@Param("username") String username,

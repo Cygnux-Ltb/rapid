@@ -1,4 +1,4 @@
-package io.cygnuxltb.protocol.http.response;
+package io.cygnuxltb.protocol.http.response.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 /**
  * 订单基本信息
  * [*] 不可为空字段
+ * [V] 可变字段
  *
  * @author yellow013
  */
@@ -31,6 +32,11 @@ public final class OrderDTO {
      * 交易标的代码
      */
     private String instrumentCode;
+
+    /**
+     * 交易标的名称
+     */
+    private String instrumentName;
 
     /**
      * 投资者ID
@@ -81,6 +87,16 @@ public final class OrderDTO {
      * 订单交易类型
      */
     private char side;
+
+    /**
+     * 当前状态 [V]
+     */
+    private int status;
+
+    /**
+     * 当前状态信息
+     */
+    private String statusMsg;
 
     /**
      * 委托价格

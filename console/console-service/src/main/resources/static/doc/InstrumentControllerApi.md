@@ -1,5 +1,96 @@
 
 # 交易标的服务
+## 获取交易标的
+
+**URL:** `/instrument/all`
+
+**Type:** `GET`
+
+
+**Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
+
+**Description:** 获取交易标的
+
+
+
+
+
+**Request-example:**
+```bash
+curl -X GET -i /instrument/all
+```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|instrumentCode|string|交易标的代码|-|
+|instrumentType|string|交易标的类型|-|
+|exchangeCode|string|交易所代码|-|
+|fee|double|交易费用|-|
+|tradable|boolean|可交易标识|-|
+
+**Response-example:**
+```json
+[
+  {
+    "instrumentCode": "",
+    "instrumentType": "",
+    "exchangeCode": "",
+    "fee": 0.0,
+    "tradable": true
+  }
+]
+```
+
+## 获取交易标的
+
+**URL:** `/instrument`
+
+**Type:** `GET`
+
+
+**Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
+
+**Description:** 获取交易标的
+
+
+
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|code|string|true|交易标的 () [查询多个标的使用','分割]|-|
+
+
+**Request-example:**
+```bash
+curl -X GET -i /instrument?code=
+```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|instrumentCode|string|交易标的代码|-|
+|instrumentType|string|交易标的类型|-|
+|exchangeCode|string|交易所代码|-|
+|fee|double|交易费用|-|
+|tradable|boolean|可交易标识|-|
+
+**Response-example:**
+```json
+[
+  {
+    "instrumentCode": "",
+    "instrumentType": "",
+    "exchangeCode": "",
+    "fee": 0.0,
+    "tradable": true
+  }
+]
+```
+
 ## 获取结算信息
 
 **URL:** `/instrument/settlement`

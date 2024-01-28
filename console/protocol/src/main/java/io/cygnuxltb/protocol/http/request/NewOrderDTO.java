@@ -25,7 +25,7 @@ public class NewOrderDTO {
     private int side;
 
     /**
-     * 交易动作 (1: 开仓, 2: 平仓)
+     * 交易动作 (1:开仓; 2:平仓)
      */
     private int action;
 
@@ -35,9 +35,24 @@ public class NewOrderDTO {
     private double offerPrice;
 
     /**
+     * 价格限制类型 (0:无限制; 1:涨停不卖; 2:跌停不买; 3:涨跌停同时限制)
+     */
+    private int priceLimitType;
+
+    /**
      * 委托数量
      */
     private int offerQty;
+
+    /**
+     * 委托开始时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]
+     */
+    private String offerStartTime;
+
+    /**
+     * 委托结束时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]
+     */
+    private String offerEndTime;
 
     /**
      * 订单类型 (1:COMMON, 2:FAK, 3:FOK) [可为空]
@@ -48,5 +63,10 @@ public class NewOrderDTO {
      * 有效类型 (1:GTC, 2:GTD, 3:GFD) [可为空]
      */
     private int valid;
+
+    /**
+     * 请求时间
+     */
+    private long requestTime;
 
 }

@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1701620980639"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1705852605193"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -103,23 +103,31 @@ Page3:
             <li class=""><a class="dd" href="InstrumentController.html#header">4.&nbsp;交易标的服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="InstrumentController.html#_4_1_获取结算信息">4.1.&nbsp;获取结算信息</a>
+                            href="InstrumentController.html#_4_1_获取交易标的">4.1.&nbsp;获取交易标的</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_4_2_获取最新价格">4.2.&nbsp;获取最新价格</a>
+                            href="InstrumentController.html#_4_2_获取交易标的">4.2.&nbsp;获取交易标的</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_4_3_更新最新价格 (內部接口)">4.3.&nbsp;更新最新价格 (內部接口)</a>
+                            href="InstrumentController.html#_4_3_获取结算信息">4.3.&nbsp;获取结算信息</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_4_4_获取交易费用">4.4.&nbsp;获取交易费用</a>
+                            href="InstrumentController.html#_4_4_获取最新价格">4.4.&nbsp;获取最新价格</a>
                     </li>
 
                     <li><a
-                            href="InstrumentController.html#_4_5_获取可交易标的">4.5.&nbsp;获取可交易标的</a>
+                            href="InstrumentController.html#_4_5_更新最新价格 (內部接口)">4.5.&nbsp;更新最新价格 (內部接口)</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#_4_6_获取交易费用">4.6.&nbsp;获取交易费用</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#_4_7_获取可交易标的">4.7.&nbsp;获取可交易标的</a>
                     </li>
                 </ul>
             </li>
@@ -165,18 +173,18 @@ Page3:
                     </li>
 
                     <li><a
-                            href="PortfolioController.html#_7_2_获取用户第一投资组合 (左侧优先股票池)">7.2.&nbsp;获取用户第一投资组合 (左侧优先股票池)</a>
+                            href="PortfolioController.html#_7_2_获取用户第一投资组合 ([page2.jpg]左侧优先股票池)">7.2.&nbsp;获取用户第一投资组合 ([page2.jpg]左侧优先股票池)</a>
                     </li>
 
                     <li><a
-                            href="PortfolioController.html#_7_3_获取用户第二投资组合 (右侧次优股票池)">7.3.&nbsp;获取用户第二投资组合 (右侧次优股票池)</a>
+                            href="PortfolioController.html#_7_3_获取用户第二投资组合 ([page2.jpg]右侧次优股票池)">7.3.&nbsp;获取用户第二投资组合 ([page2.jpg]右侧次优股票池)</a>
                     </li>
                 </ul>
             </li>
             <li class=""><a class="dd" href="PositionController.html#header">8.&nbsp;仓位服务</a>
                 <ul class="sectlevel2" style="display: none">
                     <li><a
-                            href="PositionController.html#_8_1_查询当前持仓">8.1.&nbsp;查询当前持仓</a>
+                            href="PositionController.html#_8_1_查询当前持仓 ([page1.jpg]-持仓板块)">8.1.&nbsp;查询当前持仓 ([page1.jpg]-持仓板块)</a>
                     </li>
                 </ul>
             </li>
@@ -293,15 +301,23 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">strategyId</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock"></p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">策略ID</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">tradingDay</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">startTradingDay</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock"></p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">开始交易日</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">endTradingDay</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">结束交易日</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -322,12 +338,12 @@ Page3:
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2023-12-04 01:29:40</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2024-01-22 00:56:45</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1701620980639"></script>
+<script src="search.js?v=1705852605193"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

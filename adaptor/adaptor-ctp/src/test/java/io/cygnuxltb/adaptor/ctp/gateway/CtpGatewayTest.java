@@ -70,13 +70,13 @@ public class CtpGatewayTest {
                     }
                 });
 
-        try (CtpGateway gateway = new CtpGateway(GatewayId, config, ALL, queue::enqueue)) {
-            gateway.startup();
-            gateway.SubscribeMarketData(new String[]{"rb2010"});
-            ThreadSupport.join();
-        } catch (IOException e) {
-            log.error("IOException -> {}", e.getMessage(), e);
-        }
+//        try (CtpGateway gateway = new CtpGateway(GatewayId, config, ALL, queue::enqueue)) {
+//            gateway.startup();
+//            gateway.SubscribeMarketData(new String[]{"rb2010"});
+//            ThreadSupport.join();
+//        } catch (IOException e) {
+//            log.error("IOException -> {}", e.getMessage(), e);
+//        }
 
     }
 

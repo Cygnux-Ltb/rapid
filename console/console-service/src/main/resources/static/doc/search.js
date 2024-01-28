@@ -49,22 +49,30 @@ api.push({
 })
 api[3].list.push({
     order: '1',
-    desc: '获取结算信息',
+    desc: '获取交易标的',
 });
 api[3].list.push({
     order: '2',
-    desc: '获取最新价格',
+    desc: '获取交易标的',
 });
 api[3].list.push({
     order: '3',
-    desc: '更新最新价格 (內部接口)',
+    desc: '获取结算信息',
 });
 api[3].list.push({
     order: '4',
-    desc: '获取交易费用',
+    desc: '获取最新价格',
 });
 api[3].list.push({
     order: '5',
+    desc: '更新最新价格 (內部接口)',
+});
+api[3].list.push({
+    order: '6',
+    desc: '获取交易费用',
+});
+api[3].list.push({
+    order: '7',
     desc: '获取可交易标的',
 });
 api.push({
@@ -122,11 +130,11 @@ api[6].list.push({
 });
 api[6].list.push({
     order: '2',
-    desc: '获取用户第一投资组合 (左侧优先股票池)',
+    desc: '获取用户第一投资组合 ([page2.jpg]左侧优先股票池)',
 });
 api[6].list.push({
     order: '3',
-    desc: '获取用户第二投资组合 (右侧次优股票池)',
+    desc: '获取用户第二投资组合 ([page2.jpg]右侧次优股票池)',
 });
 api.push({
     alias: 'PositionController',
@@ -137,7 +145,7 @@ api.push({
 })
 api[7].list.push({
     order: '1',
-    desc: '查询当前持仓',
+    desc: '查询当前持仓 ([page1.jpg]-持仓板块)',
 });
 api.push({
     alias: 'ProductController',
