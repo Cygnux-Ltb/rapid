@@ -36,9 +36,29 @@ public class PositionsDTO {
         private String instrumentCode;
 
         /**
-         * 净盈亏
+         * 标的名称
          */
-        private double netPnl;
+        private String instrumentName;
+
+        /**
+         * 盈亏
+         */
+        private double pnl;
+
+        /**
+         * 盈亏百分比
+         */
+        private double pnlPercent;
+
+        /**
+         * 今日净盈亏
+         */
+        private double todayPnl;
+
+        /**
+         * 今日盈亏百分比
+         */
+        private double todayPnlPercent;
 
         /**
          * 成本价
@@ -59,6 +79,11 @@ public class PositionsDTO {
          * 净头寸
          */
         private int netPos;
+
+        /**
+         * 可用头寸
+         */
+        private int availablePos;
 
         /**
          * 持仓时间
