@@ -37,6 +37,4 @@ public class PositionController {
         return service.getPosition(userId);
     }
 
-
-
 }

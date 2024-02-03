@@ -48,14 +48,13 @@ curl -X GET -i /order?accountId=0&strategyId=0&td=0&status=0&code=
 |direction|string|订单方向|-|
 |side|string|订单交易类型|-|
 |status|int32|当前状态 [V]|-|
+|statusName|string|当前状态信息|-|
 |offerPrice|double|委托价格|-|
 |offerQty|int32|委托数量|-|
+|fee|double|交易费用|-|
 |insertTime|string|创建时间|-|
 |cancelTime|string|取消时间|-|
-|frontId|int32|前置机ID|-|
-|sessionId|int32|会话ID|-|
-|fee|double|交易费用|-|
-|channelType|string|交易通道类型|-|
+|adaptorName|string|交易通道类型|-|
 |remark|string|备注|-|
 
 **Response-example:**
@@ -77,14 +76,13 @@ curl -X GET -i /order?accountId=0&strategyId=0&td=0&status=0&code=
     "direction": "",
     "side": "",
     "status": 0,
+    "statusName": "",
     "offerPrice": 0.0,
     "offerQty": 0,
-    "insertTime": "yyyy-MM-dd HH:mm:ss",
-    "cancelTime": "yyyy-MM-dd HH:mm:ss",
-    "frontId": 0,
-    "sessionId": 0,
     "fee": 0.0,
-    "channelType": "",
+    "insertTime": "",
+    "cancelTime": "",
+    "adaptorName": "",
     "remark": ""
   }
 ]
@@ -198,23 +196,24 @@ curl -X GET -i /order/event?strategyId=0&td=0
 
 | Parameter | Type | Required | Description | Since |
 |-----------|------|----------|-------------|-------|
-|userId|int32|false|用户ID|-|
-|instrumentCode|string|false|交易标的 (例: 期货代码, 股票代码)|-|
-|side|int32|false|订单交易类型 (1:买入, 2:卖出)|-|
-|action|int32|false|交易动作 (1:开仓; 2:平仓)|-|
-|offerPrice|double|false|委托价格|-|
-|priceLimitType|int32|false|价格限制类型 (0:无限制; 1:涨停不买; 2:跌停不卖; 3:涨跌停同时限制)|-|
-|offerQty|int32|false|委托数量|-|
-|offerStartTime|string|false|委托开始时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]|-|
-|offerEndTime|string|false|委托结束时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]|-|
-|type|int32|false|订单类型 (1:COMMON, 2:FAK, 3:FOK) [可为空]|-|
-|valid|int32|false|有效类型 (1:GTC, 2:GTD, 3:GFD) [可为空]|-|
-|requestTime|int64|false|请求时间|-|
+|userId|int32|false|[不可为空]用户ID|-|
+|instrumentCode|string|false|[不可为空]交易标的 (例: 期货代码, 股票代码)|-|
+|strategyName|string|false|[可为空]策略名|-|
+|side|int32|false|[不可为空]订单交易类型 (1:买入, 2:卖出)|-|
+|action|int32|false|[不可为空]交易动作 (1:开仓; 2:平仓)|-|
+|offerPrice|double|false|[不可为空]委托价格|-|
+|priceLimitType|int32|false|[可为空, 默认: 0]价格限制类型 (0:无限制; 1:涨停不卖; 2:跌停不买; 3:涨跌停同时限制)|-|
+|offerQty|int32|false|[不可为空]委托数量|-|
+|offerStartTime|string|false|[可为空]委托开始时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]|-|
+|offerEndTime|string|false|[可为空]委托结束时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]|-|
+|type|int32|false|[可为空, 默认: 1]订单类型 (1:COMMON, 2:FAK, 4:FOK)|-|
+|valid|int32|false|[可为空, 默认: 1]有效类型 (1:GTC, 2:GTD, 3:GFD)|-|
+|requestTime|int64|false|[可为空]请求时间, 前端请求时间戳, 可自行填充|-|
 
 
 **Request-example:**
 ```bash
-curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&priceLimitType=0&offerQty=0&type=0&valid=0&requestTime=0&offerEndTime=&offerStartTime=&instrumentCode='
+curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&priceLimitType=0&offerQty=0&type=0&valid=0&requestTime=0&offerEndTime=&instrumentCode=&offerStartTime=&strategyName='
 ```
 
 **Response-example:**

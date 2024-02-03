@@ -83,7 +83,7 @@ public final class CommandController {
         var strategyParam = ControllerUtil.bodyToObject(request, SysParamEntity.class);
         if (strategyParam == null)
             return BAD_REQUEST;
-        log.info("method updateParamSafe recv : {}", strategyParam);
+        log.info("method updateParamSafe received : {}", strategyParam);
         return switch (service.updateParamSafe(strategyParam)) {
             // 更新成功返回Ok状态码
             case 0 -> UPDATED;

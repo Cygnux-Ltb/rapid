@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
 /**
  * 订单基本信息
  * [*] 不可为空字段
@@ -96,7 +94,7 @@ public final class OrderDTO {
     /**
      * 当前状态信息
      */
-    private String statusMsg;
+    private String statusName;
 
     /**
      * 委托价格
@@ -109,34 +107,24 @@ public final class OrderDTO {
     private int offerQty;
 
     /**
-     * 创建时间
-     */
-    private LocalDateTime insertTime;
-
-    /**
-     * 取消时间
-     */
-    private LocalDateTime cancelTime;
-
-    /**
-     * 前置机ID
-     */
-    private int frontId;
-
-    /**
-     * 会话ID
-     */
-    private int sessionId;
-
-    /**
      * 交易费用
      */
     private double fee;
 
     /**
+     * 创建时间
+     */
+    private String insertTime;
+
+    /**
+     * 取消时间
+     */
+    private String cancelTime;
+
+    /**
      * 交易通道类型
      */
-    private String channelType;
+    private String adaptorName;
 
     /**
      * 备注

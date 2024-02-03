@@ -6,7 +6,7 @@
     <meta name="generator" content="smart-doc">
     <title>console-service</title>
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="AllInOne.css?v=1705852605193"/>
+    <link rel="stylesheet" href="AllInOne.css?v=1706715427322"/>
     
     <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
         background: #f7f7f8;
@@ -460,6 +460,13 @@ Page3:
                     </tr>
 
                     <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">statusName</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">当前状态信息</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerPrice</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">委托价格</p></td>
@@ -470,6 +477,13 @@ Page3:
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerQty</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">委托数量</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">fee</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易费用</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
 
@@ -488,28 +502,7 @@ Page3:
                     </tr>
 
                     <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">frontId</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">前置机ID</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">sessionId</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">会话ID</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">fee</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易费用</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-                    </tr>
-
-                    <tr>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">channelType</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">adaptorName</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">交易通道类型</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
@@ -543,14 +536,13 @@ Page3:
     "direction": "",
     "side": "",
     "status": 0,
+    "statusName": "",
     "offerPrice": 0.0,
     "offerQty": 0,
-    "insertTime": "yyyy-MM-dd HH:mm:ss",
-    "cancelTime": "yyyy-MM-dd HH:mm:ss",
-    "frontId": 0,
-    "sessionId": 0,
     "fee": 0.0,
-    "channelType": "",
+    "insertTime": "",
+    "cancelTime": "",
+    "adaptorName": "",
     "remark": ""
   }
 ]</code></pre>
@@ -877,7 +869,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">userId</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">用户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]用户ID</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -885,7 +877,15 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">instrumentCode</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易标的 (例: 期货代码, 股票代码)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]交易标的 (例: 期货代码, 股票代码)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">strategyName</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空]策略名</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -893,7 +893,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">side</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">订单交易类型 (1:买入, 2:卖出)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]订单交易类型 (1:买入, 2:卖出)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -901,7 +901,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易动作 (1:开仓; 2:平仓)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]交易动作 (1:开仓; 2:平仓)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -909,7 +909,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerPrice</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托价格</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]委托价格</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -917,7 +917,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">priceLimitType</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">价格限制类型 (0:无限制; 1:涨停不买; 2:跌停不卖; 3:涨跌停同时限制)</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空, 默认: 0]价格限制类型 (0:无限制; 1:涨停不卖; 2:跌停不买; 3:涨跌停同时限制)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -925,7 +925,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerQty</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托数量</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[不可为空]委托数量</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -933,7 +933,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerStartTime</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托开始时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空]委托开始时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -941,7 +941,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">offerEndTime</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">委托结束时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空]委托结束时间, 可精确到毫米, 时间格式[yyyymmdd-HHMMSS.SSS]</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -949,7 +949,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">订单类型 (1:COMMON, 2:FAK, 3:FOK) [可为空]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空, 默认: 1]订单类型 (1:COMMON, 2:FAK, 4:FOK)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -957,7 +957,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">valid</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">有效类型 (1:GTC, 2:GTD, 3:GFD) [可为空]</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空, 默认: 1]有效类型 (1:GTC, 2:GTD, 3:GFD)</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -965,7 +965,7 @@ Page3:
                     <tr>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">requestTime</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">int64</p></td>
-                        <td class="tableblock halign-left valign-top"><p class="tableblock">请求时间</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">[可为空]请求时间, 前端请求时间戳, 可自行填充</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
                         <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
                     </tr>
@@ -974,7 +974,7 @@ Page3:
                 <div class="paragraph"><p><strong>Request-example:</strong></p></div>
                 <div class="listingblock">
                     <div class="content">
-                        <pre><code class="bash">curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&priceLimitType=0&offerQty=0&type=0&valid=0&requestTime=0&instrumentCode=&offerEndTime=&offerStartTime='</code></pre>
+                        <pre><code class="bash">curl -X POST -H 'Content-Type: APPLICATION_JSON_UTF8' -i /order --data 'userId=0&side=0&action=0&offerPrice=0.0&priceLimitType=0&offerQty=0&type=0&valid=0&requestTime=0&offerStartTime=&instrumentCode=&offerEndTime=&strategyName='</code></pre>
                     </div>
                 </div>
                 <div class="paragraph"><p><strong>Response-example:</strong></p></div>
@@ -1009,12 +1009,12 @@ Page3:
             </div>
         </div>
     </div>
-    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2024-01-22 00:56:45</span><span
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2024-02-01 00:37:07</span><span
             class="footer-modification">Suggestions,contact,support and error reporting on<a
             href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
             href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
 </div>
-<script src="search.js?v=1705852605193"></script>
+<script src="search.js?v=1706715427322"></script>
 <script>
     $(function () {
         const Accordion = function (el, multiple) {

@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
 /**
  * 订单扩展信息表
  * <p>
@@ -94,31 +92,6 @@ public final class OrderExtDTO {
     private long brokerSysId;
 
     /**
-     * volume
-     */
-    private int volume;
-
-    /**
-     * price
-     */
-    private double price;
-
-    /**
-     * insertTime
-     */
-    private LocalDateTime insertTime;
-
-    /**
-     * updateTime
-     */
-    private LocalDateTime updateTime;
-
-    /**
-     * cancelTime
-     */
-    private LocalDateTime cancelTime;
-
-    /**
      * frontId
      */
     private int frontId;
@@ -129,18 +102,18 @@ public final class OrderExtDTO {
     private int sessionId;
 
     /**
-     * fee double 19_4
-     */
-    private double fee;
-
-    /**
      * adaptorType
      */
     private String adaptorType;
 
     /**
+     * adaptorType
+     */
+    private String adaptorName;
+
+    /**
      * remark
      */
-    private String remark;
+    private String extRemark;
 
 }

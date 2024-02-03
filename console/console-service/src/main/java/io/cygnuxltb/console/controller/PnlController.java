@@ -47,7 +47,7 @@ public final class PnlController {
     public List<PnlDTO> getPnl(@RequestParam(TRADING_DAY) int tradingDay,
                                @RequestParam(STRATEGY_ID) int strategyId) {
         if (ControllerUtil.paramIsNull(tradingDay))
-            throw new IllegalArgumentException(STR."get pnl param error -> \{tradingDay}");
+            throw new IllegalArgumentException("get pnl param error -> " + tradingDay);
         return service.getPnl(strategyId, tradingDay);
     }
 
