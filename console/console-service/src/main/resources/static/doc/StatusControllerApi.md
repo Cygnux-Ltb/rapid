@@ -24,9 +24,9 @@ curl -X GET -i /status
 
 | Field | Type | Description | Since |
 |-------|------|-------------|-------|
-|productId|int32||-|
-|strategyId|int32||-|
-|instrumentCode|string||-|
+|productId|int32|No comments found.|-|
+|strategyId|int32|No comments found.|-|
+|instrumentCode|string|No comments found.|-|
 |tradable|boolean|No comments found.|-|
 
 **Response-example:**

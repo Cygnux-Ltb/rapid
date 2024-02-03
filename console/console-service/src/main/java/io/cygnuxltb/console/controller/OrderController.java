@@ -50,7 +50,7 @@ public final class OrderController {
      * @param strategyId     策略ID [int 可选项]
      * @param tradingDay     交易日 [int 可选项, 8位日期格式:YYYYMMDD]
      * @param instrumentCode 交易标的 [String 股票代码/期货代码]
-     * @param status         订单状态 [int 可选项`, 1:委托状态, 2:成交状态, 0或不传为全部状态订单]
+     * @param status         订单状态 [int (可选项), 1:委托状态, 2:成交状态, 0或不传为全部状态订单]
      * @return ResponseBean
      */
     @GetMapping
