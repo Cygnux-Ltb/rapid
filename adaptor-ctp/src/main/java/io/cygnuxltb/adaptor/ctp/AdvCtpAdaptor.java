@@ -11,7 +11,7 @@ import io.cygnuxltb.adaptor.ctp.gateway.FtdcTraderGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.concurrent.ring.RingEventbus;
+import io.mercury.common.concurrent.ring.MpRingEventbus.MpRingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
 import io.rapid.core.account.Account;
@@ -85,7 +85,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
      * @param eventbus RingEventbus<FtdcEvent>
      */
     private AdvCtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
-                          @Nonnull ConnectionMode mode, @Nonnull RingEventbus<FtdcEvent> eventbus) {
+                          @Nonnull ConnectionMode mode, @Nonnull MpRingEventbus<FtdcEvent> eventbus) {
         super(AdvCtpAdaptor.class.getSimpleName(), account);
         this.config = config;
         this.mode = mode;
@@ -374,7 +374,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             this.mode = mode;
         }
 
-        public Adaptor build(RingEventbus<FtdcEvent> eventbus) {
+        public Adaptor build(MpRingEventbus<FtdcEvent> eventbus) {
             return new AdvCtpAdaptor(account, config, mode, eventbus);
         }
 

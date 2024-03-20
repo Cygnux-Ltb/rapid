@@ -13,13 +13,13 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType;
-import io.mercury.common.concurrent.ring.RingEventbus;
+import io.mercury.common.concurrent.ring.MpRingEventbus;
 
 public final class FtdcEventPublisher {
 
-    private final RingEventbus<FtdcEvent> eventbus;
+    private final MpRingEventbus<FtdcEvent> eventbus;
 
-    public FtdcEventPublisher(RingEventbus<FtdcEvent> eventbus) {
+    public FtdcEventPublisher(MpRingEventbus<FtdcEvent> eventbus) {
         this.eventbus = eventbus;
     }
 
