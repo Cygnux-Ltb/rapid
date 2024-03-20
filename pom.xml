@@ -26,9 +26,12 @@
     </developers>
 
     <modules>
+        <module>adaptor-ctp</module>
+        <module>adaptor-fix</module>
+        <module>adaptor-ib</module>
+        <module>adaptor-mt</module>
         <module>core</module>
-        <module>adaptor</module>
-        <module>console</module>
+        <module>protocol</module>
         <module>dashboard</module>
         <module>engine</module>
         <module>example</module>
@@ -40,7 +43,7 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot.version>3.2.2</spring-boot.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
         <avro.version>1.11.3</avro.version>
     </properties>
@@ -51,7 +54,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.12.1</version>
                     <configuration>
                         <compilerArgument>--enable-preview</compilerArgument>
                         <source>${java.version}</source>
@@ -132,6 +135,11 @@
                 <version>${mercury.version}</version>
             </dependency>
             <!-- mercury transport -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-aeron</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-zmq</artifactId>
