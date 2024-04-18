@@ -11,7 +11,7 @@ import io.cygnuxltb.adaptor.ctp.gateway.FtdcTraderGateway;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.concurrent.ring.MpRingEventbus.MpRingEventbus;
+import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ArrayUtil;
 import io.rapid.core.account.Account;

@@ -13,7 +13,7 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType;
-import io.mercury.common.concurrent.ring.MpRingEventbus;
+import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
 
 public final class FtdcEventPublisher {
 
