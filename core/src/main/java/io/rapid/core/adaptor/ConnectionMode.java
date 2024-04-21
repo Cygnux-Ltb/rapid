@@ -2,7 +2,7 @@ package io.rapid.core.adaptor;
 
 public enum ConnectionMode {
 
-    ALL,
+    FULL,
 
     MARKET_DATA,
 

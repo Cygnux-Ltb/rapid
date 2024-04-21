@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.cygnuxltb.jcts.example.launch.ExampleLauncher</mainClass>
+                            <mainClass>io.rapid.example.launch.ExampleLauncher</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

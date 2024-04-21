@@ -1,4 +1,4 @@
-package io.cygnuxltb.jcts.example.strategy;
+package io.rapid.example.strategy;
 
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.indicator.impl.SMA;
@@ -6,7 +6,7 @@ import io.rapid.core.indicator.impl.SmaPoint;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.Order;
-import io.cygnuxltb.jcts.engine.strategy.SingleInstrumentStrategy;
+import io.rapid.engine.strategy.SingleInstrumentStrategy;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params;
 
