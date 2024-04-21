@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.deleted;
+package io.rapid.adaptor.ctp.gateway.deleted;
 
 import ctp.thostapi.thosttraderapiConstants;
 import org.eclipse.collections.api.bimap.ImmutableBiMap;

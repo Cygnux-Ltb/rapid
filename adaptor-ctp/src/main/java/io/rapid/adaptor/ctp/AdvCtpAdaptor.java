@@ -1,15 +1,14 @@
-package io.cygnuxltb.adaptor.ctp;
+package io.rapid.adaptor.ctp;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.cygnuxltb.adaptor.ctp.OrderRefKeeper.OrderRefNotFoundException;
-import io.cygnuxltb.adaptor.ctp.converter.MarketDataConverter;
-import io.cygnuxltb.adaptor.ctp.converter.OrderConverter;
-import io.cygnuxltb.adaptor.ctp.converter.OrderEventConverter;
-import io.cygnuxltb.adaptor.ctp.gateway.FtdcMdGateway;
-import io.cygnuxltb.adaptor.ctp.gateway.FtdcTraderGateway;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
+import io.rapid.adaptor.ctp.converter.MarketDataConverter;
+import io.rapid.adaptor.ctp.converter.OrderConverter;
+import io.rapid.adaptor.ctp.converter.OrderEventConverter;
+import io.rapid.adaptor.ctp.gateway.FtdcMdGateway;
+import io.rapid.adaptor.ctp.gateway.FtdcTraderGateway;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -252,7 +251,7 @@ public class AdvCtpAdaptor extends AbstractAdaptor {
             field.setOrderActionRef(OrderRefKeeper.nextOrderRef());
             traderGateway.ReqOrderAction(field);
             return true;
-        } catch (OrderRefNotFoundException e) {
+        } catch (OrderRefKeeper.OrderRefNotFoundException e) {
             log.error(e.getMessage(), e);
             return false;
         } catch (Exception e) {

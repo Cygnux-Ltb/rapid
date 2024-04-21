@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.spi;
+package io.rapid.adaptor.ctp.gateway.spi;
 
 import ctp.thostapi.CThostFtdcAccountregisterField;
 import ctp.thostapi.CThostFtdcBatchOrderActionField;
@@ -94,7 +94,7 @@ import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
-import io.cygnuxltb.adaptor.ctp.gateway.event.listener.FtdcTraderListener;
+import io.rapid.adaptor.ctp.gateway.event.listener.FtdcTraderListener;
 import io.mercury.common.annotation.NativeSpiImpl;
 
 @NativeSpiImpl

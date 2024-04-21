@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.launch;
+package io.rapid.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;

@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event;
+package io.rapid.adaptor.ctp.gateway.event;
 
 import io.mercury.common.functional.Handler;
 

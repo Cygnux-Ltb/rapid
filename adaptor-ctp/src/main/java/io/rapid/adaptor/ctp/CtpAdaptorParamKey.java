@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp;
+package io.rapid.adaptor.ctp;
 
 import io.mercury.common.cfg.ConfigOption;
 import io.mercury.common.param.ParamKey;

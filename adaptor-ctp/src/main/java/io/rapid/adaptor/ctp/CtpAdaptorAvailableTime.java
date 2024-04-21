@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp;
+package io.rapid.adaptor.ctp;
 
 import io.rapid.core.adaptor.AdaptorAvailableTime;
 

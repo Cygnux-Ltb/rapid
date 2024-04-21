@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway;
+package io.rapid.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcMdApi;
@@ -8,13 +8,15 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
-import io.cygnuxltb.adaptor.ctp.gateway.event.listener.BaseFtdcMdListener;
-import io.cygnuxltb.adaptor.ctp.gateway.spi.FtdcMdSpi;
+import io.rapid.adaptor.ctp.CtpConfig;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
+import io.rapid.adaptor.ctp.gateway.event.listener.BaseFtdcMdListener;
+import io.rapid.adaptor.ctp.gateway.spi.FtdcMdSpi;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.adaptor.ctp.gateway.util.FtdcRspInfoHandler;
+import io.rapid.adaptor.ctp.gateway.util.NativeLibraryManager;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -26,8 +28,6 @@ import java.lang.annotation.Native;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.cygnuxltb.adaptor.ctp.gateway.util.FtdcRspInfoHandler.nonError;
-import static io.cygnuxltb.adaptor.ctp.gateway.util.NativeLibraryManager.tryLoad;
 import static io.mercury.common.datetime.DateTimeUtil.date;
 import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.thread.SleepSupport.sleep;
@@ -41,7 +41,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     // 静态加载FtdcLibrary
     static {
         try {
-            tryLoad();
+            NativeLibraryManager.tryLoad();
         } catch (NativeLibraryException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -185,7 +185,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspUserLogin");
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (RspUserLogin != null) {
                 log.info("FtdcMdGateway::fireRspUserLogin -> FrontID==[{}], SessionID==[{}], TradingDay==[{}]",
                         RspUserLogin.getFrontID(), RspUserLogin.getSessionID(), RspUserLogin.getTradingDay());
@@ -200,7 +200,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspUserLogout(CThostFtdcUserLogoutField UserLogout,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspUserLogout");
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (UserLogout != null) {
                 // TODO 处理用户登出
                 log.info("FtdcMdGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", UserLogout.getBrokerID(),
@@ -231,7 +231,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
     public void fireRspSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("FtdcMdGateway::fireRspSubMarketData");
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (SpecificInstrument != null) {
                 log.info("FtdcMdGateway::fireRspSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
                         RequestID, IsLast, SpecificInstrument.getInstrumentID());

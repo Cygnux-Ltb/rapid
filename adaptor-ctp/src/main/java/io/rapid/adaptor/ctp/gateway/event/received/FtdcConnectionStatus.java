@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event.received;
+package io.rapid.adaptor.ctp.gateway.event.received;
 
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import lombok.Getter;

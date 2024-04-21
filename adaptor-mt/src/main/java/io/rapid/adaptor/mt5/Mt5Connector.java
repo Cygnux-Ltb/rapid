@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.mt5;
+package io.rapid.adaptor.mt5;
 
 public class Mt5Connector {
 

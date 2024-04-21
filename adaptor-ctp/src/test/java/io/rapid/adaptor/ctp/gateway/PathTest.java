@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway;
+package io.rapid.adaptor.ctp.gateway;
 
 import java.io.File;
 import java.util.List;

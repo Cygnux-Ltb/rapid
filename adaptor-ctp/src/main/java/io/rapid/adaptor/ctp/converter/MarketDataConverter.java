@@ -1,6 +1,6 @@
-package io.cygnuxltb.adaptor.ctp.converter;
+package io.rapid.adaptor.ctp.converter;
 
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
 import io.rapid.core.mkd.FastMarketData;
 import org.slf4j.Logger;
 

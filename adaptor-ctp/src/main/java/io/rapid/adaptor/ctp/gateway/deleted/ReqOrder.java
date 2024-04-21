@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.deleted;
+package io.rapid.adaptor.ctp.gateway.deleted;
 
 import java.util.UUID;
 

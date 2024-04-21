@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event.listener;
+package io.rapid.adaptor.ctp.gateway.event.listener;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcForQuoteRspField;

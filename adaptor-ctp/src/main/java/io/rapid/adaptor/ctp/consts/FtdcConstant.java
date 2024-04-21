@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.consts;
+package io.rapid.adaptor.ctp.consts;
 
 
 import io.rapid.core.protocol.avro.enums.OrdStatus;
@@ -41,18 +41,18 @@ import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_TC_IOC;
 import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_AV;
 import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_CV;
 import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_MV;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.BUY;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcDirection.SELL;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_TODAY;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_YESTERDAY;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.OPEN;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.ALL_TRADED;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.CANCELED;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
-import static io.cygnuxltb.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_QUEUEING;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcDirection.BUY;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcDirection.SELL;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_TODAY;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.CLOSE_YESTERDAY;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag.OPEN;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.ALL_TRADED;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.CANCELED;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_NOT_QUEUEING;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.NO_TRADE_QUEUEING;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_NOT_QUEUEING;
+import static io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderStatus.PART_TRADED_QUEUEING;
 
 public interface FtdcConstant {
 

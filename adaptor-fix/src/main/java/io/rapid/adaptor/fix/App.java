@@ -1,4 +1,4 @@
-package io.horizon;
+package io.rapid.adaptor.fix;
 
 /**
  * Hello world!

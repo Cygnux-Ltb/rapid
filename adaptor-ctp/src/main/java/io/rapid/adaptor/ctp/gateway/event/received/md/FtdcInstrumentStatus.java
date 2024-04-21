@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event.received.md;
+package io.rapid.adaptor.ctp.gateway.event.received.md;
 
 import ctp.thostapi.CThostFtdcInstrumentStatusField;
 import lombok.Getter;

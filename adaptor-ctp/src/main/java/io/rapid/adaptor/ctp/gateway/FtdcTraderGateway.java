@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway;
+package io.rapid.adaptor.ctp.gateway;
 
 import ctp.thostapi.CThostFtdcBatchOrderActionField;
 import ctp.thostapi.CThostFtdcInputBatchOrderActionField;
@@ -26,14 +26,16 @@ import ctp.thostapi.CThostFtdcTraderApi;
 import ctp.thostapi.CThostFtdcTraderSpi;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEventPublisher;
-import io.cygnuxltb.adaptor.ctp.gateway.event.listener.BaseFtdcTraderListener;
-import io.cygnuxltb.adaptor.ctp.gateway.spi.FtdcTraderSpi;
+import io.rapid.adaptor.ctp.CtpConfig;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
+import io.rapid.adaptor.ctp.gateway.event.listener.BaseFtdcTraderListener;
+import io.rapid.adaptor.ctp.gateway.spi.FtdcTraderSpi;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.util.StringSupport;
+import io.rapid.adaptor.ctp.gateway.util.FtdcRspInfoHandler;
+import io.rapid.adaptor.ctp.gateway.util.NativeLibraryManager;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -45,8 +47,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static ctp.thostapi.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
-import static io.cygnuxltb.adaptor.ctp.gateway.util.FtdcRspInfoHandler.nonError;
-import static io.cygnuxltb.adaptor.ctp.gateway.util.NativeLibraryManager.tryLoad;
 import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.mercury.common.thread.SleepSupport.sleep;
@@ -60,7 +60,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     // 静态加载FtdcLibrary
     static {
         try {
-            tryLoad();
+            NativeLibraryManager.tryLoad();
         } catch (NativeLibraryException e) {
             log.error(e.getMessage(), e);
             log.error("CTP native library file loading error, System must exit. status -1");
@@ -397,7 +397,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
@@ -424,7 +424,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspUserLogin, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info(
                         "TraderGateway::fireRspUserLogin -> BrokerID==[{}], UserID==[{}], LoginTime==[{}], MaxOrderRef==[{}]",
@@ -453,7 +453,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.warn("TraderGateway::fireRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("TraderGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
@@ -478,7 +478,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspOrderInsert(CThostFtdcInputOrderField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
                 publisher.publish(Field);
@@ -505,7 +505,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
 
         log.info("TraderGateway::fireRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
 
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
@@ -548,7 +548,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspQryOrder(CThostFtdcOrderField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspQryOrder -> AccountID==[{}], OrderRef==[{}], isLast==[{}]",
                         Field.getAccountID(), Field.getOrderRef(), IsLast);
@@ -587,7 +587,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onRspQryInvestorPosition -> InvestorID==[{}], ExchangeID==[{}], " +
                                 "InstrumentID==[{}], Position==[{}], isLast==[{}]",
@@ -613,7 +613,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
         log.info("TraderGateway::fireRspQryTradingAccount, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
+        if (FtdcRspInfoHandler.nonError(RspInfo))
             if (Field != null) {
                 log.info("FtdcCallback::onQryTradingAccount -> AccountID==[{}], Balance==[{}], " +
                                 "Available==[{}], Credit==[{}], WithdrawQuota==[{}], isLast==[{}]",
@@ -636,7 +636,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireRspQryInstrument(CThostFtdcInstrumentField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("TraderGateway::fireRspQryInstrument, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
+        if (FtdcRspInfoHandler.nonError(RspInfo))
             if (Field != null)
                 log.info("Output :: OnRspQryInstrument, ExchangeID==[{}], InstrumentID==[{}]",
                         Field.getExchangeID(), Field.getInstrumentID());
@@ -658,7 +658,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
 
         log.info("TraderGateway::fireRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
+        if (FtdcRspInfoHandler.nonError(RspInfo))
             if (Field != null)
                 log.info(
                         """
@@ -753,7 +753,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     @Override
     public void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field, CThostFtdcRspInfoField RspInfo) {
         log.info("TraderGateway::fireErrRtnOrderInsert");
-        if (nonError(RspInfo)) {
+        if (FtdcRspInfoHandler.nonError(RspInfo)) {
             if (Field != null) {
                 log.info("FtdcCallback::onErrRtnOrderInsert -> OrderRef==[{}], RequestID==[{}]", Field.getOrderRef(),
                         Field.getRequestID());
@@ -776,7 +776,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
     public void fireErrRtnOrderAction(CThostFtdcOrderActionField cField,
                                       CThostFtdcRspInfoField cRspInfo) {
         log.info("TraderGateway::OnErrRtnOrderAction");
-        if (nonError(cRspInfo)) {
+        if (FtdcRspInfoHandler.nonError(cRspInfo)) {
             if (cField != null) {
                 log.info("FtdcCallback::onErrRtnOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",

@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ib.gateway;
+package io.rapid.adaptor.ib;
 
 public final class IbGateway {
 

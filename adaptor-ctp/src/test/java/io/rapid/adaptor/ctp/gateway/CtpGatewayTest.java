@@ -1,10 +1,10 @@
-package io.cygnuxltb.adaptor.ctp.gateway;
+package io.rapid.adaptor.ctp.gateway;
 
-import io.cygnuxltb.adaptor.ctp.CtpConfig;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
-import io.cygnuxltb.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.CtpConfig;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.ScQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

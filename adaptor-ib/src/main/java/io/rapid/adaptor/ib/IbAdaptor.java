@@ -1,4 +1,4 @@
-package io.cygnuxltb.channel.ib.adaptor;
+package io.rapid.adaptor.ib;
 
 public final class IbAdaptor {
 

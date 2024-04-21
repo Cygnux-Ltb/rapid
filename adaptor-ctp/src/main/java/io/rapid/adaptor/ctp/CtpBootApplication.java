@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp;
+package io.rapid.adaptor.ctp;
 
 import io.mercury.common.log4j2.Log4j2Configurator;
 import org.springframework.boot.SpringApplication;

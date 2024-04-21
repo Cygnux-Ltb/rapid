@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.event;
+package io.rapid.adaptor.ctp.gateway.event;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
@@ -12,18 +12,17 @@ import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
 
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.DepthMarketData;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrder;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrderAction;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.MdConnectionStatus;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Order;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.OrderAction;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.RspInfo;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Trade;
-import static io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.TraderConnectionStatus;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.DepthMarketData;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrder;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrderAction;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.MdConnectionStatus;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Order;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.OrderAction;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.RspInfo;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Trade;
+import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.TraderConnectionStatus;
 
 public final class FtdcEventPublisher {
 

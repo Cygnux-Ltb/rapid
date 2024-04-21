@@ -1,8 +1,8 @@
-package io.cygnuxltb.adaptor.ctp.launch;
+package io.rapid.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.cygnuxltb.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
 import io.mercury.common.sys.SysProperties;
 import io.mercury.transport.rmq.AdvancedRmqPublisher;
 

@@ -1,4 +1,4 @@
-package io.cygnuxltb.adaptor.ctp.gateway.util;
+package io.rapid.adaptor.ctp.gateway.util;
 
 import ctp.thostapi.CThostFtdcRspInfoField;
 import org.slf4j.Logger;
