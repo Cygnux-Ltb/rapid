@@ -1,11 +1,12 @@
 package io.rapid.engine.trader;
 
+import io.mercury.common.collections.Capacity;
 import io.rapid.core.order.Order;
 import io.rapid.core.order.Order.OrdStatusException;
-import io.mercury.common.collections.Capacity;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 
 import javax.annotation.Nullable;
+import java.util.function.LongSupplier;
 
 import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
 
@@ -16,23 +17,35 @@ import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
  */
 public final class OrderBook {
 
+    @FunctionalInterface
+    public interface OrderBookFinder extends LongSupplier {
+
+        @Override
+        default long getAsLong() {
+            return getOrdSysId();
+        }
+
+        long getOrdSysId();
+
+    }
+
     /*
-     * 存储本OrderBook里的所有订单, 以ordSysId索引
+     * 存储当前OrderBook里的所有订单, 以ordSysId索引
      */
     private final MutableLongObjectMap<Order> orderMap;
 
     /*
-     * 存储本OrderBook里的所有long订单, 以ordSysId索引
+     * 存储当前OrderBook里的所有long订单, 以ordSysId索引
      */
     private final MutableLongObjectMap<Order> longOrderMap;
 
     /*
-     * 存储本OrderBook里的所有short订单, 以ordSysId索引
+     * 存储当前OrderBook里的所有short订单, 以ordSysId索引
      */
     private final MutableLongObjectMap<Order> shortOrderMap;
 
     /*
-     * 存储本OrderBook里的所有活动状态的订单, 以ordSysId索引
+     * 存储当前OrderBook里的所有活动状态的订单, 以ordSysId索引
      */
     private final MutableLongObjectMap<Order> activeOrderMap;
 
@@ -58,11 +71,11 @@ public final class OrderBook {
      */
     OrderBook(Capacity capacity) {
         this.orderMap = newLongObjectHashMap(capacity.value());
-        this.longOrderMap = newLongObjectHashMap(capacity.half().value());
-        this.shortOrderMap = newLongObjectHashMap(capacity.half().value());
-        this.activeOrderMap = newLongObjectHashMap(capacity.quarter().value());
-        this.activeLongOrderMap = newLongObjectHashMap(capacity.quarter().value());
-        this.activeShortOrderMap = newLongObjectHashMap(capacity.quarter().value());
+        this.longOrderMap = newLongObjectHashMap(capacity.value());
+        this.shortOrderMap = newLongObjectHashMap(capacity.value());
+        this.activeOrderMap = newLongObjectHashMap(capacity.half().value());
+        this.activeLongOrderMap = newLongObjectHashMap(capacity.half().value());
+        this.activeShortOrderMap = newLongObjectHashMap(capacity.half().value());
     }
 
     public MutableLongObjectMap<Order> getOrderMap() {
@@ -132,6 +145,11 @@ public final class OrderBook {
     @Nullable
     public Order getOrder(long ordSysId) {
         return orderMap.get(ordSysId);
+    }
+
+    @Nullable
+    public Order getOrder(OrderBookFinder finder) {
+        return getOrder(finder.getOrdSysId());
     }
 
 }
