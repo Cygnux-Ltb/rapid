@@ -28,7 +28,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
     /**
      * Normal
      */
-    protected ConnectionMode mode = ConnectionMode.ALL;
+    protected ConnectionMode mode = ConnectionMode.FULL;
 
     /**
      * @param prefix  String
