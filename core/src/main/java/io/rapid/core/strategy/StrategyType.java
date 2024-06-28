@@ -1,2 +1,11 @@
-package io.rapid.core.strategy;public class StrategyType {
+package io.rapid.core.strategy;
+
+public enum StrategyType {
+
+    Swing,
+
+    Trend,
+
+    Reversal
+
 }

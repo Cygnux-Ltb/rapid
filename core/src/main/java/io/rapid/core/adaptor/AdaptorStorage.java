@@ -44,7 +44,7 @@ public final class AdaptorStorage implements Serializable {
     /**
      * 存储Adaptor, 使用subAccountId索引
      */
-    private static final MutableIntObjectMap<Adaptor> SubAccountAdaptorMap = newIntObjectHashMap();
+    private static final MutableIntObjectMap<Adaptor> SUB_ACCOUNT_ADAPTOR_MAP = newIntObjectHashMap();
 
     private AdaptorStorage() {
     }
@@ -54,7 +54,7 @@ public final class AdaptorStorage implements Serializable {
     }
 
     public static Adaptor getAdaptor(@Nonnull SubAccount subAccount) {
-        return SubAccountAdaptorMap.get(subAccount.getSubAccountId());
+        return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccount.getSubAccountId());
     }
 
     public static Adaptor getAdaptorByAccountId(int accountId) {
@@ -62,7 +62,7 @@ public final class AdaptorStorage implements Serializable {
     }
 
     public static Adaptor getAdaptorBySubAccountId(int subAccountId) {
-        return SubAccountAdaptorMap.get(subAccountId);
+        return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccountId);
     }
 
     public static void putAdaptor(@Nonnull Adaptor adaptor) {
@@ -71,7 +71,7 @@ public final class AdaptorStorage implements Serializable {
         log.info("Put adaptor to AccountAdaptorMap, accountId==[{}], remark==[{}], adaptorId==[{}]",
                 account.getAccountId(), account.getRemark(), adaptor.getAdaptorId());
         account.getSubAccounts().each(subAccount -> {
-            SubAccountAdaptorMap.put(subAccount.getSubAccountId(), adaptor);
+            SUB_ACCOUNT_ADAPTOR_MAP.put(subAccount.getSubAccountId(), adaptor);
             log.info("Put adaptor to SubAccountAdaptorMap, subAccountId==[{}], subAccountName==[{}], adaptorId==[{}]",
                     subAccount.getSubAccountId(), subAccount.getSubAccountName(), adaptor.getAdaptorId());
         });
