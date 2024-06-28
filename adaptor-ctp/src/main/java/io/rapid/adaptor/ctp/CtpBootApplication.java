@@ -10,7 +10,7 @@ import static io.mercury.common.log4j2.Log4j2Configurator.LogLevel.INFO;
 public class CtpBootApplication {
 
     static {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>[CTP ADAPTOR START]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>[CTP ADAPTOR START]<<<<<<<<<<<<<<<<<<<<<");
         Log4j2Configurator.setLogFolder("rapid");
         Log4j2Configurator.setLogFilename("adaptor-ctp");
         Log4j2Configurator.setLogLevel(INFO);
