@@ -1,5 +1,6 @@
 package io.rapid.engine.trader;
 
+import io.mercury.common.collections.MutableMaps;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.instrument.Instrument;
@@ -21,7 +22,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
 
 /**
  * 统一管理订单<br>
@@ -43,27 +44,27 @@ public final class OrderKeeper implements Serializable {
     /*
      * 存储所有的order
      */
-    private static final OrderBook AllOrders = new OrderBook(Capacity.L09_SIZE);
+    private static final OrderBook AllOrders = new OrderBook(Capacity.L09_512);
 
     /*
      * 按照subAccountId分组存储
      */
-    private static final MutableIntObjectMap<OrderBook> SubAccountOrders = newIntObjectHashMap();
+    private static final MutableIntObjectMap<OrderBook> SubAccountOrders = MutableMaps.newIntObjectMap();
 
     /*
      * 按照accountId分组存储
      */
-    private static final MutableIntObjectMap<OrderBook> AccountOrders = newIntObjectHashMap();
+    private static final MutableIntObjectMap<OrderBook> AccountOrders = MutableMaps.newIntObjectMap();
 
     /*
      * 按照strategyId分组存储
      */
-    private static final MutableIntObjectMap<OrderBook> StrategyOrders = newIntObjectHashMap();
+    private static final MutableIntObjectMap<OrderBook> StrategyOrders = MutableMaps.newIntObjectMap();
 
     /*
      * 按照instrumentId分组存储
      */
-    private static final MutableIntObjectMap<OrderBook> InstrumentOrders = newIntObjectHashMap();
+    private static final MutableIntObjectMap<OrderBook> InstrumentOrders = MutableMaps.newIntObjectMap();
 
     private OrderKeeper() {
     }

@@ -32,7 +32,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
     public AsyncMultiStrategyManager(Capacity capacity) {
         this.queue = spscQueue("AsyncMultiStrategyScheduler-Queue")
-                .capacity(capacity.value()).spinStrategy().process(msg -> {
+                .capacity(capacity.size()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
                         case MarketData -> {
                             FastMarketData marketData = msg.getMarketData();

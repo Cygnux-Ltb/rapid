@@ -48,7 +48,7 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
                                        @Nonnull Params<K> params, Instrument instrument) {
         super(strategyId, strategyName, subAccount, params);
         this.instrument = instrument;
-        this.instruments = ImmutableSets.fromStream();
+        this.instruments = ImmutableSets.from(instrument);
     }
 
 
@@ -62,7 +62,7 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
     public Strategy addAdaptor(@Nonnull TraderAdaptor adaptor) {
         Asserter.nonNull(adaptor, "adaptor");
         log.info("added adaptor, strategyId -> {}, strategyName -> {}, investorId -> {}",
-                id, name, adaptor.account().getInvestorId());
+                id, name, adaptor.getBoundAccount().getInvestorId());
         this.adaptor = adaptor;
         return this;
     }

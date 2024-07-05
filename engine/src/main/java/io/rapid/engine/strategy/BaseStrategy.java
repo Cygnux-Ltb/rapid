@@ -5,7 +5,7 @@ import io.rapid.engine.trader.OrderKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.fsm.EnableableComponent;
+import io.mercury.common.state.EnableableComponent;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.param.ParamKey;
@@ -64,7 +64,7 @@ public abstract class BaseStrategy<K extends ParamKey>
     private boolean initSuccess = false;
 
     // 记录当前策略所有的订单
-    protected final MutableLongObjectMap<Order> orders = MutableMaps.newLongObjectHashMap();
+    protected final MutableLongObjectMap<Order> orders = MutableMaps.newLongObjectMap();
 
     // 策略参数
     protected final Params<K> params;
@@ -112,7 +112,7 @@ public abstract class BaseStrategy<K extends ParamKey>
         } else {
             this.instrument = null;
         }
-        this.instruments = ImmutableSets.getSetFactory().fromStream(Stream.of(instruments));
+        this.instruments = ImmutableSets.from(Stream.of(instruments));
 
     }
 

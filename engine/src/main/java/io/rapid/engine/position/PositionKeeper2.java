@@ -42,7 +42,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentPos = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentPos = MutableMaps.newLongIntMap();
 
     /**
      * [subAccount]的[instrument]最大多仓持仓限制<br>
@@ -50,7 +50,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentLongLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentLongLimit = MutableMaps.newLongIntMap();
 
     /**
      * [subAccount]的[instrument]最大空仓持仓限制<br>
@@ -58,7 +58,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentShortLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap SubAccountInstrumentShortLimit = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]持仓数量<br>
@@ -66,7 +66,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentPos = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentPos = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]最大多仓持仓限制<br>
@@ -74,7 +74,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentLongLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentLongLimit = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]最大空仓持仓限制<br>
@@ -82,7 +82,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentShortLimit = MutableMaps.newLongIntHashMap();
+    private static final MutableLongIntMap AccountInstrumentShortLimit = MutableMaps.newLongIntMap();
 
     private PositionKeeper2() {
     }
