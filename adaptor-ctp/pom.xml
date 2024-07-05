@@ -18,7 +18,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <jvmArguments>-Xmx512m</jvmArguments>
+                    <jvmArguments>-Xmx1024m</jvmArguments>
                 </configuration>
             </plugin>
         </plugins>
@@ -33,43 +33,18 @@
             <groupId>io.mercury</groupId>
             <artifactId>transport-zmq</artifactId>
         </dependency>
-
-        <!-- Jakarta Annotations API -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>3.0.0</version>
         </dependency>
 
-        <!-- Spring Boot autoconfiguration attempts to automatically
-             configure your Spring application based on the jar
-             dependencies that you have added. -->
+        <!-- Spring Context provides access to configured objects like a registry (a context).
+             It inherits its features from Spring Beans and adds support for internationalization,
+             event propagation, resource loading, and the transparent creation of contexts. -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>${spring-boot.version}</version>
-        </dependency>
-
-        <!-- Starter for using Log4j2 for logging.
-             An alternative to spring-boot-starter-logging -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>${spring-boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-jul</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j2-impl</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- PROD CTP JNI API -->

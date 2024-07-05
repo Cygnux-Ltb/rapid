@@ -55,9 +55,9 @@ import static io.mercury.common.thread.ThreadSupport.startNewThread;
 import static io.rapid.adaptor.ctp.gateway.util.FtdcRspInfoHandler.nonError;
 
 @Component
-public final class FtdcTraderGateway extends BaseFtdcTraderListener implements Closeable {
+public final class CtpTraderGateway extends BaseFtdcTraderListener implements Closeable {
 
-    private static final Logger log = getLogger(FtdcTraderGateway.class);
+    private static final Logger log = getLogger(CtpTraderGateway.class);
 
     // 静态加载FtdcLibrary
     static {
@@ -97,7 +97,7 @@ public final class FtdcTraderGateway extends BaseFtdcTraderListener implements C
 
     private final FtdcEventPublisher publisher;
 
-    public FtdcTraderGateway(CtpConfig config, FtdcEventPublisher publisher) {
+    public CtpTraderGateway(CtpConfig config, FtdcEventPublisher publisher) {
         this.config = nonNull(config, "config");
         this.publisher = nonNull(publisher, "publisher");
         this.gatewayId = "GATEWAY-TD-" + config.getBrokerId() + "-" + config.getInvestorId();

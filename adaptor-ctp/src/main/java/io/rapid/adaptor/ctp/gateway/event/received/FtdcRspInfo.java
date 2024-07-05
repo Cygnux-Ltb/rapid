@@ -16,9 +16,13 @@ public class FtdcRspInfo {
     /// 错误信息
     private String ErrorMsg;
 
-    public FtdcRspInfo read(CThostFtdcRspInfoField field) {
+    /**
+     * @param RspInfoField CThostFtdcRspInfoField
+     * @return FtdcRspInfo
+     */
+    public FtdcRspInfo copy(CThostFtdcRspInfoField RspInfoField) {
         return this
-                .setErrorID(field.getErrorID())
-                .setErrorMsg(field.getErrorMsg());
+                .setErrorID(RspInfoField.getErrorID())
+                .setErrorMsg(RspInfoField.getErrorMsg());
     }
 }

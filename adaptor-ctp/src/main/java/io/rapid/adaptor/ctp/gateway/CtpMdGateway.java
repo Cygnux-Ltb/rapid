@@ -11,7 +11,7 @@ import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.adaptor.ctp.CtpConfig;
+import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.rapid.adaptor.ctp.gateway.event.listener.BaseFtdcMdListener;
 import io.rapid.adaptor.ctp.gateway.spi.FtdcMdSpi;
@@ -38,9 +38,9 @@ import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 
 @Component
-public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable {
+public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcMdGateway.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(CtpMdGateway.class);
 
     // 静态加载FtdcLibrary
     static {
@@ -80,7 +80,7 @@ public final class FtdcMdGateway extends BaseFtdcMdListener implements Closeable
      * @param config    CtpConfig
      * @param publisher FtdcEventPublisher
      */
-    public FtdcMdGateway(CtpConfig config, FtdcEventPublisher publisher) {
+    public CtpMdGateway(CtpConfig config, FtdcEventPublisher publisher) {
         this.config = nonNull(config, "config");
         this.publisher = nonNull(publisher, "publisher");
         setGatewayId();

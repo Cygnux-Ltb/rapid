@@ -2,6 +2,7 @@ package io.rapid.adaptor.ctp;
 
 import io.mercury.common.concurrent.ring.RingEventbus;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
+import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.ConnectionMode;
@@ -9,10 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * 使用IOC注入时需要提供的相关Bean
  */
 @Configuration
-public class CtpConnector {
+public class CtpInjector {
 
     @Bean(name = "config")
     public CtpConfig getConfig() {

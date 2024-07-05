@@ -1,6 +1,6 @@
 package io.rapid.adaptor.ctp.gateway;
 
-import io.rapid.adaptor.ctp.CtpConfig;
+import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
 import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;

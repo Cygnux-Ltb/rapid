@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Getter
 public final class FtdcEvent {
 
-    public static final EventFactory<FtdcEvent> FTDC_EVENT_FACTORY = FtdcEvent::new;
+    public static final EventFactory<FtdcEvent> EVENT_FACTORY = FtdcEvent::new;
 
     /**
      * 事件类型
@@ -110,12 +110,14 @@ public final class FtdcEvent {
      */
     private final FtdcRspInfo rspInfo = new FtdcRspInfo();
 
+    /**
+     * For EventFactory call
+     */
     private FtdcEvent() {
-        // For EventFactory call
     }
 
     /**
-     * @author yellow013
+     * 可处理的事件类型
      */
     public enum FtdcRspType {
 

@@ -151,104 +151,107 @@ public final class FtdcInvestorPosition {
     /// 大商所持仓成本差值，只有大商所使用
     private double PositionCostOffset;
 
-
-    public FtdcInvestorPosition read(CThostFtdcInvestorPositionField field) {
+    /**
+     * @param InvestorPositionField CThostFtdcInvestorPositionField
+     * @return FtdcInvestorPosition
+     */
+    public FtdcInvestorPosition copy(CThostFtdcInvestorPositionField InvestorPositionField) {
         return this
                 /// 合约代码
-                .setInstrumentID(field.getInstrumentID())
+                .setInstrumentID(InvestorPositionField.getInstrumentID())
                 /// 经纪公司代码
-                .setBrokerID(field.getBrokerID())
+                .setBrokerID(InvestorPositionField.getBrokerID())
                 /// 投资者代码
-                .setInvestorID(field.getInvestorID())
+                .setInvestorID(InvestorPositionField.getInvestorID())
                 /// 持仓多空方向
-                .setPosiDirection(field.getPosiDirection())
+                .setPosiDirection(InvestorPositionField.getPosiDirection())
                 /// 投机套保标志
-                .setHedgeFlag(field.getHedgeFlag())
+                .setHedgeFlag(InvestorPositionField.getHedgeFlag())
                 /// 持仓日期
-                .setPositionDate(field.getPositionDate())
+                .setPositionDate(InvestorPositionField.getPositionDate())
                 /// 上日持仓
-                .setYdPosition(field.getYdPosition())
+                .setYdPosition(InvestorPositionField.getYdPosition())
                 /// 今日持仓
-                .setPosition(field.getPosition())
+                .setPosition(InvestorPositionField.getPosition())
                 /// 多头冻结
-                .setLongFrozen(field.getLongFrozen())
+                .setLongFrozen(InvestorPositionField.getLongFrozen())
                 /// 空头冻结
-                .setShortFrozen(field.getShortFrozen())
+                .setShortFrozen(InvestorPositionField.getShortFrozen())
                 /// 开仓冻结金额
-                .setLongFrozenAmount(field.getLongFrozenAmount())
+                .setLongFrozenAmount(InvestorPositionField.getLongFrozenAmount())
                 /// 开仓冻结金额
-                .setShortFrozenAmount(field.getShortFrozenAmount())
+                .setShortFrozenAmount(InvestorPositionField.getShortFrozenAmount())
                 /// 开仓量
-                .setOpenVolume(field.getOpenVolume())
+                .setOpenVolume(InvestorPositionField.getOpenVolume())
                 /// 平仓量
-                .setCloseVolume(field.getCloseVolume())
+                .setCloseVolume(InvestorPositionField.getCloseVolume())
                 /// 开仓金额
-                .setOpenAmount(field.getOpenAmount())
+                .setOpenAmount(InvestorPositionField.getOpenAmount())
                 /// 平仓金额
-                .setCloseAmount(field.getCloseAmount())
+                .setCloseAmount(InvestorPositionField.getCloseAmount())
                 /// 持仓成本
-                .setPositionCost(field.getPositionCost())
+                .setPositionCost(InvestorPositionField.getPositionCost())
                 /// 上次占用的保证金
-                .setPreMargin(field.getPreMargin())
+                .setPreMargin(InvestorPositionField.getPreMargin())
                 /// 占用的保证金
-                .setUseMargin(field.getUseMargin())
+                .setUseMargin(InvestorPositionField.getUseMargin())
                 /// 冻结的保证金
-                .setFrozenMargin(field.getFrozenMargin())
+                .setFrozenMargin(InvestorPositionField.getFrozenMargin())
                 /// 冻结的资金
-                .setFrozenCash(field.getFrozenCash())
+                .setFrozenCash(InvestorPositionField.getFrozenCash())
                 /// 冻结的手续费
-                .setFrozenCommission(field.getFrozenCommission())
+                .setFrozenCommission(InvestorPositionField.getFrozenCommission())
                 /// 资金差额
-                .setCashIn(field.getCashIn())
+                .setCashIn(InvestorPositionField.getCashIn())
                 /// 手续费
-                .setCommission(field.getCommission())
+                .setCommission(InvestorPositionField.getCommission())
                 /// 平仓盈亏
-                .setCloseProfit(field.getCloseProfit())
+                .setCloseProfit(InvestorPositionField.getCloseProfit())
                 /// 持仓盈亏
-                .setPositionProfit(field.getPositionProfit())
+                .setPositionProfit(InvestorPositionField.getPositionProfit())
                 /// 上次结算价
-                .setPreSettlementPrice(field.getPreSettlementPrice())
+                .setPreSettlementPrice(InvestorPositionField.getPreSettlementPrice())
                 /// 本次结算价
-                .setSettlementPrice(field.getSettlementPrice())
+                .setSettlementPrice(InvestorPositionField.getSettlementPrice())
                 /// 交易日
-                .setTradingDay(field.getTradingDay())
+                .setTradingDay(InvestorPositionField.getTradingDay())
                 /// 结算编号
-                .setSettlementID(field.getSettlementID())
+                .setSettlementID(InvestorPositionField.getSettlementID())
                 /// 开仓成本
-                .setOpenCost(field.getOpenCost())
+                .setOpenCost(InvestorPositionField.getOpenCost())
                 /// 交易所保证金
-                .setExchangeMargin(field.getExchangeMargin())
+                .setExchangeMargin(InvestorPositionField.getExchangeMargin())
                 /// 组合成交形成的持仓
-                .setCombPosition(field.getCombPosition())
+                .setCombPosition(InvestorPositionField.getCombPosition())
                 /// 组合多头冻结
-                .setCombLongFrozen(field.getCombLongFrozen())
+                .setCombLongFrozen(InvestorPositionField.getCombLongFrozen())
                 /// 组合空头冻结
-                .setCombShortFrozen(field.getCombShortFrozen())
+                .setCombShortFrozen(InvestorPositionField.getCombShortFrozen())
                 /// 逐日盯市平仓盈亏
-                .setCloseProfitByDate(field.getCloseProfitByDate())
+                .setCloseProfitByDate(InvestorPositionField.getCloseProfitByDate())
                 /// 逐笔对冲平仓盈亏
-                .setCloseProfitByTrade(field.getCloseProfitByTrade())
+                .setCloseProfitByTrade(InvestorPositionField.getCloseProfitByTrade())
                 /// 今日持仓
-                .setTodayPosition(field.getTodayPosition())
+                .setTodayPosition(InvestorPositionField.getTodayPosition())
                 /// 保证金率
-                .setMarginRateByMoney(field.getMarginRateByMoney())
+                .setMarginRateByMoney(InvestorPositionField.getMarginRateByMoney())
                 /// 保证金率(按手数)
-                .setMarginRateByVolume(field.getMarginRateByVolume())
+                .setMarginRateByVolume(InvestorPositionField.getMarginRateByVolume())
                 /// 执行冻结
-                .setStrikeFrozen(field.getStrikeFrozen())
+                .setStrikeFrozen(InvestorPositionField.getStrikeFrozen())
                 /// 执行冻结金额
-                .setStrikeFrozenAmount(field.getStrikeFrozenAmount())
+                .setStrikeFrozenAmount(InvestorPositionField.getStrikeFrozenAmount())
                 /// 放弃执行冻结
-                .setAbandonFrozen(field.getAbandonFrozen())
+                .setAbandonFrozen(InvestorPositionField.getAbandonFrozen())
                 /// 交易所代码
-                .setExchangeID(field.getExchangeID())
+                .setExchangeID(InvestorPositionField.getExchangeID())
                 /// 执行冻结的昨仓
-                .setYdStrikeFrozen(field.getYdStrikeFrozen())
+                .setYdStrikeFrozen(InvestorPositionField.getYdStrikeFrozen())
                 /// 投资单元代码
-                .setInvestUnitID(field.getInvestUnitID())
+                .setInvestUnitID(InvestorPositionField.getInvestUnitID())
                 /// 大商所持仓成本差值, 只有大商所使用
                 // 6.3.15 版本使用
-                // .setPositionCostOffset(field.getPositionCostOffset())
+                // .setPositionCostOffset(InvestorPositionField.getPositionCostOffset())
                 ;
     }
 

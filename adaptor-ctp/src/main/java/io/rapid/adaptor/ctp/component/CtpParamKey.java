@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp;
+package io.rapid.adaptor.ctp.component;
 
 import io.mercury.common.config.ConfigOption;
 import io.mercury.common.param.ParamKey;

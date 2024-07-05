@@ -93,13 +93,15 @@ import ctp.thostapi.CThostFtdcTransferBankField;
 import ctp.thostapi.CThostFtdcTransferSerialField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import ctp.thostapi.CThostFtdcUserPasswordUpdateField;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
-
+/**
+ * FtdcTrader SPI 回调基础实现
+ */
 public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
 
-    private static final Logger log = getLogger(BaseFtdcTraderListener.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcTraderListener.class);
 
     protected BaseFtdcTraderListener() {
     }

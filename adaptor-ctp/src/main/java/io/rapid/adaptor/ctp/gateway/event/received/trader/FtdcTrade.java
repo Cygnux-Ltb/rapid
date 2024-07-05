@@ -103,70 +103,73 @@ public final class FtdcTrade {
     /// 投资单元代码
     private String InvestUnitID;
 
-
-    public FtdcTrade read(CThostFtdcTradeField field) {
+    /**
+     * @param TradeField CThostFtdcTradeField
+     * @return FtdcTrade
+     */
+    public FtdcTrade copy(CThostFtdcTradeField TradeField) {
         return this
-                .setBrokerID(field.getBrokerID())
+                .setBrokerID(TradeField.getBrokerID())
 
-                .setInvestorID(field.getInvestorID())
+                .setInvestorID(TradeField.getInvestorID())
 
-                .setInstrumentID(field.getInstrumentID())
+                .setInstrumentID(TradeField.getInstrumentID())
 
-                .setOrderRef(field.getOrderRef())
+                .setOrderRef(TradeField.getOrderRef())
 
-                .setUserID(field.getUserID())
+                .setUserID(TradeField.getUserID())
 
-                .setExchangeID(field.getExchangeID())
+                .setExchangeID(TradeField.getExchangeID())
 
-                .setTradeID(field.getTradeID())
+                .setTradeID(TradeField.getTradeID())
 
-                .setDirection(field.getDirection())
+                .setDirection(TradeField.getDirection())
 
-                .setOrderSysID(field.getOrderSysID())
+                .setOrderSysID(TradeField.getOrderSysID())
 
-                .setParticipantID(field.getParticipantID())
+                .setParticipantID(TradeField.getParticipantID())
 
-                .setClientID(field.getClientID())
+                .setClientID(TradeField.getClientID())
 
-                .setTradingRole(field.getTradingRole())
+                .setTradingRole(TradeField.getTradingRole())
 
-                .setExchangeInstID(field.getExchangeInstID())
+                .setExchangeInstID(TradeField.getExchangeInstID())
 
-                .setOffsetFlag(field.getOffsetFlag())
+                .setOffsetFlag(TradeField.getOffsetFlag())
 
-                .setHedgeFlag(field.getHedgeFlag())
+                .setHedgeFlag(TradeField.getHedgeFlag())
 
-                .setPrice(field.getPrice())
+                .setPrice(TradeField.getPrice())
 
-                .setVolume(field.getVolume())
+                .setVolume(TradeField.getVolume())
 
-                .setTradeDate(field.getTradeDate())
+                .setTradeDate(TradeField.getTradeDate())
 
-                .setTradeTime(field.getTradeTime())
+                .setTradeTime(TradeField.getTradeTime())
 
-                .setTradeType(field.getTradeType())
+                .setTradeType(TradeField.getTradeType())
 
-                .setPriceSource(field.getPriceSource())
+                .setPriceSource(TradeField.getPriceSource())
 
-                .setTraderID(field.getTraderID())
+                .setTraderID(TradeField.getTraderID())
 
-                .setOrderLocalID(field.getOrderLocalID())
+                .setOrderLocalID(TradeField.getOrderLocalID())
 
-                .setClearingPartID(field.getClearingPartID())
+                .setClearingPartID(TradeField.getClearingPartID())
 
-                .setBusinessUnit(field.getBusinessUnit())
+                .setBusinessUnit(TradeField.getBusinessUnit())
 
-                .setSequenceNo(field.getSequenceNo())
+                .setSequenceNo(TradeField.getSequenceNo())
 
-                .setTradingDay(field.getTradingDay())
+                .setTradingDay(TradeField.getTradingDay())
 
-                .setSettlementID(field.getSettlementID())
+                .setSettlementID(TradeField.getSettlementID())
 
-                .setBrokerOrderSeq(field.getBrokerOrderSeq())
+                .setBrokerOrderSeq(TradeField.getBrokerOrderSeq())
 
-                .setTradeSource(field.getTradeSource())
+                .setTradeSource(TradeField.getTradeSource())
 
-                .setInvestUnitID(field.getInvestUnitID())
+                .setInvestUnitID(TradeField.getInvestUnitID())
 
                 ;
     }

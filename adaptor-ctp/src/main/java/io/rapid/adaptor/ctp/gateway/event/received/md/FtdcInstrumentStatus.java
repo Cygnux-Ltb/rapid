@@ -58,18 +58,22 @@ public class FtdcInstrumentStatus {
      */
     private char EnterReason;
 
-    public FtdcInstrumentStatus read(CThostFtdcInstrumentStatusField field) {
+    /**
+     * @param InstrumentStatusField CThostFtdcInstrumentStatusField
+     * @return FtdcInstrumentStatus
+     */
+    public FtdcInstrumentStatus copy(CThostFtdcInstrumentStatusField InstrumentStatusField) {
         return this
                 // 交易所代码, 合约在交易所的代码, 结算组代码, 合约代码
-                .setExchangeID(field.getExchangeID())
-                .setExchangeInstID(field.getExchangeInstID())
-                .setSettlementGroupID(field.getSettlementGroupID())
-                .setInstrumentID(field.getInstrumentID())
+                .setExchangeID(InstrumentStatusField.getExchangeID())
+                .setExchangeInstID(InstrumentStatusField.getExchangeInstID())
+                .setSettlementGroupID(InstrumentStatusField.getSettlementGroupID())
+                .setInstrumentID(InstrumentStatusField.getInstrumentID())
                 // 合约交易状态, 交易阶段编号, 进入本状态时间, 进入本状态原因
-                .setInstrumentStatus(field.getInstrumentStatus())
-                .setTradingSegmentSN(field.getTradingSegmentSN())
-                .setEnterTime(field.getEnterTime())
-                .setEnterReason(field.getEnterReason());
+                .setInstrumentStatus(InstrumentStatusField.getInstrumentStatus())
+                .setTradingSegmentSN(InstrumentStatusField.getTradingSegmentSN())
+                .setEnterTime(InstrumentStatusField.getEnterTime())
+                .setEnterReason(InstrumentStatusField.getEnterReason());
     }
 
 }

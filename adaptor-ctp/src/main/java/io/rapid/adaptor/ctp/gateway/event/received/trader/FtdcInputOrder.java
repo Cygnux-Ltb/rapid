@@ -100,38 +100,42 @@ public final class FtdcInputOrder {
     /// MAC地址
     private String MacAddress;
 
-    public FtdcInputOrder read(CThostFtdcInputOrderField field) {
+    /**
+     * @param InputOrderField CThostFtdcInputOrderField
+     * @return FtdcInputOrder
+     */
+    public FtdcInputOrder copy(CThostFtdcInputOrderField InputOrderField) {
         return this
-                .setBrokerID(field.getBrokerID())
-                .setInvestorID(field.getInvestorID())
-                .setInstrumentID(field.getInstrumentID())
-                .setOrderRef(field.getOrderRef())
-                .setUserID(field.getUserID())
-                .setOrderPriceType(field.getOrderPriceType())
-                .setDirection(field.getDirection())
-                .setCombOffsetFlag(field.getCombOffsetFlag())
-                .setCombHedgeFlag(field.getCombHedgeFlag())
-                .setLimitPrice(field.getLimitPrice())
-                .setVolumeTotalOriginal(field.getVolumeTotalOriginal())
-                .setTimeCondition(field.getTimeCondition())
-                .setGTDDate(field.getGTDDate())
-                .setVolumeCondition(field.getVolumeCondition())
-                .setMinVolume(field.getMinVolume())
-                .setContingentCondition(field.getContingentCondition())
-                .setStopPrice(field.getStopPrice())
-                .setForceCloseReason(field.getForceCloseReason())
-                .setIsAutoSuspend(field.getIsAutoSuspend())
-                .setBusinessUnit(field.getBusinessUnit())
-                .setRequestID(field.getRequestID())
-                .setUserForceClose(field.getUserForceClose())
-                .setIsSwapOrder(field.getIsSwapOrder())
-                .setExchangeID(field.getExchangeID())
-                .setInvestUnitID(field.getInvestUnitID())
-                .setAccountID(field.getAccountID())
-                .setCurrencyID(field.getCurrencyID())
-                .setClientID(field.getClientID())
-                .setIPAddress(field.getIPAddress())
-                .setMacAddress(field.getMacAddress());
+                .setBrokerID(InputOrderField.getBrokerID())
+                .setInvestorID(InputOrderField.getInvestorID())
+                .setInstrumentID(InputOrderField.getInstrumentID())
+                .setOrderRef(InputOrderField.getOrderRef())
+                .setUserID(InputOrderField.getUserID())
+                .setOrderPriceType(InputOrderField.getOrderPriceType())
+                .setDirection(InputOrderField.getDirection())
+                .setCombOffsetFlag(InputOrderField.getCombOffsetFlag())
+                .setCombHedgeFlag(InputOrderField.getCombHedgeFlag())
+                .setLimitPrice(InputOrderField.getLimitPrice())
+                .setVolumeTotalOriginal(InputOrderField.getVolumeTotalOriginal())
+                .setTimeCondition(InputOrderField.getTimeCondition())
+                .setGTDDate(InputOrderField.getGTDDate())
+                .setVolumeCondition(InputOrderField.getVolumeCondition())
+                .setMinVolume(InputOrderField.getMinVolume())
+                .setContingentCondition(InputOrderField.getContingentCondition())
+                .setStopPrice(InputOrderField.getStopPrice())
+                .setForceCloseReason(InputOrderField.getForceCloseReason())
+                .setIsAutoSuspend(InputOrderField.getIsAutoSuspend())
+                .setBusinessUnit(InputOrderField.getBusinessUnit())
+                .setRequestID(InputOrderField.getRequestID())
+                .setUserForceClose(InputOrderField.getUserForceClose())
+                .setIsSwapOrder(InputOrderField.getIsSwapOrder())
+                .setExchangeID(InputOrderField.getExchangeID())
+                .setInvestUnitID(InputOrderField.getInvestUnitID())
+                .setAccountID(InputOrderField.getAccountID())
+                .setCurrencyID(InputOrderField.getCurrencyID())
+                .setClientID(InputOrderField.getClientID())
+                .setIPAddress(InputOrderField.getIPAddress())
+                .setMacAddress(InputOrderField.getMacAddress());
     }
 
 

@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.converter;
+package io.rapid.adaptor.ctp.component;
 
 import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
 import io.rapid.core.mkd.FastMarketData;

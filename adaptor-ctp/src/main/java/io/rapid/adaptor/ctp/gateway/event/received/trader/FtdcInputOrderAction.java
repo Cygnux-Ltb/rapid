@@ -61,25 +61,29 @@ public final class FtdcInputOrderAction {
     /// MAC地址
     private String MacAddress;
 
-    public FtdcInputOrderAction read(CThostFtdcInputOrderActionField field) {
+    /**
+     * @param InputOrderActionField CThostFtdcInputOrderActionField
+     * @return FtdcInputOrderAction
+     */
+    public FtdcInputOrderAction copy(CThostFtdcInputOrderActionField InputOrderActionField) {
         return this
-                .setBrokerID(field.getBrokerID())
-                .setInvestorID(field.getInvestorID())
-                .setOrderActionRef(field.getOrderActionRef())
-                .setOrderRef(field.getOrderRef())
-                .setRequestID(field.getRequestID())
-                .setFrontID(field.getFrontID())
-                .setSessionID(field.getSessionID())
-                .setExchangeID(field.getExchangeID())
-                .setOrderSysID(field.getOrderSysID())
-                .setActionFlag(field.getActionFlag())
-                .setLimitPrice(field.getLimitPrice())
-                .setVolumeChange(field.getVolumeChange())
-                .setUserID(field.getUserID())
-                .setInstrumentID(field.getInstrumentID())
-                .setInvestUnitID(field.getInvestUnitID())
-                .setIPAddress(field.getIPAddress())
-                .setMacAddress(field.getMacAddress());
+                .setBrokerID(InputOrderActionField.getBrokerID())
+                .setInvestorID(InputOrderActionField.getInvestorID())
+                .setOrderActionRef(InputOrderActionField.getOrderActionRef())
+                .setOrderRef(InputOrderActionField.getOrderRef())
+                .setRequestID(InputOrderActionField.getRequestID())
+                .setFrontID(InputOrderActionField.getFrontID())
+                .setSessionID(InputOrderActionField.getSessionID())
+                .setExchangeID(InputOrderActionField.getExchangeID())
+                .setOrderSysID(InputOrderActionField.getOrderSysID())
+                .setActionFlag(InputOrderActionField.getActionFlag())
+                .setLimitPrice(InputOrderActionField.getLimitPrice())
+                .setVolumeChange(InputOrderActionField.getVolumeChange())
+                .setUserID(InputOrderActionField.getUserID())
+                .setInstrumentID(InputOrderActionField.getInstrumentID())
+                .setInvestUnitID(InputOrderActionField.getInvestUnitID())
+                .setIPAddress(InputOrderActionField.getIPAddress())
+                .setMacAddress(InputOrderActionField.getMacAddress());
     }
 
 }

@@ -13,6 +13,7 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
+import org.springframework.stereotype.Component;
 
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.DepthMarketData;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrder;
@@ -24,59 +25,16 @@ import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.RspInfo;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Trade;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.TraderConnectionStatus;
 
+@Component
 public final class FtdcEventPublisher {
 
     private final MpRingEventbus<FtdcEvent> eventbus;
 
+    /**
+     * @param eventbus MpRingEventbus<FtdcEvent>
+     */
     public FtdcEventPublisher(MpRingEventbus<FtdcEvent> eventbus) {
         this.eventbus = eventbus;
-    }
-
-    /**
-     * @param field     CThostFtdcRspInfoField
-     * @param requestId int
-     * @param isLast    boolean
-     */
-    public void publish(CThostFtdcRspInfoField field, int requestId, boolean isLast) {
-        eventbus.publish((event, sequence) ->
-                event.setType(RspInfo)
-                        .setRequestId(requestId)
-                        .setLast(isLast)
-                        .getRspInfo()
-                        .read(field));
-    }
-
-    /**
-     * @param field CThostFtdcDepthMarketDataField
-     */
-    public void publish(CThostFtdcDepthMarketDataField field) {
-        eventbus.publish((event, sequence) ->
-                event.setType(DepthMarketData)
-                        .getDepthMarketData()
-                        .read(field));
-    }
-
-
-    /**
-     * @param field  CThostFtdcOrderField
-     * @param isLast boolean
-     */
-    public void publish(CThostFtdcOrderField field, boolean isLast) {
-        eventbus.publish((event, sequence) ->
-                event.setType(Order)
-                        .setLast(isLast)
-                        .getOrder()
-                        .read(field));
-    }
-
-    /**
-     * @param field CThostFtdcTradeField
-     */
-    public void publish(CThostFtdcTradeField field) {
-        eventbus.publish((event, sequence) ->
-                event.setType(Trade)
-                        .getTrade()
-                        .read(field));
     }
 
     /**
@@ -93,7 +51,7 @@ public final class FtdcEventPublisher {
                         .setRequestId(requestId)
                         .setLast(isLast)
                         .getConnectionStatus()
-                        .read(field));
+                        .copy(field));
     }
 
     /**
@@ -119,13 +77,62 @@ public final class FtdcEventPublisher {
                         .setRequestId(requestId)
                         .setLast(isLast)
                         .getConnectionStatus()
-                        .read(field));
+                        .copy(field));
     }
 
 
     public void publishTraderUnavailable(int reason) {
 
     }
+
+
+    /**
+     * @param field     CThostFtdcRspInfoField
+     * @param requestId int
+     * @param isLast    boolean
+     */
+    public void publish(CThostFtdcRspInfoField field, int requestId, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                event.setType(RspInfo)
+                        .setRequestId(requestId)
+                        .setLast(isLast)
+                        .getRspInfo()
+                        .copy(field));
+    }
+
+    /**
+     * @param field CThostFtdcDepthMarketDataField
+     */
+    public void publish(CThostFtdcDepthMarketDataField field) {
+        eventbus.publish((event, sequence) ->
+                event.setType(DepthMarketData)
+                        .getDepthMarketData()
+                        .copy(field));
+    }
+
+
+    /**
+     * @param field  CThostFtdcOrderField
+     * @param isLast boolean
+     */
+    public void publish(CThostFtdcOrderField field, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                event.setType(Order)
+                        .setLast(isLast)
+                        .getOrder()
+                        .copy(field));
+    }
+
+    /**
+     * @param field CThostFtdcTradeField
+     */
+    public void publish(CThostFtdcTradeField field) {
+        eventbus.publish((event, sequence) ->
+                event.setType(Trade)
+                        .getTrade()
+                        .copy(field));
+    }
+
 
     /**
      * @param field CThostFtdcInputOrderField
@@ -134,7 +141,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(InputOrder)
                         .getInputOrder()
-                        .read(field));
+                        .copy(field));
     }
 
     /**
@@ -144,7 +151,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(InputOrderAction)
                         .getInputOrderAction()
-                        .read(field));
+                        .copy(field));
     }
 
     /**
@@ -154,7 +161,7 @@ public final class FtdcEventPublisher {
         eventbus.publish((event, sequence) ->
                 event.setType(OrderAction)
                         .getOrderAction()
-                        .read(field));
+                        .copy(field));
     }
 
 

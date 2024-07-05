@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp;
+package io.rapid.adaptor.ctp.component;
 
 import com.typesafe.config.Config;
 import ctp.thostapi.CThostFtdcReqAuthenticateField;
@@ -17,19 +17,19 @@ import java.time.LocalDateTime;
 
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
-import static io.rapid.adaptor.ctp.CtpParamKey.AccountId;
-import static io.rapid.adaptor.ctp.CtpParamKey.AppId;
-import static io.rapid.adaptor.ctp.CtpParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.CtpParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.CtpParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.CtpParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.CtpParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.CtpParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.CtpParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.CtpParamKey.Password;
-import static io.rapid.adaptor.ctp.CtpParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.CtpParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.CtpParamKey.UserId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.AccountId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.AppId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.AuthCode;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.BrokerId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.CurrencyId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.InvestorId;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.IpAddr;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.MacAddr;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.MdAddr;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.Password;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.TraderAddr;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.TradingDay;
+import static io.rapid.adaptor.ctp.component.CtpParamKey.UserId;
 import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
 
 @Getter

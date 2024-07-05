@@ -1,17 +1,16 @@
-package io.rapid.adaptor.ctp.converter;
+package io.rapid.adaptor.ctp.component;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
-import io.rapid.adaptor.ctp.CtpConfig;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcActionFlag;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcContingentCondition;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcDirection;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcForceCloseReason;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcHedgeFlag;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOffsetFlag;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcOrderPrice;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcTimeCondition;
-import io.rapid.adaptor.ctp.consts.FtdcConstant.FtdcVolumeCondition;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcActionFlag;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcContingentCondition;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcDirection;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcForceCloseReason;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcHedgeFlag;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOffsetFlag;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOrderPrice;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcTimeCondition;
+import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcVolumeCondition;
 import io.rapid.core.protocol.avro.request.CancelOrder;
 import io.rapid.core.protocol.avro.request.NewOrder;
 import org.slf4j.Logger;

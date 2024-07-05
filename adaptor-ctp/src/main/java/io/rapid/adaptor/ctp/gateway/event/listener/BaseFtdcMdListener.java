@@ -6,13 +6,15 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
-
+/**
+ * FtdcMd SPI 回调基础实现
+ */
 public abstract class BaseFtdcMdListener implements FtdcMdListener {
 
-    private static final Logger log = getLogger(BaseFtdcMdListener.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcMdListener.class);
 
     protected BaseFtdcMdListener() {
     }

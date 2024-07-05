@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp;
+package io.rapid.adaptor.ctp.component;
 
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.thread.SleepSupport;
@@ -35,9 +35,7 @@ public class OrderRefKeeper {
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectMap(L10_2048.size());
 
-    private final static OrderRefKeeper INSTANCE = new OrderRefKeeper();
-
-    private OrderRefKeeper() {
+    public OrderRefKeeper() {
     }
 
     public void put(String orderRef, long ordSysId) {
@@ -111,8 +109,10 @@ public class OrderRefKeeper {
 
     public static void main(String[] args) {
 
+        var keeper = new OrderRefKeeper();
+
         for (int i = 0; i < 1000; i++) {
-            System.out.println(INSTANCE.nextOrderRef());
+            System.out.println(keeper.nextOrderRef());
             SleepSupport.sleep(2);
         }
 

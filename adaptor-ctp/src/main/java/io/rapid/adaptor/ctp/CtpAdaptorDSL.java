@@ -1,6 +1,7 @@
 package io.rapid.adaptor.ctp;
 
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
+import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.Adaptor;
@@ -15,9 +16,9 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  *
  * @author yellow013
  */
-public class AdvCtpAdaptor extends CtpAdaptor {
+public class CtpAdaptorDSL extends CtpAdaptor {
 
-    private static final Logger log = getLogger(AdvCtpAdaptor.class);
+    private static final Logger log = getLogger(CtpAdaptorDSL.class);
 
     /**
      * 传入InboundScheduler实现, 由构造函数在内部转换为MPSC队列缓冲区
@@ -27,7 +28,7 @@ public class AdvCtpAdaptor extends CtpAdaptor {
      * @param mode     ConnectionMode
      * @param eventbus RingEventbus<FtdcEvent>
      */
-    protected AdvCtpAdaptor(@Nonnull Account account,
+    protected CtpAdaptorDSL(@Nonnull Account account,
                             @Nonnull CtpConfig config,
                             @Nonnull ConnectionMode mode,
                             @Nonnull MpRingEventbus<FtdcEvent> eventbus) {

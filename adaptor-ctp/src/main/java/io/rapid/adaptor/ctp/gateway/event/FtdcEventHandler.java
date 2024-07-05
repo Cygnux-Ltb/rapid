@@ -4,5 +4,5 @@ import io.mercury.common.functional.Handler;
 
 @FunctionalInterface
 public interface FtdcEventHandler extends Handler<FtdcEvent> {
-
+    
 }

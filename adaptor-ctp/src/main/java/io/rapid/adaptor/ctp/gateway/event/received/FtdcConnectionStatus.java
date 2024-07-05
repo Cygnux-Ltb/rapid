@@ -52,25 +52,29 @@ public class FtdcConnectionStatus {
     /// 能源中心时间
     private String INETime;
 
-    public FtdcConnectionStatus read(CThostFtdcRspUserLoginField field) {
+    /**
+     * @param RspUserLoginField CThostFtdcRspUserLoginField
+     * @return FtdcConnectionStatus
+     */
+    public FtdcConnectionStatus copy(CThostFtdcRspUserLoginField RspUserLoginField) {
         return this
                 // 交易日, 登录成功时间
-                .setTradingDay(field.getTradingDay())
-                .setLoginTime(field.getLoginTime())
+                .setTradingDay(RspUserLoginField.getTradingDay())
+                .setLoginTime(RspUserLoginField.getLoginTime())
                 // 经纪公司代码, 用户代码, 交易系统名称
-                .setBrokerID(field.getBrokerID())
-                .setUserID(field.getUserID())
-                .setSystemName(field.getSystemName())
+                .setBrokerID(RspUserLoginField.getBrokerID())
+                .setUserID(RspUserLoginField.getUserID())
+                .setSystemName(RspUserLoginField.getSystemName())
                 // 前置编号, 会话编号, 最大报单引用
-                .setFrontID(field.getFrontID())
-                .setSessionID(field.getSessionID())
-                .setMaxOrderRef(field.getMaxOrderRef())
+                .setFrontID(RspUserLoginField.getFrontID())
+                .setSessionID(RspUserLoginField.getSessionID())
+                .setMaxOrderRef(RspUserLoginField.getMaxOrderRef())
                 // 上期所时间, 大商所时间, 郑商所时间, 中金所时间, 能源中心时间
-                .setSHFETime(field.getSHFETime())
-                .setDCETime(field.getDCETime())
-                .setCZCETime(field.getCZCETime())
-                .setFFEXTime(field.getFFEXTime())
-                .setINETime(field.getINETime());
+                .setSHFETime(RspUserLoginField.getSHFETime())
+                .setDCETime(RspUserLoginField.getDCETime())
+                .setCZCETime(RspUserLoginField.getCZCETime())
+                .setFFEXTime(RspUserLoginField.getFFEXTime())
+                .setINETime(RspUserLoginField.getINETime());
     }
 
 }

@@ -1,6 +1,5 @@
-package io.rapid.adaptor.ctp.converter;
+package io.rapid.adaptor.ctp.component;
 
-import io.rapid.adaptor.ctp.OrderRefKeeper;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrder;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderAction;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
@@ -15,9 +14,9 @@ import org.springframework.stereotype.Component;
 import static io.mercury.common.datetime.EpochTime.getEpochMicros;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
-import static io.rapid.adaptor.ctp.consts.FtdcConstant.withDirection;
-import static io.rapid.adaptor.ctp.consts.FtdcConstant.withOffsetFlag;
-import static io.rapid.adaptor.ctp.consts.FtdcConstant.withOrderStatus;
+import static io.rapid.adaptor.ctp.consts.ConstMapper.withDirection;
+import static io.rapid.adaptor.ctp.consts.ConstMapper.withOffsetFlag;
+import static io.rapid.adaptor.ctp.consts.ConstMapper.withOrderStatus;
 import static io.rapid.core.instrument.futures.ChinaFutures.FixedMultiplier;
 import static io.rapid.core.protocol.avro.event.OrderEvent.newBuilder;
 import static java.lang.Integer.parseInt;

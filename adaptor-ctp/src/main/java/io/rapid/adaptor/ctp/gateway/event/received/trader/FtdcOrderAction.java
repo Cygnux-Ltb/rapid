@@ -97,66 +97,69 @@ public final class FtdcOrderAction {
     /// MAC地址
     private String MacAddress;
 
-
-    public FtdcOrderAction read(CThostFtdcOrderActionField field) {
+    /**
+     * @param OrderActionField CThostFtdcOrderActionField
+     * @return FtdcOrderAction
+     */
+    public FtdcOrderAction copy(CThostFtdcOrderActionField OrderActionField) {
         return this
-                .setBrokerID(field.getBrokerID())
+                .setBrokerID(OrderActionField.getBrokerID())
 
-                .setInvestorID(field.getInvestorID())
+                .setInvestorID(OrderActionField.getInvestorID())
 
-                .setOrderActionRef(field.getOrderActionRef())
+                .setOrderActionRef(OrderActionField.getOrderActionRef())
 
-                .setOrderRef(field.getOrderRef())
+                .setOrderRef(OrderActionField.getOrderRef())
 
-                .setRequestID(field.getRequestID())
+                .setRequestID(OrderActionField.getRequestID())
 
-                .setFrontID(field.getFrontID())
+                .setFrontID(OrderActionField.getFrontID())
 
-                .setSessionID(field.getSessionID())
+                .setSessionID(OrderActionField.getSessionID())
 
-                .setExchangeID(field.getExchangeID())
+                .setExchangeID(OrderActionField.getExchangeID())
 
-                .setOrderSysID(field.getOrderSysID())
+                .setOrderSysID(OrderActionField.getOrderSysID())
 
-                .setActionFlag(field.getActionFlag())
+                .setActionFlag(OrderActionField.getActionFlag())
 
-                .setLimitPrice(field.getLimitPrice())
+                .setLimitPrice(OrderActionField.getLimitPrice())
 
-                .setVolumeChange(field.getVolumeChange())
+                .setVolumeChange(OrderActionField.getVolumeChange())
 
-                .setActionDate(field.getActionDate())
+                .setActionDate(OrderActionField.getActionDate())
 
-                .setActionTime(field.getActionTime())
+                .setActionTime(OrderActionField.getActionTime())
 
-                .setTraderID(field.getTraderID())
+                .setTraderID(OrderActionField.getTraderID())
 
-                .setInstallID(field.getInstallID())
+                .setInstallID(OrderActionField.getInstallID())
 
-                .setOrderLocalID(field.getOrderLocalID())
+                .setOrderLocalID(OrderActionField.getOrderLocalID())
 
-                .setActionLocalID(field.getActionLocalID())
+                .setActionLocalID(OrderActionField.getActionLocalID())
 
-                .setParticipantID(field.getParticipantID())
+                .setParticipantID(OrderActionField.getParticipantID())
 
-                .setClientID(field.getClientID())
+                .setClientID(OrderActionField.getClientID())
 
-                .setBusinessUnit(field.getBusinessUnit())
+                .setBusinessUnit(OrderActionField.getBusinessUnit())
 
-                .setOrderActionStatus(field.getOrderActionStatus())
+                .setOrderActionStatus(OrderActionField.getOrderActionStatus())
 
-                .setUserID(field.getUserID())
+                .setUserID(OrderActionField.getUserID())
 
-                .setStatusMsg(field.getStatusMsg())
+                .setStatusMsg(OrderActionField.getStatusMsg())
 
-                .setInstrumentID(field.getInstrumentID())
+                .setInstrumentID(OrderActionField.getInstrumentID())
 
-                .setBranchID(field.getBranchID())
+                .setBranchID(OrderActionField.getBranchID())
 
-                .setInvestUnitID(field.getInvestUnitID())
+                .setInvestUnitID(OrderActionField.getInvestUnitID())
 
-                .setIPAddress(field.getIPAddress())
+                .setIPAddress(OrderActionField.getIPAddress())
 
-                .setMacAddress(field.getMacAddress())
+                .setMacAddress(OrderActionField.getMacAddress())
 
                 ;
     }

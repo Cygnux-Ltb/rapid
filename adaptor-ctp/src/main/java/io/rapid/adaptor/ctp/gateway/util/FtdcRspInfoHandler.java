@@ -9,10 +9,10 @@ public final class FtdcRspInfoHandler {
 
     private static final Logger log = getLogger(FtdcRspInfoHandler.class);
 
-    public static boolean nonError(CThostFtdcRspInfoField RspInfo) {
-        if (RspInfo != null && RspInfo.getErrorID() != 0) {
-            log.error("RspInfo Has Error, ErrorID == [{}], ErrorMsg == [{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
+    public static boolean nonError(CThostFtdcRspInfoField RspInfoField) {
+        if (RspInfoField != null && RspInfoField.getErrorID() != 0) {
+            log.error("RspInfoField Has Error, ErrorID == [{}], ErrorMsg == [{}]",
+                    RspInfoField.getErrorID(), RspInfoField.getErrorMsg());
             return false;
         } else
             return true;
