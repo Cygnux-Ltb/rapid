@@ -38,15 +38,6 @@
             <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
 
-        <!-- Spring Context provides access to configured objects like a registry (a context).
-             It inherits its features from Spring Beans and adds support for internationalization,
-             event propagation, resource loading, and the transparent creation of contexts. -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
         <!-- PROD CTP JNI API -->
         <!-- The /install/install.sh must be run first -->
         <!-- <dependency> <groupId>ctp</groupId> <artifactId>thostapi</artifactId>

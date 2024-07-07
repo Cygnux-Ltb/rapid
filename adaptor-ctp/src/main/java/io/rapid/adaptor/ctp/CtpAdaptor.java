@@ -23,11 +23,11 @@ import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.MarketDataFeed;
-import io.rapid.core.protocol.avro.request.CancelOrder;
-import io.rapid.core.protocol.avro.request.NewOrder;
-import io.rapid.core.protocol.avro.request.QueryBalance;
-import io.rapid.core.protocol.avro.request.QueryOrder;
-import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.serializable.avro.request.CancelOrder;
+import io.rapid.core.serializable.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.request.QueryBalance;
+import io.rapid.core.serializable.avro.request.QueryOrder;
+import io.rapid.core.serializable.avro.request.QueryPositions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -225,7 +225,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean newOrder(@javax.annotation.Nonnull NewOrder order) {
+    public boolean newOrder(@Nonnull NewOrder order) {
         try {
             CThostFtdcInputOrderField field = orderConverter.toInputOrder(order);
             String orderRef = Integer.toString(orderRefKeeper.nextOrderRef());
@@ -266,7 +266,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final long queryInterval = 1050L;
 
     @Override
-    public boolean queryOrder(@javax.annotation.Nonnull QueryOrder query) {
+    public boolean queryOrder(@Nonnull QueryOrder query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
@@ -287,7 +287,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@javax.annotation.Nonnull QueryPositions query) {
+    public boolean queryPositions(@Nonnull QueryPositions query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
@@ -308,7 +308,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@javax.annotation.Nonnull QueryBalance query) {
+    public boolean queryBalance(@Nonnull QueryBalance query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {

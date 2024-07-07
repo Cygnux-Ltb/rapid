@@ -5,8 +5,8 @@ import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderAction;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrderAction;
 import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
-import io.rapid.core.protocol.avro.enums.OrdStatus;
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.enums.OrdStatus;
+import io.rapid.core.serializable.avro.event.OrderEvent;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import static io.rapid.adaptor.ctp.consts.ConstMapper.withDirection;
 import static io.rapid.adaptor.ctp.consts.ConstMapper.withOffsetFlag;
 import static io.rapid.adaptor.ctp.consts.ConstMapper.withOrderStatus;
 import static io.rapid.core.instrument.futures.ChinaFutures.FixedMultiplier;
-import static io.rapid.core.protocol.avro.event.OrderEvent.newBuilder;
+import static io.rapid.core.serializable.avro.event.OrderEvent.newBuilder;
 import static java.lang.Integer.parseInt;
 
 /**

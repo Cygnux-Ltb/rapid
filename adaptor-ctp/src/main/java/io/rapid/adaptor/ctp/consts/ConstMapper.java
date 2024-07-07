@@ -1,9 +1,9 @@
 package io.rapid.adaptor.ctp.consts;
 
 
-import io.rapid.core.protocol.avro.enums.OrdStatus;
-import io.rapid.core.protocol.avro.enums.TrdAction;
-import io.rapid.core.protocol.avro.enums.TrdDirection;
+import io.rapid.core.serializable.avro.enums.OrdStatus;
+import io.rapid.core.serializable.avro.enums.TrdAction;
+import io.rapid.core.serializable.avro.enums.TrdDirection;
 
 import javax.annotation.Nonnull;
 

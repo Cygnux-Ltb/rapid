@@ -11,8 +11,8 @@ import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOffsetFlag;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOrderPrice;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcTimeCondition;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcVolumeCondition;
-import io.rapid.core.protocol.avro.request.CancelOrder;
-import io.rapid.core.protocol.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.request.CancelOrder;
+import io.rapid.core.serializable.avro.request.NewOrder;
 import org.slf4j.Logger;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
