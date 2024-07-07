@@ -10,9 +10,9 @@ import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
-import io.rapid.core.protocol.avro.event.OrderEvent;
-import io.rapid.core.protocol.avro.request.CancelOrder;
-import io.rapid.core.protocol.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.request.CancelOrder;
+import io.rapid.core.serializable.avro.request.NewOrder;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 

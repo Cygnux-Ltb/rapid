@@ -2,11 +2,11 @@ package io.rapid.core.mkd;
 
 import io.rapid.core.adaptor.Adaptor;
 import io.rapid.core.handler.OrderHandler;
-import io.rapid.core.protocol.avro.request.CancelOrder;
-import io.rapid.core.protocol.avro.request.NewOrder;
-import io.rapid.core.protocol.avro.request.QueryBalance;
-import io.rapid.core.protocol.avro.request.QueryOrder;
-import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.serializable.avro.request.CancelOrder;
+import io.rapid.core.serializable.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.request.QueryBalance;
+import io.rapid.core.serializable.avro.request.QueryOrder;
+import io.rapid.core.serializable.avro.request.QueryPositions;
 
 import javax.annotation.Nonnull;
 

@@ -34,7 +34,7 @@ public enum TrdDirection {
     /**
      * @return TrdDirection
      */
-    public static TrdDirection valueOf(io.rapid.core.protocol.avro.enums.TrdDirection direction) {
+    public static TrdDirection valueOf(io.rapid.core.serializable.avro.enums.TrdDirection direction) {
         return switch (direction) {
             case LONG -> TrdDirection.Long;
             case SHORT -> TrdDirection.Short;

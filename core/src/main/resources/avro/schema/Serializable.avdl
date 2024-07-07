@@ -1,34 +1,36 @@
 @namespace("io.rapid.core.serializable.avro")
 protocol NullProtocol {
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum OrdType {
-		// 无效
+		// 1 : 无效
 		INVALID,
-		// 限价单
+		// 2 : 限价单
 		LIMITED,
-		// 市价单
+		// 3 : 市价单
 		MARKET,
-		// Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
+		// 4 : Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
 		LIMITED_STOP,
-		// Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
+		// 5 : Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
 		MARKET_STOP,
-		// Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
+		// 6 : Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
 		MTL,
-		// Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
+		// 7 : Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
 		BP,
-		// Average Price, 限定最终成交平均价格的报单.
+		// 8 : Average Price, 限定最终成交平均价格的报单.
 		AP,
-		// Kill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
+		// 9 : Kill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
 		FOK,
-		// Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
+		// 10 : Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
 		FAK,
-		// Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
+		// 11 : Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
 		MV
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum OrdValid {
+		// 无效
+		INVALID,
 		// Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
 		GTC,
 		// Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
@@ -37,7 +39,7 @@ protocol NullProtocol {
 		GFD
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum OrdSide {
 		// 无效
 		INVALID,
@@ -51,7 +53,7 @@ protocol NullProtocol {
 		SHORT_SELL
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum OrdStatus {
 		// 无效
 		INVALID,
@@ -67,12 +69,14 @@ protocol NullProtocol {
 		FILLED,
 		// 未确认撤单
 		PENDING_CANCEL,
-		// 已撤单
-		CANCELED,
 		// 撤单已拒绝
 		CANCEL_REJECTED,
+		// 已撤单
+		CANCELED,
 		// 未确认修改订单
 		PENDING_REPLACE,
+		// 修改已拒绝
+		REPLACE_REJECTED,
 		// 已修改
 		REPLACED,
 		// 已暂停
@@ -81,7 +85,7 @@ protocol NullProtocol {
 		UNPROVIDED
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum OrdLevel {
 		// 子订单
 		CHILD,
@@ -93,7 +97,7 @@ protocol NullProtocol {
 		GROUP
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum TrdDirection {
 		// 无效
 		INVALID,
@@ -103,7 +107,7 @@ protocol NullProtocol {
 		SHORT
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum TrdAction {
 		// 无效
 		INVALID,
@@ -117,12 +121,14 @@ protocol NullProtocol {
 		CLOSE_YESTERDAY
 	}
 
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum AdaptorStatus {
 		// 无效
 		INVALID,
 		// 不可用
 		UNAVAILABLE,
+		// 可用
+		AVAILABLE,
 		// 行情启用
 		MD_ENABLE,
 		// 行情禁用
@@ -136,37 +142,7 @@ protocol NullProtocol {
 	/**
 	 * 新订单
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
-	record Order {
-		// Epoch Microsecond Unit
-		long generateTime;
-		// Epoch Microsecond Unit
-		long sendTime;
-		long ordSysId;
-		long delayMillis = 0;
-		int offerQty;
-		int minTradingQty = 1;
-		double offerPrice = 0.0D;
-		string exchangeCode;
-		int instrumentId;
-		string instrumentCode;
-		io.rapid.core.protocol.avro.enums.OrdType type;
-		io.rapid.core.protocol.avro.enums.OrdValid valid;
-		io.rapid.core.protocol.avro.enums.TrdAction action;
-		io.rapid.core.protocol.avro.enums.TrdDirection direction;
-		string brokerCode;
-		int accountId;
-		int subAccountId;
-		int strategyId;
-		int algoId;
-		string operatorId;
-		string msg = "";
-	}
-
-	/**
-	 * 新订单
-	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record NewOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
@@ -179,10 +155,10 @@ protocol NullProtocol {
 		string exchangeCode;
 		int instrumentId;
 		string instrumentCode;
-		io.rapid.core.protocol.avro.enums.OrdType type;
-		io.rapid.core.protocol.avro.enums.OrdValid valid;
-		io.rapid.core.protocol.avro.enums.TrdAction action;
-		io.rapid.core.protocol.avro.enums.TrdDirection direction;
+		io.rapid.core.serializable.avro.enums.OrdType type;
+		io.rapid.core.serializable.avro.enums.OrdValid valid;
+		io.rapid.core.serializable.avro.enums.TrdAction action;
+		io.rapid.core.serializable.avro.enums.TrdDirection direction;
 		string brokerId;
 		int accountId;
 		int subAccountId;
@@ -194,7 +170,7 @@ protocol NullProtocol {
 	/**
 	 * 撤单
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record CancelOrder {
 		// Epoch Microsecond Unit
 		long generateTime;
@@ -216,7 +192,7 @@ protocol NullProtocol {
 	/**
 	 * 查询订单
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record QueryOrder {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -235,7 +211,7 @@ protocol NullProtocol {
 	/**
 	 * 查询账户持仓
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record QueryPositions {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -253,7 +229,7 @@ protocol NullProtocol {
 	/**
 	 * 查询账户余额
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record QueryBalance {
 		// Epoch Millisecond Unit
 		long generateTime = 0;
@@ -269,7 +245,7 @@ protocol NullProtocol {
 	/**
 	 * 订单回报
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record OrderEvent {
 		// Epoch Microsecond Unit
 		long epochMicros;
@@ -281,9 +257,9 @@ protocol NullProtocol {
 		string brokerOrdSysId;
 		string exchangeCode;
 		string instrumentCode;
-		io.rapid.core.protocol.avro.enums.OrdStatus status;
-		io.rapid.core.protocol.avro.enums.TrdDirection direction;
-		io.rapid.core.protocol.avro.enums.TrdAction action;
+		io.rapid.core.serializable.avro.enums.OrdStatus status;
+		io.rapid.core.serializable.avro.enums.TrdDirection direction;
+		io.rapid.core.serializable.avro.enums.TrdAction action;
 		int offerQty = 0;
 		int filledQty = 0;
 		long offerPrice = 0;
@@ -296,7 +272,7 @@ protocol NullProtocol {
 	/**
 	 * 账户可用余额回报
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record BalanceEvent {
 		long epochMillis;
 		string brokerId;
@@ -308,7 +284,7 @@ protocol NullProtocol {
 	/**
 	 * 持仓回报
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record PositionsEvent {
 		long epochMillis;
 		string brokerId;
@@ -321,18 +297,18 @@ protocol NullProtocol {
 	/**
 	 * 适配器回报
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record AdaptorEvent {
 		long epochMillis;
 		string adaptorId;
 		int accountId;
-		io.rapid.core.protocol.avro.enums.AdaptorStatus status;
+		io.rapid.core.serializable.avro.enums.AdaptorStatus status;
 	}
 
 	/**
 	 * 行情类型
 	 */
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum MarketDataType {
 		DEPTH, FAST, LEVEL10, LEVEL20, LEVEL30
 	}
@@ -340,7 +316,7 @@ protocol NullProtocol {
 	/**
 	 * 行情订阅状态
 	 */
-	@namespace("io.rapid.core.protocol.avro.enums")
+	@namespace("io.rapid.core.serializable.avro.enums")
 	enum SubscribeStatus {
 		SUCCEED, PART_SUCCEED, FAILED
 	}
@@ -348,9 +324,9 @@ protocol NullProtocol {
 	/**
 	 * 订阅行情
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record SubscribeMarketData {
-		io.rapid.core.protocol.avro.enums.MarketDataType type;
+		io.rapid.core.serializable.avro.enums.MarketDataType type;
 		string instrumentCode;
 		string recvAddr;
 	}
@@ -358,9 +334,9 @@ protocol NullProtocol {
 	/**
 	 * 订阅多个行情
 	 */
-	@namespace("io.rapid.core.protocol.avro.request")
+	@namespace("io.rapid.core.serializable.avro.request")
 	record SubscribeMultiMarketData {
-		io.rapid.core.protocol.avro.enums.MarketDataType type;
+		io.rapid.core.serializable.avro.enums.MarketDataType type;
 		array<string> instrumentCodes;
 		string recvAddr;
 	}
@@ -368,9 +344,9 @@ protocol NullProtocol {
 	/**
 	 * 行情订阅回报
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record MarketDataSubscribeEvent {
-		io.rapid.core.protocol.avro.enums.SubscribeStatus status;
+		io.rapid.core.serializable.avro.enums.SubscribeStatus status;
 		array<string> successInstrumentCodes;
 		array<string> failInstrumentCodes;
 		string msg;
@@ -379,7 +355,7 @@ protocol NullProtocol {
 	/**
 	 * 深度行情数据结构
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record DepthMarketDataEvent {
 		long timestamp;
 		int instrumentId;
@@ -397,7 +373,7 @@ protocol NullProtocol {
 	/**
 	 * 五档快速行情数据结构
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record FastMarketDataEvent {
 		long timestamp;
 		int instrumentId;
@@ -430,7 +406,7 @@ protocol NullProtocol {
 	/**
 	 * 十档行情数据结构
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record L10MarketDataEvent {
 		long timestamp;
 		int instrumentId;
@@ -483,7 +459,7 @@ protocol NullProtocol {
 	/**
 	 * 二十档行情数据结构
 	 */
-	@namespace("io.rapid.core.protocol.avro.event")
+	@namespace("io.rapid.core.serializable.avro.event")
 	record L20MarketDataEvent {
 		long timestamp;
 		int instrumentId;

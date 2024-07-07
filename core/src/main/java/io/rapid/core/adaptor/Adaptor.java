@@ -7,17 +7,16 @@ import io.rapid.core.account.Account;
 import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.protocol.avro.request.CancelOrder;
-import io.rapid.core.protocol.avro.request.NewOrder;
-import io.rapid.core.protocol.avro.request.QueryBalance;
-import io.rapid.core.protocol.avro.request.QueryOrder;
-import io.rapid.core.protocol.avro.request.QueryPositions;
+import io.rapid.core.serializable.avro.request.CancelOrder;
+import io.rapid.core.serializable.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.request.QueryBalance;
+import io.rapid.core.serializable.avro.request.QueryOrder;
+import io.rapid.core.serializable.avro.request.QueryPositions;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public interface Adaptor extends AutoCloseable, Enableable {
-
 
     // ############################## Adaptor状态相关 ############################## //
 

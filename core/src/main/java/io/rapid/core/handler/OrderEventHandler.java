@@ -1,6 +1,6 @@
 package io.rapid.core.handler;
 
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.event.OrderEvent;
 
 import javax.annotation.Nonnull;
 
