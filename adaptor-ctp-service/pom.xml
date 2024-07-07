@@ -29,7 +29,7 @@
         <dependency>
             <groupId>io.cygnuxltb</groupId>
             <artifactId>adaptor-ctp</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Spring Boot autoconfiguration attempts to automatically

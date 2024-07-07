@@ -4,10 +4,10 @@ import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
 import io.mercury.serialization.json.JsonWrapper;
-import io.rapid.core.protocol.avro.enums.OrdStatus;
-import io.rapid.core.protocol.avro.enums.TrdAction;
-import io.rapid.core.protocol.avro.enums.TrdDirection;
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.enums.OrdStatus;
+import io.rapid.core.serializable.avro.enums.TrdAction;
+import io.rapid.core.serializable.avro.enums.TrdDirection;
+import io.rapid.core.serializable.avro.event.OrderEvent;
 import org.junit.Test;
 
 public class OrderEventConverterTest {
