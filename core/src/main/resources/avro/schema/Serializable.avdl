@@ -1,5 +1,5 @@
-@namespace("io.rapid.core.protocol.avro")
-protocol Protocol {
+@namespace("io.rapid.core.serializable.avro")
+protocol NullProtocol {
 
 	@namespace("io.rapid.core.protocol.avro.enums")
 	enum OrdType {
