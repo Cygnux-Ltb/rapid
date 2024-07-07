@@ -3,7 +3,7 @@ package io.rapid.engine.strategy;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.adaptor.TraderAdaptor;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.protocol.avro.event.AdaptorEvent;
+import io.rapid.core.serializable.avro.event.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
 import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.datetime.EpochTime;

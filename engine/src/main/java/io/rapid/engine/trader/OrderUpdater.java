@@ -2,7 +2,7 @@ package io.rapid.engine.trader;
 
 import io.rapid.core.order.ChildOrder;
 import io.rapid.core.order.enums.OrdStatus;
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.event.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 

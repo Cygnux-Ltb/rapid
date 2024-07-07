@@ -2,7 +2,7 @@ package io.rapid.engine.actor;
 
 
 import io.rapid.core.handler.OrderEventHandler;
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.event.OrderEvent;
 
 import javax.annotation.Nonnull;
 
