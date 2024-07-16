@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 
 import java.io.File;
 
-import static io.mercury.common.datetime.pattern.DateTimePattern.YYYYMMDD_L_HHMMSS;
+import static io.mercury.common.datetime.pattern.impl.DateTimePattern.YYYYMMDD_L_HHMMSS;
 import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
 import static io.rapid.core.util.MarketTradableTime.registerCloseTime;
 

@@ -2,8 +2,8 @@ package io.rapid.adaptor.ctp;
 
 import io.mercury.common.concurrent.ring.RingEventbus;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
-import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.ConnectionMode;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CtpInjector {
 
-    @Bean(name = "config")
-    public CtpConfig getConfig() {
+    @Bean(name = "param")
+    public CtpParams getParam() {
         return null;
     }
 

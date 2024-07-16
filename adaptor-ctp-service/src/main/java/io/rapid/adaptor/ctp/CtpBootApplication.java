@@ -4,8 +4,6 @@ import io.mercury.common.log4j2.Log4j2Configurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import static io.mercury.common.log4j2.Log4j2Configurator.LogLevel.INFO;
-
 @SpringBootApplication
 public class CtpBootApplication {
 
@@ -13,7 +11,7 @@ public class CtpBootApplication {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>[CTP ADAPTOR START]<<<<<<<<<<<<<<<<<<<<<");
         Log4j2Configurator.setLogFolder("rapid");
         Log4j2Configurator.setLogFilename("adaptor-ctp");
-        Log4j2Configurator.setLogLevel(INFO);
+        Log4j2Configurator.useInfoLogLevel();
     }
 
     public static void main(String[] args) {

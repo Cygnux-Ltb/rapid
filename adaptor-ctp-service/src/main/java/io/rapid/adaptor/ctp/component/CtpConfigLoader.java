@@ -1,12 +1,9 @@
 package io.rapid.adaptor.ctp.component;
 
 import com.typesafe.config.Config;
-import ctp.thostapi.CThostFtdcReqAuthenticateField;
-import ctp.thostapi.CThostFtdcReqUserLoginField;
 import io.mercury.common.config.ConfigWrapper;
-import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;
-import io.rapid.adaptor.ctp.param.CtpParam;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.param.CtpParamKey;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.time.LocalDateTime;
 
-import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
+import static io.mercury.common.datetime.pattern.impl.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
 import static io.rapid.adaptor.ctp.param.CtpParamKey.AccountId;
 import static io.rapid.adaptor.ctp.param.CtpParamKey.AppId;
@@ -39,7 +36,7 @@ import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.par
 @Accessors(chain = true)
 @Configuration
 @PropertySource("file:${user.home}/config/ctp.properties")
-public class CtpConfig implements CtpParam {
+public class CtpConfigLoader implements CtpParams {
 
     @Value("traderAddr")
     private String traderAddr;
@@ -77,7 +74,7 @@ public class CtpConfig implements CtpParam {
         return JsonWrapper.toJson(this);
     }
 
-    public CtpConfig load(Config config) {
+    public CtpConfigLoader load(Config config) {
         var wrapper = new ConfigWrapper<CtpParamKey>(config);
         return this
                 // 交易服务器地址
@@ -106,55 +103,6 @@ public class CtpConfig implements CtpParam {
                 .setCurrencyId(wrapper.getString(CurrencyId, "CNY"))
                 // 交易日
                 .setTradingDay(wrapper.getString(TradingDay, YYYYMMDD.fmt(parseTradingDay(LocalDateTime.now()))));
-    }
-
-    public CtpConfig load(Params<CtpParamKey> params) {
-        return this
-                // 交易服务器地址
-                .setTraderAddr(params.getString(TraderAddr))
-                // 行情服务器地址
-                .setMdAddr(params.getString(MdAddr))
-                // 应用ID
-                .setAppId(params.getString(AppId))
-                // 经纪商ID
-                .setBrokerId(params.getString(BrokerId))
-                // 投资者ID
-                .setInvestorId(params.getString(InvestorId))
-                // 账号ID
-                .setAccountId(params.getString(AccountId))
-                // 用户ID
-                .setUserId(params.getString(UserId))
-                // 密码
-                .setPassword(params.getString(Password))
-                // 认证码
-                .setAuthCode(params.getString(AuthCode))
-                // 客户端IP地址
-                .setIpAddr(params.getString(IpAddr))
-                // 客户端MAC地址
-                .setMacAddr(params.getString(MacAddr))
-                // 结算货币
-                .setCurrencyId(params.getString(CurrencyId))
-                // 交易日
-                .setTradingDay(params.getString(TradingDay));
-    }
-
-    public CThostFtdcReqAuthenticateField getReqAuthenticateField() {
-        CThostFtdcReqAuthenticateField reqAuthenticateField = new CThostFtdcReqAuthenticateField();
-        reqAuthenticateField.setAppID(this.getAppId());
-        reqAuthenticateField.setUserID(this.getUserId());
-        reqAuthenticateField.setBrokerID(this.getBrokerId());
-        reqAuthenticateField.setAuthCode(this.getAuthCode());
-        return reqAuthenticateField;
-    }
-
-    public CThostFtdcReqUserLoginField getReqUserLoginField() {
-        CThostFtdcReqUserLoginField reqUserLoginField = new CThostFtdcReqUserLoginField();
-        reqUserLoginField.setBrokerID(this.getBrokerId());
-        reqUserLoginField.setUserID(this.getUserId());
-        reqUserLoginField.setPassword(this.getPassword());
-        reqUserLoginField.setClientIPAddress(this.getIpAddr());
-        reqUserLoginField.setMacAddress(this.getMacAddr());
-        return reqUserLoginField;
     }
 
 }

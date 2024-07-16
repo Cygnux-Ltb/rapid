@@ -25,6 +25,17 @@
     </build>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-zmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>transport-rabbitmq</artifactId>
+        </dependency>
+
         <!-- Adaptor CTP -->
         <dependency>
             <groupId>io.cygnuxltb</groupId>
