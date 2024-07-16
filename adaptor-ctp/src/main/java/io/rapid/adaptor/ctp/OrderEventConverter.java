@@ -9,7 +9,6 @@ import io.rapid.core.serializable.avro.enums.OrdStatus;
 import io.rapid.core.serializable.avro.event.OrderEvent;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import static io.mercury.common.datetime.EpochTime.getEpochMicros;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
@@ -26,7 +25,6 @@ import static java.lang.Integer.parseInt;
  *
  * @author yellow013
  */
-@Component
 public final class OrderEventConverter {
 
     private static final Logger log = getLogger(OrderEventConverter.class);

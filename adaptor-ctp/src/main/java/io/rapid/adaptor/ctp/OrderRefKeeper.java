@@ -5,7 +5,6 @@ import io.mercury.common.thread.SleepSupport;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 import java.time.Duration;
@@ -26,7 +25,6 @@ import static java.lang.System.currentTimeMillis;
  * <p>
  * TODO - Add Persistence
  */
-@Component
 public class OrderRefKeeper {
 
     private static final Logger log = getLogger(OrderRefKeeper.class);

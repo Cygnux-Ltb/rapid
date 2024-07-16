@@ -6,6 +6,8 @@ import ctp.thostapi.CThostFtdcReqUserLoginField;
 import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.param.Params;
 import io.mercury.serialization.json.JsonWrapper;
+import io.rapid.adaptor.ctp.param.CtpParam;
+import io.rapid.adaptor.ctp.param.CtpParamKey;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -17,19 +19,19 @@ import java.time.LocalDateTime;
 
 import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.AccountId;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.AppId;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.Password;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.component.CtpParamKey.UserId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AccountId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AppId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AuthCode;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.BrokerId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.CurrencyId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.InvestorId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.IpAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.MacAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.MdAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.Password;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.TraderAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.TradingDay;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.UserId;
 import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
 
 @Getter
@@ -37,7 +39,7 @@ import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.par
 @Accessors(chain = true)
 @Configuration
 @PropertySource("file:${user.home}/config/ctp.properties")
-public class CtpConfig {
+public class CtpConfig implements CtpParam {
 
     @Value("traderAddr")
     private String traderAddr;

@@ -25,4 +25,5 @@ public class FtdcRspInfo {
                 .setErrorID(RspInfoField.getErrorID())
                 .setErrorMsg(RspInfoField.getErrorMsg());
     }
+    
 }
