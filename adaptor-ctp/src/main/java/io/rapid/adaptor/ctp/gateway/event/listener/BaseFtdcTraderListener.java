@@ -107,7 +107,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
+     * 当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
      */
     @Override
     public void fireFrontConnected() {
@@ -116,7 +116,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
 
 
     /**
-     * ///当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后. API会自动重新连接, 客户端可不做处理.
+     * 当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后. API会自动重新连接, 客户端可不做处理.
      *
      * @param Reason 错误原因
      *               <br> 0x1001 网络读失败
@@ -132,7 +132,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
 
 
     /**
-     * ///心跳超时警告. 当长时间未收到报文时, 该方法被调用.
+     * 心跳超时警告. 当长时间未收到报文时, 该方法被调用.
      *
      * @param TimeLapse 距离上次接收报文的时间
      */
@@ -143,7 +143,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
 
 
     /**
-     * ///客户端认证响应
+     * 客户端认证响应
      *
      * @param Field     CThostFtdcRspAuthenticateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -157,7 +157,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///登录请求响应
+     * 登录请求响应
      *
      * @param Field     CThostFtdcRspUserLoginField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -171,7 +171,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///登出请求响应
+     * 登出请求响应
      *
      * @param Field     CThostFtdcUserLogoutField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -185,7 +185,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///用户口令更新请求响应
+     * 用户口令更新请求响应
      *
      * @param Field     CThostFtdcUserPasswordUpdateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -199,7 +199,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///资金账户口令更新请求响应
+     * 资金账户口令更新请求响应
      *
      * @param Field     CThostFtdcTradingAccountPasswordUpdateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -213,7 +213,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///查询用户当前支持的认证模式的回复
+     * 查询用户当前支持的认证模式的回复
      *
      * @param Field     CThostFtdcRspUserAuthMethodField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -227,7 +227,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///获取图形验证码请求的回复
+     * 获取图形验证码请求的回复
      *
      * @param Field     CThostFtdcRspGenUserCaptchaField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -241,7 +241,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///获取短信验证码请求的回复
+     * 获取短信验证码请求的回复
      *
      * @param Field     CThostFtdcRspGenUserTextField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -255,7 +255,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报单录入请求响应
+     * 报单录入请求响应
      *
      * @param Field     CThostFtdcInputOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -269,7 +269,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///预埋单录入请求响应
+     * 预埋单录入请求响应
      *
      * @param Field     CThostFtdcParkedOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -283,7 +283,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///预埋撤单录入请求响应
+     * 预埋撤单录入请求响应
      *
      * @param Field     CThostFtdcParkedOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -297,7 +297,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报单操作请求响应
+     * 报单操作请求响应
      *
      * @param Field     CThostFtdcInputOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -311,7 +311,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///查询最大报单数量响应
+     * 查询最大报单数量响应
      *
      * @param Field     CThostFtdcQueryMaxOrderVolumeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -325,7 +325,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///投资者结算结果确认响应
+     * 投资者结算结果确认响应
      *
      * @param Field     CThostFtdcSettlementInfoConfirmField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -339,7 +339,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///删除预埋单响应
+     * 删除预埋单响应
      *
      * @param Field     CThostFtdcRemoveParkedOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -353,7 +353,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///删除预埋撤单响应
+     * 删除预埋撤单响应
      *
      * @param Field     CThostFtdcRemoveParkedOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -367,7 +367,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///执行宣告录入请求响应
+     * 执行宣告录入请求响应
      *
      * @param Field     CThostFtdcInputExecOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -381,7 +381,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///执行宣告操作请求响应
+     * 执行宣告操作请求响应
      *
      * @param Field     CThostFtdcInputExecOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -395,7 +395,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///询价录入请求响应
+     * 询价录入请求响应
      *
      * @param Field     CThostFtdcInputForQuoteField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -409,7 +409,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报价录入请求响应
+     * 报价录入请求响应
      *
      * @param Field     CThostFtdcInputQuoteField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -423,7 +423,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报价操作请求响应
+     * 报价操作请求响应
      *
      * @param Field     CThostFtdcInputQuoteActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -437,7 +437,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///批量报单操作请求响应
+     * 批量报单操作请求响应
      *
      * @param Field     CThostFtdcInputBatchOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -451,7 +451,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期权自对冲录入请求响应
+     * 期权自对冲录入请求响应
      *
      * @param Field     CThostFtdcInputOptionSelfCloseField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -465,7 +465,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期权自对冲操作请求响应
+     * 期权自对冲操作请求响应
      *
      * @param Field     CThostFtdcInputOptionSelfCloseActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -479,7 +479,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///申请组合录入请求响应
+     * 申请组合录入请求响应
      *
      * @param Field     CThostFtdcInputCombActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -493,7 +493,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询报单响应
+     * 请求查询报单响应
      *
      * @param Field     CThostFtdcOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -507,7 +507,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询成交响应
+     * 请求查询成交响应
      *
      * @param Field     CThostFtdcTradeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -521,7 +521,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者持仓响应
+     * 请求查询投资者持仓响应
      *
      * @param Field     CThostFtdcInvestorPositionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -535,7 +535,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询资金账户响应
+     * 请求查询资金账户响应
      *
      * @param Field     CThostFtdcTradingAccountField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -549,7 +549,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者响应
+     * 请求查询投资者响应
      *
      * @param Field     CThostFtdcInvestorField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -563,7 +563,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询交易编码响应
+     * 请求查询交易编码响应
      *
      * @param Field     CThostFtdcTradingCodeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -577,7 +577,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询合约保证金率响应
+     * 请求查询合约保证金率响应
      *
      * @param Field     CThostFtdcInstrumentMarginRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -591,7 +591,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询合约手续费率响应
+     * 请求查询合约手续费率响应
      *
      * @param Field     CThostFtdcInstrumentCommissionRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -605,7 +605,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询交易所响应
+     * 请求查询交易所响应
      *
      * @param Field     CThostFtdcExchangeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -619,7 +619,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询产品响应
+     * 请求查询产品响应
      *
      * @param Field     CThostFtdcProductField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -633,7 +633,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询合约响应
+     * 请求查询合约响应
      *
      * @param Field     CThostFtdcInstrumentField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -647,7 +647,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询行情响应
+     * 请求查询行情响应
      *
      * @param Field     CThostFtdcDepthMarketDataField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -661,7 +661,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者结算结果响应
+     * 请求查询投资者结算结果响应
      *
      * @param Field     CThostFtdcSettlementInfoField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -675,7 +675,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询转帐银行响应
+     * 请求查询转帐银行响应
      *
      * @param Field     CThostFtdcTransferBankField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -689,7 +689,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者持仓明细响应
+     * 请求查询投资者持仓明细响应
      *
      * @param Field     CThostFtdcInvestorPositionDetailField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -703,7 +703,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询客户通知响应
+     * 请求查询客户通知响应
      *
      * @param Field     CThostFtdcNoticeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -717,7 +717,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询结算信息确认响应
+     * 请求查询结算信息确认响应
      *
      * @param Field     CThostFtdcSettlementInfoConfirmField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -731,7 +731,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者持仓明细响应
+     * 请求查询投资者持仓明细响应
      *
      * @param Field     CThostFtdcInvestorPositionCombineDetailField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -745,7 +745,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///查询保证金监管系统经纪公司资金账户密钥响应
+     * 查询保证金监管系统经纪公司资金账户密钥响应
      *
      * @param Field     CThostFtdcCFMMCTradingAccountKeyField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -759,7 +759,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询仓单折抵信息响应
+     * 请求查询仓单折抵信息响应
      *
      * @param Field     CThostFtdcEWarrantOffsetField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -773,7 +773,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资者品种/跨品种保证金响应
+     * 请求查询投资者品种/跨品种保证金响应
      *
      * @param Field     CThostFtdcInvestorProductGroupMarginField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -787,7 +787,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询交易所保证金率响应
+     * 请求查询交易所保证金率响应
      *
      * @param Field     CThostFtdcExchangeMarginRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -801,7 +801,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询交易所调整保证金率响应
+     * 请求查询交易所调整保证金率响应
      *
      * @param Field     CThostFtdcExchangeMarginRateAdjustField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -815,7 +815,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询汇率响应
+     * 请求查询汇率响应
      *
      * @param Field     CThostFtdcExchangeRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -829,7 +829,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询二级代理操作员银期权限响应
+     * 请求查询二级代理操作员银期权限响应
      *
      * @param Field     CThostFtdcSecAgentACIDMapField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -843,7 +843,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询产品报价汇率
+     * 请求查询产品报价汇率
      *
      * @param Field     CThostFtdcProductExchRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -857,7 +857,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询产品组
+     * 请求查询产品组
      *
      * @param Field     CThostFtdcProductGroupField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -871,7 +871,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询做市商合约手续费率响应
+     * 请求查询做市商合约手续费率响应
      *
      * @param Field     CThostFtdcMMInstrumentCommissionRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -885,7 +885,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询做市商期权合约手续费响应
+     * 请求查询做市商期权合约手续费响应
      *
      * @param Field     CThostFtdcMMOptionInstrCommRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -899,7 +899,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询报单手续费响应
+     * 请求查询报单手续费响应
      *
      * @param Field     CThostFtdcInstrumentOrderCommRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -913,7 +913,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询资金账户响应
+     * 请求查询资金账户响应
      *
      * @param Field     CThostFtdcTradingAccountField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -927,7 +927,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询二级代理商资金校验模式响应
+     * 请求查询二级代理商资金校验模式响应
      *
      * @param Field     CThostFtdcSecAgentCheckModeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -941,7 +941,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询二级代理商信息响应
+     * 请求查询二级代理商信息响应
      *
      * @param Field     CThostFtdcSecAgentTradeInfoField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -955,7 +955,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询期权交易成本响应
+     * 请求查询期权交易成本响应
      *
      * @param Field     CThostFtdcOptionInstrTradeCostField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -969,7 +969,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询期权合约手续费响应
+     * 请求查询期权合约手续费响应
      *
      * @param Field     CThostFtdcOptionInstrCommRateField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -983,7 +983,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询执行宣告响应
+     * 请求查询执行宣告响应
      *
      * @param Field     CThostFtdcExecOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -997,7 +997,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询询价响应
+     * 请求查询询价响应
      *
      * @param Field     CThostFtdcForQuoteField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1011,7 +1011,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询报价响应
+     * 请求查询报价响应
      *
      * @param Field     CThostFtdcQuoteField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1025,7 +1025,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询期权自对冲响应
+     * 请求查询期权自对冲响应
      *
      * @param Field     CThostFtdcOptionSelfCloseField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1039,7 +1039,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询投资单元响应
+     * 请求查询投资单元响应
      *
      * @param Field     CThostFtdcInvestUnitField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1053,7 +1053,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询组合合约安全系数响应
+     * 请求查询组合合约安全系数响应
      *
      * @param Field     CThostFtdcCombInstrumentGuardField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1067,7 +1067,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询申请组合响应
+     * 请求查询申请组合响应
      *
      * @param Field     CThostFtdcCombActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1081,7 +1081,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询转帐流水响应
+     * 请求查询转帐流水响应
      *
      * @param Field     CThostFtdcTransferSerialField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1095,7 +1095,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询银期签约关系响应
+     * 请求查询银期签约关系响应
      *
      * @param Field     CThostFtdcAccountregisterField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1109,7 +1109,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///错误应答
+     * 错误应答
      *
      * @param RspInfo   CThostFtdcRspInfoField
      * @param RequestID int
@@ -1121,7 +1121,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报单通知 ***
+     * 报单通知 ***
      *
      * @param Order CThostFtdcOrderField
      */
@@ -1131,7 +1131,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///成交通知 ***
+     * 成交通知 ***
      *
      * @param Trade CThostFtdcTradeField
      */
@@ -1141,7 +1141,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报单录入错误回报
+     * 报单录入错误回报
      *
      * @param Field   CThostFtdcInputOrderField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1153,7 +1153,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报单操作错误回报
+     * 报单操作错误回报
      *
      * @param Field   CThostFtdcOrderActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1165,7 +1165,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///合约交易状态通知
+     * 合约交易状态通知
      *
      * @param Field CThostFtdcInstrumentStatusField
      */
@@ -1175,7 +1175,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///交易所公告通知
+     * 交易所公告通知
      *
      * @param Field CThostFtdcBulletinField
      */
@@ -1185,7 +1185,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///交易通知
+     * 交易通知
      *
      * @param Field CThostFtdcTradingNoticeInfoField
      */
@@ -1195,7 +1195,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///提示条件单校验错误
+     * 提示条件单校验错误
      *
      * @param Field CThostFtdcErrorConditionalOrderField
      */
@@ -1205,7 +1205,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///执行宣告通知
+     * 执行宣告通知
      *
      * @param Field CThostFtdcExecOrderField
      */
@@ -1215,7 +1215,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///执行宣告录入错误回报
+     * 执行宣告录入错误回报
      *
      * @param Field   CThostFtdcInputExecOrderField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1227,7 +1227,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///执行宣告操作错误回报
+     * 执行宣告操作错误回报
      *
      * @param Field   CThostFtdcExecOrderActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1239,7 +1239,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///询价录入错误回报
+     * 询价录入错误回报
      *
      * @param Field   CThostFtdcInputForQuoteField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1251,7 +1251,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报价通知
+     * 报价通知
      *
      * @param Field CThostFtdcQuoteField
      */
@@ -1261,7 +1261,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报价录入错误回报
+     * 报价录入错误回报
      *
      * @param Field   CThostFtdcInputQuoteField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1273,7 +1273,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///报价操作错误回报
+     * 报价操作错误回报
      *
      * @param Field   CThostFtdcQuoteActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1285,7 +1285,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///询价通知
+     * 询价通知
      *
      * @param Field CThostFtdcForQuoteRspField
      */
@@ -1295,7 +1295,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///保证金监控中心用户令牌
+     * 保证金监控中心用户令牌
      *
      * @param Field CThostFtdcCFMMCTradingAccountTokenField
      */
@@ -1305,7 +1305,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///批量报单操作错误回报
+     * 批量报单操作错误回报
      *
      * @param Field   CThostFtdcBatchOrderActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1317,7 +1317,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期权自对冲通知
+     * 期权自对冲通知
      *
      * @param Field CThostFtdcOptionSelfCloseField
      */
@@ -1327,7 +1327,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期权自对冲录入错误回报
+     * 期权自对冲录入错误回报
      *
      * @param Field   CThostFtdcInputOptionSelfCloseField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1339,7 +1339,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期权自对冲操作错误回报
+     * 期权自对冲操作错误回报
      *
      * @param Field   CThostFtdcOptionSelfCloseActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1351,7 +1351,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///申请组合通知
+     * 申请组合通知
      *
      * @param Field CThostFtdcCombActionField
      */
@@ -1361,7 +1361,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///申请组合录入错误回报
+     * 申请组合录入错误回报
      *
      * @param Field   CThostFtdcInputCombActionField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1373,7 +1373,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询签约银行响应
+     * 请求查询签约银行响应
      *
      * @param Field     CThostFtdcContractBankField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1387,7 +1387,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询预埋单响应
+     * 请求查询预埋单响应
      *
      * @param Field     CThostFtdcParkedOrderField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1401,7 +1401,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询预埋撤单响应
+     * 请求查询预埋撤单响应
      *
      * @param Field     CThostFtdcParkedOrderActionField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1415,7 +1415,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询交易通知响应
+     * 请求查询交易通知响应
      *
      * @param Field     CThostFtdcTradingNoticeField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1429,7 +1429,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询经纪公司交易参数响应
+     * 请求查询经纪公司交易参数响应
      *
      * @param Field     CThostFtdcBrokerTradingParamsField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1443,7 +1443,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询经纪公司交易算法响应
+     * 请求查询经纪公司交易算法响应
      *
      * @param Field     CThostFtdcBrokerTradingAlgosField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1457,7 +1457,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///请求查询监控中心用户令牌
+     * 请求查询监控中心用户令牌
      *
      * @param Field     CThostFtdcQueryCFMMCTradingAccountTokenField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1471,7 +1471,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起银行资金转期货通知
+     * 银行发起银行资金转期货通知
      *
      * @param Field CThostFtdcRspTransferField
      */
@@ -1481,7 +1481,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起期货资金转银行通知
+     * 银行发起期货资金转银行通知
      *
      * @param Field CThostFtdcRspTransferField
      */
@@ -1491,7 +1491,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起冲正银行转期货通知
+     * 银行发起冲正银行转期货通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1501,7 +1501,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起冲正期货转银行通知
+     * 银行发起冲正期货转银行通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1511,7 +1511,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起银行资金转期货通知
+     * 期货发起银行资金转期货通知
      *
      * @param Field CThostFtdcRspTransferField
      */
@@ -1521,7 +1521,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起期货资金转银行通知
+     * 期货发起期货资金转银行通知
      *
      * @param Field CThostFtdcRspTransferField
      */
@@ -1531,7 +1531,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
+     * 系统运行时期货端手工发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1541,7 +1541,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
+     * 系统运行时期货端手工发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1551,7 +1551,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起查询银行余额通知
+     * 期货发起查询银行余额通知
      *
      * @param Field CThostFtdcNotifyQueryAccountField
      */
@@ -1561,7 +1561,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起银行资金转期货错误回报
+     * 期货发起银行资金转期货错误回报
      *
      * @param Field   CThostFtdcReqTransferField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1573,7 +1573,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起期货资金转银行错误回报
+     * 期货发起期货资金转银行错误回报
      *
      * @param Field   CThostFtdcReqTransferField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1585,7 +1585,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///系统运行时期货端手工发起冲正银行转期货错误回报
+     * 系统运行时期货端手工发起冲正银行转期货错误回报
      *
      * @param Field   CThostFtdcReqRepealField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1597,7 +1597,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///系统运行时期货端手工发起冲正期货转银行错误回报
+     * 系统运行时期货端手工发起冲正期货转银行错误回报
      *
      * @param Field   CThostFtdcReqRepealField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1609,7 +1609,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起查询银行余额错误回报
+     * 期货发起查询银行余额错误回报
      *
      * @param Field   CThostFtdcReqQueryAccountField
      * @param RspInfo CThostFtdcRspInfoField
@@ -1621,7 +1621,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
+     * 期货发起冲正银行转期货请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1631,7 +1631,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
+     * 期货发起冲正期货转银行请求, 银行处理完毕后报盘发回的通知
      *
      * @param Field CThostFtdcRspRepealField
      */
@@ -1641,7 +1641,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起银行资金转期货应答
+     * 期货发起银行资金转期货应答
      *
      * @param Field     CThostFtdcReqTransferField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1655,7 +1655,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起期货资金转银行应答
+     * 期货发起期货资金转银行应答
      *
      * @param Field     CThostFtdcReqTransferField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1669,7 +1669,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///期货发起查询银行余额应答
+     * 期货发起查询银行余额应答
      *
      * @param Field     CThostFtdcReqQueryAccountField
      * @param RspInfo   CThostFtdcRspInfoField
@@ -1683,7 +1683,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起银期开户通知
+     * 银行发起银期开户通知
      *
      * @param Field CThostFtdcOpenAccountField
      */
@@ -1693,7 +1693,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起银期销户通知
+     * 银行发起银期销户通知
      *
      * @param Field CThostFtdcCancelAccountField
      */
@@ -1703,7 +1703,7 @@ public abstract class BaseFtdcTraderListener implements FtdcTraderListener {
     }
 
     /**
-     * ///银行发起变更银行账号通知
+     * 银行发起变更银行账号通知
      *
      * @param Field CThostFtdcChangeAccountField
      */

@@ -20,7 +20,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
+     * 当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.
      */
     @Override
     public void fireFrontConnected() {
@@ -28,7 +28,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后, API会自动重新连接, 客户端可不做处理.
+     * 当客户端与交易后台通信连接断开时, 该方法被调用. 当发生这个情况后, API会自动重新连接, 客户端可不做处理.
      *
      * @param Reason 错误原因
      *               0x1001 网络读失败
@@ -43,7 +43,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///心跳超时警告. 当长时间未收到报文时, 该方法被调用.
+     * 心跳超时警告. 当长时间未收到报文时, 该方法被调用.
      *
      * @param TimeLapse 距离上次接收报文的时间
      */
@@ -53,7 +53,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///登录请求响应
+     * 登录请求响应
      *
      * @param RspUserLogin CThostFtdcRspUserLoginField
      * @param RspInfo      CThostFtdcRspInfoField
@@ -67,7 +67,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///登出请求响应
+     * 登出请求响应
      *
      * @param UserLogout CThostFtdcUserLogoutField
      * @param RspInfo    CThostFtdcRspInfoField
@@ -81,7 +81,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///错误应答
+     * 错误应答
      *
      * @param RspInfo   CThostFtdcRspInfoField
      * @param RequestID int
@@ -93,7 +93,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///订阅行情应答
+     * 订阅行情应答
      *
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
@@ -107,7 +107,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///取消订阅行情应答
+     * 取消订阅行情应答
      *
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
@@ -121,7 +121,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///订阅询价应答
+     * 订阅询价应答
      *
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
@@ -135,7 +135,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///取消订阅询价应答
+     * 取消订阅询价应答
      *
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
@@ -149,7 +149,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///深度行情通知
+     * 深度行情通知
      *
      * @param DepthMarketData CThostFtdcDepthMarketDataField
      */
@@ -159,7 +159,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     }
 
     /**
-     * ///询价通知
+     * 询价通知
      *
      * @param ForQuoteRsp CThostFtdcForQuoteRspField
      */

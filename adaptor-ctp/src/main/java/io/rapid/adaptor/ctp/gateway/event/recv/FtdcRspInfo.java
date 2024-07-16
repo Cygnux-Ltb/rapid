@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.event.received;
+package io.rapid.adaptor.ctp.gateway.event.recv;
 
 import ctp.thostapi.CThostFtdcRspInfoField;
 import lombok.Getter;

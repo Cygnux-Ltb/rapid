@@ -13,7 +13,6 @@ import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
-import org.springframework.stereotype.Component;
 
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.DepthMarketData;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.InputOrder;
@@ -25,7 +24,6 @@ import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.RspInfo;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.Trade;
 import static io.rapid.adaptor.ctp.gateway.event.FtdcEvent.FtdcRspType.TraderConnectionStatus;
 
-@Component
 public final class FtdcEventPublisher {
 
     private final MpRingEventbus<FtdcEvent> eventbus;

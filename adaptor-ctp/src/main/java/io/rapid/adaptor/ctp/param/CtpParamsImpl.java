@@ -6,7 +6,7 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Properties;
 
-public final class CtpParamImpl extends ImmutableParams implements CtpParam {
+public final class CtpParamsImpl extends ImmutableParams implements CtpParams {
 
     /**
      * 根据传入的Key获取Map中的相应字段
@@ -15,7 +15,7 @@ public final class CtpParamImpl extends ImmutableParams implements CtpParam {
      * @throws NullPointerException     e
      * @throws IllegalArgumentException e
      */
-    public CtpParamImpl(@Nonnull Map<String, String> map)
+    public CtpParamsImpl(@Nonnull Map<String, String> map)
             throws NullPointerException, IllegalArgumentException {
         super(map, CtpParamKey.values());
     }
@@ -27,7 +27,7 @@ public final class CtpParamImpl extends ImmutableParams implements CtpParam {
      * @throws NullPointerException     e
      * @throws IllegalArgumentException e
      */
-    public CtpParamImpl(@Nonnull Properties prop)
+    public CtpParamsImpl(@Nonnull Properties prop)
             throws NullPointerException, IllegalArgumentException {
         super(prop, CtpParamKey.values());
     }

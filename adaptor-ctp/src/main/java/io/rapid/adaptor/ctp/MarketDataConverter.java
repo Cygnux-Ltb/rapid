@@ -1,6 +1,6 @@
-package io.rapid.adaptor.ctp.component;
+package io.rapid.adaptor.ctp;
 
-import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.gateway.event.recv.md.FtdcDepthMarketData;
 import io.rapid.core.mkd.FastMarketData;
 import org.slf4j.Logger;
 
@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.mercury.common.datetime.TimeConst.NANOS_PER_MILLIS;
-import static io.mercury.common.datetime.pattern.DatePattern.YYYYMMDD;
-import static io.mercury.common.datetime.pattern.TimePattern.HH_MM_SS;
+import static io.mercury.common.datetime.pattern.impl.DatePattern.YYYYMMDD;
+import static io.mercury.common.datetime.pattern.impl.TimePattern.HH_MM_SS;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.rapid.core.instrument.InstrumentKeeper.getInstrument;
 

@@ -1,7 +1,8 @@
-package io.rapid.adaptor.ctp.component;
+package io.rapid.adaptor.ctp;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcActionFlag;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcContingentCondition;
 import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcDirection;
@@ -44,13 +45,13 @@ public final class OrderConverter {
     // MAC地址
     private final String macAddress;
 
-    public OrderConverter(CtpConfig config) {
-        this.brokerId = config.getBrokerId();
-        this.investorId = config.getInvestorId();
-        this.accountId = config.getAccountId();
-        this.userId = config.getUserId();
-        this.ipAddress = config.getIpAddr();
-        this.macAddress = config.getMacAddr();
+    public OrderConverter(CtpParams param) {
+        this.brokerId = param.getBrokerId();
+        this.investorId = param.getInvestorId();
+        this.accountId = param.getAccountId();
+        this.userId = param.getUserId();
+        this.ipAddress = param.getIpAddr();
+        this.macAddress = param.getMacAddr();
         log.info("FtdcOrderConverter initialized, brokerId=={}, investorId=={}, accountId=={}, userId=={}",
                 brokerId, investorId, accountId, userId);
     }

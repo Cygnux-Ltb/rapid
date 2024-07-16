@@ -2,7 +2,6 @@ package io.rapid.adaptor.ctp.converter;
 
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2Configurator;
-import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
 import io.mercury.serialization.json.JsonWrapper;
 import io.rapid.core.serializable.avro.enums.OrdStatus;
 import io.rapid.core.serializable.avro.enums.TrdAction;
@@ -13,7 +12,7 @@ import org.junit.Test;
 public class OrderEventConverterTest {
 
     static {
-        Log4j2Configurator.setLogLevel(LogLevel.INFO);
+        Log4j2Configurator.useInfoLogLevel();
     }
 
     @Test

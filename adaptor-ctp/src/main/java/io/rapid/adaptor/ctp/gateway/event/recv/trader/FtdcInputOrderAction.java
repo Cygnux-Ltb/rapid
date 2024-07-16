@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.event.received.trader;
+package io.rapid.adaptor.ctp.gateway.event.recv.trader;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import lombok.Getter;

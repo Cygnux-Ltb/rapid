@@ -3,18 +3,17 @@ package io.rapid.adaptor.ctp;
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
 import io.mercury.common.collections.MutableSets;
+import io.mercury.common.concurrent.ring.RingEventbus;
 import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
 import io.mercury.common.state.AvailableTime;
+import io.mercury.common.thread.Sleep;
 import io.mercury.common.util.ArrayUtil;
-import io.rapid.adaptor.ctp.component.CtpConfig;
-import io.rapid.adaptor.ctp.component.OrderRefKeeper;
-import io.rapid.adaptor.ctp.component.MarketDataConverter;
-import io.rapid.adaptor.ctp.component.OrderConverter;
-import io.rapid.adaptor.ctp.component.OrderEventConverter;
 import io.rapid.adaptor.ctp.gateway.CtpMdGateway;
 import io.rapid.adaptor.ctp.gateway.CtpTraderGateway;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.gateway.event.FtdcEventHandler;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.AbstractAdaptor;
 import io.rapid.core.adaptor.ConnectionMode;
@@ -30,42 +29,35 @@ import io.rapid.core.serializable.avro.request.QueryOrder;
 import io.rapid.core.serializable.avro.request.QueryPositions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import org.eclipse.collections.api.set.MutableSet;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalTime;
 
+import static io.mercury.common.concurrent.ring.base.WaitStrategyOption.Yielding;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
-import static io.mercury.common.thread.SleepSupport.sleep;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 import static io.mercury.serialization.json.JsonWrapper.toJson;
 import static java.time.LocalTime.of;
 import static java.util.Arrays.stream;
 
-@Component
 public class CtpAdaptor extends AbstractAdaptor {
 
     private static final Logger log = getLogger(CtpAdaptor.class);
 
-    @Resource
-    private OrderRefKeeper orderRefKeeper;
+    // CTP OrderRef分配器
+    private final OrderRefKeeper orderRefKeeper;
 
     // 行情转换器
-    @Resource
     private final MarketDataConverter marketDataConverter = new MarketDataConverter();
 
     // 转换订单回报
-    @Resource
     private final OrderEventConverter orderEventConverter = new OrderEventConverter();
 
     // CTP Config
-    @Resource
-    private final CtpConfig config;
+    private final CtpParams param;
 
-    @Resource
     private final FtdcEventPublisher publisher;
 
     // TODO 两个INT类型可以合并
@@ -77,19 +69,43 @@ public class CtpAdaptor extends AbstractAdaptor {
 
 
     /**
+     * 传入FtdcEventHandler实现, 由构造函数在内部转换为MPSC队列缓冲区
+     *
+     * @param account Account
+     * @param param   CtpParam
+     * @param mode    ConnectionMode
+     * @param handler FtdcEventHandler
+     */
+    protected CtpAdaptor(@Nonnull Account account, @Nonnull CtpParams param,
+                         @Nonnull ConnectionMode mode, @Nonnull OrderRefKeeper orderRefKeeper,
+                         @Nonnull FtdcEventHandler handler) {
+        this(account, param, mode, orderRefKeeper,
+                RingEventbus.multiProducer(FtdcEvent.EVENT_FACTORY)
+                        .size(512)
+                        .name("internal-ctp-eventbus")
+                        .waitStrategy(Yielding.get())
+                        .process(handler)
+        );
+    }
+
+
+    /**
      * 传入InboundScheduler实现, 由构造函数在内部转换为MPSC队列缓冲区
      *
      * @param account  Account
-     * @param config   CtpConfig
+     * @param param    CtpParam
      * @param mode     ConnectionMode
-     * @param eventbus RingEventbus<FtdcEvent>
+     * @param eventbus MpRingEventbus<FtdcEvent>
      */
-    public CtpAdaptor(@Nonnull Account account, @Nonnull CtpConfig config,
-                      @Nonnull ConnectionMode mode, @Nonnull MpRingEventbus<FtdcEvent> eventbus) {
+    protected CtpAdaptor(@Nonnull Account account, @Nonnull CtpParams param,
+                         @Nonnull ConnectionMode mode, @Nonnull OrderRefKeeper orderRefKeeper,
+                         @Nonnull MpRingEventbus<FtdcEvent> eventbus) {
         super(account);
-        this.config = config;
+        this.param = param;
         this.mode = mode;
+        this.orderRefKeeper = orderRefKeeper;
         this.publisher = new FtdcEventPublisher(eventbus);
+        log.info("Adaptor -> {}, Mode -> {}, Use Account -> {}", getAdaptorId(), mode, account);
     }
 
     // FtdcMdGateway
@@ -106,24 +122,24 @@ public class CtpAdaptor extends AbstractAdaptor {
     @PostConstruct
     private CtpAdaptor initializer() {
         // 创建FtdcOrderConverter
-        this.orderConverter = new OrderConverter(config);
+        this.orderConverter = new OrderConverter(param);
         // 根据连接模式创建相应的Gateway
         switch (mode) {
             case MARKET_DATA -> {
-                this.mdGateway = new CtpMdGateway(config, publisher);
+                this.mdGateway = new CtpMdGateway(param, publisher);
                 this.mdGatewayId = mdGateway.getGatewayId();
                 log.info("MARKET_DATA MODE -> Create md gateway success, gatewayId -> {}", mdGatewayId);
             }
             case TRADE -> {
-                this.traderGateway = new CtpTraderGateway(config, publisher);
+                this.traderGateway = new CtpTraderGateway(param, publisher);
                 this.traderGatewayId = traderGateway.getGatewayId();
                 log.info("TRADE MODE -> Create td gateway success, gatewayId -> {}", traderGatewayId);
             }
             default -> {
-                this.mdGateway = new CtpMdGateway(config, publisher);
+                this.mdGateway = new CtpMdGateway(param, publisher);
                 this.mdGatewayId = mdGateway.getGatewayId();
                 log.info("FULL MODE -> Create md gateway success, gatewayId -> {}", mdGatewayId);
-                this.traderGateway = new CtpTraderGateway(config, publisher);
+                this.traderGateway = new CtpTraderGateway(param, publisher);
                 this.traderGatewayId = traderGateway.getGatewayId();
                 log.info("FULL MODE -> Create td gateway success, gatewayId -> {}", traderGatewayId);
             }
@@ -219,7 +235,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 return false;
             }
         } catch (Exception e) {
-            log.error("{} -> exec SubscribeMarketData has exception -> {}", mdGatewayId, e.getMessage(), e);
+            log.error("{} -> Native SubscribeMarketData has exception -> {}", mdGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -235,7 +251,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             traderGateway.nativeReqOrderInsert(field);
             return true;
         } catch (Exception e) {
-            log.error("{} -> exec ReqOrderInsert has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native ReqOrderInsert has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -254,7 +270,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             log.error(e.getMessage(), e);
             return false;
         } catch (Exception e) {
-            log.error("{} -> exec ReqOrderAction has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native ReqOrderAction has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -263,7 +279,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final Object mutex = new Object();
 
     // 查询间隔, 依据CTP规定限制
-    private final long queryInterval = 1050L;
+    private final long queryInterval = 1100L;
 
     @Override
     public boolean queryOrder(@Nonnull QueryOrder query) {
@@ -272,7 +288,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 startNewThread("QueryOrder-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryOrder, Waiting...", adaptorId);
-                        sleep(queryInterval);
+                        Sleep.millis(queryInterval);
                         traderGateway.nativeReqQryOrder(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryOrder", adaptorId);
                     }
@@ -281,7 +297,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> Exec ReqQryOrder has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native ReqQryOrder has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -293,7 +309,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 startNewThread("QueryPositions-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
-                        sleep(queryInterval);
+                        Sleep.millis(queryInterval);
                         traderGateway.nativeReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
@@ -302,7 +318,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> Exec ReqQryInvestorPosition has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native ReqQryInvestorPosition has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
@@ -314,7 +330,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 startNewThread("QueryBalance-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryTradingAccount, Waiting...", adaptorId);
-                        sleep(queryInterval);
+                        Sleep.millis(queryInterval);
                         traderGateway.nativeReqQryTradingAccount();
                         log.info("{} -> Has been sent ReqQryTradingAccount", adaptorId);
                     }
@@ -323,12 +339,12 @@ public class CtpAdaptor extends AbstractAdaptor {
             } else
                 return false;
         } catch (Exception e) {
-            log.error("{} -> Exec ReqQryTradingAccount has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native ReqQryTradingAccount has exception -> {}", traderGatewayId, e.getMessage(), e);
             return false;
         }
     }
 
-//    private IdleStrategy idleStrategy = new SleepingIdleStrategy(100000);
+
 
     @Override
     public void close() throws IOException {
@@ -338,7 +354,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             mdGateway.close();
             traderGateway.close();
         } catch (Exception e) {
-            log.error("{} -> Exec close has exception -> {}", traderGatewayId, e.getMessage(), e);
+            log.error("{} -> Native close has exception -> {}", traderGatewayId, e.getMessage(), e);
             throw new IOException(e);
         }
     }
@@ -391,6 +407,44 @@ public class CtpAdaptor extends AbstractAdaptor {
                     // 夜盘收盘后10分钟
                     of(2, 40)};
         }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Account account;
+        private CtpParams param;
+        private ConnectionMode mode = ConnectionMode.FULL;
+        private OrderRefKeeper orderRefKeeper;
+
+        public void setAccount(Account account) {
+            this.account = account;
+        }
+
+        public void setParam(CtpParams param) {
+            this.param = param;
+        }
+
+        public void setMode(ConnectionMode mode) {
+            this.mode = mode;
+        }
+
+        public Builder setOrderRefKeeper(OrderRefKeeper orderRefKeeper) {
+            this.orderRefKeeper = orderRefKeeper;
+            return this;
+        }
+
+        public CtpAdaptor build(MpRingEventbus<FtdcEvent> eventbus) {
+            return new CtpAdaptor(account, param, mode, orderRefKeeper, eventbus);
+        }
+
+        public CtpAdaptor build(FtdcEventHandler handler) {
+            return new CtpAdaptor(account, param, mode, orderRefKeeper, handler);
+        }
+
     }
 
 }

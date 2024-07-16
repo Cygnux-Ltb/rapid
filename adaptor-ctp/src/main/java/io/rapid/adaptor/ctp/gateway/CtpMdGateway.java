@@ -11,7 +11,8 @@ import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.adaptor.ctp.component.CtpConfig;
+import io.mercury.common.thread.Sleep;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.rapid.adaptor.ctp.gateway.event.listener.BaseFtdcMdListener;
 import io.rapid.adaptor.ctp.gateway.spi.FtdcMdSpi;
@@ -21,7 +22,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.Getter;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
@@ -33,11 +33,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.mercury.common.datetime.DateTimeUtil.date;
 import static io.mercury.common.lang.Asserter.nonNull;
-import static io.mercury.common.thread.SleepSupport.sleep;
+import static io.mercury.common.thread.Sleep.millis;
 import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 
-@Component
 public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpMdGateway.class);
@@ -69,7 +68,7 @@ public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable 
     private String gatewayId;
 
     @Resource
-    private final CtpConfig config;
+    private final CtpParams param;
 
     @Resource
     private final FtdcEventPublisher publisher;
@@ -77,19 +76,19 @@ public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable 
     /**
      * 自行初始化时使用构造函数
      *
-     * @param config    CtpConfig
+     * @param param     CtpConfig
      * @param publisher FtdcEventPublisher
      */
-    public CtpMdGateway(CtpConfig config, FtdcEventPublisher publisher) {
-        this.config = nonNull(config, "config");
+    public CtpMdGateway(CtpParams param, FtdcEventPublisher publisher) {
+        this.param = nonNull(param, "param");
         this.publisher = nonNull(publisher, "publisher");
         setGatewayId();
     }
 
     private void setGatewayId() {
-        if (config == null || publisher == null)
+        if (param == null || publisher == null)
             throw new IllegalStateException("[CtpConfig] or [FtdcEventPublisher] has not been injected");
-        this.gatewayId = "GATEWAY-MD-" + config.getBrokerId() + "-" + config.getInvestorId();
+        this.gatewayId = "GATEWAY-MD-" + param.getBrokerId() + "-" + param.getInvestorId();
     }
 
     /**
@@ -126,7 +125,7 @@ public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable 
         NativeApi.RegisterSpi(Spi);
         log.info("{} -> call CThostFtdcMdApi::RegisterSpi", gatewayId);
         // 注册到ftdcMdApi前置机
-        NativeApi.RegisterFront(config.getMdAddr());
+        NativeApi.RegisterFront(param.getMdAddr());
         log.info("{} -> call native CThostFtdcMdApi::RegisterFront", gatewayId);
         // 初始化ftdcMdApi
         NativeApi.Init();
@@ -159,7 +158,7 @@ public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable 
             if (NativeApi != null) NativeApi.Release();
             log.info("CThostFtdcMdApi is released");
         });
-        sleep(1000);
+        Sleep.millis(1000);
     }
 
 //*******************************************************************************************************//
@@ -174,7 +173,7 @@ public final class CtpMdGateway extends BaseFtdcMdListener implements Closeable 
     @Override
     public void fireFrontConnected() {
         log.info("FtdcMdGateway::fireFrontConnected");
-        CThostFtdcReqUserLoginField ReqField = config.getReqUserLoginField();
+        CThostFtdcReqUserLoginField ReqField = param.getReqUserLoginField();
         int newRequestID = requestIdGetter.incrementAndGet();
         NativeApi.ReqUserLogin(ReqField, newRequestID);
         log.info("Send CThostFtdcMdApi::ReqUserLogin OK ->  nRequestID==[{}]", newRequestID);

@@ -3,7 +3,7 @@ package io.rapid.adaptor.ctp.param;
 import ctp.thostapi.CThostFtdcReqAuthenticateField;
 import ctp.thostapi.CThostFtdcReqUserLoginField;
 
-public interface CtpParam {
+public interface CtpParams {
 
     String getTraderAddr();
 

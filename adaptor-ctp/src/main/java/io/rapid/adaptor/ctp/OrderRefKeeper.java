@@ -1,7 +1,7 @@
-package io.rapid.adaptor.ctp.component;
+package io.rapid.adaptor.ctp;
 
 import io.mercury.common.datetime.EpochTime;
-import io.mercury.common.thread.SleepSupport;
+import io.mercury.common.thread.Sleep;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class OrderRefKeeper {
     }
 
     public void put(String orderRef, long ordSysId) {
-        log.info("PUT order mapping orderRef==[{}] <--> ordSysId==[{}]", orderRef, ordSysId);
+        log.info("PUT ORDER MAPPING orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMapper.put(orderRef, ordSysId);
         ordSysIdMapper.put(ordSysId, orderRef);
     }
@@ -111,7 +111,7 @@ public class OrderRefKeeper {
 
         for (int i = 0; i < 1000; i++) {
             System.out.println(keeper.nextOrderRef());
-            SleepSupport.sleep(2);
+            Sleep.millis(2);
         }
 
         Duration duration = Duration

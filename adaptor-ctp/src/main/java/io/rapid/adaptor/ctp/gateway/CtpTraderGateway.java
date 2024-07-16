@@ -29,15 +29,15 @@ import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.file.FileUtil;
 import io.mercury.common.lang.exception.NativeLibraryException;
+import io.mercury.common.thread.Sleep;
 import io.mercury.common.util.StringSupport;
-import io.rapid.adaptor.ctp.component.CtpConfig;
 import io.rapid.adaptor.ctp.gateway.event.FtdcEventPublisher;
 import io.rapid.adaptor.ctp.gateway.event.listener.BaseFtdcTraderListener;
 import io.rapid.adaptor.ctp.gateway.spi.FtdcTraderSpi;
 import io.rapid.adaptor.ctp.gateway.util.NativeLibraryManager;
+import io.rapid.adaptor.ctp.param.CtpParams;
 import lombok.Getter;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.io.Closeable;
 import java.io.File;
@@ -49,12 +49,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static ctp.thostapi.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
 import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
-import static io.mercury.common.thread.SleepSupport.sleep;
+import static io.mercury.common.thread.Sleep.millis;
 import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 import static io.rapid.adaptor.ctp.gateway.util.FtdcRspInfoHandler.nonError;
 
-@Component
 public final class CtpTraderGateway extends BaseFtdcTraderListener implements Closeable {
 
     private static final Logger log = getLogger(CtpTraderGateway.class);
@@ -93,14 +92,14 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
     @Getter
     private final String gatewayId;
 
-    private final CtpConfig config;
+    private final CtpParams param;
 
     private final FtdcEventPublisher publisher;
 
-    public CtpTraderGateway(CtpConfig config, FtdcEventPublisher publisher) {
-        this.config = nonNull(config, "config");
+    public CtpTraderGateway(CtpParams param, FtdcEventPublisher publisher) {
+        this.param = nonNull(param, "param");
         this.publisher = nonNull(publisher, "publisher");
-        this.gatewayId = "GATEWAY-TD-" + config.getBrokerId() + "-" + config.getInvestorId();
+        this.gatewayId = "GATEWAY-TD-" + param.getBrokerId() + "-" + param.getInvestorId();
     }
 
     /**
@@ -136,7 +135,7 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
         NativeApi.RegisterSpi(Spi);
         log.info("{} -> call native CThostFtdcTraderApi::RegisterSpi", gatewayId);
         // 注册到trader前置机
-        NativeApi.RegisterFront(config.getTraderAddr());
+        NativeApi.RegisterFront(param.getTraderAddr());
         log.info("{} -> call native CThostFtdcTraderApi::RegisterFront", gatewayId);
         /// THOST_TERT_RESTART:从本交易日开始重传
         /// THOST_TERT_RESUME:从上次收到的续传
@@ -204,8 +203,8 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
      */
     public int nativeReqQryOrder(String exchangeCode, String instrumentCode) {
         CThostFtdcQryOrderField ReqField = new CThostFtdcQryOrderField();
-        ReqField.setBrokerID(config.getBrokerId());
-        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setBrokerID(param.getBrokerId());
+        ReqField.setInvestorID(param.getInvestorId());
         ReqField.setExchangeID(exchangeCode);
         ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdGetter.incrementAndGet();
@@ -238,10 +237,10 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
      */
     public int nativeReqQryTradingAccount() {
         CThostFtdcQryTradingAccountField ReqField = new CThostFtdcQryTradingAccountField();
-        ReqField.setBrokerID(config.getBrokerId());
-        ReqField.setAccountID(config.getAccountId());
-        ReqField.setInvestorID(config.getInvestorId());
-        ReqField.setCurrencyID(config.getCurrencyId());
+        ReqField.setBrokerID(param.getBrokerId());
+        ReqField.setAccountID(param.getAccountId());
+        ReqField.setInvestorID(param.getInvestorId());
+        ReqField.setCurrencyID(param.getCurrencyId());
         int RequestID = requestIdGetter.incrementAndGet();
         NativeApi.ReqQryTradingAccount(ReqField, RequestID);
         log.info(
@@ -258,8 +257,8 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
      */
     public int nativeReqQryInvestorPosition(String exchangeCode, String instrumentCode) {
         CThostFtdcQryInvestorPositionField ReqField = new CThostFtdcQryInvestorPositionField();
-        ReqField.setBrokerID(config.getBrokerId());
-        ReqField.setInvestorID(config.getInvestorId());
+        ReqField.setBrokerID(param.getBrokerId());
+        ReqField.setInvestorID(param.getInvestorId());
         ReqField.setExchangeID(exchangeCode);
         ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdGetter.incrementAndGet();
@@ -292,11 +291,11 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
      */
     public int nativeReqQrySettlementInfo() {
         CThostFtdcQrySettlementInfoField ReqField = new CThostFtdcQrySettlementInfoField();
-        ReqField.setBrokerID(config.getBrokerId());
-        ReqField.setInvestorID(config.getInvestorId());
-        ReqField.setTradingDay(config.getTradingDay());
-        ReqField.setAccountID(config.getAccountId());
-        ReqField.setCurrencyID(config.getCurrencyId());
+        ReqField.setBrokerID(param.getBrokerId());
+        ReqField.setInvestorID(param.getInvestorId());
+        ReqField.setTradingDay(param.getTradingDay());
+        ReqField.setAccountID(param.getAccountId());
+        ReqField.setCurrencyID(param.getCurrencyId());
         int RequestID = requestIdGetter.incrementAndGet();
         NativeApi.ReqQrySettlementInfo(ReqField, RequestID);
         log.info("Send TraderApi::ReqQrySettlementInfo OK -> RequestID==[{}]", RequestID);
@@ -328,7 +327,7 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
             if (NativeApi != null) NativeApi.Release();
             log.info("CThostFtdcTraderApi is released");
         });
-        sleep(1000);
+        Sleep.millis(1000);
     }
 
 //*******************************************************************************************************//
@@ -343,9 +342,9 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
     @Override
     public void fireFrontConnected() {
         log.info("TraderGateway::fireFrontConnected");
-        if (StringSupport.nonEmpty(config.getAuthCode()) && !isAuthenticate) {
+        if (StringSupport.nonEmpty(param.getAuthCode()) && !isAuthenticate) {
             // 发送认证请求
-            CThostFtdcReqAuthenticateField ReqField = config.getReqAuthenticateField();
+            CThostFtdcReqAuthenticateField ReqField = param.getReqAuthenticateField();
             int newRequestID = requestIdGetter.incrementAndGet();
             NativeApi.ReqAuthenticate(ReqField, newRequestID);
             log.info(
@@ -353,7 +352,7 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
                     newRequestID, ReqField.getBrokerID(), ReqField.getUserID(), ReqField.getAppID(), ReqField.getAuthCode());
         } else {
             log.error("Cannot sent TraderApi::ReqAuthenticate, authCode==[{}], isAuthenticate==[{}]",
-                    config.getAuthCode(), isAuthenticate);
+                    param.getAuthCode(), isAuthenticate);
         }
     }
 
@@ -404,7 +403,7 @@ public final class CtpTraderGateway extends BaseFtdcTraderListener implements Cl
                 log.info("FtdcCallback::onRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
                 isAuthenticate = true;
-                CThostFtdcReqUserLoginField ReqField = config.getReqUserLoginField();
+                CThostFtdcReqUserLoginField ReqField = param.getReqUserLoginField();
                 int newRequestID = requestIdGetter.incrementAndGet();
                 NativeApi.ReqUserLogin(ReqField, newRequestID);
                 log.info("Send TraderApi::ReqUserLogin OK -> RequestID==[{}]", newRequestID);

@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.event.received.md;
+package io.rapid.adaptor.ctp.gateway.event.recv.md;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import lombok.Getter;

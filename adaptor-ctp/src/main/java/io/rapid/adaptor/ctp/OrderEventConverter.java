@@ -1,10 +1,10 @@
-package io.rapid.adaptor.ctp.component;
+package io.rapid.adaptor.ctp;
 
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrder;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderAction;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrderAction;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcInputOrder;
+import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcInputOrderAction;
+import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcOrderAction;
+import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcTrade;
 import io.rapid.core.serializable.avro.enums.OrdStatus;
 import io.rapid.core.serializable.avro.event.OrderEvent;
 import jakarta.annotation.Resource;

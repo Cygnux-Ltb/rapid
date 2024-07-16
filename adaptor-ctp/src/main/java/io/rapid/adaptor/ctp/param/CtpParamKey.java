@@ -1,10 +1,9 @@
-package io.rapid.adaptor.ctp.config;
+package io.rapid.adaptor.ctp.param;
 
 import io.mercury.common.config.ConfigOption;
 import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params.ValueType;
-
-import static io.mercury.common.param.Params.ValueType.STRING;
+import lombok.Getter;
 
 /**
  * 用于读取FTDC配置信息
@@ -80,10 +79,13 @@ public enum CtpParamKey implements ParamKey, ConfigOption {
 
     ;
 
+    @Getter
     private final String paramName;
 
-    private final ValueType valueType = STRING;
+    @Getter
+    private final ValueType valueType = ValueType.STRING;
 
+    @Getter
     private final String configName;
 
     CtpParamKey(String paramName) {
@@ -92,23 +94,8 @@ public enum CtpParamKey implements ParamKey, ConfigOption {
     }
 
     @Override
-    public String getParamName() {
-        return paramName;
-    }
-
-    @Override
-    public ValueType getValueType() {
-        return valueType;
-    }
-
-    @Override
     public int getParamId() {
         return ordinal();
-    }
-
-    @Override
-    public String getConfigName() {
-        return configName;
     }
 
     public static void main(String[] args) {
