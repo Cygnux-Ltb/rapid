@@ -1,6 +1,6 @@
 package io.rapid.engine.strategy;
 
-import io.rapid.core.account.Account;
+import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataHandler;
@@ -11,7 +11,7 @@ import io.rapid.core.serializable.avro.event.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
-import org.eclipse.collections.api.set.ImmutableSet;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -20,19 +20,27 @@ import java.util.function.Supplier;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
-public class StrategyImpl implements Strategy {
+public class StrategyImpl extends BaseStrategy {
 
     private static final Logger log = getLogger(StrategyImpl.class);
 
-    StrategyImpl(MarketDataHandler marketDataHandler) {
+    private final MarketDataHandler marketDataHandler;
+
+    protected StrategyImpl(int strategyId, @Nonnull String strategyName,
+                           @Nonnull SubAccount subAccount, @Nonnull Params params,
+                           MarketDataHandler marketDataHandler, @Nonnull Instrument... instruments) {
+        super(strategyId, strategyName, subAccount, params, instruments);
         this.marketDataHandler = marketDataHandler;
     }
-
-    private final MarketDataHandler marketDataHandler;
 
     @Override
     public void onMarketData(@Nonnull FastMarketData marketData) {
         marketDataHandler.onMarketData(marketData);
+    }
+
+    @Override
+    protected void handleMarketData(FastMarketData marketData) {
+
     }
 
     private final AdaptorEventHandler adaptorEventHandler = event -> {
@@ -74,6 +82,11 @@ public class StrategyImpl implements Strategy {
     }
 
     @Override
+    protected void handleOrder(Order order) {
+
+    }
+
+    @Override
     public int getStrategyId() {
         return 0;
     }
@@ -83,18 +96,9 @@ public class StrategyImpl implements Strategy {
         return null;
     }
 
-    @Override
-    public SubAccount getSubAccount() {
-        return null;
-    }
 
     @Override
-    public Account getAccount() {
-        return null;
-    }
-
-    @Override
-    public ImmutableSet<Instrument> getInstruments() {
+    public ImmutableList<Instrument> getInstruments() {
         return null;
     }
 
@@ -104,12 +108,12 @@ public class StrategyImpl implements Strategy {
     }
 
     @Override
-    public void onStrategyEvent(@Nonnull StrategyEvent event) {
+    public void onEvent(@Nonnull StrategyEvent event) {
 
     }
 
     @Override
-    public void onThrowable(Throwable throwable) throws StrategyException {
+    public void onException(Exception exception) throws StrategyException {
 
     }
 

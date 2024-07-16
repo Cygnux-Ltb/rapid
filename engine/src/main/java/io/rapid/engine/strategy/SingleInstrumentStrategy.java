@@ -1,41 +1,26 @@
 package io.rapid.engine.strategy;
 
+import io.mercury.common.datetime.EpochTime;
+import io.mercury.common.lang.Asserter;
+import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.adaptor.TraderAdaptor;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.serializable.avro.event.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
-import io.mercury.common.collections.ImmutableSets;
-import io.mercury.common.datetime.EpochTime;
-import io.mercury.common.lang.Asserter;
-import io.mercury.common.param.ParamKey;
-import io.mercury.common.param.Params;
-import org.eclipse.collections.api.set.ImmutableSet;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
-public abstract class SingleInstrumentStrategy<K extends ParamKey>
-        extends BaseStrategy<K> {
+public abstract class SingleInstrumentStrategy extends BaseStrategy {
 
     private static final Logger log = getLogger(SingleInstrumentStrategy.class);
 
     protected TraderAdaptor adaptor;
 
-    /**
-     * @param strategyId   int
-     * @param strategyName String
-     * @param subAccount   SubAccount
-     * @param instrument   Instrument
-     */
-    protected SingleInstrumentStrategy(int strategyId,
-                                       @Nonnull String strategyName,
-                                       @Nonnull SubAccount subAccount,
-                                       @Nonnull Instrument instrument) {
-        this(strategyId, strategyName, subAccount, null, instrument);
-    }
+    protected Instrument instrument;
 
     /**
      * @param strategyId   int
@@ -45,24 +30,16 @@ public abstract class SingleInstrumentStrategy<K extends ParamKey>
      * @param instrument   Instrument
      */
     protected SingleInstrumentStrategy(int strategyId, @Nonnull String strategyName, SubAccount subAccount,
-                                       @Nonnull Params<K> params, Instrument instrument) {
-        super(strategyId, strategyName, subAccount, params);
+                                       @Nonnull Params params, Instrument instrument) {
+        super(strategyId, strategyName, subAccount, params, instrument);
         this.instrument = instrument;
-        this.instruments = ImmutableSets.from(instrument);
-    }
-
-
-    @Override
-    @Nonnull
-    public ImmutableSet<Instrument> getInstruments() {
-        return instruments;
     }
 
 
     public Strategy addAdaptor(@Nonnull TraderAdaptor adaptor) {
         Asserter.nonNull(adaptor, "adaptor");
         log.info("added adaptor, strategyId -> {}, strategyName -> {}, investorId -> {}",
-                id, name, adaptor.getBoundAccount().getInvestorId());
+                strategyId, strategyName, adaptor.getBoundAccount().getInvestorId());
         this.adaptor = adaptor;
         return this;
     }

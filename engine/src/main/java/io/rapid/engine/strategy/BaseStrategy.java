@@ -1,16 +1,12 @@
 package io.rapid.engine.strategy;
 
-import io.rapid.engine.position.PositionKeeper;
-import io.rapid.engine.trader.OrderKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.state.EnableableComponent;
 import io.mercury.common.lang.Asserter;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.param.ParamKey;
 import io.mercury.common.param.Params;
 import io.mercury.common.sequence.SnowflakeAlgo;
+import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountStorage;
 import io.rapid.core.account.SubAccount;
@@ -25,126 +21,128 @@ import io.rapid.core.order.Order;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
+import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.serializable.avro.request.QueryBalance;
 import io.rapid.core.serializable.avro.request.QueryPositions;
-import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
+import io.rapid.engine.position.PositionKeeper;
+import io.rapid.engine.trader.OrderKeeper;
+import lombok.Getter;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
-import org.eclipse.collections.api.set.ImmutableSet;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static java.lang.Math.abs;
 
-public abstract class BaseStrategy<K extends ParamKey>
-        extends EnableableComponent
-        implements Strategy, CircuitBreaker {
+public abstract class BaseStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
 
-    private final static Logger log = Log4j2LoggerFactory.getLogger(BaseStrategy.class);
+    private final static Logger log = getLogger(BaseStrategy.class);
 
-    // 策略ID
-    protected final int id;
+    /**
+     * 策略ID
+     */
+    @Getter
+    protected final int strategyId;
 
-    // 策略名称
-    protected final String name;
+    /**
+     * 策略名称
+     */
+    @Getter
+    protected final String strategyName;
 
-    // 子账号
+    /**
+     * 子账号
+     */
+    @Getter
     protected final SubAccount subAccount;
     protected final int subAccountId;
 
-    // 实际账号
+    /**
+     * 实际账号
+     */
+    @Getter
     protected final Account account;
     protected final int accountId;
 
-    // 是否初始化成功
-    private boolean initSuccess = false;
+    /**
+     * 是否初始化成功
+     */
+    private boolean initialized = false;
 
-    // 记录当前策略所有的订单
+    /**
+     * 记录当前策略所有的订单
+     */
     protected final MutableLongObjectMap<Order> orders = MutableMaps.newLongObjectMap();
 
-    // 策略参数
-    protected final Params<K> params;
+    /**
+     * 策略参数
+     */
+    @Getter
+    protected final Params params;
 
-    // TODO
+    /**
+     * 仓位查询对象
+     */
     protected QueryPositions queryPositions;
 
-    // TODO
+    /**
+     * 资金查询对象
+     */
     protected QueryBalance queryBalance;
 
+    /**
+     * OrderSysID分配器
+     */
     private final OrdSysIdAllocator allocator;
 
-    // 策略订阅的合约列表
-    protected ImmutableSet<Instrument> instruments;
+    /**
+     * 策略订阅的合约列表
+     */
+    @Getter
+    protected ImmutableList<Instrument> instruments;
 
-    // 策略订阅的合约
-    protected Instrument instrument;
+    protected final boolean singleInstrumentStrategy;
 
-    protected final boolean isSingleInstrument;
-
-    protected BaseStrategy(int id,
-                           @Nonnull String name,
+    protected BaseStrategy(int strategyId,
+                           @Nonnull String strategyName,
                            @Nonnull SubAccount subAccount,
-                           @Nonnull Params<K> params,
+                           @Nonnull Params params,
                            @Nonnull Instrument... instruments) {
-        Asserter.atWithinRange(id, 1, MAX_STRATEGY_ID, "strategyId");
-        Asserter.nonEmpty(name, "strategyName");
+        Asserter.atWithinRange(strategyId, 1, MAX_STRATEGY_ID, "strategyId");
+        Asserter.nonEmpty(strategyName, "strategyName");
         Asserter.nonNull(subAccount, "subAccount");
-        this.id = id;
-        this.name = name;
+        this.strategyId = strategyId;
+        this.strategyName = strategyName;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
         this.account = AccountStorage.getAccountBySubAccountId(subAccount.getSubAccountId());
         this.accountId = account.getAccountId();
         this.params = params;
         this.queryPositions = QueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
+                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
         this.queryBalance = QueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(name).setStrategyId(id).setSubAccountId(subAccountId).build();
-        var snowflake = new SnowflakeAlgo(id);
+                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
+        var snowflake = new SnowflakeAlgo(strategyId);
         this.allocator = snowflake::next;
-        this.isSingleInstrument = (instruments.length == 1);
-        if (isSingleInstrument) {
-            this.instrument = instruments[0];
-        } else {
-            this.instrument = null;
-        }
-        this.instruments = ImmutableSets.from(Stream.of(instruments));
-
-    }
-
-    public int getStrategyId() {
-        return id;
-    }
-
-    public String getStrategyName() {
-        return name;
-    }
-
-    public SubAccount getSubAccount() {
-        return subAccount;
-    }
-
-    public Account getAccount() {
-        return account;
+        this.instruments = ImmutableSets.from(instruments).toImmutableList();
+        this.singleInstrumentStrategy = instruments.length == 1;
     }
 
     public MutableLongObjectMap<Order> getOrders() {
         return orders;
     }
 
-    public Params<K> getParams() {
-        return params;
-    }
 
     @Override
     public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
         Asserter.nonNull(initializer, "initializer");
-        this.initSuccess = initializer.get();
-        log.info("Initialize result initSuccess==[{}]", initSuccess);
+        this.initialized = initializer.get();
+        log.info("Initialize result initSuccess==[{}]", initialized);
         // TODO 设置StrategyKeeper
         // StrategyKeeper.putStrategy(this);
         return this;
@@ -172,28 +170,28 @@ public abstract class BaseStrategy<K extends ParamKey>
     protected abstract void handleOrder(Order order);
 
     @Override
-    public void onStrategyEvent(@Nonnull StrategyEvent event) {
+    public void onEvent(@Nonnull StrategyEvent event) {
         // TODO
         log.info("{} :: Handle StrategyControlEvent -> {}", getStrategyName(), event);
     }
 
     @Override
     public boolean enable() {
-        if (initSuccess) {
+        if (initialized) {
             boolean enable = super.enable();
             if (enable) {
                 log.info("{} :: enable strategy success. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        name, id, initSuccess, isEnabled());
+                        strategyName, strategyId, initialized, isEnabled());
             } else {
                 log.info(
                         "{} :: enable strategy failure, strategy is enabled. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        name, id, initSuccess, isEnabled());
+                        strategyName, strategyId, initialized, isEnabled());
             }
             return enable;
         } else {
             log.info(
                     "{} :: enable strategy failure, strategy is not initialized. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                    getStrategyName(), id, initSuccess, isEnabled());
+                    getStrategyName(), strategyId, initialized, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
     }
@@ -202,11 +200,11 @@ public abstract class BaseStrategy<K extends ParamKey>
     public boolean disable() {
         boolean disable = super.disable();
         if (disable) {
-            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getStrategyName(), id,
+            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getStrategyName(), strategyId,
                     isEnabled());
         } else {
             log.info("{} :: disable strategy failure, strategy is disabled. strategyId==[{}], isEnable==[{}]",
-                    getStrategyName(), id, isEnabled());
+                    getStrategyName(), strategyId, isEnabled());
         }
         return disable;
     }
@@ -232,9 +230,9 @@ public abstract class BaseStrategy<K extends ParamKey>
     }
 
     @Override
-    public void onThrowable(Throwable throwable) {
+    public void onException(Exception exception) {
         log.error("StrategyId -> [{}] throw exception -> [{}]",
-                id, throwable.getMessage(), throwable);
+                strategyId, exception.getMessage(), exception);
     }
 
     /**
@@ -387,7 +385,7 @@ public abstract class BaseStrategy<K extends ParamKey>
      */
     protected void openPosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType,
                                 TrdDirection direction) {
-        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, id, subAccount, account,
+        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.Open);
         childOrder.printLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
         saveOrder(childOrder);
@@ -476,7 +474,7 @@ public abstract class BaseStrategy<K extends ParamKey>
      * @param ordType    订单类型
      */
     protected void closePosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType) {
-        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, id, subAccount, account,
+        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, offerQty > 0 ? TrdDirection.Long : TrdDirection.Short,
                 TrdAction.Close);
 
