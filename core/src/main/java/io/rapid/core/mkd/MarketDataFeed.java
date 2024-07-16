@@ -90,7 +90,7 @@ public interface MarketDataFeed extends Adaptor {
      * @return TraderAdaptor
      */
     @Override
-    default Adaptor addOrderHandler(OrderHandler handler) {
+    default MarketDataFeed addOrderHandler(OrderHandler handler) {
         throw new UnsupportedOperationException(getClass().getName()
                 + " : unsupported functions -> addOrderHandler");
     }

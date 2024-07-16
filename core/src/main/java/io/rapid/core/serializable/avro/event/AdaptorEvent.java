@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 /** 适配器回报 */
 @org.apache.avro.specific.AvroGenerated
 public class AdaptorEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 434613878289649503L;
+  private static final long serialVersionUID = -9121059124603875984L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AdaptorEvent\",\"namespace\":\"io.rapid.core.serializable.avro.event\",\"doc\":\"适配器回报\",\"fields\":[{\"name\":\"epochMillis\",\"type\":\"long\"},{\"name\":\"adaptorId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"accountId\",\"type\":\"int\"},{\"name\":\"status\",\"type\":{\"type\":\"enum\",\"name\":\"AdaptorStatus\",\"namespace\":\"io.rapid.core.serializable.avro.enums\",\"symbols\":[\"INVALID\",\"UNAVAILABLE\",\"MD_ENABLE\",\"MD_DISABLE\",\"TRADER_ENABLE\",\"TRADER_DISABLE\"]}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AdaptorEvent\",\"namespace\":\"io.rapid.core.serializable.avro.event\",\"doc\":\"适配器回报\",\"fields\":[{\"name\":\"epochMillis\",\"type\":\"long\"},{\"name\":\"adaptorId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"accountId\",\"type\":\"int\"},{\"name\":\"status\",\"type\":{\"type\":\"enum\",\"name\":\"AdaptorStatus\",\"namespace\":\"io.rapid.core.serializable.avro.enums\",\"symbols\":[\"INVALID\",\"UNAVAILABLE\",\"AVAILABLE\",\"MD_ENABLE\",\"MD_DISABLE\",\"TRADER_ENABLE\",\"TRADER_DISABLE\"]}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();

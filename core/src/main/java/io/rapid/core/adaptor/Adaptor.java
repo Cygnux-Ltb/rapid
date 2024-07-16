@@ -54,7 +54,7 @@ public interface Adaptor extends AutoCloseable, Enableable {
      * 添加行情处理器
      *
      * @param handler MarketDataHandler
-     * @return MarketDataFeed
+     * @return Adaptor
      */
     Adaptor addMarketDataHandler(MarketDataHandler handler);
 
@@ -113,7 +113,7 @@ public interface Adaptor extends AutoCloseable, Enableable {
      * 添加订单处理器
      *
      * @param handler OrderHandler
-     * @return TraderAdaptor
+     * @return Adaptor
      */
     Adaptor addOrderHandler(OrderHandler handler);
 

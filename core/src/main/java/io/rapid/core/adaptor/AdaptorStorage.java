@@ -1,6 +1,5 @@
 package io.rapid.core.adaptor;
 
-import io.mercury.common.collections.MutableMaps;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -40,12 +39,12 @@ public final class AdaptorStorage implements Serializable {
     /**
      * 存储Adaptor, 使用accountId索引
      */
-    private static final MutableIntObjectMap<Adaptor> ACCOUNT_ADAPTOR_MAP = MutableMaps.newIntObjectMap();
+    private static final MutableIntObjectMap<Adaptor> ACCOUNT_ADAPTOR_MAP = newIntObjectMap();
 
     /**
      * 存储Adaptor, 使用subAccountId索引
      */
-    private static final MutableIntObjectMap<Adaptor> SUB_ACCOUNT_ADAPTOR_MAP = MutableMaps.newIntObjectMap();
+    private static final MutableIntObjectMap<Adaptor> SUB_ACCOUNT_ADAPTOR_MAP = newIntObjectMap();
 
     private AdaptorStorage() {
     }

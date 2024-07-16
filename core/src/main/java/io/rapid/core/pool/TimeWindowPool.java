@@ -2,7 +2,7 @@ package io.rapid.core.pool;
 
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.param.JointKeyParams;
+import io.mercury.common.param.impl.JointKeyParams;
 import io.mercury.common.sequence.TimeWindow;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
@@ -106,13 +106,13 @@ public final class TimeWindowPool {
      */
     public ImmutableSortedSet<TimeWindow> getTimePeriodSet(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        ImmutableSortedSet<TimeWindow> sortedSet = timeWindowPool.get(symbolTimeKey);
-        if (sortedSet == null) {
+        var timeWindows = timeWindowPool.get(symbolTimeKey);
+        if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            sortedSet = timeWindowPool.get(symbolTimeKey);
+            timeWindows = timeWindowPool.get(symbolTimeKey);
         }
-        return sortedSet;
+        return timeWindows;
     }
 
     /**
@@ -131,13 +131,13 @@ public final class TimeWindowPool {
      */
     public ImmutableLongObjectMap<TimeWindow> getTimePeriodMap(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        ImmutableLongObjectMap<TimeWindow> longObjectMap = timePeriodMapPool.get(symbolTimeKey);
-        if (longObjectMap == null) {
+        var timeWindows = timePeriodMapPool.get(symbolTimeKey);
+        if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            longObjectMap = timePeriodMapPool.get(symbolTimeKey);
+            timeWindows = timePeriodMapPool.get(symbolTimeKey);
         }
-        return longObjectMap;
+        return timeWindows;
     }
 
     /**

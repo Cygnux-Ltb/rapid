@@ -6,8 +6,8 @@
 package io.rapid.core.serializable.avro.enums;
 @org.apache.avro.specific.AvroGenerated
 public enum OrdStatus implements org.apache.avro.generic.GenericEnumSymbol<OrdStatus> {
-  INVALID, PENDING_NEW, NEW, NEW_REJECTED, PARTIALLY_FILLED, FILLED, PENDING_CANCEL, CANCELED, CANCEL_REJECTED, PENDING_REPLACE, REPLACED, SUSPENDED, UNPROVIDED  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"OrdStatus\",\"namespace\":\"io.rapid.core.serializable.avro.enums\",\"symbols\":[\"INVALID\",\"PENDING_NEW\",\"NEW\",\"NEW_REJECTED\",\"PARTIALLY_FILLED\",\"FILLED\",\"PENDING_CANCEL\",\"CANCELED\",\"CANCEL_REJECTED\",\"PENDING_REPLACE\",\"REPLACED\",\"SUSPENDED\",\"UNPROVIDED\"]}");
+  INVALID, PENDING_NEW, NEW, NEW_REJECTED, PARTIALLY_FILLED, FILLED, PENDING_CANCEL, CANCEL_REJECTED, CANCELED, PENDING_REPLACE, REPLACE_REJECTED, REPLACED, SUSPENDED, UNPROVIDED  ;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"OrdStatus\",\"namespace\":\"io.rapid.core.serializable.avro.enums\",\"symbols\":[\"INVALID\",\"PENDING_NEW\",\"NEW\",\"NEW_REJECTED\",\"PARTIALLY_FILLED\",\"FILLED\",\"PENDING_CANCEL\",\"CANCEL_REJECTED\",\"CANCELED\",\"PENDING_REPLACE\",\"REPLACE_REJECTED\",\"REPLACED\",\"SUSPENDED\",\"UNPROVIDED\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

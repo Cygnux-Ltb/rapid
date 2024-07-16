@@ -1,11 +1,10 @@
 package io.rapid.core.account;
 
 import com.typesafe.config.Config;
-import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.config.ConfigWrapper;
 import io.mercury.common.lang.Asserter;
-import io.mercury.common.util.StringSupport;
+import io.mercury.common.state.EnableableComponent;
 import org.eclipse.collections.api.set.MutableSet;
 
 import javax.annotation.Nonnull;
@@ -73,7 +72,8 @@ public final class Account extends EnableableComponent implements Comparable<Acc
      * @param brokerName String
      * @param investorId String
      */
-    public Account(int accountId, @Nonnull String brokerId, @Nonnull String brokerName, @Nonnull String investorId) {
+    public Account(int accountId, @Nonnull String brokerId,
+                   @Nonnull String brokerName, @Nonnull String investorId) {
         this(accountId, brokerId, brokerName, investorId, 0L, 0L);
     }
 
@@ -85,7 +85,8 @@ public final class Account extends EnableableComponent implements Comparable<Acc
      * @param balance    long
      * @param credit     long
      */
-    public Account(int accountId, @Nonnull String brokerId, @Nonnull String brokerName, @Nonnull String investorId,
+    public Account(int accountId, @Nonnull String brokerId,
+                   @Nonnull String brokerName, @Nonnull String investorId,
                    long balance, long credit) {
         Asserter.greaterThan(accountId, 0, "accountId");
         Asserter.nonEmpty(brokerId, "brokerId");
@@ -170,35 +171,17 @@ public final class Account extends EnableableComponent implements Comparable<Acc
 
     }
 
-    private static final String AccountIdField = "{\"accountId\" : ";
-    private static final String BrokerNameField = ", \"brokerName\" : ";
-    private static final String InvestorIdField = ", \"investorId\" : ";
-    private static final String BalanceField = ", \"balance\" : ";
-    private static final String CreditField = ", \"credit\" : ";
-    private static final String RemarkField = ", \"remark\" : ";
-    private static final String SubAccountTotalField = ", \"subAccountTotal\" : ";
-    private static final String IsEnabledField = ", \"isEnabled\" : ";
-    private static final String End = "}";
-
     @Override
     public String toString() {
-        return AccountIdField +
-                accountId +
-                BrokerNameField +
-                brokerName +
-                InvestorIdField +
-                investorId +
-                BalanceField +
-                balance +
-                CreditField +
-                credit +
-                RemarkField +
-                remark +
-                SubAccountTotalField +
-                subAccounts.size() +
-                IsEnabledField +
-                isEnabled() +
-                End;
+        return "{\"accountId\" : " + accountId
+                + ", \"brokerName\" : " + brokerName
+                + ", \"investorId\" : " + investorId
+                + ", \"balance\" : " + balance
+                + ", \"credit\" : " + credit
+                + ", \"remark\" : " + remark
+                + ", \"subAccountTotal\" : " + subAccounts.size()
+                + ", \"isEnabled\" : " + isEnabled()
+                + "}";
     }
 
     @Override
@@ -207,7 +190,6 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     }
 
     public static void main(String[] args) {
-        System.out.println(StringSupport.toText(null));
         Account account = new Account(1, "ZSQH", "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
