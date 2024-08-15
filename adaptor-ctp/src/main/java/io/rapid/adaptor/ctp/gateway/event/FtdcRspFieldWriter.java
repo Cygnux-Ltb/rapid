@@ -12,6 +12,7 @@ import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcTradeField;
 import ctp.thostapi.CThostFtdcTradingAccountField;
+import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.serializable.avro.md.SpecificInstrumentSource;
 import io.rapid.adaptor.ctp.serializable.avro.shared.EventSource;
@@ -19,17 +20,17 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
-public final class FtdcRspFieldCopier {
+public final class FtdcRspFieldWriter {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspPublisher.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspFieldWriter.class);
 
     /**
      * @param event FtdcRspEvent
      * @param Field CThostFtdcDepthMarketDataField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyFromDepthMarketData(@Nonnull FtdcRspEvent event,
-                                                       @Nonnull CThostFtdcDepthMarketDataField Field) {
+    public static FtdcRspEvent writeDepthMarketData(@Nonnull FtdcRspEvent event,
+                                                    @Nonnull CThostFtdcDepthMarketDataField Field) {
         event.getFtdcDepthMarketData()
                 // 交易日, 合约ID, 交易所ID, 合约在交易所的代码
                 .setTradingDay(Field.getTradingDay())
@@ -90,21 +91,18 @@ public final class FtdcRspFieldCopier {
         return event;
     }
 
-    public static FtdcRspEvent copyFromRspUserLogin(FtdcRspEvent event,
-                                                    EventSource source,
-                                                    CThostFtdcRspUserLoginField Field,
-                                                    CThostFtdcRspInfoField RspInfo,
-                                                    int RequestID, boolean IsLast) {
+
+    public static FtdcRspEvent writeRspUserLogin(FtdcRspEvent event, EventSource source,
+                                                 CThostFtdcRspUserLoginField Field,
+                                                 CThostFtdcRspInfoField RspInfo,
+                                                 int RequestID, boolean IsLast) {
         event.getRspUserLogin()
-                // 事件来源
+                // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
                 .setSource(source)
-                // FTDC响应信息 - 错误代码
                 .setErrorID(RspInfo.getErrorID())
-                // FTDC响应信息 - 错误信息
                 .setErrorMsg(RspInfo.getErrorMsg())
-                // 请求ID
+                // 请求ID, 是否最后一条信息
                 .setRequestID(RequestID)
-                // 是否最后一条信息
                 .setIsLast(IsLast)
                 // 交易日
                 .setTradingDay(Field.getTradingDay())
@@ -136,18 +134,62 @@ public final class FtdcRspFieldCopier {
     }
 
 
+    public static FtdcRspEvent writeRspUserLogout(FtdcRspEvent event, EventSource source,
+                                                  CThostFtdcUserLogoutField Field,
+                                                  CThostFtdcRspInfoField RspInfo,
+                                                  int RequestID, boolean IsLast) {
+        event.getUserLogout()
+                // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
+                .setSource(source)
+                .setErrorID(RspInfo.getErrorID())
+                .setErrorMsg(RspInfo.getErrorMsg())
+                // 请求ID, 是否最后一条信息
+                .setRequestID(RequestID)
+                .setIsLast(IsLast)
+                // 经纪公司代码, 用户代码
+                .setBrokerID(Field.getBrokerID())
+                .setUserID(Field.getUserID());
+        return event;
+    }
+
+
+    public static FtdcRspEvent writeFrontDisconnected(FtdcRspEvent event, EventSource source,
+                                                      int Reason, String BrokerID, String UserID) {
+        event.getFrontDisconnected()
+                // 事件来源
+                .setSource(source)
+                // 错误原因
+                .setReason(Reason)
+                // 经纪公司代码
+                .setBrokerID(BrokerID)
+                // 用户代码
+                .setUserID(UserID);
+        return event;
+    }
+
+    public static FtdcRspEvent writeHeartBeatWarning(FtdcRspEvent event, EventSource source,
+                                                     int TimeLapse, String BrokerID, String UserID) {
+        event.getHeartBeatWarning()
+                // 事件来源
+                .setSource(source)
+                // 距离上次接收报文的时间
+                .setTimeLapse(TimeLapse)
+                // 经纪公司代码
+                .setBrokerID(BrokerID)
+                // 用户代码
+                .setUserID(UserID);
+        return event;
+    }
+
     public static FtdcRspEvent writeRspError(FtdcRspEvent event, EventSource source,
                                              CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         event.getRspError()
-                // 事件来源
+                // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
                 .setSource(source)
-                // FTDC响应信息 - 错误代码
                 .setErrorID(RspInfo.getErrorID())
-                // FTDC响应信息 - 错误信息
                 .setErrorMsg(RspInfo.getErrorMsg())
-                // 请求ID
+                // 请求ID, 是否最后一条信息
                 .setRequestID(RequestID)
-                // 是否最后一条信息
                 .setIsLast(IsLast);
         return event;
     }
@@ -157,8 +199,8 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcInstrumentStatusField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcInstrumentStatusField Field) {
+    public static FtdcRspEvent writeInstrumentStatus(FtdcRspEvent event,
+                                                     CThostFtdcInstrumentStatusField Field) {
         event.getFtdcInstrumentStatus()
                 // 交易所代码, 合约在交易所的代码, 结算组代码, 合约代码
                 .setExchangeID(Field.getExchangeID())
@@ -178,9 +220,14 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcInputOrderField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcInputOrderField Field) {
+    public static FtdcRspEvent writeInputOrder(FtdcRspEvent event,
+                                               CThostFtdcInputOrderField Field,
+                                               CThostFtdcRspInfoField RspInfo, boolean IsLast) {
         event.getFtdcInputOrder()
+                // [FTDC响应信息] - 错误代码, 错误信息
+                .setErrorID(RspInfo.getErrorID())
+                .setErrorMsg(RspInfo.getErrorMsg())
+                .setIsLast(IsLast)
                 .setBrokerID(Field.getBrokerID())
                 .setInvestorID(Field.getInvestorID())
                 .setInstrumentID(Field.getInstrumentID())
@@ -219,9 +266,14 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcInputOrderActionField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcInputOrderActionField Field) {
+    public static FtdcRspEvent writeInputOrderAction(@Nonnull FtdcRspEvent event,
+                                                     @Nonnull CThostFtdcInputOrderActionField Field,
+                                                     CThostFtdcRspInfoField RspInfo, boolean IsLast) {
         event.getFtdcInputOrderAction()
+                // [FTDC响应信息] - 错误代码, 错误信息
+                .setErrorID(RspInfo.getErrorID())
+                .setErrorMsg(RspInfo.getErrorMsg())
+                .setIsLast(IsLast)
                 .setBrokerID(Field.getBrokerID())
                 .setInvestorID(Field.getInvestorID())
                 .setOrderActionRef(Field.getOrderActionRef())
@@ -248,9 +300,15 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcInvestorPositionField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcInvestorPositionField Field) {
+    public static FtdcRspEvent writeInvestorPosition(@Nonnull FtdcRspEvent event,
+                                                     @Nonnull CThostFtdcInvestorPositionField Field,
+                                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         event.getFtdcInvestorPosition()
+                // [FTDC响应信息] - 错误代码, 错误信息
+                .setErrorID(RspInfo.getErrorID())
+                .setErrorMsg(RspInfo.getErrorMsg())
+                .setRequestID(RequestID)
+                .setIsLast(IsLast)
                 /// 合约代码
                 .setInstrumentID(Field.getInstrumentID())
                 /// 经纪公司代码
@@ -356,8 +414,8 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcOrderField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcOrderField Field) {
+    public static FtdcRspEvent writeOrder(@Nonnull FtdcRspEvent event,
+                                          @Nonnull CThostFtdcOrderField Field) {
         event.getFtdcOrder()
                 .setBrokerID(Field.getBrokerID())
                 .setInvestorID(Field.getInvestorID())
@@ -431,8 +489,8 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcOrderActionField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcOrderActionField Field) {
+    public static FtdcRspEvent writeOrderAction(@Nonnull FtdcRspEvent event,
+                                                @Nonnull CThostFtdcOrderActionField Field) {
         event.getFtdcOrderAction()
                 // 经纪公司代码
                 .setBrokerID(Field.getBrokerID())
@@ -500,8 +558,8 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcTradeField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcTradeField Field) {
+    public static FtdcRspEvent writeTrade(@Nonnull FtdcRspEvent event,
+                                          @Nonnull CThostFtdcTradeField Field) {
         event.getFtdcTrade()
                 /// 经纪公司代码
                 .setBrokerID(Field.getBrokerID())
@@ -574,9 +632,14 @@ public final class FtdcRspFieldCopier {
      * @param Field CThostFtdcTradingAccountField
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent copyToEvent(@Nonnull FtdcRspEvent event,
-                                           @Nonnull CThostFtdcTradingAccountField Field) {
+    public static FtdcRspEvent writeTradingAccount(@Nonnull FtdcRspEvent event,
+                                                   @Nonnull CThostFtdcTradingAccountField Field,
+                                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         event.getFtdcTradingAccount()
+                .setErrorID(RspInfo.getErrorID())
+                .setErrorMsg(RspInfo.getErrorMsg())
+                .setRequestID(RequestID)
+                .setIsLast(IsLast)
                 /// 经纪公司代码
                 .setBrokerID(Field.getBrokerID())
                 /// 投资者账号
@@ -678,16 +741,19 @@ public final class FtdcRspFieldCopier {
         return event;
     }
 
-    public static FtdcRspEvent copyToEvent(FtdcRspEvent event,
-                                           SpecificInstrumentSource source,
-                                           CThostFtdcSpecificInstrumentField Field,
-                                           CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+    public static FtdcRspEvent writeSpecificInstrument(FtdcRspEvent event,
+                                                       SpecificInstrumentSource source,
+                                                       CThostFtdcSpecificInstrumentField Field,
+                                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         event.getFtdcSpecificInstrument()
+                // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
                 .setSource(source)
                 .setErrorID(RspInfo.getErrorID())
                 .setErrorMsg(RspInfo.getErrorMsg())
+                // 请求ID, 是否最后一条信息
                 .setRequestID(RequestID)
                 .setIsLast(IsLast)
+                // 合约代码
                 .setInstrumentID(Field.getInstrumentID());
         return event;
     }

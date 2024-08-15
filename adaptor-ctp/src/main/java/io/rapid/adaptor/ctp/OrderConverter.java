@@ -2,21 +2,20 @@ package io.rapid.adaptor.ctp;
 
 import ctp.thostapi.CThostFtdcInputOrderActionField;
 import ctp.thostapi.CThostFtdcInputOrderField;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.adaptor.ctp.consts.FtdcActionFlag;
+import io.rapid.adaptor.ctp.consts.FtdcContingentCondition;
+import io.rapid.adaptor.ctp.consts.FtdcDirection;
+import io.rapid.adaptor.ctp.consts.FtdcForceCloseReason;
+import io.rapid.adaptor.ctp.consts.FtdcHedgeFlag;
+import io.rapid.adaptor.ctp.consts.FtdcOffsetFlag;
+import io.rapid.adaptor.ctp.consts.FtdcOrderPrice;
+import io.rapid.adaptor.ctp.consts.FtdcTimeCondition;
+import io.rapid.adaptor.ctp.consts.FtdcVolumeCondition;
 import io.rapid.adaptor.ctp.param.CtpParams;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcActionFlag;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcContingentCondition;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcDirection;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcForceCloseReason;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcHedgeFlag;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOffsetFlag;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcOrderPrice;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcTimeCondition;
-import io.rapid.adaptor.ctp.consts.ConstMapper.FtdcVolumeCondition;
-import io.rapid.core.serializable.avro.request.CancelOrder;
-import io.rapid.core.serializable.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.outbound.CancelOrder;
+import io.rapid.core.serializable.avro.outbound.NewOrder;
 import org.slf4j.Logger;
-
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * FtdcOrderConverter
@@ -25,7 +24,7 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  */
 public final class OrderConverter {
 
-    private static final Logger log = getLogger(OrderConverter.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(OrderConverter.class);
 
     // 经纪公司代码
     private final String brokerId;
@@ -45,13 +44,13 @@ public final class OrderConverter {
     // MAC地址
     private final String macAddress;
 
-    public OrderConverter(CtpParams param) {
-        this.brokerId = param.getBrokerId();
-        this.investorId = param.getInvestorId();
-        this.accountId = param.getAccountId();
-        this.userId = param.getUserId();
-        this.ipAddress = param.getIpAddr();
-        this.macAddress = param.getMacAddr();
+    public OrderConverter(CtpParams params) {
+        this.brokerId = params.getBrokerId();
+        this.investorId = params.getInvestorId();
+        this.accountId = params.getAccountId();
+        this.userId = params.getUserId();
+        this.ipAddress = params.getIpAddr();
+        this.macAddress = params.getMacAddr();
         log.info("FtdcOrderConverter initialized, brokerId=={}, investorId=={}, accountId=={}, userId=={}",
                 brokerId, investorId, accountId, userId);
     }
@@ -128,48 +127,48 @@ public final class OrderConverter {
      */
     public CThostFtdcInputOrderField toInputOrder(NewOrder order) {
         // 创建FTDC报单类型
-        var field = new CThostFtdcInputOrderField();
+        var Field = new CThostFtdcInputOrderField();
         // 经纪公司代码
-        field.setBrokerID(brokerId);
+        Field.setBrokerID(brokerId);
         // 投资者代码
-        field.setInvestorID(investorId);
+        Field.setInvestorID(investorId);
         // 资金账号
-        field.setAccountID(accountId);
+        Field.setAccountID(accountId);
         // 用户代码
-        field.setUserID(userId);
+        Field.setUserID(userId);
         // IP地址
-        field.setIPAddress(ipAddress);
+        Field.setIPAddress(ipAddress);
         // MAC地址
-        field.setMacAddress(macAddress);
+        Field.setMacAddress(macAddress);
         // 设置交易所ID
-        field.setExchangeID(order.getExchangeCode());
+        Field.setExchangeID(order.getExchangeCode());
         log.info("Set CThostFtdcInputOrderField -> ExchangeID == {}", order.getExchangeCode());
         // 设置交易标的
-        field.setInstrumentID(order.getInstrumentCode());
+        Field.setInstrumentID(order.getInstrumentCode());
         log.info("Set CThostFtdcInputOrderField -> InstrumentID == {}", order.getInstrumentCode());
         // 设置报单价格
-        field.setOrderPriceType(FtdcOrderPrice.LIMIT_PRICE);
+        Field.setOrderPriceType(FtdcOrderPrice.LIMIT_PRICE);
         log.info("Set CThostFtdcInputOrderField -> OrderPriceType == LimitPrice");
         // 设置开平标识
         switch (order.getAction()) {
             case OPEN -> {
                 // 设置为开仓
-                field.setCombOffsetFlag(FtdcOffsetFlag.OPEN_STR);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.OPEN_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Open");
             }
             case CLOSE -> {
                 // 设置为平仓
-                field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_STR);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Close");
             }
             case CLOSE_TODAY -> {
                 // 设置为平今仓
-                field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_TODAY_STR);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_TODAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseToday");
             }
             case CLOSE_YESTERDAY -> {
                 // 设置为平昨仓
-                field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseYesterday");
             }
             case INVALID -> {
@@ -179,18 +178,18 @@ public final class OrderConverter {
             }
         }
         // 设置投机标识
-        field.setCombHedgeFlag(FtdcHedgeFlag.SPECULATION_STR);
+        Field.setCombHedgeFlag(FtdcHedgeFlag.SPECULATION_STR);
         log.info("Set CThostFtdcInputOrderField -> CombHedgeFlag == Speculation");
         // 设置买卖方向
         switch (order.getDirection()) {
             case LONG -> {
                 // 设置为买单
-                field.setDirection(FtdcDirection.BUY);
+                Field.setDirection(FtdcDirection.BUY);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Buy");
             }
             case SHORT -> {
                 // 设置为卖单
-                field.setDirection(FtdcDirection.SELL);
+                Field.setDirection(FtdcDirection.SELL);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Sell");
             }
             case INVALID -> {
@@ -201,36 +200,36 @@ public final class OrderConverter {
         }
         // 设置价格
         double limitPrice = order.getOfferPrice();
-        field.setLimitPrice(limitPrice);
+        Field.setLimitPrice(limitPrice);
         log.info("Set CThostFtdcInputOrderField -> LimitPrice == {}", limitPrice);
         // 设置数量
         int volumeTotalOriginal = order.getOfferQty();
-        field.setVolumeTotalOriginal(volumeTotalOriginal);
+        Field.setVolumeTotalOriginal(volumeTotalOriginal);
         log.info("Set CThostFtdcInputOrderField -> VolumeTotalOriginal == {}", volumeTotalOriginal);
         // 设置有效期类型
-        field.setTimeCondition(FtdcTimeCondition.GFD);
+        Field.setTimeCondition(FtdcTimeCondition.GFD);
         log.info("Set CThostFtdcInputOrderField -> TimeCondition == GFD");
         // 设置成交量类型
-        field.setVolumeCondition(FtdcVolumeCondition.AV);
+        Field.setVolumeCondition(FtdcVolumeCondition.AV);
         log.info("Set CThostFtdcInputOrderField -> VolumeCondition == AV");
         // 设置最小成交数量, 默认为1
-        field.setMinVolume(1);
+        Field.setMinVolume(1);
         log.info("Set CThostFtdcInputOrderField -> MinVolume == 1");
         // 设置触发条件
-        field.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
+        Field.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
         log.info("Set CThostFtdcInputOrderField -> ContingentCondition == Immediately");
         // 设置止损价格
-        field.setStopPrice(0.0D);
+        Field.setStopPrice(0.0D);
         log.info("Set CThostFtdcInputOrderField -> StopPrice == 0.0D");
         // 设置强平原因: 此处固定为非强平
-        field.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
+        Field.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
         log.info("Set CThostFtdcInputOrderField -> ForceCloseReason == NotForceClose");
         // 设置自动挂起标识
-        field.setIsAutoSuspend(0);
+        Field.setIsAutoSuspend(0);
         log.info("Set CThostFtdcInputOrderField -> IsAutoSuspend == 0");
         // 返回FTDC新订单对象
         log.info("Set CThostFtdcInputOrderField finished");
-        return field;
+        return Field;
     }
 
     /**
@@ -279,26 +278,26 @@ public final class OrderConverter {
      */
     public CThostFtdcInputOrderActionField toFtdcInputOrderAction(CancelOrder order) {
         // 创建FTDC撤单类型
-        var field = new CThostFtdcInputOrderActionField();
+        var Field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码
-        field.setBrokerID(brokerId);
+        Field.setBrokerID(brokerId);
         // 投资者代码
-        field.setInvestorID(investorId);
+        Field.setInvestorID(investorId);
         // 用户代码
-        field.setUserID(userId);
+        Field.setUserID(userId);
         // IP地址
-        field.setIPAddress(ipAddress);
+        Field.setIPAddress(ipAddress);
         // MAC地址
-        field.setMacAddress(macAddress);
+        Field.setMacAddress(macAddress);
         // 操作标志
-        field.setActionFlag(FtdcActionFlag.DELETE);
+        Field.setActionFlag(FtdcActionFlag.DELETE);
         // 交易所代码
-        field.setExchangeID(order.getExchangeCode());
+        Field.setExchangeID(order.getExchangeCode());
         // 合约代码
-        field.setInstrumentID(order.getInstrumentCode());
+        Field.setInstrumentID(order.getInstrumentCode());
         // 返回FTDC撤单对象
         log.info("Set CThostFtdcInputOrderActionField finished");
-        return field;
+        return Field;
     }
 
 }

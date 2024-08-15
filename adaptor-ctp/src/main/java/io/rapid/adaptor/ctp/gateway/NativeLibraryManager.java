@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.util;
+package io.rapid.adaptor.ctp.gateway;
 
 import io.mercury.common.lang.exception.NativeLibraryException;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public final class NativeLibraryManager {
                 // 根据操作系统选择加载不同库文件
                 if (OS_NAME.toLowerCase().startsWith("windows")) {
                     log.info("Copy win64 library file to java.library.path -> {}", JAVA_LIBRARY_PATH);
-                    // TODO 复制DLL文件到LIBRARY_PATH目录
+                    // TODO 复制[DLL文件]到[LIBRARY_PATH目录]
                     // 加载[.dll]文件
                     //////////////////////////////// thostapi_wrap.dll
                     loadLibrary("thostapi_wrap");

@@ -6,6 +6,20 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Properties;
 
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AccountId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AppId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.AuthCode;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.BrokerId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.CurrencyId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.InvestorId;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.IpAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.MacAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.MdAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.Password;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.TraderAddr;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.TradingDay;
+import static io.rapid.adaptor.ctp.param.CtpParamKey.UserId;
+
 public final class CtpParamsImpl extends ImmutableParams implements CtpParams {
 
     /**
@@ -35,67 +49,67 @@ public final class CtpParamsImpl extends ImmutableParams implements CtpParams {
 
     @Override
     public String getTraderAddr() {
-        return getString(CtpParamKey.TraderAddr);
+        return getString(TraderAddr);
     }
 
     @Override
     public String getMdAddr() {
-        return getString(CtpParamKey.MdAddr);
+        return getString(MdAddr);
     }
 
     @Override
     public String getAppId() {
-        return getString(CtpParamKey.AppId);
+        return getString(AppId);
     }
 
     @Override
     public String getBrokerId() {
-        return getString(CtpParamKey.BrokerId);
+        return getString(BrokerId);
     }
 
     @Override
     public String getInvestorId() {
-        return getString(CtpParamKey.InvestorId);
+        return getString(InvestorId);
     }
 
     @Override
     public String getAccountId() {
-        return getString(CtpParamKey.AccountId);
+        return getString(AccountId);
     }
 
     @Override
     public String getUserId() {
-        return getString(CtpParamKey.UserId);
+        return getString(UserId);
     }
 
     @Override
     public String getPassword() {
-        return getString(CtpParamKey.Password);
+        return getString(Password);
     }
 
     @Override
     public String getAuthCode() {
-        return getString(CtpParamKey.AuthCode);
+        return getString(AuthCode);
     }
 
     @Override
     public String getIpAddr() {
-        return getString(CtpParamKey.IpAddr);
+        return getString(IpAddr);
     }
 
     @Override
     public String getMacAddr() {
-        return getString(CtpParamKey.MacAddr);
+        return getString(MacAddr);
     }
 
     @Override
     public String getTradingDay() {
-        return getString(CtpParamKey.TradingDay);
+        return getString(TradingDay);
     }
 
     @Override
     public String getCurrencyId() {
-        return getString(CtpParamKey.CurrencyId);
+        return getString(CurrencyId);
     }
 
 }

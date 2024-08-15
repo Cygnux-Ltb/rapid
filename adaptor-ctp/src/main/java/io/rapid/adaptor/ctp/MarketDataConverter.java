@@ -1,6 +1,6 @@
 package io.rapid.adaptor.ctp;
 
-import io.rapid.adaptor.ctp.gateway.event.recv.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.serializable.avro.md.FtdcDepthMarketData;
 import io.rapid.core.mkd.FastMarketData;
 import org.slf4j.Logger;
 

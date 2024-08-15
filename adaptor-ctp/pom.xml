@@ -11,6 +11,12 @@
     <artifactId>adaptor-ctp</artifactId>
     <name>adaptor-ctp</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <avro.version>1.11.3</avro.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -23,6 +29,31 @@
                     <enablePreview>true</enablePreview>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <id>schemas</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <fieldVisibility>public</fieldVisibility>
+                            <stringType>String</stringType>
+                            <createOptionalGetters>false</createOptionalGetters>
+                            <optionalGettersForNullableFieldsOnly>true</optionalGettersForNullableFieldsOnly>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro/schema</sourceDirectory>
+                            <templateDirectory>${project.basedir}/src/main/resources/avro/template/</templateDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -31,6 +62,16 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-avro</artifactId>
         </dependency>
 
         <!-- PROD CTP JNI API -->

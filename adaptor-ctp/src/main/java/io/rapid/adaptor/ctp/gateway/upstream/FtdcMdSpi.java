@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.spi;
+package io.rapid.adaptor.ctp.gateway.upstream;
 
 import ctp.thostapi.CThostFtdcDepthMarketDataField;
 import ctp.thostapi.CThostFtdcForQuoteRspField;
@@ -7,7 +7,6 @@ import ctp.thostapi.CThostFtdcRspInfoField;
 import ctp.thostapi.CThostFtdcRspUserLoginField;
 import ctp.thostapi.CThostFtdcSpecificInstrumentField;
 import ctp.thostapi.CThostFtdcUserLogoutField;
-import io.rapid.adaptor.ctp.gateway.event.listener.FtdcMdListener;
 import io.mercury.common.annotation.NativeSpiImpl;
 
 @NativeSpiImpl

@@ -1,105 +1,193 @@
-@namespace("io.rapid.adaptor.ctp.gateway.event0.md")
-protocol MdProtocol {
+@namespace("io.rapid.adaptor.ctp.serializable.avro")
+protocol FtdcMdRspProtocol {
 
     /**
      * 深度行情数据结构
      */
-    @namespace("io.rapid.adaptor.ctp.gateway.event0.md")
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.md")
     record FtdcDepthMarketData {
-        // 交易日
+        /**
+          * 交易日
+          */
         string TradingDay;
-        // 合约ID
+        /**
+          * 合约ID
+          */
         string InstrumentID;
-        // 交易所ID
+        /**
+          * 交易所ID
+          */
         string ExchangeID;
-        // 合约在交易所的代码
+        /**
+          * 合约在交易所的代码
+          */
         string ExchangeInstID;
-        // 最新价
+        /**
+          * 最新价
+          */
         double LastPrice;
-        // 昨结算价
+        /**
+          * 昨结算价
+          */
         double PreSettlementPrice;
-        // 昨收盘
+        /**
+          * 昨收盘
+          */
         double PreClosePrice;
-        // 昨持仓量
+        /**
+          * 昨持仓量
+          */
         double PreOpenInterest;
-        // 开盘价
+        /**
+          * 开盘价
+          */
         double OpenPrice;
-        // 最高价
+        /**
+          * 最高价
+          */
         double HighestPrice;
-        // 最低价
+        /**
+          * 最低价
+          */
         double LowestPrice;
-        // 成交量
+        /**
+          * 成交量
+          */
         int Volume;
-        // 成交金额
+        /**
+          * 成交金额
+          */
         double Turnover;
-        // 持仓量
+        /**
+          * 持仓量
+          */
         double OpenInterest;
-        // 收盘价
+        /**
+          * 收盘价
+          */
         double ClosePrice;
-        // 结算价
+        /**
+          * 结算价
+          */
         double SettlementPrice;
-        // 涨停板价
+        /**
+          * 涨停板价
+          */
         double UpperLimitPrice;
-        // 跌停板价
+        /**
+          * 跌停板价
+          */
         double LowerLimitPrice;
-        // 昨Delta
+        /**
+          * 昨Delta
+          */
         double PreDelta;
-        // 今Delta
+        /**
+          * 今Delta
+          */
         double CurrDelta;
-        // 第一档买价
+        /**
+          * 第一档买价
+          */
         double BidPrice1;
-        // 第一档买量
+        /**
+          * 第一档买量
+          */
         int BidVolume1;
-        // 第一档卖价
+        /**
+          * 第一档卖价
+          */
         double AskPrice1;
-        // 第一档卖量
+        /**
+          * 第一档卖量
+          */
         int AskVolume1;
-        // 第二档买价
+        /**
+          * 第二档买价
+          */
         double BidPrice2;
-        // 第二档买量
+        /**
+          * 第二档买量
+          */
         int BidVolume2;
-        // 第二档卖价
+        /**
+          * 第二档卖价
+          */
         double AskPrice2;
-        // 第二档卖量
+        /**
+          * 第二档卖量
+          */
         int AskVolume2;
-        // 第三档买价
+        /**
+          * 第三档买价
+          */
         double BidPrice3;
-        // 第三档买量
+        /**
+          * 第三档买量
+          */
         int BidVolume3;
-        // 第三档卖价
+        /**
+          * 第三档卖价
+          */
         double AskPrice3;
-        // 第三档卖量
+        /**
+          * 第三档卖量
+          */
         int AskVolume3;
-        // 第四档买价
+        /**
+          * 第四档买价
+          */
         double BidPrice4;
-        // 第四档买量
+        /**
+          * 第四档买量
+          */
         int BidVolume4;
-        // 第四档卖价
+        /**
+          * 第四档卖价
+          */
         double AskPrice4;
-        // 第四档卖量
+        /**
+          * 第四档卖量
+          */
         int AskVolume4;
-        // 第五档买价
+        /**
+          * 第五档买价
+          */
         double BidPrice5;
-        // 第五档买量
+        /**
+          * 第五档买量
+          */
         int BidVolume5;
-        // 第五档卖价
+        /**
+          * 第五档卖价
+          */
         double AskPrice5;
-        // 第五档卖量
+        /**
+          * 第五档卖量
+          */
         int AskVolume5;
-        // 平均价格
+        /**
+          * 平均价格
+          */
         double AveragePrice;
-        // 更新时间
+        /**
+          * 更新时间
+          */
         string UpdateTime;
-        // 更新毫秒数
+        /**
+          * 更新毫秒数
+          */
         int UpdateMillisec;
-        // 业务日期
+        /**
+          * 业务日期
+          */
         string ActionDay;
     }
 
     /**
       * SpecificInstrument 来源
       */
-    @namespace("io.rapid.adaptor.ctp.gateway.event0.md")
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.md")
     enum SpecificInstrumentSource {
         SubMarketData, UnsubMarketData, SubForQuoteRsp, UnsubForQuoteRsp
     }
@@ -107,17 +195,28 @@ protocol MdProtocol {
     /**
       * 指定的合约
       */
-    @namespace("io.rapid.adaptor.ctp.gateway.event0.md")
-    record FtdcSpecificInstrument
-    {
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.md")
+    record FtdcSpecificInstrument {
         /**
-          * Specific Instrument Type
+          * SpecificInstrument Source
           */
         SpecificInstrumentSource Source;
         /**
-          * Epoch Time
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
           */
-        long EpochTime;
+        string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
         /**
           * Instrument ID
           */

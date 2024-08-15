@@ -25,7 +25,7 @@
     <error id="INVESTOR_NOT_ACTIVE" value="19" prompt="CTP:投资者不活跃"/>
     <error id="NOT_EXCHANGE_CLIENT" value="20" prompt="CTP:投资者未在交易所开户"/>
     <error id="NO_VALID_TRADER_AVAILABLE" value="21" prompt="CTP:该交易席位未连接到交易所"/>
-    <error id="DUPLICATE_ORDER_REF" value="22" prompt="CTP:报单错误：不允许重复报单"/>
+    <error id="DUPLICATE_ORDER_REF" value="22" prompt="CTP:报单错误 - 不允许重复报单"/>
     <error id="BAD_ORDER_ACTION_FIELD" value="23" prompt="CTP:错误的报单操作字段"/>
     <error id="DUPLICATE_ORDER_ACTION_REF" value="24" prompt="CTP:撤单已报送, 不允许重复撤单"/>
     <error id="ORDER_NOT_FOUND" value="25" prompt="CTP:撤单找不到相应报单"/>
@@ -48,9 +48,9 @@
     <error id="SETTLEMENT_INFO_NOT_CONFIRMED" value="42" prompt="CTP:结算结果未确认"/>
     <error id="DEPOSIT_NOT_FOUND" value="43" prompt="CTP:没有对应的入金记录"/>
     <error id="EXCHANG_TRADING" value="44" prompt="CTP:交易所已经进入连续交易状态"/>
-    <error id="PARKEDORDER_NOT_FOUND" value="45" prompt="CTP:找不到预埋（撤单）单"/>
-    <error id="PARKEDORDER_HASSENDED" value="46" prompt="CTP:预埋（撤单）单已经发送"/>
-    <error id="PARKEDORDER_HASDELETE" value="47" prompt="CTP:预埋（撤单）单已经删除"/>
+    <error id="PARKEDORDER_NOT_FOUND" value="45" prompt="CTP:找不到预埋(撤单)单"/>
+    <error id="PARKEDORDER_HASSENDED" value="46" prompt="CTP:预埋(撤单)单已经发送"/>
+    <error id="PARKEDORDER_HASDELETE" value="47" prompt="CTP:预埋(撤单)单已经删除"/>
     <error id="INVALID_INVESTORIDORPASSWORD" value="48" prompt="CTP:无效的投资者或者密码"/>
     <error id="INVALID_LOGIN_IPADDRESS" value="49" prompt="CTP:不合法的登录IP地址"/>
     <error id="OVER_CLOSETODAY_POSITION" value="50" prompt="CTP:平今仓位不足"/>
@@ -93,8 +93,8 @@
     <error id="OPTIONS_NOT_SUPPORT_ABANDON" value="87" prompt="CTP:该期权合约不支持放弃执行"/>
     <error id="COMBOPTIONS_SUPPORT_IOC_ONLY" value="88" prompt="CTP:该组合期权合约只支持IOC"/>
     <error id="OPEN_FILE_FAILED" value="89" prompt="CTP:打开文件失败"/>
-    <error id="NEED_RETRY" value="90" prompt="CTP：查询未就绪, 请稍后重试"/>
-    <error id="EXCHANGE_RTNERROR" value="91" prompt="CTP：交易所返回的错误"/>
+    <error id="NEED_RETRY" value="90" prompt="CTP:查询未就绪, 请稍后重试"/>
+    <error id="EXCHANGE_RTNERROR" value="91" prompt="CTP:交易所返回的错误"/>
     <error id="QUOTE_DERIVEDORDER_ACTIONERROR" value="92" prompt="CTP:报价衍生单要等待交易所返回才能撤单"/>
     <error id="INSTRUMENTMAP_NOT_FOUND" value="93" prompt="CTP:找不到组合合约映射"/>
     <error id="CANCELLATION_OF_OTC_DERIVED_ORDER_NOT_ALLOWED" value="94" prompt="CTP:不允许撤销OTC衍生报单"/>
@@ -107,58 +107,60 @@
     <error id="OUT_OF_TIMEINTERVAL" value="113" prompt="CTP:当前时间禁止询价"/>
     <error id="OUT_OF_PRICEINTERVAL" value="114" prompt="CTP:当前价差禁止询价"/>
     <error id="ORDER_FREQ_LIMIT" value="116" prompt="CTP:下单频率限制"/>
-    <error id="WEAK_PASSWORD" value="131" prompt="CTP：您当前密码为弱密码, 请修改成强密码后重新登录"/>
+    <error id="WEAK_PASSWORD" value="131" prompt="CTP:您当前密码为弱密码, 请修改成强密码后重新登录"/>
     <error id="EXEC_FORBIDDEN_TIME" value="139" prompt="CTP:当前时间禁止行权"/>
     <error id="FIRST_LOGIN" value="140" prompt="CTP:首次登录必须修改密码, 请修改密码后重新登录"/>
     <error id="PWD_OUT_OF_DATE" value="141" prompt="CTP:您当前密码已过期, 请修改后登录"/>
-    <error id="PWD_MUST_DIFF" value="142" prompt="CTP:修改密码失败。新密码不允许与旧密码相同"/>
+    <error id="PWD_MUST_DIFF" value="142" prompt="CTP:修改密码失败. 新密码不允许与旧密码相同"/>
     <error id="IP_FORBIDDEN" value="143" prompt="CTP:您登录失败次数过多, IP被禁止登入CTP"/>
     <error id="IP_BLACK" value="144" prompt="CTP:您当前IP在黑名单中, 被禁止登入CTP"/>
 
     <!--转帐系统错误代码 -->
-    <error id="SEND_INSTITUTION_CODE_ERROR" value="1000" prompt="CTP:银期转账：发送机构代码错误"/>
-    <error id="NO_GET_PLATFORM_SN" value="1001" prompt="CTP:银期转账：取平台流水号错误"/>
-    <error id="ILLEGAL_TRANSFER_BANK" value="1002" prompt="CTP:银期转账：不合法的转账银行"/>
-    <error id="ALREADY_OPEN_ACCOUNT" value="1003" prompt="CTP:银期转账：已经开户"/>
-    <error id="NOT_OPEN_ACCOUNT" value="1004" prompt="CTP:银期转账：未开户"/>
-    <error id="PROCESSING" value="1005" prompt="CTP:银期转账：处理中"/>
-    <error id="OVERTIME" value="1006" prompt="CTP:银期转账：交易超时"/>
-    <error id="RECORD_NOT_FOUND" value="1007" prompt="CTP:银期转账：找不到记录"/>
-    <error id="NO_FOUND_REVERSAL_ORIGINAL_TRANSACTION" value="1008" prompt="CTP:银期转账：找不到被冲正的原始交易"/>
-    <error id="CONNECT_HOST_FAILED" value="1009" prompt="CTP:银期转账：连接主机失败"/>
-    <error id="SEND_FAILED" value="1010" prompt="CTP:银期转账：发送失败"/>
-    <error id="LATE_RESPONSE" value="1011" prompt="CTP:银期转账：迟到应答"/>
-    <error id="REVERSAL_BANKID_NOT_MATCH" value="1012" prompt="CTP:银期转账：冲正交易银行代码错误"/>
-    <error id="REVERSAL_BANKACCOUNT_NOT_MATCH" value="1013" prompt="CTP:银期转账：冲正交易银行账户错误"/>
-    <error id="REVERSAL_BROKERID_NOT_MATCH" value="1014" prompt="CTP:银期转账：冲正交易经纪公司代码错误"/>
-    <error id="REVERSAL_ACCOUNTID_NOT_MATCH" value="1015" prompt="CTP:银期转账：冲正交易资金账户错误"/>
-    <error id="REVERSAL_AMOUNT_NOT_MATCH" value="1016" prompt="CTP:银期转账：冲正交易交易金额错误"/>
-    <error id="DB_OPERATION_FAILED" value="1017" prompt="CTP:银期转账：数据库操作错误"/>
-    <error id="SEND_ASP_FAILURE" value="1018" prompt="CTP:银期转账：发送到交易系统失败"/>
-    <error id="NOT_SIGNIN" value="1019" prompt="CTP:银期转账：没有签到"/>
-    <error id="ALREADY_SIGNIN" value="1020" prompt="CTP:银期转账：已经签到"/>
-    <error id="AMOUNT_OR_TIMES_OVER" value="1021" prompt="CTP:银期转账：金额或次数超限"/>
-    <error id="NOT_IN_TRANSFER_TIME" value="1022" prompt="CTP:银期转账：这一时间段不能转账"/>
+    <error id="SEND_INSTITUTION_CODE_ERROR" value="1000" prompt="CTP:银期转账 - 发送机构代码错误"/>
+    <error id="NO_GET_PLATFORM_SN" value="1001" prompt="CTP:银期转账 - 取平台流水号错误"/>
+    <error id="ILLEGAL_TRANSFER_BANK" value="1002" prompt="CTP:银期转账 - 不合法的转账银行"/>
+    <error id="ALREADY_OPEN_ACCOUNT" value="1003" prompt="CTP:银期转账 - 已经开户"/>
+    <error id="NOT_OPEN_ACCOUNT" value="1004" prompt="CTP:银期转账 - 未开户"/>
+    <error id="PROCESSING" value="1005" prompt="CTP:银期转账 - 处理中"/>
+    <error id="OVERTIME" value="1006" prompt="CTP:银期转账 - 交易超时"/>
+    <error id="RECORD_NOT_FOUND" value="1007" prompt="CTP:银期转账 - 找不到记录"/>
+    <error id="NO_FOUND_REVERSAL_ORIGINAL_TRANSACTION" value="1008" prompt="CTP:银期转账 - 找不到被冲正的原始交易"/>
+    <error id="CONNECT_HOST_FAILED" value="1009" prompt="CTP:银期转账 - 连接主机失败"/>
+    <error id="SEND_FAILED" value="1010" prompt="CTP:银期转账 - 发送失败"/>
+    <error id="LATE_RESPONSE" value="1011" prompt="CTP:银期转账 - 迟到应答"/>
+    <error id="REVERSAL_BANKID_NOT_MATCH" value="1012" prompt="CTP:银期转账 - 冲正交易银行代码错误"/>
+    <error id="REVERSAL_BANKACCOUNT_NOT_MATCH" value="1013" prompt="CTP:银期转账 - 冲正交易银行账户错误"/>
+    <error id="REVERSAL_BROKERID_NOT_MATCH" value="1014" prompt="CTP:银期转账 - 冲正交易经纪公司代码错误"/>
+    <error id="REVERSAL_ACCOUNTID_NOT_MATCH" value="1015" prompt="CTP:银期转账 - 冲正交易资金账户错误"/>
+    <error id="REVERSAL_AMOUNT_NOT_MATCH" value="1016" prompt="CTP:银期转账 - 冲正交易交易金额错误"/>
+    <error id="DB_OPERATION_FAILED" value="1017" prompt="CTP:银期转账 - 数据库操作错误"/>
+    <error id="SEND_ASP_FAILURE" value="1018" prompt="CTP:银期转账 - 发送到交易系统失败"/>
+    <error id="NOT_SIGNIN" value="1019" prompt="CTP:银期转账 - 没有签到"/>
+    <error id="ALREADY_SIGNIN" value="1020" prompt="CTP:银期转账 - 已经签到"/>
+    <error id="AMOUNT_OR_TIMES_OVER" value="1021" prompt="CTP:银期转账 - 金额或次数超限"/>
+    <error id="NOT_IN_TRANSFER_TIME" value="1022" prompt="CTP:银期转账 - 这一时间段不能转账"/>
     <error id="BANK_SERVER_ERROR" value="1023" prompt="银行主机错"/>
-    <error id="BANK_SERIAL_IS_REPEALED" value="1024" prompt="CTP:银期转账：银行已经冲正"/>
-    <error id="BANK_SERIAL_NOT_EXIST" value="1025" prompt="CTP:银期转账：银行流水不存在"/>
-    <error id="NOT_ORGAN_MAP" value="1026" prompt="CTP:银期转账：机构没有签约"/>
-    <error id="EXIST_TRANSFER" value="1027" prompt="CTP:银期转账：存在转账, 不能销户"/>
-    <error id="BANK_FORBID_REVERSAL" value="1028" prompt="CTP:银期转账：银行不支持冲正"/>
-    <error id="DUP_BANK_SERIAL" value="1029" prompt="CTP:银期转账：重复的银行流水"/>
-    <error id="FBT_SYSTEM_BUSY" value="1030" prompt="CTP:银期转账：转账系统忙, 稍后再试"/>
-    <error id="MACKEY_SYNCING" value="1031" prompt="CTP:银期转账：MAC密钥正在同步"/>
-    <error id="ACCOUNTID_ALREADY_REGISTER" value="1032" prompt="CTP:银期转账：资金账户已经登记"/>
-    <error id="BANKACCOUNT_ALREADY_REGISTER" value="1033" prompt="CTP:银期转账：银行账户已经登记"/>
-    <error id="DUP_BANK_SERIAL_REDO_OK" value="1034" prompt="CTP:银期转账：重复的银行流水,重发成功"/>
-    <error id="CURRENCYID_NOT_SUPPORTED" value="1035" prompt="CTP:银期转账：该币种代码不支持"/>
-    <error id="INVALID_MAC" value="1036" prompt="CTP:银期转账：MAC值验证失败"/>
-    <error id="NOT_SUPPORT_SECAGENT_BY_BANK" value="1037" prompt="CTP:银期转账：不支持银行端发起的二级代理商转账和查询"/>
-    <error id="PINKEY_SYNCING" value="1038" prompt="CTP:银期转账：PIN密钥正在同步"/>
-    <error id="SECAGENT_QUERY_BY_CCB" value="1039" prompt="CTP:银期转账：建行发起的二级代理商查询"/>
-    <error id="BANKACCOUNT_NOT_EMPTY" value="1040" prompt="CTP:银期转账：银行账户不能为空"/>
-    <error id="INVALID_RESERVE_OPEN_ACCOUNT" value="1041" prompt="CTP:银期转账：资金账户存在, 预约开户失败"/>
-    <error id="OPEN_ACCOUNT_NOT_DEFAULT_ACCOUNT" value="1042" prompt="CTP:银期转账：开户请求的银行卡号和预留的账号不同"/>
+    <error id="BANK_SERIAL_IS_REPEALED" value="1024" prompt="CTP:银期转账 - 银行已经冲正"/>
+    <error id="BANK_SERIAL_NOT_EXIST" value="1025" prompt="CTP:银期转账 - 银行流水不存在"/>
+    <error id="NOT_ORGAN_MAP" value="1026" prompt="CTP:银期转账 - 机构没有签约"/>
+    <error id="EXIST_TRANSFER" value="1027" prompt="CTP:银期转账 - 存在转账, 不能销户"/>
+    <error id="BANK_FORBID_REVERSAL" value="1028" prompt="CTP:银期转账 - 银行不支持冲正"/>
+    <error id="DUP_BANK_SERIAL" value="1029" prompt="CTP:银期转账 - 重复的银行流水"/>
+    <error id="FBT_SYSTEM_BUSY" value="1030" prompt="CTP:银期转账 - 转账系统忙, 稍后再试"/>
+    <error id="MACKEY_SYNCING" value="1031" prompt="CTP:银期转账 - MAC密钥正在同步"/>
+    <error id="ACCOUNTID_ALREADY_REGISTER" value="1032" prompt="CTP:银期转账 - 资金账户已经登记"/>
+    <error id="BANKACCOUNT_ALREADY_REGISTER" value="1033" prompt="CTP:银期转账 - 银行账户已经登记"/>
+    <error id="DUP_BANK_SERIAL_REDO_OK" value="1034" prompt="CTP:银期转账 - 重复的银行流水,重发成功"/>
+    <error id="CURRENCYID_NOT_SUPPORTED" value="1035" prompt="CTP:银期转账 - 该币种代码不支持"/>
+    <error id="INVALID_MAC" value="1036" prompt="CTP:银期转账 - MAC值验证失败"/>
+    <error id="NOT_SUPPORT_SECAGENT_BY_BANK" value="1037"
+           prompt="CTP:银期转账 - 不支持银行端发起的二级代理商转账和查询"/>
+    <error id="PINKEY_SYNCING" value="1038" prompt="CTP:银期转账 - PIN密钥正在同步"/>
+    <error id="SECAGENT_QUERY_BY_CCB" value="1039" prompt="CTP:银期转账 - 建行发起的二级代理商查询"/>
+    <error id="BANKACCOUNT_NOT_EMPTY" value="1040" prompt="CTP:银期转账 - 银行账户不能为空"/>
+    <error id="INVALID_RESERVE_OPEN_ACCOUNT" value="1041" prompt="CTP:银期转账 - 资金账户存在, 预约开户失败"/>
+    <error id="OPEN_ACCOUNT_NOT_DEFAULT_ACCOUNT" value="1042"
+           prompt="CTP:银期转账 - 开户请求的银行卡号和预留的账号不同"/>
     <error id="BANK_SYSTEM_INTERNAL_ERROR" value="1043" prompt="银行系统内部错误"/>
 
     <!-- add for transfer begin -->
@@ -181,26 +183,26 @@
 
     <!-- add for transfer end -->
     <!--换汇系统错误代码 bgn -->
-    <error id="FBE_NO_GET_PLATFORM_SN" value="3001" prompt="CTP:银期换汇：取平台流水号错误"/>
-    <error id="FBE_ILLEGAL_TRANSFER_BANK" value="3002" prompt="CTP:银期换汇：不合法的转账银行"/>
-    <error id="FBE_PROCESSING" value="3005" prompt="CTP:银期换汇：处理中"/>
-    <error id="FBE_OVERTIME" value="3006" prompt="CTP:银期换汇：交易超时"/>
-    <error id="FBE_RECORD_NOT_FOUND" value="3007" prompt="CTP:银期换汇：找不到记录"/>
-    <error id="FBE_CONNECT_HOST_FAILED" value="3009" prompt="CTP:银期换汇：连接主机失败"/>
-    <error id="FBE_SEND_FAILED" value="3010" prompt="CTP:银期换汇：发送失败"/>
-    <error id="FBE_LATE_RESPONSE" value="3011" prompt="CTP:银期换汇：迟到应答"/>
-    <error id="FBE_DB_OPERATION_FAILED" value="3017" prompt="CTP:银期换汇：数据库操作错误"/>
-    <error id="FBE_NOT_SIGNIN" value="3019" prompt="CTP:银期换汇：没有签到"/>
-    <error id="FBE_ALREADY_SIGNIN" value="3020" prompt="CTP:银期换汇：已经签到"/>
-    <error id="FBE_AMOUNT_OR_TIMES_OVER" value="3021" prompt="CTP:银期换汇：金额或次数超限"/>
-    <error id="FBE_NOT_IN_TRANSFER_TIME" value="3022" prompt="CTP:银期换汇：这一时间段不能换汇"/>
-    <error id="FBE_BANK_SERVER_ERROR" value="3023" prompt="CTP:银期换汇：银行主机错"/>
-    <error id="FBE_NOT_ORGAN_MAP" value="3026" prompt="CTP:银期换汇：机构没有签约"/>
-    <error id="FBE_SYSTEM_BUSY" value="3030" prompt="CTP:银期换汇：换汇系统忙, 稍后再试"/>
-    <error id="FBE_CURRENCYID_NOT_SUPPORTED" value="3035" prompt="CTP:银期换汇：该币种代码不支持"/>
-    <error id="FBE_WRONG_BANK_ACCOUNT" value="3036" prompt="CTP:银期换汇：银行帐号不正确"/>
-    <error id="FBE_BANK_ACCOUNT_NO_FUNDS" value="3037" prompt="CTP:银期换汇：银行帐户余额不足"/>
-    <error id="FBE_DUP_CERT_NO" value="3038" prompt="CTP:银期换汇：凭证号重复"/>
+    <error id="FBE_NO_GET_PLATFORM_SN" value="3001" prompt="CTP:银期换汇 - 取平台流水号错误"/>
+    <error id="FBE_ILLEGAL_TRANSFER_BANK" value="3002" prompt="CTP:银期换汇 - 不合法的转账银行"/>
+    <error id="FBE_PROCESSING" value="3005" prompt="CTP:银期换汇 - 处理中"/>
+    <error id="FBE_OVERTIME" value="3006" prompt="CTP:银期换汇 - 交易超时"/>
+    <error id="FBE_RECORD_NOT_FOUND" value="3007" prompt="CTP:银期换汇 - 找不到记录"/>
+    <error id="FBE_CONNECT_HOST_FAILED" value="3009" prompt="CTP:银期换汇 - 连接主机失败"/>
+    <error id="FBE_SEND_FAILED" value="3010" prompt="CTP:银期换汇 - 发送失败"/>
+    <error id="FBE_LATE_RESPONSE" value="3011" prompt="CTP:银期换汇 - 迟到应答"/>
+    <error id="FBE_DB_OPERATION_FAILED" value="3017" prompt="CTP:银期换汇 - 数据库操作错误"/>
+    <error id="FBE_NOT_SIGNIN" value="3019" prompt="CTP:银期换汇 - 没有签到"/>
+    <error id="FBE_ALREADY_SIGNIN" value="3020" prompt="CTP:银期换汇 - 已经签到"/>
+    <error id="FBE_AMOUNT_OR_TIMES_OVER" value="3021" prompt="CTP:银期换汇 - 金额或次数超限"/>
+    <error id="FBE_NOT_IN_TRANSFER_TIME" value="3022" prompt="CTP:银期换汇 - 这一时间段不能换汇"/>
+    <error id="FBE_BANK_SERVER_ERROR" value="3023" prompt="CTP:银期换汇 - 银行主机错"/>
+    <error id="FBE_NOT_ORGAN_MAP" value="3026" prompt="CTP:银期换汇 - 机构没有签约"/>
+    <error id="FBE_SYSTEM_BUSY" value="3030" prompt="CTP:银期换汇 - 换汇系统忙, 稍后再试"/>
+    <error id="FBE_CURRENCYID_NOT_SUPPORTED" value="3035" prompt="CTP:银期换汇 - 该币种代码不支持"/>
+    <error id="FBE_WRONG_BANK_ACCOUNT" value="3036" prompt="CTP:银期换汇 - 银行帐号不正确"/>
+    <error id="FBE_BANK_ACCOUNT_NO_FUNDS" value="3037" prompt="CTP:银期换汇 - 银行帐户余额不足"/>
+    <error id="FBE_DUP_CERT_NO" value="3038" prompt="CTP:银期换汇 - 凭证号重复"/>
     <!--换汇系统错误代码 end -->
 
     <!--登录鉴权错误代码 begin -->

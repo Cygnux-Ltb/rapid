@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 /**
  * FtdcMd SPI 回调基础实现
  */
-public abstract class BaseFtdcMdListener implements FtdcMdListener {
+public abstract class LogFtdcMdListener implements FtdcMdListener {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseFtdcMdListener.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(LogFtdcMdListener.class);
 
-    protected BaseFtdcMdListener() {
+    protected LogFtdcMdListener() {
     }
 
     /**
@@ -39,7 +39,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
-        log.warn("MdSpi::fireFrontDisconnected Unsupported");
+        log.warn("MdSpi::fireFrontDisconnected Unsupported -> Reason=={}", Reason);
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
-        log.warn("MdSpi::fireHeartBeatWarning Unsupported");
+        log.warn("MdSpi::fireHeartBeatWarning Unsupported -> TimeLapse=={}", TimeLapse);
     }
 
     /**
@@ -63,7 +63,8 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUserLogin(CThostFtdcRspUserLoginField RspUserLogin,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("MdSpi::fireRspUserLogin Unsupported");
+        log.warn("MdSpi::fireRspUserLogin Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -77,7 +78,8 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField UserLogout,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("MdSpi::fireRspUserLogout Unsupported");
+        log.warn("MdSpi::fireRspUserLogout Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -89,7 +91,8 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("MdSpi::fireRspError Unsupported");
+        log.warn("MdSpi::fireRspError Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -103,7 +106,8 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("MdSpi::fireRspSubMarketData Unsupported");
+        log.warn("MdSpi::fireRspSubMarketData Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -117,7 +121,8 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
     @Override
     public void fireRspUnSubMarketData(CThostFtdcSpecificInstrumentField SpecificInstrument,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("MdSpi::fireRspUnSubMarketData Unsupported");
+        log.warn("MdSpi::fireRspUnSubMarketData Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -126,12 +131,13 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
      * @param RequestID          int
-     * @param bIsLast            boolean
+     * @param IsLast             boolean
      */
     @Override
     public void fireRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
-                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast) {
-        log.warn("MdSpi::fireRspSubForQuoteRsp Unsupported");
+                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspSubForQuoteRsp Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**
@@ -140,12 +146,13 @@ public abstract class BaseFtdcMdListener implements FtdcMdListener {
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
      * @param RequestID          int
-     * @param bIsLast            boolean
+     * @param IsLast             boolean
      */
     @Override
     public void fireRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
-                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast) {
-        log.warn("MdSpi::fireRspUnSubForQuoteRsp Unsupported");
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.warn("MdSpi::fireRspUnSubForQuoteRsp Unsupported -> ErrorID=={}, ErrorMsg=={}, RequestID=={}, IsLast=={}",
+                RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
     /**

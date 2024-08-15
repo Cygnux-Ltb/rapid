@@ -2,11 +2,11 @@ package io.rapid.adaptor.ctp;
 
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.thread.Sleep;
+import io.rapid.core.order.OrderRefAllocator;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
 
-import java.io.Serial;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,17 +25,18 @@ import static java.lang.System.currentTimeMillis;
  * <p>
  * TODO - Add Persistence
  */
-public class OrderRefAllocator {
+public class FastOrderRefAllocator implements OrderRefAllocator {
 
-    private static final Logger log = getLogger(OrderRefAllocator.class);
+    private static final Logger log = getLogger(FastOrderRefAllocator.class);
 
     private final MutableObjectLongMap<String> orderRefMapper = newObjectLongMap(L10_2048.size());
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectMap(L10_2048.size());
 
-    public OrderRefAllocator() {
+    public FastOrderRefAllocator() {
     }
 
+    @Override
     public void related(String orderRef, long ordSysId) {
         log.info("PUT ORDER MAPPING orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMapper.put(orderRef, ordSysId);
@@ -46,6 +47,7 @@ public class OrderRefAllocator {
      * @param orderRef String
      * @return long
      */
+    @Override
     public long getOrdSysId(String orderRef) {
         long ordSysId = orderRefMapper.get(orderRef);
         if (ordSysId == 0L) {
@@ -93,21 +95,9 @@ public class OrderRefAllocator {
         return (int) (currentTimeMillis() - BENCHMARK_POINT);
     }
 
-    public static final class OrderRefNotFoundException extends Exception {
-
-        @Serial
-        private static final long serialVersionUID = -74254388017422611L;
-
-        private OrderRefNotFoundException(long ordSysId) {
-            super("ordSysId -> [" + ordSysId + "] is not find orderRef");
-        }
-
-    }
-
-
     public static void main(String[] args) {
 
-        var keeper = new OrderRefAllocator();
+        var keeper = new FastOrderRefAllocator();
 
         for (int i = 0; i < 1000; i++) {
             System.out.println(keeper.nextOrderRef());

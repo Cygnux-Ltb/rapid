@@ -1,18 +1,255 @@
-@namespace("io.rapid.adaptor.ctp.gateway.event0")
-protocol MarketDataProtocol {
+@namespace("io.rapid.adaptor.ctp.serializable.avro")
+protocol FtdcSharedRspProtocol {
 
     /**
-     * 响应信息
-     */
-    record FtdcRspInfo {
+      * FTDC响应类型
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.pack")
+    enum FtdcRspType {
+        // 非支持的数据类型
+        Unsupported,
+        // SHARED
+        FrontDisconnected,
+        HeartBeatWarning,
+        RspUserLogin,
+        RspUserLogout,
+        RspError,
+        MdClosed,
+        TraderClosed,
+        // MD
+        FtdcDepthMarketData,
+        FtdcSpecificInstrument,
+        // TRADER
+        FtdcInputOrder,
+        FtdcInputOrderAction,
+        FtdcInstrumentStatus,
+        FtdcInvestorPosition,
+        FtdcOrder,
+        FtdcOrderAction,
+        FtdcTrade,
+        FtdcTradingAccount
+    }
+
+    /**
+      * FTDC响应包装
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.pack")
+    record FtdcRsp {
         /**
-          * 错误代码
+          * 响应类型
           */
+        FtdcRspType RspType;
+        /**
+          * 时间戳
+          */
+        long epochMillis;
+        /**
+          * FTDC响应内容 - 已序列化
+          */
+        bytes RspContent;
+    }
+
+    /**
+      * 事件来源
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    enum EventSource {
+        // 事件来自行情上游
+        MD,
+        // 事件来自交易上游
+        TD
+    }
+
+    /**
+      * 通信连接断开
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    record FrontDisconnected {
+        /**
+          * 事件来源
+          */
+        EventSource Source;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 错误原因
+          * 0x1001 网络读失败
+          * 0x1002 网络写失败
+          * 0x2001 接收心跳超时
+          * 0x2002 发送心跳失败
+          * 0x2003 收到错误报文
+          */
+        int Reason;
+    }
+
+    /**
+      * 心跳超时警告
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    record HeartBeatWarning {
+        /**
+          * 事件来源
+          */
+        EventSource Source;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 距离上次接收报文的时间
+          */
+        int TimeLapse;
+    }
+
+    /**
+      * 用户登录响应
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    record RspUserLogin {
+        /**
+          * 事件来源
+          */
+        EventSource Source;
+        /**
+         * FTDC响应信息 - 错误代码
+         */
         int ErrorID;
         /**
-          * 错误信息
+          * FTDC响应信息 - 错误信息
           */
         string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
+        /**
+          * 交易日
+          */
+        string TradingDay;
+        /**
+          * 登录成功时间
+          */
+        string LoginTime;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 交易系统名称
+          */
+        string SystemName;
+        /**
+          * 前置编号
+          */
+        int FrontID;
+        /**
+          * 会话编号
+          */
+        int SessionID;
+        /**
+          * 最大报单引用
+          */
+        string MaxOrderRef;
+        /**
+          * 上期所时间
+          */
+        string SHFETime;
+        /**
+          * 大商所时间
+          */
+        string DCETime;
+        /**
+          * 郑商所时间
+          */
+        string CZCETime;
+        /**
+          * 中金所时间
+          */
+        string FFEXTime;
+        /**
+          * 能源中心时间
+          */
+        string INETime;
+    }
+
+    /**
+      * 用户登出请求(响应)
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    record UserLogout {
+        /**
+          * 事件来源
+          */
+        EventSource Source;
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 用户代码
+          */
+        string UserID;
+    }
+
+    /**
+      * 错误应答
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.shared")
+    record RspError {
+        /**
+          * 事件来源
+          */
+        EventSource Source;
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
     }
 
 }

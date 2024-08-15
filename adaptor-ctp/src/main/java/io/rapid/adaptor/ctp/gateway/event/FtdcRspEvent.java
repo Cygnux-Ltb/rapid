@@ -1,16 +1,22 @@
 package io.rapid.adaptor.ctp.gateway.event;
 
 import com.lmax.disruptor.EventFactory;
-import io.rapid.adaptor.ctp.gateway.event.received.md.FtdcDepthMarketData;
-import io.rapid.adaptor.ctp.gateway.event.received.shared.FtdcConnectionStatus;
-import io.rapid.adaptor.ctp.gateway.event.received.shared.FtdcRspInfo;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderAction;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInputOrderEvent;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcInvestorPosition;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcOrderAction;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcTrade;
-import io.rapid.adaptor.ctp.gateway.event.received.trader.FtdcTradingAccount;
+import io.rapid.adaptor.ctp.serializable.avro.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.serializable.avro.md.FtdcSpecificInstrument;
+import io.rapid.adaptor.ctp.serializable.avro.pack.FtdcRspType;
+import io.rapid.adaptor.ctp.serializable.avro.shared.FrontDisconnected;
+import io.rapid.adaptor.ctp.serializable.avro.shared.HeartBeatWarning;
+import io.rapid.adaptor.ctp.serializable.avro.shared.RspError;
+import io.rapid.adaptor.ctp.serializable.avro.shared.RspUserLogin;
+import io.rapid.adaptor.ctp.serializable.avro.shared.UserLogout;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrder;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrderAction;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInstrumentStatus;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInvestorPosition;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrderAction;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTradingAccount;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,9 +27,9 @@ import lombok.experimental.Accessors;
  * @author yellow013
  */
 @Getter
-public final class FtdcRsp {
+public final class FtdcRspEvent {
 
-    public static final EventFactory<FtdcRsp> EVENT_FACTORY = FtdcRsp::new;
+    public static final EventFactory<FtdcRspEvent> EVENT_FACTORY = FtdcRspEvent::new;
 
     /**
      * 事件类型
@@ -33,99 +39,92 @@ public final class FtdcRsp {
     private FtdcRspType type = FtdcRspType.Unsupported;
 
     /**
-     * 是否最后一条
+     * 毫秒时间戳
      */
     @Setter
     @Accessors(chain = true)
-    private boolean last = true;
+    private long epochMillis;
 
+
+    //////////////////////////////////// SHARED RSP ////////////////////////////////////
     /**
-     * 请求编号
+     * 通信连接断开
      */
-    @Setter
-    @Accessors(chain = true)
-    private int requestId = 0;
-
+    private final FrontDisconnected frontDisconnected = new FrontDisconnected();
     /**
-     * 距离上次接收报文的时间
+     * 心跳超时警告
      */
-    @Setter
-    @Accessors(chain = true)
-    private int timeLapse = 0;
-
+    private final HeartBeatWarning heartBeatWarning = new HeartBeatWarning();
     /**
-     * 错误原因
+     * 错误应答
      */
-    @Setter
-    @Accessors(chain = true)
-    private int reason;
-
+    private final RspError rspError = new RspError();
     /**
-     * 错误代码
+     * 用户登录响应
      */
-    private int errorID;
-
+    private final RspUserLogin rspUserLogin = new RspUserLogin();
     /**
-     * 错误信息
+     * 用户登出请求(响应)
      */
-    private String errorMsg;
+    private final UserLogout userLogout = new UserLogout();
 
-    /**
-     * 接口连接信息
-     */
-    private final FtdcConnectionStatus connectionStatus = new FtdcConnectionStatus();
 
+    //////////////////////////////////// MD RSP ////////////////////////////////////
     /**
      * 行情
      */
-    private final FtdcDepthMarketData depthMarketData = new FtdcDepthMarketData();
-
+    private final FtdcDepthMarketData ftdcDepthMarketData = new FtdcDepthMarketData();
     /**
-     * 返回账户信息
+     * 指定的合约
      */
-    private final FtdcTradingAccount tradingAccount = new FtdcTradingAccount();
+    private final FtdcSpecificInstrument ftdcSpecificInstrument = new FtdcSpecificInstrument();
 
-    /**
-     * 返回持仓信息
-     */
-    private final FtdcInvestorPosition investorPosition = new FtdcInvestorPosition();
 
-    /**
-     * 报单推送
-     */
-    private final FtdcOrder order = new FtdcOrder();
-
-    /**
-     * 成交推送
-     */
-    private final FtdcTrade trade = new FtdcTrade();
-
+    //////////////////////////////////// TRADER RSP ////////////////////////////////////
     /**
      * 返回报单错误
      */
-    private final FtdcInputOrderEvent inputOrder = new FtdcInputOrderEvent();
+    private final FtdcInputOrder ftdcInputOrder = new FtdcInputOrder();
 
     /**
      * 返回撤单提交错误
      */
-    private final FtdcInputOrderAction inputOrderAction = new FtdcInputOrderAction();
+    private final FtdcInputOrderAction ftdcInputOrderAction = new FtdcInputOrderAction();
+
+    /**
+     * 合约状态
+     */
+    private final FtdcInstrumentStatus ftdcInstrumentStatus = new FtdcInstrumentStatus();
+
+    /**
+     * 持仓信息
+     */
+    private final FtdcInvestorPosition ftdcInvestorPosition = new FtdcInvestorPosition();
+
+    /**
+     * 报单推送
+     */
+    private final FtdcOrder ftdcOrder = new FtdcOrder();
 
     /**
      * 返回撤单错误
      */
-    private final FtdcOrderAction orderAction = new FtdcOrderAction();
+    private final FtdcOrderAction ftdcOrderAction = new FtdcOrderAction();
 
     /**
-     * 错误消息
+     * 成交推送
      */
-    private final FtdcRspInfo rspInfo = new FtdcRspInfo();
+    private final FtdcTrade ftdcTrade = new FtdcTrade();
 
     /**
-     * For EventFactory call
+     * 账户信息(余额)
      */
-    private FtdcRsp() {
+    private final FtdcTradingAccount ftdcTradingAccount = new FtdcTradingAccount();
+
+    /**
+     * For EventFactory Call
+     */
+    private FtdcRspEvent() {
     }
-
-
 
 }

@@ -1,10 +1,236 @@
-@namespace("io.rapid.adaptor.ctp.gateway.event0")
-protocol FtdcTdRspProtocol {
+@namespace("io.rapid.adaptor.ctp.serializable.avro")
+protocol FtdcTraderRspProtocol {
+
+    /**
+      * FtdcInputOrder
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcInputOrder {
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 是否最后一条信息
+          */
+        boolean IsLast;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 报单引用
+          */
+        string OrderRef;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 报单价格条件
+          */
+        int OrderPriceType;
+        /**
+          * 买卖方向
+          */
+        int Direction;
+        /**
+          * 组合开平标志
+          */
+        string CombOffsetFlag;
+        /**
+          * 组合投机套保标志
+          */
+        string CombHedgeFlag;
+        /**
+          * 价格
+          */
+        double LimitPrice;
+        /**
+          * 数量
+          */
+        int VolumeTotalOriginal;
+        /**
+          * 有效期类型
+          */
+        int TimeCondition;
+        /**
+          * GTD日期
+          */
+        string GTDDate;
+        /**
+          * 成交量类型
+          */
+        int VolumeCondition;
+        /**
+          * 最小成交量
+          */
+        int MinVolume;
+        /**
+          * 触发条件
+          */
+        int ContingentCondition;
+        /**
+          * 止损价
+          */
+        double StopPrice;
+        /**
+          * 强平原因
+          */
+        int ForceCloseReason;
+        /**
+          * 自动挂起标志
+          */
+        int IsAutoSuspend;
+        /**
+          * 业务单元
+          */
+        string BusinessUnit;
+        /**
+          * 请求编号
+          */
+        int RequestID;
+        /**
+          * 用户强评标志
+          */
+        int UserForceClose;
+        /**
+          * 互换单标志
+          */
+        int IsSwapOrder;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+        /**
+          * 资金账号
+          */
+        string AccountID;
+        /**
+          * 币种代码
+          */
+        string CurrencyID;
+        /**
+          * 交易编码
+          */
+        string ClientID;
+        /**
+          * IP地址
+          */
+        string IPAddress;
+        /**
+          * MAC地址
+          */
+        string MacAddress;
+    }
+
+    /**
+      * FtdcInputOrderAction
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcInputOrderAction {
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 是否最后一条信息
+          */
+        boolean IsLast;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 报单操作引用
+          */
+        int OrderActionRef;
+        /**
+          * 报单引用
+          */
+        string OrderRef;
+        /**
+          * 请求编号
+          */
+        int RequestID;
+        /**
+          * 前置编号
+          */
+        int FrontID;
+        /**
+          * 会话编号
+          */
+        int SessionID;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 报单编号
+          */
+        string OrderSysID;
+        /**
+          * 操作标志
+          */
+        int ActionFlag;
+        /**
+          * 价格
+          */
+        double LimitPrice;
+        /**
+          * 数量变化
+          */
+        int VolumeChange;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+        /**
+          * IP地址
+          */
+        string IPAddress;
+        /**
+          * MAC地址
+          */
+        string MacAddress;
+    }
 
     /**
      * 合约状态
      */
-    @namespace("io.rapid.adaptor.ctp.gateway.event0.td")
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
     record FtdcInstrumentStatus {
         /**
           * 交易所代码
@@ -24,7 +250,6 @@ protocol FtdcTdRspProtocol {
         string InstrumentID;
         /**
          * 合约交易状态
-         *
          * ///开盘前
          * #define THOST_FTDC_IS_BeforeTrading '0'
          * ///非交易
@@ -51,7 +276,6 @@ protocol FtdcTdRspProtocol {
         string EnterTime;
         /**
           * 进入本状态原因
-          *
           * ///自动切换
           * #define THOST_FTDC_IER_Automatic '1'
           * ///手动切换
@@ -60,6 +284,961 @@ protocol FtdcTdRspProtocol {
           * #define THOST_FTDC_IER_Fuse '3'
           */
         int EnterReason;
+    }
+
+    /**
+      * FtdcInvestorPosition
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcInvestorPosition {
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 持仓多空方向
+          */
+        int PosiDirection;
+        /**
+          * 投机套保标志
+          */
+        int HedgeFlag;
+        /**
+          * 持仓日期
+          */
+        int PositionDate;
+        /**
+          * 上日持仓
+          */
+        int YdPosition;
+        /**
+          * 今日持仓
+          */
+        int Position;
+        /**
+          * 多头冻结
+          */
+        int LongFrozen;
+        /**
+          * 空头冻结
+          */
+        int ShortFrozen;
+        /**
+          * 开仓冻结金额
+          */
+        double LongFrozenAmount;
+        /**
+          * 开仓冻结金额
+          */
+        double ShortFrozenAmount;
+        /**
+          * 开仓量
+          */
+        int OpenVolume;
+        /**
+          * 平仓量
+          */
+        int CloseVolume;
+        /**
+          * 开仓金额
+          */
+        double OpenAmount;
+        /**
+          * 平仓金额
+          */
+        double CloseAmount;
+        /**
+          * 持仓成本
+          */
+        double PositionCost;
+        /**
+          * 上次占用的保证金
+          */
+        double PreMargin;
+        /**
+          * 占用的保证金
+          */
+        double UseMargin;
+        /**
+          * 冻结的保证金
+          */
+        double FrozenMargin;
+        /**
+          * 冻结的资金
+          */
+        double FrozenCash;
+        /**
+          * 冻结的手续费
+          */
+        double FrozenCommission;
+        /**
+          * 资金差额
+          */
+        double CashIn;
+        /**
+          * 手续费
+          */
+        double Commission;
+        /**
+          * 平仓盈亏
+          */
+        double CloseProfit;
+        /**
+          * 持仓盈亏
+          */
+        double PositionProfit;
+        /**
+          * 上次结算价
+          */
+        double PreSettlementPrice;
+        /**
+          * 本次结算价
+          */
+        double SettlementPrice;
+        /**
+          * 交易日
+          */
+        string TradingDay;
+        /**
+          * 结算编号
+          */
+        int SettlementID;
+        /**
+          * 开仓成本
+          */
+        double OpenCost;
+        /**
+          * 交易所保证金
+          */
+        double ExchangeMargin;
+        /**
+          * 组合成交形成的持仓
+          */
+        int CombPosition;
+        /**
+          * 组合多头冻结
+          */
+        int CombLongFrozen;
+        /**
+          * 组合空头冻结
+          */
+        int CombShortFrozen;
+        /**
+          * 逐日盯市平仓盈亏
+          */
+        double CloseProfitByDate;
+        /**
+          * 逐笔对冲平仓盈亏
+          */
+        double CloseProfitByTrade;
+        /**
+          * 今日持仓
+          */
+        int TodayPosition;
+        /**
+          * 保证金率
+          */
+        double MarginRateByMoney;
+        /**
+          * 保证金率(按手数)
+          */
+        double MarginRateByVolume;
+        /**
+          * 执行冻结
+          */
+        int StrikeFrozen;
+        /**
+          * 执行冻结金额
+          */
+        double StrikeFrozenAmount;
+        /**
+          * 放弃执行冻结
+          */
+        int AbandonFrozen;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 执行冻结的昨仓
+          */
+        int YdStrikeFrozen;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+        /**
+          * 大商所持仓成本差值, 只有大商所使用
+          */
+        double PositionCostOffset;
+    }
+
+    /**
+      * FtdcOrder
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcOrder {
+        /**
+         * 是否最后一条信息
+         */
+        boolean IsLast;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 报单引用
+          */
+        string OrderRef;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 报单价格条件
+          */
+        int OrderPriceType;
+        /**
+          * 买卖方向
+          */
+        int Direction;
+        /**
+          * 组合开平标志
+          */
+        string CombOffsetFlag;
+        /**
+          * 组合投机套保标志
+          */
+        string CombHedgeFlag;
+        /**
+          * 价格
+          */
+        double LimitPrice;
+        /**
+          * 数量
+          */
+        int VolumeTotalOriginal;
+        /**
+          * 有效期类型
+          */
+        int TimeCondition;
+        /**
+          * GTD日期
+          */
+        string GTDDate;
+        /**
+          * 成交量类型
+          */
+        int VolumeCondition;
+        /**
+          * 最小成交量
+          */
+        int MinVolume;
+        /**
+          * 触发条件
+          */
+        int ContingentCondition;
+        /**
+          * 止损价
+          */
+        double StopPrice;
+        /**
+          * 强平原因
+          */
+        int ForceCloseReason;
+        /**
+          * 自动挂起标志
+          */
+        int IsAutoSuspend;
+        /**
+          * 业务单元
+          */
+        string BusinessUnit;
+        /**
+          * 请求编号
+          */
+        int RequestID;
+        /**
+          * 本地报单编号
+          */
+        string OrderLocalID;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 会员代码
+          */
+        string ParticipantID;
+        /**
+          * 客户代码
+          */
+        string ClientID;
+        /**
+          * 合约在交易所的代码
+          */
+        string ExchangeInstID;
+        /**
+          * 交易所交易员代码
+          */
+        string TraderID;
+        /**
+          * 安装编号
+          */
+        int InstallID;
+        /**
+          * 报单提交状态
+          */
+        int OrderSubmitStatus;
+        /**
+          * 报单提示序号
+          */
+        int NotifySequence;
+        /**
+          * 交易日
+          */
+        string TradingDay;
+        /**
+          * 结算编号
+          */
+        int SettlementID;
+        /**
+          * 报单编号
+          */
+        string OrderSysID;
+        /**
+          * 报单来源
+          */
+        int OrderSource;
+        /**
+          * 报单状态
+          */
+        int OrderStatus;
+        /**
+          * 报单类型
+          */
+        int OrderType;
+        /**
+          * 今成交数量
+          */
+        int VolumeTraded;
+        /**
+          * 剩余数量
+          */
+        int VolumeTotal;
+        /**
+          * 报单日期
+          */
+        string InsertDate;
+        /**
+          * 委托时间
+          */
+        string InsertTime;
+        /**
+          * 激活时间
+          */
+        string ActiveTime;
+        /**
+          * 挂起时间
+          */
+        string SuspendTime;
+        /**
+          * 最后修改时间
+          */
+        string UpdateTime;
+        /**
+          * 撤销时间
+          */
+        string CancelTime;
+        /**
+          * 最后修改交易所交易员代码
+          */
+        string ActiveTraderID;
+        /**
+          * 结算会员编号
+          */
+        string ClearingPartID;
+        /**
+          * 序号
+          */
+        int SequenceNo;
+        /**
+          * 前置编号
+          */
+        int FrontID;
+        /**
+          * 会话编号
+          */
+        int SessionID;
+        /**
+          * 用户端产品信息
+          */
+        string UserProductInfo;
+        /**
+          * 状态信息
+          */
+        string StatusMsg;
+        /**
+          * 用户强评标志
+          */
+        int UserForceClose;
+        /**
+          * 操作用户代码
+          */
+        string ActiveUserID;
+        /**
+          * 经纪公司报单编号
+          */
+        int BrokerOrderSeq;
+        /**
+          * 相关报单
+          */
+        string RelativeOrderSysID;
+        /**
+          * 郑商所成交数量
+          */
+        int ZCETotalTradedVolume;
+        /**
+          * 互换单标志
+          */
+        int IsSwapOrder;
+        /**
+          * 营业部编号
+          */
+        string BranchID;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+        /**
+          * 资金账号
+          */
+        string AccountID;
+        /**
+          * 币种代码
+          */
+        string CurrencyID;
+        /**
+          * IP地址
+          */
+        string IPAddress;
+        /**
+          * MAC地址
+          */
+        string MacAddress;
+    }
+
+    /**
+      * FtdcOrderAction
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcOrderAction {
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 报单操作引用
+          */
+        int OrderActionRef;
+        /**
+          * 报单引用
+          */
+        string OrderRef;
+        /**
+          * 请求编号
+          */
+        int RequestID;
+        /**
+          * 前置编号
+          */
+        int FrontID;
+        /**
+          * 会话编号
+          */
+        int SessionID;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 报单编号
+          */
+        string OrderSysID;
+        /**
+          * 操作标志
+          */
+        int ActionFlag;
+        /**
+          * 价格
+          */
+        double LimitPrice;
+        /**
+          * 数量变化
+          */
+        int VolumeChange;
+        /**
+          * 操作日期
+          */
+        string ActionDate;
+        /**
+          * 操作时间
+          */
+        string ActionTime;
+        /**
+          * 交易所交易员代码
+          */
+        string TraderID;
+        /**
+          * 安装编号
+          */
+        int InstallID;
+        /**
+          * 本地报单编号
+          */
+        string OrderLocalID;
+        /**
+          * 操作本地编号
+          */
+        string ActionLocalID;
+        /**
+          * 会员代码
+          */
+        string ParticipantID;
+        /**
+          * 客户代码
+          */
+        string ClientID;
+        /**
+          * 业务单元
+          */
+        string BusinessUnit;
+        /**
+          * 报单操作状态
+          */
+        int OrderActionStatus;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 状态信息
+          */
+        string StatusMsg;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 营业部编号
+          */
+        string BranchID;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+        /**
+          * IP地址
+          */
+        string IPAddress;
+        /**
+          * MAC地址
+          */
+        string MacAddress;
+    }
+
+    /**
+      * FtdcTrade
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcTrade {
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者代码
+          */
+        string InvestorID;
+        /**
+          * 合约代码
+          */
+        string InstrumentID;
+        /**
+          * 报单引用
+          */
+        string OrderRef;
+        /**
+          * 用户代码
+          */
+        string UserID;
+        /**
+          * 交易所代码
+          */
+        string ExchangeID;
+        /**
+          * 成交编号
+          */
+        string TradeID;
+        /**
+          * 买卖方向
+          */
+        int Direction;
+        /**
+          * 报单编号
+          */
+        string OrderSysID;
+        /**
+          * 会员代码
+          */
+        string ParticipantID;
+        /**
+          * 客户代码
+          */
+        string ClientID;
+        /**
+          * 交易角色
+          */
+        int TradingRole;
+        /**
+          * 合约在交易所的代码
+          */
+        string ExchangeInstID;
+        /**
+          * 开平标志
+          */
+        int OffsetFlag;
+        /**
+          * 投机套保标志
+          */
+        int HedgeFlag;
+        /**
+          * 价格
+          */
+        double Price;
+        /**
+          * 数量
+          */
+        int Volume;
+        /**
+          * 成交日期
+          */
+        string TradeDate;
+        /**
+          * 成交时间
+          */
+        string TradeTime;
+        /**
+          * 成交类型
+          */
+        int TradeType;
+        /**
+          * 成交价来源
+          */
+        int PriceSource;
+        /**
+          * 交易所交易员代码
+          */
+        string TraderID;
+        /**
+          * 本地报单编号
+          */
+        string OrderLocalID;
+        /**
+          * 结算会员编号
+          */
+        string ClearingPartID;
+        /**
+          * 业务单元
+          */
+        string BusinessUnit;
+        /**
+          * 序号
+          */
+        int SequenceNo;
+        /**
+          * 交易日
+          */
+        string TradingDay;
+        /**
+          * 结算编号
+          */
+        int SettlementID;
+        /**
+          * 经纪公司报单编号
+          */
+        int BrokerOrderSeq;
+        /**
+          * 成交来源
+          */
+        int TradeSource;
+        /**
+          * 投资单元代码
+          */
+        string InvestUnitID;
+    }
+
+    /**
+      * FtdcTradingAccount
+      */
+    @namespace("io.rapid.adaptor.ctp.serializable.avro.trader")
+    record FtdcTradingAccount {
+        /**
+         * FTDC响应信息 - 错误代码
+         */
+        int ErrorID;
+        /**
+          * FTDC响应信息 - 错误信息
+          */
+        string ErrorMsg;
+        /**
+          * 请求ID
+          */
+        int RequestID;
+        /**
+        * 是否最后一条信息
+        */
+        boolean IsLast;
+        /**
+          * 经纪公司代码
+          */
+        string BrokerID;
+        /**
+          * 投资者账号
+          */
+        string AccountID;
+        /**
+          * 上次质押金额
+          */
+        double PreMortgage;
+        /**
+          * 上次信用额度
+          */
+        double PreCredit;
+        /**
+          * 上次存款额
+          */
+        double PreDeposit;
+        /**
+          * 上次结算准备金
+          */
+        double PreBalance;
+        /**
+          * 上次占用的保证金
+          */
+        double PreMargin;
+        /**
+          * 利息基数
+          */
+        double InterestBase;
+        /**
+          * 利息收入
+          */
+        double Interest;
+        /**
+          * 入金金额
+          */
+        double Deposit;
+        /**
+          * 出金金额
+          */
+        double Withdraw;
+        /**
+          * 冻结的保证金
+          */
+        double FrozenMargin;
+        /**
+          * 冻结的资金
+          */
+        double FrozenCash;
+        /**
+          * 冻结的手续费
+          */
+        double FrozenCommission;
+        /**
+          * 当前保证金总额
+          */
+        double CurrMargin;
+        /**
+          * 资金差额
+          */
+        double CashIn;
+        /**
+          * 手续费
+          */
+        double Commission;
+        /**
+          * 平仓盈亏
+          */
+        double CloseProfit;
+        /**
+          * 持仓盈亏
+          */
+        double PositionProfit;
+        /**
+          * 期货结算准备金
+          */
+        double Balance;
+        /**
+          * 可用资金
+          */
+        double Available;
+        /**
+          * 可取资金
+          */
+        double WithdrawQuota;
+        /**
+          * 基本准备金
+          */
+        double Reserve;
+        /**
+          * 交易日
+          */
+        string TradingDay;
+        /**
+          * 结算编号
+          */
+        int SettlementID;
+        /**
+          * 信用额度
+          */
+        double Credit;
+        /**
+          * 质押金额
+          */
+        double Mortgage;
+        /**
+          * 交易所保证金
+          */
+        double ExchangeMargin;
+        /**
+          * 投资者交割保证金
+          */
+        double DeliveryMargin;
+        /**
+          * 交易所交割保证金
+          */
+        double ExchangeDeliveryMargin;
+        /**
+          * 保底期货结算准备金
+          */
+        double ReserveBalance;
+        /**
+          * 币种代码
+          */
+        string CurrencyID;
+        /**
+          * 上次货币质入金额
+          */
+        double PreFundMortgageIn;
+        /**
+          * 上次货币质出金额
+          */
+        double PreFundMortgageOut;
+        /**
+          * 货币质入金额
+          */
+        double FundMortgageIn;
+        /**
+          * 货币质出金额
+          */
+        double FundMortgageOut;
+        /**
+          * 货币质押余额
+          */
+        double FundMortgageAvailable;
+        /**
+          * 可质押货币金额
+          */
+        double MortgageableFund;
+        /**
+          * 特殊产品占用保证金
+          */
+        double SpecProductMargin;
+        /**
+          * 特殊产品冻结保证金
+          */
+        double SpecProductFrozenMargin;
+        /**
+          * 特殊产品手续费
+          */
+        double SpecProductCommission;
+        /**
+          * 特殊产品冻结手续费
+          */
+        double SpecProductFrozenCommission;
+        /**
+          * 特殊产品持仓盈亏
+          */
+        double SpecProductPositionProfit;
+        /**
+          * 特殊产品平仓盈亏
+          */
+        double SpecProductCloseProfit;
+        /**
+          * 根据持仓盈亏算法计算的特殊产品持仓盈亏
+          */
+        double SpecProductPositionProfitByAlg;
+        /**
+          * 特殊产品交易所保证金
+          */
+        double SpecProductExchangeMargin;
+        /**
+          * 业务类型
+          */
+        int BizType;
+        /**
+          * 延时换汇冻结金额
+          */
+        double FrozenSwap;
+        /**
+          * 剩余换汇额度
+          */
+        double RemainSwap;
     }
 
 }

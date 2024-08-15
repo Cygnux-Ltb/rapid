@@ -1,14 +1,15 @@
 package io.rapid.adaptor.ctp.gateway;
 
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.concurrent.queue.ScQueueWithJCT;
+import io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
-import io.rapid.adaptor.ctp.gateway.event.recv.md.FtdcDepthMarketData;
-import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.gateway.event.recv.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.param.CtpParamsImpl;
+import io.rapid.adaptor.ctp.serializable.avro.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.serializable.avro.pack.FtdcRspType;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTrade;
 import org.junit.Test;
 import org.slf4j.Logger;
 
@@ -42,23 +43,23 @@ public class CtpGatewayTest {
 
         final CtpParams config = new CtpParamsImpl(map);
 
-        final Queue<FtdcEvent> queue = ScQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
+        final Queue<FtdcRspEvent> queue = SingleConsumerQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {
                     switch (msg.getType()) {
-                        case DepthMarketData -> {
-                            FtdcDepthMarketData depthMarketData = msg.getDepthMarketData();
+                        case FtdcRspType.FtdcDepthMarketData -> {
+                            FtdcDepthMarketData depthMarketData = msg.getFtdcDepthMarketData();
                             log.info(
                                     "Handle CThostFtdcDepthMarketDataField -> InstrumentID==[{}]  UpdateTime==[{}]  UpdateMillisec==[{}]  AskPrice1==[{}]  BidPrice1==[{}]",
                                     depthMarketData.getInstrumentID(), depthMarketData.getUpdateTime(),
                                     depthMarketData.getUpdateMillisec(), depthMarketData.getAskPrice1(),
                                     depthMarketData.getBidPrice1());
                         }
-                        case Order -> {
-                            FtdcOrder order = msg.getOrder();
+                        case FtdcOrder -> {
+                            FtdcOrder order = msg.getFtdcOrder();
                             log.info("Handle RtnOrder -> OrderRef==[{}]", order.getOrderRef());
                         }
-                        case Trade -> {
-                            FtdcTrade trade = msg.getTrade();
+                        case FtdcTrade -> {
+                            FtdcTrade trade = msg.getFtdcTrade();
                             log.info("Handle RtnTrade -> OrderRef==[{}]", trade.getOrderRef());
                         }
                         default -> {
