@@ -1,4 +1,4 @@
-package io.rapid.core.adaptor;
+package io.rapid.core.upstream;
 
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;

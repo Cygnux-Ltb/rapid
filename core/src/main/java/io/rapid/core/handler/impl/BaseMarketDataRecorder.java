@@ -1,10 +1,10 @@
 package io.rapid.core.handler.impl;
 
-import io.rapid.core.mkd.MarketDataFeed;
+import io.rapid.core.upstream.MarketDataFeed;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataRecorder;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.serializable.avro.event.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;

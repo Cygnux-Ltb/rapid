@@ -1,6 +1,6 @@
 package io.rapid.core.handler;
 
-import io.rapid.core.serializable.avro.event.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
 
 import javax.annotation.Nonnull;
 

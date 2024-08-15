@@ -3,7 +3,7 @@ package io.rapid.core.instrument.base;
 import io.rapid.core.instrument.Exchange;
 import io.rapid.core.instrument.Instrument;
 import io.mercury.common.state.EnableableComponent;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 
 import java.util.HashMap;
 
@@ -61,7 +61,7 @@ public abstract class BaseInstrument extends EnableableComponent implements Inst
             map.put("instrumentId", getInstrumentId());
             map.put("instrumentCode", getInstrumentCode());
             map.put("symbol", getSymbol());
-            this.formatText = JsonWrapper.toJson(map);
+            this.formatText = JsonWriter.toJson(map);
         }
         return formatText;
     }

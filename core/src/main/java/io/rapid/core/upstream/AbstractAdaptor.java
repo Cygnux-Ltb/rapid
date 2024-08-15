@@ -1,4 +1,4 @@
-package io.rapid.core.adaptor;
+package io.rapid.core.upstream;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.state.EnableableComponent;

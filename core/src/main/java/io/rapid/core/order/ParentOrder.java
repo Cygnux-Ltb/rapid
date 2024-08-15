@@ -26,6 +26,11 @@ public class ParentOrder extends AbstractOrder {
     private static final long serialVersionUID = -5096106824571703291L;
 
     /**
+     * 所属子订单
+     */
+    private final MutableList<ChildOrder> childOrders;
+
+    /**
      * @param ordSysId     long
      * @param strategyId   int
      * @param subAccountId int
@@ -44,11 +49,6 @@ public class ParentOrder extends AbstractOrder {
         this.childOrders = childOrders;
     }
 
-
-    /**
-     * 所属子订单
-     */
-    private final MutableList<ChildOrder> childOrders;
 
     /**
      * 由外部传入拆分为多个订单的逻辑

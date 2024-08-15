@@ -1,7 +1,7 @@
 package io.rapid.core.indicator.structure;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 
 import javax.annotation.Nonnull;
 
@@ -80,7 +80,7 @@ public final class Bar implements JsonSerializable {
     public static void main(String[] args) {
 
         Bar bar = new Bar().onPrice(10000).onPrice(100L).onPrice(1000L);
-        System.out.println(JsonWrapper.toJson(bar));
+        System.out.println(JsonWriter.toJson(bar));
         System.out.println(bar);
 
     }

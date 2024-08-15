@@ -5,7 +5,7 @@ import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.util.StringSupport;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.instrument.Exchange;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
@@ -648,7 +648,7 @@ public final class ChinaFutures {
                 tempMap.put("symbolCode", symbolCode);
                 tempMap.put("priorityCloseType", priorityCloseType);
                 tempMap.put("multiplier", multiplier);
-                this.cache = JsonWrapper.toJson(tempMap);
+                this.cache = JsonWriter.toJson(tempMap);
             }
             return cache;
         }

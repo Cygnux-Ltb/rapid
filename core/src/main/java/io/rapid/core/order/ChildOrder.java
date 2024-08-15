@@ -10,9 +10,9 @@ import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
-import io.rapid.core.serializable.avro.event.OrderEvent;
-import io.rapid.core.serializable.avro.request.CancelOrder;
-import io.rapid.core.serializable.avro.request.NewOrder;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
+import io.rapid.core.serializable.avro.outbound.CancelOrder;
+import io.rapid.core.serializable.avro.outbound.NewOrder;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -224,7 +224,7 @@ public class ChildOrder extends AbstractOrder {
      * @param tradePrice  long
      * @param tradeQty    int
      */
-    public void addRecord(long epochMicros, long tradePrice, int tradeQty) {
+    public void addRecord(long epochMicros, double tradePrice, int tradeQty) {
         records.add(new TradeRecord(ordSysId, records.size() + 1,
                 epochMicros, tradePrice, tradeQty));
     }

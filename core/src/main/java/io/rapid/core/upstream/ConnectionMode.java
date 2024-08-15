@@ -1,4 +1,4 @@
-package io.rapid.core.adaptor;
+package io.rapid.core.upstream;
 
 public enum ConnectionMode {
 

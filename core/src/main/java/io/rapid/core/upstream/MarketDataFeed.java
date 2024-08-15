@@ -1,97 +1,43 @@
-package io.rapid.core.adaptor;
+package io.rapid.core.upstream;
 
-import io.rapid.core.handler.OrderHandler;
-import io.rapid.core.serializable.avro.request.CancelOrder;
-import io.rapid.core.serializable.avro.request.NewOrder;
-import io.rapid.core.serializable.avro.request.QueryBalance;
-import io.rapid.core.serializable.avro.request.QueryOrder;
-import io.rapid.core.serializable.avro.request.QueryPositions;
+import io.mercury.common.state.AvailableTime;
+import io.mercury.common.state.Enableable;
+import io.mercury.common.state.StartupException;
+import io.rapid.core.instrument.Instrument;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
-public interface MarketDataFeed extends Adaptor {
+public interface MarketDataFeed extends AutoCloseable, Enableable {
 
+    // ############################## 状态相关 ############################## //
+
+    /**
+     * @return Feed ID
+     */
     String getFeedId();
 
     /**
-     * @return Adaptor ID
+     * 返回[可用时间]对象
+     *
+     * @return AvailableTime
      */
-    @Nonnull
-    @Override
-    default String getAdaptorId() {
-        return getFeedId();
-    }
+    AvailableTime getAvailableTime();
 
     /**
-     * 发送订单请求
+     * Adaptor 启动函数
      *
-     * @param order NewOrder
      * @return boolean
      */
-    @Override
-    default boolean newOrder(@Nonnull NewOrder order) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> newOrder");
-    }
+    boolean startup() throws IOException, IllegalStateException, StartupException;
+
+    // ############################## 行情相关 ############################## //
 
     /**
-     * 发送撤单请求
+     * 订阅行情
      *
-     * @param order CancelOrder
-     * @return boolean
+     * @param instruments Instrument[]
      */
-    @Override
-    default boolean cancelOrder(@Nonnull CancelOrder order) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> cancelOrder");
-    }
+    boolean subscribeMarketData(@Nonnull Instrument... instruments);
 
-    /**
-     * 查询订单
-     *
-     * @param query QueryOrder
-     * @return boolean
-     */
-    @Override
-    default boolean queryOrder(@Nonnull QueryOrder query) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> queryOrder");
-    }
-
-    /**
-     * 查询持仓
-     *
-     * @param query QueryPositions
-     * @return boolean
-     */
-    @Override
-    default boolean queryPositions(@Nonnull QueryPositions query) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> queryPositions");
-    }
-
-    /**
-     * 查询余额
-     *
-     * @param query QueryBalance
-     * @return boolean
-     */
-    @Override
-    default boolean queryBalance(@Nonnull QueryBalance query) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> queryBalance");
-    }
-
-    /**
-     * 添加订单处理器
-     *
-     * @param handler OrderHandler
-     * @return TraderAdaptor
-     */
-    @Override
-    default MarketDataFeed addOrderHandler(OrderHandler handler) {
-        throw new UnsupportedOperationException(getClass().getName()
-                + " : unsupported functions -> addOrderHandler");
-    }
-    
 }

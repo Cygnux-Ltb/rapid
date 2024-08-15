@@ -3,7 +3,7 @@ package io.rapid.core.instrument.base;
 import io.mercury.common.datetime.TimeZone;
 import io.mercury.common.sequence.SerialObj;
 import io.mercury.common.sequence.TimeWindow;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import org.eclipse.collections.api.list.ImmutableList;
 
 import javax.annotation.Nonnull;
@@ -79,7 +79,7 @@ public final class TradingPeriod implements SerialObj<TradingPeriod> {
 
     @Override
     public String toString() {
-        return JsonWrapper.toJson(this);
+        return JsonWriter.toJson(this);
     }
 
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 package io.rapid.core.mkd;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.serializable.avro.event.FastMarketDataEvent;
+import io.rapid.core.serializable.avro.inbound.FastMarketDataEvent;
 import io.mercury.common.datetime.Timestamp;
 
 public final class FastMarketDataBridge  {
@@ -22,17 +22,17 @@ public final class FastMarketDataBridge  {
                 // set -> last price, volume, turnover
                 .setLastPrice(0L).setVolume(0).setTurnover(0L)
                 // set -> level5 bid prices
-                .setBidPrices1(0L).setBidPrices2(0L).setBidPrices3(0L)
-                .setBidPrices4(0L).setBidPrices5(0L)
+                .setBidPrice1(0L).setBidPrice2(0L).setBidPrice3(0L)
+                .setBidPrice4(0L).setBidPrice5(0L)
                 // set -> level5 bid volumes
-                .setBidVolumes1(0).setBidVolumes2(0).setBidVolumes3(0)
-                .setBidVolumes4(0).setBidVolumes5(0)
+                .setBidVolume1(0).setBidVolume2(0).setBidVolume3(0)
+                .setBidVolume4(0).setBidVolume5(0)
                 // set -> level5 ask prices
-                .setAskPrices1(0L).setAskPrices2(0L).setAskPrices3(0L)
-                .setAskPrices4(0L).setAskPrices5(0L)
+                .setAskPrice1(0L).setAskPrice2(0L).setAskPrice3(0L)
+                .setAskPrice4(0L).setAskPrice5(0L)
                 // set -> level5 ask volumes
-                .setAskVolumes1(0).setAskVolumes2(0).setAskVolumes3(0)
-                .setAskVolumes4(0).setAskVolumes5(0)
+                .setAskVolume1(0).setAskVolume2(0).setAskVolume3(0)
+                .setAskVolume4(0).setAskVolume5(0)
                 // call -> build
                 .build();
     }
@@ -101,27 +101,27 @@ public final class FastMarketDataBridge  {
 
 
     public double getBidPrice1() {
-        return marketData.getBidPrices1();
+        return marketData.getBidPrice1();
     }
 
 
     public double getBidPrice2() {
-        return marketData.getBidPrices2();
+        return marketData.getBidPrice2();
     }
 
 
     public double getBidPrice3() {
-        return marketData.getBidPrices3();
+        return marketData.getBidPrice3();
     }
 
 
     public double getBidPrice4() {
-        return marketData.getBidPrices4();
+        return marketData.getBidPrice4();
     }
 
 
     public double getBidPrice5() {
-        return marketData.getBidPrices5();
+        return marketData.getBidPrice5();
     }
 
 
@@ -131,27 +131,27 @@ public final class FastMarketDataBridge  {
 
 
     public int getBidVolume1() {
-        return marketData.getBidVolumes1();
+        return marketData.getBidVolume1();
     }
 
 
     public int getBidVolume2() {
-        return marketData.getBidVolumes2();
+        return marketData.getBidVolume2();
     }
 
 
     public int getBidVolume3() {
-        return marketData.getBidVolumes3();
+        return marketData.getBidVolume3();
     }
 
 
     public int getBidVolume4() {
-        return marketData.getBidVolumes4();
+        return marketData.getBidVolume4();
     }
 
 
     public int getBidVolume5() {
-        return marketData.getBidVolumes5();
+        return marketData.getBidVolume5();
     }
 
 
@@ -161,27 +161,27 @@ public final class FastMarketDataBridge  {
 
 
     public double getAskPrice1() {
-        return marketData.getAskPrices1();
+        return marketData.getAskPrice1();
     }
 
 
     public double getAskPrice2() {
-        return marketData.getAskPrices2();
+        return marketData.getAskPrice2();
     }
 
 
     public double getAskPrice3() {
-        return marketData.getAskPrices3();
+        return marketData.getAskPrice3();
     }
 
 
     public double getAskPrice4() {
-        return marketData.getAskPrices4();
+        return marketData.getAskPrice4();
     }
 
 
     public double getAskPrice5() {
-        return marketData.getAskPrices5();
+        return marketData.getAskPrice5();
     }
 
 
@@ -191,52 +191,52 @@ public final class FastMarketDataBridge  {
 
 
     public int getAskVolume1() {
-        return marketData.getAskVolumes1();
+        return marketData.getAskVolume1();
 
     }
 
 
     public int getAskVolume2() {
-        return marketData.getAskVolumes2();
+        return marketData.getAskVolume2();
     }
 
 
     public int getAskVolume3() {
-        return marketData.getAskVolumes3();
+        return marketData.getAskVolume3();
     }
 
 
     public int getAskVolume4() {
-        return marketData.getAskVolumes4();
+        return marketData.getAskVolume4();
     }
 
 
     public int getAskVolume5() {
-        return marketData.getAskVolumes5();
+        return marketData.getAskVolume5();
     }
 
 
     public void updated() {
-        this.bidPrices[0] = marketData.getBidPrices1();
-        this.bidPrices[1] = marketData.getBidPrices2();
-        this.bidPrices[2] = marketData.getBidPrices3();
-        this.bidPrices[3] = marketData.getBidPrices4();
-        this.bidPrices[4] = marketData.getBidPrices5();
-        this.bidVolumes[0] = marketData.getBidVolumes1();
-        this.bidVolumes[1] = marketData.getBidVolumes2();
-        this.bidVolumes[2] = marketData.getBidVolumes3();
-        this.bidVolumes[3] = marketData.getBidVolumes4();
-        this.bidVolumes[4] = marketData.getBidVolumes5();
-        this.askPrices[0] = marketData.getAskPrices1();
-        this.askPrices[1] = marketData.getAskPrices2();
-        this.askPrices[2] = marketData.getAskPrices3();
-        this.askPrices[3] = marketData.getAskPrices4();
-        this.askPrices[4] = marketData.getAskPrices5();
-        this.askVolumes[0] = marketData.getAskVolumes1();
-        this.askVolumes[1] = marketData.getAskVolumes2();
-        this.askVolumes[2] = marketData.getAskVolumes3();
-        this.askVolumes[3] = marketData.getAskVolumes4();
-        this.askVolumes[4] = marketData.getAskVolumes5();
+        this.bidPrices[0] = marketData.getBidPrice1();
+        this.bidPrices[1] = marketData.getBidPrice2();
+        this.bidPrices[2] = marketData.getBidPrice3();
+        this.bidPrices[3] = marketData.getBidPrice4();
+        this.bidPrices[4] = marketData.getBidPrice5();
+        this.bidVolumes[0] = marketData.getBidVolume1();
+        this.bidVolumes[1] = marketData.getBidVolume2();
+        this.bidVolumes[2] = marketData.getBidVolume3();
+        this.bidVolumes[3] = marketData.getBidVolume4();
+        this.bidVolumes[4] = marketData.getBidVolume5();
+        this.askPrices[0] = marketData.getAskPrice1();
+        this.askPrices[1] = marketData.getAskPrice2();
+        this.askPrices[2] = marketData.getAskPrice3();
+        this.askPrices[3] = marketData.getAskPrice4();
+        this.askPrices[4] = marketData.getAskPrice5();
+        this.askVolumes[0] = marketData.getAskVolume1();
+        this.askVolumes[1] = marketData.getAskVolume2();
+        this.askVolumes[2] = marketData.getAskVolume3();
+        this.askVolumes[3] = marketData.getAskVolume4();
+        this.askVolumes[4] = marketData.getAskVolume5();
     }
 
 }

@@ -1,116 +1,12 @@
 @namespace("io.rapid.core.serializable.avro")
-protocol NullProtocol {
+protocol TypeDefinition {
 
     import idl "enums.avdl";
 
     /**
-     * 新订单
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record NewOrder {
-
-        // Epoch Microsecond Unit
-        long generateTime;
-        // Epoch Microsecond Unit
-        long sendTime;
-        long ordSysId;
-        int offerQty;
-        int minimumQty = 1;
-        double offerPrice = 0.0D;
-        string exchangeCode;
-        int instrumentId;
-        string instrumentCode;
-        io.rapid.core.serializable.avro.enums.OrdType type;
-        io.rapid.core.serializable.avro.enums.OrdValid valid;
-        io.rapid.core.serializable.avro.enums.TrdAction action;
-        io.rapid.core.serializable.avro.enums.TrdDirection direction;
-        string brokerId;
-        int accountId;
-        int subAccountId;
-        int strategyId;
-        string operatorId;
-        string msg = "";
-    }
-
-    /**
-     * 撤单
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record CancelOrder {
-        // Epoch Microsecond Unit
-        long generateTime;
-        // Epoch Microsecond Unit
-        long sendTime;
-        long ordSysId;
-        boolean immediately = true;
-        long delayMillis = 0;
-        string exchangeCode;
-        string instrumentCode;
-        string brokerId;
-        int accountId;
-        int subAccountId;
-        int strategyId;
-        string operatorId = "";
-        string msg = "";
-    }
-
-    /**
-     * 查询订单
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record QueryOrder {
-        // Epoch Millisecond Unit
-        long generateTime = 0;
-        // Epoch Millisecond Unit
-        long sendTime = 0;
-        long ordSysId;
-        string exchangeCode;
-        string instrumentCode;
-        string brokerId;
-        int accountId;
-        int subAccountId;
-        int strategyId;
-        string operatorId = "";
-    }
-
-    /**
-     * 查询账户持仓
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record QueryPositions {
-        // Epoch Millisecond Unit
-        long generateTime = 0;
-        // Epoch Millisecond Unit
-        long sendTime = 0;
-        string exchangeCode;
-        string instrumentCode;
-        string brokerId;
-        int accountId;
-        int subAccountId;
-        int strategyId;
-        string operatorId = "";
-    }
-
-    /**
-     * 查询账户余额
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record QueryBalance {
-        // Epoch Millisecond Unit
-        long generateTime = 0;
-        // Epoch Millisecond Unit
-        long sendTime = 0;
-        string brokerId;
-        int accountId;
-        int subAccountId;
-        int strategyId;
-        string operatorId = "";
-    }
-
-    /**
      * 订单回报
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record OrderEvent {
         // Epoch Microsecond Unit
         long epochMicros;
@@ -137,7 +33,7 @@ protocol NullProtocol {
     /**
      * 账户可用余额回报
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record BalanceEvent {
         long epochMillis;
         string brokerId;
@@ -149,7 +45,7 @@ protocol NullProtocol {
     /**
      * 持仓回报
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record PositionsEvent {
         long epochMillis;
         string brokerId;
@@ -163,7 +59,7 @@ protocol NullProtocol {
     /**
      * 适配器回报
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record AdaptorEvent {
         long epochMillis;
         string adaptorId;
@@ -172,45 +68,9 @@ protocol NullProtocol {
     }
 
     /**
-     * 行情类型
-     */
-    @namespace("io.rapid.core.serializable.avro.enums")
-    enum MarketDataType {
-        DEPTH, FAST, LEVEL10, LEVEL20, LEVEL30
-    }
-
-    /**
-     * 行情订阅状态
-     */
-    @namespace("io.rapid.core.serializable.avro.enums")
-    enum SubscribeStatus {
-        SUCCEED, PART_SUCCEED, FAILED
-    }
-
-    /**
-     * 订阅行情
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record SubscribeMarketData {
-        io.rapid.core.serializable.avro.enums.MarketDataType type;
-        string instrumentCode;
-        string recvAddr;
-    }
-
-    /**
-     * 订阅多个行情
-     */
-    @namespace("io.rapid.core.serializable.avro.request")
-    record SubscribeMultiMarketData {
-        io.rapid.core.serializable.avro.enums.MarketDataType type;
-        array<string> instrumentCodes;
-        string recvAddr;
-    }
-
-    /**
      * 行情订阅回报
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record MarketDataSubscribeEvent {
         io.rapid.core.serializable.avro.enums.SubscribeStatus status;
         array<string> successInstrumentCodes;
@@ -221,7 +81,7 @@ protocol NullProtocol {
     /**
      * 深度行情数据结构
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record DepthMarketDataEvent {
         long timestamp;
         int instrumentId;
@@ -239,7 +99,7 @@ protocol NullProtocol {
     /**
      * 五档快速行情数据结构
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record FastMarketDataEvent {
         long timestamp;
         int instrumentId;
@@ -272,7 +132,7 @@ protocol NullProtocol {
     /**
      * 十档行情数据结构
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record L10MarketDataEvent {
         long timestamp;
         int instrumentId;
@@ -325,7 +185,7 @@ protocol NullProtocol {
     /**
      * 二十档行情数据结构
      */
-    @namespace("io.rapid.core.serializable.avro.event")
+    @namespace("io.rapid.core.serializable.avro.inbound")
     record L20MarketDataEvent {
         long timestamp;
         int instrumentId;

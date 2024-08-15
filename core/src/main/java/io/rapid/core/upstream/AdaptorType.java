@@ -1,4 +1,4 @@
-package io.rapid.core.adaptor;
+package io.rapid.core.upstream;
 
 public enum AdaptorType {
 
@@ -7,8 +7,6 @@ public enum AdaptorType {
     TWS,
 
     FIX,
-
-    MT4,
 
     MT5
 

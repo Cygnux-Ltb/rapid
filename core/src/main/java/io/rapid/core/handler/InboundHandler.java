@@ -1,8 +1,8 @@
 package io.rapid.core.handler;
 
 import io.rapid.core.mkd.FastMarketData;
-import io.rapid.core.serializable.avro.event.AdaptorEvent;
-import io.rapid.core.serializable.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.ResourceUtil;
 import org.slf4j.Logger;
