@@ -1,0 +1,553 @@
+@namespace("io.rapid.core.serializable.avro")
+protocol NullProtocol {
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum OrdType {
+        // 1 : 无效
+        INVALID,
+        // 2 : 限价单
+        LIMITED,
+        // 3 : 市价单
+        MARKET,
+        // 4 : Limited Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为限价单的报单.
+        LIMITED_STOP,
+        // 5 : Market Stop, 在目前的市场价格达到指定的止损价格时, 被激活成为市价单的报单.
+        MARKET_STOP,
+        // 6 : Market To Limited, 按照市价报单的方式成交, 不能成交的部分保留在报单队列中, 变成限价单的报单.
+        MTL,
+        // 7 : Best Price, 不带有价格限定, 按照市场中存在的最好价格买入或者卖出的报单.
+        BP,
+        // 8 : Average Price, 限定最终成交平均价格的报单.
+        AP,
+        // 9 : Kill Or Kill, 表示要求立即全部成交, 否则就全部取消的报单.
+        FOK,
+        // 10 : Fill And Kill, 表示要求立即成交, 对于无法满足的部分予以取消的报单.
+        FAK,
+        // 11 : Minimum Volume, 要求满足成交量达到这个最小成交量, 否则就取消的报单.
+        MV
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum OrdValid {
+        // 无效
+        INVALID,
+        // Good Till Cancel, 将一直有效, 直到交易员取消这个报单, 或者该合约本身到期的报单.
+        GTC,
+        // Good Till Date, 将一直有效, 直到指定日期或交易员取消这个报单, 或者该合约本身到期的报单.
+        GTD,
+        // Good For Day, 只在当日的交易时段有效, 一旦当前交易时段结束, 自动取消的报单.
+        GFD
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum OrdSide {
+        // 无效
+        INVALID,
+        // 买
+        BUY,
+        // 卖
+        SELL,
+        // 融资买入
+        MARGIN_BUY,
+        // 融券卖出
+        SHORT_SELL
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum OrdStatus {
+        // 无效
+        INVALID,
+        // 新订单未确认
+        PENDING_NEW,
+        // 新订单
+        NEW,
+        // 新订单已拒绝
+        NEW_REJECTED,
+        // 部分成交
+        PARTIALLY_FILLED,
+        // 全部成交
+        FILLED,
+        // 未确认撤单
+        PENDING_CANCEL,
+        // 撤单已拒绝
+        CANCEL_REJECTED,
+        // 已撤单
+        CANCELED,
+        // 未确认修改订单
+        PENDING_REPLACE,
+        // 修改已拒绝
+        REPLACE_REJECTED,
+        // 已修改
+        REPLACED,
+        // 已暂停
+        SUSPENDED,
+        // 未提供
+        UNPROVIDED
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum OrdLevel {
+        // 子订单
+        CHILD,
+        // 父订单
+        PARENT,
+        // 策略订单
+        STRATEGY,
+        // 组订单
+        GROUP
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum TrdDirection {
+        // 无效
+        INVALID,
+        // 多
+        LONG,
+        // 空
+        SHORT
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum TrdAction {
+        // 无效
+        INVALID,
+        // 开仓
+        OPEN,
+        // 平仓
+        CLOSE,
+        // 平今仓
+        CLOSE_TODAY,
+        // 平昨仓
+        CLOSE_YESTERDAY
+    }
+
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum AdaptorStatus {
+        // 无效
+        INVALID,
+        // 不可用
+        UNAVAILABLE,
+        // 可用
+        AVAILABLE,
+        // 行情启用
+        MD_ENABLE,
+        // 行情禁用
+        MD_DISABLE,
+        // 交易启用
+        TRADER_ENABLE,
+        // 交易禁用
+        TRADER_DISABLE
+    }
+
+    /**
+     * 新订单
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record NewOrder {
+        // Epoch Microsecond Unit
+        long generateTime;
+        // Epoch Microsecond Unit
+        long sendTime;
+        long ordSysId;
+        int offerQty;
+        int minimumQty = 1;
+        double offerPrice = 0.0D;
+        string exchangeCode;
+        int instrumentId;
+        string instrumentCode;
+        io.rapid.core.serializable.avro.enums.OrdType type;
+        io.rapid.core.serializable.avro.enums.OrdValid valid;
+        io.rapid.core.serializable.avro.enums.TrdAction action;
+        io.rapid.core.serializable.avro.enums.TrdDirection direction;
+        string brokerId;
+        int accountId;
+        int subAccountId;
+        int strategyId;
+        string operatorId;
+        string msg = "";
+    }
+
+    /**
+     * 撤单
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record CancelOrder {
+        // Epoch Microsecond Unit
+        long generateTime;
+        // Epoch Microsecond Unit
+        long sendTime;
+        long ordSysId;
+        boolean immediately = true;
+        long delayMillis = 0;
+        string exchangeCode;
+        string instrumentCode;
+        string brokerId;
+        int accountId;
+        int subAccountId;
+        int strategyId;
+        string operatorId = "";
+        string msg = "";
+    }
+
+    /**
+     * 查询订单
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record QueryOrder {
+        // Epoch Millisecond Unit
+        long generateTime = 0;
+        // Epoch Millisecond Unit
+        long sendTime = 0;
+        long ordSysId;
+        string exchangeCode;
+        string instrumentCode;
+        string brokerId;
+        int accountId;
+        int subAccountId;
+        int strategyId;
+        string operatorId = "";
+    }
+
+    /**
+     * 查询账户持仓
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record QueryPositions {
+        // Epoch Millisecond Unit
+        long generateTime = 0;
+        // Epoch Millisecond Unit
+        long sendTime = 0;
+        string exchangeCode;
+        string instrumentCode;
+        string brokerId;
+        int accountId;
+        int subAccountId;
+        int strategyId;
+        string operatorId = "";
+    }
+
+    /**
+     * 查询账户余额
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record QueryBalance {
+        // Epoch Millisecond Unit
+        long generateTime = 0;
+        // Epoch Millisecond Unit
+        long sendTime = 0;
+        string brokerId;
+        int accountId;
+        int subAccountId;
+        int strategyId;
+        string operatorId = "";
+    }
+
+    /**
+     * 订单回报
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record OrderEvent {
+        // Epoch Microsecond Unit
+        long epochMicros;
+        long ordSysId;
+        int tradingDay;
+        string brokerId;
+        string investorId = "";
+        string orderRef;
+        string brokerOrdSysId;
+        string exchangeCode;
+        string instrumentCode;
+        io.rapid.core.serializable.avro.enums.OrdStatus status;
+        io.rapid.core.serializable.avro.enums.TrdDirection direction;
+        io.rapid.core.serializable.avro.enums.TrdAction action;
+        int offerQty = 0;
+        int filledQty = 0;
+        double offerPrice = 0;
+        double tradePrice = 0;
+        string offerTime = "";
+        string updateTime = "";
+        string msg = "";
+    }
+
+    /**
+     * 账户可用余额回报
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record BalanceEvent {
+        long epochMillis;
+        string brokerId;
+        string investorId;
+        long available;
+        string currencyId;
+    }
+
+    /**
+     * 持仓回报
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record PositionsEvent {
+        long epochMillis;
+        string brokerId;
+        string investorId;
+        string exchangeCode;
+        string instrumentCode;
+        io.rapid.core.serializable.avro.enums.TrdDirection direction;
+        int qty;
+    }
+
+    /**
+     * 适配器回报
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record AdaptorEvent {
+        long epochMillis;
+        string adaptorId;
+        int accountId;
+        io.rapid.core.serializable.avro.enums.AdaptorStatus status;
+    }
+
+    /**
+     * 行情类型
+     */
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum MarketDataType {
+        DEPTH, FAST, LEVEL10, LEVEL20, LEVEL30
+    }
+
+    /**
+     * 行情订阅状态
+     */
+    @namespace("io.rapid.core.serializable.avro.enums")
+    enum SubscribeStatus {
+        SUCCEED, PART_SUCCEED, FAILED
+    }
+
+    /**
+     * 订阅行情
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record SubscribeMarketData {
+        io.rapid.core.serializable.avro.enums.MarketDataType type;
+        string instrumentCode;
+        string recvAddr;
+    }
+
+    /**
+     * 订阅多个行情
+     */
+    @namespace("io.rapid.core.serializable.avro.request")
+    record SubscribeMultiMarketData {
+        io.rapid.core.serializable.avro.enums.MarketDataType type;
+        array<string> instrumentCodes;
+        string recvAddr;
+    }
+
+    /**
+     * 行情订阅回报
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record MarketDataSubscribeEvent {
+        io.rapid.core.serializable.avro.enums.SubscribeStatus status;
+        array<string> successInstrumentCodes;
+        array<string> failInstrumentCodes;
+        string msg;
+    }
+
+    /**
+     * 深度行情数据结构
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record DepthMarketDataEvent {
+        long timestamp;
+        int instrumentId;
+        string instrumentCode;
+        double lastPrice;
+        int volume;
+        long turnover;
+        array<double> bidPrices;
+        array<int> bidVolumes;
+        array<double> askPrices;
+        array<int> askVolumes;
+        int depth;
+    }
+
+    /**
+     * 五档快速行情数据结构
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record FastMarketDataEvent {
+        long timestamp;
+        int instrumentId;
+        string instrumentCode;
+        double lastPrice;
+        int volume;
+        long turnover;
+        double bidPrice1;
+        double bidPrice2;
+        double bidPrice3;
+        double bidPrice4;
+        double bidPrice5;
+        int bidVolume1;
+        int bidVolume2;
+        int bidVolume3;
+        int bidVolume4;
+        int bidVolume5;
+        double askPrice1;
+        double askPrice2;
+        double askPrice3;
+        double askPrice4;
+        double askPrice5;
+        int askVolume1;
+        int askVolume2;
+        int askVolume3;
+        int askVolume4;
+        int askVolume5;
+    }
+
+    /**
+     * 十档行情数据结构
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record L10MarketDataEvent {
+        long timestamp;
+        int instrumentId;
+        string instrumentCode;
+        double lastPrice;
+        int volume;
+        long turnover;
+        double bidPrice1;
+        double bidPrice2;
+        double bidPrice3;
+        double bidPrice4;
+        double bidPrice5;
+        double bidPrice6;
+        double bidPrice7;
+        double bidPrice8;
+        double bidPrice9;
+        double bidPrice10;
+        int bidVolume1;
+        int bidVolume2;
+        int bidVolume3;
+        int bidVolume4;
+        int bidVolume5;
+        int bidVolume6;
+        int bidVolume7;
+        int bidVolume8;
+        int bidVolume9;
+        int bidVolume10;
+        double askPrice1;
+        double askPrice2;
+        double askPrice3;
+        double askPrice4;
+        double askPrice5;
+        double askPrice6;
+        double askPrice7;
+        double askPrice8;
+        double askPrice9;
+        double askPrice10;
+        int askVolume1;
+        int askVolume2;
+        int askVolume3;
+        int askVolume4;
+        int askVolume5;
+        int askVolume6;
+        int askVolume7;
+        int askVolume8;
+        int askVolume9;
+        int askVolume10;
+    }
+
+    /**
+     * 二十档行情数据结构
+     */
+    @namespace("io.rapid.core.serializable.avro.event")
+    record L20MarketDataEvent {
+        long timestamp;
+        int instrumentId;
+        string instrumentCode;
+        double lastPrice;
+        int volume;
+        long turnover;
+        double bidPrice1;
+        double bidPrice2;
+        double bidPrice3;
+        double bidPrice4;
+        double bidPrice5;
+        double bidPrice6;
+        double bidPrice7;
+        double bidPrice8;
+        double bidPrice9;
+        double bidPrice10;
+        double bidPrice11;
+        double bidPrice12;
+        double bidPrice13;
+        double bidPrice14;
+        double bidPrice15;
+        double bidPrice16;
+        double bidPrice17;
+        double bidPrice18;
+        double bidPrice19;
+        double bidPrice20;
+        int bidVolume1;
+        int bidVolume2;
+        int bidVolume3;
+        int bidVolume4;
+        int bidVolume5;
+        int bidVolume6;
+        int bidVolume7;
+        int bidVolume8;
+        int bidVolume9;
+        int bidVolume10;
+        int bidVolume11;
+        int bidVolume12;
+        int bidVolume13;
+        int bidVolume14;
+        int bidVolume15;
+        int bidVolume16;
+        int bidVolume17;
+        int bidVolume18;
+        int bidVolume19;
+        int bidVolume20;
+        double askPrice1;
+        double askPrice2;
+        double askPrice3;
+        double askPrice4;
+        double askPrice5;
+        double askPrice6;
+        double askPrice7;
+        double askPrice8;
+        double askPrice9;
+        double askPrice10;
+        double askPrice11;
+        double askPrice12;
+        double askPrice13;
+        double askPrice14;
+        double askPrice15;
+        double askPrice16;
+        double askPrice17;
+        double askPrice18;
+        double askPrice19;
+        double askPrice20;
+        int askVolume1;
+        int askVolume2;
+        int askVolume3;
+        int askVolume4;
+        int askVolume5;
+        int askVolume6;
+        int askVolume7;
+        int askVolume8;
+        int askVolume9;
+        int askVolume10;
+        int askVolume11;
+        int askVolume12;
+        int askVolume13;
+        int askVolume14;
+        int askVolume15;
+        int askVolume16;
+        int askVolume17;
+        int askVolume18;
+        int askVolume19;
+        int askVolume20;
+    }
+
+}

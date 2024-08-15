@@ -1,0 +1,18 @@
+@namespace("io.rapid.adaptor.ctp.gateway.event0")
+protocol MarketDataProtocol {
+
+    /**
+     * 响应信息
+     */
+    record FtdcRspInfo {
+        /**
+          * 错误代码
+          */
+        int ErrorID;
+        /**
+          * 错误信息
+          */
+        string ErrorMsg;
+    }
+
+}
