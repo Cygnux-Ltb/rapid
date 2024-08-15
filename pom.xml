@@ -29,7 +29,7 @@
         <module>adaptor-ctp</module>
         <module>adaptor-ctp-service</module>
         <module>adaptor-fix</module>
-        <module>adaptor-ib</module>
+        <module>adaptor-tws</module>
         <module>adaptor-mt</module>
         <module>core</module>
         <module>engine</module>
