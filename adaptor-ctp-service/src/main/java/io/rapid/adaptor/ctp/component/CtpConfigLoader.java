@@ -2,7 +2,7 @@ package io.rapid.adaptor.ctp.component;
 
 import com.typesafe.config.Config;
 import io.mercury.common.config.ConfigWrapper;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.param.CtpParamKey;
 import lombok.Getter;
@@ -71,7 +71,7 @@ public class CtpConfigLoader implements CtpParams {
 
     @Override
     public String toString() {
-        return JsonWrapper.toJson(this);
+        return JsonWriter.toJson(this);
     }
 
     public CtpConfigLoader load(Config config) {

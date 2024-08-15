@@ -3,11 +3,11 @@ package io.rapid.adaptor.ctp.converter;
 import io.mercury.common.datetime.EpochTime;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.serializable.avro.enums.OrdStatus;
 import io.rapid.core.serializable.avro.enums.TrdAction;
 import io.rapid.core.serializable.avro.enums.TrdDirection;
-import io.rapid.core.serializable.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
 import org.junit.Test;
 
 public class OrderEventConverterTest {
@@ -35,7 +35,7 @@ public class OrderEventConverterTest {
         builder.setDirection(TrdDirection.LONG);
         builder.setAction(TrdAction.OPEN);
         OrderEvent event = builder.build();
-        System.out.println(JsonWrapper.toJson(event));
+        System.out.println(JsonWriter.toJson(event));
 
     }
 

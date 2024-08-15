@@ -1,11 +1,11 @@
 package io.rapid.adaptor.ctp;
 
-import io.mercury.common.concurrent.ring.RingEventbus;
-import io.mercury.common.concurrent.ring.RingEventbus.MpRingEventbus;
-import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.mercury.common.concurrent.disruptor.RingEventbus;
+import io.mercury.common.concurrent.disruptor.RingEventbus.MultiProducerRingEventbus;
+import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.core.account.Account;
-import io.rapid.core.adaptor.ConnectionMode;
+import io.rapid.core.upstream.ConnectionMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,14 +31,14 @@ public class CtpInjector {
     }
 
     @Bean(name = "eventbus")
-    public MpRingEventbus<FtdcEvent> getEventbus() {
-        return RingEventbus.multiProducer(FtdcEvent.EVENT_FACTORY)
+    public MultiProducerRingEventbus<FtdcRspEvent> getEventbus() {
+        return RingEventbus.multiProducer(FtdcRspEvent.EVENT_FACTORY)
                 .name("")
                 .size(2048)
                 .process(this::eventHandle);
     }
 
-    private void eventHandle(FtdcEvent event) {
+    private void eventHandle(FtdcRspEvent event) {
 
     }
 

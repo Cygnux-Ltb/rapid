@@ -2,7 +2,7 @@ package io.rapid.adaptor.ctp.launch;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import io.rapid.adaptor.ctp.gateway.event.FtdcEvent;
+import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
 import io.mercury.common.sys.SysProperties;
 import io.mercury.transport.rmq.AdvancedRmqPublisher;
 
@@ -15,7 +15,7 @@ public class CtpRabbitHandler implements Runnable, Closeable {
 	@SuppressWarnings("unused")
 	private final Config config;
 
-	private AdvancedRmqPublisher<FtdcEvent> publisher;
+	private AdvancedRmqPublisher<FtdcRspEvent> publisher;
 
 	public CtpRabbitHandler(Config config) {
 		this.config = config;
