@@ -3,7 +3,7 @@ package io.rapid.core.order;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
-import io.mercury.common.fsm.Signal;
+import io.mercury.common.state.Signal;
 
 public interface TradeSignal extends Signal {
 

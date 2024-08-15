@@ -11,65 +11,67 @@
     <artifactId>adaptor-ctp</artifactId>
     <name>adaptor-ctp</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <avro.version>1.11.3</avro.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <jvmArguments>-Xmx512m</jvmArguments>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <enablePreview>true</enablePreview>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <id>schemas</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <fieldVisibility>public</fieldVisibility>
+                            <stringType>String</stringType>
+                            <createOptionalGetters>false</createOptionalGetters>
+                            <optionalGettersForNullableFieldsOnly>true</optionalGettersForNullableFieldsOnly>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro/schema</sourceDirectory>
+                            <templateDirectory>${project.basedir}/src/main/resources/avro/template/</templateDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>transport-rabbitmq</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>transport-zmq</artifactId>
-        </dependency>
 
-        <!-- Jakarta Annotations API -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>3.0.0</version>
         </dependency>
 
-        <!-- Spring Boot autoconfiguration attempts to automatically
-             configure your Spring application based on the jar
-             dependencies that you have added. -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>${spring-boot.version}</version>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-json</artifactId>
         </dependency>
 
-        <!-- Starter for using Log4j2 for logging.
-             An alternative to spring-boot-starter-logging -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>${spring-boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-jul</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j2-impl</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>io.mercury</groupId>
+            <artifactId>serialization-avro</artifactId>
         </dependency>
 
         <!-- PROD CTP JNI API -->

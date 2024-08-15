@@ -9,7 +9,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import java.util.Optional;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
-import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newLongObjectMap;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
@@ -21,15 +21,15 @@ public final class PointSet<P extends Point> {
     private final MutableLongObjectMap<P> map;
 
     private PointSet(Capacity capacity) {
-        this.list = newFastList(capacity.value());
-        this.map = newLongObjectHashMap(capacity.value());
+        this.list = newFastList(capacity.size());
+        this.map = newLongObjectMap(capacity.size());
     }
 
     /**
      * @return PointSet<P>
      */
     public static <P extends Point> PointSet<P> newEmpty() {
-        return new PointSet<>(Capacity.L07_SIZE);
+        return new PointSet<>(Capacity.L07_128);
     }
 
     /**

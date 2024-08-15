@@ -1,13 +1,13 @@
 package io.rapid.core.strategy;
 
-import io.mercury.common.fsm.Enableable;
+import io.mercury.common.state.Enableable;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.instrument.Instrument;
-import org.eclipse.collections.api.set.ImmutableSet;
+import org.eclipse.collections.api.list.ImmutableList;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
@@ -43,13 +43,13 @@ public interface Strategy extends
 
     Account getAccount();
 
-    ImmutableSet<Instrument> getInstruments();
+    ImmutableList<Instrument> getInstruments();
 
     Strategy initialize(@Nonnull Supplier<Boolean> initializer);
 
-    void onStrategyEvent(@Nonnull StrategyEvent event);
+    void onEvent(@Nonnull StrategyEvent event);
 
-    void onThrowable(Throwable throwable) throws StrategyException;
+    void onException(Exception exception) throws StrategyException;
 
     @Override
     default int compareTo(Strategy o) {

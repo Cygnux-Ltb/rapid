@@ -1,7 +1,7 @@
 package io.rapid.core.handler.impl;
 
 import io.rapid.core.handler.OrderEventHandler;
-import io.rapid.core.protocol.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;

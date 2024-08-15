@@ -1,7 +1,7 @@
 package io.rapid.core.account;
 
 
-import io.mercury.common.cfg.ConfigOption;
+import io.mercury.common.config.ConfigOption;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

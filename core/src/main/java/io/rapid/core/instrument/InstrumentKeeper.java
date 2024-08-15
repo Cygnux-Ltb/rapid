@@ -3,7 +3,7 @@ package io.rapid.core.instrument;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.instrument.futures.ChinaFutures;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableMap;
@@ -32,7 +32,7 @@ public final class InstrumentKeeper {
     /**
      * 存储instrument, 以instrumentId索引
      */
-    private static final MutableIntObjectMap<Instrument> InstrumentById = MutableMaps.newIntObjectHashMap();
+    private static final MutableIntObjectMap<Instrument> InstrumentById = MutableMaps.newIntObjectMap();
 
     /**
      * 存储instrument, 以instrumentCode索引
@@ -199,7 +199,7 @@ public final class InstrumentKeeper {
         var map = new HashMap<>();
         map.put("isInitialized", isInitialized);
         map.put("instruments", getInstruments());
-        return JsonWrapper.toPrettyJson(map);
+        return JsonWriter.toPrettyJson(map);
     }
 
 }

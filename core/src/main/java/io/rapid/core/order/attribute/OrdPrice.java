@@ -1,8 +1,8 @@
 package io.rapid.core.order.attribute;
 
+import io.mercury.common.serialization.specific.JsonSerializable;
 import io.rapid.core.order.ChildOrder;
 import io.rapid.core.order.TradeRecord;
-import io.mercury.common.serialization.specific.JsonSerializable;
 
 import javax.annotation.Nonnull;
 
@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
  */
 public final class OrdPrice implements JsonSerializable {
 
-    /*
+    /**
      * 委托价格
      */
     private double offerPrice;
 
-    /*
+    /**
      * 成交均价
      */
     private double avgTradePrice;

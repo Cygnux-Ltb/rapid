@@ -2,7 +2,7 @@ package io.rapid.core.pool;
 
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.param.JointKeyParams;
+import io.mercury.common.param.impl.JointKeyParams;
 import io.mercury.common.sequence.TimeWindow;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
@@ -33,7 +33,7 @@ public final class TimeWindowPool {
      * Map<(period + symbolId), Set<TimePeriod>>
      */
     private final MutableLongObjectMap<ImmutableSortedSet<TimeWindow>>
-            timeWindowPool = MutableMaps.newLongObjectHashMap();
+            timeWindowPool = MutableMaps.newLongObjectMap();
 
     /**
      * 使用联合主键进行索引,高位为symbolId, 低位为period <br>
@@ -41,7 +41,7 @@ public final class TimeWindowPool {
      * Map<(period + symbolId), Map<SerialNumber,TimePeriod>>
      */
     private final MutableLongObjectMap<ImmutableLongObjectMap<TimeWindow>>
-            timePeriodMapPool = MutableMaps.newLongObjectHashMap();
+            timePeriodMapPool = MutableMaps.newLongObjectMap();
 
     /**
      * @param date      LocalDate
@@ -67,7 +67,7 @@ public final class TimeWindowPool {
     private void generateTimePeriod(@Nonnull LocalDate date, @Nonnull Symbol[] symbols, Duration duration) {
         for (var symbol : symbols) {
             var timePeriodSet = MutableSets.<TimeWindow>newTreeSortedSet();
-            var timePeriodMap = MutableMaps.<TimeWindow>newLongObjectHashMap();
+            var timePeriodMap = MutableMaps.<TimeWindow>newLongObjectMap();
             // 获取指定品种下的全部交易时段,将交易时段按照指定指标周期切分
             symbol.getTradablePeriods().stream()
                     .flatMap(tradingPeriod -> tradingPeriod
@@ -106,13 +106,13 @@ public final class TimeWindowPool {
      */
     public ImmutableSortedSet<TimeWindow> getTimePeriodSet(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        ImmutableSortedSet<TimeWindow> sortedSet = timeWindowPool.get(symbolTimeKey);
-        if (sortedSet == null) {
+        var timeWindows = timeWindowPool.get(symbolTimeKey);
+        if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            sortedSet = timeWindowPool.get(symbolTimeKey);
+            timeWindows = timeWindowPool.get(symbolTimeKey);
         }
-        return sortedSet;
+        return timeWindows;
     }
 
     /**
@@ -131,13 +131,13 @@ public final class TimeWindowPool {
      */
     public ImmutableLongObjectMap<TimeWindow> getTimePeriodMap(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        ImmutableLongObjectMap<TimeWindow> longObjectMap = timePeriodMapPool.get(symbolTimeKey);
-        if (longObjectMap == null) {
+        var timeWindows = timePeriodMapPool.get(symbolTimeKey);
+        if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            longObjectMap = timePeriodMapPool.get(symbolTimeKey);
+            timeWindows = timePeriodMapPool.get(symbolTimeKey);
         }
-        return longObjectMap;
+        return timeWindows;
     }
 
     /**

@@ -1,5 +1,6 @@
 package io.rapid.example.strategy;
 
+import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.indicator.impl.SMA;
 import io.rapid.core.indicator.impl.SmaPoint;
@@ -7,15 +8,13 @@ import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.Order;
 import io.rapid.engine.strategy.SingleInstrumentStrategy;
-import io.mercury.common.param.ParamKey;
-import io.mercury.common.param.Params;
 
 /**
  * @author yellow013
  */
-public final class ExampleSmaStrategy extends SingleInstrumentStrategy<ParamKey> implements SMA.SmaEvent {
+public final class ExampleSmaStrategy extends SingleInstrumentStrategy implements SMA.SmaEvent {
 
-    public ExampleSmaStrategy(SubAccount subAccount, Params<ParamKey> params, Instrument instrument) {
+    public ExampleSmaStrategy(SubAccount subAccount, Params params, Instrument instrument) {
         super(100, "ExampleSmaStrategy", subAccount, params, instrument);
     }
 

@@ -1,17 +1,18 @@
 package io.rapid.core.position;
 
+import io.mercury.common.collections.MutableMaps;
 import io.rapid.core.account.AccountPosition;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
 
 @NotThreadSafe
 public abstract class BasePositionManager<P extends Position> implements PositionManager<P> {
 
-    private final MutableIntObjectMap<AccountPosition<P>> accountPositionMap = newIntObjectHashMap();
+    private final MutableIntObjectMap<AccountPosition<P>> accountPositionMap = MutableMaps.newIntObjectMap();
 
     private final PositionProducer<P> producer;
 

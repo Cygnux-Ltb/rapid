@@ -1,7 +1,7 @@
 package io.rapid.core.handler.impl;
 
 import io.rapid.core.handler.AdaptorEventHandler;
-import io.rapid.core.protocol.avro.event.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;

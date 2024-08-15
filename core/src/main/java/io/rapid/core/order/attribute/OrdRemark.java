@@ -3,7 +3,7 @@ package io.rapid.core.order.attribute;
 import io.mercury.common.collections.MutableLists;
 import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.common.util.StringSupport;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import org.eclipse.collections.api.list.MutableList;
 
 import javax.annotation.Nonnull;
@@ -19,7 +19,7 @@ public final class OrdRemark implements JsonSerializable {
 
     @Override
     public String toString() {
-        return JsonWrapper.toJson(remarks);
+        return JsonWriter.toJson(remarks);
     }
 
     @Override

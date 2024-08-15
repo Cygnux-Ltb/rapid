@@ -3,7 +3,7 @@ package io.rapid.core.instrument;
 import io.rapid.core.instrument.enums.InstrumentType;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import io.rapid.core.instrument.enums.PriorityCloseType;
-import io.mercury.common.fsm.Enableable;
+import io.mercury.common.state.Enableable;
 import io.mercury.common.functional.Formatter;
 
 import java.time.ZoneOffset;

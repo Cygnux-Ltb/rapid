@@ -1,10 +1,11 @@
 package io.rapid.engine.manager;
 
-import io.rapid.core.instrument.Instrument;
-import io.rapid.core.strategy.Strategy;
 import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.strategy.Strategy;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.set.MutableSet;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
@@ -26,7 +26,7 @@ public abstract class MultiStrategyManager implements StrategyManager {
     /**
      * 策略列表
      */
-    protected final MutableIntObjectMap<Strategy> strategyMap = newIntObjectHashMap();
+    protected final MutableIntObjectMap<Strategy> strategyMap = MutableMaps.newIntObjectMap();
 
     /**
      * 订阅合约的策略列表 <br>

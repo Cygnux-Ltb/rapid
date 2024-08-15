@@ -1,6 +1,6 @@
 package io.rapid.engine.status;
 
-import io.mercury.common.collections.ImmutableMaps;
+import io.mercury.common.collections.MutableMaps;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import java.time.Instant;
@@ -45,8 +45,8 @@ public final class ApplicationStatus {
 
         private final int code;
 
-        private static final ImmutableIntObjectMap<AppStatus> Map = ImmutableMaps.getIntObjectMapFactory()
-                .from(newFastList(AppStatus.values()), AppStatus::getCode, status -> status);
+        private static final ImmutableIntObjectMap<AppStatus> Map =
+                MutableMaps.newIntObjectMap(AppStatus::getCode  ,AppStatus.values()).toImmutable();
 
         AppStatus(int code) {
             this.code = code;

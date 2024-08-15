@@ -1,5 +1,6 @@
 package io.rapid.core.account;
 
+import io.mercury.common.collections.MutableMaps;
 import io.rapid.core.account.Account.AccountException;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -12,7 +13,6 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
-import static io.mercury.common.collections.MutableMaps.newIntObjectHashMap;
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 import static io.mercury.common.lang.Asserter.requiredLength;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
@@ -34,7 +34,7 @@ public final class AccountStorage implements Serializable {
     /**
      * 存储Account信息, 一对一关系, 以accountId索引
      */
-    private static final MutableIntObjectMap<Account> Accounts = newIntObjectHashMap();
+    private static final MutableIntObjectMap<Account> Accounts = MutableMaps.newIntObjectMap();
 
     /**
      * 存储Account信息, 一对一关系, 以investorId索引
@@ -44,12 +44,12 @@ public final class AccountStorage implements Serializable {
     /**
      * 存储Account信息, 多对一关系, 以subAccountId索引
      */
-    private static final MutableIntObjectMap<Account> AccountsBySubAccountId = newIntObjectHashMap();
+    private static final MutableIntObjectMap<Account> AccountsBySubAccountId = MutableMaps.newIntObjectMap();
 
     /**
      * 存储SubAccount信息, 一对一关系, 以subAccountId索引
      */
-    private static final MutableIntObjectMap<SubAccount> SubAccounts = newIntObjectHashMap();
+    private static final MutableIntObjectMap<SubAccount> SubAccounts = MutableMaps.newIntObjectMap();
 
     /**
      * 初始化标识
@@ -70,15 +70,14 @@ public final class AccountStorage implements Serializable {
                 // 建立account相关索引
                 Stream.of(subAccounts).map(SubAccount::getAccount).collect(toSet())
                         .each(AccountStorage::putAccount);
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 isInitialized.set(false);
-                IllegalStateException se = new IllegalStateException("AccountKeeper initialization failed", e);
-                log.error("AccountKeeper initialization failed", se);
-                throw se;
+                var e = new IllegalStateException("AccountKeeper initialization failed", ex);
+                log.error("AccountKeeper initialization failed", e);
+                throw e;
             }
         } else {
-            IllegalStateException e = new IllegalStateException(
-                    "AccountKeeper Has been initialized, cannot be initialize again");
+            var e = new IllegalStateException("AccountKeeper Has been initialized, cannot be initialize again");
             log.error("AccountKeeper already initialized", e);
             throw e;
         }
@@ -115,8 +114,7 @@ public final class AccountStorage implements Serializable {
     public static Account getAccountBySubAccountId(int subAccountId) throws AccountException {
         var account = AccountsBySubAccountId.get(subAccountId);
         if (account == null)
-            throw new AccountException(
-                    "Account error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
+            throw new AccountException("Account error in mapping : subAccountId[" + subAccountId + "] no mapped instance");
         return account;
     }
 

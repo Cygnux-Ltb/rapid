@@ -50,7 +50,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point,
     protected MutableList<E> events = newFastList(8);
 
     protected BaseIndicator(Instrument instrument) {
-        this(instrument, Capacity.L08_SIZE);
+        this(instrument, Capacity.L08_256);
     }
 
     protected BaseIndicator(Instrument instrument, Capacity capacity) {

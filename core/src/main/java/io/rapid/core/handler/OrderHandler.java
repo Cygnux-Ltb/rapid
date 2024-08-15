@@ -1,10 +1,11 @@
 package io.rapid.core.handler;
 
-import io.rapid.core.order.Order;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.order.Order;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @FunctionalInterface
 public interface OrderHandler {
@@ -20,7 +21,11 @@ public interface OrderHandler {
 
         private final Logger log;
 
-        public OrderLogger(Logger log) {
+        public OrderLogger() {
+            this(null);
+        }
+
+        public OrderLogger(@Nullable Logger log) {
             this.log = log == null ? Log4j2LoggerFactory.getLogger(getClass()) : log;
         }
 

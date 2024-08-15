@@ -27,8 +27,9 @@
 
     <modules>
         <module>adaptor-ctp</module>
+        <module>adaptor-ctp-service</module>
         <module>adaptor-fix</module>
-        <module>adaptor-ib</module>
+        <module>adaptor-tws</module>
         <module>adaptor-mt</module>
         <module>core</module>
         <module>engine</module>
@@ -41,9 +42,9 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <spring-boot.version>3.2.6</spring-boot.version>
+        <spring-boot.version>3.3.1</spring-boot.version>
+        <spring.version>6.1.10</spring.version>
         <mercury.version>1.0-SNAPSHOT</mercury.version>
-        <avro.version>1.11.3</avro.version>
     </properties>
 
     <build>
@@ -69,11 +70,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerArgument>-parameters</compilerArgument>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                        <arg>-Xlint:unchecked</arg>
-                        <arg>-Xlint:preview</arg>
-                    </compilerArgs>
+                    <enablePreview>true</enablePreview>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>
@@ -96,10 +93,15 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.32</version>
+                <version>1.18.34</version>
             </dependency>
-            <!-- see https://github.com/yellow013/mercury.git -->
-            <!-- mercury commons -->
+            <!-- Jakarta Annotations API -->
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <!-- commons -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>commons-core</artifactId>
@@ -110,13 +112,13 @@
                 <artifactId>commons-concurrent</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- mercury persistence -->
+            <!-- persistence -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>persistence-h2</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- mercury serialization -->
+            <!-- serialization -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>serialization-json</artifactId>
@@ -132,7 +134,7 @@
                 <artifactId>serialization-sbe</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
-            <!-- mercury transport -->
+            <!-- transport -->
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-aeron</artifactId>

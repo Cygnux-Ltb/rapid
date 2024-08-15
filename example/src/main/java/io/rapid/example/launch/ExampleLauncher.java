@@ -2,13 +2,12 @@ package io.rapid.example.launch;
 
 import io.mercury.common.datetime.DateTimeUtil;
 import io.mercury.common.log4j2.Log4j2Configurator;
-import io.mercury.common.log4j2.Log4j2Configurator.LogLevel;
 
 public class ExampleLauncher {
 
     static {
         Log4j2Configurator.setLogFilename("example-" + DateTimeUtil.datetimeOfSecond());
-        Log4j2Configurator.setLogLevel(LogLevel.INFO);
+        Log4j2Configurator.useInfoLogLevel();
     }
 
     public static void main(String[] args) {

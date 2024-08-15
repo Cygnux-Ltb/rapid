@@ -1,7 +1,7 @@
 package io.rapid.core.mkd;
 
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
 import org.eclipse.collections.api.map.ImmutableMap;
@@ -87,7 +87,7 @@ public final class MarketDataKeeper implements Serializable {
 
     @Override
     public String toString() {
-        return JsonWrapper.toPrettyJsonHasNulls(map);
+        return JsonWriter.toPrettyJsonHasNulls(map);
     }
 
     public static class MarketDataSnapshot {

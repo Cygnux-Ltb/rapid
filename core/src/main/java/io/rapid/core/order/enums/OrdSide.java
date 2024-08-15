@@ -4,38 +4,38 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.order.TdxProvider;
 import org.slf4j.Logger;
 
-public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.OrdSide> {
+public enum OrdSide implements TdxProvider<io.rapid.core.serializable.avro.enums.OrdSide> {
 
     /**
      * 无效
      */
-    Invalid(OrdSideCode.INVALID, io.rapid.core.protocol.avro.enums.OrdSide.INVALID, TrdDirection.Invalid),
+    Invalid(OrdSideCode.INVALID, io.rapid.core.serializable.avro.enums.OrdSide.INVALID, TrdDirection.Invalid),
 
     /**
      * 买
      */
-    Buy(OrdSideCode.BUY, io.rapid.core.protocol.avro.enums.OrdSide.BUY, TrdDirection.Long),
+    Buy(OrdSideCode.BUY, io.rapid.core.serializable.avro.enums.OrdSide.BUY, TrdDirection.Long),
 
     /**
      * 卖
      */
-    Sell(OrdSideCode.SELL, io.rapid.core.protocol.avro.enums.OrdSide.SELL, TrdDirection.Short),
+    Sell(OrdSideCode.SELL, io.rapid.core.serializable.avro.enums.OrdSide.SELL, TrdDirection.Short),
 
     /**
      * 融资买入
      */
-    MarginBuy(OrdSideCode.MARGIN_BUY, io.rapid.core.protocol.avro.enums.OrdSide.MARGIN_BUY, TrdDirection.Long),
+    MarginBuy(OrdSideCode.MARGIN_BUY, io.rapid.core.serializable.avro.enums.OrdSide.MARGIN_BUY, TrdDirection.Long),
 
     /**
      * 融券卖出
      */
-    ShortSell(OrdSideCode.SHORT_SELL, io.rapid.core.protocol.avro.enums.OrdSide.SHORT_SELL, TrdDirection.Short),
+    ShortSell(OrdSideCode.SHORT_SELL, io.rapid.core.serializable.avro.enums.OrdSide.SHORT_SELL, TrdDirection.Short),
 
     ;
 
     private final char code;
 
-    private final io.rapid.core.protocol.avro.enums.OrdSide protocolValue;
+    private final io.rapid.core.serializable.avro.enums.OrdSide protocolValue;
 
     private final TrdDirection direction;
 
@@ -43,7 +43,7 @@ public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.Ord
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(OrdSide.class);
 
-    OrdSide(char code, io.rapid.core.protocol.avro.enums.OrdSide protocolValue, TrdDirection direction) {
+    OrdSide(char code, io.rapid.core.serializable.avro.enums.OrdSide protocolValue, TrdDirection direction) {
         this.code = code;
         this.protocolValue = protocolValue;
         this.direction = direction;
@@ -80,7 +80,7 @@ public enum OrdSide implements TdxProvider<io.rapid.core.protocol.avro.enums.Ord
     }
 
     @Override
-    public io.rapid.core.protocol.avro.enums.OrdSide getProtocolValue() {
+    public io.rapid.core.serializable.avro.enums.OrdSide getProtocolValue() {
         return protocolValue;
     }
 

@@ -5,6 +5,20 @@ public interface CircuitBreaker {
     /**
      * Enable Account
      *
+     * @param subAccountId int
+     */
+    void enableSubAccount(int subAccountId);
+
+    /**
+     * Disable Account
+     *
+     * @param subAccountId int
+     */
+    void disableSubAccount(int subAccountId);
+
+    /**
+     * Enable Account
+     *
      * @param accountId int
      */
     void enableAccount(int accountId);

@@ -8,7 +8,7 @@ import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import javax.annotation.Nullable;
 import java.util.function.LongSupplier;
 
-import static io.mercury.common.collections.MutableMaps.newLongObjectHashMap;
+import static io.mercury.common.collections.MutableMaps.newLongObjectMap;
 
 /**
  * 用于存储订单的组件
@@ -63,19 +63,19 @@ public final class OrderBook {
      * Use default Capacity.L07_SIZE, Size == 128
      */
     OrderBook() {
-        this(Capacity.L07_SIZE);
+        this(Capacity.L07_128);
     }
 
     /**
      * @param capacity Capacity
      */
     OrderBook(Capacity capacity) {
-        this.orderMap = newLongObjectHashMap(capacity.value());
-        this.longOrderMap = newLongObjectHashMap(capacity.value());
-        this.shortOrderMap = newLongObjectHashMap(capacity.value());
-        this.activeOrderMap = newLongObjectHashMap(capacity.half().value());
-        this.activeLongOrderMap = newLongObjectHashMap(capacity.half().value());
-        this.activeShortOrderMap = newLongObjectHashMap(capacity.half().value());
+        this.orderMap = newLongObjectMap(capacity.size());
+        this.longOrderMap = newLongObjectMap(capacity.size());
+        this.shortOrderMap = newLongObjectMap(capacity.size());
+        this.activeOrderMap = newLongObjectMap(capacity.halfSize().size());
+        this.activeLongOrderMap = newLongObjectMap(capacity.halfSize().size());
+        this.activeShortOrderMap = newLongObjectMap(capacity.halfSize().size());
     }
 
     public MutableLongObjectMap<Order> getOrderMap() {

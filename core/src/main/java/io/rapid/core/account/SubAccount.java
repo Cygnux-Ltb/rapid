@@ -1,8 +1,8 @@
 package io.rapid.core.account;
 
 import com.typesafe.config.Config;
-import io.mercury.common.cfg.ConfigWrapper;
-import io.mercury.common.fsm.EnableableComponent;
+import io.mercury.common.config.ConfigWrapper;
+import io.mercury.common.state.EnableableComponent;
 
 import javax.annotation.Nonnull;
 import java.io.Serial;

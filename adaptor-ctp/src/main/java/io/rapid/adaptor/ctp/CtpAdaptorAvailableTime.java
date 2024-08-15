@@ -1,28 +1,36 @@
 package io.rapid.adaptor.ctp;
 
-import io.rapid.core.adaptor.AdaptorAvailableTime;
+import io.mercury.common.state.AvailableTime;
 
 import java.time.LocalTime;
 
-import static java.time.LocalTime.of;
+public enum CtpAdaptorAvailableTime implements AvailableTime {
 
-public class CtpAdaptorAvailableTime implements AdaptorAvailableTime {
-
-    public static final CtpAdaptorAvailableTime INSTANCE = new CtpAdaptorAvailableTime();
+    INSTANCE;
 
     @Override
-    public boolean isRunningAllTime() {
+    public boolean isAvailableAllTime() {
+        // 非全时间交易
         return false;
     }
 
     @Override
     public LocalTime[] getStartTimes() {
-        return new LocalTime[]{of(8, 50), of(22, 50)};
+        return new LocalTime[]{
+                // 早盘开盘前10分钟
+                LocalTime.of(8, 50),
+                // 夜盘开盘前10分钟
+                LocalTime.of(20, 50)
+        };
     }
 
     @Override
-    public LocalTime[] getEndTimes() {
-        return new LocalTime[]{of(15, 10), of(2, 40)};
+    public LocalTime[] getStopTimes() {
+        return new LocalTime[]{
+                // 夜盘收盘后10分钟
+                LocalTime.of(15, 10),
+                // 夜盘收盘后10分钟
+                LocalTime.of(2, 40)};
     }
 
 }

@@ -1,7 +1,7 @@
 package io.rapid.core.mkd;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -77,7 +77,7 @@ public final class CopyFtdcMarketData implements JsonSerializable {
 
     @Override
     public String toString() {
-        return JsonWrapper.toJsonHasNulls(this);
+        return JsonWriter.toJsonHasNulls(this);
     }
 
     @Override

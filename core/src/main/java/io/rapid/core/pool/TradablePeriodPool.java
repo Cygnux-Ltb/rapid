@@ -23,7 +23,7 @@ public final class TradablePeriodPool {
 
     public synchronized static void register(Symbol[] symbols) {
         requiredLength(symbols, 1, "symbols");
-        var map = MutableMaps.<ImmutableList<TradingPeriod>>newIntObjectHashMap();
+        var map = MutableMaps.<ImmutableList<TradingPeriod>>newIntObjectMap();
         if (Pool != null)
             Pool.forEachKeyValue(map::put);
         for (var symbol : symbols) {

@@ -3,7 +3,7 @@ package io.rapid.core.mkd;
 import io.rapid.core.instrument.Instrument;
 import io.mercury.common.datetime.Timestamp;
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
@@ -304,7 +304,7 @@ public class BasicMarketData implements JsonSerializable {
 
     @Override
     public String toString() {
-        return JsonWrapper.toJsonHasNulls(this);
+        return JsonWriter.toJsonHasNulls(this);
     }
 
     @Nonnull
