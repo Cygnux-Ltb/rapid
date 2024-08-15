@@ -4,8 +4,8 @@ import io.rapid.engine.trader.OrderKeeper;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.mkd.MarketDataKeeper;
 import io.rapid.core.order.ChildOrder;
-import io.rapid.core.serializable.avro.event.AdaptorEvent;
-import io.rapid.core.serializable.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
-import static io.mercury.common.concurrent.queue.ScQueueWithJCT.spscQueue;
+import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spscQueue;
 
 /**
  * @author yellow013
@@ -78,7 +78,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull io.rapid.core.serializable.avro.event.AdaptorEvent report) {
+    public void onAdaptorEvent(@Nonnull io.rapid.core.serializable.avro.inbound.AdaptorEvent report) {
         queue.enqueue(new QueueMsg(report));
     }
 

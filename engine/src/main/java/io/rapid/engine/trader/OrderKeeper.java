@@ -11,7 +11,7 @@ import io.rapid.core.order.Order;
 import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
-import io.rapid.core.serializable.avro.event.OrderEvent;
+import io.rapid.core.serializable.avro.inbound.OrderEvent;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;

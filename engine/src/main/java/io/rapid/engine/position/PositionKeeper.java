@@ -7,7 +7,7 @@ import io.rapid.core.order.enums.TrdDirection;
 import io.mercury.common.functional.Formatter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.BitOperator;
-import io.mercury.serialization.json.JsonWrapper;
+import io.mercury.serialization.json.JsonWriter;
 import org.eclipse.collections.api.map.primitive.MutableLongIntMap;
 import org.slf4j.Logger;
 
@@ -287,7 +287,7 @@ public final class PositionKeeper implements Serializable, Formatter<String> {
         map.put("SubAccountInstrumentPos", SubAccountInstrumentPos);
         map.put("SubAccountInstrumentLongLimit", SubAccountInstrumentLongLimit);
         map.put("SubAccountInstrumentShortLimit", SubAccountInstrumentShortLimit);
-        return JsonWrapper.toJson(map);
+        return JsonWriter.toJson(map);
     }
 
     @Override

@@ -7,7 +7,7 @@ import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.Order;
-import io.rapid.core.serializable.avro.event.AdaptorEvent;
+import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;

@@ -10,15 +10,6 @@ public final class StrategyDSL {
 
     }
 
-
-    public static StrategyDSL useAvro() {
-        return null;
-    }
-
-    public static StrategyDSL useWire() {
-        return null;
-    }
-
     public static StrategyDSL subAccount(SubAccount subAccount) {
         return null;
     }

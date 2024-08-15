@@ -10,7 +10,6 @@ import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountStorage;
 import io.rapid.core.account.SubAccount;
-import io.rapid.core.adaptor.TraderAdaptor;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
 import io.rapid.core.mkd.FastMarketData;
@@ -22,10 +21,11 @@ import io.rapid.core.order.enums.OrdType;
 import io.rapid.core.order.enums.TrdAction;
 import io.rapid.core.order.enums.TrdDirection;
 import io.rapid.core.risk.CircuitBreaker;
-import io.rapid.core.serializable.avro.request.QueryBalance;
-import io.rapid.core.serializable.avro.request.QueryPositions;
+import io.rapid.core.serializable.avro.outbound.QueryBalance;
+import io.rapid.core.serializable.avro.outbound.QueryPositions;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
+import io.rapid.core.upstream.TraderAdaptor;
 import io.rapid.engine.position.PositionKeeper;
 import io.rapid.engine.trader.OrderKeeper;
 import lombok.Getter;
@@ -131,6 +131,9 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
         this.allocator = snowflake::next;
         this.instruments = ImmutableSets.from(instruments).toImmutableList();
         this.singleInstrumentStrategy = instruments.length == 1;
+        log.info("Strategy -> {} initialized", strategyName);
+        log.info("Strategy -> {} show params", strategyName);
+        params.printParams(log);
     }
 
     public MutableLongObjectMap<Order> getOrders() {
@@ -207,6 +210,26 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
                     getStrategyName(), strategyId, isEnabled());
         }
         return disable;
+    }
+
+    /**
+     * Enable Account
+     *
+     * @param subAccountId int
+     */
+    @Override
+    public void enableSubAccount(int subAccountId) {
+
+    }
+
+    /**
+     * Disable Account
+     *
+     * @param subAccountId int
+     */
+    @Override
+    public void disableSubAccount(int subAccountId) {
+
     }
 
     @Override
