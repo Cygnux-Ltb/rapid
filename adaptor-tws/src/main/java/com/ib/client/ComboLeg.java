@@ -6,7 +6,9 @@ package com.ib.client;
 import com.ib.client.Types.Action;
 
 public class ComboLeg {
+
     public enum OpenClose implements IApiEnum {
+
         Same, Open, Close, Unknown;
 
         static OpenClose get(int i) {
@@ -17,6 +19,7 @@ public class ComboLeg {
         public String getApiString() {
             return String.valueOf(ordinal());
         }
+
     }
 
     private int m_conid;

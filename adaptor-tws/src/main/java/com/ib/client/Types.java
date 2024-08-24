@@ -86,7 +86,7 @@ public class Types {
         None, Put, Call;
 
         public static Right get(String apiString) {
-            if (apiString != null && apiString.length() > 0) {
+            if (apiString != null && !apiString.isEmpty()) {
                 switch (apiString.charAt(0)) {
                     case 'P' -> {
                         return Put;

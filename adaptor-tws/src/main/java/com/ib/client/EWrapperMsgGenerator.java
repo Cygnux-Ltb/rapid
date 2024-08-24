@@ -849,7 +849,7 @@ public class EWrapperMsgGenerator {
 
         if (!Util.StringIsEmpty(order.getAlgoStrategy())) {
             Util.appendNonEmptyString(sb, "algoStrategy", order.getAlgoStrategy());
-            if (order.algoParams() != null && order.algoParams().size() > 0) {
+            if (order.algoParams() != null && !order.algoParams().isEmpty()) {
                 sb.append(" algoParams={");
                 for (TagValue param : order.algoParams()) {
                     sb.append(param.m_tag).append('=').append(param.m_value).append(',');
@@ -862,7 +862,7 @@ public class EWrapperMsgGenerator {
         }
 
         if ("BAG".equals(contract.getSecType())) {
-            if (order.smartComboRoutingParams() != null && order.smartComboRoutingParams().size() > 0) {
+            if (order.smartComboRoutingParams() != null && !order.smartComboRoutingParams().isEmpty()) {
                 sb.append(" smartComboRoutingParams={");
                 for (TagValue param : order.smartComboRoutingParams()) {
                     sb.append(param.m_tag).append('=').append(param.m_value).append(',');
@@ -905,7 +905,7 @@ public class EWrapperMsgGenerator {
             Util.appendNonEmptyString(sb, "warningText", orderState.warningText());
         }
 
-        if (order.conditions() != null && order.conditions().size() > 0) {
+        if (order.conditions() != null && !order.conditions().isEmpty()) {
             sb.append(" conditions={");
             for (OrderCondition condition : order.conditions()) {
                 sb.append(condition).append(";");

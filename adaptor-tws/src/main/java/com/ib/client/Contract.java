@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contract implements Cloneable {
+
     private int m_conid;
     private String m_symbol;
     private String m_secType;
@@ -313,7 +314,7 @@ public class Contract implements Cloneable {
     public int hashCode() {
         // Use a few fields only as a compromise between performance and hashCode quality.
         int result = m_conid;
-        result = result * 31 + (m_symbol == null || "".equals(m_symbol) ? 0 : m_symbol.hashCode());
+        result = result * 31 + (m_symbol == null || m_symbol.isEmpty() ? 0 : m_symbol.hashCode());
         long temp = Double.doubleToLongBits(m_strike);
         result = result * 31 + (int) (temp ^ (temp >>> 32));
         return result;
@@ -364,7 +365,7 @@ public class Contract implements Cloneable {
     }
 
     public boolean isCombo() {
-        return m_comboLegs.size() > 0;
+        return !m_comboLegs.isEmpty();
     }
 
     @Override
@@ -390,7 +391,7 @@ public class Contract implements Cloneable {
     }
 
     public static void add(StringBuilder sb, String tag, Object val) {
-        if (val == null || val instanceof String && ((String) val).length() == 0) {
+        if (val == null || val instanceof String && ((String) val).isEmpty()) {
             return;
         }
 

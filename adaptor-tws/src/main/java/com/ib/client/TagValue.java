@@ -31,8 +31,8 @@ public final class TagValue {
 
     @Override
     public int hashCode() {
-        int result = (m_tag == null || "".equals(m_tag)) ? 0 : m_tag.hashCode();
-        result = result * 31 + ((m_value == null || "".equals(m_value)) ? 0 : m_value.hashCode());
+        int result = (m_tag == null || m_tag.isEmpty()) ? 0 : m_tag.hashCode();
+        result = result * 31 + ((m_value == null || m_value.isEmpty()) ? 0 : m_value.hashCode());
         return result;
     }
 }

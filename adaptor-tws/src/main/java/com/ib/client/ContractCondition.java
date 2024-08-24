@@ -23,7 +23,9 @@ public abstract class ContractCondition extends OperatorCondition {
 
         List<ContractDetails> list = lookuper == null ? null : lookuper.lookupContract(c);
         String strContract = list != null && !list.isEmpty() ?
-                list.get(0).contract().symbol() + " " + list.get(0).contract().secType() + " on " + list.get(0).contract().exchange() :
+                list.getFirst().contract().symbol()
+                        + " " + list.getFirst().contract().secType()
+                        + " on " + list.getFirst().contract().exchange() :
                 conId() + "";
 
         return type() + " of " + strContract + super.toString();

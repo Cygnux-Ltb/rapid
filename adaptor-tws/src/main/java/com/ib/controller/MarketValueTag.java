@@ -6,6 +6,7 @@ package com.ib.controller;
 import com.ib.client.Types;
 
 public enum MarketValueTag {
+
     AccountOrGroup("AccountOrGroup"),
     RealCurrency("RealCurrency"),
     IssuerOptionValue("IssuerOption"),

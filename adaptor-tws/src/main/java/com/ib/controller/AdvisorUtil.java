@@ -15,6 +15,7 @@ import com.ib.controller.Profile.Type;
 
 
 public class AdvisorUtil {
+
     static List<Group> getGroups(String xml) {
         try {
             return getGroups_(xml);

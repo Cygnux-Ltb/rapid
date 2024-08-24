@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class PriceIncrement {
+
     private double m_lowEdge;
     private double m_increment;
 

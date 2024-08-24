@@ -9,9 +9,11 @@ import com.ib.client.Types.Action;
 import com.ib.client.Types.VolatilityType;
 
 public class DNHedgeOrder extends Order {
+
     public DNHedgeOrder(int clientId, int id, int size, String account,
                         String settlingFirm, int underConId,
                         String designatedLocation) {
+
         clientId(clientId);
         orderId(id);
         permId(id);

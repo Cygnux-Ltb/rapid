@@ -189,5 +189,6 @@ public class EClientErrors {
             m_errorCode = i;
             m_errorMsg = errString;
         }
+
     }
 }

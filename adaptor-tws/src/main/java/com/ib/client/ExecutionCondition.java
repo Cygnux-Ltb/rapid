@@ -17,7 +17,6 @@ public class ExecutionCondition extends OrderCondition {
     @Override
     public void readFrom(ObjectInput in) throws IOException {
         super.readFrom(in);
-
         m_secType = in.readUTF();
         m_exchange = in.readUTF();
         m_symbol = in.readUTF();

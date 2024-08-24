@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 public class ApiController implements EWrapper {
+
     private final ApiConnection m_client;
     private final ILogger m_outLogger;
     private final ILogger m_inLogger;

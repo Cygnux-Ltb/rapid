@@ -5,6 +5,7 @@ package com.ib.client;
 
 
 public class OrderComboLeg {
+
     private double m_price; // price per leg
 
     public double price() {

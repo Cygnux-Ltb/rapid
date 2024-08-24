@@ -6,6 +6,7 @@ package com.ib.client;
 import java.util.List;
 
 public class ContractDetails {
+
     private Contract m_contract;
     private String m_marketName;
     private double m_minTick;
@@ -473,12 +474,6 @@ public class ContractDetails {
     }
 
     public static void add(StringBuilder sb, String tag, Object val) {
-        if (val == null || val instanceof String && ((String) val).length() == 0) {
-            return;
-        }
-        sb.append(tag);
-        sb.append('\t');
-        sb.append(val);
-        sb.append('\n');
+        Contract.add(sb, tag, val);
     }
 }

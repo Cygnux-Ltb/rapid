@@ -109,4 +109,5 @@ public enum ScanCode {
     WSH_PREV_ANALYST_MEETING,
     WSH_PREV_EARNINGS,
     WSH_PREV_EVENT,
+
 }

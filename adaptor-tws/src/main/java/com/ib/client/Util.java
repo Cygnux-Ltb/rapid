@@ -20,7 +20,7 @@ public class Util {
     public static final String EQUALS_SIGN = "=";
     
 	public static boolean StringIsEmpty(String str) {
-		return str == null || str.length() == 0;
+		return str == null || str.isEmpty();
 	}
 
     public static String NormalizeString(String str) {

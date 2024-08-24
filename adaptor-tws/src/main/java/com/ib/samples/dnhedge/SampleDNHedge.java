@@ -12,6 +12,7 @@ import com.ib.samples.rfq.SimpleWrapper;
 
 
 public class SampleDNHedge extends SimpleWrapper {
+
     private enum Status {None, SecDef, Order, Done, Error}
 
     private static final int ParentAcked = 1;

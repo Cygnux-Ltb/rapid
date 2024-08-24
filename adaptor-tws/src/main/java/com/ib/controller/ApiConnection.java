@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 // NOTE: TWS 936 SERVER_VERSION is 67.
 
 public class ApiConnection extends EClientSocket {
+
     public interface ILogger {
         void log(String valueOf);
     }

@@ -78,4 +78,5 @@ public class Bar {
     public String toString() {
         return String.format("%s %s %s %s %s", formattedTime(), m_open, m_high, m_low, m_close);
     }
+
 }

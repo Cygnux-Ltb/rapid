@@ -1968,7 +1968,7 @@ public abstract class EClient {
 
                 b.send(order.conditions().size());
 
-                if (order.conditions().size() > 0) {
+                if (!order.conditions().isEmpty()) {
                     for (OrderCondition item : order.conditions()) {
                         b.send(item.type().val());
                         item.writeTo(b);

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Formats {
+
     private static final Format FMT2 = new DecimalFormat("#,##0.00");
     private static final Format FMT0 = new DecimalFormat("#,##0");
     private static final Format PCT = new DecimalFormat("0.0%");

@@ -144,8 +144,9 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void updateMktDepthL2(int tickerId, int position,
-                                 String marketMaker, int operation, int side, double price, int size, boolean isSmartDepth) {
+    public void updateMktDepthL2(int tickerId, int position, String marketMaker,
+                                 int operation, int side, double price,
+                                 int size, boolean isSmartDepth) {
         // TODO Auto-generated method stub
 
     }
@@ -182,9 +183,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void scannerData(int reqId, int rank,
-                            ContractDetails contractDetails, String distance, String benchmark,
-                            String projection, String legsStr) {
+    public void scannerData(int reqId, int rank, ContractDetails contractDetails,
+                            String distance, String benchmark, String projection, String legsStr) {
         // TODO Auto-generated method stub
 
     }
@@ -331,7 +331,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void positionMulti(int reqId, String account, String modelCode, Contract contract, double pos, double avgCost) {
+    public void positionMulti(int reqId, String account, String modelCode,
+                              Contract contract, double pos, double avgCost) {
         // TODO Auto-generated method stub
 
     }
@@ -343,7 +344,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void accountUpdateMulti(int reqId, String account, String modelCode, String key, String value, String currency) {
+    public void accountUpdateMulti(int reqId, String account, String modelCode,
+                                   String key, String value, String currency) {
         // TODO Auto-generated method stub
 
     }
@@ -355,8 +357,9 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void securityDefinitionOptionalParameter(int reqId, String exchange, int underlyingConId, String tradingClass,
-                                                    String multiplier, Set<String> expirations, Set<Double> strikes) {
+    public void securityDefinitionOptionalParameter(int reqId, String exchange, int underlyingConId,
+                                                    String tradingClass, String multiplier,
+                                                    Set<String> expirations, Set<Double> strikes) {
         // TODO Auto-generated method stub
 
     }
@@ -398,7 +401,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void tickNews(int tickerId, long timeStamp, String providerCode, String articleId, String headline, String extraData) {
+    public void tickNews(int tickerId, long timeStamp, String providerCode,
+                         String articleId, String headline, String extraData) {
         // TODO Auto-generated method stub
 
     }
@@ -410,7 +414,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void tickReqParams(int tickerId, double minTick, String bboExchange, int snapshotPermissions) {
+    public void tickReqParams(int tickerId, double minTick,
+                              String bboExchange, int snapshotPermissions) {
         // TODO Auto-generated method stub
 
     }
@@ -429,7 +434,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void historicalNews(int requestId, String time, String providerCode, String articleId, String headline) {
+    public void historicalNews(int requestId, String time, String providerCode,
+                               String articleId, String headline) {
         // TODO Auto-generated method stub
 
     }
@@ -483,7 +489,8 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL, double realizedPnL, double value) {
+    public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL,
+                          double realizedPnL, double value) {
         // TODO Auto-generated method stub
 
     }
@@ -508,14 +515,14 @@ public class DefaultEWrapper implements EWrapper {
     }
 
     @Override
-    public void tickByTickAllLast(int reqId, int tickType, long time, double price, int size, TickAttribLast tickAttribLast,
-                                  String exchange, String specialConditions) {
+    public void tickByTickAllLast(int reqId, int tickType, long time, double price, int size,
+                                  TickAttribLast tickAttribLast, String exchange, String specialConditions) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice, int bidSize, int askSize,
-                                 TickAttribBidAsk tickAttribBidAsk) {
+    public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice,
+                                 int bidSize, int askSize, TickAttribBidAsk tickAttribBidAsk) {
         // TODO Auto-generated method stub
     }
 
@@ -543,4 +550,5 @@ public class DefaultEWrapper implements EWrapper {
     public void replaceFAEnd(int reqId, String text) {
         // TODO Auto-generated method stub
     }
+
 }

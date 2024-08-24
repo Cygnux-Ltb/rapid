@@ -5,6 +5,7 @@ package com.ib.client;
 
 
 public class OrderState {
+
     private String m_status;
     private String m_initMarginBefore;
     private String m_maintMarginBefore;

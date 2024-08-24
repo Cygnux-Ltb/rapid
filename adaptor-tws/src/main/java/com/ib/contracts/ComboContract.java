@@ -7,6 +7,7 @@ import com.ib.client.Contract;
 import com.ib.client.Types.SecType;
 
 public class ComboContract extends Contract {
+
     public ComboContract(String symbol) {
         this(symbol, "USD", "SMART");
     }

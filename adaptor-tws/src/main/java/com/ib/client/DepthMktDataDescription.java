@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class DepthMktDataDescription {
+
     private String m_exchange;
     private String m_secType;
     private String m_listingExch;
