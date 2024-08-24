@@ -94,14 +94,14 @@ public final class FtdcRspPublisher {
     }
 
 
-    public void publishTraderUserLogout(EventSource Source,
-                                        CThostFtdcUserLogoutField Field,
-                                        CThostFtdcRspInfoField RspInfo,
-                                        int RequestID, boolean IsLast) {
+    public void publishUserLogout(EventSource Source,
+                                  CThostFtdcUserLogoutField Field,
+                                  CThostFtdcRspInfoField RspInfo,
+                                  int RequestID, boolean IsLast) {
         eventbus.publish((event, sequence) ->
                 FtdcRspFieldWriter.writeRspUserLogout(event, Source, Field, RspInfo, RequestID, IsLast)
                         .setEpochMillis(getEpochMillis())
-                        .setType(FtdcRspType.RspUserLogout)
+                        .setType(FtdcRspType.UserLogout)
         );
     }
 

@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 /** FTDC响应包装 */
 @org.apache.avro.specific.AvroGenerated
 public class FtdcRsp extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -4070382781241382923L;
+  private static final long serialVersionUID = -4128823029479761782L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FtdcRsp\",\"namespace\":\"io.rapid.adaptor.ctp.serializable.avro.pack\",\"doc\":\"FTDC响应包装\",\"fields\":[{\"name\":\"RspType\",\"type\":{\"type\":\"enum\",\"name\":\"FtdcRspType\",\"doc\":\"FTDC响应类型\",\"symbols\":[\"Unsupported\",\"FrontDisconnected\",\"HeartBeatWarning\",\"RspUserLogin\",\"RspUserLogout\",\"RspError\",\"MdClosed\",\"TraderClosed\",\"FtdcDepthMarketData\",\"FtdcSpecificInstrument\",\"FtdcInputOrder\",\"FtdcInputOrderAction\",\"FtdcInstrumentStatus\",\"FtdcInvestorPosition\",\"FtdcOrder\",\"FtdcOrderAction\",\"FtdcTrade\",\"FtdcTradingAccount\"]},\"doc\":\"响应类型\"},{\"name\":\"epochMillis\",\"type\":\"long\",\"doc\":\"时间戳\"},{\"name\":\"RspContent\",\"type\":\"bytes\",\"doc\":\"FTDC响应内容 - 已序列化\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FtdcRsp\",\"namespace\":\"io.rapid.adaptor.ctp.serializable.avro.pack\",\"doc\":\"FTDC响应包装\",\"fields\":[{\"name\":\"RspType\",\"type\":{\"type\":\"enum\",\"name\":\"FtdcRspType\",\"doc\":\"FTDC响应类型\",\"symbols\":[\"Unsupported\",\"FrontDisconnected\",\"HeartBeatWarning\",\"RspUserLogin\",\"UserLogout\",\"RspError\",\"MdClosed\",\"TraderClosed\",\"FtdcDepthMarketData\",\"FtdcSpecificInstrument\",\"FtdcInputOrder\",\"FtdcInputOrderAction\",\"FtdcInstrumentStatus\",\"FtdcInvestorPosition\",\"FtdcOrder\",\"FtdcOrderAction\",\"FtdcTrade\",\"FtdcTradingAccount\"]},\"doc\":\"响应类型\"},{\"name\":\"epochMillis\",\"type\":\"long\",\"doc\":\"时间戳\"},{\"name\":\"RspContent\",\"type\":\"bytes\",\"doc\":\"FTDC响应内容 - 已序列化\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();

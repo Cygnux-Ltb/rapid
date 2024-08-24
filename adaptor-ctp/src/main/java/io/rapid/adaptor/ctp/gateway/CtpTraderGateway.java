@@ -109,9 +109,9 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         if (isInitialize.compareAndSet(false, true)) {
             log.info("CThostFtdcTraderApi.GetApiVersion() -> {}", CThostFtdcTraderApi.GetApiVersion());
             try {
-                startNewMaxPriorityThread(gatewayId + "-Thread", this::ftdcInitAndJoin);
+                startNewMaxPriorityThread(gatewayId + "-Thread", this::callInitAndJoin);
             } catch (Exception e) {
-                log.error("FtdcTraderGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
+                log.error("TraderGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
                 isInitialize.set(false);
                 throw new RuntimeException(e);
             }
@@ -119,39 +119,39 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     }
 
     @CalledNativeFunction
-    private void ftdcInitAndJoin() {
+    private void callInitAndJoin() {
         // 创建CTP数据文件临时目录
         var tempDir = mkdirInTmp(gatewayId + "-" + date());
-        log.info("{} -> use trader tempDir: {}", gatewayId, tempDir.getAbsolutePath());
+        log.info("{} -> used trader tempDir: {}", gatewayId, tempDir.getAbsolutePath());
         // 指定trader临时文件地址
         var tempFile = new File(tempDir, "trader").getAbsolutePath();
-        log.info("{} -> use trader tempFile : {}", gatewayId, tempFile);
+        log.info("{} -> used trader tempFile : {}", gatewayId, tempFile);
         // 创建traderApi
         this.FtdcTraderApi = CThostFtdcTraderApi.CreateFtdcTraderApi(tempFile);
-        log.info("{} -> call native CThostFtdcTraderApi::CreateFtdcTraderApi", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::CreateFtdcTraderApi", gatewayId);
         // 创建traderSpi
         CThostFtdcTraderSpi Spi = new FtdcTraderSpi(this);
         log.info("{} -> created CThostFtdcTraderSpi with FtdcTraderSpi", gatewayId);
         // 将Spi注册到CThostFtdcTraderApi
         FtdcTraderApi.RegisterSpi(Spi);
-        log.info("{} -> call native CThostFtdcTraderApi::RegisterSpi", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::RegisterSpi", gatewayId);
         // 注册到trader前置机
         FtdcTraderApi.RegisterFront(params.getTraderAddr());
-        log.info("{} -> call native CThostFtdcTraderApi::RegisterFront", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::RegisterFront", gatewayId);
         /// THOST_TERT_RESTART:从本交易日开始重传
         /// THOST_TERT_RESUME:从上次收到的续传
         /// THOST_TERT_QUICK:只传送登录后私有流的内容
         // 订阅公有流, 设置为[THOST_TERT_RESUME]
         FtdcTraderApi.SubscribePublicTopic(THOST_TERT_RESUME);
-        log.info("{} -> call native CThostFtdcTraderApi::SubscribePublicTopic(THOST_TERT_RESUME)", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::SubscribePublicTopic(THOST_TERT_RESUME)", gatewayId);
         // 订阅私有流, 设置为[THOST_TERT_RESUME]
         FtdcTraderApi.SubscribePrivateTopic(THOST_TERT_RESUME);
-        log.info("{} -> call native CThostFtdcTraderApi::SubscribePrivateTopic(THOST_TERT_RESUME)", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::SubscribePrivateTopic(THOST_TERT_RESUME)", gatewayId);
         // 初始化traderApi
         FtdcTraderApi.Init();
-        log.info("{} -> call native CThostFtdcTraderApi::Init", gatewayId);
+        log.info("{} -> called native CThostFtdcTraderApi::Init", gatewayId);
         // 阻塞当前线程
-        log.info("{} -> call native CThostFtdcTraderApi::Join", gatewayId);
+        log.info("{} -> calling native CThostFtdcTraderApi::Join", gatewayId);
         FtdcTraderApi.Join();
     }
 
@@ -161,7 +161,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param Field CThostFtdcInputOrderField
      */
     @CalledNativeFunction
-    public int ftdcReqOrderInsert(CThostFtdcInputOrderField Field) {
+    public int callReqOrderInsert(CThostFtdcInputOrderField Field) {
         if (isAvailable) {
             // 设置账号信息
             int RequestID = requestIdAllocator.incrementAndGet();
@@ -183,7 +183,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param Field CThostFtdcInputOrderActionField
      */
     @CalledNativeFunction
-    public int ftdcReqOrderAction(CThostFtdcInputOrderActionField Field) {
+    public int callReqOrderAction(CThostFtdcInputOrderActionField Field) {
         if (isAvailable) {
             int RequestID = requestIdAllocator.incrementAndGet();
             FtdcTraderApi.ReqOrderAction(Field, RequestID);
@@ -226,7 +226,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int ftdcReqQryOrder() {
+    public int callReqQryOrder() {
         var Field = new CThostFtdcQryOrderField();
         ///经纪公司代码
         Field.setBrokerID(params.getBrokerId());
@@ -278,7 +278,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int ftdcReqQryTrade() {
+    public int callReqQryTrade() {
         var Field = new CThostFtdcQryTradeField();
         ///经纪公司代码
         Field.setBrokerID(params.getBrokerId());
@@ -325,7 +325,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int ftdcReqQryTradingAccount() {
+    public int callReqQryTradingAccount() {
         var Field = new CThostFtdcQryTradingAccountField();
         ///经纪公司代码
         Field.setBrokerID(params.getBrokerId());
@@ -351,7 +351,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param InstrumentID String
      */
     @CalledNativeFunction
-    public int ftdcReqQryInvestorPosition(String ExchangeID, String InstrumentID) {
+    public int callReqQryInvestorPosition(String ExchangeID, String InstrumentID) {
         var Field = new CThostFtdcQryInvestorPositionField();
         ///经纪公司代码
         Field.setBrokerID(params.getBrokerId());
@@ -391,7 +391,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int ftdcReqQrySettlementInfo() {
+    public int callReqQrySettlementInfo() {
         var Field = new CThostFtdcQrySettlementInfoField();
         Field.setBrokerID(params.getBrokerId());
         Field.setInvestorID(params.getInvestorId());
@@ -411,7 +411,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param instrumentCode String
      */
     @CalledNativeFunction
-    public int ftdcReqQryInstrument(String exchangeCode, String instrumentCode) {
+    public int callReqQryInstrument(String exchangeCode, String instrumentCode) {
         var Field = new CThostFtdcQryInstrumentField();
         Field.setExchangeID(exchangeCode);
         Field.setInstrumentID(instrumentCode);
@@ -494,7 +494,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::fireRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
+                log.info("TraderGateway::fireRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
                 isAuthenticate = true;
                 var ReqField = params.getReqUserLoginField();
@@ -529,7 +529,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
                 this.frontId = Field.getFrontID();
                 this.sessionId = Field.getSessionID();
                 this.isAvailable = true;
-                publisher.publishRspUserLogin(TD, Field, RspInfo,  RequestID, IsLast);
+                publisher.publishRspUserLogin(TD, Field, RspInfo, RequestID, IsLast);
             } else {
                 log.error("TraderGateway::fireRspUserLogin return null");
             }
@@ -555,8 +555,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
             if (Field != null) {
                 log.info("TraderGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
                         Field.getUserID());
-                // TODO 处理用户登出
-                publisher.publishTraderUserLogout(TD, Field, RspInfo, RequestID, IsLast);
+                publisher.publishUserLogout(TD, Field, RspInfo, RequestID, IsLast);
             } else {
                 log.error("TraderGateway::fireRspUserLogout return null");
             }
@@ -580,7 +579,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::fireRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
+                log.info("TraderGateway::fireRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
                 publisher.publishInputOrder(Field, RspInfo, IsLast);
             } else {
                 log.error("TraderGateway::fireRspOrderInsert return null");
@@ -606,7 +605,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::fireRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
+                log.info("TraderGateway::fireRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
                         Field.getOrderRef(), Field.getOrderSysID(),
                         Field.getOrderActionRef(), Field.getInstrumentID());
@@ -652,7 +651,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::fireRspQryOrder -> AccountID==[{}], OrderRef==[{}], isLast==[{}]",
+                log.info("TraderGateway::fireRspQryOrder -> AccountID==[{}], OrderRef==[{}], isLast==[{}]",
                         Field.getAccountID(), Field.getOrderRef(), IsLast);
                 publisher.publishOrder(Field);
             } else {
@@ -692,7 +691,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo)) {
             if (Field != null) {
-                log.info("FtdcCallback::fireRspQryInvestorPosition -> InvestorID==[{}], ExchangeID==[{}], " +
+                log.info("TraderGateway::fireRspQryInvestorPosition -> InvestorID==[{}], ExchangeID==[{}], " +
                                 "InstrumentID==[{}], Position==[{}], isLast==[{}]",
                         Field.getInvestorID(), Field.getExchangeID(),
                         Field.getInstrumentID(), Field.getPosition(), IsLast);
@@ -770,8 +769,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
         log.info("TraderGateway::fireRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
         if (nonError(RspInfo))
             if (Field != null)
-                log.info(
-                        """
+                log.info("""
                                 TraderGateway::fireRspQrySettlementInfo -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
                                 SettlementID==[{}], TradingDay==[{}], CurrencyID==[{}]
                                 <<<<<<<<<<<<<<<< CONTENT TEXT >>>>>>>>>>>>>>>>

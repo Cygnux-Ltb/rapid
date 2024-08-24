@@ -3,6 +3,10 @@ package io.rapid.adaptor.ctp.param;
 import ctp.thostapi.CThostFtdcReqAuthenticateField;
 import ctp.thostapi.CThostFtdcReqUserLoginField;
 
+import java.util.ArrayList;
+
+import static io.mercury.common.util.StringSupport.isNullOrEmpty;
+
 public interface CtpParams {
 
     String getTraderAddr();
@@ -30,6 +34,38 @@ public interface CtpParams {
     String getTradingDay();
 
     String getCurrencyId();
+
+    default void assertCtpParams() {
+        var paramNames = new ArrayList<String>();
+        if (isNullOrEmpty(getTraderAddr()))
+            paramNames.add("TraderAddr");
+        if (isNullOrEmpty(getMdAddr()))
+            paramNames.add("MdAddr");
+        if (isNullOrEmpty(getAppId()))
+            paramNames.add("AppId");
+        if (isNullOrEmpty(getBrokerId()))
+            paramNames.add("BrokerId");
+        if (isNullOrEmpty(getInvestorId()))
+            paramNames.add("InvestorId");
+        if (isNullOrEmpty(getAccountId()))
+            paramNames.add("AccountId");
+        if (isNullOrEmpty(getUserId()))
+            paramNames.add("UserId");
+        if (isNullOrEmpty(getPassword()))
+            paramNames.add("Password");
+        if (isNullOrEmpty(getAuthCode()))
+            paramNames.add("AuthCode");
+        if (isNullOrEmpty(getIpAddr()))
+            paramNames.add("IpAddr");
+        if (isNullOrEmpty(getMacAddr()))
+            paramNames.add("MacAddr");
+        if (isNullOrEmpty(getTradingDay()))
+            paramNames.add("TradingDay");
+        if (isNullOrEmpty(getCurrencyId()))
+            paramNames.add("CurrencyId");
+        if (!paramNames.isEmpty())
+            throw new IllegalArgumentException("CTP param not set -> [" + String.join(" , ", paramNames) + "]");
+    }
 
     default CThostFtdcReqAuthenticateField getReqAuthenticateField() {
         var Field = new CThostFtdcReqAuthenticateField();
