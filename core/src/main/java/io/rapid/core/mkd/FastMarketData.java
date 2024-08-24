@@ -76,28 +76,49 @@ public class FastMarketData {
     // 今Delta
     protected double currDelta;
 
-    /* 五档买价卖价及买量卖量 v */
+    /* 十档买价及买量 */
     protected double bidPrice1;
     protected int bidVolume1;
-    protected double askPrice1;
-    protected int askVolume1;
     protected double bidPrice2;
     protected int bidVolume2;
-    protected double askPrice2;
-    protected int askVolume2;
     protected double bidPrice3;
     protected int bidVolume3;
-    protected double askPrice3;
-    protected int askVolume3;
     protected double bidPrice4;
     protected int bidVolume4;
-    protected double askPrice4;
-    protected int askVolume4;
     protected double bidPrice5;
     protected int bidVolume5;
+    protected double bidPrice6;
+    protected int bidVolume6;
+    protected double bidPrice7;
+    protected int bidVolume7;
+    protected double bidPrice8;
+    protected int bidVolume8;
+    protected double bidPrice9;
+    protected int bidVolume9;
+    protected double bidPrice10;
+    protected int bidVolume10;
+
+    /* 十档卖价及卖量 */
+    protected double askPrice1;
+    protected int askVolume1;
+    protected double askPrice2;
+    protected int askVolume2;
+    protected double askPrice3;
+    protected int askVolume3;
+    protected double askPrice4;
+    protected int askVolume4;
     protected double askPrice5;
     protected int askVolume5;
-    /* 五档买价卖价及买量卖量 ^ */
+    protected double askPrice6;
+    protected int askVolume6;
+    protected double askPrice7;
+    protected int askVolume7;
+    protected double askPrice8;
+    protected int askVolume8;
+    protected double askPrice9;
+    protected int askVolume9;
+    protected double askPrice10;
+    protected int askVolume10;
 
     // 平均价格
     protected double averagePrice;

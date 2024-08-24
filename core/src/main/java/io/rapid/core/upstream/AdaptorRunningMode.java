@@ -1,6 +1,6 @@
 package io.rapid.core.upstream;
 
-public enum ConnectionMode {
+public enum AdaptorRunningMode {
 
     FULL,
 
@@ -10,6 +10,11 @@ public enum ConnectionMode {
 
     ;
 
-    public static ConnectionMode value
+    public static AdaptorRunningMode valueOfName(String name) {
+        for (AdaptorRunningMode mode : values())
+            if (mode.name().equalsIgnoreCase(name))
+                return mode;
+        throw new IllegalArgumentException("Unknown AdaptorRunningMode: " + name);
+    }
 
 }

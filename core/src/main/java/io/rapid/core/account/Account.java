@@ -85,9 +85,8 @@ public final class Account extends EnableableComponent implements Comparable<Acc
      * @param balance    long
      * @param credit     long
      */
-    public Account(int accountId, @Nonnull String brokerId,
-                   @Nonnull String brokerName, @Nonnull String investorId,
-                   long balance, long credit) {
+    public Account(int accountId, @Nonnull String brokerId, @Nonnull String brokerName,
+                   @Nonnull String investorId, long balance, long credit) {
         Asserter.greaterThan(accountId, 0, "accountId");
         Asserter.nonEmpty(brokerId, "brokerId");
         Asserter.nonEmpty(brokerName, "brokerName");
