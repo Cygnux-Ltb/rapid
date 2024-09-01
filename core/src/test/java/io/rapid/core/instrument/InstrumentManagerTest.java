@@ -2,7 +2,7 @@ package io.rapid.core.instrument;
 
 import org.junit.Test;
 
-public class InstrumentKeeperTest {
+public class InstrumentManagerTest {
 
 	@Test
 	public void test() {

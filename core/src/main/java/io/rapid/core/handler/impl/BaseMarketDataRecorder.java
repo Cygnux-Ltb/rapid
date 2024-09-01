@@ -1,6 +1,6 @@
 package io.rapid.core.handler.impl;
 
-import io.rapid.core.upstream.MarketDataFeed;
+import io.rapid.core.adaptor.MarketDataFeed;
 import io.rapid.core.handler.AdaptorEventHandler;
 import io.rapid.core.handler.MarketDataRecorder;
 import io.rapid.core.instrument.Instrument;

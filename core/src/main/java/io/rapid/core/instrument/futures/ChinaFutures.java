@@ -16,9 +16,9 @@ import java.util.stream.Stream;
  *
  * @author yellow013
  */
-public final class ChinaFuturesUtil {
+public final class ChinaFutures {
 
-    private ChinaFuturesUtil() {
+    private ChinaFutures() {
     }
 
     /**
@@ -144,7 +144,7 @@ public final class ChinaFuturesUtil {
 
     public static LocalDateTime nextCloseTime(LocalDateTime datetime) {
         // 夜盘收盘时间
-        LocalDateTime nightClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFuturesUtil.LATEST_NIGHT_CLOSE);
+        LocalDateTime nightClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.LATEST_NIGHT_CLOSE);
         // 输入时间在前一个夜盘中
         if (datetime.isBefore(nightClose)) {
             // 夜盘结束后10分钟
@@ -152,7 +152,7 @@ public final class ChinaFuturesUtil {
         }
 
         // 白天交易收盘时间
-        LocalDateTime dayClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFuturesUtil.DAY_CLOSE);
+        LocalDateTime dayClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.DAY_CLOSE);
         // 输入时间在夜盘收盘后, 在白天收盘前
         if (datetime.isAfter(nightClose) && datetime.isBefore(dayClose)) {
             // 白天收盘后10分钟
@@ -161,7 +161,7 @@ public final class ChinaFuturesUtil {
 
         // 获取下一个夜盘收盘时间
         LocalDateTime nextNightClose = LocalDateTime.of(datetime.toLocalDate().plusDays(1),
-                ChinaFuturesUtil.LATEST_NIGHT_CLOSE);
+                ChinaFutures.LATEST_NIGHT_CLOSE);
         // 如果输入时间在白天交易之后, 在下一个夜盘收盘结束前
         if ((datetime.isAfter(dayClose) && datetime.isBefore(nextNightClose))) {
             // 夜盘结束后10分钟

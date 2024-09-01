@@ -243,7 +243,7 @@ public class ErrorSchema {
             throw new Exception("Duplicate error message:" + errorMsg);
     }
 
-    public static String getMsg(int code, String language) {
+    public static String getMessage(int code, String language) {
         if (!isBuilt) {
             try {
                 build();
@@ -252,19 +252,18 @@ public class ErrorSchema {
         }
         ErrorMsg errorMsg = map.get(getKey(code, language));
         if (null != errorMsg)
-            return errorMsg.message();
-
+            return errorMsg.getMessage();
         return null;
     }
 
-    public static String getMsg(int code) {
+    public static String getMessage(int code) {
         if (!isBuilt) {
             try {
                 build();
             } catch (Exception ignored) {
             }
         }
-        return getMsg(code, defaultLanguage);
+        return getMessage(code, defaultLanguage);
     }
 
     public static String getDefaultLanguage() {

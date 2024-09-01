@@ -1,6 +1,6 @@
 package io.rapid.core.handler.impl;
 
-import io.rapid.core.upstream.MarketDataFeed;
+import io.rapid.core.adaptor.MarketDataFeed;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mkd.FastMarketData;
 import org.slf4j.Logger;

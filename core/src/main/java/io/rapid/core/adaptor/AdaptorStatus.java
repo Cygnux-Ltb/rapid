@@ -1,16 +1,16 @@
-package io.rapid.core.upstream;
+package io.rapid.core.adaptor;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.INVALID;
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.MD_DISABLE;
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.MD_ENABLE;
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.TRADER_DISABLE;
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.TRADER_ENABLE;
-import static io.rapid.core.upstream.AdaptorStatus.AdaptorStatusCode.UNAVAILABLE;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.INVALID;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.MD_DISABLE;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.MD_ENABLE;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_DISABLE;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.TRADER_ENABLE;
+import static io.rapid.core.adaptor.AdaptorStatus.AdaptorStatusCode.UNAVAILABLE;
 
 
 /**

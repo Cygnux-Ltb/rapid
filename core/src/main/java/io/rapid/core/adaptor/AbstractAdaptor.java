@@ -1,10 +1,10 @@
-package io.rapid.core.upstream;
+package io.rapid.core.adaptor;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.state.EnableableComponent;
 import io.mercury.common.state.StartupException;
 import io.rapid.core.account.Account;
-import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.instrument.InstrumentManager;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
 
     @Override
     public boolean startup() throws IOException, IllegalStateException, StartupException {
-        if (!InstrumentKeeper.isInitialized())
+        if (!InstrumentManager.isInitialized())
             throw new IllegalStateException("Instrument Keeper uninitialized");
         try {
             return startup0();

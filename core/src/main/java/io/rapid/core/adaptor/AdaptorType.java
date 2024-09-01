@@ -1,4 +1,4 @@
-package io.rapid.core.upstream;
+package io.rapid.core.adaptor;
 
 public enum AdaptorType {
 

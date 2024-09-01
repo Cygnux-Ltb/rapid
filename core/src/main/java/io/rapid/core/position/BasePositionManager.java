@@ -7,8 +7,6 @@ import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
-
 @NotThreadSafe
 public abstract class BasePositionManager<P extends Position> implements PositionManager<P> {
 

@@ -3,7 +3,7 @@ package io.rapid.core.mkd;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.instrument.InstrumentManager;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.slf4j.Logger;
 
@@ -41,7 +41,7 @@ public final class MarketDataKeeper implements Serializable {
 
     private MarketDataKeeper() {
         var map = MutableMaps.<String, MarketDataSnapshot>newUnifiedMap();
-        var instruments = InstrumentKeeper.getInstruments();
+        var instruments = InstrumentManager.getInstruments();
         if (instruments.isEmpty())
             throw new IllegalStateException("InstrumentKeeper is uninitialized");
         instruments.each(instrument -> {

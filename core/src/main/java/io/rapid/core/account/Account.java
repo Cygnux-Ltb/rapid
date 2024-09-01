@@ -1,160 +1,120 @@
 package io.rapid.core.account;
 
-import com.typesafe.config.Config;
-import io.mercury.common.collections.MutableSets;
-import io.mercury.common.config.ConfigWrapper;
+import io.cygnuxltb.console.beans.outbound.AccountRsp;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.state.EnableableComponent;
-import org.eclipse.collections.api.set.MutableSet;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
 import java.io.Serial;
 
 /**
- * 实际账户, 对应一个实际的经纪商账户
+ * 实际账户, 对应一个实际的资金账户
  *
  * @author yellow013
  */
-
+@Accessors(chain = true)
 public final class Account extends EnableableComponent implements Comparable<Account> {
 
     /**
      * 账户ID
      */
+    @Getter
     private final int accountId;
 
-    // 经纪商ID
-    private final String brokerId;
-
-    // 经纪商名称
-    private final String brokerName;
-
-    // 经纪商提供的投资者ID
+    /**
+     * 投资者账户ID
+     */
+    @Getter
     private final String investorId;
 
-    // 账户余额
+    /**
+     * 经纪商ID
+     */
+    @Getter
+    private final String brokerId;
+
+    /**
+     * 经纪商名称
+     */
+    @Getter
+    private final String brokerName;
+
+    /**
+     * 账户余额
+     */
+    @Getter
+    @Setter
     private long balance;
 
-    // 信用额度
+    /**
+     * 信用额度
+     */
+    @Getter
+    @Setter
     private long credit;
 
-    // 备注
+    /**
+     * 备注
+     */
+    @Getter
+    @Setter
     private String remark = "";
 
     // 备用, 数组下标, 用于快速访问本账户对应的仓位信息集合
     // private int positionManagerIndex;
 
-    // 全部子账户
-    private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
-
     /**
-     * @param config com.typesafe.config.Config
+     * 全部子账户
      */
-    public Account(@Nonnull Config config) {
-        this(new ConfigWrapper<>(config));
-    }
-
-    /**
-     * @param wrapper io.mercury.common.config.ConfigWrapper
-     */
-    private Account(@Nonnull ConfigWrapper<AccountConfig> wrapper) {
-        this(wrapper.getIntOrThrows(AccountConfig.AccountId),
-                wrapper.getStringOrThrows(AccountConfig.BrokerId),
-                wrapper.getStringOrThrows(AccountConfig.BrokerName),
-                wrapper.getStringOrThrows(AccountConfig.InvestorId),
-                wrapper.getLong(AccountConfig.Balance, 0L),
-                wrapper.getLong(AccountConfig.Credit, 0L));
-        this.remark = wrapper.getString(AccountConfig.Remark, "");
+    // private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
+    public Account(@Nonnull AccountRsp accountRsp) {
+        this(accountRsp.getAccountId(),
+                accountRsp.getInvestorCode(),
+                accountRsp.getBrokerCode(),
+                accountRsp.getBrokerCode(),
+                (long) accountRsp.getBalance(),
+                (long) accountRsp.getCredit());
+        this.remark = accountRsp.getRemark();
     }
 
     /**
      * @param accountId  int
-     * @param brokerName String
      * @param investorId String
+     * @param brokerId   String
+     * @param brokerName String
      */
-    public Account(int accountId, @Nonnull String brokerId,
-                   @Nonnull String brokerName, @Nonnull String investorId) {
+    public Account(int accountId, @Nonnull String investorId,
+                   @Nonnull String brokerId, @Nonnull String brokerName) {
         this(accountId, brokerId, brokerName, investorId, 0L, 0L);
     }
 
     /**
      * @param accountId  int
+     * @param investorId String
      * @param brokerId   String
      * @param brokerName String
-     * @param investorId String
      * @param balance    long
      * @param credit     long
      */
-    public Account(int accountId, @Nonnull String brokerId, @Nonnull String brokerName,
-                   @Nonnull String investorId, long balance, long credit) {
+    public Account(int accountId, @Nonnull String investorId,
+                   @Nonnull String brokerId, @Nonnull String brokerName,
+                   long balance, long credit) {
         Asserter.greaterThan(accountId, 0, "accountId");
+        Asserter.nonEmpty(investorId, "investorId");
         Asserter.nonEmpty(brokerId, "brokerId");
         Asserter.nonEmpty(brokerName, "brokerName");
-        Asserter.nonEmpty(investorId, "investorId");
         this.accountId = accountId;
+        this.investorId = investorId;
         this.brokerId = brokerId;
         this.brokerName = brokerName;
-        this.investorId = investorId;
         this.balance = balance;
         this.credit = credit;
         enable();
     }
 
-    /**
-     * 仅提供给同一包內的SubAccount调用
-     *
-     * @param subAccount SubAccount
-     */
-    void addSubAccount(SubAccount subAccount) {
-        subAccounts.add(subAccount);
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public String getBrokerId() {
-        return brokerId;
-    }
-
-    public String getBrokerName() {
-        return brokerName;
-    }
-
-    public String getInvestorId() {
-        return investorId;
-    }
-
-    public MutableSet<SubAccount> getSubAccounts() {
-        return subAccounts;
-    }
-
-    public long getBalance() {
-        return balance;
-    }
-
-    public long getCredit() {
-        return credit;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public Account setBalance(long balance) {
-        this.balance = balance;
-        return this;
-    }
-
-    public Account setCredit(long credit) {
-        this.credit = credit;
-        return this;
-    }
-
-    public Account setRemark(String remark) {
-        this.remark = remark;
-        return this;
-    }
 
     public final static class AccountException extends RuntimeException {
 
@@ -178,7 +138,6 @@ public final class Account extends EnableableComponent implements Comparable<Acc
                 + ", \"balance\" : " + balance
                 + ", \"credit\" : " + credit
                 + ", \"remark\" : " + remark
-                + ", \"subAccountTotal\" : " + subAccounts.size()
                 + ", \"isEnabled\" : " + isEnabled()
                 + "}";
     }

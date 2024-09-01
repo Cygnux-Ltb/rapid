@@ -82,7 +82,11 @@ public enum Exchange {
     // 交易所时区
     private final ZoneOffset zoneOffset;
 
-    // public static final long MAX = 0xFFFFL;
+    // 最大可用ID
+    public static final int MAX_ID = 213;
+
+    // ExchangeId 掩码
+    public static final int MASK = 10000000;
 
     /**
      * @param exchangeId int
@@ -90,7 +94,7 @@ public enum Exchange {
      * @param zoneOffset ZoneOffset
      */
     Exchange(int exchangeId, String fullName, ZoneOffset zoneOffset) {
-        this.exchangeId = exchangeId * 10000000;
+        this.exchangeId = exchangeId * MASK;
         this.fullName = fullName;
         this.zoneOffset = zoneOffset;
     }

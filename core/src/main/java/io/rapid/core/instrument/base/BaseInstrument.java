@@ -1,9 +1,9 @@
 package io.rapid.core.instrument.base;
 
-import io.rapid.core.instrument.Exchange;
-import io.rapid.core.instrument.Instrument;
 import io.mercury.common.state.EnableableComponent;
 import io.mercury.serialization.json.JsonWriter;
+import io.rapid.core.instrument.Exchange;
+import io.rapid.core.instrument.Instrument;
 
 import java.util.HashMap;
 
@@ -23,9 +23,7 @@ public abstract class BaseInstrument extends EnableableComponent implements Inst
      * @param instrumentCode String
      * @param exchange       Exchange
      */
-    protected BaseInstrument(int instrumentId,
-                             String instrumentCode,
-                             Exchange exchange) {
+    protected BaseInstrument(int instrumentId, String instrumentCode, Exchange exchange) {
         this.instrumentId = instrumentId;
         this.instrumentCode = instrumentCode;
         this.exchange = exchange;
@@ -48,7 +46,7 @@ public abstract class BaseInstrument extends EnableableComponent implements Inst
 
     @Override
     public String toString() {
-        return instrumentCode;
+        return format();
     }
 
     private String formatText;

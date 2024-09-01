@@ -17,7 +17,7 @@ public interface Instrument extends Enableable, Comparable<Instrument>, Formatte
      * MAX_VALUE == 214|7483647<br>
      * <p>
      * FUTURES:exchange|symbol|term<br>
-     * MAX_VALUE == 214| 74 |83647<br>
+     * MAX_VALUE == 214|  74  |83647<br>
      * <p>
      * FOREX : exchange|symbol<br>
      * MAX_VALUE == 214|7483647<br>

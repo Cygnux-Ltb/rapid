@@ -5,7 +5,7 @@ import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.serialization.json.JsonWriter;
-import io.rapid.core.instrument.futures.ChinaFutures;
+import io.rapid.core.instrument.futures.ChinaFuturesSymbol;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
@@ -13,10 +13,8 @@ import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
@@ -26,10 +24,10 @@ import java.util.stream.Stream;
  * @author yellow013
  */
 @ThreadSafe
-public final class InstrumentKeeper {
+public final class InstrumentManager {
 
     // Logger
-    private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentKeeper.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(InstrumentManager.class);
 
     /**
      * 存储[Instrument], 以[instrumentId]索引
@@ -48,15 +46,14 @@ public final class InstrumentKeeper {
 
     private static ImmutableList<Instrument> instruments;
 
-    private InstrumentKeeper() {
+    private InstrumentManager() {
     }
-
 
     private static void initialize() {
         if (isInitialized.compareAndSet(false, true)) {
             try {
-                Stream.of(ChinaFutures.ChinaFuturesSymbol.values()).forEach(InstrumentKeeper::saveInstrument);
-                InstrumentKeeper.instruments = INSTRUMENT_MAP_BY_ID.toList().toImmutable();
+                Stream.of(ChinaFuturesSymbol.values()).forEach(InstrumentManager::saveInstrument);
+                InstrumentManager.instruments = INSTRUMENT_MAP_BY_ID.toList().toImmutable();
                 log.info("InstrumentKeeper is initialized");
             } catch (Exception e) {
                 var re = new RuntimeException("InstrumentManager initialization failed", e);
@@ -74,6 +71,7 @@ public final class InstrumentKeeper {
                     instrument.getInstrumentId(), instrument.getInstrumentCode(), instrument);
             INSTRUMENT_MAP_BY_ID.put(instrument.getInstrumentId(), instrument);
             INSTRUMENT_MAP_BY_CODE.put(instrument.getInstrumentCode().toLowerCase(), instrument);
+            INSTRUMENT_MAP_BY_CODE.put(instrument.getInstrumentCode().toUpperCase(), instrument);
             setTradable(instrument);
         });
     }
@@ -153,46 +151,33 @@ public final class InstrumentKeeper {
     }
 
     /**
-     * @param instrumentCodes String[]
-     * @return Instrument[]
+     * @param instrumentCode String
+     * @return Instrument
      */
-    public static MutableList<Instrument> getInstrument(List<String> instrumentCodes) {
+    public static Instrument getInstrument(@Nonnull String instrumentCode)
+            throws IllegalArgumentException {
+        var instrument = INSTRUMENT_MAP_BY_CODE.get(instrumentCode.toLowerCase());
+        if (instrument != null)
+            return instrument;
+        instrument = INSTRUMENT_MAP_BY_CODE.get(instrumentCode.toUpperCase());
+        if (instrument != null)
+            return instrument;
+        log.error("Instrument is not find, by instrument code : {}", instrumentCode);
+        throw new IllegalArgumentException("Instrument is not find, by instrument code : " + instrumentCode);
+    }
+
+    public static MutableList<Instrument> getInstrument(String... instrumentCodes)
+            throws NullPointerException, IllegalArgumentException {
+        Asserter.requiredLength(instrumentCodes, 1, "instrumentCodes");
         if (isInitialized()) {
-            Asserter.requiredLength(instrumentCodes, 1, "instrumentCodes");
-            var list = MutableLists.<Instrument>newFastList();
-            MutableLists.newFastList(instrumentCodes.stream().map(InstrumentKeeper::getInstrument).toList());
-            for (String instrumentCode : instrumentCodes) {
-                Instrument instrument = null;
-                try {
-                    instrument = getInstrument(instrumentCode);
-                } catch (IllegalArgumentException e) {
-                    log.error("Exception message -> {}", e.getMessage(), e);
-                }
-                if (instrument != null) {
-                    log.info("Found instrument -> {}", instrument);
-                    list.add(instrument);
-                } else {
-                    log.error("Not found instrument, with instrument code -> {}", instrumentCode);
-                }
-            }
-            return list;
+            return MutableLists.newFastList(Stream.of(instrumentCodes)
+                    .map(InstrumentManager::getInstrument)
+                    .peek(instrument -> log.info("Found instrument -> {}", instrument))
+                    .toList());
         } else {
             initialize();
             return getInstrument(instrumentCodes);
         }
-    }
-
-    /**
-     * @param instrumentCode String
-     * @return Instrument
-     */
-    @Nullable
-    public static Instrument getInstrument(String instrumentCode) throws IllegalArgumentException {
-        var instrument = INSTRUMENT_MAP_BY_CODE.get(instrumentCode.toLowerCase());
-        if (instrument == null)
-            //throw new IllegalArgumentException("Instrument is not find, by instrument code : " + instrumentCode);
-            log.error("{}", instrumentCode);
-        return instrument;
     }
 
     /**

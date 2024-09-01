@@ -1,4 +1,4 @@
-package io.rapid.core.upstream;
+package io.rapid.core.adaptor;
 
 import io.mercury.common.state.AvailableTime;
 import io.mercury.common.state.Enableable;

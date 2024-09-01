@@ -8,6 +8,7 @@ import io.rapid.core.handler.MarketDataHandler;
 import io.rapid.core.handler.OrderHandler;
 import io.rapid.core.instrument.Instrument;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
@@ -30,20 +31,13 @@ public interface Strategy extends
         // 用于资源清理
         Closeable {
 
-    /**
-     * 系统可允许的最大策略ID
-     */
-    int MAX_STRATEGY_ID = 1023;
-
     int getStrategyId();
 
     String getStrategyName();
 
     SubAccount getSubAccount();
 
-    Account getAccount();
-
-    ImmutableList<Instrument> getInstruments();
+    ImmutableIntObjectMap<Instrument> getInstruments();
 
     Strategy initialize(@Nonnull Supplier<Boolean> initializer);
 

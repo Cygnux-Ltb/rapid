@@ -4,6 +4,7 @@ import io.mercury.common.datetime.TimeZone;
 import io.mercury.common.sequence.SerialObj;
 import io.mercury.common.sequence.TimeWindow;
 import io.mercury.serialization.json.JsonWriter;
+import lombok.Getter;
 import org.eclipse.collections.api.list.ImmutableList;
 
 import javax.annotation.Nonnull;
@@ -22,17 +23,24 @@ import static io.mercury.common.lang.Asserter.nonNull;
  */
 public final class TradingPeriod implements SerialObj<TradingPeriod> {
 
+    @Getter
     private final int serialId;
 
+    @Getter
     private final LocalTime start;
 
+    @Getter
     private final LocalTime end;
 
+    @Getter
     private final Duration duration;
 
-    // 全天交易
+    /**
+     * 全天交易
+     */
     public static TradingPeriod TRADING_ALL_DAY = new TradingPeriod(0,
-            LocalTime.of(0, 0, 0), LocalTime.of(0, 0, 0));
+            LocalTime.of(0, 0, 0),
+            LocalTime.of(23, 59, 59, 999999999));
 
     public TradingPeriod(int serialId, LocalTime start, LocalTime end) {
         nonNull(start, "start");
@@ -52,18 +60,6 @@ public final class TradingPeriod implements SerialObj<TradingPeriod> {
         return serialId;
     }
 
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
-    }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
     /**
      * 分割交易时段
      *
@@ -72,7 +68,8 @@ public final class TradingPeriod implements SerialObj<TradingPeriod> {
      * @param duration Duration
      * @return ImmutableList<TimeWindow>
      */
-    public ImmutableList<TimeWindow> segmentation(@Nonnull LocalDate date, @Nonnull ZoneOffset offset,
+    public ImmutableList<TimeWindow> segmentation(@Nonnull LocalDate date,
+                                                  @Nonnull ZoneOffset offset,
                                                   @Nonnull Duration duration) {
         return TimeWindow.segmentationWindow(date, start, end, offset, duration);
     }
@@ -98,5 +95,6 @@ public final class TradingPeriod implements SerialObj<TradingPeriod> {
 
         System.out.println(LocalTime.of(23, 0).plusHours(3));
     }
+
 
 }
