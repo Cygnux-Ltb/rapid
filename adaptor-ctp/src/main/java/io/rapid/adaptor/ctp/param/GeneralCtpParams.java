@@ -23,7 +23,7 @@ import static io.rapid.adaptor.ctp.param.CtpParamKey.Password;
 import static io.rapid.adaptor.ctp.param.CtpParamKey.TraderAddr;
 import static io.rapid.adaptor.ctp.param.CtpParamKey.TradingDay;
 import static io.rapid.adaptor.ctp.param.CtpParamKey.UserId;
-import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.parseTradingDay;
+import static io.rapid.core.instrument.futures.ChinaFutures.parseTradingDay;
 
 @Getter
 @Setter

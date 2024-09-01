@@ -6,13 +6,15 @@ import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.instrument.InstrumentManager;
+import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.util.stream.Stream;
 
 import static io.mercury.common.datetime.pattern.impl.DateTimePattern.YYYYMMDD_L_HHMMSS;
-import static io.rapid.core.instrument.futures.ChinaFutures.ChinaFuturesUtil.nextCloseTime;
+import static io.rapid.core.instrument.futures.ChinaFutures.nextCloseTime;
 import static io.rapid.core.util.MarketTradableTime.registerCloseTime;
 
 public final class CtpAdaptorStartup {
@@ -47,7 +49,8 @@ public final class CtpAdaptorStartup {
         String instrumentCodes = config.getString("instrumentCodes");
         log.info("instrument codes == {}", instrumentCodes);
 
-        Instrument[] instruments = InstrumentKeeper.getInstrument(instrumentCodes.split(","));
+        MutableList<Instrument> instruments = InstrumentManager.getInstrument(
+                Stream.of(instrumentCodes.split(",")).toList());
 
         registerCloseTime(nextCloseTime());
 

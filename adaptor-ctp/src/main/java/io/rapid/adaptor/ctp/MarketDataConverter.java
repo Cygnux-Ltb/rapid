@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import static io.mercury.common.datetime.TimeConst.NANOS_PER_MILLIS;
 import static io.mercury.common.datetime.pattern.impl.DatePattern.YYYYMMDD;
 import static io.mercury.common.datetime.pattern.impl.TimePattern.HH_MM_SS;
-import static io.rapid.core.instrument.InstrumentKeeper.getInstrument;
+import static io.rapid.core.instrument.InstrumentManager.getInstrument;
 
 /**
  * FtdcDepthMarketData -> FastMarketData
