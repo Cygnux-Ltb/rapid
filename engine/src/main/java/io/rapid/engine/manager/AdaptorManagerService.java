@@ -1,8 +1,6 @@
 package io.rapid.engine.manager;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.account.Account;
-import io.rapid.core.account.SubAccount;
 import io.rapid.core.adaptor.Adaptor;
 import io.rapid.core.adaptor.AdaptorManager;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -21,7 +19,6 @@ import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
  * @topic 存储Adaptor和Mapping关系<br>
  * <p>
  * 1.以[accountId]查找Adaptor<br>
- * 2.以[subAccountId]查找Adaptor<br>
  * TODO 修改为线程安全的管理器<br>
  * <p>
  * 如果程序运行中不修改Adaptor的引用则可以在多个线程中调用Get函数<br>
@@ -30,7 +27,7 @@ import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
  */
 @NotThreadSafe
 @Service
-public final class AdaptorStorage implements Serializable, AdaptorManager {
+public final class AdaptorManagerService implements Serializable, AdaptorManager {
 
     @Serial
     private static final long serialVersionUID = -1199809125474119945L;
@@ -38,52 +35,23 @@ public final class AdaptorStorage implements Serializable, AdaptorManager {
     /**
      * Logger
      */
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AdaptorStorage.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AdaptorManagerService.class);
 
     /**
-     * 存储Adaptor, 使用accountId索引
+     * 存储[Adaptor], 使用[accountId]索引
      */
-    private static final MutableIntObjectMap<Adaptor> ACCOUNT_ADAPTOR_MAP = newIntObjectMap();
-
-    /**
-     * 存储Adaptor, 使用subAccountId索引
-     */
-    private static final MutableIntObjectMap<Adaptor> SUB_ACCOUNT_ADAPTOR_MAP = newIntObjectMap();
-
-    private AdaptorStorage() {
-    }
-
-    public Adaptor getAdaptor(@Nonnull Account account) {
-        return ACCOUNT_ADAPTOR_MAP.get(account.getAccountId());
-    }
-
-    public Adaptor getAdaptor(@Nonnull SubAccount subAccount) {
-        return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccount.getSubAccountId());
-    }
-
-    public Adaptor getAdaptorByAccountId(int accountId) {
-        return ACCOUNT_ADAPTOR_MAP.get(accountId);
-    }
-
-    public Adaptor getAdaptorBySubAccountId(int subAccountId) {
-        return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccountId);
-    }
+    private final MutableIntObjectMap<Adaptor> adaptorMap = newIntObjectMap();
 
     public void putAdaptor(@Nonnull Adaptor adaptor) {
         var account = adaptor.getBoundAccount();
-        ACCOUNT_ADAPTOR_MAP.put(account.getAccountId(), adaptor);
-        log.info("Put adaptor to AccountAdaptorMap, accountId==[{}], remark==[{}], adaptorId==[{}]",
+        adaptorMap.put(account.getAccountId(), adaptor);
+        log.info("PUT [Adaptor] to AdaptorManager, accountId==[{}], remark==[{}], adaptorId==[{}]",
                 account.getAccountId(), account.getRemark(), adaptor.getAdaptorId());
-        account.getSubAccounts().each(subAccount -> {
-            SUB_ACCOUNT_ADAPTOR_MAP.put(subAccount.getSubAccountId(), adaptor);
-            log.info("Put adaptor to SubAccountAdaptorMap, subAccountId==[{}], subAccountName==[{}], adaptorId==[{}]",
-                    subAccount.getSubAccountId(), subAccount.getSubAccountName(), adaptor.getAdaptorId());
-        });
     }
 
     @Override
-    public String toString() {
-        return "";
+    public Adaptor getAdaptor(int accountId) {
+        return adaptorMap.get(accountId);
     }
 
 }

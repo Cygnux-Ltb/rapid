@@ -10,6 +10,7 @@
 
     <artifactId>engine</artifactId>
     <name>engine</name>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -37,6 +38,10 @@
                     <groupId>com.fasterxml.jackson.core</groupId>
                     <artifactId>jackson-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -46,6 +51,11 @@
         <dependency>
             <groupId>io.cygnuxltb</groupId>
             <artifactId>core</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cygnuxltb</groupId>
+            <artifactId>console-service</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

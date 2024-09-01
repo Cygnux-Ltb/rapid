@@ -17,7 +17,7 @@ import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Serial;
@@ -32,13 +32,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author yellow013
  */
 @NotThreadSafe
-@Component
-public final class AccountStorage implements Serializable, AccountManager {
+@Service
+public final class AccountManagerService implements Serializable, AccountManager {
 
     @Serial
     private static final long serialVersionUID = -6883109944757142986L;
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountStorage.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountManagerService.class);
 
     /**
      * 存储[SubAccount]信息, 一对一关系, 以subAccountId索引
@@ -71,7 +71,7 @@ public final class AccountStorage implements Serializable, AccountManager {
     @Resource
     private AccountService service;
 
-    private AccountStorage() {
+    private AccountManagerService() {
     }
 
     @PostConstruct
@@ -100,7 +100,6 @@ public final class AccountStorage implements Serializable, AccountManager {
             }
         }
     }
-
 
     @Override
     public void mapping(SubAccount subAccount, Account... accounts) {

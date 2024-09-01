@@ -3,8 +3,9 @@ package io.rapid.engine.manager;
 import io.mercury.common.collections.MutableLists;
 import io.rapid.core.account.AccountManager;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.instrument.InstrumentManager;
 import io.rapid.core.order.ChildOrder;
+import io.rapid.core.order.OrderManager;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.enums.OrdType;
@@ -18,17 +19,19 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 
+import java.util.List;
+
 import static io.rapid.core.account.SubAccount.ExternalOrderSubAccount;
 
 @Component
-public final class OrderManager {
+public final class OrderManagerService implements OrderManager {
 
     MutableList<Strategy> strategies = MutableLists.newFastList(8);
 
     @Resource
     private AccountManager accountManager;
 
-    private OrderManager() {
+    private OrderManagerService() {
     }
 
     /**
@@ -39,7 +42,7 @@ public final class OrderManager {
      */
     public ChildOrder newExternalOrder(OrderEvent event) {
         var account = accountManager.getAccount(event.getInvestorId());
-        var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
+        var instrument = InstrumentManager.getInstrument(event.getInstrumentCode());
         var direction = TrdDirection.valueOf(event.getDirection());
         var action = TrdAction.valueOf(event.getAction());
         return new ChildOrder(event.getOrdSysId(),
@@ -98,4 +101,23 @@ public final class OrderManager {
     }
 
 
+    @Override
+    public void onOrderEvent(OrderEvent event) {
+
+    }
+
+    @Override
+    public ChildOrder getChildOrder(long orderSysId) {
+        return null;
+    }
+
+    @Override
+    public List<ChildOrder> getChildOrder(String investorId) {
+        return List.of();
+    }
+
+    @Override
+    public List<ChildOrder> getChildOrder(int subAccountId) {
+        return List.of();
+    }
 }

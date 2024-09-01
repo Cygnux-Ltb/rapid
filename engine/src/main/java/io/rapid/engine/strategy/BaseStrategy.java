@@ -1,17 +1,19 @@
 package io.rapid.engine.strategy;
 
+import io.cygnuxltb.console.beans.ValueLimitation;
 import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.ImmutableMaps;
 import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.Asserter;
 import io.mercury.common.param.Params;
 import io.mercury.common.sequence.SnowflakeAlgo;
 import io.mercury.common.state.EnableableComponent;
-import io.rapid.core.account.Account;
-import io.rapid.core.account.AccountStorage;
+import io.rapid.core.account.AccountManager;
 import io.rapid.core.account.SubAccount;
+import io.rapid.core.adaptor.TraderAdaptor;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.instrument.InstrumentManager;
 import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.mkd.MarketDataKeeper;
 import io.rapid.core.order.ChildOrder;
@@ -25,13 +27,14 @@ import io.rapid.core.serializable.avro.outbound.QueryBalance;
 import io.rapid.core.serializable.avro.outbound.QueryPositions;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.core.upstream.TraderAdaptor;
 import io.rapid.engine.position.PositionKeeper;
 import io.rapid.engine.trader.OrderKeeper;
+import jakarta.annotation.Resource;
 import lombok.Getter;
-import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
@@ -39,7 +42,9 @@ import java.util.function.Supplier;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static java.lang.Math.abs;
 
-public abstract class BaseStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
+@Component
+public abstract class BaseStrategy extends EnableableComponent
+        implements Strategy, CircuitBreaker {
 
     private final static Logger log = getLogger(BaseStrategy.class);
 
@@ -61,13 +66,6 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     @Getter
     protected final SubAccount subAccount;
     protected final int subAccountId;
-
-    /**
-     * 实际账号
-     */
-    @Getter
-    protected final Account account;
-    protected final int accountId;
 
     /**
      * 是否初始化成功
@@ -95,41 +93,49 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      */
     protected QueryBalance queryBalance;
 
-    /**
+    /*
      * OrderSysID分配器
      */
     private final OrdSysIdAllocator allocator;
+
+    @Resource
+    private AccountManager accountManager;
 
     /**
      * 策略订阅的合约列表
      */
     @Getter
-    protected ImmutableList<Instrument> instruments;
+    protected ImmutableIntObjectMap<Instrument> instruments;
 
     protected final boolean singleInstrumentStrategy;
 
-    protected BaseStrategy(int strategyId,
-                           @Nonnull String strategyName,
+    protected BaseStrategy(int strategyId, @Nonnull String strategyName,
                            @Nonnull SubAccount subAccount,
                            @Nonnull Params params,
                            @Nonnull Instrument... instruments) {
-        Asserter.atWithinRange(strategyId, 1, MAX_STRATEGY_ID, "strategyId");
+        Asserter.atWithinRange(strategyId, ValueLimitation.MIN_STRATEGY_ID,
+                ValueLimitation.MAX_STRATEGY_ID, "strategyId");
         Asserter.nonEmpty(strategyName, "strategyName");
         Asserter.nonNull(subAccount, "subAccount");
         this.strategyId = strategyId;
         this.strategyName = strategyName;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
-        this.account = AccountStorage.getAccountBySubAccountId(subAccount.getSubAccountId());
-        this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositions = QueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
-        this.queryBalance = QueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
+        this.queryPositions = QueryPositions.newBuilder()
+                .setStrategyId(strategyId)
+                .setSubAccountId(subAccountId)
+                .setReason("Strategy Initialization")
+                .setSource(strategyName).build();
+        this.queryBalance = QueryBalance.newBuilder()
+                .setSubAccountId(subAccountId)
+                .setReason("Strategy Initialization")
+                .setSource(strategyName).build();
         var snowflake = new SnowflakeAlgo(strategyId);
         this.allocator = snowflake::next;
-        this.instruments = ImmutableSets.from(instruments).toImmutableList();
+        this.instruments = ImmutableMaps.newImmutableIntMap(
+                Instrument::getInstrumentId,
+                ImmutableSets.from(instruments));
         this.singleInstrumentStrategy = instruments.length == 1;
         log.info("Strategy -> {} initialized", strategyName);
         log.info("Strategy -> {} show params", strategyName);
@@ -234,22 +240,22 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
 
     @Override
     public void enableAccount(int accountId) {
-        AccountStorage.setAccountTradable(accountId);
+        accountManager.setAccountTradable(accountId);
     }
 
     @Override
     public void disableAccount(int accountId) {
-        AccountStorage.setAccountNotTradable(accountId);
+        accountManager.setAccountNotTradable(accountId);
     }
 
     @Override
     public void enableInstrument(int instrumentId) {
-        InstrumentKeeper.setTradable(instrumentId);
+        InstrumentManager.setTradable(instrumentId);
     }
 
     @Override
     public void disableInstrument(int instrumentId) {
-        InstrumentKeeper.setNotTradable(instrumentId);
+        InstrumentManager.setNotTradable(instrumentId);
     }
 
     @Override
