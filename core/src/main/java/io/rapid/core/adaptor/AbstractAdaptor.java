@@ -38,7 +38,6 @@ public abstract class AbstractAdaptor extends EnableableComponent implements Ada
         nonNull(account, "account");
         this.account = account;
         this.adaptorId = this.getClass().getSimpleName() + "-[" + account.getBrokerName() + ":" + account.getInvestorId() + "]";
-        AdaptorStorage.putAdaptor(this);
     }
 
     @Nonnull

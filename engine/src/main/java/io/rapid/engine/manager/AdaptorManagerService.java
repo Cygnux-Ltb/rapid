@@ -1,9 +1,13 @@
-package io.rapid.core.upstream;
+package io.rapid.engine.manager;
 
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
+import io.rapid.core.adaptor.Adaptor;
+import io.rapid.core.adaptor.AdaptorManager;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -11,7 +15,6 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * @author yellow013
@@ -26,7 +29,8 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  * 目前不保证这一过程的线程安全
  */
 @NotThreadSafe
-public final class AdaptorStorage implements Serializable {
+@Service
+public final class AdaptorStorage implements Serializable, AdaptorManager {
 
     @Serial
     private static final long serialVersionUID = -1199809125474119945L;
@@ -34,7 +38,7 @@ public final class AdaptorStorage implements Serializable {
     /**
      * Logger
      */
-    private static final Logger log = getLogger(AdaptorStorage.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AdaptorStorage.class);
 
     /**
      * 存储Adaptor, 使用accountId索引
@@ -49,23 +53,23 @@ public final class AdaptorStorage implements Serializable {
     private AdaptorStorage() {
     }
 
-    public static Adaptor getAdaptor(@Nonnull Account account) {
+    public Adaptor getAdaptor(@Nonnull Account account) {
         return ACCOUNT_ADAPTOR_MAP.get(account.getAccountId());
     }
 
-    public static Adaptor getAdaptor(@Nonnull SubAccount subAccount) {
+    public Adaptor getAdaptor(@Nonnull SubAccount subAccount) {
         return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccount.getSubAccountId());
     }
 
-    public static Adaptor getAdaptorByAccountId(int accountId) {
+    public Adaptor getAdaptorByAccountId(int accountId) {
         return ACCOUNT_ADAPTOR_MAP.get(accountId);
     }
 
-    public static Adaptor getAdaptorBySubAccountId(int subAccountId) {
+    public Adaptor getAdaptorBySubAccountId(int subAccountId) {
         return SUB_ACCOUNT_ADAPTOR_MAP.get(subAccountId);
     }
 
-    public static void putAdaptor(@Nonnull Adaptor adaptor) {
+    public void putAdaptor(@Nonnull Adaptor adaptor) {
         var account = adaptor.getBoundAccount();
         ACCOUNT_ADAPTOR_MAP.put(account.getAccountId(), adaptor);
         log.info("Put adaptor to AccountAdaptorMap, accountId==[{}], remark==[{}], adaptorId==[{}]",
