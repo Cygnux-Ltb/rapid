@@ -1,8 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_AF_Delete;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_AF_Modify;
-
 /**
  * ///TFtdcActionFlagType是一个操作标志类型<br>
  * <br>
@@ -17,11 +14,11 @@ public interface FtdcActionFlag {
     /**
      * 删除
      */
-    char DELETE = THOST_FTDC_AF_Delete;
+    char Delete = '0';
 
     /**
      * 修改
      */
-    char MODIFY = THOST_FTDC_AF_Modify;
+    char Modify = '3';
 
 }

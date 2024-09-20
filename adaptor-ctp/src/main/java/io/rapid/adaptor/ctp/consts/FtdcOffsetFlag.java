@@ -1,13 +1,8 @@
 package io.rapid.adaptor.ctp.consts;
 
-import io.rapid.core.serializable.avro.enums.TrdAction;
+import io.rapid.core.event.enums.TrdAction;
 
 import javax.annotation.Nonnull;
-
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_Close;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_CloseToday;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_CloseYesterday;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_Open;
 
 
 /**
@@ -37,44 +32,68 @@ import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OF_Open;
 public interface FtdcOffsetFlag {
 
     /**
-     * 组合开平标识, 开仓, [char]
+     * 开仓 [char]
      */
-    char OPEN = THOST_FTDC_OF_Open;
+    char Open = '0';
 
     /**
-     * 组合开平标识, 开仓, [String]
+     * 开仓 [String]
      */
-    String OPEN_STR = String.valueOf(THOST_FTDC_OF_Open);
+    String OpenStr = "0";
 
     /**
-     * 组合开平标识, 平仓, [char]
+     * 平仓 [char]
      */
-    char CLOSE = THOST_FTDC_OF_Close;
+    char Close = '1';
+    /**
+     * 平仓 [String]
+     */
+    String CloseStr = "1";
 
     /**
-     * 组合开平标识, 平仓, [String]
+     * 强平 [char]
      */
-    String CLOSE_STR = String.valueOf(THOST_FTDC_OF_Close);
+    char ForceClose = '2';
+    /**
+     * 强平 [String]
+     */
+    String ForceCloseStr = "2";
 
     /**
-     * 组合开平标识, 平今, [char]
+     * 平今 [char]
      */
-    char CLOSE_TODAY = THOST_FTDC_OF_CloseToday;
+    char CloseToday = '3';
+    /**
+     * 平今 [String]
+     */
+    String CloseTodayStr = "3";
 
     /**
-     * 组合开平标识, 平今, [String]
+     * 平昨 [char]
      */
-    String CLOSE_TODAY_STR = String.valueOf(THOST_FTDC_OF_CloseToday);
+    char CloseYesterday = '4';
+    /**
+     * 平昨 [String]
+     */
+    String CloseYesterdayStr = "4";
 
     /**
-     * 组合开平标识, 平昨, [char]
+     * 强减 [char]
      */
-    char CLOSE_YESTERDAY = THOST_FTDC_OF_CloseYesterday;
+    char ForceOff = '5';
+    /**
+     * 强减 [String]
+     */
+    String ForceOffStr = "5";
 
     /**
-     * 组合开平标识, 平昨, [String]
+     * 本地强平 [char]
      */
-    String CLOSE_YESTERDAY_STR = String.valueOf(THOST_FTDC_OF_CloseYesterday);
+    char LocalForceClose = '6';
+    /**
+     * 本地强平 [String]
+     */
+    String LocalForceCloseStr = "6";
 
 
     /**
@@ -96,16 +115,18 @@ public interface FtdcOffsetFlag {
      */
     @Nonnull
     static TrdAction withOffsetFlag(char offsetFlag) {
-        return  // 开仓
-                OPEN == offsetFlag ? TrdAction.OPEN
-                        // 平仓
-                        : CLOSE == offsetFlag ? TrdAction.CLOSE
-                        // 平今
-                        : CLOSE_TODAY == offsetFlag ? TrdAction.CLOSE_TODAY
-                        // 平昨
-                        : CLOSE_YESTERDAY == offsetFlag ? TrdAction.CLOSE_YESTERDAY
-                        // 未知
-                        : TrdAction.INVALID;
+        return switch (offsetFlag) {
+            // 开仓
+            case Open -> TrdAction.OPEN;
+            // 平仓
+            case Close -> TrdAction.CLOSE;
+            // 平今
+            case CloseToday -> TrdAction.CLOSE_TODAY;
+            // 平昨
+            case CloseYesterday -> TrdAction.CLOSE_YESTERDAY;
+            // 未知
+            default -> TrdAction.INVALID;
+        };
     }
 
 }

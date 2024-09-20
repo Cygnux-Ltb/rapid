@@ -1,7 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_FCC_NotForceClose;
-
 /**
  * ///TFtdcForceCloseReasonType是一个强平原因类型<br>
  * <br>
@@ -34,6 +32,6 @@ public interface FtdcForceCloseReason {
     /**
      * 非强平
      */
-    char NOT_FORCE_CLOSE = THOST_FTDC_FCC_NotForceClose;
+    char NotForceClose = '0';
 
 }

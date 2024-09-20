@@ -1,12 +1,11 @@
 package io.rapid.adaptor.ctp.consts;
 
-
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_AnyPrice;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_AskPrice1;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_BestPrice;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_BidPrice1;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_LastPrice;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_OPT_LimitPrice;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_AnyPrice;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_AskPrice1;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_BestPrice;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_BidPrice1;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_LastPrice;
+import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_LimitPrice;
 
 /**
  * ///TFtdcOrderPriceTypeType是一个报单价格条件类型 <br>

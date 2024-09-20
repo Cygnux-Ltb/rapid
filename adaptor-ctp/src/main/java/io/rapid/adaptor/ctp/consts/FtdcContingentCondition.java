@@ -1,10 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_Immediately;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_ParkedOrder;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_Touch;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_CC_TouchProfit;
-
 /**
  * ///TFtdcContingentConditionType是一个触发条件类型<br>
  * <br>
@@ -61,21 +56,81 @@ public interface FtdcContingentCondition {
     /**
      * 立即
      */
-    char IMMEDIATELY = THOST_FTDC_CC_Immediately;
+    char Immediately = '1';
 
     /**
      * 止损
      */
-    char TOUCH = THOST_FTDC_CC_Touch;
+    char Touch = '2';
 
     /**
      * 止赢
      */
-    char TOUCH_PROFIT = THOST_FTDC_CC_TouchProfit;
+    char TouchProfit = '3';
 
     /**
      * 预埋单
      */
-    char PARKED_ORDER = THOST_FTDC_CC_ParkedOrder;
+    char ParkedOrder = '4';
+
+    /**
+     * 最新价大于条件价
+     */
+    char LastPriceGreaterThanStopPrice = '5';
+
+    /**
+     * 最新价大于等于条件价
+     */
+    char LastPriceGreaterEqualStopPrice = '6';
+
+    /**
+     * 最新价小于条件价
+     */
+    char LastPriceLesserThanStopPrice = '7';
+
+    /**
+     * 最新价小于等于条件价
+     */
+    char LastPriceLesserEqualStopPrice = '8';
+
+    /**
+     * 卖一价大于条件价
+     */
+    char AskPriceGreaterThanStopPrice = '9';
+
+    /**
+     * 卖一价大于等于条件价
+     */
+    char AskPriceGreaterEqualStopPrice = 'A';
+
+    /**
+     * 卖一价小于条件价
+     */
+    char AskPriceLesserThanStopPrice = 'B';
+
+    /**
+     * 卖一价小于等于条件价
+     */
+    char AskPriceLesserEqualStopPrice = 'C';
+
+    /**
+     * 买一价大于条件价
+     */
+    char BidPriceGreaterThanStopPrice = 'D';
+
+    /**
+     * 买一价大于等于条件价
+     */
+    char BidPriceGreaterEqualStopPrice = 'E';
+
+    /**
+     * 买一价小于条件价
+     */
+    char BidPriceLesserThanStopPrice = 'F';
+
+    /**
+     * 买一价小于等于条件价
+     */
+    char BidPriceLesserEqualStopPrice = 'H';
 
 }

@@ -1,9 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_AV;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_CV;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_VC_MV;
-
 /**
  * ///TFtdcVolumeConditionType是一个成交量类型类型<br>
  * <br>
@@ -21,17 +17,17 @@ public interface FtdcVolumeCondition {
     /**
      * 任何数量
      */
-    char AV = THOST_FTDC_VC_AV;
+    char AV = '1';
 
     /**
      * 最小数量
      */
-    char MV = THOST_FTDC_VC_MV;
+    char MV = '2';
 
     /**
      * 全部数量
      */
-    char CV = THOST_FTDC_VC_CV;
+    char CV = '3';
 
 }
 
