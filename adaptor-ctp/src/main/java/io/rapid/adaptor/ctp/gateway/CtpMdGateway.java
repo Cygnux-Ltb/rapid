@@ -1,23 +1,23 @@
 package io.rapid.adaptor.ctp.gateway;
 
-import ctp.thostapi.CThostFtdcDepthMarketDataField;
-import ctp.thostapi.CThostFtdcMdApi;
-import ctp.thostapi.CThostFtdcMdSpi;
-import ctp.thostapi.CThostFtdcReqUserLoginField;
-import ctp.thostapi.CThostFtdcRspInfoField;
-import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import ctp.thostapi.CThostFtdcUserLogoutField;
+
 import io.mercury.common.annotation.CalledNativeFunction;
-import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.Sleep;
+import io.mercury.common.util.StringSupport;
 import io.rapid.adaptor.ctp.gateway.event.FtdcRspPublisher;
 import io.rapid.adaptor.ctp.gateway.upstream.FtdcMdSpi;
-import io.rapid.adaptor.ctp.gateway.upstream.LogFtdcMdListener;
+import io.rapid.adaptor.ctp.gateway.upstream.LoggingFtdcMdListener;
 import io.rapid.adaptor.ctp.param.CtpParams;
-import io.rapid.adaptor.ctp.serializable.avro.md.SpecificInstrumentSource;
 import lombok.Getter;
+import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
+import org.rationalityfrontline.jctp.CThostFtdcMdApi;
+import org.rationalityfrontline.jctp.CThostFtdcMdSpi;
+import org.rationalityfrontline.jctp.CThostFtdcReqUserLoginField;
+import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
+import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -29,26 +29,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.mercury.common.datetime.DateTimeUtil.date;
-import static io.mercury.common.file.FileUtil.mkdirInTmp;
+import static io.mercury.common.file.FileUtil.mkdirInHome;
 import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
-import static io.rapid.adaptor.ctp.serializable.avro.shared.EventSource.MD;
+import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonError;
+import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonnull;
+import static io.rapid.adaptor.ctp.serializable.md.SpecificInstrumentSource.SubMarketData;
+import static io.rapid.adaptor.ctp.serializable.md.SpecificInstrumentSource.UnsubMarketData;
+import static io.rapid.adaptor.ctp.serializable.shared.EventSource.MD;
 
-public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
+public final class CtpMdGateway extends LoggingFtdcMdListener implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpMdGateway.class);
-
-    // 静态加载FtdcLibrary
-    static {
-        try {
-            NativeLibraryManager.tryLoad();
-        } catch (NativeLibraryException e) {
-            log.error(e.getMessage(), e);
-            log.error("CTP native library file loading error, System must exit. status -1");
-            System.exit(-1);
-        }
-    }
 
     @Native
     private CThostFtdcMdApi FtdcMdApi;
@@ -78,7 +71,7 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
     public CtpMdGateway(CtpParams params, FtdcRspPublisher publisher) {
         this.params = nonNull(params, "params");
         this.publisher = nonNull(publisher, "publisher");
-        this.gatewayId = "GATEWAY-MD-" + params.getBrokerId() + "-" + params.getInvestorId();
+        this.gatewayId = "GW-MD-" + params.getBrokerId() + "-" + params.getInvestorId();
     }
 
     /**
@@ -86,9 +79,9 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
      */
     public void startup() {
         if (isInitialize.compareAndSet(false, true)) {
-            log.info("CThostFtdcMdApi.GetApiVersion() -> {}", CThostFtdcMdApi.GetApiVersion());
+            log.info("CThostFtdcMdApi::GetApiVersion -> {}", CThostFtdcMdApi.GetApiVersion());
             try {
-                startNewMaxPriorityThread(gatewayId + "-Thread", this::callInitAndJoin);
+                startNewMaxPriorityThread(gatewayId + "-Thread", this::CallInitAndJoin);
             } catch (Exception e) {
                 log.error("MdGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
                 isInitialize.set(false);
@@ -98,47 +91,53 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
     }
 
     @CalledNativeFunction
-    private void callInitAndJoin() {
+    private void CallInitAndJoin() {
         // 创建CTP数据文件临时目录
-        var tempDir = mkdirInTmp(gatewayId + "-" + date());
-        log.info("{} -> used md tempDir: {}", gatewayId, tempDir.getAbsolutePath());
+        File tempDir = mkdirInHome(gatewayId + "-" + date());
+        log.info("MdGateway -> used md tempDir: {}", tempDir.getAbsolutePath());
         // 指定md临时文件地址
-        var tempFile = new File(tempDir, "md").getAbsolutePath();
-        log.info("{} -> used md tempFile : {}", gatewayId, tempFile);
+        String tempFile = new File(tempDir, "md").getAbsolutePath();
+        log.info("MdGateway -> used md tempFile : {}", tempFile);
+
         // 创建CThostFtdcMdApi
+        log.info("MdGateway -> call CThostFtdcMdApi::CreateFtdcMdApi#{}", tempFile);
         this.FtdcMdApi = CThostFtdcMdApi.CreateFtdcMdApi(tempFile);
-        log.info("{} -> called CThostFtdcMdApi::CreateFtdcMdApi", gatewayId);
+
         // 创建CThostFtdcMdSpi
-        CThostFtdcMdSpi Spi = new FtdcMdSpi(this);
-        log.info("{} -> created CThostFtdcMdSpi with FtdcMdSpi", gatewayId);
+        log.info("MdGateway -> create CThostFtdcMdSpi implement with FtdcMdSpi");
+        CThostFtdcMdSpi MdSpi = new FtdcMdSpi(this);
+
         // 将ftdcMdSpi注册到ftdcMdApi
-        FtdcMdApi.RegisterSpi(Spi);
-        log.info("{} -> called CThostFtdcMdApi::RegisterSpi", gatewayId);
+        log.info("MdGateway -> call CThostFtdcMdApi::RegisterSpi#FtdcMdSpi");
+        FtdcMdApi.RegisterSpi(MdSpi);
+
         // 注册到ftdcMdApi前置机
+        log.info("MdGateway -> FtdcMdApi::RegisterFront#{}", params.getMdAddr());
         FtdcMdApi.RegisterFront(params.getMdAddr());
-        log.info("{} -> called native CThostFtdcMdApi::RegisterFront", gatewayId);
+
         // 初始化ftdcMdApi
+        log.info("MdGateway -> call CThostFtdcMdApi::Init");
         FtdcMdApi.Init();
-        log.info("{} -> called native CThostFtdcMdApi::Init", gatewayId);
+
         // 阻塞当前线程
-        log.info("{} -> calling native CThostFtdcMdApi::Join", gatewayId);
+        log.info("MdGateway -> call CThostFtdcMdApi::Join");
         FtdcMdApi.Join();
     }
 
     /**
      * 行情订阅接口
      *
-     * @param instruments String[]
+     * @param Instruments String[]
      */
     @CalledNativeFunction
-    public int callSubscribeMarketData(@Nonnull String[] instruments) {
+    public int SubscribeMarketData(@Nonnull String[] Instruments) {
         if (isAvailable.get()) {
-            var result = FtdcMdApi.SubscribeMarketData(instruments, instruments.length);
-            log.info("Send CThostFtdcMdApi::SubscribeMarketData OK, subscriptions count==[{}], result==[{}]",
-                    instruments.length, result);
+            var result = FtdcMdApi.SubscribeMarketData(Instruments);
+            log.info("Send CThostFtdcMdApi::SubscribeMarketData OK -> subscriptions {}, result==[{}]",
+                    StringSupport.toString(Instruments), result);
             return result;
         } else {
-            log.warn("Cannot SubscribeMarketData -> isMdLogin == [false]");
+            log.error("CThostFtdcMdApi::SubscribeMarketData is Unavailable");
             return -1;
         }
     }
@@ -191,36 +190,32 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
     public void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("MdGateway::fireRspUserLogin");
-        if (FtdcRspInfoHandler.nonError(RspInfo)) {
-            if (Field != null) {
+        if (nonError(RspInfo, "MdGateway::fireRspUserLogin", RequestID, IsLast)) {
+            if (nonnull(Field, "MdGateway::fireRspUserLogin", RequestID, IsLast)) {
                 log.info("MdGateway::fireRspUserLogin -> FrontID==[{}], SessionID==[{}], TradingDay==[{}]",
                         Field.getFrontID(), Field.getSessionID(), Field.getTradingDay());
                 isAvailable.set(true);
                 publisher.publishRspUserLogin(MD, Field, RspInfo, RequestID, IsLast);
-            } else
-                log.error("MdGateway::fireRspUserLogin return null");
+            }
         }
     }
 
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("MdGateway::fireRspUserLogout");
-        if (FtdcRspInfoHandler.nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("MdGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
-                        Field.getUserID());
+        log.warn("MdGateway::fireRspUserLogout");
+        if (nonError(RspInfo, "MdGateway::fireRspUserLogout", RequestID, IsLast)) {
+            if (nonnull(Field, "MdGateway::fireRspUserLogout", RequestID, IsLast)) {
+                log.info("MdGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]",
+                        Field.getBrokerID(), Field.getUserID());
                 publisher.publishUserLogout(MD, Field, RspInfo, RequestID, IsLast);
-            } else {
-                log.error("MdGateway::fireRspUserLogout return null");
             }
         }
-
     }
 
     @Override
     public void fireRspError(CThostFtdcRspInfoField Field, int RequestID, boolean IsLast) {
-        log.info("MdGateway::fireRspError, ErrorID==[{}], ErrorMsg==[{}], RequestID==[{}], IsLast==[{}]",
+        log.warn("MdGateway::fireRspError, ErrorID==[{}], ErrorMsg==[{}], RequestID==[{}], IsLast==[{}]",
                 Field.getErrorID(), Field.getErrorMsg(), RequestID, IsLast);
         publisher.publishRspError(MD, Field, RequestID, IsLast);
     }
@@ -237,13 +232,12 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
     public void fireRspSubMarketData(CThostFtdcSpecificInstrumentField Field,
                                      CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
         log.info("MdGateway::fireRspSubMarketData");
-        if (FtdcRspInfoHandler.nonError(RspInfo)) {
-            if (Field != null) {
+        if (nonError(RspInfo, "MdGateway::fireRspSubMarketData", RequestID, IsLast)) {
+            if (nonnull(Field, "MdGateway::fireRspSubMarketData", RequestID, IsLast)) {
                 log.info("MdGateway::fireRspSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
                         RequestID, IsLast, Field.getInstrumentID());
-                publisher.publishSpecificInstrument(Field, RspInfo, SpecificInstrumentSource.SubMarketData, RequestID, IsLast);
-            } else
-                log.error("MdGateway::fireRspSubMarketData return null");
+                publisher.publishSpecificInstrument(SubMarketData, Field, RspInfo, RequestID, IsLast);
+            }
         }
     }
 
@@ -258,8 +252,14 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
     @Override
     public void fireRspUnSubMarketData(CThostFtdcSpecificInstrumentField Field,
                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("MdGateway::fireRspUnSubMarketData -> InstrumentCode==[{}], RequestID==[{}], IsLast==[{}]",
-                Field.getInstrumentID(), RequestID, IsLast);
+        log.info("MdGateway::fireRspUnSubMarketData");
+        if (nonError(RspInfo, "MdGateway::fireRspUnSubMarketData", RequestID, IsLast)) {
+            if (nonnull(Field, "MdGateway::fireRspUnSubMarketData", RequestID, IsLast)) {
+                log.info("MdGateway::fireRspUnSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
+                        RequestID, IsLast, Field.getInstrumentID());
+                publisher.publishSpecificInstrument(UnsubMarketData, Field, RspInfo, RequestID, IsLast);
+            }
+        }
     }
 
     /**
@@ -269,13 +269,13 @@ public final class CtpMdGateway extends LogFtdcMdListener implements Closeable {
      */
     @Override
     public void fireRtnDepthMarketData(CThostFtdcDepthMarketDataField Field) {
-        if (Field != null) {
-            log.debug("MdGateway::fireRtnDepthMarketData -> InstrumentID==[{}], LastPrice==[{}], Volume==[{}], Turnover==[{}], UpdateTime==[{}], UpdateMillisec==[{}]",
-                    Field.getInstrumentID(), Field.getLastPrice(), Field.getVolume(),
-                    Field.getTurnover(), Field.getUpdateTime(), Field.getUpdateMillisec());
+        if (nonnull(Field, "MdGateway::fireRtnDepthMarketData")) {
+            log.debug("MdGateway::fireRtnDepthMarketData -> " +
+                            "InstrumentID==[{}], LastPrice==[{}], Volume==[{}], Turnover==[{}], UpdateTime==[{}], UpdateMillisec==[{}]",
+                    Field.getInstrumentID(), Field.getLastPrice(), Field.getVolume(), Field.getTurnover(),
+                    Field.getUpdateTime(), Field.getUpdateMillisec());
             publisher.publishDepthMarketData(Field);
-        } else
-            log.error("MdGateway::fireRtnDepthMarketData return null");
+        }
     }
 
     @Override

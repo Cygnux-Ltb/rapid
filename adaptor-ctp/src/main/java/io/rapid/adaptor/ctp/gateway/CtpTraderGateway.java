@@ -1,41 +1,39 @@
 package io.rapid.adaptor.ctp.gateway;
 
-import ctp.thostapi.CThostFtdcBatchOrderActionField;
-import ctp.thostapi.CThostFtdcInputBatchOrderActionField;
-import ctp.thostapi.CThostFtdcInputOrderActionField;
-import ctp.thostapi.CThostFtdcInputOrderField;
-import ctp.thostapi.CThostFtdcInstrumentField;
-import ctp.thostapi.CThostFtdcInstrumentStatusField;
-import ctp.thostapi.CThostFtdcInvestorPositionField;
-import ctp.thostapi.CThostFtdcOrderActionField;
-import ctp.thostapi.CThostFtdcOrderField;
-import ctp.thostapi.CThostFtdcQryInstrumentField;
-import ctp.thostapi.CThostFtdcQryInvestorPositionField;
-import ctp.thostapi.CThostFtdcQryOrderField;
-import ctp.thostapi.CThostFtdcQrySettlementInfoField;
-import ctp.thostapi.CThostFtdcQryTradeField;
-import ctp.thostapi.CThostFtdcQryTradingAccountField;
-import ctp.thostapi.CThostFtdcRspAuthenticateField;
-import ctp.thostapi.CThostFtdcRspInfoField;
-import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSettlementInfoConfirmField;
-import ctp.thostapi.CThostFtdcSettlementInfoField;
-import ctp.thostapi.CThostFtdcTradeField;
-import ctp.thostapi.CThostFtdcTraderApi;
-import ctp.thostapi.CThostFtdcTraderSpi;
-import ctp.thostapi.CThostFtdcTradingAccountField;
-import ctp.thostapi.CThostFtdcUserLogoutField;
 import io.mercury.common.annotation.CalledNativeFunction;
-import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.Sleep;
-import io.mercury.common.util.StringSupport;
 import io.rapid.adaptor.ctp.consts.FtdcBizType;
 import io.rapid.adaptor.ctp.gateway.event.FtdcRspPublisher;
 import io.rapid.adaptor.ctp.gateway.upstream.FtdcTraderSpi;
-import io.rapid.adaptor.ctp.gateway.upstream.LogFtdcTraderListener;
+import io.rapid.adaptor.ctp.gateway.upstream.LoggingFtdcTraderListener;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import lombok.Getter;
+import org.rationalityfrontline.jctp.CThostFtdcBatchOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcInputBatchOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderField;
+import org.rationalityfrontline.jctp.CThostFtdcInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcInstrumentStatusField;
+import org.rationalityfrontline.jctp.CThostFtdcInvestorPositionField;
+import org.rationalityfrontline.jctp.CThostFtdcOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcOrderField;
+import org.rationalityfrontline.jctp.CThostFtdcQryInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcQryInvestorPositionField;
+import org.rationalityfrontline.jctp.CThostFtdcQryOrderField;
+import org.rationalityfrontline.jctp.CThostFtdcQrySettlementInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcQryTradeField;
+import org.rationalityfrontline.jctp.CThostFtdcQryTradingAccountField;
+import org.rationalityfrontline.jctp.CThostFtdcRspAuthenticateField;
+import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
+import org.rationalityfrontline.jctp.CThostFtdcSettlementInfoConfirmField;
+import org.rationalityfrontline.jctp.CThostFtdcSettlementInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcTradeField;
+import org.rationalityfrontline.jctp.CThostFtdcTraderApi;
+import org.rationalityfrontline.jctp.CThostFtdcTraderSpi;
+import org.rationalityfrontline.jctp.CThostFtdcTradingAccountField;
+import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 import org.slf4j.Logger;
 
 import java.io.Closeable;
@@ -45,29 +43,20 @@ import java.lang.annotation.Native;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static ctp.thostapi.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
 import static io.mercury.common.datetime.DateTimeUtil.date;
-import static io.mercury.common.file.FileUtil.mkdirInTmp;
+import static io.mercury.common.file.FileUtil.mkdirInHome;
 import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
-import static io.rapid.adaptor.ctp.gateway.FtdcRspInfoHandler.nonError;
-import static io.rapid.adaptor.ctp.serializable.avro.shared.EventSource.TD;
+import static io.mercury.common.util.StringSupport.nonEmpty;
+import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonError;
+import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonnull;
+import static io.rapid.adaptor.ctp.serializable.shared.EventSource.TD;
+import static org.rationalityfrontline.jctp.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
 
-public final class CtpTraderGateway extends LogFtdcTraderListener implements Closeable {
+public final class CtpTraderGateway extends LoggingFtdcTraderListener implements Closeable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpTraderGateway.class);
-
-    // 静态加载FtdcLibrary
-    static {
-        try {
-            NativeLibraryManager.tryLoad();
-        } catch (NativeLibraryException e) {
-            log.error(e.getMessage(), e);
-            log.error("CTP native library file loading error, System must exit. status -1");
-            System.exit(-1);
-        }
-    }
 
     @Native
     private CThostFtdcTraderApi FtdcTraderApi;
@@ -76,15 +65,15 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     private final AtomicBoolean isInitialize = new AtomicBoolean(false);
 
     // 是否已认证
-    private volatile boolean isAuthenticate;
+    private final AtomicBoolean isAuthenticate = new AtomicBoolean(false);
 
     // 是否已登陆交易接口
-    private volatile boolean isAvailable;
+    private final AtomicBoolean isAvailable = new AtomicBoolean(false);
 
     // 交易前置号
-    private volatile int frontId;
+    private final AtomicInteger frontId = new AtomicInteger(-1);
     // 交易会话号
-    private volatile int sessionId;
+    private final AtomicInteger sessionId = new AtomicInteger(-1);
 
     // 交易请求ID
     private final AtomicInteger requestIdAllocator = new AtomicInteger(-1);
@@ -99,7 +88,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     public CtpTraderGateway(CtpParams params, FtdcRspPublisher publisher) {
         this.params = nonNull(params, "params");
         this.publisher = nonNull(publisher, "publisher");
-        this.gatewayId = "GATEWAY-TD-" + params.getBrokerId() + "-" + params.getInvestorId();
+        this.gatewayId = "GW-TD-" + params.getBrokerId() + "-" + params.getInvestorId();
     }
 
     /**
@@ -107,9 +96,9 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     public void startup() {
         if (isInitialize.compareAndSet(false, true)) {
-            log.info("CThostFtdcTraderApi.GetApiVersion() -> {}", CThostFtdcTraderApi.GetApiVersion());
+            log.info("CThostFtdcTraderApi::GetApiVersion -> {}", CThostFtdcTraderApi.GetApiVersion());
             try {
-                startNewMaxPriorityThread(gatewayId + "-Thread", this::callInitAndJoin);
+                startNewMaxPriorityThread(gatewayId + "-Thread", this::CallInitAndJoin);
             } catch (Exception e) {
                 log.error("TraderGateway initAndJoin throw Exception -> {}", e.getMessage(), e);
                 isInitialize.set(false);
@@ -119,60 +108,71 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     }
 
     @CalledNativeFunction
-    private void callInitAndJoin() {
+    private void CallInitAndJoin() {
         // 创建CTP数据文件临时目录
-        var tempDir = mkdirInTmp(gatewayId + "-" + date());
-        log.info("{} -> used trader tempDir: {}", gatewayId, tempDir.getAbsolutePath());
+        File tempDir = mkdirInHome(gatewayId + "-" + date());
+        log.info("TraderGateway -> used trader tempDir: {}", tempDir.getAbsolutePath());
         // 指定trader临时文件地址
-        var tempFile = new File(tempDir, "trader").getAbsolutePath();
-        log.info("{} -> used trader tempFile : {}", gatewayId, tempFile);
+        String tempFile = new File(tempDir, "trader").getAbsolutePath();
+        log.info("TraderGateway -> used trader tempFile : {}", tempFile);
+
         // 创建traderApi
+        log.info("TraderGateway -> call CThostFtdcTraderApi::CreateFtdcTraderApi#{}", tempFile);
         this.FtdcTraderApi = CThostFtdcTraderApi.CreateFtdcTraderApi(tempFile);
-        log.info("{} -> called native CThostFtdcTraderApi::CreateFtdcTraderApi", gatewayId);
+
         // 创建traderSpi
-        CThostFtdcTraderSpi Spi = new FtdcTraderSpi(this);
-        log.info("{} -> created CThostFtdcTraderSpi with FtdcTraderSpi", gatewayId);
+        log.info("TraderGateway -> create CThostFtdcTraderSpi implement with FtdcTraderSpi");
+        CThostFtdcTraderSpi TraderSpi = new FtdcTraderSpi(this);
+
         // 将Spi注册到CThostFtdcTraderApi
-        FtdcTraderApi.RegisterSpi(Spi);
-        log.info("{} -> called native CThostFtdcTraderApi::RegisterSpi", gatewayId);
+        log.info("TraderGateway -> call CThostFtdcTraderApi::RegisterSpi#FtdcTraderSpi");
+        FtdcTraderApi.RegisterSpi(TraderSpi);
+
         // 注册到trader前置机
+        log.info("TraderGateway -> call CThostFtdcTraderApi::RegisterFront#{}", params.getTraderAddr());
         FtdcTraderApi.RegisterFront(params.getTraderAddr());
-        log.info("{} -> called native CThostFtdcTraderApi::RegisterFront", gatewayId);
-        /// THOST_TERT_RESTART:从本交易日开始重传
-        /// THOST_TERT_RESUME:从上次收到的续传
-        /// THOST_TERT_QUICK:只传送登录后私有流的内容
+
+        // THOST_TERT_RESTART:从本交易日开始重传
+        // THOST_TERT_RESUME:从上次收到的续传
+        // THOST_TERT_QUICK:只传送登录后私有流的内容
         // 订阅公有流, 设置为[THOST_TERT_RESUME]
+        log.info("TraderGateway -> call CThostFtdcTraderApi::SubscribePublicTopic#THOST_TERT_RESUME");
         FtdcTraderApi.SubscribePublicTopic(THOST_TERT_RESUME);
-        log.info("{} -> called native CThostFtdcTraderApi::SubscribePublicTopic(THOST_TERT_RESUME)", gatewayId);
+
         // 订阅私有流, 设置为[THOST_TERT_RESUME]
+        log.info("TraderGateway -> call CThostFtdcTraderApi::SubscribePrivateTopic#THOST_TERT_RESUME");
         FtdcTraderApi.SubscribePrivateTopic(THOST_TERT_RESUME);
-        log.info("{} -> called native CThostFtdcTraderApi::SubscribePrivateTopic(THOST_TERT_RESUME)", gatewayId);
+
         // 初始化traderApi
+        log.info("TraderGateway -> call CThostFtdcTraderApi::Init");
         FtdcTraderApi.Init();
-        log.info("{} -> called native CThostFtdcTraderApi::Init", gatewayId);
+
         // 阻塞当前线程
-        log.info("{} -> calling native CThostFtdcTraderApi::Join", gatewayId);
+        log.info("TraderGateway -> call CThostFtdcTraderApi::Join");
         FtdcTraderApi.Join();
     }
 
     /**
      * 报单请求
      *
-     * @param Field CThostFtdcInputOrderField
+     * @param ReqField CThostFtdcInputOrderField
      */
     @CalledNativeFunction
-    public int callReqOrderInsert(CThostFtdcInputOrderField Field) {
-        if (isAvailable) {
+    public int ReqOrderInsert(CThostFtdcInputOrderField ReqField) {
+        if (isAvailable.get()) {
             // 设置账号信息
             int RequestID = requestIdAllocator.incrementAndGet();
-            FtdcTraderApi.ReqOrderInsert(Field, RequestID);
-            log.info("Send TraderApi::ReqOrderInsert OK -> RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], "
-                            + "CombOffsetFlag==[{}], Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
-                    RequestID, Field.getOrderRef(), Field.getInstrumentID(), Field.getCombOffsetFlag(),
-                    Field.getDirection(), Field.getVolumeTotalOriginal(), Field.getLimitPrice());
+            FtdcTraderApi.ReqOrderInsert(ReqField, RequestID);
+            log.info("Send CThostFtdcTraderApi::ReqOrderInsert OK -> " +
+                            "RequestID==[{}], OrderRef==[{}], InstrumentID==[{}], " +
+                            "CombOffsetFlag==[{}], Direction==[{}], " +
+                            "VolumeTotalOriginal==[{}], LimitPrice==[{}]",
+                    RequestID, ReqField.getOrderRef(), ReqField.getInstrumentID(),
+                    ReqField.getCombOffsetFlag(), ReqField.getDirection(),
+                    ReqField.getVolumeTotalOriginal(), ReqField.getLimitPrice());
             return RequestID;
         } else {
-            log.error("TraderApi::ReqOrderInsert call error :: TraderApi is Unavailable");
+            log.error("CThostFtdcTraderApi::ReqOrderInsert is Unavailable");
             return -1;
         }
     }
@@ -180,20 +180,23 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     /**
      * 撤单请求
      *
-     * @param Field CThostFtdcInputOrderActionField
+     * @param ReqField CThostFtdcInputOrderActionField
      */
     @CalledNativeFunction
-    public int callReqOrderAction(CThostFtdcInputOrderActionField Field) {
-        if (isAvailable) {
+    public int ReqOrderAction(CThostFtdcInputOrderActionField ReqField) {
+        if (isAvailable.get()) {
             int RequestID = requestIdAllocator.incrementAndGet();
-            FtdcTraderApi.ReqOrderAction(Field, RequestID);
-            log.info("Send TraderApi::ReqOrderAction OK -> RequestID==[{}], OrderRef==[{}], OrderActionRef==[{}], "
-                            + "BrokerID==[{}], InvestorID==[{}], InstrumentID==[{}]",
-                    RequestID, Field.getOrderRef(), Field.getOrderActionRef(), Field.getBrokerID(),
-                    Field.getInvestorID(), Field.getInstrumentID());
+            ReqField.setFrontID(frontId.get());
+            ReqField.setSessionID(sessionId.get());
+            FtdcTraderApi.ReqOrderAction(ReqField, RequestID);
+            log.info("Send CThostFtdcTraderApi::ReqOrderAction OK -> " +
+                            "RequestID==[{}], OrderRef==[{}], OrderActionRef==[{}], " +
+                            "BrokerID==[{}], InvestorID==[{}], InstrumentID==[{}]",
+                    RequestID, ReqField.getOrderRef(), ReqField.getOrderActionRef(), ReqField.getBrokerID(),
+                    ReqField.getInvestorID(), ReqField.getInstrumentID());
             return RequestID;
         } else {
-            log.error("TraderApi::ReqOrderAction call error :: TraderApi is Unavailable");
+            log.error("CThostFtdcTraderApi::ReqOrderAction is Unavailable");
             return -1;
         }
 
@@ -226,28 +229,31 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int callReqQryOrder() {
-        var Field = new CThostFtdcQryOrderField();
-        ///经纪公司代码
-        Field.setBrokerID(params.getBrokerId());
-        ///投资者代码
-        Field.setInvestorID(params.getInvestorId());
-        ///合约代码
-        // Field.setInstrumentID(InstrumentID);
-        ///交易所代码
-        // Field.setExchangeID(ExchangeID);
-        ///报单编号
-        // Field.setOrderSysID("");
-        ///开始时间
-        // Field.setInsertTimeStart("");
-        ///结束时间
-        // Field.setInsertTimeEnd("");
-        ///投资单元代码
-        // Field.setInvestUnitID("");
+    public int ReqQryOrder() {
+        var ReqField = new CThostFtdcQryOrderField();
+        //经纪公司代码
+        ReqField.setBrokerID(params.getBrokerId());
+        //投资者代码
+        ReqField.setInvestorID(params.getInvestorId());
+        //合约代码
+        // ReqField.setInstrumentID(InstrumentID);
+        //交易所代码
+        // ReqField.setExchangeID(ExchangeID);
+        //报单编号
+        // ReqField.setOrderSysID("");
+        //开始时间
+        // ReqField.setInsertTimeStart("");
+        //结束时间
+        // ReqField.setInsertTimeEnd("");
+        //投资单元代码
+        // ReqField.setInvestUnitID("");
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQryOrder(Field, RequestID);
-        log.info("Send TraderApi::ReqQryOrder OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, Field.getBrokerID(), Field.getInvestorID(), Field.getExchangeID(), Field.getInstrumentID());
+        FtdcTraderApi.ReqQryOrder(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQryOrder OK -> " +
+                        "RequestID==[{}], BrokerID==[{}], InvestorID==[{}], " +
+                        "ExchangeID==[{}], InstrumentID==[{}]",
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(),
+                ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -278,28 +284,31 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int callReqQryTrade() {
-        var Field = new CThostFtdcQryTradeField();
-        ///经纪公司代码
-        Field.setBrokerID(params.getBrokerId());
-        ///投资者代码
-        Field.setInvestorID(params.getInvestorId());
-        ///合约代码
-        // Field.setInstrumentID(InstrumentID);
-        ///交易所代码
-        // Field.setExchangeID(ExchangeID);
-        ///报单编号
-        // Field.setOrderSysID("");
-        ///开始时间
-        // Field.setInsertTimeStart("");
-        ///结束时间
-        // Field.setInsertTimeEnd("");
-        ///投资单元代码
-        // Field.setInvestUnitID("");
+    public int ReqQryTrade() {
+        var ReqField = new CThostFtdcQryTradeField();
+        //经纪公司代码
+        ReqField.setBrokerID(params.getBrokerId());
+        //投资者代码
+        ReqField.setInvestorID(params.getInvestorId());
+        //合约代码
+        // ReqField.setInstrumentID(InstrumentID);
+        //交易所代码
+        // ReqField.setExchangeID(ExchangeID);
+        //报单编号
+        // ReqField.setOrderSysID("");
+        //开始时间
+        // ReqField.setInsertTimeStart("");
+        //结束时间
+        // ReqField.setInsertTimeEnd("");
+        //投资单元代码
+        // ReqField.setInvestUnitID("");
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQryTrade(Field, RequestID);
-        log.info("Send TraderApi::ReqQryOrder OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, Field.getBrokerID(), Field.getInvestorID(), Field.getExchangeID(), Field.getInstrumentID());
+        FtdcTraderApi.ReqQryTrade(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQryTrade OK -> " +
+                        "RequestID==[{}], BrokerID==[{}], InvestorID==[{}], " +
+                        "ExchangeID==[{}], InstrumentID==[{}]",
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(),
+                ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -325,22 +334,25 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int callReqQryTradingAccount() {
-        var Field = new CThostFtdcQryTradingAccountField();
-        ///经纪公司代码
-        Field.setBrokerID(params.getBrokerId());
-        ///投资者代码
-        Field.setInvestorID(params.getInvestorId());
-        ///币种代码
-        Field.setCurrencyID(params.getCurrencyId());
-        ///业务类型
-        Field.setBizType(FtdcBizType.Future);
-        ///投资者账号
-        Field.setAccountID(params.getAccountId());
+    public int ReqQryTradingAccount() {
+        var ReqField = new CThostFtdcQryTradingAccountField();
+        //经纪公司代码
+        ReqField.setBrokerID(params.getBrokerId());
+        //投资者代码
+        ReqField.setInvestorID(params.getInvestorId());
+        //币种代码
+        ReqField.setCurrencyID(params.getCurrencyId());
+        //业务类型
+        ReqField.setBizType(FtdcBizType.Future);
+        //投资者账号
+        ReqField.setAccountID(params.getAccountId());
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQryTradingAccount(Field, RequestID);
-        log.info("Send TraderApi::ReqQryTradingAccount OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], CurrencyID==[{}], BizType==[{}] AccountID==[{}]",
-                RequestID, Field.getBrokerID(), Field.getInvestorID(), Field.getCurrencyID(), Field.getBizType(), Field.getAccountID());
+        FtdcTraderApi.ReqQryTradingAccount(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQryTradingAccount OK -> " +
+                        "RequestID==[{}], BrokerID==[{}], InvestorID==[{}], " +
+                        "CurrencyID==[{}], BizType==[{}] AccountID==[{}]",
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(),
+                ReqField.getCurrencyID(), ReqField.getBizType(), ReqField.getAccountID());
         return RequestID;
     }
 
@@ -351,22 +363,25 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param InstrumentID String
      */
     @CalledNativeFunction
-    public int callReqQryInvestorPosition(String ExchangeID, String InstrumentID) {
-        var Field = new CThostFtdcQryInvestorPositionField();
-        ///经纪公司代码
-        Field.setBrokerID(params.getBrokerId());
-        ///投资者代码
-        Field.setInvestorID(params.getInvestorId());
-        ///合约代码
-        Field.setInstrumentID(InstrumentID);
-        ///交易所代码
-        Field.setExchangeID(ExchangeID);
-        ///投资单元代码
-        // Field.setInvestUnitID("");
+    public int ReqQryInvestorPosition(String ExchangeID, String InstrumentID) {
+        var ReqField = new CThostFtdcQryInvestorPositionField();
+        //经纪公司代码
+        ReqField.setBrokerID(params.getBrokerId());
+        //投资者代码
+        ReqField.setInvestorID(params.getInvestorId());
+        //合约代码
+        ReqField.setInstrumentID(InstrumentID);
+        //交易所代码
+        ReqField.setExchangeID(ExchangeID);
+        //投资单元代码
+        // ReqField.setInvestUnitID("");
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQryInvestorPosition(Field, RequestID);
-        log.info("Send TraderApi::ReqQryInvestorPosition OK -> RequestID==[{}], BrokerID==[{}], InvestorID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, Field.getBrokerID(), Field.getInvestorID(), Field.getExchangeID(), Field.getInstrumentID());
+        FtdcTraderApi.ReqQryInvestorPosition(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQryInvestorPosition OK -> " +
+                        "RequestID==[{}], BrokerID==[{}], InvestorID==[{}], " +
+                        "ExchangeID==[{}], InstrumentID==[{}]",
+                RequestID, ReqField.getBrokerID(), ReqField.getInvestorID(),
+                ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -391,16 +406,17 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * </pre>
      */
     @CalledNativeFunction
-    public int callReqQrySettlementInfo() {
-        var Field = new CThostFtdcQrySettlementInfoField();
-        Field.setBrokerID(params.getBrokerId());
-        Field.setInvestorID(params.getInvestorId());
-        Field.setTradingDay(params.getTradingDay());
-        Field.setAccountID(params.getAccountId());
-        Field.setCurrencyID(params.getCurrencyId());
+    public int ReqQrySettlementInfo() {
+        var ReqField = new CThostFtdcQrySettlementInfoField();
+        ReqField.setBrokerID(params.getBrokerId());
+        ReqField.setInvestorID(params.getInvestorId());
+        ReqField.setTradingDay(params.getTradingDay());
+        ReqField.setAccountID(params.getAccountId());
+        ReqField.setCurrencyID(params.getCurrencyId());
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQrySettlementInfo(Field, RequestID);
-        log.info("Send TraderApi::ReqQrySettlementInfo OK -> RequestID==[{}]", RequestID);
+        FtdcTraderApi.ReqQrySettlementInfo(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQrySettlementInfo OK -> " +
+                "RequestID==[{}]", RequestID);
         return RequestID;
     }
 
@@ -411,14 +427,15 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param instrumentCode String
      */
     @CalledNativeFunction
-    public int callReqQryInstrument(String exchangeCode, String instrumentCode) {
-        var Field = new CThostFtdcQryInstrumentField();
-        Field.setExchangeID(exchangeCode);
-        Field.setInstrumentID(instrumentCode);
+    public int ReqQryInstrument(String exchangeCode, String instrumentCode) {
+        var ReqField = new CThostFtdcQryInstrumentField();
+        ReqField.setExchangeID(exchangeCode);
+        ReqField.setInstrumentID(instrumentCode);
         int RequestID = requestIdAllocator.incrementAndGet();
-        FtdcTraderApi.ReqQryInstrument(Field, RequestID);
-        log.info("Send TraderApi::ReqQryInstrument OK -> RequestID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
-                RequestID, Field.getExchangeID(), Field.getInstrumentID());
+        FtdcTraderApi.ReqQryInstrument(ReqField, RequestID);
+        log.info("Send CThostFtdcTraderApi::ReqQryInstrument OK -> " +
+                        "RequestID==[{}], ExchangeID==[{}], InstrumentID==[{}]",
+                RequestID, ReqField.getExchangeID(), ReqField.getInstrumentID());
         return RequestID;
     }
 
@@ -435,15 +452,19 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @CalledNativeFunction
     public void fireFrontConnected() {
         log.info("TraderGateway::fireFrontConnected");
-        if (StringSupport.nonEmpty(params.getAuthCode()) && !isAuthenticate) {
+        if (nonEmpty(params.getAuthCode()) && !isAuthenticate.get()) {
             // 发送认证请求
-            var Field = params.getReqAuthenticateField();
+            var ReqField = params.getReqAuthenticateField();
             int RequestID = requestIdAllocator.incrementAndGet();
-            FtdcTraderApi.ReqAuthenticate(Field, RequestID);
-            log.info("Sent TraderApi::ReqAuthenticate OK -> RequestID==[{}], BrokerID==[{}], UserID==[{}], AppID==[{}], AuthCode==[{}]",
-                    RequestID, Field.getBrokerID(), Field.getUserID(), Field.getAppID(), Field.getAuthCode());
+            FtdcTraderApi.ReqAuthenticate(ReqField, RequestID);
+            log.info("Sent CThostFtdcTraderApi::ReqAuthenticate OK -> " +
+                            "RequestID==[{}], BrokerID==[{}], UserID==[{}], " +
+                            "AppID==[{}], AuthCode==[{}]",
+                    RequestID, ReqField.getBrokerID(), ReqField.getUserID(),
+                    ReqField.getAppID(), ReqField.getAuthCode());
         } else {
-            log.error("Cannot sent TraderApi::ReqAuthenticate, authCode==[{}], isAuthenticate==[{}]",
+            log.error("Cannot sent CThostFtdcTraderApi::ReqAuthenticate, " +
+                            "authCode==[{}], isAuthenticate==[{}]",
                     params.getAuthCode(), isAuthenticate);
         }
     }
@@ -460,12 +481,12 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireFrontDisconnected(int Reason) {
-        log.warn("TraderGateway::fireFrontDisconnected");
-        isAvailable = false;
-        isAuthenticate = false;
+        log.warn("TraderGateway::fireFrontDisconnected OK -> " +
+                "Reason==[{}]", Reason);
+        isAvailable.set(false);
+        isAuthenticate.set(false);
         // 交易前置断开处理
         publisher.publishFrontDisconnected(TD, Reason, params.getBrokerId(), params.getUserId());
-
     }
 
     /**
@@ -475,7 +496,8 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireHeartBeatWarning(int TimeLapse) {
-        log.info("TraderGateway::fireHeartBeatWarning");
+        log.info("TraderGateway::fireHeartBeatWarning OK -> " +
+                "TimeLapse==[{}]", TimeLapse);
         publisher.publishHeartBeatWarning(TD, TimeLapse, params.getBrokerId(), params.getUserId());
     }
 
@@ -491,22 +513,17 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @CalledNativeFunction
     public void fireRspAuthenticate(CThostFtdcRspAuthenticateField Field,
                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspAuthenticate, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspAuthenticate -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
-                        Field.getUserID());
-                isAuthenticate = true;
+        if (nonError(RspInfo, "TraderGateway::fireRspAuthenticate", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspAuthenticate", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspAuthenticate OK -> " +
+                                "BrokerID==[{}], UserID==[{}]",
+                        Field.getBrokerID(), Field.getUserID());
+                isAuthenticate.set(true);
                 var ReqField = params.getReqUserLoginField();
                 int ReqRequestID = requestIdAllocator.incrementAndGet();
                 FtdcTraderApi.ReqUserLogin(ReqField, ReqRequestID);
-                log.info("Sent TraderApi::ReqUserLogin OK -> RequestID==[{}]", ReqRequestID);
-            } else {
-                log.error("TraderGateway::fireRspAuthenticate return null");
+                log.info("Sent CThostFtdcTraderApi::ReqUserLogin OK -> RequestID==[{}]", ReqRequestID);
             }
-        } else {
-            log.error("TraderGateway::fireRspAuthenticate has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -521,21 +538,18 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspUserLogin(CThostFtdcRspUserLoginField Field,
                                  CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspUserLogin, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspUserLogin -> BrokerID==[{}], UserID==[{}], LoginTime==[{}], MaxOrderRef==[{}]",
-                        Field.getBrokerID(), Field.getUserID(), Field.getLoginTime(), Field.getMaxOrderRef());
-                this.frontId = Field.getFrontID();
-                this.sessionId = Field.getSessionID();
-                this.isAvailable = true;
+        if (nonError(RspInfo, "TraderGateway::fireRspUserLogin", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspUserLogin", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspUserLogin OK -> " +
+                                "BrokerID==[{}], UserID==[{}], " +
+                                "LoginTime==[{}], MaxOrderRef==[{}]",
+                        Field.getBrokerID(), Field.getUserID(),
+                        Field.getLoginTime(), Field.getMaxOrderRef());
+                this.frontId.set(Field.getFrontID());
+                this.sessionId.set(Field.getSessionID());
+                this.isAvailable.set(true);
                 publisher.publishRspUserLogin(TD, Field, RspInfo, RequestID, IsLast);
-            } else {
-                log.error("TraderGateway::fireRspUserLogin return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspUserLogin has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -550,19 +564,13 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspUserLogout(CThostFtdcUserLogoutField Field,
                                   CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.warn("TraderGateway::fireRspUserLogout, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspUserLogout -> BrokerID==[{}], UserID==[{}]", Field.getBrokerID(),
-                        Field.getUserID());
+        if (nonError(RspInfo, "TraderGateway::fireRspUserLogout", RequestID, IsLast))
+            if (nonnull(Field, "TraderGateway::fireRspUserLogout", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspUserLogout OK -> " +
+                                "BrokerID==[{}], UserID==[{}]",
+                        Field.getBrokerID(), Field.getUserID());
                 publisher.publishUserLogout(TD, Field, RspInfo, RequestID, IsLast);
-            } else {
-                log.error("TraderGateway::fireRspUserLogout return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspUserLogout has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
-        }
     }
 
     /**
@@ -576,17 +584,12 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspOrderInsert(CThostFtdcInputOrderField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspOrderInsert, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspOrderInsert -> OrderRef==[{}]", Field.getOrderRef());
+        if (nonError(RspInfo, "TraderGateway::fireRspOrderInsert", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspOrderInsert", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspOrderInsert OK -> " +
+                        "OrderRef==[{}]", Field.getOrderRef());
                 publisher.publishInputOrder(Field, RspInfo, IsLast);
-            } else {
-                log.error("TraderGateway::fireRspOrderInsert return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspOrderInsert has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -602,20 +605,15 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspOrderAction(CThostFtdcInputOrderActionField Field,
                                    CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
+        if (nonError(RspInfo, "TraderGateway::fireRspOrderAction", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspOrderAction", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspOrderAction OK -> " +
+                                "OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
                         Field.getOrderRef(), Field.getOrderSysID(),
                         Field.getOrderActionRef(), Field.getInstrumentID());
                 publisher.publishInputOrderAction(Field, RspInfo, IsLast);
-            } else {
-                log.error("TraderGateway::fireRspOrderAction return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspOrderAction has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -630,9 +628,9 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireRspBatchOrderAction(CThostFtdcInputBatchOrderActionField Field,
-                                        CThostFtdcRspInfoField RspInfo,
-                                        int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspBatchOrderAction, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+                                        CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        log.info("TraderGateway::fireRspBatchOrderAction OK -> " +
+                "RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
     }
 
 
@@ -646,20 +644,14 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireRspQryOrder(CThostFtdcOrderField Field,
-                                CThostFtdcRspInfoField RspInfo,
-                                int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQryOrder, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspQryOrder -> AccountID==[{}], OrderRef==[{}], isLast==[{}]",
+                                CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        if (nonError(RspInfo, "TraderGateway::fireRspQryOrder", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspQryOrder", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspQryOrder OK -> " +
+                                "AccountID==[{}], OrderRef==[{}], isLast==[{}]",
                         Field.getAccountID(), Field.getOrderRef(), IsLast);
                 publisher.publishOrder(Field);
-            } else {
-                log.error("TraderGateway::fireRspQryOrder return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspQryOrder has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -674,7 +666,8 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspQryTrade(CThostFtdcTradeField Field,
                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQryTrade, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
+        log.info("TraderGateway::fireRspQryTrade OK -> " +
+                "RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
     }
 
     /**
@@ -688,21 +681,15 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspQryInvestorPosition(CThostFtdcInvestorPositionField Field,
                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQryInvestorPosition, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireRspQryInvestorPosition -> InvestorID==[{}], ExchangeID==[{}], " +
+        if (nonError(RspInfo, "TraderGateway::fireRspQryInvestorPosition", RequestID, IsLast))
+            if (nonnull(Field, "TraderGateway::fireRspQryInvestorPosition", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspQryInvestorPosition OK -> " +
+                                "InvestorID==[{}], ExchangeID==[{}], " +
                                 "InstrumentID==[{}], Position==[{}], isLast==[{}]",
                         Field.getInvestorID(), Field.getExchangeID(),
                         Field.getInstrumentID(), Field.getPosition(), IsLast);
                 publisher.publishInvestorPosition(Field, RspInfo, RequestID, IsLast);
-            } else {
-                log.error("TraderGateway::fireRspQryInvestorPosition return null");
             }
-        } else {
-            log.error("TraderGateway::fireRspQryInvestorPosition has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
-        }
     }
 
     /**
@@ -716,19 +703,15 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspQryTradingAccount(CThostFtdcTradingAccountField Field,
                                          CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQryTradingAccount, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
-            if (Field != null) {
-                log.info("TraderGateway::fireRspQryTradingAccount -> AccountID==[{}], Balance==[{}], " +
-                                "Available==[{}], Credit==[{}], WithdrawQuota==[{}], isLast==[{}]",
-                        Field.getAccountID(), Field.getBalance(),
-                        Field.getAvailable(), Field.getCredit(), Field.getWithdrawQuota(), IsLast);
+        if (nonError(RspInfo, "TraderGateway::fireRspQryTradingAccount")) {
+            if (nonnull(Field, "TraderGateway::fireRspQryTradingAccount")) {
+                log.info("TraderGateway::fireRspQryTradingAccount OK -> " +
+                                "AccountID==[{}], Balance==[{}], Available==[{}], " +
+                                "Credit==[{}], WithdrawQuota==[{}], isLast==[{}]",
+                        Field.getAccountID(), Field.getBalance(), Field.getAvailable(),
+                        Field.getCredit(), Field.getWithdrawQuota(), IsLast);
                 publisher.publishTradingAccount(Field, RspInfo, RequestID, IsLast);
-            } else
-                log.error("TraderGateway::fireRspQryTradingAccount return null");
-        else {
-            log.error("TraderGateway::fireRspQryTradingAccount has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
+            }
         }
     }
 
@@ -741,17 +724,14 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      * @param IsLast    boolean
      */
     @Override
-    public void fireRspQryInstrument(CThostFtdcInstrumentField Field, CThostFtdcRspInfoField RspInfo,
-                                     int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQryInstrument, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
-            if (Field != null)
-                log.info("TraderGateway::fireRspQryInstrument, ExchangeID==[{}], InstrumentID==[{}]",
+    public void fireRspQryInstrument(CThostFtdcInstrumentField Field,
+                                     CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        if (nonError(RspInfo, "TraderGateway::fireRspQryInstrument", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspQryInstrument", RequestID, IsLast)) {
+                log.info("TraderGateway::fireRspQryInstrument OK -> " +
+                                "ExchangeID==[{}], InstrumentID==[{}]",
                         Field.getExchangeID(), Field.getInstrumentID());
-            else
-                log.error("TraderGateway::fireRspQryInstrument return null");
-        else {
-            log.error("TraderGateway::fireRspQryInstrument has error, ErrorID==[{}], ErrorMsg==[{}]", RspInfo.getErrorID(), RspInfo.getErrorMsg());
+            }
         }
     }
 
@@ -766,11 +746,10 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspQrySettlementInfo(CThostFtdcSettlementInfoField Field, CThostFtdcRspInfoField RspInfo,
                                          int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQrySettlementInfo, RequestID==[{}], IsLast==[{}]", RequestID, IsLast);
-        if (nonError(RspInfo))
-            if (Field != null)
+        if (nonError(RspInfo, "TraderGateway::fireRspQrySettlementInfo", RequestID, IsLast)) {
+            if (nonnull(Field, "TraderGateway::fireRspQrySettlementInfo", RequestID, IsLast)) {
                 log.info("""
-                                TraderGateway::fireRspQrySettlementInfo -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
+                                TraderGateway::fireRspQrySettlementInfo OK -> BrokerID==[{}], AccountID==[{}], InvestorID==[{}],
                                 SettlementID==[{}], TradingDay==[{}], CurrencyID==[{}]
                                 <<<<<<<<<<<<<<<< CONTENT TEXT >>>>>>>>>>>>>>>>
                                 {}
@@ -778,11 +757,7 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
                         Field.getBrokerID(), Field.getAccountID(), Field.getInvestorID(),
                         Field.getSettlementID(), Field.getTradingDay(),
                         Field.getCurrencyID(), Field.getContent());
-            else
-                log.error("TraderGateway::fireRspQrySettlementInfo return null");
-        else {
-            log.error("TraderGateway::fireRspQrySettlementInfo has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
+            }
         }
     }
 
@@ -797,7 +772,8 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
     @Override
     public void fireRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField Field,
                                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspQrySettlementInfoConfirm, ErrorID==[{}], ErrorMsg==[{}] RequestID==[{}], IsLast==[{}]",
+        log.info("TraderGateway::fireRspQrySettlementInfoConfirm OK -> " +
+                        "ErrorID==[{}], ErrorMsg==[{}] RequestID==[{}], IsLast==[{}]",
                 RspInfo.getErrorID(), RspInfo.getErrorMsg(), RequestID, IsLast);
     }
 
@@ -811,7 +787,8 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireRspError(CThostFtdcRspInfoField Field, int RequestID, boolean IsLast) {
-        log.info("TraderGateway::fireRspError, ErrorID=[{}], ErrorMsg=[{}], RequestID==[{}], IsLast==[{}]",
+        log.warn("NOTE >>>> TraderGateway::fireRspError OK -> " +
+                        "ErrorID=[{}], ErrorMsg=[{}], RequestID==[{}], IsLast==[{}]",
                 Field.getErrorID(), Field.getErrorMsg(), RequestID, IsLast);
         publisher.publishRspError(TD, Field, RequestID, IsLast);
     }
@@ -824,17 +801,18 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireRtnOrder(CThostFtdcOrderField Field) {
-        if (Field != null) {
-            log.info( // 报单推送消息模板
-                    "TraderGateway::fireRtnOrder -> OrderRef==[{}], OrderSysID==[{}], RequestID==[{}]"
-                            + "InvestorID==[{}], InstrumentID==[{}], OrderStatus==[{}], "
-                            + "Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
+        log.info("NOTE >>>> TraderGateway::fireRtnOrder");
+        if (nonnull(Field, "TraderGateway::fireRtnOrder")) {
+            log.info(// 报单推送消息模板
+                    "TraderGateway::fireRtnOrder OK -> " +
+                            "OrderRef==[{}], OrderSysID==[{}], RequestID==[{}]" +
+                            "InvestorID==[{}], InstrumentID==[{}], OrderStatus==[{}], " +
+                            "Direction==[{}], VolumeTotalOriginal==[{}], LimitPrice==[{}]",
                     Field.getOrderRef(), Field.getOrderSysID(), Field.getRequestID(),
                     Field.getInvestorID(), Field.getInstrumentID(), Field.getOrderStatus(),
                     Field.getDirection(), Field.getVolumeTotalOriginal(), Field.getLimitPrice());
             publisher.publishOrder(Field);
-        } else
-            log.error("TraderGateway::fireRtnOrder return null");
+        }
     }
 
 
@@ -845,17 +823,18 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireRtnTrade(CThostFtdcTradeField Field) {
-        if (Field != null) {
-            log.info( // 成交推送消息模板
-                    "TraderGateway::fireRtnTrade -> OrderRef==[{}], OrderSysID==[{}], TradeID==[{}]"
-                            + "InvestorID==[{}], InstrumentID==[{}], TradeTime==[{}]"
-                            + "Direction==[{}], Volume==[{}], Price==[{}]",
+        log.info("NOTE >>>> TraderGateway::fireRtnTrade");
+        if (nonnull(Field, "TraderGateway::fireRtnTrade")) {
+            log.info(// 成交推送消息模板
+                    "TraderGateway::fireRtnTrade OK -> " +
+                            "OrderRef==[{}], OrderSysID==[{}], TradeID==[{}]" +
+                            "InvestorID==[{}], InstrumentID==[{}], TradeTime==[{}]" +
+                            "Direction==[{}], Volume==[{}], Price==[{}]",
                     Field.getOrderRef(), Field.getOrderSysID(), Field.getTradeID(),
                     Field.getInvestorID(), Field.getInstrumentID(), Field.getTradeTime(),
                     Field.getDirection(), Field.getVolume(), Field.getPrice());
             publisher.publishTrade(Field);
-        } else
-            log.error("TraderGateway::fireRtnTrade return null");
+        }
     }
 
     /**
@@ -866,18 +845,13 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireErrRtnOrderInsert(CThostFtdcInputOrderField Field, CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderGateway::fireErrRtnOrderInsert");
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireErrRtnOrderInsert -> OrderRef==[{}], RequestID==[{}]",
+        if (nonError(RspInfo, "TraderGateway::fireErrRtnOrderInsert")) {
+            if (nonnull(Field, "TraderGateway::fireErrRtnOrderInsert")) {
+                log.warn("TraderGateway::fireErrRtnOrderInsert OK -> " +
+                                "OrderRef==[{}], RequestID==[{}]",
                         Field.getOrderRef(), Field.getRequestID());
                 publisher.publishInputOrder(Field, RspInfo, true);
-            } else {
-                log.error("TraderGateway::fireErrRtnOrderInsert return null");
             }
-        } else {
-            log.error("TraderGateway::fireErrRtnOrderInsert has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
@@ -889,20 +863,16 @@ public final class CtpTraderGateway extends LogFtdcTraderListener implements Clo
      */
     @Override
     public void fireErrRtnOrderAction(CThostFtdcOrderActionField Field, CThostFtdcRspInfoField RspInfo) {
-        log.info("TraderGateway::fireErrRtnOrderAction");
-        if (nonError(RspInfo)) {
-            if (Field != null) {
-                log.info("TraderGateway::fireErrRtnOrderAction -> OrderRef==[{}], OrderSysID==[{}], " +
+        log.warn("TraderGateway::fireErrRtnOrderAction");
+        if (nonError(RspInfo, "TraderGateway::fireErrRtnOrderAction")) {
+            if (nonnull(Field, "TraderGateway::fireErrRtnOrderAction")) {
+                log.warn("TraderGateway::fireErrRtnOrderAction OK -> " +
+                                "OrderRef==[{}], OrderSysID==[{}], " +
                                 "OrderActionRef==[{}], InstrumentID==[{}]",
                         Field.getOrderRef(), Field.getOrderSysID(),
                         Field.getOrderActionRef(), Field.getInstrumentID());
                 publisher.publishOrderAction(Field);
-            } else {
-                log.error("TraderGateway::fireErrRtnOrderAction return null");
             }
-        } else {
-            log.error("TraderGateway::fireErrRtnOrderAction has error, ErrorID==[{}], ErrorMsg==[{}]",
-                    RspInfo.getErrorID(), RspInfo.getErrorMsg());
         }
     }
 
