@@ -1,14 +1,14 @@
 package io.rapid.core.instrument;
 
+import io.mercury.common.state.Enableable;
 import io.rapid.core.instrument.enums.InstrumentType;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import io.rapid.core.instrument.enums.PriorityCloseType;
-import io.mercury.common.state.Enableable;
-import io.mercury.common.functional.Formatter;
 
 import java.time.ZoneOffset;
 
-public interface Instrument extends Enableable, Comparable<Instrument>, Formatter<String> {
+public sealed interface Instrument extends Enableable, Comparable<Instrument>
+        permits AbstractInstrument {
 
     /**
      * Integer.MAX_VALUE == 2147483647
@@ -46,7 +46,7 @@ public interface Instrument extends Enableable, Comparable<Instrument>, Formatte
         return getSymbol().getMultiplier();
     }
 
-    default int getTickSize() {
+    default double getTickSize() {
         return getSymbol().getTickSize();
     }
 

@@ -11,30 +11,30 @@ public interface AccountManager {
     /**
      * @param subAccountId int
      * @return SubAccount
-     * @throws SubAccount.SubAccountException e
+     * @throws SubAccountException e
      */
-    SubAccount getSubAccount(int subAccountId) throws SubAccount.SubAccountException;
+    SubAccount getSubAccount(int subAccountId) throws SubAccountException;
 
     /**
      * @param subAccountId int
      * @return AccountGroup
-     * @throws Account.AccountException e
+     * @throws AccountException e
      */
     SubAccountMapping getSubAccountMapping(int subAccountId);
 
     /**
      * @param accountId int
      * @return Account
-     * @throws Account.AccountException e
+     * @throws AccountException e
      */
-    Account getAccount(int accountId) throws Account.AccountException;
+    Account getAccount(int accountId) throws AccountException;
 
     /**
      * @param investorId String
      * @return Account
-     * @throws Account.AccountException e
+     * @throws AccountException e
      */
-    Account getAccount(String investorId) throws Account.AccountException;
+    Account getAccount(String investorId) throws AccountException;
 
 
     /**

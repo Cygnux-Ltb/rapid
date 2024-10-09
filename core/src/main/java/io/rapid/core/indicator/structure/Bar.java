@@ -1,7 +1,7 @@
 package io.rapid.core.indicator.structure;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonWriter;
+import lombok.Getter;
 
 import javax.annotation.Nonnull;
 
@@ -10,25 +10,43 @@ import javax.annotation.Nonnull;
  */
 public final class Bar implements JsonSerializable {
 
-    // 开盘价
-    private double open = 0.0D;
+    /**
+     * 开盘价
+     */
+    @Getter
+    private final double open;
 
-    // 最高价
-    private double highest = Integer.MIN_VALUE;
+    /**
+     * 最高价
+     */
+    @Getter
+    private double highest;
 
-    // 最低价
-    private double lowest = Integer.MAX_VALUE;
+    /**
+     * 最低价
+     */
 
-    // 最新价
-    private double last = 0.0D;
+    @Getter
+    private double lowest;
+
+    /**
+     * 最新价
+     */
+    @Getter
+    private double last;
+
+    public Bar(double open) {
+        this.open = open;
+        this.highest = open;
+        this.lowest = open;
+        this.last = open;
+    }
 
     /**
      * @param price double
      * @return Bar
      */
     public Bar onPrice(double price) {
-        if (open == 0L)
-            open = price;
         if (price > highest)
             highest = price;
         if (price < lowest)
@@ -37,38 +55,16 @@ public final class Bar implements JsonSerializable {
         return this;
     }
 
-    public double getOpen() {
-        return open;
-    }
-
-    public double getHighest() {
-        return highest;
-    }
-
-    public double getLowest() {
-        return lowest;
-    }
-
-    public double getLast() {
-        return last;
-    }
-
-    private static final String OpenField = "{\"open\":";
-    private static final String HighestField = ",\"highest\":";
-    private static final String LowestField = ",\"lowest\":";
-    private static final String LastField = ",\"last\":";
-    private static final String End = "}";
-
     @Override
     public String toString() {
         return // 开盘价
-                OpenField + open +
+                "{\"open\":" + open
                         // 最高价
-                        HighestField + (highest == Long.MIN_VALUE ? 0L : highest) +
+                        + ",\"highest\":" + highest
                         // 最低价
-                        LowestField + (lowest == Long.MAX_VALUE ? 0L : lowest) +
+                        + ",\"lowest\":" + lowest
                         // 最新价
-                        LastField + last + End;
+                        + ",\"last\":" + last + "}";
     }
 
     @Nonnull
@@ -79,8 +75,7 @@ public final class Bar implements JsonSerializable {
 
     public static void main(String[] args) {
 
-        Bar bar = new Bar().onPrice(10000).onPrice(100L).onPrice(1000L);
-        System.out.println(JsonWriter.toJson(bar));
+        Bar bar = new Bar(10D).onPrice(10000D).onPrice(100D).onPrice(1000D);
         System.out.println(bar);
 
     }

@@ -1,15 +1,14 @@
 package io.rapid.core.order;
 
-import io.mercury.common.sequence.SerialObj;
-import io.rapid.core.instrument.Instrument;
+import io.mercury.common.sequence.SerialObject;
+import io.rapid.core.event.enums.OrdStatus;
+import io.rapid.core.event.enums.OrdType;
+import io.rapid.core.event.enums.OrdValid;
+import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.attribute.OrdRemark;
 import io.rapid.core.order.attribute.OrdTimestamp;
-import io.rapid.core.order.enums.OrdStatus;
-import io.rapid.core.order.enums.OrdType;
-import io.rapid.core.order.enums.OrdValid;
-import io.rapid.core.order.enums.TrdDirection;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -20,7 +19,7 @@ import static java.lang.Long.compare;
 /**
  * @author yellow013
  */
-public interface Order extends SerialObj<Order>, Serializable {
+public sealed interface Order extends SerialObject<Order>, Serializable permits AbstractOrder {
 
     /**
      * ordSysId构成, 使用雪花算法实现<br>
@@ -58,7 +57,7 @@ public interface Order extends SerialObj<Order>, Serializable {
      *
      * @return Instrument
      */
-    Instrument getInstrument();
+    String getInstrumentCode();
 
     /**
      * OrdQty
@@ -110,9 +109,19 @@ public interface Order extends SerialObj<Order>, Serializable {
     OrdStatus getStatus();
 
     /**
+     * @param type OrdType
+     */
+    void setType(OrdType type);
+
+    /**
+     * @param valid OrdValid
+     */
+    void setValid(OrdValid valid);
+
+    /**
      * @param status Order
      */
-    Order setStatus(@Nonnull OrdStatus status);
+    void setStatus(OrdStatus status);
 
     /**
      * remark
@@ -133,11 +142,17 @@ public interface Order extends SerialObj<Order>, Serializable {
      */
     int getOrdLevel();
 
+
     /**
-     * @param logger Logger
-     * @param msg    String
+     * @param log Logger
+     * @param msg String
      */
-    void printLog(Logger logger, String msg);
+    default void toLog(Logger log, String msg) {
+        log.info("{}, Order attribute : ordSysId==[{}], status==[{}], direction==[{}], type==[{}], " +
+                        "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}",
+                msg, getOrdSysId(), getStatus(), getDirection(), getType(), getInstrumentCode(),
+                getPrice(), getQty(), getTimestamp(), getRemark());
+    }
 
     @Override
     default long serialId() {
@@ -149,22 +164,6 @@ public interface Order extends SerialObj<Order>, Serializable {
         return getOrdLevel() > o.getOrdLevel() ? -1
                 : getOrdLevel() < o.getOrdLevel() ? 1
                 : compare(getOrdSysId(), o.getOrdSysId());
-    }
-
-    /**
-     * OrdStatusException
-     *
-     * @author yellow013
-     */
-    class OrdStatusException extends RuntimeException {
-
-        @java.io.Serial
-        private static final long serialVersionUID = -4772495541311633988L;
-
-        public OrdStatusException(String message) {
-            super(message);
-        }
-
     }
 
 }

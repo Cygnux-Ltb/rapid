@@ -1,14 +1,19 @@
 package io.rapid.core.account;
 
 import io.cygnuxltb.console.beans.outbound.AccountRsp;
-import io.mercury.common.lang.Asserter;
 import io.mercury.common.state.EnableableComponent;
+import io.rapid.core.event.outbound.QueryBalance;
+import io.rapid.core.event.outbound.QueryOrder;
+import io.rapid.core.event.outbound.QueryPosition;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
-import java.io.Serial;
+
+import static io.mercury.common.lang.Asserter.greaterThan;
+import static io.mercury.common.lang.Asserter.nonEmpty;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * 实际账户, 对应一个实际的资金账户
@@ -25,22 +30,16 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     private final int accountId;
 
     /**
-     * 投资者账户ID
+     * 经纪商Code
      */
     @Getter
-    private final String investorId;
+    private final String brokerCode;
 
     /**
-     * 经纪商ID
+     * 投资者账户CODE (*在内部系统中使用唯一代码)
      */
     @Getter
-    private final String brokerId;
-
-    /**
-     * 经纪商名称
-     */
-    @Getter
-    private final String brokerName;
+    private final String investorCode;
 
     /**
      * 账户余额
@@ -72,69 +71,74 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     // private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
     public Account(@Nonnull AccountRsp accountRsp) {
         this(accountRsp.getAccountId(),
+                accountRsp.getBrokerCode(),
                 accountRsp.getInvestorCode(),
-                accountRsp.getBrokerCode(),
-                accountRsp.getBrokerCode(),
                 (long) accountRsp.getBalance(),
                 (long) accountRsp.getCredit());
         this.remark = accountRsp.getRemark();
     }
 
     /**
-     * @param accountId  int
-     * @param investorId String
-     * @param brokerId   String
-     * @param brokerName String
+     * @param accountId    int
+     * @param brokerCode   String
+     * @param investorCode String
      */
-    public Account(int accountId, @Nonnull String investorId,
-                   @Nonnull String brokerId, @Nonnull String brokerName) {
-        this(accountId, brokerId, brokerName, investorId, 0L, 0L);
+    public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode) {
+        this(accountId, brokerCode, investorCode, 0L, 0L);
     }
 
     /**
-     * @param accountId  int
-     * @param investorId String
-     * @param brokerId   String
-     * @param brokerName String
-     * @param balance    long
-     * @param credit     long
+     * @param accountId    int
+     * @param brokerCode   String
+     * @param investorCode String
+     * @param balance      long
+     * @param credit       long
      */
-    public Account(int accountId, @Nonnull String investorId,
-                   @Nonnull String brokerId, @Nonnull String brokerName,
+    public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode,
                    long balance, long credit) {
-        Asserter.greaterThan(accountId, 0, "accountId");
-        Asserter.nonEmpty(investorId, "investorId");
-        Asserter.nonEmpty(brokerId, "brokerId");
-        Asserter.nonEmpty(brokerName, "brokerName");
-        this.accountId = accountId;
-        this.investorId = investorId;
-        this.brokerId = brokerId;
-        this.brokerName = brokerName;
+        this.accountId = greaterThan(accountId, 0, "accountId");
+        this.investorCode = nonEmpty(investorCode, "investorId");
+        this.brokerCode = nonEmpty(brokerCode, "brokerCode");
         this.balance = balance;
         this.credit = credit;
         enable();
     }
 
+    /**
+     * @return QueryOrder
+     */
+    public QueryOrder newQueryOrder() {
+        return new QueryOrder()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
+    }
 
-    public final static class AccountException extends RuntimeException {
+    /**
+     * @return QueryPosition
+     */
+    public QueryPosition newQueryPosition() {
+        return new QueryPosition()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
+    }
 
-        /**
-         *
-         */
-        @Serial
-        private static final long serialVersionUID = -6421678546942382394L;
-
-        public AccountException(String message) {
-            super(message);
-        }
-
+    /**
+     * @return QueryBalance
+     */
+    public QueryBalance newQueryBalance() {
+        return new QueryBalance()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
     }
 
     @Override
     public String toString() {
         return "{\"accountId\" : " + accountId
-                + ", \"brokerName\" : " + brokerName
-                + ", \"investorId\" : " + investorId
+                + ", \"brokerCode\" : " + brokerCode
+                + ", \"investorCode\" : " + investorCode
                 + ", \"balance\" : " + balance
                 + ", \"credit\" : " + credit
                 + ", \"remark\" : " + remark
@@ -147,8 +151,34 @@ public final class Account extends EnableableComponent implements Comparable<Acc
         return Integer.compare(this.accountId, o.accountId);
     }
 
+    private String mdTopic;
+
+    /**
+     * brokerCode + "/" + investorId + "/md"
+     *
+     * @return String
+     */
+    public String getMarketDataTopic() {
+        if (mdTopic == null)
+            mdTopic = (brokerCode + "/" + investorCode + "/md");
+        return mdTopic;
+    }
+
+    private String tdTopic;
+
+    /**
+     * brokerCode + "/" + investorId + "/md"
+     *
+     * @return String
+     */
+    public String getTraderTopic() {
+        if (tdTopic == null)
+            tdTopic = (brokerCode + "/" + investorCode + "/td");
+        return tdTopic;
+    }
+
     public static void main(String[] args) {
-        Account account = new Account(1, "ZSQH", "ZSQH", "200500");
+        Account account = new Account(1, "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
     }

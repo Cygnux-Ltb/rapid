@@ -1,6 +1,6 @@
 package io.rapid.core.mkd;
 
-import io.rapid.core.mkd.copy.MarketDataSnapshot;
+import io.rapid.core.mdata.copy.MarketDataSnapshot;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 

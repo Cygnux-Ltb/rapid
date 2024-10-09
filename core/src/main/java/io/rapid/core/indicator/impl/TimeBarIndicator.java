@@ -1,16 +1,16 @@
 package io.rapid.core.indicator.impl;
 
+import io.mercury.common.collections.MutableLists;
+import io.mercury.common.epoch.EpochTimeUtil;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.mercury.common.sequence.TimeWindow;
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.base.FixedPeriodPoint;
 import io.rapid.core.indicator.structure.Bar;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.pool.TimeWindowPool;
-import io.mercury.common.collections.MutableLists;
-import io.mercury.common.datetime.EpochTime;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.sequence.TimeWindow;
 import org.eclipse.collections.api.list.primitive.MutableDoubleList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
 import org.slf4j.Logger;
@@ -50,13 +50,13 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
     }
 
     @Override
-    protected void handleMarketData(FastMarketData marketData) {
+    protected void handleMarketData(RawMarketData marketData) {
         TimeWindow currentPointSerial = currentPoint.getWindow();
-        LocalDateTime marketDatetime = EpochTime.ofEpochMillis(marketData.getEpochMillis(),
+        LocalDateTime marketDatetime = EpochTimeUtil.ofEpochMillis(marketData.getEpochMillis(),
                         instrument.getZoneOffset())
                 .toLocalDateTime();
         if (currentPointSerial.isPeriod(marketDatetime)) {
-            currentPoint.handleMarketData(marketData);
+            currentPoint.onMarketData(marketData);
             for (TimeBarEvent timeBarsEvent : events) {
                 timeBarsEvent.onCurrentTimeBarChanged(currentPoint);
             }
@@ -70,7 +70,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
                 return;
             }
             while (!newBar.getWindow().isPeriod(marketDatetime)) {
-                newBar.handleMarketData(preMarketData);
+                newBar.onMarketData(preMarketData);
                 for (TimeBarEvent timeBarsEvent : events) {
                     timeBarsEvent.onStartTimeBar(newBar);
                 }
@@ -112,7 +112,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
     public static final class TimeBarPoint extends FixedPeriodPoint {
 
         // 存储开高低收价格和成交量以及成交金额的字段
-        private final Bar bar = new Bar();
+        private final Bar bar = new Bar(0);
 
         // 总成交量
         private long volumeSum = 0L;
@@ -164,7 +164,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
         }
 
         @Override
-        protected void handleMarketData0(FastMarketData marketData) {
+        protected void handleMarketData0(RawMarketData marketData) {
             // 处理当前价格
             bar.onPrice(marketData.getLastPrice());
             // 记录当前价格
@@ -174,7 +174,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
             // 记录当前成交量
             volumeRecord.add(marketData.getVolume());
             // 处理当前成交额
-            turnoverSum += marketData.getTurnover();
+            turnoverSum += (long) marketData.getTurnover();
         }
 
     }

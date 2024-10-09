@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.io.Serial;
 import java.util.stream.Stream;
 
 import static io.cygnuxltb.console.beans.ValueLimitation.MAX_SUB_ACCOUNT_ID;
@@ -117,17 +116,6 @@ public final class SubAccount extends EnableableComponent implements Comparable<
         return this;
     }
 
-    public static class SubAccountException extends RuntimeException {
-
-        @Serial
-        private static final long serialVersionUID = -8903289183998546839L;
-
-        public SubAccountException(String message) {
-            super(message);
-        }
-
-    }
-
     @Override
     public String toString() {
         return "{\"subAccountId\" : " + subAccountId
@@ -147,7 +135,7 @@ public final class SubAccount extends EnableableComponent implements Comparable<
 
     public static void main(String[] args) {
         SubAccount subAccount = new SubAccount(10, "TEST_SUB",
-                new Account(1, "HYQH", "HYQH", "200500", 100000, 0));
+                new Account(1, "HYQH", "200500", 100000, 0));
         System.out.println(subAccount);
         System.out.println(subAccount.toString().length());
     }

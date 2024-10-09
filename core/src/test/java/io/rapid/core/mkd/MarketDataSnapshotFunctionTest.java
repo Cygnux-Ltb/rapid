@@ -1,14 +1,14 @@
 package io.rapid.core.mkd;
 
 
-import io.rapid.core.mkd.copy.DefaultMarketDataIncrement;
-import io.rapid.core.mkd.copy.DefaultMarketDataNewOrder;
-import io.rapid.core.mkd.copy.DefaultMarketDataReplaceOrder;
-import io.rapid.core.mkd.copy.DefaultMarketDataSnapshot;
-import io.rapid.core.mkd.copy.MarketDataIncrement;
-import io.rapid.core.mkd.copy.MarketDataSnapshot;
-import io.rapid.core.mkd.copy.MarketDataSnapshotFunction;
-import io.rapid.core.mkd.copy.Side;
+import io.rapid.core.mdata.copy.DefaultMarketDataIncrement;
+import io.rapid.core.mdata.copy.DefaultMarketDataNewOrder;
+import io.rapid.core.mdata.copy.DefaultMarketDataReplaceOrder;
+import io.rapid.core.mdata.copy.DefaultMarketDataSnapshot;
+import io.rapid.core.mdata.copy.MarketDataIncrement;
+import io.rapid.core.mdata.copy.MarketDataSnapshot;
+import io.rapid.core.mdata.copy.MarketDataSnapshotFunction;
+import io.rapid.core.mdata.copy.Side;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 

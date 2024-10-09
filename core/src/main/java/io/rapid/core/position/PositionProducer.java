@@ -4,8 +4,10 @@ package io.rapid.core.position;
 import io.rapid.core.instrument.Instrument;
 
 @FunctionalInterface
-public interface PositionProducer<P extends Position> {
+public interface PositionProducer {
 
-	P produce(int accountId, Instrument instrument);
+    Position produce(int accountId, Instrument instrument);
+
+    PositionProducer DEFAULT = PositionImpl::new;
 
 }

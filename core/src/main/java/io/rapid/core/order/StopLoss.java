@@ -1,10 +1,11 @@
 package io.rapid.core.order;
 
-import io.mercury.common.sequence.SerialObj;
-import io.rapid.core.mkd.FastMarketData;
-import io.rapid.core.order.enums.TrdDirection;
+import io.mercury.common.sequence.SerialObject;
+import io.rapid.core.event.enums.TrdDirection;
+import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.order.impl.Order;
 
-public class StopLoss implements SerialObj<StopLoss> {
+public class StopLoss implements SerialObject<StopLoss> {
 
     /**
      * ordSysId
@@ -24,7 +25,7 @@ public class StopLoss implements SerialObj<StopLoss> {
     /**
      * @param order ChildOrder
      */
-    public StopLoss(ChildOrder order) {
+    public StopLoss(Order order) {
         this.ordSysId = order.getOrdSysId();
         this.direction = order.getDirection();
     }
@@ -33,12 +34,12 @@ public class StopLoss implements SerialObj<StopLoss> {
      * @param order      ChildOrder
      * @param offsetTick int
      */
-    public StopLoss(ChildOrder order, int offsetTick) {
+    public StopLoss(Order order, int offsetTick) {
         this.ordSysId = order.getOrdSysId();
         this.direction = order.getDirection();
         switch (direction) {
-            case Long -> stopPrice = order.getPrice().getAvgTradePrice() - offsetTick;
-            case Short -> stopPrice = order.getPrice().getAvgTradePrice() + offsetTick;
+            case LONG -> stopPrice = order.getPrice().getAvgTradePrice() - offsetTick;
+            case SHORT -> stopPrice = order.getPrice().getAvgTradePrice() + offsetTick;
             default -> throw new IllegalStateException(
                     "direction error -> direction == [" + direction + "]");
         }
@@ -54,8 +55,8 @@ public class StopLoss implements SerialObj<StopLoss> {
         this.ordSysId = ordSysId;
         this.direction = direction;
         switch (direction) {
-            case Long -> stopPrice = Long.MIN_VALUE;
-            case Short -> stopPrice = Long.MAX_VALUE;
+            case LONG -> stopPrice = Long.MIN_VALUE;
+            case SHORT -> stopPrice = Long.MAX_VALUE;
             default -> throw new IllegalStateException(
                     "direction error -> direction == [" + direction + "]");
         }
@@ -66,10 +67,10 @@ public class StopLoss implements SerialObj<StopLoss> {
         return ordSysId;
     }
 
-    public final boolean isStopLoss(FastMarketData marketData) {
+    public final boolean isStopLoss(RawMarketData marketData) {
         return switch (direction) {
-            case Long -> stopPrice < marketData.getAskPrice1();
-            case Short -> stopPrice > marketData.getBidPrice1();
+            case LONG -> stopPrice < marketData.getAskPrice1();
+            case SHORT -> stopPrice > marketData.getBidPrice1();
             default -> throw new IllegalStateException(
                     "direction error -> direction == [" + direction + "]");
         };

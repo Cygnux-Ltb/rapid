@@ -1,12 +1,10 @@
 package io.rapid.core.instrument;
 
-import io.mercury.common.functional.Formatter;
 import io.mercury.common.util.StringSupport;
-import io.rapid.core.instrument.base.TradingPeriod;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface Symbol extends Formatter<String> {
+public interface Symbol {
 
     Exchange getExchange();
 
@@ -20,7 +18,7 @@ public interface Symbol extends Formatter<String> {
 
     PriceMultiplier getMultiplier();
 
-    int getTickSize();
+    double getTickSize();
 
     default boolean isSymbolCode(String code) {
         if (StringSupport.isNullOrEmpty(code))

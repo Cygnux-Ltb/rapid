@@ -2,26 +2,27 @@ package io.rapid.core.order;
 
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
-import io.rapid.core.serializable.avro.inbound.OrderEvent;
+import io.rapid.core.event.inbound.OrderReport;
+import io.rapid.core.order.impl.Order;
 
 import java.util.List;
 
 public interface OrderManager {
 
-    void onOrderEvent(OrderEvent event);
+    void onOrderEvent(OrderReport event);
 
-    ChildOrder getChildOrder(long orderSysId);
+    Order getChildOrder(long orderSysId);
 
-    default List<ChildOrder> getChildOrder(Account account) {
-        return getChildOrder(account.getInvestorId());
+    default List<Order> getChildOrder(Account account) {
+        return getChildOrder(account.getInvestorCode());
     }
 
-    List<ChildOrder> getChildOrder(String investorId);
+    List<Order> getChildOrder(String investorId);
 
-    default List<ChildOrder> getChildOrder(SubAccount subAccount) {
+    default List<Order> getChildOrder(SubAccount subAccount) {
         return getChildOrder(subAccount.getSubAccountId());
     }
 
-    List<ChildOrder> getChildOrder(int subAccountId);
+    List<Order> getChildOrder(int subAccountId);
 
 }

@@ -6,8 +6,10 @@ public final class ErrorMsg {
 
     @Getter
     private final int code;
+
     @Getter
     private final String language;
+
     @Getter
     private final String message;
 

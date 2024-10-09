@@ -9,22 +9,22 @@ import javax.annotation.Nonnull;
  */
 public final class OrdQty implements JsonSerializable {
 
-    /*
+    /**
      * 委托数量
      */
     private int offerQty;
 
-    /*
+    /**
      * 剩余数量
      */
     private int leavesQty;
 
-    /*
+    /**
      * 已成交数量
      */
     private int filledQty;
 
-    /*
+    /**
      * 上一次成交数量
      */
     private int lastFilledQty;
@@ -99,15 +99,11 @@ public final class OrdQty implements JsonSerializable {
 
     @Override
     public String toString() {
-        return OfferQtyField +
-                offerQty +
-                LeavesQtyField +
-                leavesQty +
-                LastFilledQtyField +
-                lastFilledQty +
-                FilledQtyField +
-                filledQty +
-                End;
+        return OfferQtyField + offerQty
+                + LeavesQtyField + leavesQty
+                + LastFilledQtyField + lastFilledQty
+                + FilledQtyField + filledQty
+                + End;
     }
 
     @Nonnull

@@ -1,7 +1,6 @@
 package io.rapid.core.instrument;
 
 import java.time.ZoneOffset;
-import java.util.stream.Stream;
 
 import static io.mercury.common.datetime.TimeZone.CST;
 import static io.mercury.common.datetime.TimeZone.JST;
@@ -115,10 +114,16 @@ public enum Exchange {
         return zoneOffset;
     }
 
+    public static int parseExchangeId(Instrument instrument) {
+        return parseExchangeId(instrument.getInstrumentId());
+    }
+
+    public static int parseExchangeId(int instrumentId) {
+        return instrumentId / MASK;
+    }
+
     public static void main(String[] args) {
-
-        Stream.of(Exchange.values()).forEach(e -> System.out.println(e.getExchangeId()));
-
+        System.out.println(Exchange.parseExchangeId(InstrumentKeeper.getInstrument("rb2501")));
     }
 
 }

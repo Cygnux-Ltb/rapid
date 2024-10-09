@@ -6,8 +6,8 @@ import io.rapid.core.instrument.Instrument;
 
 import java.time.Duration;
 
-public abstract class FixedPeriodIndicator<P extends FixedPeriodPoint,
-        E extends IndicatorEvent> extends BaseIndicator<P, E> {
+public abstract class FixedPeriodIndicator<P extends FixedPeriodPoint, E extends IndicatorEvent>
+        extends BaseIndicator<P, E> {
 
     protected final Duration duration;
 

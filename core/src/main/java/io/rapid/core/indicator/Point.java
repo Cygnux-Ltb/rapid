@@ -1,9 +1,9 @@
 package io.rapid.core.indicator;
 
-import io.mercury.common.sequence.SerialObj;
+import io.mercury.common.sequence.SerialObject;
 
-public interface Point extends SerialObj<Point> {
+public interface Point extends SerialObject<Point> {
 
-	int getIndex();
+    int getIndex();
 
 }

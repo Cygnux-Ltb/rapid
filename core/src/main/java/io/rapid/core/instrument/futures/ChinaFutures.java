@@ -51,7 +51,6 @@ public final class ChinaFutures {
      */
     public static final LocalTime DAY_CLOSE = LocalTime.of(15, 0);
 
-
     /**
      * 分析<b> [Instrument]</b>
      *
@@ -61,7 +60,6 @@ public final class ChinaFutures {
     public static Instrument parseInstrument(String instrumentCode) {
         return parseInstrumentList(instrumentCode).getFirst();
     }
-
 
     /**
      * 分析<b> [Instrument] </b>列表
@@ -142,17 +140,22 @@ public final class ChinaFutures {
         return nextCloseTime(LocalDateTime.now());
     }
 
+    /**
+     * 获取下一次关闭运行的时间点
+     *
+     * @param datetime LocalDateTime
+     * @return LocalDateTime
+     */
     public static LocalDateTime nextCloseTime(LocalDateTime datetime) {
         // 夜盘收盘时间
-        LocalDateTime nightClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.LATEST_NIGHT_CLOSE);
+        var nightClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.LATEST_NIGHT_CLOSE);
         // 输入时间在前一个夜盘中
-        if (datetime.isBefore(nightClose)) {
+        if (datetime.isBefore(nightClose))
             // 夜盘结束后10分钟
             return nightClose.plusMinutes(10);
-        }
 
         // 白天交易收盘时间
-        LocalDateTime dayClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.DAY_CLOSE);
+        var dayClose = LocalDateTime.of(datetime.toLocalDate(), ChinaFutures.DAY_CLOSE);
         // 输入时间在夜盘收盘后, 在白天收盘前
         if (datetime.isAfter(nightClose) && datetime.isBefore(dayClose)) {
             // 白天收盘后10分钟
@@ -160,7 +163,7 @@ public final class ChinaFutures {
         }
 
         // 获取下一个夜盘收盘时间
-        LocalDateTime nextNightClose = LocalDateTime.of(datetime.toLocalDate().plusDays(1),
+        var nextNightClose = LocalDateTime.of(datetime.toLocalDate().plusDays(1),
                 ChinaFutures.LATEST_NIGHT_CLOSE);
         // 如果输入时间在白天交易之后, 在下一个夜盘收盘结束前
         if ((datetime.isAfter(dayClose) && datetime.isBefore(nextNightClose))) {

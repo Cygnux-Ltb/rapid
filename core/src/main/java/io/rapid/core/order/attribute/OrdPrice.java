@@ -1,8 +1,9 @@
 package io.rapid.core.order.attribute;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.instrument.InstrumentKeeper;
 import io.rapid.core.order.TradeRecord;
+import io.rapid.core.order.impl.Order;
 
 import javax.annotation.Nonnull;
 
@@ -49,13 +50,13 @@ public final class OrdPrice implements JsonSerializable {
         return this;
     }
 
-    public OrdPrice calcAvgTradePrice(@Nonnull ChildOrder order) {
+    public OrdPrice calcAvgTradePrice(@Nonnull Order order) {
         var records = order.getRecords();
         if (records.size() == 1) {
             this.avgTradePrice = records.getFirst().tradePrice();
         }
         if (records.size() > 1) {
-            var multiplier = order.getInstrument().getMultiplier();
+            var multiplier = InstrumentKeeper.getInstrument(order.getInstrumentCode()).getMultiplier();
             // 计算总成交金额
             long totalTurnover = records
                     .sumOfLong(trade -> multiplier.toLong(trade.tradePrice()) * trade.tradeQty());
@@ -73,11 +74,9 @@ public final class OrdPrice implements JsonSerializable {
 
     @Override
     public String toString() {
-        return OfferPriceField +
-                offerPrice +
-                AvgTradePriceField +
-                avgTradePrice +
-                End;
+        return OfferPriceField + offerPrice
+                + AvgTradePriceField + avgTradePrice
+                + End;
     }
 
     @Override

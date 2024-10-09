@@ -1,10 +1,10 @@
 package io.rapid.core.instrument.futures;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.base.BaseFutures;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import io.rapid.core.instrument.enums.PriorityCloseType;
 
+import static io.rapid.core.instrument.Exchange.ZCE;
 import static io.rapid.core.instrument.futures.ChinaFutures.PRICE_MULTIPLIER;
 import static io.rapid.core.instrument.futures.ChinaFutures.parseInstrumentTerm;
 import static io.rapid.core.instrument.futures.ChinaFutures.parseSymbolCode;
@@ -12,7 +12,7 @@ import static io.rapid.core.instrument.futures.ChinaFutures.parseSymbolCode;
 /**
  * @author yellow013
  */
-public final class ChinaFuturesInstrument extends BaseFutures {
+public final class ChinaFuturesInstrument extends AbstractFutures {
 
     private final PriorityCloseType priorityCloseType;
 
@@ -29,11 +29,6 @@ public final class ChinaFuturesInstrument extends BaseFutures {
     @Override
     public PriorityCloseType getPriorityCloseType() {
         return priorityCloseType;
-    }
-
-    @Override
-    public int getTickSize() {
-        return 1;
     }
 
     @Override
@@ -57,12 +52,12 @@ public final class ChinaFuturesInstrument extends BaseFutures {
     static Instrument newInstance(ChinaFuturesSymbol symbol, int term) {
         int instrumentId = symbol.acquireInstrumentId(term);
         String instrumentCode;
-        // 对郑商所合约代码做特殊处理, 去除最高位年份, 比如CF2205需要处理为CF205
-//      if (symbol.getExchange() == ZCE) {
-//          instrumentCode = symbol.getSymbolCode() + String.valueOf(term).substring(1);
-//      } else {
-        instrumentCode = symbol.getSymbolCode() + term;
-//      }
+        // 对郑商所合约代码做特殊处理, 去除最高位年份, 比如CF2405需要处理为CF405
+        if (symbol.getExchange() == ZCE) {
+            instrumentCode = symbol.getSymbolCode() + String.valueOf(term).substring(1);
+        } else {
+            instrumentCode = symbol.getSymbolCode() + term;
+        }
         return new ChinaFuturesInstrument(symbol, instrumentId, instrumentCode);
     }
 

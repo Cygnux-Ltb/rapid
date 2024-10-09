@@ -1,6 +1,6 @@
 package io.rapid.core.order.attribute;
 
-import io.mercury.common.datetime.EpochTime;
+import io.mercury.common.epoch.HighResolutionEpoch;
 
 /**
  * 时间单位为Epoch微秒
@@ -18,7 +18,7 @@ public final class OrdTimestamp {
     private long finishTime;
 
     private OrdTimestamp() {
-        this.generateTime = EpochTime.getEpochMicros();
+        this.generateTime = HighResolutionEpoch.micros();
     }
 
     /**
@@ -50,7 +50,7 @@ public final class OrdTimestamp {
      * @return OrdTimestamp
      */
     public OrdTimestamp updateSendTime() {
-        this.sendTime = EpochTime.getEpochMicros();
+        this.sendTime = HighResolutionEpoch.micros();
         return this;
     }
 
@@ -60,7 +60,7 @@ public final class OrdTimestamp {
      * @return OrdTimestamp
      */
     public OrdTimestamp updateFirstReportTime() {
-        this.firstReportTime = EpochTime.getEpochMicros();
+        this.firstReportTime = HighResolutionEpoch.micros();
         return this;
     }
 
@@ -70,7 +70,7 @@ public final class OrdTimestamp {
      * @return OrdTimestamp
      */
     public OrdTimestamp updateFinishTime() {
-        this.finishTime = EpochTime.getEpochMicros();
+        this.finishTime = HighResolutionEpoch.micros();
         return this;
     }
 
