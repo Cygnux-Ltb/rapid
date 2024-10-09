@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- This is parent rapid pom.xml -->
-    <groupId>io.cygnuxltb</groupId>
-    <artifactId>rapid</artifactId>
+    <groupId>io.cygnuxltb.rapid</groupId>
+    <artifactId>parent</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
@@ -41,10 +41,10 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <spring-boot.version>3.3.2</spring-boot.version>
-        <spring.version>6.1.12</spring.version>
+        <spring-boot.version>3.3.3</spring-boot.version>
+        <spring.version>6.1.13</spring.version>
         <avro.version>1.12.0</avro.version>
-        <mercury.version>1.0-SNAPSHOT</mercury.version>
+        <mercury.version>1.0.1</mercury.version>
     </properties>
 
     <build>
@@ -128,7 +128,7 @@
             </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
-                <artifactId>serialization-avro</artifactId>
+                <artifactId>serialization-fury</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>
@@ -139,17 +139,17 @@
             <!-- transport -->
             <dependency>
                 <groupId>io.mercury</groupId>
-                <artifactId>transport-aeron</artifactId>
-                <version>${mercury.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.mercury</groupId>
                 <artifactId>transport-zmq</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>transport-rabbitmq</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-aeron</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
         </dependencies>
