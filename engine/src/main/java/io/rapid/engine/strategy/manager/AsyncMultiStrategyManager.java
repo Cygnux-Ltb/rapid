@@ -1,14 +1,13 @@
 package io.rapid.engine.strategy.manager;
 
-import io.rapid.core.event.inbound.FastMarketData;
-import io.rapid.core.event.inbound.OrderEvent;
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
 import io.rapid.engine.trader.OrderKeeper;
-import io.rapid.core.order.ChildOrder;
-import io.rapid.core.event.inbound.AdaptorEvent;
+import io.rapid.core.order.impl.Order;
+import io.rapid.core.event.inbound.AdaptorReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -24,9 +23,9 @@ import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spsc
  * <p>
  * 策略执行引擎与整体框架分离
  */
-public final class AsyncMultiEventScheduler extends MultiEventScheduler {
+public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiEventScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyManager.class);
 
     private final Queue<QueueMsg> queue;
 
@@ -34,12 +33,12 @@ public final class AsyncMultiEventScheduler extends MultiEventScheduler {
     private static final int OrderReport = 1;
     private static final int AdaptorEvent = 2;
 
-    public AsyncMultiEventScheduler(Capacity capacity) {
+    public AsyncMultiStrategyManager(Capacity capacity) {
         this.queue = spscQueue("AsyncMultiStrategyScheduler-Queue")
                 .capacity(capacity.size()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
                         case MarketData -> {
-                            FastMarketData marketData = msg.getMarketData();
+                            RawMarketData marketData = msg.getMarketData();
                             subscribedMap.get(marketData.getInstrumentCode())
                                     .each(strategy -> {
                                         if (strategy.isEnabled())
@@ -50,7 +49,7 @@ public final class AsyncMultiEventScheduler extends MultiEventScheduler {
                             var event = msg.getOrderEvent();
                             log.info("Handle OrderEvent, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                                     event.getOrdSysId());
-                            ChildOrder order = OrderKeeper.handleOrderReport(event);
+                            Order order = OrderKeeper.handleOrderReport(event);
                             log.info(
                                     "Search Order OK. brokerSysId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
                                     event.getBrokerOrdSysId(), order.getStrategyId(),
@@ -58,7 +57,7 @@ public final class AsyncMultiEventScheduler extends MultiEventScheduler {
                             strategyMap.get(order.getStrategyId()).onOrder(order);
                         }
                         case AdaptorEvent -> {
-                            AdaptorEvent adaptorReport = msg.getAdaptorEvent();
+                            AdaptorReport adaptorReport = msg.getAdaptorEvent();
                             String adaptorId = adaptorReport.getAdaptorId();
                             log.info("Recv AdaptorEvent -> {}", adaptorReport);
                         }
@@ -69,19 +68,19 @@ public final class AsyncMultiEventScheduler extends MultiEventScheduler {
 
     // TODO add pools
     @Override
-    public void onMarketData(@Nonnull FastMarketData marketData) {
+    public void onMarketData(@Nonnull RawMarketData marketData) {
         queue.enqueue(new QueueMsg(marketData));
     }
 
     // TODO add pools
     @Override
-    public void onOrderEvent(@Nonnull OrderEvent event) {
+    public void onOrderEvent(@Nonnull io.rapid.core.event.inbound.OrderReport event) {
         queue.enqueue(new QueueMsg(event));
     }
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull io.rapid.core.event.inbound.AdaptorEvent report) {
+    public void onAdaptorEvent(@Nonnull AdaptorReport report) {
         queue.enqueue(new QueueMsg(report));
     }
 
@@ -109,41 +108,41 @@ public final class AsyncMultiEventScheduler extends MultiEventScheduler {
 
         private final int mark;
 
-        private FastMarketData marketData;
+        private RawMarketData marketData;
 
-        private OrderEvent orderEvent;
+        private io.rapid.core.event.inbound.OrderReport orderReport;
 
-        private AdaptorEvent adaptorEvent;
+        private AdaptorReport adaptorReport;
 
-        private QueueMsg(FastMarketData marketData) {
+        private QueueMsg(RawMarketData marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
 
-        private QueueMsg(OrderEvent orderEvent) {
+        private QueueMsg(io.rapid.core.event.inbound.OrderReport orderReport) {
             this.mark = OrderReport;
-            this.orderEvent = orderEvent;
+            this.orderReport = orderReport;
         }
 
-        private QueueMsg(AdaptorEvent adaptorEvent) {
+        private QueueMsg(AdaptorReport adaptorReport) {
             this.mark = AdaptorEvent;
-            this.adaptorEvent = adaptorEvent;
+            this.adaptorReport = adaptorReport;
         }
 
         public int getMark() {
             return mark;
         }
 
-        public FastMarketData getMarketData() {
+        public RawMarketData getMarketData() {
             return marketData;
         }
 
-        public OrderEvent getOrderEvent() {
-            return orderEvent;
+        public io.rapid.core.event.inbound.OrderReport getOrderEvent() {
+            return orderReport;
         }
 
-        public AdaptorEvent getAdaptorEvent() {
-            return adaptorEvent;
+        public AdaptorReport getAdaptorEvent() {
+            return adaptorReport;
         }
 
     }

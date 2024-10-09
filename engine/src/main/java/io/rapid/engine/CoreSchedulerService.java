@@ -1,29 +1,35 @@
 package io.rapid.engine;
 
-import io.mercury.common.collections.MutableLists;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.EventScheduler;
+import io.rapid.core.CoreScheduler;
+import io.rapid.core.account.AccountManager;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.InboundEvent;
-import io.rapid.core.event.OutboundEvent;
+import io.rapid.core.event.InboundEventFeeder;
+import io.rapid.core.event.OutboundEventHandler;
 import io.rapid.core.event.container.InboundEventLoop;
-import io.rapid.core.event.container.OutboundEventLoop;
+import io.rapid.core.event.enums.MarketDataType;
+import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
-import io.rapid.core.event.inbound.FastMarketData;
 import io.rapid.core.event.inbound.MarketDataSubscribeReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.outbound.CancelOrder;
-import io.rapid.core.event.outbound.NewOrder;
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.event.outbound.QueryBalance;
 import io.rapid.core.event.outbound.QueryOrder;
 import io.rapid.core.event.outbound.QueryPosition;
-import io.rapid.core.event.outbound.StrategySignal;
 import io.rapid.core.event.outbound.SubscribeMarketData;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.MarketDataManager;
 import io.rapid.core.order.OrderManager;
+import io.rapid.core.order.attribute.OrdPrice;
+import io.rapid.core.order.attribute.OrdQty;
+import io.rapid.core.order.impl.ParentOrder;
+import io.rapid.core.position.PositionManager;
 import io.rapid.core.strategy.StrategyManager;
+import io.rapid.core.strategy.StrategySignal;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
@@ -32,27 +38,45 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service("eventScheduler")
-public class EventSchedulerService implements EventScheduler {
+import static io.mercury.common.collections.MutableLists.newFastList;
+import static io.mercury.common.epoch.EpochTimeUtil.getEpochMillis;
 
-    private final MutableList<StrategySignal> trdSignalList = MutableLists.newFastList(256);
+@Service("coreScheduler")
+public class CoreSchedulerService implements CoreScheduler {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(EventSchedulerService.class);
+    private final MutableList<StrategySignal> signals = newFastList(64);
+
+    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
+
+    @Resource
+    private MarketDataManager marketDataManager;
+
+    @Resource
+    private AccountManager accountManager;
 
     @Resource
     private OrderManager orderManager;
 
     @Resource
-    private AdaptorManager adaptorManager;
+    private PositionManager positionManager;
 
     @Resource
     private StrategyManager strategyManager;
 
-    private final InboundEventLoop inboundEventLoop = new InboundEventLoop() {
+    @Resource
+    private AdaptorManager adaptorManager;
+
+    @Resource
+    private InboundEventFeeder eventFeeder;
+
+    @Resource
+    private OutboundEventHandler outboundEventHandler;
+
+    private final InboundEventLoop eventLoop = new InboundEventLoop() {
         @Override
         protected void process(InboundEvent event) {
             switch (event.getType()) {
-                case FastMarketData -> handleFastMarketData(event.getFastMarketData());
+                case FastMarketData -> handleRawMarketData(event.getRawMarketData());
                 case DepthMarketData -> handleDepthMarketData(event.getDepthMarketData());
                 case OrderReport -> handleOrderReport(event.getOrderReport());
                 case PositionsReport -> handlePositionsReport(event.getPositionsReport());
@@ -64,30 +88,15 @@ public class EventSchedulerService implements EventScheduler {
         }
     };
 
-    private final OutboundEventLoop outboundEventLoop = new OutboundEventLoop() {
-        @Override
-        protected void process(OutboundEvent event) {
-            switch (event.getType()) {
-                case StrategySignal -> handleStrategySignal(event.getStrategySignal());
-                case NewOrder -> handleNewOrder(event.getNewOrder());
-                case CancelOrder -> handleCancelOrder(event.getCancelOrder());
-                case SubscribeMarketData -> handleSubscribeMarketData(event.getSubscribeMarketData());
-                case QueryOrder -> handleQueryOrder(event.getQueryOrder());
-                case QueryPosition -> handleQueryPosition(event.getQueryPosition());
-                case QueryBalance -> handleQueryBalance(event.getQueryBalance());
-                case Invalid -> log.error("NOTE Unknown OutboundEvent -> {}", event);
-            }
-        }
-    };
-
-    public boolean addTradeSignal(StrategySignal signal) {
-        return trdSignalList.add(signal);
-    }
-
 
     @PostConstruct
     public void init() {
+        // 注册事件循环队列, 用于接收事件并且处理
+        eventFeeder.addEventLoop(eventLoop);
 
+
+        // 启动事件提供者
+        eventFeeder.startup();
     }
 
 
@@ -107,7 +116,7 @@ public class EventSchedulerService implements EventScheduler {
      * @param event FastMarketData
      */
     @Override
-    public void handleFastMarketData(FastMarketData event) {
+    public void handleRawMarketData(RawMarketData event) {
 
     }
 
@@ -118,7 +127,7 @@ public class EventSchedulerService implements EventScheduler {
      */
     @Override
     public void handleMarketDataSubscribeReport(MarketDataSubscribeReport event) {
-
+        log.info("CoreSchedulerService::handleMarketDataSubscribeReport, [MarketDataSubscribeReport] -> {}", event);
     }
 
     /**
@@ -128,7 +137,7 @@ public class EventSchedulerService implements EventScheduler {
      */
     @Override
     public void handleOrderReport(OrderReport event) {
-
+        log.info("CoreSchedulerService::handleOrderReport, [OrderReport] -> {}", event);
     }
 
     /**
@@ -138,6 +147,58 @@ public class EventSchedulerService implements EventScheduler {
      */
     @Override
     public void handleAdaptorReport(AdaptorReport event) {
+        log.info("CoreSchedulerService::handleAdaptorReport, [AdaptorReport] -> {}", event);
+        adaptorManager.onAdaptorEvent(event);
+        var currentStatus = adaptorManager.getCurrentStatus(event.getAccountId());
+        log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, event.getAdaptorId());
+        if (currentStatus.isMdAvailable()) {
+            var subscribeMarketData = new SubscribeMarketData()
+                    .setAccountId(event.getAccountId())
+                    .setType(MarketDataType.FAST)
+                    .setInstrumentCodes(strategyManager.getInstruments()
+                            .stream()
+                            .map(Instrument::getInstrumentCode)
+                            .toList())
+                    // TODO 补充接收地址
+                    .setRecvAddr("");
+            log.info("Publish [SubscribeMarketData] in loop -> {}", subscribeMarketData);
+            outboundEventHandler.handleSubscribeMarketData(subscribeMarketData);
+        }
+        if (currentStatus.isTraderAvailable()) {
+            /// 查询订单 ///
+            var queryOrder = new QueryOrder()
+                    .setAccountId(event.getAccountId())
+                    .setSource("CoreScheduler")
+                    .setGenerateTime(getEpochMillis());
+            log.info("Publish [QueryOrder] in loop -> {}", queryOrder);
+            outboundEventHandler.handleQueryOrder(queryOrder);
+
+            /// 查询仓位 ///
+            var queryPosition = new QueryPosition()
+                    .setAccountId(event.getAccountId())
+                    .setSource("CoreScheduler")
+                    .setGenerateTime(getEpochMillis());
+            log.info("Publish [QueryPosition] in loop -> {}", queryPosition);
+            outboundEventHandler.handleQueryPosition(queryPosition);
+
+            /// 查询余额 ///
+            var queryBalance = new QueryBalance()
+                    .setAccountId(event.getAccountId())
+                    .setSource("CoreScheduler")
+                    .setGenerateTime(getEpochMillis());
+            log.info("Publish [QueryBalance] in loop -> {}", queryBalance);
+            outboundEventHandler.handleQueryBalance(queryBalance);
+        }
+    }
+
+    /**
+     * 持仓回报处理
+     *
+     * @param event PositionsReport
+     */
+    @Override
+    public void handlePositionsReport(PositionsReport event) {
+        log.info("CoreSchedulerService::handlePositionsReport, [PositionsReport] -> {}", event);
 
     }
 
@@ -148,81 +209,58 @@ public class EventSchedulerService implements EventScheduler {
      */
     @Override
     public void handleBalanceReport(BalanceReport event) {
-
+        log.info("CoreSchedulerService::handleBalanceReport, [BalanceReport] -> {}", event);
     }
 
     /**
-     * 持仓回报处理
-     *
-     * @param event PositionsReport
+     * 对本次数据运行产生的信号进行处理
      */
-    @Override
-    public void handlePositionsReport(PositionsReport event) {
-
+    private void handleSignal() {
+        signals.each(this::handleSignal);
+        signals.clear();
     }
 
-    /**
-     * 处理撤单
-     *
-     * @param event CancelOrder
-     */
-    @Override
-    public void handleCancelOrder(CancelOrder event) {
+    private void handleSignal(StrategySignal signal) {
+        int orderWatermark = signal.getOrderWatermark();
+        var strategy = strategyManager.getStrategy(signal.getStrategyId());
+        var subAccountMapping = accountManager.getSubAccountMapping(signal.getSubAccountId());
+        // TODO 改进子账户映射获取实际账户的逻辑
+        var account = subAccountMapping.getAccountMap().getAny();
 
-    }
+        positionManager.acquirePosition(account.getAccountId(), signal.getInstrumentCode());
 
-    /**
-     * 处理新订单
-     *
-     * @param event NewOrder
-     */
-    @Override
-    public void handleNewOrder(NewOrder event) {
+        /// 创建父订单
+        ParentOrder parentOrder = new ParentOrder(
+                signal.getStrategyId(),
+                signal.getSubAccountId(),
+                account.getAccountId(),
+                signal.getInstrumentCode(),
+                OrdQty.withOffer(signal.getOfferQty()),
+                OrdPrice.withOffer(signal.getOfferPrice()),
+                OrdType.defaultType(),
+                signal.getDirection());
 
-    }
 
-    /**
-     * 处理余额查询
-     *
-     * @param event QueryBalance
-     */
-    @Override
-    public void handleQueryBalance(QueryBalance event) {
-        adaptorManager.sendQueryBalance(event);
-    }
+        orders.put(parentOrder.uniqueId(), parentOrder);
 
-    /**
-     * 处理订单查询
-     *
-     * @param event QueryOrder
-     */
-    @Override
-    public void handleQueryOrder(QueryOrder event) {
-        adaptorManager.sendQueryOrder(event);
-    }
+        // 转换为实际订单
+        MutableList<ActParentOrder> parentOrders = strategyOrderConverter.apply(parentOrder);
 
-    /**
-     * 处理仓位查询
-     *
-     * @param event QueryPosition
-     */
-    @Override
-    public void handleQueryPosition(QueryPosition event) {
-        adaptorManager.sendQueryPositions(event);
-    }
+        // 存储订单
+        // TODO 未完成全部逻辑
+        ActParentOrder parentOrder = parentOrders.getFirst();
+        orders.put(parentOrder.uniqueId(), parentOrder);
 
-    /**
-     * 处理策略信号
-     *
-     * @param event StrategySignal
-     */
-    @Override
-    public void handleStrategySignal(StrategySignal event) {
-        int orderWatermark = event.getOrderWatermark();
+        // 转为实际执行的子订单
+        ActChildOrder childOrder = parentOrder.toChildOrder();
+        orders.put(childOrder.uniqueId(), childOrder);
+
+        getAdaptor(instrument).newOrder(childOrder);
+
 
         switch (orderWatermark) {
             case 1 -> {
-                switch (event.getDirection()) {
+                switch (signal.getDirection()) {
                     case LONG:
 
                         break;
@@ -235,7 +273,7 @@ public class EventSchedulerService implements EventScheduler {
                 }
             }
             case -1 -> {
-                switch (event.getDirection()) {
+                switch (signal.getDirection()) {
                     case LONG:
 
                         break;
@@ -251,16 +289,13 @@ public class EventSchedulerService implements EventScheduler {
             default -> {
             }
         }
+
     }
 
-    /**
-     * 处理行情订阅
-     *
-     * @param event SubscribeMarketData
-     */
-    @Override
-    public void handleSubscribeMarketData(SubscribeMarketData event) {
 
+    @Override
+    public void onSignal(StrategySignal signal) {
+        signals.add(signal);
     }
 
 
@@ -279,8 +314,7 @@ public class EventSchedulerService implements EventScheduler {
      */
     @Override
     public void close() throws IOException {
-
+        // TODO 资源清理
     }
-
 
 }

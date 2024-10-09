@@ -1,9 +1,9 @@
 package io.rapid.engine.strategy.manager;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.event.inbound.AdaptorEvent;
-import io.rapid.core.event.inbound.FastMarketData;
-import io.rapid.core.event.inbound.OrderEvent;
+import io.rapid.core.event.inbound.AdaptorReport;
+import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
@@ -19,15 +19,15 @@ import javax.annotation.Nonnull;
  * <p>
  * 策略执行引擎与整体框架分离
  */
-public final class SyncMultiEventScheduler extends MultiEventScheduler {
+public final class SyncMultiStrategyManager extends MultiStrategyManager {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(SyncMultiEventScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SyncMultiStrategyManager.class);
 
-    public SyncMultiEventScheduler() {
+    public SyncMultiStrategyManager() {
     }
 
     @Override
-    public void onMarketData(@Nonnull FastMarketData marketData) {
+    public void onMarketData(@Nonnull RawMarketData marketData) {
         subscribedMap.get(marketData.getInstrumentCode())
                 .each(strategy -> {
                     if (strategy.isEnabled())
@@ -36,7 +36,7 @@ public final class SyncMultiEventScheduler extends MultiEventScheduler {
     }
 
     @Override
-    public void onOrderEvent(@Nonnull OrderEvent event) {
+    public void onOrderEvent(@Nonnull OrderReport event) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                 event.getOrdSysId());
         var order = OrderKeeper.handleOrderReport(event);
@@ -48,7 +48,7 @@ public final class SyncMultiEventScheduler extends MultiEventScheduler {
 
     // TODO add pools
     @Override
-    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
+    public void onAdaptorEvent(@Nonnull AdaptorReport event) {
         log.info("Recv AdaptorEvent -> {}", event);
     }
 

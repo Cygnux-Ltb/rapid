@@ -1,7 +1,7 @@
 package io.rapid.engine.barrier;
 
 
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.order.impl.Order;
 import io.rapid.core.risk.OrderBarrier;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -14,7 +14,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 public class AccountBarrier implements OrderBarrier {
 
 	@Override
-	public boolean filter(ChildOrder order) {
+	public boolean filter(Order order) {
 		// TODO Auto-generated method stub
 		return false;
 	}

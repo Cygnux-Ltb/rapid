@@ -1,4 +1,4 @@
-package io.rapid.engine.manager;
+package io.rapid.engine.trader;
 
 public class StopLossManager {
 }

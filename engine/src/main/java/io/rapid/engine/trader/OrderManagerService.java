@@ -5,10 +5,10 @@ import io.rapid.core.account.AccountManager;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.TrdAction;
 import io.rapid.core.event.enums.TrdDirection;
-import io.rapid.core.event.received.OrderEvent;
+import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.InstrumentManager;
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.instrument.InstrumentKeeper;
+import io.rapid.core.order.impl.Order;
 import io.rapid.core.order.OrderManager;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
@@ -39,12 +39,12 @@ public final class OrderManagerService implements OrderManager {
      * @param event OrderReport
      * @return ChildOrder
      */
-    public ChildOrder newExternalOrder(OrderEvent event) {
+    public Order newExternalOrder(OrderReport event) {
         var account = accountManager.getAccount(event.getInvestorId());
-        var instrument = InstrumentManager.getInstrument(event.getInstrumentCode());
+        var instrument = InstrumentKeeper.getInstrument(event.getInstrumentCode());
         var direction = event.getDirection();
         var action = event.getAction();
-        return new ChildOrder(event.getOrdSysId(),
+        return new Order(event.getOrdSysId(),
                 // -------------------------------
                 // 外部订单使用的策略ID
                 0,
@@ -72,7 +72,7 @@ public final class OrderManagerService implements OrderManager {
      * @return ChildOrder
      */
     @Deprecated
-    public static ChildOrder newExternalOrder(
+    public static Order newExternalOrder(
             //
             final long ordSysId,
             //
@@ -87,7 +87,7 @@ public final class OrderManagerService implements OrderManager {
             @Nonnull final TrdDirection direction,
             //
             @Nonnull final TrdAction action) {
-        return new ChildOrder(ordSysId,
+        return new Order(ordSysId,
                 // -------------------------------
                 // 外部策略
                 0,
@@ -101,22 +101,22 @@ public final class OrderManagerService implements OrderManager {
 
 
     @Override
-    public void onOrderEvent(OrderEvent event) {
+    public void onOrderEvent(OrderReport event) {
 
     }
 
     @Override
-    public ChildOrder getChildOrder(long orderSysId) {
+    public Order getChildOrder(long orderSysId) {
         return null;
     }
 
     @Override
-    public List<ChildOrder> getChildOrder(String investorId) {
+    public List<Order> getChildOrder(String investorId) {
         return List.of();
     }
 
     @Override
-    public List<ChildOrder> getChildOrder(int subAccountId) {
+    public List<Order> getChildOrder(int subAccountId) {
         return List.of();
     }
 }

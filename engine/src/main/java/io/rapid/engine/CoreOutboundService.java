@@ -1,7 +1,10 @@
 package io.rapid.engine;
 
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.AdaptorManager;
+import io.rapid.core.event.OutboundEvent;
 import io.rapid.core.event.OutboundEventHandler;
+import io.rapid.core.event.container.OutboundEventLoop;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -9,15 +12,33 @@ import io.rapid.core.event.outbound.QueryOrder;
 import io.rapid.core.event.outbound.QueryPosition;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class OutboundService implements OutboundEventHandler {
+public class CoreOutboundService implements OutboundEventHandler {
+
+    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
 
     @Resource
     private AdaptorManager adaptorManager;
+
+    private final OutboundEventLoop eventLoop = new OutboundEventLoop() {
+        @Override
+        protected void process(OutboundEvent event) {
+            log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
+            switch (event.getType()) {
+                case NewOrder -> adaptorManager.commitNewOrder(event.getNewOrder());
+                case CancelOrder -> adaptorManager.commitCancelOrder(event.getCancelOrder());
+                case SubscribeMarketData -> adaptorManager.commitSubscribeMarketData(event.getSubscribeMarketData());
+                case QueryOrder -> adaptorManager.commitQueryOrder(event.getQueryOrder());
+                case QueryPosition -> adaptorManager.commitQueryPositions(event.getQueryPosition());
+                case QueryBalance -> adaptorManager.commitQueryBalance(event.getQueryBalance());
+            }
+        }
+    };
 
     /**
      * [1].处理行情订阅
@@ -26,7 +47,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleSubscribeMarketData(SubscribeMarketData event) {
-        adaptorManager.commitSubscribeMarketData(event);
+        eventLoop.publish(event);
     }
 
     /**
@@ -36,7 +57,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleNewOrder(NewOrder event) {
-        adaptorManager.commitNewOrder(event);
+        eventLoop.publish(event);
     }
 
     /**
@@ -46,7 +67,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleCancelOrder(CancelOrder event) {
-        adaptorManager.commitCancelOrder(event);
+        eventLoop.publish(event);
     }
 
     /**
@@ -56,7 +77,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleQueryOrder(QueryOrder event) {
-        adaptorManager.commitQueryOrder(event);
+        eventLoop.publish(event);
     }
 
     /**
@@ -66,7 +87,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleQueryPosition(QueryPosition event) {
-        adaptorManager.commitQueryPositions(event);
+        eventLoop.publish(event);
     }
 
     /**
@@ -76,7 +97,7 @@ public class OutboundService implements OutboundEventHandler {
      */
     @Override
     public void handleQueryBalance(QueryBalance event) {
-        adaptorManager.commitQueryBalance(event);
+        eventLoop.publish(event);
     }
 
     /**

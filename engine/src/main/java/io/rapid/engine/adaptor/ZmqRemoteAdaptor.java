@@ -5,12 +5,12 @@ import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqPublisher;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.AbstractAdaptor;
-import io.rapid.core.event.send.CancelOrder;
-import io.rapid.core.event.send.NewOrder;
-import io.rapid.core.event.send.QueryBalance;
-import io.rapid.core.event.send.QueryOrder;
-import io.rapid.core.event.send.QueryPositions;
-import io.rapid.core.event.send.SubscribeMarketData;
+import io.rapid.core.event.outbound.CancelOrder;
+import io.rapid.core.event.outbound.NewOrder;
+import io.rapid.core.event.outbound.QueryBalance;
+import io.rapid.core.event.outbound.QueryOrder;
+import io.rapid.core.event.outbound.QueryPosition;
+import io.rapid.core.event.outbound.SubscribeMarketData;
 import org.apache.fury.Fury;
 
 import javax.annotation.Nonnull;
@@ -36,9 +36,9 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
      * @param account Account
      */
     public ZmqRemoteAdaptor(@Nonnull Account account) {
-        super(account);
+        super(account, false);
         this.publisher = ZmqConfigurator
-                .ipc("upstream/" + account.getBrokerCode() + "/" + account.getAccountId())
+                .ipc("adaptor/pub")
                 .createPublisherWithBinary();
     }
 
@@ -52,70 +52,33 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
 
     private final JsonRecord record = new JsonRecord();
 
-    /**
-     * 订阅行情
-     *
-     * @param subscribeMarketData SubscribeMarketData
-     */
     @Override
-    public boolean subscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {
-
-
+    protected boolean directSubscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {
         return false;
     }
 
-    /**
-     * 发送订单请求
-     *
-     * @param order NewOrder
-     * @return boolean
-     */
     @Override
-    public boolean newOrder(@Nonnull NewOrder order) {
+    protected boolean directNewOrder(@Nonnull NewOrder order) {
         return false;
     }
 
-    /**
-     * 发送撤单请求
-     *
-     * @param order CancelOrder
-     * @return boolean
-     */
     @Override
-    public boolean cancelOrder(@Nonnull CancelOrder order) {
+    protected boolean directCancelOrder(@Nonnull CancelOrder order) {
         return false;
     }
 
-    /**
-     * 查询订单
-     *
-     * @param query QueryOrder
-     * @return boolean
-     */
     @Override
-    public boolean queryOrder(@Nonnull QueryOrder query) {
+    protected boolean directQueryOrder(@Nonnull QueryOrder query) {
         return false;
     }
 
-    /**
-     * 查询持仓
-     *
-     * @param query QueryPositions
-     * @return boolean
-     */
     @Override
-    public boolean queryPositions(@Nonnull QueryPositions query) {
+    protected boolean directQueryPositions(@Nonnull QueryPosition query) {
         return false;
     }
 
-    /**
-     * 查询余额
-     *
-     * @param query QueryBalance
-     * @return boolean
-     */
     @Override
-    public boolean queryBalance(@Nonnull QueryBalance query) {
+    protected boolean directQueryBalance(@Nonnull QueryBalance query) {
         return false;
     }
 

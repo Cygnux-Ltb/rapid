@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.cygnuxltb</groupId>
-        <artifactId>rapid</artifactId>
+        <groupId>io.cygnuxltb.rapid</groupId>
+        <artifactId>parent</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -19,6 +19,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>commons-concurrent</artifactId>
         </dependency>
@@ -28,28 +32,10 @@
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
-            <artifactId>serialization-avro</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
             <artifactId>transport-zmq</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.cygnuxltb</groupId>
+            <groupId>io.cygnuxltb.rapid</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
         </dependency>
@@ -58,12 +44,14 @@
             <artifactId>console-service</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- Reactive Extensions for Java -->
         <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-core</artifactId>
-            <version>3.6.9</version>
+            <groupId>io.reactivex.rxjava3</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>3.1.9</version>
         </dependency>
     </dependencies>
+
     <repositories>
         <repository>
             <id>maven_central</id>

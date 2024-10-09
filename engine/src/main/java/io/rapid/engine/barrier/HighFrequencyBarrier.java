@@ -1,6 +1,6 @@
 package io.rapid.engine.barrier;
 
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.order.impl.Order;
 import io.rapid.core.risk.OrderBarrier;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
@@ -13,9 +13,9 @@ public final class HighFrequencyBarrier implements OrderBarrier {
 	private static final Logger log = Log4j2LoggerFactory.getLogger(HighFrequencyBarrier.class);
 
 	@Override
-	public boolean filter(ChildOrder order) {
+	public boolean filter(Order order) {
 		switch (order.getDirection()) {
-			case Long, Short -> {
+			case LONG, SHORT -> {
 				return false;
 			}
             default -> {

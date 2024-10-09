@@ -1,8 +1,8 @@
 package io.rapid.engine.trader;
 
-import io.rapid.core.order.ChildOrder;
-import io.rapid.core.order.enums.OrdStatus;
-import io.rapid.core.serializable.avro.inbound.OrderEvent;
+import io.rapid.core.order.impl.Order;
+import io.rapid.core.event.enums.OrdStatus;
+import io.rapid.core.event.inbound.OrderReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
@@ -18,30 +18,30 @@ public final class OrderUpdater {
      * @param order ChildOrder
      * @param event DtoOrderReport
      */
-    public static void updateOrder(@Nonnull ChildOrder order, @Nonnull OrderEvent event) {
+    public static void updateOrder(@Nonnull Order order, @Nonnull OrderReport event) {
         var qty = order.getQty();
         int filledQty = event.getFilledQty();
         OrdStatus status = OrdStatus.valueOf(event.getStatus());
         log.info("OrderEvent status==[{}], filledQty==[{}], tradePrice==[{}], order.getQty() -> {}", status, filledQty,
                 event.getTradePrice(), qty);
         switch (status) {
-            case Unprovided, Invalid -> {
+            case UNPROVIDED, INVALID -> {
                 // 处理未返回订单状态的情况, 根据成交数量判断
                 int offerQty = qty.getOfferQty();
                 order.setStatus(
                         // 成交数量等于委托数量, 状态为全部成交
-                        filledQty == offerQty ? OrdStatus.Filled
+                        filledQty == offerQty ? OrdStatus.FILLED
                                 // 成交数量小于委托数量同时成交数量大于0, 状态为部分成交
-                                : filledQty < offerQty && filledQty > 0 ? OrdStatus.PartiallyFilled
+                                : filledQty < offerQty && filledQty > 0 ? OrdStatus.PARTIALLY_FILLED
                                 // 成交数量等于0, 状态为New
-                                : OrdStatus.New);
+                                : OrdStatus.NEW);
             }
             default ->
                 // 已返回订单状态, 直接读取
                     order.setStatus(status);
         }
         switch (order.getStatus()) {
-            case PartiallyFilled -> {
+            case PARTIALLY_FILLED -> {
                 // 处理部分成交, 设置已成交数量
                 // Set FilledQty
                 order.getQty().setFilledQty(filledQty);
@@ -56,7 +56,7 @@ public final class OrderUpdater {
                         order.getQty().getFilledQty(),
                         order.getPrice().getAvgTradePrice());
             }
-            case Filled -> {
+            case FILLED -> {
                 // 处理全部成交, 设置已成交数量
                 // Set FilledQty
                 order.getQty().setFilledQty(filledQty);

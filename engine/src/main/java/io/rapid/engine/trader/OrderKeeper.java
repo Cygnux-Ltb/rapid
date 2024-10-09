@@ -5,15 +5,14 @@ import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.account.Account;
 import io.rapid.core.account.SubAccount;
+import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.BasicMarketData;
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.mdata.Level2MarketData;
+import io.rapid.core.order.impl.Order;
 import io.rapid.core.order.OrdSysIdAllocator;
-import io.rapid.core.order.Order;
-import io.rapid.core.order.enums.OrdType;
-import io.rapid.core.order.enums.TrdAction;
-import io.rapid.core.order.enums.TrdDirection;
-import io.rapid.core.serializable.avro.inbound.OrderEvent;
+import io.rapid.core.event.enums.OrdType;
+import io.rapid.core.event.enums.TrdAction;
+import io.rapid.core.event.enums.TrdDirection;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 
@@ -72,7 +71,7 @@ public final class OrderKeeper implements Serializable {
      *
      * @param order Order
      */
-    private static void putOrder(Order order) {
+    private static void putOrder(io.rapid.core.order.Order order) {
         int subAccountId = order.getSubAccountId();
         int accountId = order.getAccountId();
         AllOrders.putOrder(order);
@@ -85,9 +84,9 @@ public final class OrderKeeper implements Serializable {
     /**
      * @param order Order
      */
-    private static void updateOrder(Order order) {
+    private static void updateOrder(io.rapid.core.order.Order order) {
         switch (order.getStatus()) {
-            case Filled, Canceled, NewRejected, CancelRejected -> {
+            case FILLED, CANCELED, NEW_REJECTED, CANCEL_REJECTED -> {
                 AllOrders.finishOrder(order);
                 getSubAccountOrderBook(order.getSubAccountId()).finishOrder(order);
                 getAccountOrderBook(order.getAccountId()).finishOrder(order);
@@ -106,20 +105,20 @@ public final class OrderKeeper implements Serializable {
      * @param event AvOrderEvent
      * @return ChildOrder
      */
-    public static ChildOrder handleOrderReport(OrderEvent event) {
+    public static Order handleOrderReport(OrderReport event) {
         log.info("Handle OrderEvent, event -> {}", event);
         // 根据订单回报查找所属订单
-        Order order = getOrder(event.getOrdSysId());
+        io.rapid.core.order.Order order = getOrder(event.getOrdSysId());
         if (order == null) {
             // 处理订单由外部系统发出而收到报单回报的情况
             log.warn("Received other source order, ordSysId==[{}]", event.getOrdSysId());
             // 根据成交回报创建新订单, 放入OrderBook托管
-            order = ChildOrder.newExternalOrder(event);
+            // order = ChildOrder.newExternalOrder(event);
             // 新订单放入OrderBook
             putOrder(order);
         } else
-            order.printLog(log, "OrderBookKeeper :: Search order OK");
-        ChildOrder childOrder = (ChildOrder) order;
+            order.toLog(log, "OrderBookKeeper :: Search order OK");
+        Order childOrder = (Order) order;
         // 根据订单回报更新订单状态
         OrderUpdater.updateOrder(childOrder, event);
         // 更新Keeper内订单
@@ -140,7 +139,7 @@ public final class OrderKeeper implements Serializable {
      * @return Order
      */
     @Nullable
-    public static Order getOrder(long ordSysId) {
+    public static io.rapid.core.order.Order getOrder(long ordSysId) {
         return AllOrders.getOrder(ordSysId);
     }
 
@@ -176,7 +175,7 @@ public final class OrderKeeper implements Serializable {
         return InstrumentOrders.getIfAbsentPut(instrument.getInstrumentId(), OrderBook::new);
     }
 
-    public static void onMarketData(BasicMarketData marketData) {
+    public static void onMarketData(Level2MarketData marketData) {
         // TODO 处理行情
     }
 
@@ -195,17 +194,11 @@ public final class OrderKeeper implements Serializable {
      * @param action            TrdAction
      * @return ChildOrder
      */
-    public static ChildOrder createAndSaveChildOrder(OrdSysIdAllocator ordSysIdAllocator,
-                                                     int strategyId,
-                                                     SubAccount subAccount,
-                                                     Account account,
-                                                     Instrument instrument,
-                                                     int offerQty,
-                                                     double offerPrice,
-                                                     OrdType type,
-                                                     TrdDirection direction,
-                                                     TrdAction action) {
-        ChildOrder childOrder = ChildOrder.newOrder(ordSysIdAllocator, strategyId,
+    public static Order createAndSaveChildOrder(OrdSysIdAllocator ordSysIdAllocator, int strategyId,
+                                                SubAccount subAccount, Account account, Instrument instrument,
+                                                int offerQty, double offerPrice, OrdType type,
+                                                TrdDirection direction, TrdAction action) {
+        Order childOrder = Order.newOrder(ordSysIdAllocator, strategyId,
                 subAccount, account, instrument, offerQty, offerPrice, type, direction, action);
         putOrder(childOrder);
         return childOrder;

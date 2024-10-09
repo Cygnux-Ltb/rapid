@@ -1,8 +1,8 @@
 package io.rapid.engine.trader;
 
 import io.mercury.common.collections.Capacity;
+import io.rapid.core.order.OrdStatusException;
 import io.rapid.core.order.Order;
-import io.rapid.core.order.Order.OrdStatusException;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 
 import javax.annotation.Nullable;
@@ -108,11 +108,11 @@ public final class OrderBook {
      */
     public Order putOrder(Order order) {
         switch (order.getDirection()) {
-            case Long -> {
+            case LONG -> {
                 longOrderMap.put(order.getOrdSysId(), order);
                 activeLongOrderMap.put(order.getOrdSysId(), order);
             }
-            case Short -> {
+            case SHORT -> {
                 shortOrderMap.put(order.getOrdSysId(), order);
                 activeShortOrderMap.put(order.getOrdSysId(), order);
             }
@@ -130,9 +130,9 @@ public final class OrderBook {
      */
     public Order finishOrder(Order order) throws OrdStatusException {
         switch (order.getDirection()) {
-            case Long -> activeLongOrderMap.remove(order.getOrdSysId());
-            case Short -> activeShortOrderMap.remove(order.getOrdSysId());
-            case Invalid ->
+            case LONG -> activeLongOrderMap.remove(order.getOrdSysId());
+            case SHORT -> activeShortOrderMap.remove(order.getOrdSysId());
+            case INVALID ->
                     throw new OrdStatusException("ordSysId: [" + order.getOrdSysId() + "], direction is invalid.");
         }
         return activeOrderMap.remove(order.getOrdSysId());

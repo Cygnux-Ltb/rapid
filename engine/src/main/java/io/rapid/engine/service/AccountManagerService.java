@@ -1,4 +1,4 @@
-package io.rapid.engine.manager;
+package io.rapid.engine.service;
 
 import io.cygnuxltb.console.beans.outbound.SubAccountMappingRsp;
 import io.cygnuxltb.console.beans.outbound.SubAccountRsp;
@@ -52,14 +52,14 @@ public final class AccountManagerService implements Serializable, AccountManager
     private final MutableIntObjectMap<SubAccountMapping> subAccountMappingMap = MutableMaps.newIntObjectMap();
 
     /**
-     * 存储[Account]信息, 一对一关系, 以accountId索引
+     * 存储[Account]信息, 一对一关系, 以[accountId]索引
      */
     private final MutableIntObjectMap<Account> accountMap = MutableMaps.newIntObjectMap();
 
     /**
-     * 存储[Account]信息, 一对一关系, 以investorId索引
+     * 存储[Account]信息, 一对一关系, 以[investorCode]索引
      */
-    private final MutableMap<String, Account> accountMapByInvestorId = MutableMaps.newUnifiedMap();
+    private final MutableMap<String, Account> accountMapByInvestorCode = MutableMaps.newUnifiedMap();
 
     /**
      * 初始化标识
@@ -112,8 +112,9 @@ public final class AccountManagerService implements Serializable, AccountManager
 
     private Account saveAccount(Account account) {
         accountMap.put(account.getAccountId(), account);
-        accountMapByInvestorId.put(account.getInvestorId(), account);
-        log.info("Saved [Account] -> accountId==[{}], investorId==[{}]", account.getAccountId(), account.getInvestorId());
+        accountMapByInvestorCode.put(account.getInvestorCode(), account);
+        log.info("Saved [Account] -> accountId==[{}], investorCode==[{}]",
+                account.getAccountId(), account.getInvestorCode());
         return account;
     }
 
@@ -139,7 +140,7 @@ public final class AccountManagerService implements Serializable, AccountManager
 
     @Override
     public Account getAccount(String investorId) throws AccountException {
-        var account = accountMapByInvestorId.get(investorId);
+        var account = accountMapByInvestorCode.get(investorId);
         if (account == null)
             throw new AccountException("Account error in mapping : investorId[" + investorId + "] no mapped instance");
         return account;

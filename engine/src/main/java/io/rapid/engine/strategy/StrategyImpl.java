@@ -1,17 +1,18 @@
 package io.rapid.engine.strategy;
 
+import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
-import io.rapid.core.handler.AdaptorEventHandler;
+import io.rapid.core.event.inbound.AdaptorReport;
+import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.handler.AdaptorReportHandler;
 import io.rapid.core.handler.MarketDataHandler;
+import io.rapid.core.strategy.StrategySignalHandler;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
 import io.rapid.core.order.Order;
-import io.rapid.core.serializable.avro.inbound.AdaptorEvent;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
-import org.eclipse.collections.api.list.ImmutableList;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -34,16 +35,16 @@ public class StrategyImpl extends BaseStrategy {
     }
 
     @Override
-    public void onMarketData(@Nonnull FastMarketData marketData) {
+    public void onMarketData(@Nonnull RawMarketData marketData) {
         marketDataHandler.onMarketData(marketData);
     }
 
     @Override
-    protected void handleMarketData(FastMarketData marketData) {
+    protected void handleMarketData(RawMarketData marketData) {
 
     }
 
-    private final AdaptorEventHandler adaptorEventHandler = event -> {
+    private final AdaptorReportHandler adaptorReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getStrategyName(),
                 event.getAdaptorId(), event.getStatus());
         switch (event.getStatus()) {
@@ -71,9 +72,8 @@ public class StrategyImpl extends BaseStrategy {
 
     };
 
-    @Override
-    public void onAdaptorEvent(@Nonnull AdaptorEvent event) {
-        adaptorEventHandler.onAdaptorEvent(event);
+    public void onAdaptorEvent(@Nonnull AdaptorReport event) {
+        adaptorReportHandler.onAdaptorReport(event);
     }
 
     @Override
@@ -87,6 +87,16 @@ public class StrategyImpl extends BaseStrategy {
     }
 
     @Override
+    public Strategy setParams(Params params) {
+        return null;
+    }
+
+    @Override
+    public Strategy setSignalHandler(StrategySignalHandler handler) {
+        return null;
+    }
+
+    @Override
     public int getStrategyId() {
         return 0;
     }
@@ -96,10 +106,9 @@ public class StrategyImpl extends BaseStrategy {
         return null;
     }
 
-
     @Override
-    public ImmutableList<Instrument> getInstruments() {
-        return null;
+    public void onEpochTime(long epochTime, EpochUnit epochUnit) {
+
     }
 
     @Override
@@ -108,7 +117,7 @@ public class StrategyImpl extends BaseStrategy {
     }
 
     @Override
-    public void onEvent(@Nonnull StrategyEvent event) {
+    public void onStrategyEvent(@Nonnull StrategyEvent event) {
 
     }
 
@@ -136,4 +145,5 @@ public class StrategyImpl extends BaseStrategy {
     public void close() throws IOException {
 
     }
+
 }

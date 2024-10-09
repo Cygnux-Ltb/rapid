@@ -18,12 +18,12 @@ import java.io.IOException;
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 
 @Service("multiStrategyManager")
-public abstract class MultiEventScheduler extends AbstractEventScheduler {
+public abstract class MultiStrategyManager extends AbstractStrategyManager {
 
     /**
      * Logger
      */
-    private static final Logger log = Log4j2LoggerFactory.getLogger(MultiEventScheduler.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(MultiStrategyManager.class);
 
     /**
      * 策略列表
