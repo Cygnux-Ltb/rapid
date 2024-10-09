@@ -97,7 +97,7 @@ import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 import org.rationalityfrontline.jctp.CThostFtdcUserPasswordUpdateField;
 
 @NativeSpiImpl
-public final class FtdcTraderSpi1 extends CThostFtdcTraderSpi {
+public final class FtdcTraderSpiV_672 extends CThostFtdcTraderSpi {
 
     /**
      * FTDC Trader Listener
@@ -107,7 +107,7 @@ public final class FtdcTraderSpi1 extends CThostFtdcTraderSpi {
     /**
      * @param listener FtdcTraderListener
      */
-    public FtdcTraderSpi1(FtdcTraderListener listener) {
+    public FtdcTraderSpiV_672(FtdcTraderListener listener) {
         this.listener = listener;
     }
 

@@ -1,25 +1,33 @@
 package io.rapid.adaptor.ctp.gateway.event;
 
 import com.lmax.disruptor.EventFactory;
-import io.rapid.adaptor.ctp.serializable.avro.md.FtdcDepthMarketData;
-import io.rapid.adaptor.ctp.serializable.avro.md.FtdcSpecificInstrument;
-import io.rapid.adaptor.ctp.serializable.avro.pack.FtdcRspType;
-import io.rapid.adaptor.ctp.serializable.avro.shared.FrontDisconnected;
-import io.rapid.adaptor.ctp.serializable.avro.shared.HeartBeatWarning;
-import io.rapid.adaptor.ctp.serializable.avro.shared.RspError;
-import io.rapid.adaptor.ctp.serializable.avro.shared.RspUserLogin;
-import io.rapid.adaptor.ctp.serializable.avro.shared.UserLogout;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrder;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrderAction;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInstrumentStatus;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInvestorPosition;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrderAction;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTrade;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTradingAccount;
+import io.mercury.common.epoch.EpochUnit;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.mercury.common.serialization.specific.JsonSerializable;
+import io.mercury.serialization.json.JsonRecord;
+import io.rapid.adaptor.ctp.serializable.FtdcRspType;
+import io.rapid.adaptor.ctp.serializable.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.serializable.md.FtdcSpecificInstrument;
+import io.rapid.adaptor.ctp.serializable.shared.FrontDisconnected;
+import io.rapid.adaptor.ctp.serializable.shared.HeartBeatWarning;
+import io.rapid.adaptor.ctp.serializable.shared.RspError;
+import io.rapid.adaptor.ctp.serializable.shared.RspUserLogin;
+import io.rapid.adaptor.ctp.serializable.shared.UserLogout;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrder;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrderAction;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInstrumentStatus;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInvestorPosition;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcOrderAction;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcTradingAccount;
+import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.slf4j.Logger;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 事件循环使用Event类型
@@ -27,9 +35,13 @@ import lombok.experimental.Accessors;
  * @author yellow013
  */
 @Getter
-public final class FtdcRspEvent {
+public final class FtdcRspEvent implements JsonSerializable {
+
+    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspEvent.class);
 
     public static final EventFactory<FtdcRspEvent> EVENT_FACTORY = FtdcRspEvent::new;
+
+    private static final AtomicBoolean isLogging = new AtomicBoolean(false);
 
     /**
      * 事件类型
@@ -39,12 +51,11 @@ public final class FtdcRspEvent {
     private FtdcRspType type = FtdcRspType.Unsupported;
 
     /**
-     * 毫秒时间戳
+     * 微秒时间戳
      */
     @Setter
     @Accessors(chain = true)
-    private long epochMillis;
-
+    private long epochMicros;
 
     //////////////////////////////////// SHARED RSP ////////////////////////////////////
     /**
@@ -68,7 +79,6 @@ public final class FtdcRspEvent {
      */
     private final UserLogout userLogout = new UserLogout();
 
-
     //////////////////////////////////// MD RSP ////////////////////////////////////
     /**
      * 行情
@@ -78,7 +88,6 @@ public final class FtdcRspEvent {
      * 指定的合约
      */
     private final FtdcSpecificInstrument ftdcSpecificInstrument = new FtdcSpecificInstrument();
-
 
     //////////////////////////////////// TRADER RSP ////////////////////////////////////
     /**
@@ -125,6 +134,69 @@ public final class FtdcRspEvent {
      * For EventFactory Call
      */
     private FtdcRspEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return toJson();
+    }
+
+    public JsonRecord toJsonRecord() {
+        return setValue(new JsonRecord().setEpochUnit(EpochUnit.MICROS));
+    }
+
+    // 复用Record
+    private final JsonRecord record = new JsonRecord().setEpochUnit(EpochUnit.MICROS);
+
+    @Nonnull
+    @Override
+    public String toJson() {
+        return setValue(record).toJson();
+    }
+
+    private JsonRecord setValue(JsonRecord record) {
+        return record.setTitle(type.name())
+                .setEpochTime(epochMicros)
+                .setRecord(switch (type) {
+                    case FtdcDepthMarketData -> ftdcDepthMarketData;
+                    case FtdcOrder -> ftdcOrder;
+                    case FtdcTrade -> ftdcTrade;
+                    case FtdcInputOrder -> ftdcInputOrder;
+                    case FtdcInputOrderAction -> ftdcInputOrderAction;
+                    case FtdcOrderAction -> ftdcOrderAction;
+                    case HeartBeatWarning -> heartBeatWarning;
+                    case FtdcInstrumentStatus -> ftdcInstrumentStatus;
+                    case FtdcSpecificInstrument -> ftdcSpecificInstrument;
+                    case FtdcInvestorPosition -> ftdcInvestorPosition;
+                    case FtdcTradingAccount -> ftdcTradingAccount;
+                    case RspError -> rspError;
+                    case Unsupported -> "Unsupported";
+                    case FrontDisconnected -> frontDisconnected;
+                    case RspUserLogin -> rspUserLogin;
+                    case UserLogout -> userLogout;
+                    case MdClosed -> "MdClosed";
+                    case TraderClosed -> "TraderClosed";
+                });
+    }
+
+    /**
+     * 启用日志记录
+     */
+    public static void enableLogging() {
+        isLogging.set(true);
+    }
+
+    /**
+     * 禁用日志记录
+     */
+    public static void disableLogging() {
+        isLogging.set(false);
+    }
+
+    public FtdcRspEvent logging() {
+        if (isLogging.get())
+            log.info("FtdcRspEvent logging -> {}", this);
+        return this;
     }
 
 }

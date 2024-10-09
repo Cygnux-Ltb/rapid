@@ -1,23 +1,21 @@
 package io.rapid.adaptor.ctp;
 
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrder;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcInputOrderAction;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrderAction;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTrade;
-import io.rapid.core.serializable.avro.enums.OrdStatus;
-import io.rapid.core.serializable.avro.inbound.OrderEvent;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrder;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrderAction;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcOrderAction;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcTrade;
+import io.rapid.core.event.enums.OrdStatus;
+import io.rapid.core.event.inbound.OrderReport;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 
-import static io.mercury.common.datetime.EpochTime.getEpochMicros;
+import static io.mercury.common.epoch.HighResolutionEpoch.micros;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
 import static io.rapid.adaptor.ctp.consts.FtdcDirection.withDirection;
 import static io.rapid.adaptor.ctp.consts.FtdcOffsetFlag.withOffsetFlag;
 import static io.rapid.adaptor.ctp.consts.FtdcOrderStatus.withOrderStatus;
-import static io.rapid.core.instrument.futures.ChinaFutures.FixedMultiplier;
-import static io.rapid.core.serializable.avro.inbound.OrderEvent.newBuilder;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -40,32 +38,32 @@ public final class OrderEventConverter {
      * @param order FtdcInputOrder
      * @return OrderReport
      */
-    public OrderEvent withFtdcInputOrder(FtdcInputOrder order) {
-        String orderRef = order.getOrderRef();
+    public OrderReport withFtdcInputOrder(FtdcInputOrder order) {
+        String orderRef = order.OrderRef;
         long ordSysId = orderRefAllocator.getOrdSysId(orderRef);
-        var event = newBuilder()
+        var event = OrderReport.builder()
                 // 时间戳
-                .setEpochMicros(getEpochMicros())
+                .epochMicros(micros())
                 // OrdSysId
-                .setOrdSysId(ordSysId)
+                .ordSysId(ordSysId)
                 // 投资者ID
-                .setInvestorId(order.getInvestorID())
+                .investorId(order.InvestorID)
                 // 报单引用
-                .setOrderRef(orderRef)
+                .orderRef(orderRef)
                 // 交易所
-                .setExchangeCode(order.getExchangeID())
+                .exchangeCode(order.ExchangeID)
                 // 合约代码
-                .setInstrumentCode(order.getInstrumentID())
+                .instrumentCode(order.InstrumentID)
                 // 报单状态
-                .setStatus(OrdStatus.NEW_REJECTED)
+                .status(OrdStatus.NEW_REJECTED)
                 // 买卖方向
-                .setDirection(withDirection((char) order.getDirection()))
+                .direction(withDirection((char) order.Direction))
                 // 组合开平标志
-                .setAction(withOffsetFlag(order.getCombOffsetFlag()))
+                .action(withOffsetFlag(order.CombOffsetFlag))
                 // 委托数量
-                .setOfferQty(order.getVolumeTotalOriginal())
+                .offerQty(order.VolumeTotalOriginal)
                 // 委托价格
-                .setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()))
+                .offerPrice(order.LimitPrice)
                 .build();
         log.info("FtdcInputOrder conversion to OrderReport -> {}", event);
         return event;
@@ -79,42 +77,42 @@ public final class OrderEventConverter {
      * @param order FtdcOrder
      * @return OrderReport
      */
-    public OrderEvent withFtdcOrder(FtdcOrder order) {
-        String orderRef = order.getOrderRef();
+    public OrderReport withFtdcOrder(FtdcOrder order) {
+        String orderRef = order.OrderRef;
         long ordSysId = orderRefAllocator.getOrdSysId(orderRef);
-        var event = newBuilder()
+        var event = OrderReport.builder()
                 // 时间戳
-                .setEpochMicros(getEpochMicros())
+                .epochMicros(micros())
                 // OrdSysId
-                .setOrdSysId(ordSysId)
+                .ordSysId(ordSysId)
                 // 交易日
-                .setTradingDay(parseInt(order.getTradingDay()))
+                .tradingDay(parseInt(order.TradingDay))
                 // 投资者ID
-                .setInvestorId(order.getInvestorID())
+                .investorId(order.InvestorID)
                 // 报单引用
-                .setOrderRef(orderRef)
+                .orderRef(orderRef)
                 // 报单编号
-                .setBrokerOrdSysId(order.getOrderSysID())
+                .brokerOrdSysId(order.OrderSysID)
                 // 交易所
-                .setExchangeCode(order.getExchangeID())
+                .exchangeCode(order.ExchangeID)
                 // 合约代码
-                .setInstrumentCode(order.getInstrumentID())
+                .instrumentCode(order.InstrumentID)
                 // 报单状态
-                .setStatus(withOrderStatus((char) order.getOrderStatus()))
+                .status(withOrderStatus((char) order.OrderStatus))
                 // 买卖方向
-                .setDirection(withDirection((char) order.getDirection()))
+                .direction(withDirection((char) order.Direction))
                 // 组合开平标志
-                .setAction(withOffsetFlag(order.getCombOffsetFlag()))
+                .action(withOffsetFlag(order.CombOffsetFlag))
                 // 委托数量
-                .setOfferQty(order.getVolumeTotalOriginal())
+                .offerQty(order.VolumeTotalOriginal)
                 // 完成数量
-                .setFilledQty(order.getVolumeTraded())
+                .filledQty(order.VolumeTraded)
                 // 委托价格
-                .setOfferPrice(FixedMultiplier.toLong(order.getLimitPrice()))
+                .offerPrice(order.LimitPrice)
                 // 报单日期 + 委托时间
-                .setOfferTime(removeNonDigits(order.getInsertDate()) + removeNonDigits(order.getInsertTime()))
+                .offerTime(removeNonDigits(order.InsertDate) + removeNonDigits(order.InsertTime))
                 // 更新时间
-                .setUpdateTime(order.getUpdateTime())
+                .updateTime(order.UpdateTime)
                 .build();
         log.info("FtdcOrder conversion to OrderReport -> {}", event);
         return event;
@@ -128,38 +126,38 @@ public final class OrderEventConverter {
      * @param trade FtdcTrade
      * @return OrderReport
      */
-    public OrderEvent withFtdcTrade(FtdcTrade trade) {
-        var orderRef = trade.getOrderRef();
+    public OrderReport withFtdcTrade(FtdcTrade trade) {
+        var orderRef = trade.OrderRef;
         long ordSysId = orderRefAllocator.getOrdSysId(orderRef);
-        var event = newBuilder()
+        var event = OrderReport.builder()
                 // 微秒时间戳
-                .setEpochMicros(getEpochMicros())
+                .epochMicros(micros())
                 // OrdSysId
-                .setOrdSysId(ordSysId)
+                .ordSysId(ordSysId)
                 // 交易日
-                .setTradingDay(parseInt(trade.getTradingDay()))
+                .tradingDay(parseInt(trade.TradingDay))
                 // 投资者ID
-                .setInvestorId(trade.getInvestorID())
+                .investorId(trade.InvestorID)
                 // 报单引用
-                .setOrderRef(orderRef)
+                .orderRef(orderRef)
                 // 报单编号
-                .setBrokerOrdSysId(trade.getOrderSysID())
+                .brokerOrdSysId(trade.OrderSysID)
                 // 交易所
-                .setExchangeCode(trade.getExchangeID())
+                .exchangeCode(trade.ExchangeID)
                 // 合约代码
-                .setInstrumentCode(trade.getInstrumentID())
+                .instrumentCode(trade.InstrumentID)
                 // 报单状态
-                .setStatus(OrdStatus.UNPROVIDED)
+                .status(OrdStatus.UNPROVIDED)
                 // 买卖方向
-                .setDirection(withDirection((char) trade.getDirection()))
+                .direction(withDirection((char) trade.Direction))
                 // 组合开平标志
-                .setAction(withOffsetFlag((char) trade.getOffsetFlag()))
+                .action(withOffsetFlag((char) trade.OffsetFlag))
                 // 完成数量
-                .setFilledQty(trade.getVolume())
+                .filledQty(trade.Volume)
                 // 成交价格
-                .setTradePrice(FixedMultiplier.toLong(trade.getPrice()))
+                .tradePrice(trade.Price)
                 // 最后修改时间
-                .setUpdateTime(removeNonDigits(trade.getTradeDate()) + removeNonDigits(trade.getTradeTime()))
+                .updateTime(removeNonDigits(trade.TradeDate) + removeNonDigits(trade.TradeTime))
                 .build();
         log.info("FtdcTrade conversion to OrderEvent -> {}", event);
         return event;
@@ -173,8 +171,8 @@ public final class OrderEventConverter {
      * @param inputOrderAction FtdcInputOrderAction
      * @return OrderReport
      */
-    public OrderEvent withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
-
+    public OrderReport withFtdcInputOrderAction(FtdcInputOrderAction inputOrderAction) {
+        log.warn("FtdcInputOrderAction conversion to OrderEvent no support");
         return null;
     }
 
@@ -186,8 +184,8 @@ public final class OrderEventConverter {
      * @param orderAction FtdcOrderAction
      * @return OrderReport
      */
-    public OrderEvent withFtdcOrderAction(FtdcOrderAction orderAction) {
-
+    public OrderReport withFtdcOrderAction(FtdcOrderAction orderAction) {
+        log.warn("FtdcOrderAction conversion to OrderEvent no support");
         return null;
     }
 

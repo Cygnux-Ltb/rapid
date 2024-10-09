@@ -6,10 +6,10 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.param.ImmutableCtpParams;
-import io.rapid.adaptor.ctp.serializable.avro.md.FtdcDepthMarketData;
-import io.rapid.adaptor.ctp.serializable.avro.pack.FtdcRspType;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.serializable.avro.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.serializable.FtdcRspType;
+import io.rapid.adaptor.ctp.serializable.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.serializable.trader.FtdcTrade;
 import org.junit.Test;
 import org.slf4j.Logger;
 
@@ -48,19 +48,19 @@ public class CtpGatewayTest {
                     switch (msg.getType()) {
                         case FtdcRspType.FtdcDepthMarketData -> {
                             FtdcDepthMarketData depthMarketData = msg.getFtdcDepthMarketData();
-                            log.info(
-                                    "Handle CThostFtdcDepthMarketDataField -> InstrumentID==[{}]  UpdateTime==[{}]  UpdateMillisec==[{}]  AskPrice1==[{}]  BidPrice1==[{}]",
-                                    depthMarketData.getInstrumentID(), depthMarketData.getUpdateTime(),
-                                    depthMarketData.getUpdateMillisec(), depthMarketData.getAskPrice1(),
-                                    depthMarketData.getBidPrice1());
+//                            log.info(
+//                                    "Handle CThostFtdcDepthMarketDataField -> InstrumentID==[{}]  UpdateTime==[{}]  UpdateMillisec==[{}]  AskPrice1==[{}]  BidPrice1==[{}]",
+//                                    depthMarketData.getInstrumentID(), depthMarketData.getUpdateTime(),
+//                                    depthMarketData.getUpdateMillisec(), depthMarketData.getAskPrice1(),
+//                                    depthMarketData.getBidPrice1());
                         }
                         case FtdcOrder -> {
                             FtdcOrder order = msg.getFtdcOrder();
-                            log.info("Handle RtnOrder -> OrderRef==[{}]", order.getOrderRef());
+                            log.info("Handle RtnOrder -> OrderRef==[{}]", order.OrderRef);
                         }
                         case FtdcTrade -> {
                             FtdcTrade trade = msg.getFtdcTrade();
-                            log.info("Handle RtnTrade -> OrderRef==[{}]", trade.getOrderRef());
+                            log.info("Handle RtnTrade -> OrderRef==[{}]", trade.OrderRef);
                         }
                         default -> {
                         }

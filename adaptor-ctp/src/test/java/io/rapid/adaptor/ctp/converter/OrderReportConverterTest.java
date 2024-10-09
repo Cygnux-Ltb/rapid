@@ -6,10 +6,10 @@ import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.event.enums.OrdStatus;
 import io.rapid.core.event.enums.TrdAction;
 import io.rapid.core.event.enums.TrdDirection;
-import io.rapid.core.event.inbound.OrderEvent;
+import io.rapid.core.event.inbound.OrderReport;
 import org.junit.Test;
 
-public class OrderEventConverterTest {
+public class OrderReportConverterTest {
 
     static {
         Log4j2Configurator.useInfoLogLevel();
@@ -17,7 +17,7 @@ public class OrderEventConverterTest {
 
     @Test
     public void test() {
-        var builder = OrderEvent.builder();
+        var builder = OrderReport.builder();
         // 微秒时间戳
         builder.epochMicros(HighResolutionEpoch.micros());
         // OrdSysId
@@ -33,7 +33,7 @@ public class OrderEventConverterTest {
         builder.status(OrdStatus.NEW_REJECTED);
         builder.direction(TrdDirection.LONG);
         builder.action(TrdAction.OPEN);
-        OrderEvent event = builder.build();
+        OrderReport event = builder.build();
         System.out.println(JsonWriter.toJson(event));
 
     }

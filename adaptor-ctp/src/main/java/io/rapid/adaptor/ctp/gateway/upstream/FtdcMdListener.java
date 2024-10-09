@@ -1,11 +1,13 @@
 package io.rapid.adaptor.ctp.gateway.upstream;
 
-import ctp.thostapi.CThostFtdcDepthMarketDataField;
-import ctp.thostapi.CThostFtdcForQuoteRspField;
-import ctp.thostapi.CThostFtdcRspInfoField;
-import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import ctp.thostapi.CThostFtdcUserLogoutField;
+
+import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
+import org.rationalityfrontline.jctp.CThostFtdcForQuoteRspField;
+import org.rationalityfrontline.jctp.CThostFtdcMulticastInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
+import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 
 public interface FtdcMdListener {
 
@@ -92,10 +94,10 @@ public interface FtdcMdListener {
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
      * @param RequestID          int
-     * @param bIsLast            boolean
+     * @param IsLast             boolean
      */
     void fireRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
-                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast);
+                               CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
     /**
      * 取消订阅询价应答
@@ -103,10 +105,10 @@ public interface FtdcMdListener {
      * @param SpecificInstrument CThostFtdcSpecificInstrumentField
      * @param RspInfo            CThostFtdcRspInfoField
      * @param RequestID          int
-     * @param bIsLast            boolean
+     * @param IsLast             boolean
      */
     void fireRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField SpecificInstrument,
-                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean bIsLast);
+                                 CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
     /**
      * 深度行情通知
@@ -121,5 +123,16 @@ public interface FtdcMdListener {
      * @param ForQuoteRsp CThostFtdcForQuoteRspField
      */
     void fireRtnForQuoteRsp(CThostFtdcForQuoteRspField ForQuoteRsp);
+
+    /**
+     * 请求查询组播合约
+     *
+     * @param MulticastInstrument CThostFtdcMulticastInstrumentField
+     * @param RspInfo             CThostFtdcRspInfoField
+     * @param RequestID           int
+     * @param IsLast              boolean
+     */
+    void fireRspQryMulticastInstrument(CThostFtdcMulticastInstrumentField MulticastInstrument,
+                                       CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast);
 
 }

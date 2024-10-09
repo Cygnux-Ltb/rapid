@@ -35,9 +35,9 @@ import static io.mercury.common.thread.ThreadSupport.startNewMaxPriorityThread;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonError;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonnull;
-import static io.rapid.adaptor.ctp.serializable.md.SpecificInstrumentSource.SubMarketData;
-import static io.rapid.adaptor.ctp.serializable.md.SpecificInstrumentSource.UnsubMarketData;
-import static io.rapid.adaptor.ctp.serializable.shared.EventSource.MD;
+import static io.rapid.adaptor.ctp.serializable.source.SpecificInstrumentSource.SubMarketData;
+import static io.rapid.adaptor.ctp.serializable.source.SpecificInstrumentSource.UnsubMarketData;
+import static io.rapid.adaptor.ctp.serializable.source.EventSource.MD;
 
 public final class CtpMdGateway extends LoggingFtdcMdListener implements Closeable {
 
@@ -71,7 +71,7 @@ public final class CtpMdGateway extends LoggingFtdcMdListener implements Closeab
     public CtpMdGateway(CtpParams params, FtdcRspPublisher publisher) {
         this.params = nonNull(params, "params");
         this.publisher = nonNull(publisher, "publisher");
-        this.gatewayId = "GW-MD-" + params.getBrokerId() + "-" + params.getInvestorId();
+        this.gatewayId = "CPT-MD-" + params.getBrokerId() + "-" + params.getInvestorId();
     }
 
     /**
@@ -92,35 +92,37 @@ public final class CtpMdGateway extends LoggingFtdcMdListener implements Closeab
 
     @CalledNativeFunction
     private void CallInitAndJoin() {
-        // 创建CTP数据文件临时目录
-        File tempDir = mkdirInHome(gatewayId + "-" + date());
-        log.info("MdGateway -> used md tempDir: {}", tempDir.getAbsolutePath());
-        // 指定md临时文件地址
-        String tempFile = new File(tempDir, "md").getAbsolutePath();
+        var tempFile = new File(
+                // 在[home]目录创建CTP临时数据文件目录, (前缀+BrokerId+InvestorId+启动时日期)
+                mkdirInHome("ctp-tmp-" + params.getBrokerId() + "-" + params.getInvestorId() + "-" + date()),
+                // 临时文件名
+                "md")
+                // 文件绝对路径
+                .getAbsolutePath();
         log.info("MdGateway -> used md tempFile : {}", tempFile);
 
         // 创建CThostFtdcMdApi
-        log.info("MdGateway -> call CThostFtdcMdApi::CreateFtdcMdApi#{}", tempFile);
+        log.info("MdGateway -> native CThostFtdcMdApi::CreateFtdcMdApi#{}", tempFile);
         this.FtdcMdApi = CThostFtdcMdApi.CreateFtdcMdApi(tempFile);
 
         // 创建CThostFtdcMdSpi
-        log.info("MdGateway -> create CThostFtdcMdSpi implement with FtdcMdSpi");
+        log.info("MdGateway -> create native CThostFtdcMdSpi implement with FtdcMdSpi");
         CThostFtdcMdSpi MdSpi = new FtdcMdSpi(this);
 
         // 将ftdcMdSpi注册到ftdcMdApi
-        log.info("MdGateway -> call CThostFtdcMdApi::RegisterSpi#FtdcMdSpi");
+        log.info("MdGateway -> native CThostFtdcMdApi::RegisterSpi#FtdcMdSpi");
         FtdcMdApi.RegisterSpi(MdSpi);
 
         // 注册到ftdcMdApi前置机
-        log.info("MdGateway -> FtdcMdApi::RegisterFront#{}", params.getMdAddr());
+        log.info("MdGateway -> native FtdcMdApi::RegisterFront#{}", params.getMdAddr());
         FtdcMdApi.RegisterFront(params.getMdAddr());
 
         // 初始化ftdcMdApi
-        log.info("MdGateway -> call CThostFtdcMdApi::Init");
+        log.info("MdGateway -> native CThostFtdcMdApi::Init");
         FtdcMdApi.Init();
 
         // 阻塞当前线程
-        log.info("MdGateway -> call CThostFtdcMdApi::Join");
+        log.info("MdGateway -> native CThostFtdcMdApi::Join");
         FtdcMdApi.Join();
     }
 

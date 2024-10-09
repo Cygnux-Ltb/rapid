@@ -45,7 +45,7 @@ public enum CtpParamKey implements ParamKey, ConfigOption {
     /**
      * 用户ID
      */
-    UserId("userid"),
+    UserId("userId"),
 
     /**
      * 密码

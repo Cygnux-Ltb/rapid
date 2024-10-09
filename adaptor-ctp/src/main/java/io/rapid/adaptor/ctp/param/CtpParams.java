@@ -1,7 +1,8 @@
 package io.rapid.adaptor.ctp.param;
 
-import ctp.thostapi.CThostFtdcReqAuthenticateField;
-import ctp.thostapi.CThostFtdcReqUserLoginField;
+
+import org.rationalityfrontline.jctp.CThostFtdcReqAuthenticateField;
+import org.rationalityfrontline.jctp.CThostFtdcReqUserLoginField;
 
 import java.util.ArrayList;
 
@@ -35,36 +36,37 @@ public interface CtpParams {
 
     String getCurrencyId();
 
-    default void assertCtpParams() {
-        var paramNames = new ArrayList<String>();
+    default CtpParams assertCtpParams() {
+        var errorParamNames = new ArrayList<String>();
         if (isNullOrEmpty(getTraderAddr()))
-            paramNames.add("TraderAddr");
+            errorParamNames.add("TraderAddr");
         if (isNullOrEmpty(getMdAddr()))
-            paramNames.add("MdAddr");
+            errorParamNames.add("MdAddr");
         if (isNullOrEmpty(getAppId()))
-            paramNames.add("AppId");
+            errorParamNames.add("AppId");
         if (isNullOrEmpty(getBrokerId()))
-            paramNames.add("BrokerId");
+            errorParamNames.add("BrokerId");
         if (isNullOrEmpty(getInvestorId()))
-            paramNames.add("InvestorId");
+            errorParamNames.add("InvestorId");
         if (isNullOrEmpty(getAccountId()))
-            paramNames.add("AccountId");
+            errorParamNames.add("AccountId");
         if (isNullOrEmpty(getUserId()))
-            paramNames.add("UserId");
+            errorParamNames.add("UserId");
         if (isNullOrEmpty(getPassword()))
-            paramNames.add("Password");
+            errorParamNames.add("Password");
         if (isNullOrEmpty(getAuthCode()))
-            paramNames.add("AuthCode");
+            errorParamNames.add("AuthCode");
         if (isNullOrEmpty(getIpAddr()))
-            paramNames.add("IpAddr");
+            errorParamNames.add("IpAddr");
         if (isNullOrEmpty(getMacAddr()))
-            paramNames.add("MacAddr");
+            errorParamNames.add("MacAddr");
         if (isNullOrEmpty(getTradingDay()))
-            paramNames.add("TradingDay");
+            errorParamNames.add("TradingDay");
         if (isNullOrEmpty(getCurrencyId()))
-            paramNames.add("CurrencyId");
-        if (!paramNames.isEmpty())
-            throw new IllegalArgumentException("CTP param not set -> [" + String.join(" , ", paramNames) + "]");
+            errorParamNames.add("CurrencyId");
+        if (!errorParamNames.isEmpty())
+            throw new IllegalArgumentException("CTP param not set -> [" + String.join(" , ", errorParamNames) + "]");
+        return this;
     }
 
     default CThostFtdcReqAuthenticateField getReqAuthenticateField() {

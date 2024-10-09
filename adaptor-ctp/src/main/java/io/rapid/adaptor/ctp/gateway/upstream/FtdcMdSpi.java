@@ -1,13 +1,15 @@
 package io.rapid.adaptor.ctp.gateway.upstream;
 
-import ctp.thostapi.CThostFtdcDepthMarketDataField;
-import ctp.thostapi.CThostFtdcForQuoteRspField;
-import ctp.thostapi.CThostFtdcMdSpi;
-import ctp.thostapi.CThostFtdcRspInfoField;
-import ctp.thostapi.CThostFtdcRspUserLoginField;
-import ctp.thostapi.CThostFtdcSpecificInstrumentField;
-import ctp.thostapi.CThostFtdcUserLogoutField;
+
 import io.mercury.common.annotation.NativeSpiImpl;
+import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
+import org.rationalityfrontline.jctp.CThostFtdcForQuoteRspField;
+import org.rationalityfrontline.jctp.CThostFtdcMdSpi;
+import org.rationalityfrontline.jctp.CThostFtdcMulticastInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
+import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
+import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
+import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 
 @NativeSpiImpl
 public final class FtdcMdSpi extends CThostFtdcMdSpi {
@@ -171,6 +173,20 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     @Override
     public void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField ForQuoteRsp) {
         listener.fireRtnForQuoteRsp(ForQuoteRsp);
+    }
+
+    /**
+     * 请求查询组播合约
+     *
+     * @param MulticastInstrument CThostFtdcMulticastInstrumentField
+     * @param RspInfo             CThostFtdcRspInfoField
+     * @param RequestID           int
+     * @param IsLast              boolean
+     */
+    @Override
+    public void OnRspQryMulticastInstrument(CThostFtdcMulticastInstrumentField MulticastInstrument,
+                                            CThostFtdcRspInfoField RspInfo, int RequestID, boolean IsLast) {
+        listener.fireRspQryMulticastInstrument(MulticastInstrument, RspInfo, RequestID, IsLast);
     }
 
 }

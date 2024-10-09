@@ -12,7 +12,7 @@ import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 
 @NativeSpiImpl
-public final class FtdcMdSpi1 extends CThostFtdcMdSpi {
+public final class FtdcMdSpiV_672 extends CThostFtdcMdSpi {
 
     /**
      * FTDC MarketData Listener
@@ -22,7 +22,7 @@ public final class FtdcMdSpi1 extends CThostFtdcMdSpi {
     /**
      * @param listener FtdcMdListener
      */
-    public FtdcMdSpi1(FtdcMdListener listener) {
+    public FtdcMdSpiV_672(FtdcMdListener listener) {
         this.listener = listener;
     }
 
