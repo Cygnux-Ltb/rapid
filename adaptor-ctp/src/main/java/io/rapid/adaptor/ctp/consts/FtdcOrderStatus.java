@@ -92,7 +92,7 @@ public interface FtdcOrderStatus {
      * @return OrdStatus
      */
     @Nonnull
-    static OrdStatus withOrderStatus(char orderStatus) {
+    static OrdStatus withFtdcOrderStatus(char orderStatus) {
         return switch (orderStatus) {
             // 未成交不在队列中 or 未成交还在队列中 return [OrdStatus.New]
             case NoTradeNotQueueing, NoTradeQueueing -> OrdStatus.NEW;

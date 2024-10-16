@@ -1,5 +1,6 @@
 package io.rapid.adaptor.ctp.consts;
 
+
 /**
  * ///TFtdcContingentConditionType是一个触发条件类型<br>
  * <br>

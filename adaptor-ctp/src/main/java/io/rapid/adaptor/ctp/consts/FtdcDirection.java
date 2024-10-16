@@ -17,12 +17,12 @@ public interface FtdcDirection {
     /**
      * 买
      */
-    char Buy = '0';
+    char BUY = '0';
 
     /**
      * 卖
      */
-    char Sell = '1';
+    char SELL = '1';
 
     /**
      * 根据<b>[FTDC返回]</b>买卖方向类型, 映射<b>[系统自定义]</b>买卖方向类型类型
@@ -30,12 +30,12 @@ public interface FtdcDirection {
      * @param direction char
      * @return TrdDirection
      */
-    static TrdDirection withDirection(char direction) {
+    static TrdDirection withFtdcDirection(char direction) {
         return switch (direction) {
             // 买
-            case Buy -> TrdDirection.LONG;
+            case BUY -> TrdDirection.LONG;
             // 卖
-            case Sell -> TrdDirection.SHORT;
+            case SELL -> TrdDirection.SHORT;
             // 未知
             default -> TrdDirection.INVALID;
         };

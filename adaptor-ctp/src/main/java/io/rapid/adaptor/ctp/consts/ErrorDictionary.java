@@ -1,14 +1,14 @@
 package io.rapid.adaptor.ctp.consts;
 
-import io.mercury.common.collections.ImmutableMaps;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
-import java.util.Arrays;
+import static io.mercury.common.collections.ImmutableMaps.newImmutableIntMap;
+import static java.util.Arrays.asList;
 
 public interface ErrorDictionary {
 
-    ImmutableIntObjectMap<ErrorMsg> MSG_MAP = ImmutableMaps.newImmutableIntMap(
-            Arrays.asList(
+    ImmutableIntObjectMap<ErrorMsg> MSG_MAP = newImmutableIntMap(
+            asList(
                     new ErrorMsg(0, "NONE", "CTP:正确"),
                     new ErrorMsg(1, "INVALID_DATA_SYNC_STATUS", "CTP:不在已同步状态"),
                     new ErrorMsg(2, "INCONSISTENT_INFORMATION", "CTP:会话信息不一致"),
@@ -264,8 +264,8 @@ public interface ErrorDictionary {
                     new ErrorMsg(4104, "SC_API_LOGIN_ERROR", "CTP:Login Error."),
                     new ErrorMsg(5000, "RCAMS_COMB_PRODUCT_INFO_NOT_FOUND", "CTP:找不到RCAMS产品组合信息"),
                     new ErrorMsg(5001, "RCAMS_SHORT_OPT_ADJUST_PARAM_NOT_FOUND", "CTP:找不到RCAMS空头期权风险调整参数"),
-                    new ErrorMsg(999999, "WAITING_OFFER_RSP", "CTP:等待银期报盘处理结果")),
-            ErrorMsg::id);
+                    new ErrorMsg(999999, "WAITING_OFFER_RSP", "CTP:等待银期报盘处理结果")
+            ), ErrorMsg::id);
 
 
     static ErrorMsg getMsg(int id) {

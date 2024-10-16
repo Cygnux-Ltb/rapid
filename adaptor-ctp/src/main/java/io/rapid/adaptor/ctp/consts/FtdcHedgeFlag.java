@@ -26,56 +26,56 @@ public interface FtdcHedgeFlag {
     /**
      * 投机 [char]
      */
-    char Speculation = '1';
+    char SPECULATION = '1';
     /**
      * 投机 [String]
      */
-    String SpeculationStr = "1";
+    String SPECULATION_STR = String.valueOf(SPECULATION);
 
     /**
      * 套利 [char]
      */
-    char Arbitrage = '2';
+    char ARBITRAGE = '2';
     /**
      * 套利 [String]
      */
-    String ArbitrageStr = "2";
+    String ARBITRAGE_STR = String.valueOf(ARBITRAGE);
 
     /**
      * 套保 [char]
      */
-    char Hedge = '3';
+    char HEDGE = '3';
     /**
      * 套保 [String]
      */
-    String HedgeStr = "3";
+    String HEDGE_STR = String.valueOf(HEDGE);
 
     /**
      * 做市商 [char]
      */
-    char MarketMaker = '5';
+    char MARKET_MAKER = '5';
     /**
      * 做市商 [String]
      */
-    String MarketMakerStr = "5";
+    String MARKET_MAKER_STR = String.valueOf(MARKET_MAKER);
 
     /**
      * 第一腿投机第二腿套保 大商所专用 [char]
      */
-    char SpecHedge = '6';
+    char SPEC_HEDGE = '6';
     /**
      * 第一腿投机第二腿套保 大商所专用 [String]
      */
-    String SpecHedgeStr = "6";
+    String SPEC_HEDGE_STR = String.valueOf(SPEC_HEDGE);
 
     /**
      * 第一腿套保第二腿投机 大商所专用 [char]
      */
-    char HedgeSpec = '7';
+    char HEDGE_SPEC = '7';
     /**
      * 第一腿套保第二腿投机 大商所专用 [String]
      */
-    String HedgeSpecStr = "7";
+    String HEDGE_SPEC_STR = String.valueOf(HEDGE_SPEC);
 
 }
 

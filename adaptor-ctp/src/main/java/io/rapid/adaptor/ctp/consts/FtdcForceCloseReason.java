@@ -32,6 +32,11 @@ public interface FtdcForceCloseReason {
     /**
      * 非强平
      */
-    char NotForceClose = '0';
+    char NOT_FORCE_CLOSE = '0';
+
+    /**
+     * 资金不足
+     */
+    char LACK_DEPOSIT = '1';
 
 }

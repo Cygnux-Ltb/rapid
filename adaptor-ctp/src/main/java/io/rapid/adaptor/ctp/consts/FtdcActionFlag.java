@@ -14,11 +14,11 @@ public interface FtdcActionFlag {
     /**
      * 删除
      */
-    char Delete = '0';
+    char DELETE = '0';
 
     /**
      * 修改
      */
-    char Modify = '3';
+    char MODIFY = '3';
 
 }

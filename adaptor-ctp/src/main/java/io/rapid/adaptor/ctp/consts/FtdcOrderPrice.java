@@ -1,12 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_AnyPrice;
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_AskPrice1;
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_BestPrice;
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_BidPrice1;
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_LastPrice;
-import static org.rationalityfrontline.jctp.jctpConstants.THOST_FTDC_OPT_LimitPrice;
-
 /**
  * ///TFtdcOrderPriceTypeType是一个报单价格条件类型 <br>
  * <br>
@@ -63,31 +56,31 @@ public interface FtdcOrderPrice {
     /**
      * 任意价
      */
-    char ANY_PRICE = THOST_FTDC_OPT_AnyPrice;
+    char ANY_PRICE = '1';
 
     /**
      * 限价
      */
-    char LIMIT_PRICE = THOST_FTDC_OPT_LimitPrice;
+    char LIMIT_PRICE = '2';
 
     /**
      * 最优价
      */
-    char BEST_PRICE = THOST_FTDC_OPT_BestPrice;
+    char BEST_PRICE = '3';
 
     /**
      * 最新价
      */
-    char LAST_PRICE = THOST_FTDC_OPT_LastPrice;
+    char LAST_PRICE = '4';
 
     /**
      * 卖一价
      */
-    char ASK_PRICE1 = THOST_FTDC_OPT_AskPrice1;
+    char ASK_PRICE1 = '8';
 
     /**
      * 买一价
      */
-    char BID_PRICE1 = THOST_FTDC_OPT_BidPrice1;
+    char BID_PRICE1 = 'C';
 
 }

@@ -14,11 +14,11 @@ public interface FtdcBizType {
     /**
      * 期货
      */
-    char Future = '1';
+    char FUTURE = '1';
 
     /**
      * 证券
      */
-    char Stock = '2';
+    char STOCK = '2';
 
 }

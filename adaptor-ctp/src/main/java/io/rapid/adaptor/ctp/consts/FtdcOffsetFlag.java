@@ -34,66 +34,66 @@ public interface FtdcOffsetFlag {
     /**
      * 开仓 [char]
      */
-    char Open = '0';
+    char OPEN = '0';
 
     /**
      * 开仓 [String]
      */
-    String OpenStr = "0";
+    String OPEN_STR = String.valueOf(OPEN);
 
     /**
      * 平仓 [char]
      */
-    char Close = '1';
+    char CLOSE = '1';
     /**
      * 平仓 [String]
      */
-    String CloseStr = "1";
+    String CLOSE_STR = String.valueOf(CLOSE);
 
     /**
      * 强平 [char]
      */
-    char ForceClose = '2';
+    char FORCE_CLOSE = '2';
     /**
      * 强平 [String]
      */
-    String ForceCloseStr = "2";
+    String FORCE_CLOSE_STR = String.valueOf(FORCE_CLOSE);
 
     /**
      * 平今 [char]
      */
-    char CloseToday = '3';
+    char CLOSE_TODAY = '3';
     /**
      * 平今 [String]
      */
-    String CloseTodayStr = "3";
+    String CLOSE_TODAY_STR = String.valueOf(CLOSE_TODAY);
 
     /**
      * 平昨 [char]
      */
-    char CloseYesterday = '4';
+    char CLOSE_YESTERDAY = '4';
     /**
      * 平昨 [String]
      */
-    String CloseYesterdayStr = "4";
+    String CLOSE_YESTERDAY_STR = String.valueOf(CLOSE_YESTERDAY);
 
     /**
      * 强减 [char]
      */
-    char ForceOff = '5';
+    char FORCE_OFF = '5';
     /**
      * 强减 [String]
      */
-    String ForceOffStr = "5";
+    String FORCE_OFF_STR = String.valueOf(FORCE_OFF);
 
     /**
      * 本地强平 [char]
      */
-    char LocalForceClose = '6';
+    char LOCAL_FORCE_CLOSE = '6';
     /**
      * 本地强平 [String]
      */
-    String LocalForceCloseStr = "6";
+    String LOCAL_FORCE_CLOSE_STR = String.valueOf(LOCAL_FORCE_CLOSE);
 
 
     /**
@@ -103,8 +103,8 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withOffsetFlag(@Nonnull String combOffsetFlag) {
-        return withOffsetFlag(combOffsetFlag.charAt(0));
+    static TrdAction withFtdcOffsetFlag(@Nonnull String combOffsetFlag) {
+        return withFtdcOffsetFlag(combOffsetFlag.charAt(0));
     }
 
     /**
@@ -114,16 +114,16 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withOffsetFlag(char offsetFlag) {
+    static TrdAction withFtdcOffsetFlag(char offsetFlag) {
         return switch (offsetFlag) {
             // 开仓
-            case Open -> TrdAction.OPEN;
+            case OPEN -> TrdAction.OPEN;
             // 平仓
-            case Close -> TrdAction.CLOSE;
+            case CLOSE -> TrdAction.CLOSE;
             // 平今
-            case CloseToday -> TrdAction.CLOSE_TODAY;
+            case CLOSE_TODAY -> TrdAction.CLOSE_TODAY;
             // 平昨
-            case CloseYesterday -> TrdAction.CLOSE_YESTERDAY;
+            case CLOSE_YESTERDAY -> TrdAction.CLOSE_YESTERDAY;
             // 未知
             default -> TrdAction.INVALID;
         };
