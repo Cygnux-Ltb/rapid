@@ -1,9 +1,11 @@
-package io.rapid.core.order;
+package io.rapid.core.order.impl;
 
 import io.rapid.core.event.enums.OrdStatus;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.OrdValid;
 import io.rapid.core.event.enums.TrdDirection;
+import io.rapid.core.order.OrdSysIdAllocatorKeeper;
+import io.rapid.core.order.Order;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.attribute.OrdRemark;
@@ -17,7 +19,7 @@ import org.slf4j.Logger;
  *
  * @author yellow013
  */
-public abstract non-sealed class AbstractOrder implements Order {
+public abstract sealed class AbstractOrder implements Order permits ChildOrder, ParentOrder {
 
     @java.io.Serial
     private static final long serialVersionUID = -3444258095612091354L;

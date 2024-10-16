@@ -1,8 +1,7 @@
-package io.rapid.core.order.impl;
+package io.rapid.core.order;
 
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.TrdDirection;
-import io.rapid.core.order.AbstractOrder;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import lombok.Getter;
@@ -23,7 +22,7 @@ import static io.mercury.common.collections.MutableLists.newFastList;
  * @author yellow013
  * @creation 2018-07-09
  */
-public class ParentOrder extends AbstractOrder {
+public final class ParentOrder extends AbstractOrder {
 
     @Serial
     private static final long serialVersionUID = -5096106824571703291L;
@@ -32,7 +31,7 @@ public class ParentOrder extends AbstractOrder {
      * 所属子订单
      */
     @Getter
-    private final MutableList<Order> childOrders = newFastList(4);
+    private final MutableList<ChildOrder> childOrders = newFastList(4);
 
     /**
      * @param strategyId     int
@@ -57,7 +56,7 @@ public class ParentOrder extends AbstractOrder {
      * @param splitFunc Function<ParentOrder, Collection<ChildOrder>>
      * @return MutableList<ChildOrder>
      */
-    public MutableList<Order> splitChildOrder(Function<ParentOrder, List<Order>> splitFunc) {
+    public MutableList<ChildOrder> splitChildOrder(Function<ParentOrder, List<ChildOrder>> splitFunc) {
         this.childOrders.addAll(splitFunc.apply(this));
         return this.childOrders;
     }
