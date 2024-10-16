@@ -4,7 +4,7 @@ import io.mercury.common.annotation.CalledNativeFunction;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.Sleep;
 import io.rapid.adaptor.ctp.consts.FtdcBizType;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspPublisher;
+import io.rapid.adaptor.ctp.event.FtdcRspPublisher;
 import io.rapid.adaptor.ctp.gateway.upstream.FtdcTraderSpi;
 import io.rapid.adaptor.ctp.gateway.upstream.LoggingFtdcTraderListener;
 import io.rapid.adaptor.ctp.param.CtpParams;
@@ -51,7 +51,7 @@ import static io.mercury.common.thread.ThreadSupport.startNewThread;
 import static io.mercury.common.util.StringSupport.nonEmpty;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonError;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonnull;
-import static io.rapid.adaptor.ctp.serializable.source.EventSource.TD;
+import static io.rapid.adaptor.ctp.event.source.EventSource.TD;
 import static org.rationalityfrontline.jctp.THOST_TE_RESUME_TYPE.THOST_TERT_RESUME;
 
 public final class CtpTraderGateway extends LoggingFtdcTraderListener implements Closeable {
@@ -348,7 +348,7 @@ public final class CtpTraderGateway extends LoggingFtdcTraderListener implements
         //币种代码
         ReqField.setCurrencyID(params.getCurrencyId());
         //业务类型
-        ReqField.setBizType(FtdcBizType.Future);
+        ReqField.setBizType(FtdcBizType.FUTURE);
         //投资者账号
         ReqField.setAccountID(params.getAccountId());
         int RequestID = requestIdAllocator.incrementAndGet();

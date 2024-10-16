@@ -16,32 +16,30 @@ public final class NativeLibraryLoader {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(NativeLibraryLoader.class);
 
-    private static final AtomicBoolean isLoaded = new AtomicBoolean(false);
+    private static final AtomicBoolean IS_LOADED = new AtomicBoolean(false);
 
     public static void tryLoad() throws NativeLibraryException {
-
-        if (isLoaded.compareAndSet(false, true)) {
+        if (IS_LOADED.compareAndSet(false, true)) {
             try {
-                log.info("########## Trying to load library !!! ##########");
+                log.info("############## Trying to load library !!! ##############");
                 // 根据操作系统选择加载不同库文件
-                if (OS_NAME.toLowerCase().startsWith("windows")) {
-                    log.info("The current environment is Windows");
-                } else if (OS_NAME.toLowerCase().startsWith("linux")) {
-                    log.info("The current environment is Linux");
+                if (OS_NAME.toLowerCase().startsWith("windows")
+                        || OS_NAME.toLowerCase().startsWith("linux")) {
+                    log.info("The current environment is {}", OS_NAME);
                 } else {
                     log.error("Unsupported OS -> {}", OS_NAME);
                     throw new UnsupportedOperationException("Unsupported OS : " + OS_NAME);
                 }
                 if (jctpJNI.libraryLoaded()) {
-                    log.info("Load library success by OS -> {}", OS_NAME);
+                    log.info("Load library succeeded by OS -> {}", OS_NAME);
                 } else {
                     log.error("Load library failed by OS -> {}", OS_NAME);
                     throw new IllegalStateException("Load library failed by OS : " + OS_NAME);
                 }
             } catch (Exception e) {
-                isLoaded.set(false);
-                throw new NativeLibraryException("Load native library failure, Exception cause -> [" +
-                        e.getClass().getSimpleName() + "], OS==[" + OS_NAME + "], Message -> " + e.getMessage(), e);
+                IS_LOADED.set(false);
+                throw new NativeLibraryException("Load native library failure, Exception cause -> ["
+                        + e.getClass().getSimpleName() + "], OS==[" + OS_NAME + "], Message : " + e.getMessage(), e);
             }
         } else
             log.warn("Library already loaded, jctpJNI::libraryLoaded() cannot be called repeatedly");
