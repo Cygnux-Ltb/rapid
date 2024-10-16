@@ -3,13 +3,15 @@ package io.rapid.core.strategy;
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
 import io.rapid.core.event.enums.OrdValid;
-import io.rapid.core.event.enums.TrdDirection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import static io.mercury.common.util.StringSupport.isNullOrEmpty;
+import static java.lang.Math.abs;
 
 
 /**
@@ -32,29 +34,25 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
      */
     private long sendTime;
     /**
-     * 子账户ID
+     * 子账户ID [不可为空]
      */
     private int subAccountId;
     /**
-     * 策略ID
+     * 策略ID [不可为空]
      */
     private int strategyId;
     /**
-     * 交易标的ID
+     * 交易标的ID [不可为空]
      */
     private int instrumentId;
     /**
-     * 交易标的代码
+     * 交易标的代码 [不可为空]
      */
     private String instrumentCode;
     /**
      * 订单有效类型
      */
     private OrdValid valid;
-    /**
-     * 订单方向
-     */
-    private TrdDirection direction;
     /**
      * 订单水位 (做市策略使用)
      */
@@ -67,10 +65,6 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
      * 最小成交数量
      */
     private int minimumQty;
-    /**
-     * 委托数量
-     */
-    private int offerQty;
     /**
      * 委托价格
      */
@@ -108,6 +102,24 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
      */
     private String remark;
 
+    /**
+     * TargetQty ABS
+     *
+     * @return int
+     */
+    public int getTargetQtyAbs() {
+        return abs(targetQty);
+    }
+
+    /**
+     * OrderWatermark ABS
+     *
+     * @return int
+     */
+    public int getOrderWatermarkAbs() {
+        return abs(orderWatermark);
+    }
+
     @Override
     public void copyFrom(StrategySignal source) {
         // 复制生成时间 (Epoch Microsecond Unit)
@@ -124,16 +136,12 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
         this.instrumentCode = source.instrumentCode;
         // 复制订单有效类型
         this.valid = source.valid;
-        // 复制订单方向
-        this.direction = source.direction;
         // 复制订单水位
         this.orderWatermark = source.orderWatermark;
         // 复制目标数量
         this.targetQty = source.targetQty;
         // 复制最小成交数量
         this.minimumQty = source.minimumQty;
-        // 复制委托数量
-        this.offerQty = source.offerQty;
         // 复制委托价格
         this.offerPrice = source.offerPrice;
         // 复制允许浮动点数
@@ -153,5 +161,17 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
         // 复制备注
         this.remark = source.remark;
     }
+
+    public boolean isVerification() {
+        // instrument 未提供
+        if (isNullOrEmpty(instrumentCode) && instrumentId == 0)
+            return false;
+        // subAccountId or strategyId 未提供
+        if (subAccountId == 0 || strategyId == 0)
+            return false;
+        // targetQty or orderWatermark 未提供
+        return targetQty != 0 || orderWatermark != 0;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package io.rapid.core.strategy;
 
+import io.cygnuxltb.console.beans.ValueLimitation;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.mercury.common.state.Enableable;
@@ -7,6 +8,7 @@ import io.rapid.core.account.SubAccount;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.MarketDataConsumer;
 import io.rapid.core.order.OrdSysIdAllocator;
+import io.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.rapid.core.order.OrderHandler;
 
 import javax.annotation.Nonnull;
@@ -36,7 +38,9 @@ public interface Strategy extends
 
     SubAccount getSubAccount();
 
-    OrdSysIdAllocator getOrdSysIdAllocator();
+    default OrdSysIdAllocator getAllocator() {
+        return OrdSysIdAllocatorKeeper.acquireAllocator(getStrategyId());
+    }
 
     void addInstrument(Instrument instrument);
 
@@ -52,5 +56,11 @@ public interface Strategy extends
     default int compareTo(Strategy o) {
         return Integer.compare(this.getStrategyId(), o.getStrategyId());
     }
+
+    int MIN_STRATEGY_ID = ValueLimitation.MIN_STRATEGY_ID;
+
+    int MAX_STRATEGY_ID = ValueLimitation.MAX_STRATEGY_ID;
+
+    int EXTERNAL_ORDER_STRATEGY_ID = 0;
 
 }
