@@ -31,6 +31,7 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
     private int tradingDay;
     private String brokerId;
     private String investorId;
+    private int accountId;
     private String orderRef;
     private String brokerOrdSysId;
     private String exchangeCode;
@@ -58,6 +59,8 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
         this.brokerId = source.getBrokerId();
         // 复制投资者ID
         this.investorId = source.getInvestorId();
+        // 复制真实账户ID
+        this.accountId = source.getAccountId();
         // 复制订单引用
         this.orderRef = source.getOrderRef();
         // 复制经纪商订单系统ID

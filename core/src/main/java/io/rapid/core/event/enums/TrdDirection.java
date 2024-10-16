@@ -1,6 +1,6 @@
 package io.rapid.core.event.enums;
 
-import io.rapid.core.constant.TrdConstant;
+import io.rapid.core.trade.TrdConstant;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

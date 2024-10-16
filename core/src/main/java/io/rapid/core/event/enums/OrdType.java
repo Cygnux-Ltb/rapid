@@ -1,7 +1,7 @@
 package io.rapid.core.event.enums;
 
 
-import io.rapid.core.constant.OrdConstant;
+import io.rapid.core.order.OrdConstant;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

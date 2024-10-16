@@ -69,7 +69,7 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(RawMarketData event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.FastMarketData;
+        this.type = InboundEventType.RawMarketData;
         this.rawMarketData.copyFrom(event);
         return this;
     }
@@ -153,7 +153,7 @@ public final class InboundEvent implements JsonSerializable {
         return record.setTitle(type.name())
                 .setEpochTime(epochMicros)
                 .setRecord(switch (type) {
-                    case FastMarketData -> rawMarketData;
+                    case RawMarketData -> rawMarketData;
                     case DepthMarketData -> depthMarketData;
                     case OrderReport -> orderReport;
                     case PositionsReport -> positionsReport;

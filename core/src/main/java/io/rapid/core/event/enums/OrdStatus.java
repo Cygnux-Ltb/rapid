@@ -1,16 +1,12 @@
 package io.rapid.core.event.enums;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.constant.OrdConstant;
+import io.rapid.core.order.OrdConstant;
 import lombok.Getter;
 import org.slf4j.Logger;
 
 public enum OrdStatus {
 
-    /**
-     * 无效
-     */
-    INVALID(OrdConstant.INVALID, false),
     /**
      * 未知
      */
@@ -149,8 +145,8 @@ public enum OrdStatus {
             case OrdConstant.STATUS_UNPROVIDED -> UNPROVIDED;
             // 没有匹配项
             default -> {
-                log.error("OrdStatus valueOf error, return OrdStatus -> [INVALID], input code==[{}]", code);
-                yield INVALID;
+                log.error("OrdStatus valueOf error, return OrdStatus -> [UNKNOWN], input code==[{}]", code);
+                yield UNKNOWN;
             }
         };
     }

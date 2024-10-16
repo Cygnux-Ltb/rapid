@@ -4,7 +4,7 @@ public enum InboundEventType {
 
     Invalid,
 
-    FastMarketData,
+    RawMarketData,
 
     DepthMarketData,
 

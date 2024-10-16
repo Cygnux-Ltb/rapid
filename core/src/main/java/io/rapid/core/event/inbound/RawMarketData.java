@@ -39,17 +39,25 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
      */
     private int volume;
     /**
-     * 今总成交量
+     * 成交量偏移
      */
-    private int totalVolume;
+    private int volumeDelta;
     /**
      * 成交金额
      */
     private double turnover;
     /**
-     * 今总成交金额
+     * 成交金额偏移
      */
-    private double totalTurnover;
+    private double turnoverDelta;
+    /**
+     * 持仓量
+     */
+    private double openInterest;
+    /**
+     * 持仓量偏移
+     */
+    private double openInterestDelta;
     /**
      * 今开盘价
      */
@@ -70,10 +78,6 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
      * 今跌停板价
      */
     private double lowerLimitPrice;
-    /**
-     * 今持仓量
-     */
-    private double openInterest;
     /**
      * 买价1
      */
@@ -131,12 +135,16 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
         this.lastPrice = source.lastPrice;
         /// 复制成交量
         this.volume = source.volume;
-        /// 复制今总成交量
-        this.totalVolume = source.totalVolume;
-        /// 复制成交额
+        /// 复制成交量偏移
+        this.volumeDelta = source.volumeDelta;
+        /// 复制成交金额
         this.turnover = source.turnover;
-        /// 复制今总成交金额
-        this.totalTurnover = source.totalTurnover;
+        /// 复制成交金额偏移
+        this.turnoverDelta = source.turnoverDelta;
+        /// 复制持仓量
+        this.openInterest = source.openInterest;
+        /// 复制持仓量偏移
+        this.openInterestDelta = source.openInterestDelta;
         /// 复制今开盘价
         this.openPrice = source.openPrice;
         /// 复制今最高价
@@ -147,8 +155,6 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
         this.upperLimitPrice = source.upperLimitPrice;
         /// 复制今跌停板价
         this.lowerLimitPrice = source.lowerLimitPrice;
-        /// 复制今持仓量
-        this.openInterest = source.openInterest;
         /// 复制买价1
         this.bidPrice1 = source.bidPrice1;
         /// 复制买量1
@@ -174,9 +180,9 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
                 this.instrumentCode,
                 this.lastPrice,
                 this.volume,
-                this.totalVolume,
+                this.volumeDelta,
                 this.turnover,
-                this.totalTurnover,
+                this.turnoverDelta,
                 this.openPrice,
                 this.highestPrice,
                 this.lowestPrice,

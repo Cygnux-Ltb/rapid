@@ -1,7 +1,7 @@
 package io.rapid.core.event.enums;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.constant.OrdConstant;
+import io.rapid.core.order.OrdConstant;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
