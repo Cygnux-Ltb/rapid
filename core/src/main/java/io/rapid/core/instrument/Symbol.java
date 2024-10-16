@@ -12,7 +12,7 @@ public interface Symbol {
 
     String getSymbolCode();
 
-    ImmutableList<TradingPeriod> getTradablePeriods();
+    ImmutableList<TradablePeriod> getTradablePeriods();
 
     ImmutableList<Instrument> getInstruments();
 

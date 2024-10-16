@@ -1,7 +1,7 @@
 package io.rapid.core.instrument.stock;
 
 import io.rapid.core.instrument.Exchange;
-import io.rapid.core.instrument.TradingPeriod;
+import io.rapid.core.instrument.TradablePeriod;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -14,7 +14,7 @@ public final class ChinaStockInstrument extends AbstractStock {
 
     public ChinaStockInstrument(int instrumentId, String instrumentCode,
                                 Exchange exchange, PriceMultiplier multiplier,
-                                ImmutableList<TradingPeriod> tradablePeriods) {
+                                ImmutableList<TradablePeriod> tradablePeriods) {
         super(instrumentId, instrumentCode, exchange, multiplier, 1, tradablePeriods);
     }
 

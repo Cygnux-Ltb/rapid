@@ -1,7 +1,7 @@
 package io.rapid.core.instrument;
 
 import io.mercury.common.datetime.TimeZone;
-import io.mercury.common.sequence.SerialObject;
+import io.mercury.common.sequence.OrderedObject;
 import io.mercury.common.sequence.TimeWindow;
 import io.mercury.serialization.json.JsonWriter;
 import lombok.Getter;
@@ -20,11 +20,11 @@ import static java.time.Duration.between;
 import static java.time.LocalTime.of;
 
 /**
- * 指示某交易标的一段交易时间
+ * 指示某交易标的一段可交易时间段
  *
  * @author yellow013
  */
-public final class TradingPeriod implements SerialObject<TradingPeriod> {
+public final class TradablePeriod implements OrderedObject<TradablePeriod> {
 
     @Getter
     private final int serialId;
@@ -41,18 +41,18 @@ public final class TradingPeriod implements SerialObject<TradingPeriod> {
     /**
      * 全天交易
      */
-    public static final TradingPeriod TRADING_ALL_DAY = new TradingPeriod(0,
+    public static final TradablePeriod TRADING_ALL_DAY = new TradablePeriod(0,
             of(0, 0, 0),
             of(23, 59, 59, 999999999));
 
-    public TradingPeriod(int serialId, int startHour, int endHour) {
+    public TradablePeriod(int serialId, int startHour, int endHour) {
         this(serialId, of(startHour, 0, 0),
                 of(endHour, 0, 0));
     }
 
-    public TradingPeriod(int serialId,
-                         int startHour, int startMinute,
-                         int endHour, int endMinute) {
+    public TradablePeriod(int serialId,
+                          int startHour, int startMinute,
+                          int endHour, int endMinute) {
         this(serialId, of(startHour, startMinute, 0),
                 of(endHour, endMinute, 0));
     }
@@ -66,9 +66,9 @@ public final class TradingPeriod implements SerialObject<TradingPeriod> {
      * @param endMinute   int
      * @param endSecond   int
      */
-    public TradingPeriod(int serialId,
-                         int startHour, int startMinute, int startSecond,
-                         int endHour, int endMinute, int endSecond) {
+    public TradablePeriod(int serialId,
+                          int startHour, int startMinute, int startSecond,
+                          int endHour, int endMinute, int endSecond) {
         this(serialId, of(startHour, startMinute, startSecond),
                 of(endHour, endMinute, endSecond));
     }
@@ -79,7 +79,7 @@ public final class TradingPeriod implements SerialObject<TradingPeriod> {
      * @param start    LocalTime
      * @param end      LocalTime
      */
-    public TradingPeriod(int serialId, LocalTime start, LocalTime end) {
+    public TradablePeriod(int serialId, LocalTime start, LocalTime end) {
         nonNull(start, "start");
         nonNull(end, "end");
         this.serialId = serialId;
@@ -93,7 +93,7 @@ public final class TradingPeriod implements SerialObject<TradingPeriod> {
     }
 
     @Override
-    public long serialId() {
+    public long orderNum() {
         return serialId;
     }
 
@@ -118,10 +118,10 @@ public final class TradingPeriod implements SerialObject<TradingPeriod> {
 
     public static void main(String[] args) {
 
-        TradingPeriod tradingPeriod = new TradingPeriod(0, of(21, 0, 0),
+        TradablePeriod tradablePeriod = new TradablePeriod(0, of(21, 0, 0),
                 of(2, 30, 0));
 
-        tradingPeriod.segmentation(LocalDate.now(), TimeZone.CST, Duration.ofMinutes(45))
+        tradablePeriod.segmentation(LocalDate.now(), TimeZone.CST, Duration.ofMinutes(45))
                 .each(timePeriod -> System.out.println(timePeriod.getStart() + " - " + timePeriod.getEnd()));
 
         LocalDateTime of = LocalDateTime.of(LocalDate.now(), of(23, 55, 30));

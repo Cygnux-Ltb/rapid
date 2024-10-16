@@ -19,10 +19,10 @@ public abstract class AbstractSymbol implements Symbol {
     protected final PriceMultiplier multiplier;
 
     @Getter
-    protected final ImmutableList<TradingPeriod> tradablePeriods;
+    protected final ImmutableList<TradablePeriod> tradablePeriods;
 
     public AbstractSymbol(int symbolId, String symbolCode, Exchange exchange, PriceMultiplier multiplier,
-                          ImmutableList<TradingPeriod> tradablePeriods) {
+                          ImmutableList<TradablePeriod> tradablePeriods) {
         this.symbolId = symbolId;
         this.symbolCode = symbolCode;
         this.exchange = exchange;

@@ -16,8 +16,8 @@ public abstract class FloatPeriodPoint extends BasePoint {
     }
 
     @Override
-    public long serialId() {
-        return point.serialId();
+    public long orderNum() {
+        return point.orderNum();
     }
 
 }

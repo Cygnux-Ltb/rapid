@@ -1,4 +1,4 @@
-package io.rapid.core.constant;
+package io.rapid.core.instrument;
 
 /**
  * 货币类型(代码)

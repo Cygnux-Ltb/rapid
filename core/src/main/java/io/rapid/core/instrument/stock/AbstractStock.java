@@ -5,7 +5,7 @@ import io.rapid.core.instrument.AbstractInstrument;
 import io.rapid.core.instrument.Exchange;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
-import io.rapid.core.instrument.TradingPeriod;
+import io.rapid.core.instrument.TradablePeriod;
 import io.rapid.core.instrument.enums.InstrumentType;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import lombok.Getter;
@@ -17,14 +17,14 @@ public abstract class AbstractStock extends AbstractInstrument implements Symbol
     private final double tickSize;
 
     @Getter
-    private final ImmutableList<TradingPeriod> tradablePeriods;
+    private final ImmutableList<TradablePeriod> tradablePeriods;
 
     @Getter
     private final ImmutableList<Instrument> instruments;
 
     protected AbstractStock(int instrumentId, String instrumentCode, Exchange exchange,
                             PriceMultiplier priceMultiplier, int tickSize,
-                            ImmutableList<TradingPeriod> tradablePeriods) {
+                            ImmutableList<TradablePeriod> tradablePeriods) {
         super(instrumentId, instrumentCode, exchange);
         this.tickSize = tickSize;
         this.tradablePeriods = tradablePeriods;

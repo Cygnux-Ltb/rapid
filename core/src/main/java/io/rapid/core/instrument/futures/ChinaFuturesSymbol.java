@@ -6,7 +6,7 @@ import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.instrument.Exchange;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.Symbol;
-import io.rapid.core.instrument.TradingPeriod;
+import io.rapid.core.instrument.TradablePeriod;
 import io.rapid.core.instrument.enums.PriceMultiplier;
 import io.rapid.core.instrument.enums.PriorityCloseType;
 import lombok.Getter;
@@ -38,10 +38,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 铜期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 1, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 1, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -53,10 +53,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 铝期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 1, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 1, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -68,10 +68,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 锌期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 1, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 1, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -83,10 +83,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 镍期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 1, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 1, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -98,10 +98,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_4,
             // 黄金期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 2, 30),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 2, 30),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             6, 12
     ),
@@ -113,10 +113,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 白银期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 2, 30),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 2, 30),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             6, 12
     ),
@@ -128,10 +128,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 螺纹钢期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 10
     ),
@@ -143,10 +143,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 热卷扎板期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 10
     ),
@@ -158,10 +158,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 橡胶期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -173,10 +173,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 燃油期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -189,10 +189,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 原油期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 1, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 1, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -205,10 +205,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 大豆期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -220,10 +220,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 豆粕期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -235,10 +235,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 豆油期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -250,10 +250,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棕榈油期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -265,10 +265,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棕榈油期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -280,10 +280,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 铁矿石期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -297,10 +297,10 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棉花交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 11, 30),
-                    new TradingPeriod(3, 13, 30, 15, 0)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 11, 30),
+                    new TradablePeriod(3, 13, 30, 15, 0)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -312,9 +312,9 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 白糖交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 15, 15)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 15, 15)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -326,9 +326,9 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // PTA交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 15, 15)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 15, 15)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -340,9 +340,9 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 甲醇交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 15, 15)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 15, 15)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -354,9 +354,9 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 菜粕交易时段
             newImmutableList(
-                    new TradingPeriod(0, 21, 0, 23, 0),
-                    new TradingPeriod(1, 9, 0, 10, 15),
-                    new TradingPeriod(2, 10, 30, 15, 15)),
+                    new TradablePeriod(0, 21, 0, 23, 0),
+                    new TradablePeriod(1, 9, 0, 10, 15),
+                    new TradablePeriod(2, 10, 30, 15, 15)),
             // 主力合约月份
             1, 5, 9
     ),
@@ -369,8 +369,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 沪深300期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -382,8 +382,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 上证50期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -395,8 +395,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 中证500期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -408,8 +408,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 30年期国债期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -421,8 +421,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 10年期国债期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -434,8 +434,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 5年期国债期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -447,8 +447,8 @@ public enum ChinaFuturesSymbol implements Symbol {
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 2年期国债期货交易时段
             newImmutableList(
-                    new TradingPeriod(0, 9, 15, 11, 30),
-                    new TradingPeriod(1, 13, 0, 15, 15)),
+                    new TradablePeriod(0, 9, 15, 11, 30),
+                    new TradablePeriod(1, 13, 0, 15, 15)),
             // 主力合约月份
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ),
@@ -485,7 +485,7 @@ public enum ChinaFuturesSymbol implements Symbol {
 
     // 交易时间段
     @Getter
-    private final ImmutableList<TradingPeriod> tradablePeriods;
+    private final ImmutableList<TradablePeriod> tradablePeriods;
 
     /**
      * @param exchange          Exchange
@@ -499,7 +499,7 @@ public enum ChinaFuturesSymbol implements Symbol {
                        int sortingInExchange, double tickSize,
                        PriorityCloseType priorityCloseType, PriceMultiplier multiplier,
                        // 交易时间段列表
-                       ImmutableList<TradingPeriod> tradingPeriods,
+                       ImmutableList<TradablePeriod> tradingPeriods,
                        // 主力合约月份
                        int... mainMonths) {
         this.exchange = exchange;

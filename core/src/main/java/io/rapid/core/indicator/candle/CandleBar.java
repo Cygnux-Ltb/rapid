@@ -17,10 +17,12 @@ public final class CandleBar extends BasePoint {
     private final long startTime;
 
     // 总成交量
-    private long volumeSum = 0L;
+    @Getter
+    private long volume = 0L;
 
     // 总成交金额
-    private long turnoverSum = 0L;
+    @Getter
+    private long turnover = 0L;
 
     public CandleBar(int index, double open, CandlePeriod period, long startTime) {
         super(index);
@@ -35,7 +37,7 @@ public final class CandleBar extends BasePoint {
     }
 
     @Override
-    public long serialId() {
+    public long orderNum() {
         return 0;
     }
 }

@@ -6,7 +6,7 @@ import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.impl.SMA.SmaEvent;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.instrument.TradingPeriod;
+import io.rapid.core.instrument.TradablePeriod;
 import io.rapid.core.pool.TradablePeriodPool;
 
 import java.time.Duration;
@@ -23,11 +23,11 @@ public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent> {
     public SMA2(Instrument instrument, Duration duration, int cycle) {
         super(instrument, duration, cycle);
         this.historyPriceWindow = new LongRingWindow(cycle);
-        TradingPeriod tradingPeriod = TradablePeriodPool.nextTradingPeriod(instrument, LocalTime.now());
+        TradablePeriod tradablePeriod = TradablePeriodPool.nextTradingPeriod(instrument, LocalTime.now());
         LocalDate date = LocalDate.now();
         ZoneOffset offset = instrument.getZoneOffset();
-        TimeWindow timePeriod = TimeWindow.with(LocalDateTime.of(date, tradingPeriod.getStart()),
-                LocalDateTime.of(date, tradingPeriod.getStart()).plusSeconds(duration.getSeconds()), offset);
+        TimeWindow timePeriod = TimeWindow.with(LocalDateTime.of(date, tradablePeriod.getStart()),
+                LocalDateTime.of(date, tradablePeriod.getStart()).plusSeconds(duration.getSeconds()), offset);
         currentPoint = SmaPoint.with(0, instrument, duration, timePeriod, cycle, historyPriceWindow);
     }
 
