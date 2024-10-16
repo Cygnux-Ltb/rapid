@@ -1,8 +1,8 @@
 package io.rapid.engine.position;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.ChildOrder;
-import io.rapid.core.order.enums.TrdDirection;
+import io.rapid.core.order.impl.ChildOrder;
+import io.rapid.core.event.enums.TrdDirection;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.functional.Formatter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -149,8 +149,8 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
         long key = mergePositionsKey(subAccountId, instrument);
         int currentQty = SubAccountInstrumentPos.get(key);
         return switch (direction) {
-            case Long -> SubAccountInstrumentLongLimit.get(key) - currentQty;
-            case Short -> SubAccountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> SubAccountInstrumentLongLimit.get(key) - currentQty;
+            case SHORT -> SubAccountInstrumentShortLimit.get(key) - currentQty;
             default -> 0;
         };
     }
@@ -167,8 +167,8 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
         long key = mergePositionsKey(accountId, instrument);
         int currentQty = AccountInstrumentPos.get(key);
         return switch (direction) {
-            case Long -> AccountInstrumentLongLimit.get(key) - currentQty;
-            case Short -> AccountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> AccountInstrumentLongLimit.get(key) - currentQty;
+            case SHORT -> AccountInstrumentShortLimit.get(key) - currentQty;
             default -> 0;
         };
     }
@@ -216,25 +216,25 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
         Instrument instrument = order.getInstrument();
         int trdQty = order.getLastRecord().tradeQty();
         switch (order.getDirection()) {
-            case Long -> {
+            case LONG -> {
                 switch (order.getAction()) {
-                    case Open -> trdQty = abs(trdQty);
-                    case Close, CloseToday, CloseYesterday -> trdQty = -abs(trdQty);
-                    case Invalid ->
+                    case OPEN -> trdQty = abs(trdQty);
+                    case CLOSE, CLOSE_TODAY, CLOSE_YESTERDAY -> trdQty = -abs(trdQty);
+                    case INVALID ->
                             log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
                                     subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
                 }
             }
-            case Short -> {
+            case SHORT -> {
                 switch (order.getAction()) {
-                    case Open -> trdQty = -abs(trdQty);
-                    case Close, CloseToday, CloseYesterday -> trdQty = abs(trdQty);
-                    case Invalid ->
+                    case OPEN -> trdQty = -abs(trdQty);
+                    case CLOSE, CLOSE_TODAY, CLOSE_YESTERDAY -> trdQty = abs(trdQty);
+                    case INVALID ->
                             log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
                                     subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
                 }
             }
-            case Invalid ->
+            case INVALID ->
                     log.error("Order direction is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
                             subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
         }
@@ -258,9 +258,9 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      */
     public static void addCurrentPosition(int subAccountId, Instrument instrument, TrdDirection direction, int qty) {
         switch (direction) {
-            case Long -> qty = abs(qty);
-            case Short -> qty = -abs(qty);
-            case Invalid ->
+            case LONG -> qty = abs(qty);
+            case SHORT -> qty = -abs(qty);
+            case INVALID ->
                     log.warn("Add position, direction is [Invalid], subAccountId==[{}], instrumentCode==[{}], qty==[{}]",
                             subAccountId, instrument.getInstrumentCode(), qty);
         }

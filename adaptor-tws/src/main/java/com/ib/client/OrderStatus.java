@@ -5,6 +5,7 @@ package com.ib.client;
 
 
 public enum OrderStatus {
+
 	ApiPending,
 	ApiCancelled,
 	PreSubmitted,
@@ -26,6 +27,7 @@ public enum OrderStatus {
     }
     
 	public boolean isActive() {
-		return this == PreSubmitted || this == PendingCancel || this == Submitted || this == PendingSubmit;
+		return this == PreSubmitted || this == PendingCancel
+				|| this == Submitted || this == PendingSubmit;
 	}
 }

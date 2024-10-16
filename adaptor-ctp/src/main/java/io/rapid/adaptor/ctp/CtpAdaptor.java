@@ -1,41 +1,37 @@
 package io.rapid.adaptor.ctp;
 
-import ctp.thostapi.CThostFtdcInputOrderActionField;
-import ctp.thostapi.CThostFtdcInputOrderField;
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.concurrent.disruptor.RingEventbus;
-import io.mercury.common.concurrent.disruptor.RingEventbus.MultiProducerRingEventbus;
+import io.mercury.common.lang.exception.NativeLibraryException;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.AvailableTime;
 import io.mercury.common.thread.Sleep;
-import io.mercury.common.util.ArrayUtil;
 import io.rapid.adaptor.ctp.gateway.CtpMdGateway;
 import io.rapid.adaptor.ctp.gateway.CtpTraderGateway;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspHandler;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspPublisher;
+import io.rapid.adaptor.ctp.gateway.NativeLibraryLoader;
+import io.rapid.adaptor.ctp.event.FtdcRspConverter;
+import io.rapid.adaptor.ctp.event.FtdcRspEvent;
+import io.rapid.adaptor.ctp.event.FtdcRspPublisher;
 import io.rapid.adaptor.ctp.param.CtpParams;
+import io.rapid.adaptor.ctp.event.source.EventSource;
 import io.rapid.core.account.Account;
-import io.rapid.core.instrument.Instrument;
+import io.rapid.core.adaptor.AbstractAdaptor;
+import io.rapid.core.adaptor.AdaptorRunningMode;
+import io.rapid.core.event.outbound.CancelOrder;
+import io.rapid.core.event.outbound.NewOrder;
+import io.rapid.core.event.outbound.QueryBalance;
+import io.rapid.core.event.outbound.QueryOrder;
+import io.rapid.core.event.outbound.QueryPosition;
+import io.rapid.core.event.outbound.SubscribeMarketData;
 import io.rapid.core.order.OrderRefAllocator;
-import io.rapid.core.serializable.avro.outbound.CancelOrder;
-import io.rapid.core.serializable.avro.outbound.NewOrder;
-import io.rapid.core.serializable.avro.outbound.QueryBalance;
-import io.rapid.core.serializable.avro.outbound.QueryOrder;
-import io.rapid.core.serializable.avro.outbound.QueryPositions;
-import io.rapid.core.upstream.AbstractAdaptor;
-import io.rapid.core.upstream.ConnectionMode;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
-import org.eclipse.collections.api.set.MutableSet;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderField;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import static io.mercury.common.concurrent.disruptor.base.CommonStrategy.Yielding;
 import static io.mercury.common.thread.ThreadSupport.startNewThread;
-import static io.mercury.serialization.json.JsonWriter.toJson;
-import static java.util.Arrays.stream;
 
 public class CtpAdaptor extends AbstractAdaptor {
 
@@ -45,62 +41,27 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final OrderRefAllocator orderRefAllocator;
 
     // 行情转换器
-    private final MarketDataConverter marketDataConverter = new MarketDataConverter();
+    private final FtdcRspConverter ftdcRspConverter = new FtdcRspConverter();
 
     // 转换订单回报
-    private final OrderEventConverter orderEventConverter = new OrderEventConverter();
+    private final OrderReportConverter orderReportConverter = new OrderReportConverter();
 
     // CTP Params
     private final CtpParams params;
 
+    // FtdcRsp发布器
     private final FtdcRspPublisher publisher;
+
+    // 是否已初始化, 用于控制本地库文件加载
+    protected AtomicBoolean initialized = new AtomicBoolean(false);
 
     // TODO 两个INT类型可以合并
     private volatile int frontId;
     private volatile int sessionId;
 
-    private volatile boolean isMdAvailable;
-    private volatile boolean isTraderAvailable;
-
-
-    /**
-     * 传入FtdcEventHandler实现, 由构造函数在内部转换为MPSC队列缓冲区
-     *
-     * @param account Account
-     * @param params  CtpParam
-     * @param mode    ConnectionMode
-     * @param handler FtdcEventHandler
-     */
-    protected CtpAdaptor(@Nonnull Account account, @Nonnull CtpParams params,
-                         @Nonnull ConnectionMode mode, @Nonnull OrderRefAllocator orderRefAllocator,
-                         @Nonnull FtdcRspHandler handler) {
-        this(account, params, mode, orderRefAllocator,
-                RingEventbus.multiProducer(FtdcRspEvent.EVENT_FACTORY)
-                        .size(512).name("internal-ctp-eventbus")
-                        .waitStrategy(Yielding.get())
-                        .process(handler)
-        );
-    }
-
-
-    /**
-     * 传入MpRingEventbus实现, 由构造函数在内部转换为MPSC队列缓冲区
-     *
-     * @param account  Account
-     * @param params   CtpParam
-     * @param mode     ConnectionMode
-     * @param eventbus MpRingEventbus<FtdcEvent>
-     */
-    protected CtpAdaptor(@Nonnull Account account, @Nonnull CtpParams params,
-                         @Nonnull ConnectionMode mode, @Nonnull OrderRefAllocator orderRefAllocator,
-                         @Nonnull MultiProducerRingEventbus<FtdcRspEvent> eventbus) {
-        super(account);
-        this.params = params;
-        this.mode = mode;
-        this.orderRefAllocator = orderRefAllocator;
-        this.publisher = new FtdcRspPublisher(eventbus);
-        log.info("Adaptor -> {}, Mode -> {}, Use Account -> {}", getAdaptorId(), mode, account);
-    }
+    // TODO TEMP
+    private volatile boolean isMdAvailable = true;
+    private volatile boolean isTraderAvailable = true;
 
     // FtdcMdGateway
     private CtpMdGateway mdGateway;
@@ -113,12 +74,55 @@ public class CtpAdaptor extends AbstractAdaptor {
     // FTDC报单请求转换器
     private OrderConverter orderConverter;
 
+    // 外部扩展处理器
+    private final FtdcRspHandler extHandler;
+
+    /**
+     * 传入[FtdcRspHandler]实现
+     *
+     * @param builder    Builder
+     * @param extHandler FtdcEventHandler
+     */
+    private CtpAdaptor(@Nonnull Builder builder,
+                       @Nonnull FtdcRspHandler extHandler) {
+        super(builder.account, builder.isAsync);
+        this.params = builder.params;
+        this.runningMode = builder.runningMode;
+        this.orderRefAllocator = builder.orderRefAllocator;
+        this.extHandler = extHandler;
+        this.publisher = new FtdcRspPublisher(this::processEvent);
+        log.info("Adaptor==[{}], Mode==[{}], isAsync==[{}], Account -> {}",
+                getAdaptorId(), runningMode, builder.isAsync, account);
+    }
+
+    private void processEvent(FtdcRspEvent event) {
+        switch (event.getType()) {
+            case MdClosed -> this.isMdAvailable = false;
+            case TraderClosed -> this.isTraderAvailable = false;
+        }
+        extHandler.handle(event);
+    }
+
     @PostConstruct
     private CtpAdaptor initializer() {
+        if (initialized.compareAndSet(false, true)) {
+            log.info("Adaptor -> {}, Mode -> {}", getAdaptorId(), runningMode);
+            // 加载NativeLibrary
+            try {
+                NativeLibraryLoader.tryLoad();
+            } catch (NativeLibraryException e) {
+                log.error(e.getMessage(), e);
+                log.error("CTP native library file loading error, System must exit, Status -1");
+                System.exit(-1);
+            }
+        } else {
+            log.info("Adaptor -> {}, Mode -> {}, Already initialized", getAdaptorId(), runningMode);
+            return this;
+        }
         // 创建FtdcOrderConverter
         this.orderConverter = new OrderConverter(params);
         // 根据连接模式创建相应的Gateway
-        switch (mode) {
+        switch (runningMode) {
             case MARKET_DATA -> {
                 this.mdGateway = new CtpMdGateway(params, publisher);
                 this.mdGatewayId = mdGateway.getGatewayId();
@@ -149,13 +153,15 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     @Override
     protected boolean startup0() {
-        switch (mode) {
+        initializer();
+        switch (runningMode) {
             case MARKET_DATA -> {
                 try {
                     mdGateway.startup();
                     return true;
                 } catch (Exception e) {
-                    log.error("mdGateway.startup() has exception ", e);
+                    log.error("CtpMdGateway::startup has exception from {}, Cause by -> {}",
+                            mdGatewayId, e.getMessage(), e);
                     return false;
                 }
             }
@@ -164,85 +170,69 @@ public class CtpAdaptor extends AbstractAdaptor {
                     traderGateway.startup();
                     return true;
                 } catch (Exception e) {
-                    log.error("");
+                    log.error("CtpTraderGateway::startup has exception from {}, Cause by -> {}",
+                            traderGatewayId, e.getMessage(), e);
                     return false;
                 }
             }
             default -> {
                 try {
                     mdGateway.startup();
-                    traderGateway.startup();
-                    return true;
                 } catch (Exception e) {
-                    log.error("");
+                    log.error("CtpMdGateway::startup has exception from {}, Cause by -> {}",
+                            mdGatewayId, e.getMessage(), e);
                     return false;
                 }
+                try {
+                    traderGateway.startup();
+                } catch (Exception e) {
+                    log.error("CtpTraderGateway::startup has exception from {}, Cause by -> {}",
+                            traderGatewayId, e.getMessage(), e);
+                    return false;
+                }
+                return true;
             }
         }
-    }
-
-    // 存储已订阅合约
-    private final MutableSet<String> subscribedInstrumentCodes = MutableSets.newUnifiedSet();
-
-    @Override
-    public AvailableTime getAvailableTime() {
-        return CtpAdaptorAvailableTime.INSTANCE;
     }
 
     /**
      * 订阅行情实现
      */
     @Override
-    public boolean subscribeMarketData(@Nonnull Instrument... instruments) {
+    protected boolean directSubscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {
         try {
+            // 去除重复合约代码
             if (isMdAvailable) {
-                if (ArrayUtil.isNullOrEmpty(instruments)) {
-                    // 输入的Instrument数组为空或null
-                    log.warn("{} -> Input instruments is null or empty, Use subscribed instruments", adaptorId);
-                    if (subscribedInstrumentCodes.isEmpty()) {
-                        // 已记录的订阅Instrument为空
-                        log.warn("{} -> Subscribed instruments is empty", adaptorId);
-                        return false;
-                    } else {
-                        // 使用已经订阅过的Instrument
-                        String[] instrumentCodes = new String[subscribedInstrumentCodes.size()];
-                        log.info("Add subscribe instrument code -> Count==[{}]", subscribedInstrumentCodes.size());
-                        subscribedInstrumentCodes.toArray(instrumentCodes);
-                        mdGateway.ftdcSubscribeMarketData(instrumentCodes);
-                        return true;
-                    }
-                } else {
-                    String[] instrumentCodes = new String[instruments.length];
-                    for (int i = 0; i < instruments.length; i++) {
-                        instrumentCodes[i] = instruments[i].getInstrumentCode();
-                        log.info("Add subscribe instrument -> instrumentCode==[{}]", instrumentCodes[i]);
-                        subscribedInstrumentCodes.add(instrumentCodes[i]);
-                    }
-                    mdGateway.ftdcSubscribeMarketData(instrumentCodes);
-                    return true;
+                var instrumentCodeSet = MutableSets.newUnifiedSet(subscribeMarketData.getInstrumentCodes());
+                if (instrumentCodeSet.isEmpty()) {
+                    // 输入的[InstrumentCodes]为空
+                    log.warn("{} -> Input instrument code array is null or empty", adaptorId);
+                    return false;
                 }
+                mdGateway.SubscribeMarketData(instrumentCodeSet
+                        .stream()
+                        .peek(code -> log.info("Subscribe instrument -> instrumentCode==[{}]", code))
+                        .toArray(String[]::new));
+                return true;
             } else {
-                stream(instruments)
-                        .forEach(instrument -> subscribedInstrumentCodes.add(instrument.getInstrumentCode()));
-                log.warn("{} -> market not available, already recorded instrument code", mdGatewayId);
-                log.info("subscribed instrument codes -> {}", toJson(subscribedInstrumentCodes));
+                log.warn("{} -> market not available, isMdAvailable==[{}]", mdGatewayId, isMdAvailable);
                 return false;
             }
         } catch (Exception e) {
-            log.error("{} -> Native SubscribeMarketData has exception -> {}", mdGatewayId, e.getMessage(), e);
+            log.error("{} -> SubscribeMarketData has exception -> {}", mdGatewayId, e.getMessage(), e);
             return false;
         }
     }
 
     @Override
-    public boolean newOrder(@Nonnull NewOrder order) {
+    protected boolean directNewOrder(@Nonnull NewOrder order) {
         try {
             CThostFtdcInputOrderField ReqField = orderConverter.toInputOrder(order);
             String orderRef = Integer.toString(orderRefAllocator.nextOrderRef());
             // 设置OrderRef
             ReqField.setOrderRef(orderRef);
-            orderRefAllocator.related(orderRef, order.getOrdSysId());
-            traderGateway.ftdcReqOrderInsert(ReqField);
+            orderRefAllocator.binding(orderRef, order.getOrdSysId());
+            traderGateway.ReqOrderInsert(ReqField);
             return true;
         } catch (Exception e) {
             log.error("{} -> Native ReqOrderInsert has exception -> {}", traderGatewayId, e.getMessage(), e);
@@ -251,14 +241,14 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean cancelOrder(@Nonnull CancelOrder order) {
+    protected boolean directCancelOrder(@Nonnull CancelOrder order) {
         try {
             CThostFtdcInputOrderActionField ReqField = orderConverter.toFtdcInputOrderAction(order);
             String orderRef = orderRefAllocator.getOrderRef(order.getOrdSysId());
             // 目前使用orderRef进行撤单
             ReqField.setOrderRef(orderRef);
             ReqField.setOrderActionRef(orderRefAllocator.nextOrderRef());
-            traderGateway.ftdcReqOrderAction(ReqField);
+            traderGateway.ReqOrderAction(ReqField);
             return true;
         } catch (FastOrderRefAllocator.OrderRefNotFoundException e) {
             log.error(e.getMessage(), e);
@@ -273,17 +263,17 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final Object mutex = new Object();
 
     // 查询间隔, 依据CTP规定限制
-    private final long queryInterval = 1100L;
+    private final long queryInterval = 1200L;
 
     @Override
-    public boolean queryOrder(@Nonnull QueryOrder query) {
+    protected boolean directQueryOrder(@Nonnull QueryOrder query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryOrder-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryOrder, Waiting...", adaptorId);
                         Sleep.millis(queryInterval);
-                        traderGateway.ftdcReqQryOrder();
+                        traderGateway.ReqQryOrder();
                         log.info("{} -> Has been sent ReqQryOrder", adaptorId);
                     }
                 });
@@ -297,14 +287,14 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryPositions(@Nonnull QueryPositions query) {
+    protected boolean directQueryPositions(@Nonnull QueryPosition query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryPositions-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
                         Sleep.millis(queryInterval);
-                        traderGateway.ftdcReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
+                        traderGateway.ReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
                         log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                     }
                 });
@@ -318,14 +308,14 @@ public class CtpAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public boolean queryBalance(@Nonnull QueryBalance query) {
+    protected boolean directQueryBalance(@Nonnull QueryBalance query) {
         try {
             if (isTraderAvailable) {
                 startNewThread("QueryBalance-Worker", () -> {
                     synchronized (mutex) {
                         log.info("{} -> Ready to sent ReqQryTradingAccount, Waiting...", adaptorId);
                         Sleep.millis(queryInterval);
-                        traderGateway.ftdcReqQryTradingAccount();
+                        traderGateway.ReqQryTradingAccount();
                         log.info("{} -> Has been sent ReqQryTradingAccount", adaptorId);
                     }
                 });
@@ -338,12 +328,11 @@ public class CtpAdaptor extends AbstractAdaptor {
         }
     }
 
-
     @Override
     public void close() throws IOException {
         try {
-            // publisher.publishMdUnavailable(-1);
-            // publisher.publishTraderUnavailable(-1);
+            publisher.publishFrontDisconnected(EventSource.MD, 1, params.getBrokerId(), params.getUserId());
+            publisher.publishFrontDisconnected(EventSource.TD, 1, params.getBrokerId(), params.getUserId());
             mdGateway.close();
             traderGateway.close();
         } catch (Exception e) {
@@ -356,35 +345,38 @@ public class CtpAdaptor extends AbstractAdaptor {
         return new Builder(account, params);
     }
 
-
     public static class Builder {
 
         private final Account account;
         private final CtpParams params;
-        private ConnectionMode mode = ConnectionMode.FULL;
-        private FastOrderRefAllocator orderRefAllocator = new FastOrderRefAllocator();
+        private boolean isAsync = false;
+        private AdaptorRunningMode runningMode = AdaptorRunningMode.FULL;
+        private OrderRefAllocator orderRefAllocator = FastOrderRefAllocator.INSTANCE;
 
         private Builder(Account account, CtpParams params) {
             this.account = account;
             this.params = params;
         }
 
-        public void setMode(ConnectionMode mode) {
-            this.mode = mode;
+        public Builder setRunningMode(AdaptorRunningMode runningMode) {
+            this.runningMode = runningMode;
+            return this;
         }
 
-        public Builder setOrderRefKeeper(FastOrderRefAllocator orderRefAllocator) {
+        public Builder setOrderRefKeeper(OrderRefAllocator orderRefAllocator) {
             this.orderRefAllocator = orderRefAllocator;
             return this;
         }
 
-        public CtpAdaptor build(MultiProducerRingEventbus<FtdcRspEvent> eventbus) {
-            return new CtpAdaptor(account, params, mode, orderRefAllocator, eventbus);
+        public Builder asyncMode() {
+            this.isAsync = true;
+            return this;
         }
 
         public CtpAdaptor build(FtdcRspHandler handler) {
-            return new CtpAdaptor(account, params, mode, orderRefAllocator, handler);
+            return new CtpAdaptor(this, handler);
         }
+
     }
 
 }

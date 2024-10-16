@@ -1,185 +1,147 @@
 package io.rapid.core.account;
 
-import com.typesafe.config.Config;
-import io.mercury.common.collections.MutableSets;
-import io.mercury.common.config.ConfigWrapper;
-import io.mercury.common.lang.Asserter;
+import io.cygnuxltb.console.beans.outbound.AccountRsp;
 import io.mercury.common.state.EnableableComponent;
-import org.eclipse.collections.api.set.MutableSet;
+import io.rapid.core.event.outbound.QueryBalance;
+import io.rapid.core.event.outbound.QueryOrder;
+import io.rapid.core.event.outbound.QueryPosition;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
-import java.io.Serial;
+
+import static io.mercury.common.lang.Asserter.greaterThan;
+import static io.mercury.common.lang.Asserter.nonEmpty;
+import static java.lang.System.currentTimeMillis;
 
 /**
- * 实际账户, 对应一个实际的经纪商账户
+ * 实际账户, 对应一个实际的资金账户
  *
  * @author yellow013
  */
-
+@Accessors(chain = true)
 public final class Account extends EnableableComponent implements Comparable<Account> {
 
     /**
      * 账户ID
      */
+    @Getter
     private final int accountId;
 
-    // 经纪商ID
-    private final String brokerId;
+    /**
+     * 经纪商Code
+     */
+    @Getter
+    private final String brokerCode;
 
-    // 经纪商名称
-    private final String brokerName;
+    /**
+     * 投资者账户CODE (*在内部系统中使用唯一代码)
+     */
+    @Getter
+    private final String investorCode;
 
-    // 经纪商提供的投资者ID
-    private final String investorId;
-
-    // 账户余额
+    /**
+     * 账户余额
+     */
+    @Getter
+    @Setter
     private long balance;
 
-    // 信用额度
+    /**
+     * 信用额度
+     */
+    @Getter
+    @Setter
     private long credit;
 
-    // 备注
+    /**
+     * 备注
+     */
+    @Getter
+    @Setter
     private String remark = "";
 
     // 备用, 数组下标, 用于快速访问本账户对应的仓位信息集合
     // private int positionManagerIndex;
 
-    // 全部子账户
-    private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
-
     /**
-     * @param config com.typesafe.config.Config
+     * 全部子账户
      */
-    public Account(@Nonnull Config config) {
-        this(new ConfigWrapper<>(config));
+    // private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
+    public Account(@Nonnull AccountRsp accountRsp) {
+        this(accountRsp.getAccountId(),
+                accountRsp.getBrokerCode(),
+                accountRsp.getInvestorCode(),
+                (long) accountRsp.getBalance(),
+                (long) accountRsp.getCredit());
+        this.remark = accountRsp.getRemark();
     }
 
     /**
-     * @param wrapper io.mercury.common.config.ConfigWrapper
+     * @param accountId    int
+     * @param brokerCode   String
+     * @param investorCode String
      */
-    private Account(@Nonnull ConfigWrapper<AccountConfig> wrapper) {
-        this(wrapper.getIntOrThrows(AccountConfig.AccountId),
-                wrapper.getStringOrThrows(AccountConfig.BrokerId),
-                wrapper.getStringOrThrows(AccountConfig.BrokerName),
-                wrapper.getStringOrThrows(AccountConfig.InvestorId),
-                wrapper.getLong(AccountConfig.Balance, 0L),
-                wrapper.getLong(AccountConfig.Credit, 0L));
-        this.remark = wrapper.getString(AccountConfig.Remark, "");
+    public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode) {
+        this(accountId, brokerCode, investorCode, 0L, 0L);
     }
 
     /**
-     * @param accountId  int
-     * @param brokerName String
-     * @param investorId String
+     * @param accountId    int
+     * @param brokerCode   String
+     * @param investorCode String
+     * @param balance      long
+     * @param credit       long
      */
-    public Account(int accountId, @Nonnull String brokerId,
-                   @Nonnull String brokerName, @Nonnull String investorId) {
-        this(accountId, brokerId, brokerName, investorId, 0L, 0L);
-    }
-
-    /**
-     * @param accountId  int
-     * @param brokerId   String
-     * @param brokerName String
-     * @param investorId String
-     * @param balance    long
-     * @param credit     long
-     */
-    public Account(int accountId, @Nonnull String brokerId,
-                   @Nonnull String brokerName, @Nonnull String investorId,
+    public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode,
                    long balance, long credit) {
-        Asserter.greaterThan(accountId, 0, "accountId");
-        Asserter.nonEmpty(brokerId, "brokerId");
-        Asserter.nonEmpty(brokerName, "brokerName");
-        Asserter.nonEmpty(investorId, "investorId");
-        this.accountId = accountId;
-        this.brokerId = brokerId;
-        this.brokerName = brokerName;
-        this.investorId = investorId;
+        this.accountId = greaterThan(accountId, 0, "accountId");
+        this.investorCode = nonEmpty(investorCode, "investorId");
+        this.brokerCode = nonEmpty(brokerCode, "brokerCode");
         this.balance = balance;
         this.credit = credit;
         enable();
     }
 
     /**
-     * 仅提供给同一包內的SubAccount调用
-     *
-     * @param subAccount SubAccount
+     * @return QueryOrder
      */
-    void addSubAccount(SubAccount subAccount) {
-        subAccounts.add(subAccount);
+    public QueryOrder newQueryOrder() {
+        return new QueryOrder()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
     }
 
-    public int getAccountId() {
-        return accountId;
+    /**
+     * @return QueryPosition
+     */
+    public QueryPosition newQueryPosition() {
+        return new QueryPosition()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
     }
 
-    public String getBrokerId() {
-        return brokerId;
-    }
-
-    public String getBrokerName() {
-        return brokerName;
-    }
-
-    public String getInvestorId() {
-        return investorId;
-    }
-
-    public MutableSet<SubAccount> getSubAccounts() {
-        return subAccounts;
-    }
-
-    public long getBalance() {
-        return balance;
-    }
-
-    public long getCredit() {
-        return credit;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public Account setBalance(long balance) {
-        this.balance = balance;
-        return this;
-    }
-
-    public Account setCredit(long credit) {
-        this.credit = credit;
-        return this;
-    }
-
-    public Account setRemark(String remark) {
-        this.remark = remark;
-        return this;
-    }
-
-    public final static class AccountException extends RuntimeException {
-
-        /**
-         *
-         */
-        @Serial
-        private static final long serialVersionUID = -6421678546942382394L;
-
-        public AccountException(String message) {
-            super(message);
-        }
-
+    /**
+     * @return QueryBalance
+     */
+    public QueryBalance newQueryBalance() {
+        return new QueryBalance()
+                .setGenerateTime(currentTimeMillis())
+                .setAccountId(accountId)
+                .setBrokerId(brokerCode);
     }
 
     @Override
     public String toString() {
         return "{\"accountId\" : " + accountId
-                + ", \"brokerName\" : " + brokerName
-                + ", \"investorId\" : " + investorId
+                + ", \"brokerCode\" : " + brokerCode
+                + ", \"investorCode\" : " + investorCode
                 + ", \"balance\" : " + balance
                 + ", \"credit\" : " + credit
                 + ", \"remark\" : " + remark
-                + ", \"subAccountTotal\" : " + subAccounts.size()
                 + ", \"isEnabled\" : " + isEnabled()
                 + "}";
     }
@@ -189,8 +151,34 @@ public final class Account extends EnableableComponent implements Comparable<Acc
         return Integer.compare(this.accountId, o.accountId);
     }
 
+    private String mdTopic;
+
+    /**
+     * brokerCode + "/" + investorId + "/md"
+     *
+     * @return String
+     */
+    public String getMarketDataTopic() {
+        if (mdTopic == null)
+            mdTopic = (brokerCode + "/" + investorCode + "/md");
+        return mdTopic;
+    }
+
+    private String tdTopic;
+
+    /**
+     * brokerCode + "/" + investorId + "/md"
+     *
+     * @return String
+     */
+    public String getTraderTopic() {
+        if (tdTopic == null)
+            tdTopic = (brokerCode + "/" + investorCode + "/td");
+        return tdTopic;
+    }
+
     public static void main(String[] args) {
-        Account account = new Account(1, "ZSQH", "ZSQH", "200500");
+        Account account = new Account(1, "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
     }

@@ -4,6 +4,7 @@
 package com.ib.controller;
 
 public enum LocationCode {
+
     BOND_US("BOND.US"),
     EFP("EFP"),
     FUT_ECBOT("FUT.ECBOT"),

@@ -35,19 +35,6 @@ public final class StrategyKeeper implements Serializable {
      */
     private static final MutableIntObjectMap<Strategy> StrategyMap = MutableMaps.newIntObjectMap();
 
-    /**
-     * 子账户与策略的对应关系
-     */
-//	@Deprecated
-//	private static final MutableIntObjectMap<MutableList<Strategy>> SubAccountStrategysMap = MutableMaps
-//			.newIntObjectHashMap();
-
-    /**
-     * 订阅合约的策略列表
-     */
-    private static final MutableIntObjectMap<MutableList<Strategy>> SubscribedInstrumentMap = MutableMaps
-            .newIntObjectMap();
-
     private StrategyKeeper() {
     }
 

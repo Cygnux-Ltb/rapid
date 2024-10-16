@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class HistoricalTick {
+
     private final long m_time;
     private final double m_price;
     private final long m_size;

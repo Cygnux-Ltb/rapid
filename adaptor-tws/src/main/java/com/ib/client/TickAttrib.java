@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class TickAttrib {
+
     private boolean m_canAutoExecute = false;
     private boolean m_pastLimit = false;
     private boolean m_preOpen = false;

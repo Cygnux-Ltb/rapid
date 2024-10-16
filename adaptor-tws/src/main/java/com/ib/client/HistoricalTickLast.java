@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class HistoricalTickLast {
+
     private final long m_time;
     private final TickAttribLast m_tickAttribLast;
     private final double m_price;
@@ -11,7 +12,8 @@ public class HistoricalTickLast {
     private final String m_exchange;
     private final String m_specialConditions;
 
-    public HistoricalTickLast(long time, TickAttribLast tickAttribLast, double price, long size, String exchange, String specialConditions) {
+    public HistoricalTickLast(long time, TickAttribLast tickAttribLast, double price, long size,
+                              String exchange, String specialConditions) {
         m_time = time;
         m_tickAttribLast = tickAttribLast;
         m_price = price;

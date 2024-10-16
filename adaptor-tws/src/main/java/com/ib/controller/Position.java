@@ -7,6 +7,7 @@ import com.ib.client.Contract;
 
 
 public class Position {
+
     private final Contract m_contract;
     private final String m_account;
     private final double m_position;

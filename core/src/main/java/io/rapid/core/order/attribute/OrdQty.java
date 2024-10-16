@@ -1,6 +1,7 @@
 package io.rapid.core.order.attribute;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
+import lombok.Getter;
 
 import javax.annotation.Nonnull;
 
@@ -9,25 +10,29 @@ import javax.annotation.Nonnull;
  */
 public final class OrdQty implements JsonSerializable {
 
-    /*
+    /**
      * 委托数量
      */
-    private int offerQty;
+    @Getter
+    private final int offerQty;
 
-    /*
+    /**
      * 剩余数量
      */
+    @Getter
     private int leavesQty;
 
-    /*
-     * 已成交数量
-     */
-    private int filledQty;
-
-    /*
+    /**
      * 上一次成交数量
      */
+    @Getter
     private int lastFilledQty;
+
+    /**
+     * 已成交数量
+     */
+    @Getter
+    private int filledQty;
 
     private OrdQty(int offerQty) {
         this.offerQty = offerQty;
@@ -36,36 +41,6 @@ public final class OrdQty implements JsonSerializable {
 
     public static OrdQty withOffer(int offerQty) {
         return new OrdQty(offerQty);
-    }
-
-    public int getOfferQty() {
-        return offerQty;
-    }
-
-    public int getLeavesQty() {
-        return leavesQty;
-    }
-
-    public int getFilledQty() {
-        return filledQty;
-    }
-
-    public int getLastFilledQty() {
-        return lastFilledQty;
-    }
-
-    /**
-     * 设置委托数量
-     *
-     * @param offerQty int
-     * @return OrdQty
-     */
-    public OrdQty setOfferQty(int offerQty) {
-        if (this.offerQty == 0) {
-            this.offerQty = offerQty;
-            this.leavesQty = offerQty;
-        }
-        return this;
     }
 
     /**
@@ -91,23 +66,19 @@ public final class OrdQty implements JsonSerializable {
         return setFilledQty(this.filledQty + filledQty);
     }
 
-    private static final String OfferQtyField = "{\"offerQty\" : ";
-    private static final String LeavesQtyField = ", \"leavesQty\" : ";
-    private static final String LastFilledQtyField = ", \"lastFilledQty\" : ";
-    private static final String FilledQtyField = ", \"filledQty\" : ";
+    private static final String OfferQtyTitle = "{\"offerQty\" : ";
+    private static final String LeavesQtyTitle = ", \"leavesQty\" : ";
+    private static final String LastFilledQtyTitle = ", \"lastFilledQty\" : ";
+    private static final String FilledQtyTitle = ", \"filledQty\" : ";
     private static final String End = "}";
 
     @Override
     public String toString() {
-        return OfferQtyField +
-                offerQty +
-                LeavesQtyField +
-                leavesQty +
-                LastFilledQtyField +
-                lastFilledQty +
-                FilledQtyField +
-                filledQty +
-                End;
+        return OfferQtyTitle + offerQty
+                + LeavesQtyTitle + leavesQty
+                + LastFilledQtyTitle + lastFilledQty
+                + FilledQtyTitle + filledQty
+                + End;
     }
 
     @Nonnull

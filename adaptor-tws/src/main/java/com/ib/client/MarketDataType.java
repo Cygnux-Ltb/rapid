@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class MarketDataType {
+
     // constants - market data types
     public static final int REALTIME = 1;
     public static final int FROZEN = 2;
@@ -44,4 +45,5 @@ public class MarketDataType {
         }
         return fields;
     }
+
 }

@@ -19,8 +19,8 @@ public abstract class FixedPeriodPoint extends BasePoint {
     }
 
     @Override
-    public long serialId() {
-        return window.serialId();
+    public long orderNum() {
+        return window.orderNum();
     }
 
 }

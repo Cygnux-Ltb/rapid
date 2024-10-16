@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class NewsProvider {
+
     private String m_providerCode;
     private String m_providerName;
 

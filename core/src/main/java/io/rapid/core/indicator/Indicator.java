@@ -1,30 +1,28 @@
 package io.rapid.core.indicator;
 
 
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
 
 /**
- * 
- * @author yellow013
- *
  * @param <P> Point 类型
  * @param <E> IndicatorEvent 类型
+ * @author yellow013
  */
 public interface Indicator<P extends Point, E extends IndicatorEvent> {
 
-	Instrument getInstrument();
+    Instrument getInstrument();
 
-	void onMarketData(FastMarketData md);
+    void onMarketData(RawMarketData md);
 
-	void addEvent(E event);
+    void addEvent(E event);
 
-	P getPoint(int index);
+    P getPoint(int index);
 
-	P getFastPoint();
+    P getFastPoint();
 
-	P getCurrentPoint();
+    P getCurrentPoint();
 
-	PointSet<P> getPointSet();
+    PointSet<P> getPointSet();
 
 }

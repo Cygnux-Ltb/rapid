@@ -2,15 +2,15 @@ package io.rapid.core.instrument.futures;
 
 public final class JapanFutures {
 
-	private JapanFutures() {
-	}
+    private JapanFutures() {
+    }
 
-	public enum JapanFuturesSymbol {
+    public enum JapanFuturesSymbol {
 
-	}
+    }
 
-	public static final class JapanFuturesInstrument {
+    public static final class JapanFuturesInstrument {
 
-	}
+    }
 
 }

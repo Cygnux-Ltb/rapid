@@ -14,7 +14,8 @@ public class Bar {
     private final int m_count;
     private final double m_wap;
 
-    public Bar(String time, double open, double high, double low, double close, long volume, int count, double wap) {
+    public Bar(String time, double open, double high, double low, double close,
+               long volume, int count, double wap) {
         this.m_time = time;
         this.m_open = open;
         this.m_high = high;

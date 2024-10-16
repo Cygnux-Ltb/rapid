@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class HistoricalTickBidAsk {
+
     private final long m_time;
     private final TickAttribBidAsk m_tickAttribBidAsk;
     private final double m_priceBid;
@@ -11,7 +12,8 @@ public class HistoricalTickBidAsk {
     private final long m_sizeBid;
     private final long m_sizeAsk;
 
-    public HistoricalTickBidAsk(long time, TickAttribBidAsk tickAttribBidAsk, double priceBid, double priceAsk, long sizeBid, long sizeAsk) {
+    public HistoricalTickBidAsk(long time, TickAttribBidAsk tickAttribBidAsk,
+                                double priceBid, double priceAsk, long sizeBid, long sizeAsk) {
         m_time = time;
         m_tickAttribBidAsk = tickAttribBidAsk;
         m_priceBid = priceBid;

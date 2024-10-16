@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class DeltaNeutralContract {
+
     private int m_conid;
     private double m_delta;
     private double m_price;

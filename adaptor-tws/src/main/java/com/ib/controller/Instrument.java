@@ -4,6 +4,7 @@
 package com.ib.controller;
 
 public enum Instrument {
+
     STK("STK"),
     BOND("BOND"),
     EFP("EFP"),

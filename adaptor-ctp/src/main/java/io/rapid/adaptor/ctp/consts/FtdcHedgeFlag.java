@@ -1,8 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_HF_Speculation;
-
 /**
  * ///TFtdcHedgeFlagType是一个投机套保标志类型<br>
  * <br>
@@ -27,14 +24,58 @@ import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_HF_Speculation;
 public interface FtdcHedgeFlag {
 
     /**
-     * 组合投机套保标识, 投机, [char]
+     * 投机 [char]
      */
-    char SPECULATION = THOST_FTDC_HF_Speculation;
+    char SPECULATION = '1';
+    /**
+     * 投机 [String]
+     */
+    String SPECULATION_STR = String.valueOf(SPECULATION);
 
     /**
-     * 组合投机套保标识, 投机, [String]
+     * 套利 [char]
      */
-    String SPECULATION_STR = String.valueOf(THOST_FTDC_HF_Speculation);
-    
+    char ARBITRAGE = '2';
+    /**
+     * 套利 [String]
+     */
+    String ARBITRAGE_STR = String.valueOf(ARBITRAGE);
+
+    /**
+     * 套保 [char]
+     */
+    char HEDGE = '3';
+    /**
+     * 套保 [String]
+     */
+    String HEDGE_STR = String.valueOf(HEDGE);
+
+    /**
+     * 做市商 [char]
+     */
+    char MARKET_MAKER = '5';
+    /**
+     * 做市商 [String]
+     */
+    String MARKET_MAKER_STR = String.valueOf(MARKET_MAKER);
+
+    /**
+     * 第一腿投机第二腿套保 大商所专用 [char]
+     */
+    char SPEC_HEDGE = '6';
+    /**
+     * 第一腿投机第二腿套保 大商所专用 [String]
+     */
+    String SPEC_HEDGE_STR = String.valueOf(SPEC_HEDGE);
+
+    /**
+     * 第一腿套保第二腿投机 大商所专用 [char]
+     */
+    char HEDGE_SPEC = '7';
+    /**
+     * 第一腿套保第二腿投机 大商所专用 [String]
+     */
+    String HEDGE_SPEC_STR = String.valueOf(HEDGE_SPEC);
+
 }
 

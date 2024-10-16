@@ -4,6 +4,7 @@
 package com.ib.controller;
 
 public class Alias {
+
     private String m_account;
     private String m_alias;
 

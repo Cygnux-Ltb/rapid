@@ -2,11 +2,10 @@ package io.rapid.adaptor.ctp;
 
 import io.mercury.serialization.json.JsonParser;
 import io.mercury.serialization.json.JsonWriter;
-import io.rapid.adaptor.ctp.serializable.avro.shared.EventSource;
-import io.rapid.adaptor.ctp.serializable.avro.shared.UserLogout;
+import io.rapid.adaptor.ctp.event.shared.UserLogout;
+import io.rapid.adaptor.ctp.event.source.EventSource;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 public class AvroTest {
 
@@ -14,15 +13,14 @@ public class AvroTest {
 
         UserLogout userLogout = new UserLogout();
 
-        userLogout.setBrokerID("Test Broker").setUserID("Test User")
-                .setIsLast(true).setSource(EventSource.TD)
-                .setErrorID(0).setErrorMsg("");
+        userLogout.BrokerID = ("Test Broker");
+        userLogout.UserID = ("Test User");
+        userLogout.IsLast = (true);
+        userLogout.Source = (EventSource.TD);
+        userLogout.ErrorID = (0);
+        userLogout.ErrorMsg = ("");
 
         String json = JsonWriter.toJson(userLogout);
-
-        ByteBuffer buffer = userLogout.toByteBuffer();
-
-        System.out.println(buffer);
 
         System.out.println(json);
 
@@ -31,7 +29,9 @@ public class AvroTest {
         System.out.println(userLogout == logout);
 
         assert logout != null;
-        System.out.println(logout.getBrokerID());
+        System.out.println(logout.BrokerID);
+
+        System.out.println((int) '3');
 
     }
 

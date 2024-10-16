@@ -1,10 +1,7 @@
 package io.rapid.adaptor.ctp.consts;
 
 
-import io.rapid.core.serializable.avro.enums.TrdDirection;
-
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_D_Buy;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_D_Sell;
+import io.rapid.core.event.enums.TrdDirection;
 
 /**
  * TFtdcDirectionType是一个买卖方向类型 <br>
@@ -20,12 +17,12 @@ public interface FtdcDirection {
     /**
      * 买
      */
-    char BUY = THOST_FTDC_D_Buy;
+    char BUY = '0';
 
     /**
      * 卖
      */
-    char SELL = THOST_FTDC_D_Sell;
+    char SELL = '1';
 
     /**
      * 根据<b>[FTDC返回]</b>买卖方向类型, 映射<b>[系统自定义]</b>买卖方向类型类型
@@ -33,15 +30,16 @@ public interface FtdcDirection {
      * @param direction char
      * @return TrdDirection
      */
-    static TrdDirection withDirection(char direction) {
-        return  // 买
-                BUY == direction ? TrdDirection.LONG
-                        // 卖
-                        : SELL == direction ? TrdDirection.SHORT
-                        // 未知
-                        : TrdDirection.INVALID;
+    static TrdDirection withFtdcDirection(char direction) {
+        return switch (direction) {
+            // 买
+            case BUY -> TrdDirection.LONG;
+            // 卖
+            case SELL -> TrdDirection.SHORT;
+            // 未知
+            default -> TrdDirection.INVALID;
+        };
     }
-
 
 }
 

@@ -1,6 +1,6 @@
 package io.rapid.adaptor.ctp;
 
-import io.mercury.common.datetime.EpochTime;
+import io.mercury.common.epoch.EpochTimeUtil;
 import io.mercury.common.thread.Sleep;
 import io.rapid.core.order.OrderRefAllocator;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
@@ -33,11 +33,13 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectMap(L10_2048.size());
 
-    public FastOrderRefAllocator() {
+    public static final OrderRefAllocator INSTANCE = new FastOrderRefAllocator();
+
+    private FastOrderRefAllocator() {
     }
 
     @Override
-    public void related(String orderRef, long ordSysId) {
+    public void binding(String orderRef, long ordSysId) {
         log.info("PUT ORDER MAPPING orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMapper.put(orderRef, ordSysId);
         ordSysIdMapper.put(ordSysId, orderRef);
@@ -52,7 +54,7 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
         long ordSysId = orderRefMapper.get(orderRef);
         if (ordSysId == 0L) {
             // 处理其他来源的订单
-            ordSysId = FOR_EXTERNAL_ORDER.getOrdSysId();
+            ordSysId = FOR_EXTERNAL_ORDER.nextOrdSysId();
             log.warn("Handle external order, allocate external order used ordSysId==[{}], orderRef==[{}]",
                     ordSysId, orderRef);
         }
@@ -79,7 +81,7 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
      * 如果当前时间在基准时间之后, 则使用当天的基准时间;
      * 如果在基准时间之前, 则使用前一天的基准时间
      */
-    public static final long BENCHMARK_POINT = EpochTime.getEpochMillis(
+    public static final long BENCHMARK_POINT = EpochTimeUtil.getEpochMillis(
             ZonedDateTime.of(LocalTime.now().isBefore(BENCHMARK_TIME)
                             ? LocalDate.now().minusDays(1)
                             : LocalDate.now(),
@@ -97,10 +99,10 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
 
     public static void main(String[] args) {
 
-        var keeper = new FastOrderRefAllocator();
+        var allocator = new FastOrderRefAllocator();
 
         for (int i = 0; i < 1000; i++) {
-            System.out.println(keeper.nextOrderRef());
+            System.out.println(allocator.nextOrderRef());
             Sleep.millis(2);
         }
 

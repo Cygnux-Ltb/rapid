@@ -1,8 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_BZTP_Future;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_BZTP_Stock;
-
 /**
  * ///TFtdcBizTypeType是一个业务类型类型
  * <br>
@@ -14,8 +11,14 @@ import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_BZTP_Stock;
  */
 public interface FtdcBizType {
 
-    char Future = THOST_FTDC_BZTP_Future;
+    /**
+     * 期货
+     */
+    char FUTURE = '1';
 
-    char Stock = THOST_FTDC_BZTP_Stock;
+    /**
+     * 证券
+     */
+    char STOCK = '2';
 
 }

@@ -1795,7 +1795,7 @@ class EDecoder implements ObjectInput {
 
     public int readIntMax() throws IOException {
         String str = readStr();
-        return (str == null || str.length() == 0) ? Integer.MAX_VALUE
+        return (str == null || str.isEmpty()) ? Integer.MAX_VALUE
                 : Integer.parseInt(str);
     }
 
@@ -1811,7 +1811,7 @@ class EDecoder implements ObjectInput {
 
     public double readDoubleMax() throws IOException {
         String str = readStr();
-        return (str == null || str.length() == 0) ? Double.MAX_VALUE
+        return (str == null || str.isEmpty()) ? Double.MAX_VALUE
                 : Double.parseDouble(str);
     }
 
@@ -1856,7 +1856,7 @@ class EDecoder implements ObjectInput {
             }
 
             String str = sb.toString();
-            return str.length() == 0 ? null : str;
+            return str.isEmpty() ? null : str;
         }
 
         @Override

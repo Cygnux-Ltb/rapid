@@ -7,6 +7,7 @@ import com.ib.client.Contract;
 import com.ib.client.Types.SecType;
 
 public class FutContract extends Contract {
+
     public FutContract(String symbol, String lastTradeDateOrContractMonth) {
         symbol(symbol);
         secType(SecType.FUT);
@@ -21,4 +22,5 @@ public class FutContract extends Contract {
         currency(currency);
         lastTradeDateOrContractMonth(lastTradeDateOrContractMonth);
     }
+
 }

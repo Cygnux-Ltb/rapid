@@ -14,4 +14,6 @@ public enum InstrumentType {
 
     FOREX,
 
+    CRYPTOCURRENCY
+
 }

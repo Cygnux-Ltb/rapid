@@ -4,6 +4,7 @@
 package com.ib.controller;
 
 public class TradeId {
+
     private final String m_key;
     private final String m_full;
 

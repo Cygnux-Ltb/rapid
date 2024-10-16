@@ -1,7 +1,5 @@
 package io.rapid.adaptor.ctp;
 
-import ctp.thostapi.CThostFtdcInputOrderActionField;
-import ctp.thostapi.CThostFtdcInputOrderField;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.consts.FtdcActionFlag;
 import io.rapid.adaptor.ctp.consts.FtdcContingentCondition;
@@ -13,8 +11,10 @@ import io.rapid.adaptor.ctp.consts.FtdcOrderPrice;
 import io.rapid.adaptor.ctp.consts.FtdcTimeCondition;
 import io.rapid.adaptor.ctp.consts.FtdcVolumeCondition;
 import io.rapid.adaptor.ctp.param.CtpParams;
-import io.rapid.core.serializable.avro.outbound.CancelOrder;
-import io.rapid.core.serializable.avro.outbound.NewOrder;
+import io.rapid.core.event.outbound.CancelOrder;
+import io.rapid.core.event.outbound.NewOrder;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderActionField;
+import org.rationalityfrontline.jctp.CThostFtdcInputOrderField;
 import org.slf4j.Logger;
 
 /**
@@ -173,7 +173,7 @@ public final class OrderConverter {
             }
             case INVALID -> {
                 // 无效订单动作
-                log.error("order action is invalid, ordSysId==[{}]", order.getOrdSysId());
+                log.error("Order action is invalid, ordSysId==[{}]", order.getOrdSysId());
                 throw new IllegalStateException("order action is invalid -> ordSysId == " + order.getOrdSysId());
             }
         }
@@ -194,7 +194,7 @@ public final class OrderConverter {
             }
             case INVALID -> {
                 // 无效订单方向
-                log.error("order direction is invalid, ordSysId==[{}]", order.getOrdSysId());
+                log.error("Order direction is invalid, ordSysId==[{}]", order.getOrdSysId());
                 throw new IllegalStateException("order direction is invalid -> ordSysId == " + order.getOrdSysId());
             }
         }
@@ -216,7 +216,7 @@ public final class OrderConverter {
         Field.setMinVolume(1);
         log.info("Set CThostFtdcInputOrderField -> MinVolume == 1");
         // 设置触发条件
-        Field.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
+        Field.setContingentCondition(FtdcContingentCondition.Immediately);
         log.info("Set CThostFtdcInputOrderField -> ContingentCondition == Immediately");
         // 设置止损价格
         Field.setStopPrice(0.0D);

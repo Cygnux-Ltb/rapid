@@ -12,7 +12,7 @@ protocol FtdcSharedRspProtocol {
         FrontDisconnected,
         HeartBeatWarning,
         RspUserLogin,
-        RspUserLogout,
+        UserLogout,
         RspError,
         MdClosed,
         TraderClosed,

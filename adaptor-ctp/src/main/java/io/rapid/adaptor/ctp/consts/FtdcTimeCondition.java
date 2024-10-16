@@ -1,8 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_TC_GFD;
-import static ctp.thostapi.thosttraderapiConstants.THOST_FTDC_TC_IOC;
-
 /**
  * ///TFtdcTimeConditionType是一个有效期类型类型<br>
  * <br>
@@ -29,11 +26,31 @@ public interface FtdcTimeCondition {
     /**
      * 立即完成, 否则撤销
      */
-    char IOC = THOST_FTDC_TC_IOC;
+    char IOC = '1';
+
+    /**
+     * 本节有效
+     */
+    char GFS = '2';
 
     /**
      * 当日有效
      */
-    char GFD = THOST_FTDC_TC_GFD;
+    char GFD = '3';
+
+    /**
+     * 指定日期前有效
+     */
+    char GTD = '4';
+
+    /**
+     * 撤销前有效
+     */
+    char GTC = '5';
+
+    /**
+     * 集合竞价有效
+     */
+    char GFA = '6';
 
 }

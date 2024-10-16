@@ -1,47 +1,52 @@
 package io.rapid.engine.strategy;
 
 import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.collections.ImmutableSets;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.lang.Asserter;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.param.Params;
-import io.mercury.common.sequence.SnowflakeAlgo;
 import io.mercury.common.state.EnableableComponent;
-import io.rapid.core.account.Account;
-import io.rapid.core.account.AccountStorage;
+import io.rapid.core.account.AccountManager;
 import io.rapid.core.account.SubAccount;
+import io.rapid.core.event.enums.OrdType;
+import io.rapid.core.event.enums.TrdAction;
+import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
-import io.rapid.core.mkd.FastMarketData;
-import io.rapid.core.mkd.MarketDataKeeper;
-import io.rapid.core.order.ChildOrder;
+import io.rapid.core.mdata.MarketDataManager;
+import io.rapid.core.mdata.MarketDataSnapshot;
+import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.OrdSysIdAllocator;
-import io.rapid.core.order.Order;
-import io.rapid.core.order.enums.OrdType;
-import io.rapid.core.order.enums.TrdAction;
-import io.rapid.core.order.enums.TrdDirection;
+import io.rapid.core.order.OrdSysIdAllocatorKeeper;
+import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.risk.CircuitBreaker;
-import io.rapid.core.serializable.avro.outbound.QueryBalance;
-import io.rapid.core.serializable.avro.outbound.QueryPositions;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.core.upstream.TraderAdaptor;
+import io.rapid.core.strategy.StrategyManager;
+import io.rapid.core.strategy.StrategySignal;
+import io.rapid.core.strategy.StrategySignalHandler;
 import io.rapid.engine.position.PositionKeeper;
-import io.rapid.engine.trader.OrderKeeper;
+import io.rapid.engine.order.OrderKeeper;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import lombok.Getter;
-import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
+import static io.mercury.common.lang.Asserter.atWithinRange;
+import static io.mercury.common.lang.Asserter.nonEmpty;
+import static io.mercury.common.lang.Asserter.nonNull;
 import static java.lang.Math.abs;
 
+@Component
 public abstract class BaseStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
 
-    private final static Logger log = getLogger(BaseStrategy.class);
+    private final static Logger log = Log4j2LoggerFactory.getLogger(BaseStrategy.class);
 
     /**
      * 策略ID
@@ -60,24 +65,23 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      */
     @Getter
     protected final SubAccount subAccount;
-    protected final int subAccountId;
 
     /**
-     * 实际账号
+     * 子账号ID
      */
     @Getter
-    protected final Account account;
-    protected final int accountId;
+    protected final int subAccountId;
 
     /**
      * 是否初始化成功
      */
-    private boolean initialized = false;
+    protected boolean initialized = false;
 
     /**
      * 记录当前策略所有的订单
      */
-    protected final MutableLongObjectMap<Order> orders = MutableMaps.newLongObjectMap();
+    @Getter
+    protected final MutableLongObjectMap<io.rapid.core.order.Order> orders = MutableMaps.newLongObjectMap();
 
     /**
      * 策略参数
@@ -86,115 +90,123 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     protected final Params params;
 
     /**
-     * 仓位查询对象
-     */
-    protected QueryPositions queryPositions;
-
-    /**
-     * 资金查询对象
-     */
-    protected QueryBalance queryBalance;
-
-    /**
      * OrderSysID分配器
      */
     private final OrdSysIdAllocator allocator;
+
+    @Resource
+    protected AccountManager accountManager;
+
+    @Resource
+    protected MarketDataManager marketDataManager;
+
+    @Resource
+    protected StrategyManager strategyManager;
 
     /**
      * 策略订阅的合约列表
      */
     @Getter
-    protected ImmutableList<Instrument> instruments;
+    protected final MutableIntObjectMap<Instrument> instruments = MutableMaps.newIntObjectMap();
 
-    protected final boolean singleInstrumentStrategy;
+    @Resource(name = "coreScheduler")
+    protected StrategySignalHandler signalHandler;
 
-    protected BaseStrategy(int strategyId,
-                           @Nonnull String strategyName,
-                           @Nonnull SubAccount subAccount,
-                           @Nonnull Params params,
-                           @Nonnull Instrument... instruments) {
-        Asserter.atWithinRange(strategyId, 1, MAX_STRATEGY_ID, "strategyId");
-        Asserter.nonEmpty(strategyName, "strategyName");
-        Asserter.nonNull(subAccount, "subAccount");
+    protected BaseStrategy(int strategyId, String strategyName,
+                           SubAccount subAccount, Params params,
+                           ImmutableIntObjectMap<Instrument> instruments) {
+        atWithinRange(strategyId, MIN_STRATEGY_ID, MAX_STRATEGY_ID, "strategyId");
+        nonEmpty(strategyName, "strategyName");
+        nonNull(subAccount, "subAccount");
+        nonNull(params, "params");
         this.strategyId = strategyId;
         this.strategyName = strategyName;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
-        this.account = AccountStorage.getAccountBySubAccountId(subAccount.getSubAccountId());
-        this.accountId = account.getAccountId();
         this.params = params;
-        this.queryPositions = QueryPositions.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
-        this.queryBalance = QueryBalance.newBuilder().setAccountId(accountId).setBrokerId(account.getBrokerId())
-                .setOperatorId(strategyName).setStrategyId(strategyId).setSubAccountId(subAccountId).build();
-        var snowflake = new SnowflakeAlgo(strategyId);
-        this.allocator = snowflake::next;
-        this.instruments = ImmutableSets.from(instruments).toImmutableList();
-        this.singleInstrumentStrategy = instruments.length == 1;
+        this.allocator = OrdSysIdAllocatorKeeper.acquireAllocator(strategyId);
         log.info("Strategy -> {} initialized", strategyName);
-        log.info("Strategy -> {} show params", strategyName);
-        params.printParams(log);
+        log.info("Strategy -> {} print params", params);
+        params.showParams(log);
     }
 
-    public MutableLongObjectMap<Order> getOrders() {
-        return orders;
+    @PostConstruct
+    private void init() {
+        if (verification()) {
+            // 将策略注册到管理器
+            strategyManager.addStrategy(this);
+        } else {
+            log.info("Strategy -> {} validation failed", strategyName);
+        }
     }
 
+    protected abstract boolean verification();
 
     @Override
-    public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
-        Asserter.nonNull(initializer, "initializer");
+    public Strategy initialize(Supplier<Boolean> initializer) {
+        if (initializer == null)
+            initializer = () -> true;
         this.initialized = initializer.get();
         log.info("Initialize result initSuccess==[{}]", initialized);
-        // TODO 设置StrategyKeeper
-        // StrategyKeeper.putStrategy(this);
         return this;
     }
 
     @Override
-    public void onMarketData(@Nonnull FastMarketData marketData) {
-        if (orders.notEmpty()) {
-            log.info("{} :: strategyOrders not empty, doing....", getStrategyName());
-            // TODO
-        }
+    public void acceptMarketData(@Nonnull SavedMarketData marketData) {
+//        if (orders.notEmpty()) {
+//            log.info("{} :: strategyOrders not empty, doing....", getStrategyName());
+//            // TODO
+//        }
         handleMarketData(marketData);
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData(FastMarketData marketData);
+    protected abstract void handleMarketData(SavedMarketData marketData);
 
     @Override
-    public void onOrder(@Nonnull Order order) {
-        order.printLog(log, "Call onOrder function");
+    public void onOrder(@Nonnull io.rapid.core.order.Order order) {
+        order.toLog(log, "Call onOrder function");
         handleOrder(order);
     }
 
     @AbstractFunction
-    protected abstract void handleOrder(Order order);
+    protected abstract void handleOrder(io.rapid.core.order.Order order);
 
     @Override
-    public void onEvent(@Nonnull StrategyEvent event) {
-        // TODO
-        log.info("{} :: Handle StrategyControlEvent -> {}", getStrategyName(), event);
+    public void onStrategyEvent(@Nonnull StrategyEvent event) {
+        log.info("{} :: Handle StrategyEvent -> {}", getStrategyName(), event);
+        handleStrategyEvent(event);
     }
+
+    @Override
+    public void addInstrument(Instrument instrument) {
+        instruments.put(instrument.getInstrumentId(), instrument);
+        // marketDataManager.
+    }
+
+    @Override
+    public OrdSysIdAllocator getAllocator() {
+        return allocator;
+    }
+
+    @AbstractFunction
+    protected abstract void handleStrategyEvent(@Nonnull StrategyEvent event);
 
     @Override
     public boolean enable() {
         if (initialized) {
             boolean enable = super.enable();
-            if (enable) {
-                log.info("{} :: enable strategy success. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        strategyName, strategyId, initialized, isEnabled());
-            } else {
+            if (enable)
+                log.info("{}::enable success. strategyId==[{}], isEnable==[{}]",
+                        strategyName, strategyId, isEnabled());
+            else
                 log.info(
-                        "{} :: enable strategy failure, strategy is enabled. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                        strategyName, strategyId, initialized, isEnabled());
-            }
+                        "{}::enable failure. strategyId==[{}], isEnable==[{}]",
+                        strategyName, strategyId, isEnabled());
             return enable;
         } else {
-            log.info(
-                    "{} :: enable strategy failure, strategy is not initialized. strategyId==[{}], initSuccess==[{}], isEnable==[{}]",
-                    getStrategyName(), strategyId, initialized, isEnabled());
+            log.info("{}::enable failure, strategy is not initialized. strategyId==[{}], isEnable==[{}]",
+                    strategyName, strategyId, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
     }
@@ -202,44 +214,33 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     @Override
     public boolean disable() {
         boolean disable = super.disable();
-        if (disable) {
-            log.info("{} :: disable strategy success. strategyId==[{}], isEnable==[{}]", getStrategyName(), strategyId,
-                    isEnabled());
-        } else {
-            log.info("{} :: disable strategy failure, strategy is disabled. strategyId==[{}], isEnable==[{}]",
-                    getStrategyName(), strategyId, isEnabled());
-        }
+        if (disable)
+            log.info("{}::disable strategy success. strategyId==[{}], isEnable==[{}]",
+                    strategyName, strategyId, isEnabled());
+        else
+            log.info("{}::disable strategy failure, strategyId==[{}], isEnable==[{}]",
+                    strategyName, strategyId, isEnabled());
         return disable;
     }
 
-    /**
-     * Enable Account
-     *
-     * @param subAccountId int
-     */
     @Override
     public void enableSubAccount(int subAccountId) {
-
+        accountManager.setSubAccountTradable(subAccountId);
     }
 
-    /**
-     * Disable Account
-     *
-     * @param subAccountId int
-     */
     @Override
     public void disableSubAccount(int subAccountId) {
-
+        accountManager.setSubAccountNotTradable(subAccountId);
     }
 
     @Override
     public void enableAccount(int accountId) {
-        AccountStorage.setAccountTradable(accountId);
+        accountManager.setAccountTradable(accountId);
     }
 
     @Override
     public void disableAccount(int accountId) {
-        AccountStorage.setAccountNotTradable(accountId);
+        accountManager.setAccountNotTradable(accountId);
     }
 
     @Override
@@ -265,8 +266,8 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param direction  TrdDirection
      * @param targetQty  int
      */
-    void orderWatermark(Instrument instrument, TrdDirection direction, int targetQty) {
-        orderWatermark(instrument, direction, targetQty, -1L, -1);
+    protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty) {
+        newTradeSignal(instrument, direction, targetQty, Double.NaN, -1);
     }
 
     /**
@@ -277,8 +278,8 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param targetQty  int
      * @param limitPrice long
      */
-    void orderWatermark(Instrument instrument, TrdDirection direction, int targetQty, long limitPrice) {
-        orderWatermark(instrument, direction, targetQty, limitPrice, 0);
+    protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty, double limitPrice) {
+        newTradeSignal(instrument, direction, targetQty, limitPrice, 0);
     }
 
     /**
@@ -290,32 +291,24 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param limitPrice 限定价格
      * @param floatTick  允许浮动点差
      */
-    void orderWatermark(Instrument instrument, TrdDirection direction, int targetQty, long limitPrice, int floatTick) {
-//		long offerPrice = 0L;
-//		if (limitPrice > 0)
-//			offerPrice = limitPrice;
-//		else
-//			offerPrice = getLevel1Price(instrument, direction);
+    protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty, double limitPrice, int floatTick) {
+        double offerPrice;
+        if (Double.isNaN(limitPrice))
+            offerPrice = getLevel1Price(instrument, direction);
+        else
+            offerPrice = limitPrice;
 
-        // 创建策略订单
-//		StrategyOrder strategyOrder = new StrategyOrder(strategyId, accountId, subAccountId, instrument,
-//				OrdQty.withOffer(targetQty), OrdPrice.withOffer(offerPrice), OrdType.Limit, direction);
-//		orders.put(strategyOrder.uniqueId(), strategyOrder);
+        var signal = new StrategySignal();
 
-        // 转换为实际订单
-//		MutableList<ActParentOrder> parentOrders = strategyOrderConverter.apply(strategyOrder);
+        signal.setInstrumentId(instrument.getInstrumentId());
+        signal.setInstrumentCode(instrument.getInstrumentCode());
+        signal.setDirection(direction);
+        signal.setTargetQty(targetQty);
+        signal.setOfferPrice(offerPrice);
+        signal.setFloatTick(floatTick);
 
-        // 存储订单
-        // TODO 未完成全部逻辑
-//		ActParentOrder parentOrder = parentOrders.getFirst();
-//		orders.put(parentOrder.uniqueId(), parentOrder);
-
-        // 转为实际执行的子订单
-        // ActChildOrder childOrder = parentOrder.toChildOrder();
-        // orders.put(childOrder.uniqueId(), childOrder);
-
-        // getAdaptor(instrument).newOrder(childOrder);
-
+        log.info("Strategy -> {}, Created TradeSignal -> {}", strategyId, signal);
+        signalHandler.onSignal(signal);
     }
 
 //    /**
@@ -361,12 +354,12 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @return double
      */
     protected double getLevel1Price(Instrument instrument, TrdDirection direction) {
-        MarketDataKeeper.MarketDataSnapshot snapshot = MarketDataKeeper.getSnapshot(instrument);
+        MarketDataSnapshot snapshot = marketDataManager.getSnapshot(instrument);
         return switch (direction) {
             // 获取当前卖一价
-            case Long -> snapshot.getAskPrice1();
+            case LONG -> snapshot.getAskPrice1();
             // 获取当前买一价
-            case Short -> snapshot.getBidPrice1();
+            case SHORT -> snapshot.getBidPrice1();
             // 状态错误
             default -> throw new IllegalArgumentException("Direction is [Invalid]");
         };
@@ -386,7 +379,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     }
 
     protected void openPosition(Instrument instrument, int offerQty, TrdDirection direction) {
-        openPosition(instrument, offerQty, getLevel1Price(instrument, direction), OrdType.Limited, direction);
+        openPosition(instrument, offerQty, getLevel1Price(instrument, direction), OrdType.LIMITED, direction);
     }
 
     /**
@@ -408,20 +401,20 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      */
     protected void openPosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType,
                                 TrdDirection direction) {
-        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
-                instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.Open);
-        childOrder.printLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
-        saveOrder(childOrder);
+        final ChildOrder order = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
+                instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.OPEN);
+        order.toLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
+        saveOrder(order);
 
-        getTraderAdaptor().newOrder(childOrder.toNewOrder());
-        childOrder.printLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
+        getTradingChannel().newOrder(order.toNewOrder());
+        order.toLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
     /**
      * @param instrument 交易标的
      */
     protected void closeAllPosition(Instrument instrument) {
-        closeAllPosition(instrument, OrdType.Limited);
+        closeAllPosition(instrument, OrdType.LIMITED);
     }
 
     /**
@@ -439,9 +432,9 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
                     getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
             double offerPrice;
             if (position > 0)
-                offerPrice = getLevel1Price(instrument, TrdDirection.Long);
+                offerPrice = getLevel1Price(instrument, TrdDirection.LONG);
             else
-                offerPrice = getLevel1Price(instrument, TrdDirection.Short);
+                offerPrice = getLevel1Price(instrument, TrdDirection.SHORT);
             closePosition(instrument, position, offerPrice, ordType);
         }
     }
@@ -459,7 +452,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
         } else {
             log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
                     getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-            closePosition(instrument, position, offerPrice, OrdType.Limited);
+            closePosition(instrument, position, offerPrice, OrdType.LIMITED);
         }
     }
 
@@ -487,7 +480,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param offerPrice 委托价格
      */
     protected void closePosition(Instrument instrument, int offerQty, long offerPrice) {
-        closePosition(instrument, offerQty, offerPrice, OrdType.Limited);
+        closePosition(instrument, offerQty, offerPrice, OrdType.LIMITED);
     }
 
     /**
@@ -497,15 +490,16 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param ordType    订单类型
      */
     protected void closePosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType) {
-        final ChildOrder childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
-                instrument, abs(offerQty), offerPrice, ordType, offerQty > 0 ? TrdDirection.Long : TrdDirection.Short,
-                TrdAction.Close);
+        final ChildOrder order = OrderKeeper
+                .createAndSaveChildOrder(allocator, strategyId, subAccount, account,
+                        instrument, abs(offerQty), offerPrice, ordType, offerQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT,
+                        TrdAction.CLOSE);
 
-        childOrder.printLog(log, "Close position generate [ChildOrder]");
-        saveOrder(childOrder);
+        order.toLog(log, "Close position generate [ChildOrder]");
+        saveOrder(order);
 
-        getTraderAdaptor().newOrder(childOrder.toNewOrder());
-        childOrder.printLog(log, "Close position [ChildOrder] has been sent");
+        getTradingChannel().newOrder(order.toNewOrder());
+        order.toLog(log, "Close position [ChildOrder] has been sent");
     }
 
     /**
@@ -513,19 +507,8 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      *
      * @param order Order
      */
-    private void saveOrder(@Nonnull Order order) {
+    private void saveOrder(@Nonnull io.rapid.core.order.Order order) {
         orders.put(order.getOrdSysId(), order);
-    }
-
-
-    /**
-     * 由策略自行决定在交易不同Instrument时使用哪个TraderAdaptor
-     *
-     * @return Adaptor
-     */
-    protected TraderAdaptor getTraderAdaptor() {
-        //TODO
-        return null;
     }
 
 }

@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class TickAttribLast {
+
     private boolean m_pastLimit = false; // aka halted
     private boolean m_unreported = false;
 

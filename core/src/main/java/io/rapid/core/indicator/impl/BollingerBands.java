@@ -1,14 +1,17 @@
 package io.rapid.core.indicator.impl;
 
+import io.mercury.common.sequence.TimeWindow;
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.base.FixedPeriodPoint;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
-import io.mercury.common.sequence.TimeWindow;
 
 import java.time.Duration;
 
+/**
+ *
+ */
 public final class BollingerBands extends
         FixedPeriodIndicator<BollingerBands.BollingerBandsPoint, BollingerBands.BollingerBandsEvent> {
 
@@ -17,7 +20,7 @@ public final class BollingerBands extends
     }
 
     @Override
-    protected void handleMarketData(FastMarketData marketData) {
+    protected void handleMarketData(RawMarketData marketData) {
 
     }
 
@@ -40,7 +43,7 @@ public final class BollingerBands extends
         }
 
         @Override
-        protected void handleMarketData0(FastMarketData marketData) {
+        protected void handleMarketData0(RawMarketData marketData) {
 
         }
 

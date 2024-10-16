@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class TickByTick {
+
     private final int m_tickType; // 0 - None, 1 - Last, 2 - AllLast, 3 -BidAsk, 4 - MidPoint
     private final long m_time;  // in seconds
     private double m_price;

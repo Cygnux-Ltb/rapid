@@ -1,5 +1,6 @@
 package io.rapid.core.position;
 
+import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.order.Order;
 
@@ -7,7 +8,7 @@ import java.io.Serializable;
 
 import static java.lang.Integer.compare;
 
-public interface Position extends Comparable<Position>, Serializable {
+public sealed interface Position extends Comparable<Position>, Serializable permits PositionImpl {
 
     /**
      * 投资者账户ID
@@ -44,37 +45,46 @@ public interface Position extends Comparable<Position>, Serializable {
     /**
      * 获取当前仓位
      *
+     * @param direction TrdDirection
      * @return int
      */
-    int getCurrentQty();
+    int getCurrentQty(TrdDirection direction);
 
     /**
      * 设置当前仓位
      *
-     * @param qty int
+     * @param direction TrdDirection
+     * @param qty       int
      */
-    void setCurrentQty(int qty);
+    void setCurrentQty(TrdDirection direction, int qty);
+
+    /**
+     * 获取净持仓
+     *
+     * @return int
+     */
+    int getNetQty();
 
     /**
      * 获取可用仓位
      *
      * @return int
      */
-    int getTradableQty();
+    int getTradableQty(TrdDirection direction);
 
     /**
      * 设置可用仓位
      *
      * @param qty int
      */
-    void setTradableQty(int qty);
+    void setTradableQty(TrdDirection direction, int qty);
 
     /**
      * 使用订单更新仓位
      *
      * @param order Order
      */
-    void updateWithOrder(Order order);
+    void updateWith(Order order);
 
     @Override
     default int compareTo(Position o) {

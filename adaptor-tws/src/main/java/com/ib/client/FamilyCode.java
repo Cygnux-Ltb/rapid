@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public class FamilyCode {
+
     private String m_accountID;
     private String m_familyCodeStr;
 
@@ -32,4 +33,5 @@ public class FamilyCode {
         m_accountID = p_accountID;
         m_familyCodeStr = p_familyCodeStr;
     }
+
 }

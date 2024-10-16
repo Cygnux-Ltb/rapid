@@ -10,33 +10,31 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.mercury.common.collections.MutableLists.newFastList;
-
 public final class ApplicationStatus {
 
-    private static final AtomicInteger CurrentStatus = new AtomicInteger(AppStatus.Unknown.getCode());
+    private static final AtomicInteger _current_status = new AtomicInteger(AppStatus.Unknown.getCode());
 
     private ApplicationStatus() {
     }
 
     public static AppStatus getStatus() {
-        return AppStatus.valueOf(CurrentStatus.get());
+        return AppStatus.valueOf(_current_status.get());
     }
 
     public static void setInitialization() {
-        CurrentStatus.set(AppStatus.Initialization.getCode());
+        _current_status.set(AppStatus.Initialization.getCode());
     }
 
     public static void setOnline() {
-        CurrentStatus.set(AppStatus.Online.getCode());
+        _current_status.set(AppStatus.Online.getCode());
     }
 
     public static void setOffline() {
-        CurrentStatus.set(AppStatus.Offline.getCode());
+        _current_status.set(AppStatus.Offline.getCode());
     }
 
     public static void setUnknown() {
-        CurrentStatus.set(AppStatus.Unknown.getCode());
+        _current_status.set(AppStatus.Unknown.getCode());
     }
 
     public enum AppStatus {
@@ -46,7 +44,8 @@ public final class ApplicationStatus {
         private final int code;
 
         private static final ImmutableIntObjectMap<AppStatus> Map =
-                MutableMaps.newIntObjectMap(AppStatus::getCode  ,AppStatus.values()).toImmutable();
+               // ImmutableMaps.
+                MutableMaps.newIntObjectMap(AppStatus::getCode, AppStatus.values()).toImmutable();
 
         AppStatus(int code) {
             this.code = code;

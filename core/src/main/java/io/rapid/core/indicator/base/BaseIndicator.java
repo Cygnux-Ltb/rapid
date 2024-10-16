@@ -2,22 +2,22 @@ package io.rapid.core.indicator.base;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.Indicator;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.Point;
 import io.rapid.core.indicator.PointSet;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
-public abstract class BaseIndicator<P extends BasePoint & Point,
-        E extends IndicatorEvent> implements Indicator<P, E> {
+public abstract class BaseIndicator<P extends BasePoint & Point, E extends IndicatorEvent>
+        implements Indicator<P, E> {
 
-    private static final Logger log = getLogger(BaseIndicator.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseIndicator.class);
 
     /**
      * 指标对应的标的
@@ -42,7 +42,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point,
     /**
      * 前一笔行情
      */
-    protected FastMarketData preMarketData;
+    protected RawMarketData preMarketData;
 
     /**
      * 存储事件的集合
@@ -62,7 +62,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point,
         return instrument;
     }
 
-    public FastMarketData getPreMarketData() {
+    public RawMarketData getPreMarketData() {
         return preMarketData;
     }
 
@@ -101,12 +101,12 @@ public abstract class BaseIndicator<P extends BasePoint & Point,
     }
 
     @Override
-    public void onMarketData(FastMarketData marketData) {
+    public void onMarketData(RawMarketData marketData) {
         handleMarketData(marketData);
         this.preMarketData = marketData;
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData(FastMarketData marketData);
+    protected abstract void handleMarketData(RawMarketData marketData);
 
 }

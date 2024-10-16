@@ -1,11 +1,11 @@
 package io.rapid.core.indicator.impl;
 
-import java.time.Duration;
-
-import io.rapid.core.instrument.Instrument;
-import io.rapid.core.mkd.FastMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
+import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.instrument.Instrument;
+
+import java.time.Duration;
 
 public final class SmaPoint extends MaPoint {
 
@@ -30,7 +30,7 @@ public final class SmaPoint extends MaPoint {
     }
 
     @Override
-    protected void handleMarketData0(FastMarketData marketData) {
+    protected void handleMarketData0(RawMarketData marketData) {
         this.lastPrice = marketData.getLastPrice();
         int count = historyPriceWindow.count();
         this.avgPrice = (historyPriceSum + lastPrice) / count;

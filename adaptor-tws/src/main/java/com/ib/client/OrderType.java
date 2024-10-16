@@ -5,6 +5,7 @@ package com.ib.client;
 
 
 public enum OrderType implements IApiEnum {
+
     None(""),
     MKT("MKT"),
     LMT("LMT"),
@@ -53,7 +54,7 @@ public enum OrderType implements IApiEnum {
     }
 
     public static OrderType get(String apiString) {
-        if (apiString != null && apiString.length() > 0 && !apiString.equals("None")) {
+        if (apiString != null && !apiString.isEmpty() && !apiString.equals("None")) {
             for (OrderType type : values()) {
                 if (type.m_apiString.equals(apiString)) {
                     return type;

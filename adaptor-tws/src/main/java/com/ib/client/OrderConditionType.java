@@ -4,6 +4,7 @@
 package com.ib.client;
 
 public enum OrderConditionType {
+
 	Price(1),
 	Time(3),
 	Margin(4),
