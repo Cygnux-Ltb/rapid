@@ -1,4 +1,4 @@
-package io.rapid.core.order;
+package io.rapid.core.trade;
 
 public interface TrdConstant {
 

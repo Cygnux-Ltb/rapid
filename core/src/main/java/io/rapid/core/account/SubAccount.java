@@ -30,7 +30,7 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     /**
      * 处理外部订单使用的子账户
      */
-    public static final SubAccount ExternalOrderSubAccount = new SubAccount();
+    public static final SubAccount EXTERNAL_ORDER_SUB_ACCOUNT = new SubAccount();
 
     /**
      * 子账户ID

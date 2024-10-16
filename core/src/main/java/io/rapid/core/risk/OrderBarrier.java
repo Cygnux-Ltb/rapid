@@ -1,16 +1,16 @@
 package io.rapid.core.risk;
 
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
 
 import java.util.function.Predicate;
 
 @FunctionalInterface
-public interface OrderBarrier extends Predicate<Order> {
+public interface OrderBarrier extends Predicate<ChildOrder> {
 
-    boolean filter(Order order);
+    boolean filter(ChildOrder order);
 
     @Override
-    default boolean test(Order t) {
+    default boolean test(ChildOrder t) {
         return filter(t);
     }
 

@@ -2,7 +2,7 @@ package io.rapid.core.position;
 
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
 
 /**
  * 持仓管理接口
@@ -59,7 +59,7 @@ public sealed interface PositionManager permits AbstractPositionManager {
      * @param instrument Instrument
      * @param order      ChildOrder
      */
-    default void onOrder(int accountId, Instrument instrument, Order order) {
+    default void onOrder(int accountId, Instrument instrument, ChildOrder order) {
         acquirePosition(accountId, instrument).updateWith(order);
     }
 

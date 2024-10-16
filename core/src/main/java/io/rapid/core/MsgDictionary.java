@@ -2,12 +2,13 @@ package io.rapid.core;
 
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.lang.StringConstant;
+import lombok.Getter;
 import org.eclipse.collections.api.map.MutableMap;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class ErrorDictionary {
+public final class MsgDictionary {
 
     private static final AtomicReference<String> DEFAULT_LANGUAGE = new AtomicReference<>("cn");
 
@@ -261,5 +262,30 @@ public final class ErrorDictionary {
     public static void setDefaultLanguage(String defaultLanguage) {
         DEFAULT_LANGUAGE.set(defaultLanguage);
     }
+
+    public static final class ErrorMsg {
+
+        @Getter
+        private final int code;
+
+        @Getter
+        private final String language;
+
+        @Getter
+        private final String message;
+
+        ErrorMsg(int code, String language, String message) {
+            this.code = code;
+            this.language = language;
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            return code + ":" + language + ":" + message;
+        }
+
+    }
+
 
 }

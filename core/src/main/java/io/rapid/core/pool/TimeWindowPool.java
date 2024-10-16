@@ -74,7 +74,7 @@ public final class TimeWindowPool {
                             .segmentation(date, symbol.getExchange().getZoneOffset(), duration).stream())
                     .collect(Collectors2.toList()).each(serial -> {
                         timePeriodSet.add(serial);
-                        timePeriodMap.put(serial.serialId(), serial);
+                        timePeriodMap.put(serial.orderNum(), serial);
                     });
             long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
             timeWindowPool.put(symbolTimeKey, timePeriodSet.toImmutable());
@@ -160,7 +160,7 @@ public final class TimeWindowPool {
     @CheckForNull
     public TimeWindow getNextTimePeriod(@Nonnull Symbol symbol, Duration duration, TimeWindow window) {
         ImmutableLongObjectMap<TimeWindow> longObjectMap = getTimePeriodMap(symbol, duration);
-        return longObjectMap.get(window.serialId() + duration.getSeconds());
+        return longObjectMap.get(window.orderNum() + duration.getSeconds());
     }
 
 }
