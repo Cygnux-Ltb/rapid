@@ -33,20 +33,17 @@ public final class OrdSysIdAllocatorKeeper {
 
     private static final OrdSysIdAllocator[] allocators = new OrdSysIdAllocator[1024];
 
-
     /**
      * @param strategyId int
      * @return OrdSysIdAllocator
      */
-    public static OrdSysIdAllocator newAllocator(int strategyId) {
+    public static OrdSysIdAllocator acquireAllocator(int strategyId) {
         if (strategyId < 0 || strategyId > 1023) {
             log.error("OrdSysIdAllocatorKeeper::newAllocator, strategyId==[{}] is not in range", strategyId);
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);
         }
-        if (allocators[strategyId] != null) {
-            log.error("OrdSysIdAllocatorKeeper::newAllocator, strategyId==[{}] already exists", strategyId);
-            throw new IllegalStateException("[OrdSysIdAllocator] already exists, [strategyId]=" + strategyId);
-        }
+        if (allocators[strategyId] != null)
+            return allocators[strategyId];
         allocators[strategyId] = new SnowflakeAlgo(strategyId)::next;
         log.info("OrdSysIdAllocatorKeeper::newAllocator, successfully created, strategyId==[{}]", strategyId);
         return allocators[strategyId];

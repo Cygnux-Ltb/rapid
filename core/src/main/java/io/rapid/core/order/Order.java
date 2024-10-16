@@ -1,10 +1,11 @@
 package io.rapid.core.order;
 
-import io.mercury.common.sequence.SerialObject;
+import io.mercury.common.sequence.OrderedObject;
 import io.rapid.core.event.enums.OrdStatus;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.OrdValid;
 import io.rapid.core.event.enums.TrdDirection;
+import io.rapid.core.instrument.Instrument;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.attribute.OrdRemark;
@@ -14,12 +15,10 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 
-import static java.lang.Long.compare;
-
 /**
  * @author yellow013
  */
-public sealed interface Order extends SerialObject<Order>, Serializable permits AbstractOrder {
+public sealed interface Order extends OrderedObject<Order>, Serializable permits AbstractOrder {
 
     /**
      * ordSysId构成, 使用雪花算法实现<br>
@@ -57,7 +56,7 @@ public sealed interface Order extends SerialObject<Order>, Serializable permits 
      *
      * @return Instrument
      */
-    String getInstrumentCode();
+    Instrument getInstrument();
 
     /**
      * OrdQty
@@ -124,6 +123,16 @@ public sealed interface Order extends SerialObject<Order>, Serializable permits 
     void setStatus(OrdStatus status);
 
     /**
+     * @return String
+     */
+    String getSignalSource();
+
+    /**
+     * @param signalSource String
+     */
+    void setSignalSource(String signalSource);
+
+    /**
      * remark
      *
      * @return OrdRemark
@@ -138,10 +147,11 @@ public sealed interface Order extends SerialObject<Order>, Serializable permits 
     }
 
     /**
-     * @return int
+     * 是否为子订单
+     *
+     * @return boolean
      */
-    int getOrdLevel();
-
+    boolean isChild();
 
     /**
      * @param log Logger
@@ -150,20 +160,13 @@ public sealed interface Order extends SerialObject<Order>, Serializable permits 
     default void toLog(Logger log, String msg) {
         log.info("{}, Order attribute : ordSysId==[{}], status==[{}], direction==[{}], type==[{}], " +
                         "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}",
-                msg, getOrdSysId(), getStatus(), getDirection(), getType(), getInstrumentCode(),
+                msg, getOrdSysId(), getStatus(), getDirection(), getType(), getInstrument().getInstrumentCode(),
                 getPrice(), getQty(), getTimestamp(), getRemark());
     }
 
     @Override
-    default long serialId() {
+    default long orderNum() {
         return getOrdSysId();
-    }
-
-    @Override
-    default int compareTo(Order o) {
-        return getOrdLevel() > o.getOrdLevel() ? -1
-                : getOrdLevel() < o.getOrdLevel() ? 1
-                : compare(getOrdSysId(), o.getOrdSysId());
     }
 
 }

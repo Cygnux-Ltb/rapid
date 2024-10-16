@@ -1,7 +1,8 @@
 package io.rapid.core.order;
 
 import io.rapid.core.order.attribute.OrdTimestamp;
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
+import lombok.Getter;
 import org.eclipse.collections.api.set.ImmutableSet;
 
 import static io.mercury.common.collections.ImmutableSets.newImmutableSet;
@@ -14,34 +15,26 @@ public final class GroupOrder {
     /**
      * 订单组ID
      */
-    private final long groupOrdId;
+    @Getter
+    private final long groupOrdSysId;
 
     /**
      * 订单组时间戳
      */
+    @Getter
     private final OrdTimestamp groupTimestamp;
 
     /**
      * 包含的订单
      */
-    private final ImmutableSet<Order> actualOrders;
+    @Getter
+    private final ImmutableSet<ChildOrder> childOrders;
 
-    public GroupOrder(long groupOrdId, Order... orders) {
-        this.groupOrdId = groupOrdId;
+    public GroupOrder(long groupOrdSysId, ChildOrder... orders) {
+        this.groupOrdSysId = groupOrdSysId;
         this.groupTimestamp = OrdTimestamp.now();
-        this.actualOrders = newImmutableSet(orders);
+        this.childOrders = newImmutableSet(orders);
     }
 
-    public long getGroupOrdId() {
-        return groupOrdId;
-    }
-
-    public OrdTimestamp getGroupTimestamp() {
-        return groupTimestamp;
-    }
-
-    public ImmutableSet<Order> getActualOrders() {
-        return actualOrders;
-    }
 
 }

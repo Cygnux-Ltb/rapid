@@ -1,11 +1,11 @@
-package io.rapid.core.order.impl;
+package io.rapid.core.order;
 
 import io.rapid.core.event.enums.OrdStatus;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.OrdValid;
 import io.rapid.core.event.enums.TrdDirection;
-import io.rapid.core.order.OrdSysIdAllocatorKeeper;
-import io.rapid.core.order.Order;
+import io.rapid.core.instrument.Instrument;
+import io.rapid.core.instrument.InstrumentKeeper;
 import io.rapid.core.order.attribute.OrdPrice;
 import io.rapid.core.order.attribute.OrdQty;
 import io.rapid.core.order.attribute.OrdRemark;
@@ -19,7 +19,7 @@ import org.slf4j.Logger;
  *
  * @author yellow013
  */
-public abstract sealed class AbstractOrder implements Order permits ChildOrder, ParentOrder {
+public abstract non-sealed class AbstractOrder implements Order {
 
     @java.io.Serial
     private static final long serialVersionUID = -3444258095612091354L;
@@ -52,7 +52,7 @@ public abstract sealed class AbstractOrder implements Order permits ChildOrder, 
      * Instrument
      */
     @Getter
-    protected final String instrumentCode;
+    protected final Instrument instrument;
 
     /**
      * 数量
@@ -100,6 +100,13 @@ public abstract sealed class AbstractOrder implements Order permits ChildOrder, 
     protected final OrdTimestamp timestamp = OrdTimestamp.now();
 
     /**
+     * 信号源, 用于追踪策略信号与订单的关联
+     */
+    @Getter
+    @Setter
+    protected String signalSource;
+
+    /**
      * 订单备注(可添加新信息)
      */
     @Getter
@@ -108,26 +115,20 @@ public abstract sealed class AbstractOrder implements Order permits ChildOrder, 
     /**
      * @param strategyId     int
      * @param subAccountId   int
-     * @param accountId      int
      * @param instrumentCode String
+     * @param accountId      int
      * @param qty            OrdQty
      * @param price          OrdPrice
      * @param type           OrdType
      * @param direction      TrdDirection
      */
-    protected AbstractOrder(int strategyId,
-                            int subAccountId,
-                            int accountId,
-                            String instrumentCode,
-                            OrdQty qty,
-                            OrdPrice price,
-                            OrdType type,
-                            TrdDirection direction) {
+    protected AbstractOrder(int strategyId, int subAccountId, String instrumentCode, int accountId,
+                            OrdQty qty, OrdPrice price, OrdType type, TrdDirection direction) {
         this.ordSysId = OrdSysIdAllocatorKeeper.nextOrdSysId(strategyId);
         this.strategyId = strategyId;
         this.subAccountId = subAccountId;
+        this.instrument = InstrumentKeeper.getInstrument(instrumentCode);
         this.accountId = accountId;
-        this.instrumentCode = instrumentCode;
         this.qty = qty;
         this.price = price;
         this.type = type;
@@ -141,7 +142,7 @@ public abstract sealed class AbstractOrder implements Order permits ChildOrder, 
     @Override
     public void toLog(Logger log, String msg) {
         log.info(LOG_TEMPLATE, msg, ordSysId, status, direction, type,
-                instrumentCode, price, qty, timestamp, remark);
+                instrument.getInstrumentCode(), price, qty, timestamp, remark);
     }
 
 }

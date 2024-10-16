@@ -1,4 +1,4 @@
-package io.rapid.core.constant;
+package io.rapid.core.order;
 
 public interface OrdConstant {
 

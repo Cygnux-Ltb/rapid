@@ -4,17 +4,13 @@ import java.io.Serial;
 
 public interface OrderRefAllocator {
 
-    void related(String orderRef, long ordSysId);
+    void binding(String orderRef, long ordSysId);
 
     long getOrdSysId(String orderRef);
 
     String getOrderRef(long ordSysId) throws OrderRefNotFoundException;
 
     int nextOrderRef();
-
-    default String nextStringOrderRef() {
-        return Integer.toString(nextOrderRef());
-    }
 
     final class OrderRefNotFoundException extends Exception {
 
