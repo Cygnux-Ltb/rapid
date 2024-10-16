@@ -6,7 +6,7 @@ import io.mercury.common.util.BitOperator;
 import io.mercury.serialization.json.JsonWriter;
 import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
 import org.eclipse.collections.api.map.primitive.MutableLongIntMap;
 import org.slf4j.Logger;
 
@@ -215,7 +215,7 @@ public final class PositionKeeper implements Serializable {
      *
      * @param order 子订单
      */
-    public static void updateCurrentPosition(Order order) {
+    public static void updateCurrentPosition(ChildOrder order) {
         int subAccountId = order.getSubAccountId();
         Instrument instrument = order.getInstrument();
         int trdQty = order.getLastRecord().tradeQty();

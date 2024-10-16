@@ -1,7 +1,7 @@
 package io.rapid.engine.position;
 
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.event.enums.TrdDirection;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.functional.Formatter;
@@ -211,7 +211,7 @@ public final class PositionKeeper2 implements Serializable, Formatter<String> {
      *
      * @param order 子订单
      */
-    public static void updateCurrentPosition(Order order) {
+    public static void updateCurrentPosition(ChildOrder order) {
         int subAccountId = order.getSubAccountId();
         Instrument instrument = order.getInstrument();
         int trdQty = order.getLastRecord().tradeQty();

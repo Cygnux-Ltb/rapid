@@ -10,6 +10,8 @@ import io.rapid.core.event.OutboundEventHandler;
 import io.rapid.core.event.container.InboundEventLoop;
 import io.rapid.core.event.enums.MarketDataType;
 import io.rapid.core.event.enums.OrdType;
+import io.rapid.core.event.enums.TrdAction;
+import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
@@ -24,12 +26,13 @@ import io.rapid.core.event.outbound.SubscribeMarketData;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.MarketDataManager;
 import io.rapid.core.order.OrderManager;
-import io.rapid.core.order.attribute.OrdPrice;
-import io.rapid.core.order.attribute.OrdQty;
+import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.order.impl.ParentOrder;
 import io.rapid.core.position.PositionManager;
 import io.rapid.core.strategy.StrategyManager;
 import io.rapid.core.strategy.StrategySignal;
+import io.rapid.core.trade.TradeCommand;
+import io.rapid.core.trade.TradeCommandProducer;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
@@ -76,7 +79,7 @@ public class CoreSchedulerService implements CoreScheduler {
         @Override
         protected void process(InboundEvent event) {
             switch (event.getType()) {
-                case FastMarketData -> handleRawMarketData(event.getRawMarketData());
+                case RawMarketData -> handleRawMarketData(event.getRawMarketData());
                 case DepthMarketData -> handleDepthMarketData(event.getDepthMarketData());
                 case OrderReport -> handleOrderReport(event.getOrderReport());
                 case PositionsReport -> handlePositionsReport(event.getPositionsReport());
@@ -110,6 +113,8 @@ public class CoreSchedulerService implements CoreScheduler {
 
     }
 
+    private long marketDataCounter = -1;
+
     /**
      * 行情处理
      *
@@ -117,7 +122,12 @@ public class CoreSchedulerService implements CoreScheduler {
      */
     @Override
     public void handleRawMarketData(RawMarketData event) {
-
+        // 行情内核穿透
+        log.info("Core process start count -> {}", ++marketDataCounter);
+        marketDataManager.onMarketData(event);
+        // 处理本次内核穿透信号
+        handleSignal(signals);
+        log.info("Core process end count -> {}", marketDataCounter);
     }
 
     /**
@@ -212,82 +222,59 @@ public class CoreSchedulerService implements CoreScheduler {
         log.info("CoreSchedulerService::handleBalanceReport, [BalanceReport] -> {}", event);
     }
 
+    @Resource
+    private TradeCommandProducer tradeCommandProducer;
+
     /**
      * 对本次数据运行产生的信号进行处理
+     *
+     * @param signal StrategySignal
      */
-    private void handleSignal() {
-        signals.each(this::handleSignal);
-        signals.clear();
-    }
-
-    private void handleSignal(StrategySignal signal) {
-        int orderWatermark = signal.getOrderWatermark();
+    @Override
+    public void handleSignal(StrategySignal signal) {
+        if (!signal.isVerification()) {
+            log.error("CoreSchedulerService::handleSignal, Signal is invalid, [Signal] -> {}", signal);
+            return;
+        }
+        int targetQty = signal.getTargetQty();
+        TrdDirection targetDirection = targetQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT;
         var strategy = strategyManager.getStrategy(signal.getStrategyId());
         var subAccountMapping = accountManager.getSubAccountMapping(signal.getSubAccountId());
         // TODO 改进子账户映射获取实际账户的逻辑
         var account = subAccountMapping.getAccountMap().getAny();
 
-        positionManager.acquirePosition(account.getAccountId(), signal.getInstrumentCode());
+        // 创建父订单
+        var parentOrder = new ParentOrder(signal.getStrategyId(), signal.getSubAccountId(), signal.getInstrumentCode(),
+                signal.getTargetQtyAbs(), signal.getOfferPrice(), OrdType.defaultType(), targetDirection);
 
-        /// 创建父订单
-        ParentOrder parentOrder = new ParentOrder(
-                signal.getStrategyId(),
-                signal.getSubAccountId(),
-                account.getAccountId(),
-                signal.getInstrumentCode(),
-                OrdQty.withOffer(signal.getOfferQty()),
-                OrdPrice.withOffer(signal.getOfferPrice()),
-                OrdType.defaultType(),
-                signal.getDirection());
+        var position = positionManager.acquirePosition(account.getAccountId(), signal.getInstrumentCode());
 
+        // 转换交易指令, 多空分别如何交易
+        TradeCommand command = tradeCommandProducer.toTradeCommand(targetQty, position);
 
-        orders.put(parentOrder.uniqueId(), parentOrder);
+        // 存储父订单
+        orderManager.putOrder(parentOrder);
 
-        // 转换为实际订单
-        MutableList<ActParentOrder> parentOrders = strategyOrderConverter.apply(parentOrder);
+        // 多单指令处理
+        if (command.longAction() != TrdAction.INVALID) {
+            ChildOrder longChildOrder = ChildOrder.newWithParent(parentOrder, account.getAccountId(),
+                    command.longQty(), signal.getOfferPrice(),
+                    OrdType.defaultType(), TrdDirection.LONG, command.longAction());
+            // 存储子订单
+            orderManager.putOrder(longChildOrder);
+            // 发送多单
+            outboundEventHandler.handleNewOrder(longChildOrder.toNewOrder());
+        }
 
-        // 存储订单
-        // TODO 未完成全部逻辑
-        ActParentOrder parentOrder = parentOrders.getFirst();
-        orders.put(parentOrder.uniqueId(), parentOrder);
-
-        // 转为实际执行的子订单
-        ActChildOrder childOrder = parentOrder.toChildOrder();
-        orders.put(childOrder.uniqueId(), childOrder);
-
-        getAdaptor(instrument).newOrder(childOrder);
-
-
-        switch (orderWatermark) {
-            case 1 -> {
-                switch (signal.getDirection()) {
-                    case LONG:
-
-                        break;
-                    case SHORT:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            case -1 -> {
-                switch (signal.getDirection()) {
-                    case LONG:
-
-                        break;
-
-                    case SHORT:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            default -> {
-            }
+        // 空单指令处理
+        if (command.shortAction() != TrdAction.INVALID) {
+            ChildOrder shortChildOrder = ChildOrder.newWithParent(parentOrder, account.getAccountId(),
+                    command.shortQty(), signal.getOfferPrice(),
+                    OrdType.defaultType(), TrdDirection.SHORT, command.shortAction());
+            // 存储子订单
+            orderManager.putOrder(shortChildOrder);
+            // 发送空单
+            outboundEventHandler.handleNewOrder(shortChildOrder.toNewOrder());
         }
 
     }

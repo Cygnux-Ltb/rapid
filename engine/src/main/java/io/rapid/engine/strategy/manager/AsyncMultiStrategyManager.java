@@ -5,8 +5,8 @@ import io.rapid.core.instrument.Instrument;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
-import io.rapid.engine.trader.OrderKeeper;
-import io.rapid.core.order.impl.Order;
+import io.rapid.engine.order.OrderKeeper;
+import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
@@ -49,7 +49,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                             var event = msg.getOrderEvent();
                             log.info("Handle OrderEvent, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                                     event.getOrdSysId());
-                            Order order = OrderKeeper.handleOrderReport(event);
+                            ChildOrder order = OrderKeeper.handleOrderReport(event);
                             log.info(
                                     "Search Order OK. brokerSysId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
                                     event.getBrokerOrdSysId(), order.getStrategyId(),

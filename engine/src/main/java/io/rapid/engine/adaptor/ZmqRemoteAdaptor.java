@@ -15,7 +15,9 @@ import org.apache.fury.Fury;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import java.io.IOException;
 
+import static io.rapid.core.adaptor.Adaptor.publishPath;
 import static org.apache.fury.config.Language.JAVA;
 
 @NotThreadSafe
@@ -38,7 +40,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     public ZmqRemoteAdaptor(@Nonnull Account account) {
         super(account, false);
         this.publisher = ZmqConfigurator
-                .ipc("adaptor/pub")
+                .ipc(publishPath())
                 .createPublisherWithBinary();
     }
 
@@ -83,7 +85,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         publisher.close();
     }
 

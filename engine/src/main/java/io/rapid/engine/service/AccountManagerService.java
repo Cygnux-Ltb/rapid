@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 public final class AccountManagerService implements Serializable, AccountManager {
 
-    @Serial
+    @java.io.Serial
     private static final long serialVersionUID = -6883109944757142986L;
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AccountManagerService.class);

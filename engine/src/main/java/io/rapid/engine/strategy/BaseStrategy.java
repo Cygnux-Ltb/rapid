@@ -17,7 +17,7 @@ import io.rapid.core.mdata.MarketDataSnapshot;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.OrdSysIdAllocator;
 import io.rapid.core.order.OrdSysIdAllocatorKeeper;
-import io.rapid.core.order.impl.Order;
+import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
@@ -25,7 +25,7 @@ import io.rapid.core.strategy.StrategyManager;
 import io.rapid.core.strategy.StrategySignal;
 import io.rapid.core.strategy.StrategySignalHandler;
 import io.rapid.engine.position.PositionKeeper;
-import io.rapid.engine.trader.OrderKeeper;
+import io.rapid.engine.order.OrderKeeper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.Getter;
@@ -38,8 +38,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-import static io.cygnuxltb.console.beans.ValueLimitation.MAX_STRATEGY_ID;
-import static io.cygnuxltb.console.beans.ValueLimitation.MIN_STRATEGY_ID;
 import static io.mercury.common.lang.Asserter.atWithinRange;
 import static io.mercury.common.lang.Asserter.nonEmpty;
 import static io.mercury.common.lang.Asserter.nonNull;
@@ -126,7 +124,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
         this.params = params;
-        this.allocator = OrdSysIdAllocatorKeeper.newAllocator(strategyId);
+        this.allocator = OrdSysIdAllocatorKeeper.acquireAllocator(strategyId);
         log.info("Strategy -> {} initialized", strategyName);
         log.info("Strategy -> {} print params", params);
         params.showParams(log);
@@ -183,11 +181,11 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     @Override
     public void addInstrument(Instrument instrument) {
         instruments.put(instrument.getInstrumentId(), instrument);
-        marketDataManager.
+        // marketDataManager.
     }
 
     @Override
-    public OrdSysIdAllocator getOrdSysIdAllocator() {
+    public OrdSysIdAllocator getAllocator() {
         return allocator;
     }
 
@@ -403,13 +401,13 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      */
     protected void openPosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType,
                                 TrdDirection direction) {
-        final Order childOrder = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
+        final ChildOrder order = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.OPEN);
-        childOrder.toLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
-        saveOrder(childOrder);
+        order.toLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
+        saveOrder(order);
 
-        getTradingChannel().newOrder(childOrder.toNewOrder());
-        childOrder.toLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
+        getTradingChannel().newOrder(order.toNewOrder());
+        order.toLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
     /**
@@ -492,16 +490,16 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @param ordType    订单类型
      */
     protected void closePosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType) {
-        final Order childOrder = OrderKeeper
+        final ChildOrder order = OrderKeeper
                 .createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                         instrument, abs(offerQty), offerPrice, ordType, offerQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT,
                         TrdAction.CLOSE);
 
-        childOrder.toLog(log, "Close position generate [ChildOrder]");
-        saveOrder(childOrder);
+        order.toLog(log, "Close position generate [ChildOrder]");
+        saveOrder(order);
 
-        getTradingChannel().newOrder(childOrder.toNewOrder());
-        childOrder.toLog(log, "Close position [ChildOrder] has been sent");
+        getTradingChannel().newOrder(order.toNewOrder());
+        order.toLog(log, "Close position [ChildOrder] has been sent");
     }
 
     /**

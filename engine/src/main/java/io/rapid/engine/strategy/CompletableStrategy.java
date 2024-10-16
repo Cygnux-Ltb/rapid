@@ -5,6 +5,8 @@ import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.SavedMarketData;
+import io.rapid.core.order.OrdSysIdAllocator;
 import io.rapid.core.order.Order;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
@@ -35,6 +37,16 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
     @Override
     public SubAccount getSubAccount() {
         return null;
+    }
+
+    @Override
+    public OrdSysIdAllocator getAllocator() {
+        return null;
+    }
+
+    @Override
+    public void addInstrument(Instrument instrument) {
+
     }
 
     @Override
@@ -92,4 +104,8 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
 
     }
 
+    @Override
+    public void acceptMarketData(SavedMarketData marketData) {
+
+    }
 }

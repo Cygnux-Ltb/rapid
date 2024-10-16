@@ -19,15 +19,17 @@ import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
 import io.rapid.core.event.inbound.RawMarketData;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-public class InboundEventFeederWithZmq implements InboundEventFeeder {
+@Service
+public class InboundEventFeederService implements InboundEventFeeder {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(InboundEventFeederWithZmq.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(InboundEventFeederService.class);
 
-    private final ZmqSubscriber subscriber = ZmqConfigurator.ipc(Adaptor.publishPath())
-            .createSubscriber(this::handleMsg);
+    private final ZmqSubscriber subscriber = ZmqConfigurator
+            .ipc(Adaptor.publishPath()).createSubscriber(this::handleMsg);
 
     private InboundEventLoop loop;
 
@@ -52,10 +54,8 @@ public class InboundEventFeederWithZmq implements InboundEventFeeder {
             case MarketDataSubscribeReport -> loop.put(record.getRecordWith(MarketDataSubscribeReport.class));
             case Invalid -> log.error("Invalid event received -> {}", record);
         }
-
-
-        log.info("Received -> epochMicros == {}, title == {}, From topic -> {}", epochTime, title, topic);
-        log.info("Received -> record == {}", record.getRecord());
+//        log.info("Received -> epochMicros == {}, title == {}, From topic -> {}", epochTime, title, topic);
+//        log.info("Received -> record == {}", record.getRecord());
     }
 
 
