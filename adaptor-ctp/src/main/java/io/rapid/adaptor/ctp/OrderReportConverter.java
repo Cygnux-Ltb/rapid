@@ -1,10 +1,11 @@
 package io.rapid.adaptor.ctp;
 
-import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrder;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcInputOrderAction;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcOrderAction;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.consts.FtdcOffsetFlag;
+import io.rapid.adaptor.ctp.event.trader.FtdcInputOrder;
+import io.rapid.adaptor.ctp.event.trader.FtdcInputOrderAction;
+import io.rapid.adaptor.ctp.event.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.event.trader.FtdcOrderAction;
+import io.rapid.adaptor.ctp.event.trader.FtdcTrade;
 import io.rapid.core.event.enums.OrdStatus;
 import io.rapid.core.event.inbound.OrderReport;
 import jakarta.annotation.Resource;
@@ -13,9 +14,9 @@ import org.slf4j.Logger;
 import static io.mercury.common.epoch.HighResolutionEpoch.micros;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 import static io.mercury.common.util.StringSupport.removeNonDigits;
-import static io.rapid.adaptor.ctp.consts.FtdcDirection.withDirection;
-import static io.rapid.adaptor.ctp.consts.FtdcOffsetFlag.withOffsetFlag;
-import static io.rapid.adaptor.ctp.consts.FtdcOrderStatus.withOrderStatus;
+import static io.rapid.adaptor.ctp.consts.FtdcDirection.withFtdcDirection;
+import static io.rapid.adaptor.ctp.consts.FtdcOffsetFlag.withFtdcOffsetFlag;
+import static io.rapid.adaptor.ctp.consts.FtdcOrderStatus.withFtdcOrderStatus;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -23,9 +24,9 @@ import static java.lang.Integer.parseInt;
  *
  * @author yellow013
  */
-public final class OrderEventConverter {
+public final class OrderReportConverter {
 
-    private static final Logger log = getLogger(OrderEventConverter.class);
+    private static final Logger log = getLogger(OrderReportConverter.class);
 
     @Resource
     private FastOrderRefAllocator orderRefAllocator;
@@ -57,9 +58,9 @@ public final class OrderEventConverter {
                 // 报单状态
                 .status(OrdStatus.NEW_REJECTED)
                 // 买卖方向
-                .direction(withDirection((char) order.Direction))
+                .direction(withFtdcDirection((char) order.Direction))
                 // 组合开平标志
-                .action(withOffsetFlag(order.CombOffsetFlag))
+                .action(FtdcOffsetFlag.withFtdcOffsetFlag(order.CombOffsetFlag))
                 // 委托数量
                 .offerQty(order.VolumeTotalOriginal)
                 // 委托价格
@@ -98,11 +99,11 @@ public final class OrderEventConverter {
                 // 合约代码
                 .instrumentCode(order.InstrumentID)
                 // 报单状态
-                .status(withOrderStatus((char) order.OrderStatus))
+                .status(withFtdcOrderStatus((char) order.OrderStatus))
                 // 买卖方向
-                .direction(withDirection((char) order.Direction))
+                .direction(withFtdcDirection((char) order.Direction))
                 // 组合开平标志
-                .action(withOffsetFlag(order.CombOffsetFlag))
+                .action(FtdcOffsetFlag.withFtdcOffsetFlag(order.CombOffsetFlag))
                 // 委托数量
                 .offerQty(order.VolumeTotalOriginal)
                 // 完成数量
@@ -149,9 +150,9 @@ public final class OrderEventConverter {
                 // 报单状态
                 .status(OrdStatus.UNPROVIDED)
                 // 买卖方向
-                .direction(withDirection((char) trade.Direction))
+                .direction(withFtdcDirection((char) trade.Direction))
                 // 组合开平标志
-                .action(withOffsetFlag((char) trade.OffsetFlag))
+                .action(withFtdcOffsetFlag((char) trade.OffsetFlag))
                 // 完成数量
                 .filledQty(trade.Volume)
                 // 成交价格

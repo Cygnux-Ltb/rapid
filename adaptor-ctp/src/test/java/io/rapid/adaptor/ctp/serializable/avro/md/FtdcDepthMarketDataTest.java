@@ -3,7 +3,7 @@ package io.rapid.adaptor.ctp.serializable.avro.md;
 import com.alibaba.fastjson2.JSONObject;
 import io.mercury.serialization.json.JsonParser;
 import io.mercury.serialization.json.JsonWriter;
-import io.rapid.adaptor.ctp.serializable.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import org.apache.fury.Fury;
 import org.apache.fury.config.Language;
 

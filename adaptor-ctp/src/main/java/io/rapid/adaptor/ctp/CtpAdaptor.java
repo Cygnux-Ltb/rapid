@@ -7,10 +7,11 @@ import io.mercury.common.thread.Sleep;
 import io.rapid.adaptor.ctp.gateway.CtpMdGateway;
 import io.rapid.adaptor.ctp.gateway.CtpTraderGateway;
 import io.rapid.adaptor.ctp.gateway.NativeLibraryLoader;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspPublisher;
+import io.rapid.adaptor.ctp.event.FtdcRspConverter;
+import io.rapid.adaptor.ctp.event.FtdcRspEvent;
+import io.rapid.adaptor.ctp.event.FtdcRspPublisher;
 import io.rapid.adaptor.ctp.param.CtpParams;
-import io.rapid.adaptor.ctp.serializable.source.EventSource;
+import io.rapid.adaptor.ctp.event.source.EventSource;
 import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.AbstractAdaptor;
 import io.rapid.core.adaptor.AdaptorRunningMode;
@@ -40,10 +41,10 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final OrderRefAllocator orderRefAllocator;
 
     // 行情转换器
-    private final MarketDataConverter marketDataConverter = new MarketDataConverter();
+    private final FtdcRspConverter ftdcRspConverter = new FtdcRspConverter();
 
     // 转换订单回报
-    private final OrderEventConverter orderEventConverter = new OrderEventConverter();
+    private final OrderReportConverter orderReportConverter = new OrderReportConverter();
 
     // CTP Params
     private final CtpParams params;
@@ -230,7 +231,7 @@ public class CtpAdaptor extends AbstractAdaptor {
             String orderRef = Integer.toString(orderRefAllocator.nextOrderRef());
             // 设置OrderRef
             ReqField.setOrderRef(orderRef);
-            orderRefAllocator.related(orderRef, order.getOrdSysId());
+            orderRefAllocator.binding(orderRef, order.getOrdSysId());
             traderGateway.ReqOrderInsert(ReqField);
             return true;
         } catch (Exception e) {
@@ -350,7 +351,7 @@ public class CtpAdaptor extends AbstractAdaptor {
         private final CtpParams params;
         private boolean isAsync = false;
         private AdaptorRunningMode runningMode = AdaptorRunningMode.FULL;
-        private OrderRefAllocator orderRefAllocator = new FastOrderRefAllocator();
+        private OrderRefAllocator orderRefAllocator = FastOrderRefAllocator.INSTANCE;
 
         private Builder(Account account, CtpParams params) {
             this.account = account;

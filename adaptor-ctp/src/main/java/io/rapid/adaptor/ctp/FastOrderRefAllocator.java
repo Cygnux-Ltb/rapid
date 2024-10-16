@@ -33,11 +33,13 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
 
     private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectMap(L10_2048.size());
 
-    public FastOrderRefAllocator() {
+    public static final OrderRefAllocator INSTANCE = new FastOrderRefAllocator();
+
+    private FastOrderRefAllocator() {
     }
 
     @Override
-    public void related(String orderRef, long ordSysId) {
+    public void binding(String orderRef, long ordSysId) {
         log.info("PUT ORDER MAPPING orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMapper.put(orderRef, ordSysId);
         ordSysIdMapper.put(ordSysId, orderRef);

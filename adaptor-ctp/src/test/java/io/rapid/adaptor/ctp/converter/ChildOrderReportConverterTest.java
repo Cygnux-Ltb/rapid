@@ -9,7 +9,7 @@ import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.event.inbound.OrderReport;
 import org.junit.Test;
 
-public class OrderReportConverterTest {
+public class ChildOrderReportConverterTest {
 
     static {
         Log4j2Configurator.useInfoLogLevel();

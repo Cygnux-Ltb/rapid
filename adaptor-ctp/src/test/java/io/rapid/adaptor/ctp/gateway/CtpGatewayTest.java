@@ -3,13 +3,13 @@ package io.rapid.adaptor.ctp.gateway;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.adaptor.ctp.gateway.event.FtdcRspEvent;
+import io.rapid.adaptor.ctp.event.FtdcRspEvent;
 import io.rapid.adaptor.ctp.param.CtpParams;
 import io.rapid.adaptor.ctp.param.ImmutableCtpParams;
-import io.rapid.adaptor.ctp.serializable.FtdcRspType;
-import io.rapid.adaptor.ctp.serializable.md.FtdcDepthMarketData;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcOrder;
-import io.rapid.adaptor.ctp.serializable.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.event.FtdcRspType;
+import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
+import io.rapid.adaptor.ctp.event.trader.FtdcOrder;
+import io.rapid.adaptor.ctp.event.trader.FtdcTrade;
 import org.junit.Test;
 import org.slf4j.Logger;
 

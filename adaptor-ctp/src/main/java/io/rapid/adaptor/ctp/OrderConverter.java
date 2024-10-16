@@ -153,22 +153,22 @@ public final class OrderConverter {
         switch (order.getAction()) {
             case OPEN -> {
                 // 设置为开仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.OpenStr);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.OPEN_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Open");
             }
             case CLOSE -> {
                 // 设置为平仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CloseStr);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Close");
             }
             case CLOSE_TODAY -> {
                 // 设置为平今仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CloseTodayStr);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_TODAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseToday");
             }
             case CLOSE_YESTERDAY -> {
                 // 设置为平昨仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CloseYesterdayStr);
+                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseYesterday");
             }
             case INVALID -> {
@@ -178,18 +178,18 @@ public final class OrderConverter {
             }
         }
         // 设置投机标识
-        Field.setCombHedgeFlag(FtdcHedgeFlag.SpeculationStr);
+        Field.setCombHedgeFlag(FtdcHedgeFlag.SPECULATION_STR);
         log.info("Set CThostFtdcInputOrderField -> CombHedgeFlag == Speculation");
         // 设置买卖方向
         switch (order.getDirection()) {
             case LONG -> {
                 // 设置为买单
-                Field.setDirection(FtdcDirection.Buy);
+                Field.setDirection(FtdcDirection.BUY);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Buy");
             }
             case SHORT -> {
                 // 设置为卖单
-                Field.setDirection(FtdcDirection.Sell);
+                Field.setDirection(FtdcDirection.SELL);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Sell");
             }
             case INVALID -> {
@@ -222,7 +222,7 @@ public final class OrderConverter {
         Field.setStopPrice(0.0D);
         log.info("Set CThostFtdcInputOrderField -> StopPrice == 0.0D");
         // 设置强平原因: 此处固定为非强平
-        Field.setForceCloseReason(FtdcForceCloseReason.NotForceClose);
+        Field.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
         log.info("Set CThostFtdcInputOrderField -> ForceCloseReason == NotForceClose");
         // 设置自动挂起标识
         Field.setIsAutoSuspend(0);
@@ -290,7 +290,7 @@ public final class OrderConverter {
         // MAC地址
         Field.setMacAddress(macAddress);
         // 操作标志
-        Field.setActionFlag(FtdcActionFlag.Delete);
+        Field.setActionFlag(FtdcActionFlag.DELETE);
         // 交易所代码
         Field.setExchangeID(order.getExchangeCode());
         // 合约代码
