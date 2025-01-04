@@ -2,11 +2,12 @@ package io.rapid.engine;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.CoreScheduler;
+import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountManager;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.InboundEvent;
-import io.rapid.core.event.InboundEventFeeder;
-import io.rapid.core.event.OutboundEventHandler;
+import io.rapid.core.event.InboundFeeder;
+import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.container.InboundEventLoop;
 import io.rapid.core.event.enums.MarketDataType;
 import io.rapid.core.event.enums.OrdType;
@@ -15,13 +16,10 @@ import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
-import io.rapid.core.event.inbound.MarketDataSubscribeReport;
+import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
 import io.rapid.core.event.inbound.RawMarketData;
-import io.rapid.core.event.outbound.QueryBalance;
-import io.rapid.core.event.outbound.QueryOrder;
-import io.rapid.core.event.outbound.QueryPosition;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.MarketDataManager;
@@ -42,7 +40,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
-import static io.mercury.common.epoch.EpochTimeUtil.getEpochMillis;
 
 @Service("coreScheduler")
 public class CoreSchedulerService implements CoreScheduler {
@@ -70,14 +67,14 @@ public class CoreSchedulerService implements CoreScheduler {
     private AdaptorManager adaptorManager;
 
     @Resource
-    private InboundEventFeeder eventFeeder;
+    private InboundFeeder eventFeeder;
 
     @Resource
-    private OutboundEventHandler outboundEventHandler;
+    private OutboundHandler outboundHandler;
 
     private final InboundEventLoop eventLoop = new InboundEventLoop() {
         @Override
-        protected void process(InboundEvent event) {
+        public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
                 case RawMarketData -> handleRawMarketData(event.getRawMarketData());
                 case DepthMarketData -> handleDepthMarketData(event.getDepthMarketData());
@@ -85,7 +82,7 @@ public class CoreSchedulerService implements CoreScheduler {
                 case PositionsReport -> handlePositionsReport(event.getPositionsReport());
                 case BalanceReport -> handleBalanceReport(event.getBalanceReport());
                 case AdaptorReport -> handleAdaptorReport(event.getAdaptorReport());
-                case MarketDataSubscribeReport -> handleMarketDataSubscribeReport(event.getMarketDataSubscribeReport());
+                case InstrumentStatusReport -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
                 case Invalid -> log.error("NOTE Unknown InboundEvent -> {}", event);
             }
         }
@@ -104,7 +101,7 @@ public class CoreSchedulerService implements CoreScheduler {
 
 
     /**
-     * 行情处理
+     * 深度行情处理
      *
      * @param event DepthMarketData
      */
@@ -113,6 +110,7 @@ public class CoreSchedulerService implements CoreScheduler {
 
     }
 
+    // 行情处理计数器
     private long marketDataCounter = -1;
 
     /**
@@ -131,13 +129,14 @@ public class CoreSchedulerService implements CoreScheduler {
     }
 
     /**
-     * 行情订阅回报处理
+     * 交易标的状态回报处理
      *
-     * @param event MarketDataSubscribeReport
+     * @param event InstrumentStatusReport
      */
     @Override
-    public void handleMarketDataSubscribeReport(MarketDataSubscribeReport event) {
-        log.info("CoreSchedulerService::handleMarketDataSubscribeReport, [MarketDataSubscribeReport] -> {}", event);
+    public void handleInstrumentStatusReport(InstrumentStatusReport event) {
+        log.info("CoreSchedulerService::handleInstrumentStatusReport, [InstrumentStatusReport] -> {}", event);
+        event.getSubscribeStatus();
     }
 
     /**
@@ -161,7 +160,7 @@ public class CoreSchedulerService implements CoreScheduler {
         adaptorManager.onAdaptorEvent(event);
         var currentStatus = adaptorManager.getCurrentStatus(event.getAccountId());
         log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, event.getAdaptorId());
-        if (currentStatus.isMdAvailable()) {
+        if (currentStatus.isMarketDataEnabled()) {
             var subscribeMarketData = new SubscribeMarketData()
                     .setAccountId(event.getAccountId())
                     .setType(MarketDataType.FAST)
@@ -172,32 +171,31 @@ public class CoreSchedulerService implements CoreScheduler {
                     // TODO 补充接收地址
                     .setRecvAddr("");
             log.info("Publish [SubscribeMarketData] in loop -> {}", subscribeMarketData);
-            outboundEventHandler.handleSubscribeMarketData(subscribeMarketData);
+            outboundHandler.handleSubscribeMarketData(subscribeMarketData);
         }
-        if (currentStatus.isTraderAvailable()) {
+        if (currentStatus.isTraderEnabled()) {
+            Account account = accountManager.getAccount(event.getAccountId());
+
             /// 查询订单 ///
-            var queryOrder = new QueryOrder()
-                    .setAccountId(event.getAccountId())
-                    .setSource("CoreScheduler")
-                    .setGenerateTime(getEpochMillis());
+            var queryOrder = account.newQueryOrder()
+                    .setReason("AdaptorReport-Response")
+                    .setSource("CoreScheduler");
             log.info("Publish [QueryOrder] in loop -> {}", queryOrder);
-            outboundEventHandler.handleQueryOrder(queryOrder);
+            outboundHandler.handleQueryOrder(queryOrder);
 
             /// 查询仓位 ///
-            var queryPosition = new QueryPosition()
-                    .setAccountId(event.getAccountId())
-                    .setSource("CoreScheduler")
-                    .setGenerateTime(getEpochMillis());
+            var queryPosition = account.newQueryPosition()
+                    .setReason("AdaptorReport-Response")
+                    .setSource("CoreScheduler");
             log.info("Publish [QueryPosition] in loop -> {}", queryPosition);
-            outboundEventHandler.handleQueryPosition(queryPosition);
+            outboundHandler.handleQueryPosition(queryPosition);
 
             /// 查询余额 ///
-            var queryBalance = new QueryBalance()
-                    .setAccountId(event.getAccountId())
-                    .setSource("CoreScheduler")
-                    .setGenerateTime(getEpochMillis());
+            var queryBalance = account.newQueryBalance()
+                    .setReason("AdaptorReport-Response")
+                    .setSource("CoreScheduler");
             log.info("Publish [QueryBalance] in loop -> {}", queryBalance);
-            outboundEventHandler.handleQueryBalance(queryBalance);
+            outboundHandler.handleQueryBalance(queryBalance);
         }
     }
 
@@ -263,7 +261,7 @@ public class CoreSchedulerService implements CoreScheduler {
             // 存储子订单
             orderManager.putOrder(longChildOrder);
             // 发送多单
-            outboundEventHandler.handleNewOrder(longChildOrder.toNewOrder());
+            outboundHandler.handleNewOrder(longChildOrder.toNewOrder());
         }
 
         // 空单指令处理
@@ -274,7 +272,7 @@ public class CoreSchedulerService implements CoreScheduler {
             // 存储子订单
             orderManager.putOrder(shortChildOrder);
             // 发送空单
-            outboundEventHandler.handleNewOrder(shortChildOrder.toNewOrder());
+            outboundHandler.handleNewOrder(shortChildOrder.toNewOrder());
         }
 
     }

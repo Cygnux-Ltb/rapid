@@ -1,20 +1,15 @@
 package io.rapid.engine.strategy.manager;
 
-import io.rapid.core.event.inbound.RawMarketData;
-import io.rapid.core.instrument.Instrument;
-import io.rapid.core.strategy.Strategy;
-import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.core.strategy.StrategyException;
-import io.rapid.engine.order.OrderKeeper;
-import io.rapid.core.order.impl.ChildOrder;
-import io.rapid.core.event.inbound.AdaptorReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import io.rapid.core.event.inbound.AdaptorReport;
+import io.rapid.core.mdata.SavedMarketData;
+import io.rapid.core.order.impl.ChildOrder;
+import io.rapid.core.strategy.StrategyEvent;
+import io.rapid.core.strategy.StrategyException;
+import io.rapid.engine.order.OrderKeeper;
 import org.slf4j.Logger;
-
-import javax.annotation.Nonnull;
 
 import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spscQueue;
 
@@ -38,11 +33,11 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                 .capacity(capacity.size()).spinStrategy().process(msg -> {
                     switch (msg.getMark()) {
                         case MarketData -> {
-                            RawMarketData marketData = msg.getMarketData();
-                            subscribedMap.get(marketData.getInstrumentCode())
+                            SavedMarketData marketData = msg.getMarketData();
+                            subscribedMap.get(marketData.instrumentCode())
                                     .each(strategy -> {
                                         if (strategy.isEnabled())
-                                            strategy.onMarketData(marketData);
+                                            strategy.acceptMarketData(marketData);
                                     });
                         }
                         case OrderReport -> {
@@ -66,41 +61,12 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                 });
     }
 
-    // TODO add pools
-    @Override
-    public void onMarketData(@Nonnull RawMarketData marketData) {
-        queue.enqueue(new QueueMsg(marketData));
-    }
 
-    // TODO add pools
-    @Override
-    public void onOrderEvent(@Nonnull io.rapid.core.event.inbound.OrderReport event) {
-        queue.enqueue(new QueueMsg(event));
-    }
 
-    // TODO add pools
-    @Override
-    public void onAdaptorEvent(@Nonnull AdaptorReport report) {
-        queue.enqueue(new QueueMsg(report));
-    }
 
-    @Override
-    public ImmutableIntObjectMap<Strategy> getStrategies() {
-        return null;
-    }
-
-    @Override
-    public ImmutableIntObjectMap<Instrument> getInstruments() {
-        return null;
-    }
 
     @Override
     public void onEvent(StrategyEvent event) {
-
-    }
-
-    @Override
-    public void onException(Exception exception) throws StrategyException {
 
     }
 
@@ -108,13 +74,13 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
         private final int mark;
 
-        private RawMarketData marketData;
+        private SavedMarketData marketData;
 
         private io.rapid.core.event.inbound.OrderReport orderReport;
 
         private AdaptorReport adaptorReport;
 
-        private QueueMsg(RawMarketData marketData) {
+        private QueueMsg(SavedMarketData marketData) {
             this.mark = MarketData;
             this.marketData = marketData;
         }
@@ -133,7 +99,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
             return mark;
         }
 
-        public RawMarketData getMarketData() {
+        public SavedMarketData getMarketData() {
             return marketData;
         }
 

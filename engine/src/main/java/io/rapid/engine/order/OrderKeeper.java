@@ -39,7 +39,7 @@ public final class OrderKeeper implements Serializable {
     /**
      * 存储所有的order
      */
-    private static final OrderBook ALL_ORDERS = new OrderBook(Capacity.L09_512);
+    private static final OrderBook ALL_ORDERS = new OrderBook(Capacity.L13_8192);
 
     /**
      * 按照subAccountId分组存储
@@ -68,8 +68,8 @@ public final class OrderKeeper implements Serializable {
      * @param ordSysId long
      * @return boolean
      */
-    public static boolean isContainsOrder(long ordSysId) {
-        return ALL_ORDERS.isContainsOrder(ordSysId);
+    public static boolean isExists(long ordSysId) {
+        return ALL_ORDERS.isExists(ordSysId);
     }
 
     /**
@@ -86,7 +86,7 @@ public final class OrderKeeper implements Serializable {
      * @return OrderBook
      */
     public static OrderBook getSubAccountOrderBook(int subAccountId) {
-        return SUB_ACCOUNT_ORDERS.getIfAbsentPut(subAccountId, OrderBook::new);
+        return SUB_ACCOUNT_ORDERS.getIfAbsentPut(subAccountId, () -> new OrderBook(Capacity.L08_256));
     }
 
     /**
@@ -94,7 +94,7 @@ public final class OrderKeeper implements Serializable {
      * @return OrderBook
      */
     public static OrderBook getAccountOrderBook(int accountId) {
-        return ACCOUNT_ORDERS.getIfAbsentPut(accountId, OrderBook::new);
+        return ACCOUNT_ORDERS.getIfAbsentPut(accountId, () -> new OrderBook(Capacity.L08_256));
     }
 
     /**
@@ -102,7 +102,7 @@ public final class OrderKeeper implements Serializable {
      * @return OrderBook
      */
     public static OrderBook getStrategyOrderBook(int strategyId) {
-        return STRATEGY_ORDERS.getIfAbsentPut(strategyId, OrderBook::new);
+        return STRATEGY_ORDERS.getIfAbsentPut(strategyId, () -> new OrderBook(Capacity.L09_512));
     }
 
     /**
@@ -110,7 +110,7 @@ public final class OrderKeeper implements Serializable {
      * @return OrderBook
      */
     public static OrderBook getInstrumentOrderBook(Instrument instrument) {
-        return INSTRUMENT_ORDERS.getIfAbsentPut(instrument.getInstrumentId(), OrderBook::new);
+        return INSTRUMENT_ORDERS.getIfAbsentPut(instrument.getInstrumentId(), () -> new OrderBook(Capacity.L09_512));
     }
 
     /**
@@ -172,7 +172,7 @@ public final class OrderKeeper implements Serializable {
             putOrder(childOrder);
             order = childOrder;
         } else {
-            order.toLog(log, "OrderBookKeeper :: Search order OK");
+            order.logging(log, "OrderBookKeeper :: Search order OK");
         }
         ChildOrder childOrder = (ChildOrder) order;
         // 根据订单回报更新订单状态
@@ -195,7 +195,7 @@ public final class OrderKeeper implements Serializable {
         log.info("OrderReport status==[{}], filledQty==[{}], tradePrice==[{}], OrdQty -> {}",
                 status, filledQty, report.getTradePrice(), qty);
         switch (status) {
-            case UNPROVIDED, INVALID -> {
+            case UNPROVIDED, UNKNOWN -> {
                 // 处理未返回订单状态的情况, 根据成交数量判断
                 int offerQty = qty.getOfferQty();
                 order.setStatus(

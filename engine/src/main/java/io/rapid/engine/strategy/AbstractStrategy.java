@@ -17,6 +17,7 @@ import io.rapid.core.mdata.MarketDataSnapshot;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.OrdSysIdAllocator;
 import io.rapid.core.order.OrdSysIdAllocatorKeeper;
+import io.rapid.core.order.Order;
 import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.strategy.Strategy;
@@ -24,8 +25,8 @@ import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyManager;
 import io.rapid.core.strategy.StrategySignal;
 import io.rapid.core.strategy.StrategySignalHandler;
-import io.rapid.engine.position.PositionKeeper;
 import io.rapid.engine.order.OrderKeeper;
+import io.rapid.engine.position.PositionKeeper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.Getter;
@@ -44,9 +45,9 @@ import static io.mercury.common.lang.Asserter.nonNull;
 import static java.lang.Math.abs;
 
 @Component
-public abstract class BaseStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
+public abstract class AbstractStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
 
-    private final static Logger log = Log4j2LoggerFactory.getLogger(BaseStrategy.class);
+    private final static Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
 
     /**
      * 策略ID
@@ -81,7 +82,13 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * 记录当前策略所有的订单
      */
     @Getter
-    protected final MutableLongObjectMap<io.rapid.core.order.Order> orders = MutableMaps.newLongObjectMap();
+    protected final MutableLongObjectMap<Order> orders = MutableMaps.newLongObjectMap();
+
+    /**
+     * 策略订阅的合约列表
+     */
+    @Getter
+    protected final MutableIntObjectMap<Instrument> instruments = MutableMaps.newIntObjectMap();
 
     /**
      * 策略参数
@@ -103,18 +110,12 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     @Resource
     protected StrategyManager strategyManager;
 
-    /**
-     * 策略订阅的合约列表
-     */
-    @Getter
-    protected final MutableIntObjectMap<Instrument> instruments = MutableMaps.newIntObjectMap();
-
     @Resource(name = "coreScheduler")
     protected StrategySignalHandler signalHandler;
 
-    protected BaseStrategy(int strategyId, String strategyName,
-                           SubAccount subAccount, Params params,
-                           ImmutableIntObjectMap<Instrument> instruments) {
+    protected AbstractStrategy(int strategyId, String strategyName,
+                               SubAccount subAccount, Params params,
+                               ImmutableIntObjectMap<Instrument> instruments) {
         atWithinRange(strategyId, MIN_STRATEGY_ID, MAX_STRATEGY_ID, "strategyId");
         nonEmpty(strategyName, "strategyName");
         nonNull(subAccount, "subAccount");
@@ -165,7 +166,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
 
     @Override
     public void onOrder(@Nonnull io.rapid.core.order.Order order) {
-        order.toLog(log, "Call onOrder function");
+        order.logging(log, "Call onOrder function");
         handleOrder(order);
     }
 
@@ -181,7 +182,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
     @Override
     public void addInstrument(Instrument instrument) {
         instruments.put(instrument.getInstrumentId(), instrument);
-        // marketDataManager.
+        // strategyManager.s
     }
 
     @Override
@@ -293,7 +294,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      */
     protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty, double limitPrice, int floatTick) {
         double offerPrice;
-        if (Double.isNaN(limitPrice))
+        if (Double.isNaN(limitPrice) || limitPrice == 0.0D)
             offerPrice = getLevel1Price(instrument, direction);
         else
             offerPrice = limitPrice;
@@ -302,14 +303,15 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
 
         signal.setInstrumentId(instrument.getInstrumentId());
         signal.setInstrumentCode(instrument.getInstrumentCode());
-        signal.setDirection(direction);
         signal.setTargetQty(targetQty);
         signal.setOfferPrice(offerPrice);
         signal.setFloatTick(floatTick);
 
+
         log.info("Strategy -> {}, Created TradeSignal -> {}", strategyId, signal);
         signalHandler.onSignal(signal);
     }
+
 
 //    /**
 //     * 将StrategyOrder转换为需要执行的实际订单
@@ -371,7 +373,7 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
      * @return int
      */
     protected int getCurrentPosition(int subAccountId, Instrument instrument) {
-        int position = PositionKeeper.getCurrentSubAccountPosition(subAccountId, instrument);
+        int position = PositionKeeper.getSubAccountPosition(subAccountId, instrument);
         if (position == 0)
             log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getStrategyName(), subAccountId,
                     instrument);
@@ -403,103 +405,67 @@ public abstract class BaseStrategy extends EnableableComponent implements Strate
                                 TrdDirection direction) {
         final ChildOrder order = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
                 instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.OPEN);
-        order.toLog(log, getStrategyName() + " :: Open position generate [ChildOrder]");
+        order.logging(log, getStrategyName() + " :: Open position generate [ChildOrder]");
         saveOrder(order);
 
-        getTradingChannel().newOrder(order.toNewOrder());
-        order.toLog(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
+
+        order.logging(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
     }
 
     /**
+     * 平仓全部头寸
+     */
+    protected void closeAllPosition() {
+        getInstruments().stream().forEach(this::closeAllPosition);
+    }
+
+    /**
+     * 平仓指定[交易标的]的全部头寸
+     *
      * @param instrument 交易标的
      */
     protected void closeAllPosition(Instrument instrument) {
-        closeAllPosition(instrument, OrdType.LIMITED);
-    }
-
-    /**
-     * @param instrument 交易标的
-     * @param ordType    订单类型
-     */
-    protected void closeAllPosition(Instrument instrument, OrdType ordType) {
         final int position = getCurrentPosition(subAccountId, instrument);
-        if (position == 0) {
-            log.warn(
-                    "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-        } else {
-            log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-            double offerPrice;
-            if (position > 0)
-                offerPrice = getLevel1Price(instrument, TrdDirection.LONG);
-            else
-                offerPrice = getLevel1Price(instrument, TrdDirection.SHORT);
-            closePosition(instrument, position, offerPrice, ordType);
-        }
+        double offerPrice;
+        if (position > 0)
+            offerPrice = getLevel1Price(instrument, TrdDirection.LONG);
+        else
+            offerPrice = getLevel1Price(instrument, TrdDirection.SHORT);
+        closePosition(instrument, position, offerPrice);
     }
 
     /**
-     * @param instrument Instrument
-     * @param offerPrice double
+     * 以[指定价格]平仓指定[交易标的]的全部仓位
+     *
+     * @param instrument Instrument 交易标的
+     * @param offerPrice double 委托价格
      */
     protected void closeAllPosition(Instrument instrument, double offerPrice) {
         final int position = getCurrentPosition(subAccountId, instrument);
-        if (position == 0) {
-            log.warn(
-                    "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-        } else {
-            log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-            closePosition(instrument, position, offerPrice, OrdType.LIMITED);
-        }
+        closePosition(instrument, position, offerPrice);
     }
 
     /**
-     * @param instrument 交易标的
-     * @param offerPrice 委托价格
-     * @param ordType    订单类型
-     */
-    protected void closeAllPosition(Instrument instrument, long offerPrice, OrdType ordType) {
-        final int position = getCurrentPosition(subAccountId, instrument);
-        if (position == 0) {
-            log.warn(
-                    "{} :: Terminate execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-        } else {
-            log.info("{} :: Execution close all positions, subAccountId==[{}], instrumentCode==[{}], position==[{}]",
-                    getStrategyName(), subAccountId, instrument.getInstrumentCode(), position);
-            closePosition(instrument, position, offerPrice, ordType);
-        }
-    }
-
-    /**
+     * 平仓指定[交易标的]的指定[数量]头寸
+     *
      * @param instrument 交易标的
      * @param offerQty   委托数量
-     * @param offerPrice 委托价格
      */
-    protected void closePosition(Instrument instrument, int offerQty, long offerPrice) {
-        closePosition(instrument, offerQty, offerPrice, OrdType.LIMITED);
+    protected void closePosition(Instrument instrument, int offerQty) {
+        closePosition(instrument, offerQty, 0.0D);
     }
 
     /**
+     * 以指定的[价格], 平仓指定[交易标的]的指定[数量]头寸
+     *
      * @param instrument 交易标的
      * @param offerQty   委托数量
-     * @param offerPrice 委托价格
-     * @param ordType    订单类型
+     * @param limitPrice 委托价格
      */
-    protected void closePosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType) {
-        final ChildOrder order = OrderKeeper
-                .createAndSaveChildOrder(allocator, strategyId, subAccount, account,
-                        instrument, abs(offerQty), offerPrice, ordType, offerQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT,
-                        TrdAction.CLOSE);
-
-        order.toLog(log, "Close position generate [ChildOrder]");
-        saveOrder(order);
-
-        getTradingChannel().newOrder(order.toNewOrder());
-        order.toLog(log, "Close position [ChildOrder] has been sent");
+    protected void closePosition(Instrument instrument, int offerQty, double limitPrice) {
+        // 提供新交易信号
+        newTradeSignal(instrument, offerQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT,
+                offerQty, limitPrice, 0);
     }
 
     /**

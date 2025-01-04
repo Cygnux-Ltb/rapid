@@ -1,7 +1,7 @@
 package io.rapid.engine.service;
 
-import io.cygnuxltb.console.beans.outbound.SubAccountMappingRsp;
-import io.cygnuxltb.console.beans.outbound.SubAccountRsp;
+import io.cygnuxltb.console.beans.response.SubAccountMappingRsp;
+import io.cygnuxltb.console.beans.response.SubAccountRsp;
 import io.cygnuxltb.console.component.ApplicationConfiguration;
 import io.cygnuxltb.console.service.AccountService;
 import io.mercury.common.collections.CollectionUtil;

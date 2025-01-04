@@ -12,10 +12,10 @@ public class PositionKeeperTest {
     @Test
     public void test() {
         int subAccountId = 10;
-        Instrument rb2010 = InstrumentKeeper.getInstrument("rb2010");
+        Instrument rb2010 = InstrumentKeeper.getInstrumentByCode("rb2010");
         PositionKeeper.setSubAccountPositionsLimit(subAccountId, rb2010, 10, 10);
-        PositionKeeper.addCurrentPosition(subAccountId, rb2010, TrdDirection.LONG, 10);
-        PositionKeeper.addCurrentPosition(subAccountId, rb2010, TrdDirection.SHORT, 15);
+        PositionKeeper.addPosition(subAccountId, rb2010, TrdDirection.LONG, 10);
+        PositionKeeper.addPosition(subAccountId, rb2010, TrdDirection.SHORT, 15);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class PositionKeeperTest {
     }
 
     @Test
-    public void testAddCurrentPosition() {
+    public void testAddPosition() {
 
     }
 

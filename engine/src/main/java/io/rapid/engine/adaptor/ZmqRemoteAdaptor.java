@@ -75,7 +75,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     }
 
     @Override
-    protected boolean directQueryPositions(@Nonnull QueryPosition query) {
+    protected boolean directQueryPosition(@Nonnull QueryPosition query) {
         return false;
     }
 

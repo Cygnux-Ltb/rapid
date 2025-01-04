@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.cygnuxltb.rapid</groupId>
-        <artifactId>parent</artifactId>
+        <groupId>io.cygnux.rapid</groupId>
+        <artifactId>rapid</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -35,12 +35,12 @@
             <artifactId>transport-zmq</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.cygnuxltb.rapid</groupId>
+            <groupId>io.cygnux.rapid</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>io.cygnuxltb</groupId>
+            <groupId>io.cygnux</groupId>
             <artifactId>console-service</artifactId>
             <version>1.0</version>
         </dependency>

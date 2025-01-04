@@ -3,7 +3,7 @@ package io.rapid.engine;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.OutboundEventHandler;
+import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.container.OutboundEventLoop;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class CoreOutboundService implements OutboundEventHandler {
+public class CoreOutboundService implements OutboundHandler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
 
@@ -26,16 +26,23 @@ public class CoreOutboundService implements OutboundEventHandler {
     private AdaptorManager adaptorManager;
 
     private final OutboundEventLoop eventLoop = new OutboundEventLoop() {
+
         @Override
-        protected void process(OutboundEvent event) {
+        public void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
-                case NewOrder -> adaptorManager.commitNewOrder(event.getNewOrder());
-                case CancelOrder -> adaptorManager.commitCancelOrder(event.getCancelOrder());
-                case SubscribeMarketData -> adaptorManager.commitSubscribeMarketData(event.getSubscribeMarketData());
-                case QueryOrder -> adaptorManager.commitQueryOrder(event.getQueryOrder());
-                case QueryPosition -> adaptorManager.commitQueryPositions(event.getQueryPosition());
-                case QueryBalance -> adaptorManager.commitQueryBalance(event.getQueryBalance());
+                case SubscribeMarketData -> adaptorManager
+                        .commitSubscribeMarketData(event.getSubscribeMarketData());
+                case NewOrder -> adaptorManager
+                        .commitNewOrder(event.getNewOrder());
+                case CancelOrder -> adaptorManager
+                        .commitCancelOrder(event.getCancelOrder());
+                case QueryOrder -> adaptorManager
+                        .commitQueryOrder(event.getQueryOrder());
+                case QueryPosition -> adaptorManager
+                        .commitQueryPositions(event.getQueryPosition());
+                case QueryBalance -> adaptorManager
+                        .commitQueryBalance(event.getQueryBalance());
             }
         }
     };

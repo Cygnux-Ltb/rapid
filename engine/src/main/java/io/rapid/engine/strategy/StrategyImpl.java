@@ -1,14 +1,14 @@
 package io.rapid.engine.strategy;
 
+import io.mercury.common.collections.ImmutableMaps;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
 import io.rapid.core.event.inbound.AdaptorReport;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.handler.AdaptorReportHandler;
 import io.rapid.core.handler.MarketDataHandler;
-import io.rapid.core.strategy.StrategySignalHandler;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.Order;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
@@ -17,43 +17,35 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
-public class StrategyImpl extends BaseStrategy {
+public class StrategyImpl extends AbstractStrategy {
 
     private static final Logger log = getLogger(StrategyImpl.class);
 
-    private final MarketDataHandler marketDataHandler;
+    protected final MarketDataHandler marketDataHandler;
 
     protected StrategyImpl(int strategyId, @Nonnull String strategyName,
                            @Nonnull SubAccount subAccount, @Nonnull Params params,
                            MarketDataHandler marketDataHandler, @Nonnull Instrument... instruments) {
-        super(strategyId, strategyName, subAccount, params, instruments);
+        super(strategyId, strategyName, subAccount, params,
+                ImmutableMaps.newImmutableIntMap(List.of(instruments), Instrument::getInstrumentId));
         this.marketDataHandler = marketDataHandler;
     }
 
-    @Override
-    public void onMarketData(@Nonnull RawMarketData marketData) {
-        marketDataHandler.onMarketData(marketData);
-    }
-
-    @Override
-    protected void handleMarketData(RawMarketData marketData) {
-
-    }
-
     private final AdaptorReportHandler adaptorReportHandler = event -> {
-        log.info("{} :: On adaptor status callback, adaptorId==[{}], status==[{}]", getStrategyName(),
-                event.getAdaptorId(), event.getStatus());
+        log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
+                getStrategyName(), event.getAdaptorId(), event.getChannelType(), event.isAvailable());
         switch (event.getStatus()) {
-            case MD_ENABLE -> {
+            case MD_ENABLED -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 //adaptor.subscribeMarketData(instrument);
                 // log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
-            case TRADER_ENABLE -> {
+            case TRADER_ENABLED -> {
                 log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 // TODO
 //			adaptor.queryOrder(null);
@@ -91,10 +83,6 @@ public class StrategyImpl extends BaseStrategy {
         return null;
     }
 
-    @Override
-    public Strategy setSignalHandler(StrategySignalHandler handler) {
-        return null;
-    }
 
     @Override
     public int getStrategyId() {
@@ -112,12 +100,27 @@ public class StrategyImpl extends BaseStrategy {
     }
 
     @Override
+    protected boolean verification() {
+        return false;
+    }
+
+    @Override
     public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
         return null;
     }
 
     @Override
+    protected void handleMarketData(SavedMarketData marketData) {
+
+    }
+
+    @Override
     public void onStrategyEvent(@Nonnull StrategyEvent event) {
+
+    }
+
+    @Override
+    protected void handleStrategyEvent(@jakarta.annotation.Nonnull StrategyEvent event) {
 
     }
 

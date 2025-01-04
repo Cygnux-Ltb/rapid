@@ -3,7 +3,6 @@ package io.rapid.engine.strategy;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.rapid.core.account.SubAccount;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.OrdSysIdAllocator;
@@ -11,7 +10,6 @@ import io.rapid.core.order.Order;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyException;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
@@ -49,10 +47,6 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
 
     }
 
-    @Override
-    public ImmutableIntObjectMap<Instrument> getInstruments() {
-        return null;
-    }
 
     @Override
     public Strategy initialize(Supplier<Boolean> initializer) {
@@ -89,10 +83,6 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
         return false;
     }
 
-    @Override
-    public void onMarketData(RawMarketData marketData) {
-
-    }
 
     @Override
     public void onOrder(@Nonnull Order order) {
@@ -100,7 +90,7 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
 
     }
 

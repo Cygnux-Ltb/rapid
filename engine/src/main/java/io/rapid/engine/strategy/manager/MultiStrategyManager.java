@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 
@@ -41,14 +42,17 @@ public abstract class MultiStrategyManager extends AbstractStrategyManager {
         log.info("Add strategy -> strategyId==[{}], strategyName==[{}], subAccount==[{}]",
                 strategy.getStrategyId(), strategy.getStrategyName(), strategy.getSubAccount());
         strategyMap.put(strategy.getStrategyId(), strategy);
-        strategy.getInstruments().each(instrument -> subscribeInstrument(instrument, strategy));
+        strategy.getInstruments().each(instrument -> subscribeInstrument(strategy, instrument));
         strategy.enable();
     }
 
-    private void subscribeInstrument(Instrument instrument, Strategy strategy) {
-        subscribedMap.getIfAbsentPut(instrument.getInstrumentCode(), MutableSets::newUnifiedSet).add(strategy);
-        log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
-                instrument.getInstrumentId());
+    @Override
+    public void subscribeInstrument(Strategy strategy, Instrument... instruments) {
+        Arrays.stream(instruments).forEach(instrument -> {
+            subscribedMap.getIfAbsentPut(instrument.getInstrumentCode(), MutableSets::newUnifiedSet).add(strategy);
+            log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
+                    instrument.getInstrumentId());
+        });
     }
 
     @AbstractFunction

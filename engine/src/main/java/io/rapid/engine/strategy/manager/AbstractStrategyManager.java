@@ -1,7 +1,6 @@
 package io.rapid.engine.strategy.manager;
 
 
-import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.MarketDataManager;
@@ -11,6 +10,8 @@ import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
+
+import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
 
 /**
  * @author yellow013
@@ -25,18 +26,17 @@ public abstract class AbstractStrategyManager implements StrategyManager {
     /**
      * 策略列表
      */
-    protected final MutableIntObjectMap<Strategy> strategies = MutableMaps.newIntObjectMap();
+    protected final MutableIntObjectMap<Strategy> strategies = newIntObjectMap();
 
     /**
      * 交易标的列表
      */
-    protected final MutableIntObjectMap<Instrument> instruments = MutableMaps.newIntObjectMap();
+    protected final MutableIntObjectMap<Instrument> instruments = newIntObjectMap();
 
     /**
      * 订阅合约的策略列表
      */
-    private final MutableIntObjectMap<MutableList<Strategy>> SubscribedInstrumentMap = MutableMaps
-            .newIntObjectMap();
+    private final MutableIntObjectMap<MutableList<Strategy>> subscribedInstrumentMap = newIntObjectMap();
 
     protected AbstractStrategyManager() {
     }
@@ -44,7 +44,6 @@ public abstract class AbstractStrategyManager implements StrategyManager {
     @Override
     public void addStrategy(Strategy strategy) {
         strategies.put(strategy.getStrategyId(), strategy);
-        strategy.getInstruments();
     }
 
     @Override
