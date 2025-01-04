@@ -1,6 +1,5 @@
 package io.rapid.adaptor.ctp.event;
 
-import com.lmax.disruptor.EventFactory;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
@@ -29,7 +28,7 @@ import org.slf4j.Logger;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 事件循环使用Event类型
+ * 环形队列使用[FtdcEvent]类型
  *
  * @author yellow013
  */
@@ -37,8 +36,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class FtdcRspEvent implements JsonSerializable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspEvent.class);
-
-    public static final EventFactory<FtdcRspEvent> EVENT_FACTORY = FtdcRspEvent::new;
 
     private static final AtomicBoolean isLogging = new AtomicBoolean(false);
 
@@ -132,7 +129,7 @@ public final class FtdcRspEvent implements JsonSerializable {
     /**
      * For EventFactory Call
      */
-    private FtdcRspEvent() {
+    FtdcRspEvent() {
     }
 
     @Override
@@ -169,12 +166,10 @@ public final class FtdcRspEvent implements JsonSerializable {
                     case FtdcInvestorPosition -> ftdcInvestorPosition;
                     case FtdcTradingAccount -> ftdcTradingAccount;
                     case RspError -> rspError;
-                    case Unsupported -> "Unsupported";
                     case FrontDisconnected -> frontDisconnected;
                     case RspUserLogin -> rspUserLogin;
                     case UserLogout -> userLogout;
-                    case MdClosed -> "MdClosed";
-                    case TraderClosed -> "TraderClosed";
+                    case Unsupported -> null;
                 });
     }
 

@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.upstream;
+package io.rapid.adaptor.ctp.gateway;
 
 
 import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
@@ -9,7 +9,7 @@ import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
 import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 
-public interface FtdcMdListener {
+public sealed interface FtdcMdListener permits FtdcMdListenerImpl {
 
     /**
      * 当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.

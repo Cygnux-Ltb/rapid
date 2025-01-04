@@ -1,9 +1,10 @@
 package io.rapid.adaptor.ctp.gateway;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.adaptor.ctp.consts.ErrorDictionary;
 import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
 import org.slf4j.Logger;
+
+import static io.rapid.adaptor.ctp.consts.ErrorDictionary.getPrompt;
 
 public final class FtdcFieldValidator {
 
@@ -12,36 +13,36 @@ public final class FtdcFieldValidator {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcFieldValidator.class);
 
-    static boolean nonError(CThostFtdcRspInfoField Field, String SpiFuncName) {
+    static boolean nonError(CThostFtdcRspInfoField Field, String Location) {
         if (Field == null || Field.getErrorID() == 0)
             return true;
-        log.error("SPI Function >>>> [{}], ErrorID==[{}], ErrorMsg==[{}], Prompt==[{}]",
-                SpiFuncName, Field.getErrorID(), Field.getErrorMsg(), ErrorDictionary.getPrompt(Field.getErrorID()));
+        log.error("NOTE >>>> [{}], ErrorID==[{}], ErrorMsg==[{}], Prompt==[{}]",
+                Location, Field.getErrorID(), Field.getErrorMsg(), getPrompt(Field.getErrorID()));
         return false;
     }
 
-    static boolean nonError(CThostFtdcRspInfoField Field, String SpiFuncName, int RequestID, boolean IsLast) {
+    static boolean nonError(CThostFtdcRspInfoField Field, String Location, int RequestID, boolean IsLast) {
         if (Field == null || Field.getErrorID() == 0)
             return true;
-        log.error("SPI Function >>>> [{}], ErrorID==[{}], ErrorMsg==[{}], Prompt==[{}], RequestID==[{}], IsLast==[{}]",
-                SpiFuncName, Field.getErrorID(), Field.getErrorMsg(), ErrorDictionary.getPrompt(Field.getErrorID()),
+        log.error("NOTE >>>> [{}], ErrorID==[{}], ErrorMsg==[{}], Prompt==[{}], RequestID==[{}], IsLast==[{}]",
+                Location, Field.getErrorID(), Field.getErrorMsg(), getPrompt(Field.getErrorID()),
                 RequestID, IsLast);
         return false;
     }
 
 
-    static boolean nonnull(Object FtdcField, String SpiFuncName) {
+    static boolean nonnull(Object FtdcField, String Location) {
         if (FtdcField != null)
             return true;
-        log.error("SPI Function >>>> [{}] return null ftdc fields", SpiFuncName);
+        log.error("NOTE >>>> [{}] return null field", Location);
         return false;
     }
 
-    static boolean nonnull(Object FtdcField, String SpiFuncName, int RequestID, boolean IsLast) {
+    static boolean nonnull(Object FtdcField, String Location, int RequestID, boolean IsLast) {
         if (FtdcField != null)
             return true;
-        log.error("SPI Function >>>> [{}] return null ftdc fields, RequestID==[{}], IsLast==[{}]",
-                SpiFuncName, RequestID, IsLast);
+        log.error("NOTE >>>> [{}] return null field, RequestID==[{}], IsLast==[{}]",
+                Location, RequestID, IsLast);
         return false;
     }
 

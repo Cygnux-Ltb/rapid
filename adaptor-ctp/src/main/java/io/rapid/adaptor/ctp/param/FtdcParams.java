@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static io.mercury.common.util.StringSupport.isNullOrEmpty;
 
-public interface CtpParams {
+public interface FtdcParams {
 
     String getTraderAddr();
 
@@ -36,7 +36,7 @@ public interface CtpParams {
 
     String getCurrencyId();
 
-    default CtpParams assertCtpParams() {
+    default FtdcParams assertCtpParams() {
         var errorParamNames = new ArrayList<String>();
         if (isNullOrEmpty(getTraderAddr()))
             errorParamNames.add("TraderAddr");

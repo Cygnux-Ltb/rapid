@@ -10,25 +10,25 @@ import java.time.LocalDateTime;
 
 import static io.mercury.common.datetime.pattern.impl.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AccountId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AppId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.Password;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.UserId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AccountId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AppId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AuthCode;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.BrokerId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.CurrencyId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.InvestorId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.IpAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MacAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MdAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.Password;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TraderAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TradingDay;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.UserId;
 import static io.rapid.core.instrument.futures.ChinaFutures.parseTradingDay;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class MutableCtpParams implements CtpParams {
+public class MutableFtdcParams implements FtdcParams {
 
     private String traderAddr;
 
@@ -56,8 +56,8 @@ public class MutableCtpParams implements CtpParams {
 
     private String currencyId;
 
-    public MutableCtpParams load(Config config) {
-        var wrapper = new ConfigWrapper<CtpParamKey>(config);
+    public MutableFtdcParams load(Config config) {
+        var wrapper = new ConfigWrapper<FtdcParamKey>(config);
         return this
                 // 交易服务器地址
                 .setTraderAddr(wrapper.getStringOrThrows(TraderAddr))

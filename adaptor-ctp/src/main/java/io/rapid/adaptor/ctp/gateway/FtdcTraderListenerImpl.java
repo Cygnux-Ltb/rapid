@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.upstream;
+package io.rapid.adaptor.ctp.gateway;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.rationalityfrontline.jctp.CThostFtdcAccountregisterField;
@@ -99,11 +99,11 @@ import org.slf4j.Logger;
 /**
  * FtdcTrader SPI 回调基础实现
  */
-public abstract class LoggingFtdcTraderListener implements FtdcTraderListener {
+public abstract non-sealed class FtdcTraderListenerImpl implements FtdcTraderListener {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(LoggingFtdcTraderListener.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcTraderListenerImpl.class);
 
-    protected LoggingFtdcTraderListener() {
+    protected FtdcTraderListenerImpl() {
     }
 
     /**

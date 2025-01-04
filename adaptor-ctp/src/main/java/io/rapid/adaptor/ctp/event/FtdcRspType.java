@@ -17,10 +17,6 @@ public enum FtdcRspType {
 
     RspError,
 
-    MdClosed,
-
-    TraderClosed,
-
     FtdcDepthMarketData,
 
     FtdcSpecificInstrument,

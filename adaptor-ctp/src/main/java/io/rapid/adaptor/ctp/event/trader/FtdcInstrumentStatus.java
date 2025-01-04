@@ -42,6 +42,10 @@ public class FtdcInstrumentStatus {
      */
     public int InstrumentStatus;
     /**
+     *
+     */
+    public int InstrumentStatusMsg;
+    /**
      * 交易阶段编号
      */
     public int TradingSegmentSN;

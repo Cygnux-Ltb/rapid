@@ -4,8 +4,8 @@ import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.event.FtdcRspEvent;
-import io.rapid.adaptor.ctp.param.CtpParams;
-import io.rapid.adaptor.ctp.param.ImmutableCtpParams;
+import io.rapid.adaptor.ctp.param.FtdcParams;
+import io.rapid.adaptor.ctp.param.ImmutableFtdcParams;
 import io.rapid.adaptor.ctp.event.FtdcRspType;
 import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import io.rapid.adaptor.ctp.event.trader.FtdcOrder;
@@ -41,7 +41,7 @@ public class CtpGatewayTest {
         map.put("TradingDay", "20200302");
         map.put("CurrencyId", "CNY");
 
-        final CtpParams config = new ImmutableCtpParams(map);
+        final FtdcParams config = new ImmutableFtdcParams(map);
 
         final Queue<FtdcRspEvent> queue = SingleConsumerQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {

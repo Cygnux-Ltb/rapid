@@ -6,21 +6,21 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Properties;
 
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AccountId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AppId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.Password;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.param.CtpParamKey.UserId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AccountId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AppId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AuthCode;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.BrokerId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.CurrencyId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.InvestorId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.IpAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MacAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MdAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.Password;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TraderAddr;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TradingDay;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.UserId;
 
-public final class ImmutableCtpParams extends ImmutableParams implements CtpParams {
+public final class ImmutableFtdcParams extends ImmutableParams implements FtdcParams {
 
     /**
      * 根据传入的Key获取Map中的相应字段
@@ -29,9 +29,9 @@ public final class ImmutableCtpParams extends ImmutableParams implements CtpPara
      * @throws NullPointerException     e
      * @throws IllegalArgumentException e
      */
-    public ImmutableCtpParams(@Nonnull Map<String, String> map)
+    public ImmutableFtdcParams(@Nonnull Map<String, String> map)
             throws NullPointerException, IllegalArgumentException {
-        super(map, CtpParamKey.values());
+        super(map, FtdcParamKey.values());
     }
 
     /**
@@ -41,9 +41,9 @@ public final class ImmutableCtpParams extends ImmutableParams implements CtpPara
      * @throws NullPointerException     e
      * @throws IllegalArgumentException e
      */
-    public ImmutableCtpParams(@Nonnull Properties prop)
+    public ImmutableFtdcParams(@Nonnull Properties prop)
             throws NullPointerException, IllegalArgumentException {
-        super(prop, CtpParamKey.values());
+        super(prop, FtdcParamKey.values());
     }
 
 

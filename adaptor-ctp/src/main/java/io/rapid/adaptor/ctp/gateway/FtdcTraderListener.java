@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.upstream;
+package io.rapid.adaptor.ctp.gateway;
 
 
 import org.rationalityfrontline.jctp.CThostFtdcAccountregisterField;
@@ -98,7 +98,7 @@ import org.rationalityfrontline.jctp.CThostFtdcUserPasswordUpdateField;
 /**
  *
  */
-public interface FtdcTraderListener {
+public sealed interface FtdcTraderListener permits FtdcTraderListenerImpl {
 
     /**
      * 当客户端与交易后台建立起通信连接时(还未登录前), 该方法被调用.

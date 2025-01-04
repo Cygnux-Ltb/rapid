@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.upstream;
+package io.rapid.adaptor.ctp.gateway;
 
 
 import io.mercury.common.annotation.NativeSpiImpl;
@@ -22,7 +22,7 @@ public final class FtdcMdSpi extends CThostFtdcMdSpi {
     /**
      * @param listener FtdcMdListener
      */
-    public FtdcMdSpi(FtdcMdListener listener) {
+    FtdcMdSpi(FtdcMdListener listener) {
         this.listener = listener;
     }
 

@@ -10,9 +10,10 @@ import io.rapid.adaptor.ctp.consts.FtdcOffsetFlag;
 import io.rapid.adaptor.ctp.consts.FtdcOrderPrice;
 import io.rapid.adaptor.ctp.consts.FtdcTimeCondition;
 import io.rapid.adaptor.ctp.consts.FtdcVolumeCondition;
-import io.rapid.adaptor.ctp.param.CtpParams;
+import io.rapid.adaptor.ctp.param.FtdcParams;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
+import lombok.Setter;
 import org.rationalityfrontline.jctp.CThostFtdcInputOrderActionField;
 import org.rationalityfrontline.jctp.CThostFtdcInputOrderField;
 import org.slf4j.Logger;
@@ -22,9 +23,9 @@ import org.slf4j.Logger;
  *
  * @author yellow013
  */
-public final class OrderConverter {
+public final class FtdcReqConverter {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(OrderConverter.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcReqConverter.class);
 
     // 经纪公司代码
     private final String brokerId;
@@ -44,7 +45,10 @@ public final class OrderConverter {
     // MAC地址
     private final String macAddress;
 
-    public OrderConverter(CtpParams params) {
+    @Setter
+    private String tradingDay;
+
+    FtdcReqConverter(FtdcParams params) {
         this.brokerId = params.getBrokerId();
         this.investorId = params.getInvestorId();
         this.accountId = params.getAccountId();
@@ -125,7 +129,7 @@ public final class OrderConverter {
      * };<br>
      *         </pre>
      */
-    public CThostFtdcInputOrderField toInputOrder(NewOrder order) {
+    public CThostFtdcInputOrderField convertTo(NewOrder order) throws IllegalArgumentException {
         // 创建FTDC报单类型
         var Field = new CThostFtdcInputOrderField();
         // 经纪公司代码
@@ -174,7 +178,7 @@ public final class OrderConverter {
             case INVALID -> {
                 // 无效订单动作
                 log.error("Order action is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order action is invalid -> ordSysId == " + order.getOrdSysId());
+                throw new IllegalArgumentException("order action is invalid -> ordSysId == " + order.getOrdSysId());
             }
         }
         // 设置投机标识
@@ -195,7 +199,7 @@ public final class OrderConverter {
             case INVALID -> {
                 // 无效订单方向
                 log.error("Order direction is invalid, ordSysId==[{}]", order.getOrdSysId());
-                throw new IllegalStateException("order direction is invalid -> ordSysId == " + order.getOrdSysId());
+                throw new IllegalArgumentException("order direction is invalid -> ordSysId == " + order.getOrdSysId());
             }
         }
         // 设置价格
@@ -216,7 +220,7 @@ public final class OrderConverter {
         Field.setMinVolume(1);
         log.info("Set CThostFtdcInputOrderField -> MinVolume == 1");
         // 设置触发条件
-        Field.setContingentCondition(FtdcContingentCondition.Immediately);
+        Field.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
         log.info("Set CThostFtdcInputOrderField -> ContingentCondition == Immediately");
         // 设置止损价格
         Field.setStopPrice(0.0D);
@@ -276,7 +280,7 @@ public final class OrderConverter {
      * };<br>
      *         </pre>
      */
-    public CThostFtdcInputOrderActionField toFtdcInputOrderAction(CancelOrder order) {
+    public CThostFtdcInputOrderActionField convertTo(CancelOrder order) throws IllegalArgumentException {
         // 创建FTDC撤单类型
         var Field = new CThostFtdcInputOrderActionField();
         // 经纪公司代码

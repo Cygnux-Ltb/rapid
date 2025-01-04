@@ -103,8 +103,8 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withFtdcOffsetFlag(@Nonnull String combOffsetFlag) {
-        return withFtdcOffsetFlag(combOffsetFlag.charAt(0));
+    static TrdAction getTrdAction(@Nonnull String combOffsetFlag) {
+        return getTrdAction(combOffsetFlag.charAt(0));
     }
 
     /**
@@ -114,7 +114,7 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withFtdcOffsetFlag(char offsetFlag) {
+    static TrdAction getTrdAction(int offsetFlag) {
         return switch (offsetFlag) {
             // 开仓
             case OPEN -> TrdAction.OPEN;

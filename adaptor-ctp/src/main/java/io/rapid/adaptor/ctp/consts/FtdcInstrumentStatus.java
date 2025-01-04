@@ -1,5 +1,8 @@
 package io.rapid.adaptor.ctp.consts;
 
+import io.rapid.core.event.enums.SubscribeStatus;
+import io.rapid.core.event.enums.TradingStatus;
+
 /**
  * ///TFtdcInstrumentStatusType是一个合约交易状态类型<br>
  * <br>
@@ -60,5 +63,44 @@ public interface FtdcInstrumentStatus {
      * 收盘
      */
     char CLOSED = '6';
+
+
+    static SubscribeStatus getSubscribeStatus(int InstrumentStatus) {
+        return switch (InstrumentStatus) {
+            case NO_TRADING, CLOSED -> SubscribeStatus.SUBSCRIPTION_UNAVAILABLE;
+            case BEFORE_TRADING,
+                 CONTINUOUS,
+                 AUCTION_ORDERING,
+                 AUCTION_BALANCE,
+                 AUCTION_MATCH -> SubscribeStatus.SUBSCRIPTION_AVAILABLE;
+            default -> SubscribeStatus.NOT_PROVIDED;
+        };
+    }
+
+    static TradingStatus getTradingStatus(int InstrumentStatus) {
+        return switch (InstrumentStatus) {
+            case BEFORE_TRADING,
+                 NO_TRADING -> TradingStatus.NO_TRADING;
+            case CONTINUOUS,
+                 AUCTION_ORDERING,
+                 AUCTION_BALANCE,
+                 AUCTION_MATCH -> TradingStatus.TRADING;
+            case CLOSED -> TradingStatus.CLOSED_UNSETTLED;
+            default -> TradingStatus.NOT_PROVIDED;
+        };
+    }
+
+    static String getPrompt(int InstrumentStatus) {
+        return switch (InstrumentStatus) {
+            case BEFORE_TRADING -> "开盘前";
+            case NO_TRADING -> "非交易";
+            case CONTINUOUS -> "连续交易";
+            case AUCTION_ORDERING -> "集合竞价报单";
+            case AUCTION_BALANCE -> "集合竞价价格平衡";
+            case AUCTION_MATCH -> "集合竞价撮合";
+            case CLOSED -> "收盘";
+            default -> "NONE";
+        };
+    }
 
 }

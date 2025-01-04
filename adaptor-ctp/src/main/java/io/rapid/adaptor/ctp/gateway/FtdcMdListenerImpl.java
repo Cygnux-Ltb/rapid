@@ -1,4 +1,4 @@
-package io.rapid.adaptor.ctp.gateway.upstream;
+package io.rapid.adaptor.ctp.gateway;
 
 import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
 import org.rationalityfrontline.jctp.CThostFtdcForQuoteRspField;
@@ -13,11 +13,11 @@ import org.slf4j.Logger;
 /**
  * FtdcMd SPI 回调基础实现
  */
-public abstract class LoggingFtdcMdListener implements FtdcMdListener {
+public abstract non-sealed class FtdcMdListenerImpl implements FtdcMdListener {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(LoggingFtdcMdListener.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcMdListenerImpl.class);
 
-    protected LoggingFtdcMdListener() {
+    protected FtdcMdListenerImpl() {
     }
 
     /**

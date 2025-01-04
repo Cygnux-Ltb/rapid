@@ -27,11 +27,11 @@ public interface FtdcDirection {
     /**
      * 根据<b>[FTDC返回]</b>买卖方向类型, 映射<b>[系统自定义]</b>买卖方向类型类型
      *
-     * @param direction char
+     * @param ftdcDirection char
      * @return TrdDirection
      */
-    static TrdDirection withFtdcDirection(char direction) {
-        return switch (direction) {
+    static TrdDirection getTrdDirection(int ftdcDirection) {
+        return switch (ftdcDirection) {
             // 买
             case BUY -> TrdDirection.LONG;
             // 卖

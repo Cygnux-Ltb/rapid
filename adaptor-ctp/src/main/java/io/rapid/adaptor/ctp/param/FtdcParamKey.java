@@ -10,7 +10,7 @@ import lombok.Getter;
  *
  * @author yellow013
  */
-public enum CtpParamKey implements ParamKey, ConfigOption {
+public enum FtdcParamKey implements ParamKey, ConfigOption {
 
     /**
      * 交易服务器地址
@@ -88,7 +88,7 @@ public enum CtpParamKey implements ParamKey, ConfigOption {
     @Getter
     private final String configName;
 
-    CtpParamKey(String paramName) {
+    FtdcParamKey(String paramName) {
         this.paramName = paramName;
         this.configName = "ctp." + paramName;
     }
@@ -99,7 +99,7 @@ public enum CtpParamKey implements ParamKey, ConfigOption {
     }
 
     public static void main(String[] args) {
-        for (CtpParamKey key : CtpParamKey.values())
+        for (FtdcParamKey key : FtdcParamKey.values())
             System.out.println(key.getConfigName() + "=" + key);
     }
 
