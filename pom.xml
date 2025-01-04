@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- This is parent rapid pom.xml -->
-    <groupId>io.cygnuxltb.rapid</groupId>
-    <artifactId>parent</artifactId>
+    <groupId>io.cygnux.rapid</groupId>
+    <artifactId>rapid</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
@@ -43,7 +43,6 @@
         <maven.compiler.target>21</maven.compiler.target>
         <spring-boot.version>3.3.3</spring-boot.version>
         <spring.version>6.1.13</spring.version>
-        <avro.version>1.12.0</avro.version>
         <mercury.version>1.0.1</mercury.version>
     </properties>
 
