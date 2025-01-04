@@ -11,7 +11,7 @@ import io.rapid.core.event.outbound.SubscribeMarketData;
 public abstract non-sealed class OutboundEventLoop extends EventLoop<OutboundEvent> {
 
     protected OutboundEventLoop() {
-        this(EventLoop.builder());
+        this(EventLoop.singleProducer());
     }
 
     protected OutboundEventLoop(Builder builder) {

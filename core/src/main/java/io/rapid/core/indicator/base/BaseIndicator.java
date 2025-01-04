@@ -9,6 +9,7 @@ import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.Point;
 import io.rapid.core.indicator.PointSet;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.SavedMarketData;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -42,7 +43,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point, E extends Indic
     /**
      * 前一笔行情
      */
-    protected RawMarketData preMarketData;
+    protected SavedMarketData preMarketData;
 
     /**
      * 存储事件的集合
@@ -62,7 +63,7 @@ public abstract class BaseIndicator<P extends BasePoint & Point, E extends Indic
         return instrument;
     }
 
-    public RawMarketData getPreMarketData() {
+    public SavedMarketData getPreMarketData() {
         return preMarketData;
     }
 
@@ -101,12 +102,12 @@ public abstract class BaseIndicator<P extends BasePoint & Point, E extends Indic
     }
 
     @Override
-    public void onMarketData(RawMarketData marketData) {
+    public void onMarketData(SavedMarketData marketData) {
         handleMarketData(marketData);
         this.preMarketData = marketData;
     }
 
     @AbstractFunction
-    protected abstract void handleMarketData(RawMarketData marketData);
+    protected abstract void handleMarketData(SavedMarketData marketData);
 
 }

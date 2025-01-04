@@ -70,9 +70,42 @@ public sealed interface Instrument extends Enableable, Comparable<Instrument>
         return PriorityCloseType.NONE;
     }
 
-    default int getTradeFee() {
-        return 0;
+    default void setTradable() {
+        enable();
     }
+
+    default void setNotTradable() {
+        disable();
+    }
+
+    default boolean isTradable() {
+        return isEnabled();
+    }
+
+    default boolean isNotTradable() {
+        return isDisabled();
+    }
+
+    /**
+     * 返回当前[Instrument]状态, 包含交易状态和行情订阅状态
+     *
+     * @return InstrumentStatus
+     */
+    InstrumentStatus getStatus();
+
+    /**
+     * 设置交易手续费
+     *
+     * @param tradeFee double
+     */
+    void setTradeFee(double tradeFee);
+
+    /**
+     * 获取交易手续费
+     *
+     * @return double
+     */
+    double getTradeFee();
 
     @Override
     default int compareTo(Instrument o) {

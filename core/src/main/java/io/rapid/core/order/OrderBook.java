@@ -54,7 +54,7 @@ public final class OrderBook {
     /**
      * @param capacity Capacity
      */
-    OrderBook(Capacity capacity) {
+    public OrderBook(Capacity capacity) {
         this.orderMap = newLongObjectMap(capacity.size());
         this.longOrderMap = newLongObjectMap(capacity.size());
         this.shortOrderMap = newLongObjectMap(capacity.size());
@@ -123,8 +123,9 @@ public final class OrderBook {
         return activeOrderMap.remove(order.getOrdSysId());
     }
 
-    public boolean isContainsOrder(long ordSysId) {
-        return orderMap.containsKey(ordSysId);
+
+    public boolean isExists(long ordSysId) {
+        return getOrder(ordSysId) != null;
     }
 
     @Nullable

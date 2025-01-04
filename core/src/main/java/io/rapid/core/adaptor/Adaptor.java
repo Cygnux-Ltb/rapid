@@ -3,7 +3,7 @@ package io.rapid.core.adaptor;
 import io.mercury.common.state.Enableable;
 import io.mercury.common.state.StartupException;
 import io.rapid.core.account.Account;
-import io.rapid.core.event.enums.AdaptorStatus;
+import io.rapid.core.event.enums.ChannelType;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -15,8 +15,7 @@ import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.io.IOException;
 
-public sealed interface Adaptor extends Closeable, Enableable
-        permits AbstractAdaptor {
+public sealed interface Adaptor extends Closeable, Enableable permits AbstractAdaptor {
 
     /**
      * Adaptor 消息发布URI
@@ -24,16 +23,26 @@ public sealed interface Adaptor extends Closeable, Enableable
      * @return String
      */
     static String publishPath() {
-        return "adaptor/pub";
+        return "from/adaptor";
     }
 
     /**
-     * Adaptor 消费接收URI
+     * Adaptor 消息接收URI
      *
      * @return String
      */
     static String subscribePath() {
-        return "adaptor/sub";
+        return "to/adaptor";
+    }
+
+    /**
+     * Adaptor 接收消息使用的Topic, 调用[Account::getTopic]
+     *
+     * @return String
+     */
+    default String subscribeTopic() {
+        var account = getBoundAccount();
+        return account.getTopic();
     }
 
     // ############################## 状态相关 ############################## //
@@ -48,12 +57,13 @@ public sealed interface Adaptor extends Closeable, Enableable
     @Nonnull
     Account getBoundAccount();
 
+
     /**
      * 更新Adaptor状态
      *
-     * @param status AdaptorStatus
+     * @param channelType AdaptorStatus
      */
-    void updateStatus(AdaptorStatus status);
+    void updateStatus(ChannelType channelType, boolean isEnabled);
 
     /**
      * 获取当前Adaptor状态
@@ -79,7 +89,7 @@ public sealed interface Adaptor extends Closeable, Enableable
     boolean subscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData);
 
     default String getMarketDataTopic() {
-        return getBoundAccount().getMarketDataTopic();
+        return getBoundAccount().getTopicByMd();
     }
 
     // ############################## 交易相关 ############################## //
@@ -137,7 +147,7 @@ public sealed interface Adaptor extends Closeable, Enableable
     }
 
     default String getTraderTopic() {
-        return getBoundAccount().getTraderTopic();
+        return getBoundAccount().getTopicByTd();
     }
 
 }

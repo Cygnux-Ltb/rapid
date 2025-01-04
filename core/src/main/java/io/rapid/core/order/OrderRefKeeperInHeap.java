@@ -1,18 +1,18 @@
-package io.rapid.adaptor.ctp;
+package io.rapid.core.order;
 
 import io.mercury.common.epoch.EpochTimeUtil;
 import io.mercury.common.thread.Sleep;
-import io.rapid.core.order.OrderRefAllocator;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
 import org.slf4j.Logger;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
-import static io.mercury.common.collections.Capacity.L10_2048;
+import static io.mercury.common.collections.Capacity.L11_2048;
 import static io.mercury.common.collections.MutableMaps.newLongObjectMap;
 import static io.mercury.common.collections.MutableMaps.newObjectLongMap;
 import static io.mercury.common.datetime.TimeZone.CST;
@@ -25,24 +25,23 @@ import static java.lang.System.currentTimeMillis;
  * <p>
  * TODO - Add Persistence
  */
-public class FastOrderRefAllocator implements OrderRefAllocator {
+@ThreadSafe
+public class OrderRefKeeperInHeap implements OrderRefKeeper {
 
-    private static final Logger log = getLogger(FastOrderRefAllocator.class);
+    private static final Logger log = getLogger(OrderRefKeeperInHeap.class);
 
-    private final MutableObjectLongMap<String> orderRefMapper = newObjectLongMap(L10_2048.size());
+    private final MutableObjectLongMap<String> orderRefMap = newObjectLongMap(L11_2048.size());
 
-    private final MutableLongObjectMap<String> ordSysIdMapper = newLongObjectMap(L10_2048.size());
+    private final MutableLongObjectMap<String> ordSysIdMap = newLongObjectMap(L11_2048.size());
 
-    public static final OrderRefAllocator INSTANCE = new FastOrderRefAllocator();
-
-    private FastOrderRefAllocator() {
+    OrderRefKeeperInHeap() {
     }
 
     @Override
-    public void binding(String orderRef, long ordSysId) {
-        log.info("PUT ORDER MAPPING orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
-        orderRefMapper.put(orderRef, ordSysId);
-        ordSysIdMapper.put(ordSysId, orderRef);
+    public synchronized void binding(String orderRef, long ordSysId) {
+        log.info("ORDER BINDING >>>> orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
+        orderRefMap.put(orderRef, ordSysId);
+        ordSysIdMap.put(ordSysId, orderRef);
     }
 
     /**
@@ -50,13 +49,14 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
      * @return long
      */
     @Override
-    public long getOrdSysId(String orderRef) {
-        long ordSysId = orderRefMapper.get(orderRef);
+    public synchronized long getOrdSysId(String orderRef) {
+        long ordSysId = orderRefMap.get(orderRef);
         if (ordSysId == 0L) {
             // 处理其他来源的订单
             ordSysId = FOR_EXTERNAL_ORDER.nextOrdSysId();
             log.warn("Handle external order, allocate external order used ordSysId==[{}], orderRef==[{}]",
                     ordSysId, orderRef);
+            binding(orderRef, ordSysId);
         }
         return ordSysId;
     }
@@ -65,8 +65,8 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
      * @param ordSysId long
      * @return String
      */
-    public String getOrderRef(long ordSysId) throws OrderRefNotFoundException {
-        String orderRef = ordSysIdMapper.get(ordSysId);
+    public synchronized String getOrderRef(long ordSysId) throws OrderRefNotFoundException {
+        String orderRef = ordSysIdMap.get(ordSysId);
         if (orderRef == null)
             throw new OrderRefNotFoundException(ordSysId);
         return orderRef;
@@ -75,17 +75,17 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
     /**
      * 以<b> [PM 03:30] </b> 作为计算OrderRef的基准时间
      */
-    public static final LocalTime BENCHMARK_TIME = LocalTime.of(15, 30);
+    public static final LocalTime BASELINE_TIME = LocalTime.of(15, 30);
 
     /**
      * 如果当前时间在基准时间之后, 则使用当天的基准时间;
      * 如果在基准时间之前, 则使用前一天的基准时间
      */
-    public static final long BENCHMARK_POINT = EpochTimeUtil.getEpochMillis(
-            ZonedDateTime.of(LocalTime.now().isBefore(BENCHMARK_TIME)
+    public static final long EPOCH_BASELINE_POINT = EpochTimeUtil.getEpochMillis(
+            ZonedDateTime.of(LocalTime.now().isBefore(BASELINE_TIME)
                             ? LocalDate.now().minusDays(1)
                             : LocalDate.now(),
-                    BENCHMARK_TIME, CST));
+                    BASELINE_TIME, CST));
 
     /**
      * 基于<b> Epoch时间戳与前一天基准点 </b>的偏移量计算OrderRef,
@@ -94,12 +94,12 @@ public class FastOrderRefAllocator implements OrderRefAllocator {
      * @return int
      */
     public int nextOrderRef() {
-        return (int) (currentTimeMillis() - BENCHMARK_POINT);
+        return (int) (currentTimeMillis() - EPOCH_BASELINE_POINT);
     }
 
     public static void main(String[] args) {
 
-        var allocator = new FastOrderRefAllocator();
+        var allocator = new OrderRefKeeperInHeap();
 
         for (int i = 0; i < 1000; i++) {
             System.out.println(allocator.nextOrderRef());

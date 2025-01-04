@@ -7,6 +7,7 @@ import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.impl.SMA.SmaEvent;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.TradablePeriod;
+import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.pool.TradablePeriodPool;
 
 import java.time.Duration;
@@ -36,12 +37,12 @@ public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent> {
     }
 
     @Override
-    public void onMarketData(RawMarketData marketData) {
+    public void onMarketData(SavedMarketData marketData) {
 
     }
 
     @Override
-    protected void handleMarketData(RawMarketData marketData) {
+    protected void handleMarketData(SavedMarketData marketData) {
 
     }
 

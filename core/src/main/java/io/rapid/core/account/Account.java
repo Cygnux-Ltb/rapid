@@ -1,6 +1,6 @@
 package io.rapid.core.account;
 
-import io.cygnuxltb.console.beans.outbound.AccountRsp;
+import io.cygnuxltb.console.beans.response.AccountRsp;
 import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.event.outbound.QueryBalance;
 import io.rapid.core.event.outbound.QueryOrder;
@@ -97,8 +97,8 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode,
                    long balance, long credit) {
         this.accountId = greaterThan(accountId, 0, "accountId");
-        this.investorCode = nonEmpty(investorCode, "investorId");
         this.brokerCode = nonEmpty(brokerCode, "brokerCode");
+        this.investorCode = nonEmpty(investorCode, "investorId");
         this.balance = balance;
         this.credit = credit;
         enable();
@@ -151,36 +151,44 @@ public final class Account extends EnableableComponent implements Comparable<Acc
         return Integer.compare(this.accountId, o.accountId);
     }
 
-    private String mdTopic;
-
     /**
-     * brokerCode + "/" + investorId + "/md"
+     * 此账户对应的Topic<br>
+     * brokerCode + "/" + investorCode
      *
      * @return String
      */
-    public String getMarketDataTopic() {
-        if (mdTopic == null)
-            mdTopic = (brokerCode + "/" + investorCode + "/md");
-        return mdTopic;
+    public String getTopic() {
+        return brokerCode + "/" + investorCode;
     }
 
-    private String tdTopic;
-
     /**
-     * brokerCode + "/" + investorId + "/md"
+     * 此账户对应的行情Topic<br>
+     * Account::getTopic + "/md"
      *
      * @return String
      */
-    public String getTraderTopic() {
-        if (tdTopic == null)
-            tdTopic = (brokerCode + "/" + investorCode + "/td");
-        return tdTopic;
+    public String getTopicByMd() {
+        return getTopic() + "/md";
+    }
+
+
+    /**
+     * 此账户对应的交易Topic<br>
+     * Account::getTopic + "/td"
+     *
+     * @return String
+     */
+    public String getTopicByTd() {
+        return getTopic() + "/td";
     }
 
     public static void main(String[] args) {
-        Account account = new Account(1, "ZSQH", "200500");
+        var account = new Account(1, "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
+        System.out.println(account.getTopic());
+        System.out.println(account.getTopicByMd());
+        System.out.println(account.getTopicByTd());
     }
 
 }

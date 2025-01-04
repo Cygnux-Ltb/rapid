@@ -38,7 +38,7 @@ public sealed interface PositionManager permits AbstractPositionManager {
      * @return P
      */
     default Position acquirePosition(int accountId, int instrumentId) {
-        return acquireAccountPosition(accountId).acquirePosition(InstrumentKeeper.getInstrument(instrumentId));
+        return acquireAccountPosition(accountId).acquirePosition(InstrumentKeeper.getInstrumentById(instrumentId));
     }
 
     /**
@@ -49,7 +49,7 @@ public sealed interface PositionManager permits AbstractPositionManager {
      * @return P
      */
     default Position acquirePosition(int accountId, String instrumentCode) {
-        return acquireAccountPosition(accountId).acquirePosition(InstrumentKeeper.getInstrument(instrumentCode));
+        return acquireAccountPosition(accountId).acquirePosition(InstrumentKeeper.getInstrumentByCode(instrumentCode));
     }
 
     /**

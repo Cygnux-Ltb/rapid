@@ -6,7 +6,7 @@ import io.rapid.core.event.container.InboundEventLoop;
 import java.io.Closeable;
 import java.io.IOException;
 
-public interface InboundEventFeeder extends
+public interface InboundFeeder extends
         // 用于清理资源
         Closeable {
 

@@ -2,7 +2,10 @@ package io.rapid.core.instrument;
 
 import io.mercury.common.state.EnableableComponent;
 import io.mercury.serialization.json.JsonWriter;
+import io.rapid.core.event.enums.SubscribeStatus;
+import io.rapid.core.event.enums.TradingStatus;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
@@ -26,6 +29,23 @@ public abstract non-sealed class AbstractInstrument extends EnableableComponent
      */
     @Getter
     protected final Exchange exchange;
+
+    /**
+     * 交易费用
+     */
+    @Getter
+    @Setter
+    protected double tradeFee;
+
+    /**
+     * [Instrument]状态
+     */
+    @Getter
+    protected InstrumentStatus status = new InstrumentStatus()
+            // 初始化交易状态
+            .setTradingStatus(TradingStatus.NO_TRADING)
+            // 初始化订阅状态
+            .setSubscribeStatus(SubscribeStatus.SUBSCRIPTION_UNAVAILABLE);
 
     /**
      * @param instrumentId   int

@@ -1,5 +1,7 @@
 package io.rapid.core.event;
 
+import com.lmax.disruptor.EventHandler;
+import io.mercury.common.log4j2.StaticLogger;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -14,9 +16,24 @@ import java.io.Closeable;
  *
  * @author yellow013
  */
-public interface OutboundEventHandler extends
+public interface OutboundHandler extends EventHandler<OutboundEvent>,
         // 用于清理资源
         Closeable {
+
+    @Override
+    default void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) throws Exception {
+        switch (event.getType()) {
+            case NewOrder -> handleNewOrder(event.getNewOrder());
+            case CancelOrder -> handleCancelOrder(event.getCancelOrder());
+            case QueryOrder -> handleQueryOrder(event.getQueryOrder());
+            case QueryPosition -> handleQueryPosition(event.getQueryPosition());
+            case QueryBalance -> handleQueryBalance(event.getQueryBalance());
+            case SubscribeMarketData -> handleSubscribeMarketData(event.getSubscribeMarketData());
+            case null, default ->
+                    StaticLogger.error("NOTE OutboundHandler::onEvent, event -> {}, sequence==[{}], endOfBatch==[{}]",
+                            event, sequence, endOfBatch);
+        }
+    }
 
     /**
      * [1].处理行情订阅

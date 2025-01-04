@@ -1,6 +1,6 @@
 package io.rapid.core;
 
-import io.rapid.core.event.InboundEventHandler;
+import io.rapid.core.event.InboundHandler;
 import io.rapid.core.strategy.StrategySignal;
 import io.rapid.core.strategy.StrategySignalHandler;
 import org.eclipse.collections.api.list.MutableList;
@@ -12,8 +12,7 @@ import org.eclipse.collections.api.list.MutableList;
  * 2.负责策略信号的收集与处理.<p>
  * 3.负责管理出站事件的发布.
  */
-public interface CoreScheduler extends InboundEventHandler, StrategySignalHandler {
-
+public interface CoreScheduler extends InboundHandler, StrategySignalHandler {
 
     /**
      * 对本次数据运行产生的信号进行处理

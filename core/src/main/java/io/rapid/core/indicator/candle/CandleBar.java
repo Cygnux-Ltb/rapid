@@ -3,6 +3,7 @@ package io.rapid.core.indicator.candle;
 import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.base.BasePoint;
 import io.rapid.core.indicator.structure.Bar;
+import io.rapid.core.mdata.SavedMarketData;
 import lombok.Getter;
 
 public final class CandleBar extends BasePoint {
@@ -32,7 +33,7 @@ public final class CandleBar extends BasePoint {
     }
 
     @Override
-    protected void handleMarketData0(RawMarketData marketData) {
+    protected void handleMarketData0(SavedMarketData marketData) {
 
     }
 
@@ -40,4 +41,5 @@ public final class CandleBar extends BasePoint {
     public long orderNum() {
         return 0;
     }
+
 }

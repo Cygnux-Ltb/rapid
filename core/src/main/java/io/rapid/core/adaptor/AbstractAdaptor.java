@@ -7,7 +7,7 @@ import io.mercury.common.state.EnableableComponent;
 import io.mercury.common.state.StartupException;
 import io.rapid.core.account.Account;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.enums.AdaptorStatus;
+import io.rapid.core.event.enums.ChannelType;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static io.mercury.common.concurrent.disruptor.base.CommonStrategy.Yielding;
 import static io.mercury.common.lang.Asserter.nonNull;
@@ -50,7 +49,9 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     /**
      * 当前状态
      */
-    protected AtomicReference<AdaptorStatus> status = new AtomicReference<>(AdaptorStatus.ALL_DISABLE);
+    protected AdaptorStatus status = new AdaptorStatus()
+            .setMarketDataEnabled(false)
+            .setTraderEnabled(false);
 
     /**
      * 是否为异步调用
@@ -64,13 +65,14 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
 
     /**
      * @param account Account
+     * @param isAsync boolean
      */
     protected AbstractAdaptor(@Nonnull Account account, boolean isAsync) {
         nonNull(account, "account");
         this.account = account;
         this.isAsync = isAsync;
         this.adaptorId = this.getClass().getSimpleName() +
-                "[" + account.getBrokerCode() + ":" + account.getInvestorCode() + "]";
+                "-" + account.getBrokerCode() + ":" + account.getInvestorCode();
         if (isAsync) {
             receiveQueue = RingEventbus
                     .singleProducer(OutboundEvent.EVENT_FACTORY)
@@ -104,7 +106,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
             }
             case QueryPosition -> {
                 log.info("{} -> Call directQueryPositions, event -> {} ", adaptorId, event);
-                directQueryPositions(event.getQueryPosition());
+                directQueryPosition(event.getQueryPosition());
             }
             case QueryBalance -> {
                 log.info("{} -> Call directQueryBalance, event -> {} ", adaptorId, event);
@@ -129,11 +131,19 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     /**
      * 更新Adaptor状态
      *
-     * @param status AdaptorStatus
+     * @param channelType ChannelType
+     * @param isEnabled   boolean
      */
     @Override
-    public void updateStatus(AdaptorStatus status) {
-        this.status.set(status);
+    public void updateStatus(ChannelType channelType, boolean isEnabled) {
+        switch (channelType) {
+            case MARKET_DATA -> status.setMarketDataEnabled(isEnabled);
+            case TRADING -> status.setTraderEnabled(isEnabled);
+            case FULL -> status.setMarketDataEnabled(isEnabled)
+                    .setTraderEnabled(isEnabled);
+            case null -> status.setMarketDataEnabled(isEnabled)
+                    .setTraderEnabled(isEnabled);
+        }
     }
 
     /**
@@ -143,17 +153,17 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
      */
     @Override
     public AdaptorStatus currentStatus() {
-        return status.get();
+        return status;
     }
 
     @Override
     public boolean subscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {
         if (isAsync) {
-            log.info("{} Enqueue::SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
+            log.info("{} Async SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
             receiveQueue.publish((event, sequence) -> event.updateWith(subscribeMarketData));
             return true;
         } else {
-            log.info("{} Direct::SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
+            log.info("{} Sync SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
             return directSubscribeMarketData(subscribeMarketData);
         }
     }
@@ -161,11 +171,11 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     @Override
     public boolean newOrder(@Nonnull NewOrder order) {
         if (isAsync) {
-            log.info("{} Enqueue::NewOrder -> {}", adaptorId, order);
+            log.info("{} Async NewOrder -> {}", adaptorId, order);
             receiveQueue.publish((event, sequence) -> event.updateWith(order));
             return true;
         } else {
-            log.info("{} Direct::NewOrder -> {}", adaptorId, order);
+            log.info("{} Sync NewOrder -> {}", adaptorId, order);
             return directNewOrder(order);
         }
     }
@@ -173,11 +183,11 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     @Override
     public boolean cancelOrder(@Nonnull CancelOrder order) {
         if (isAsync) {
-            log.info("{} Enqueue::CancelOrder -> {}", adaptorId, order);
+            log.info("{} Async CancelOrder -> {}", adaptorId, order);
             receiveQueue.publish((event, sequence) -> event.updateWith(order));
             return true;
         } else {
-            log.info("{} Direct::CancelOrder -> {}", adaptorId, order);
+            log.info("{} Sync CancelOrder -> {}", adaptorId, order);
             return directCancelOrder(order);
         }
     }
@@ -185,11 +195,11 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     @Override
     public boolean queryOrder(@Nonnull QueryOrder query) {
         if (isAsync) {
-            log.info("{} Enqueue::QueryOrder -> {}", adaptorId, query);
+            log.info("{} Async QueryOrder -> {}", adaptorId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Direct::QueryOrder -> {}", adaptorId, query);
+            log.info("{} Sync QueryOrder -> {}", adaptorId, query);
             return directQueryOrder(query);
         }
     }
@@ -197,23 +207,23 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     @Override
     public boolean queryPosition(@Nonnull QueryPosition query) {
         if (isAsync) {
-            log.info("{} Enqueue::QueryPositions -> {}", adaptorId, query);
+            log.info("{} Async QueryPositions -> {}", adaptorId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Direct::QueryPositions -> {}", adaptorId, query);
-            return directQueryPositions(query);
+            log.info("{} Sync QueryPositions -> {}", adaptorId, query);
+            return directQueryPosition(query);
         }
     }
 
     @Override
     public boolean queryBalance(@Nonnull QueryBalance query) {
         if (isAsync) {
-            log.info("{} Enqueue::QueryBalance -> {}", adaptorId, query);
+            log.info("{} Async QueryBalance -> {}", adaptorId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Direct::QueryBalance -> {}", adaptorId, query);
+            log.info("{} Sync QueryBalance -> {}", adaptorId, query);
             return directQueryBalance(query);
         }
     }
@@ -231,7 +241,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     protected abstract boolean directQueryOrder(@Nonnull QueryOrder query);
 
     @AbstractFunction
-    protected abstract boolean directQueryPositions(@Nonnull QueryPosition query);
+    protected abstract boolean directQueryPosition(@Nonnull QueryPosition query);
 
     @AbstractFunction
     protected abstract boolean directQueryBalance(@Nonnull QueryBalance query);

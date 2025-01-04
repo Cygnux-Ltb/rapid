@@ -57,8 +57,9 @@ public final class OutboundEvent implements JsonSerializable {
     /**
      * For EventFactory Call
      */
-    private OutboundEvent() {
+    OutboundEvent() {
     }
+
 
     /**
      * @param newOrder NewOrder
@@ -131,12 +132,12 @@ public final class OutboundEvent implements JsonSerializable {
         return toJson();
     }
 
-    private final JsonRecord record = new JsonRecord().setEpochUnit(EpochUnit.MICROS);
-
     @Nonnull
     @Override
     public String toJson() {
-        return record.setTitle(type.name())
+        return new JsonRecord()
+                .setTitle(type.name())
+                .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setRecord(switch (type) {
                     case NewOrder -> newOrder;
@@ -162,6 +163,11 @@ public final class OutboundEvent implements JsonSerializable {
         isLogging.set(false);
     }
 
+    /**
+     * 输出日志
+     *
+     * @return OutboundEvent
+     */
     public OutboundEvent logging() {
         if (isLogging.get())
             log.info("OutboundEvent logging -> {}", this);

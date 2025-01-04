@@ -121,10 +121,6 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
      */
     private int updateMillisec;
 
-    public long getEpochMillis() {
-        return epochMicros / 1000;
-    }
-
     @Override
     public void copyFrom(RawMarketData source) {
         /// 复制交易标的ID
@@ -165,7 +161,6 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
         this.askVolume1 = source.askVolume1;
         /// 复制平均价格
         this.averagePrice = source.averagePrice;
-
         /// 复制时间坐标相关字段
         this.epochMicros = source.epochMicros;
         this.tradingDay = source.tradingDay;

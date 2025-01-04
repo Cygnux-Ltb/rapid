@@ -8,7 +8,7 @@ public enum InboundEventType {
 
     DepthMarketData,
 
-    MarketDataSubscribeReport,
+    InstrumentStatusReport,
 
     OrderReport,
 

@@ -63,7 +63,7 @@ public final class ParentOrder extends AbstractOrder {
             + "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}";
 
     @Override
-    public void toLog(Logger log, String msg) {
+    public void logging(Logger log, String msg) {
         log.info(LogTemplate, msg, ordSysId, status, direction, type,
                 instrument.getInstrumentCode(), price, qty, timestamp);
     }

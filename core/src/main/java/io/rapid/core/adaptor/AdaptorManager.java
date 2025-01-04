@@ -1,6 +1,5 @@
 package io.rapid.core.adaptor;
 
-import io.rapid.core.event.enums.AdaptorStatus;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;

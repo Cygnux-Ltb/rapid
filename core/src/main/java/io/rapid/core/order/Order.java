@@ -157,7 +157,7 @@ public sealed interface Order extends OrderedObject<Order>, Serializable permits
      * @param log Logger
      * @param msg String
      */
-    default void toLog(Logger log, String msg) {
+    default void logging(Logger log, String msg) {
         log.info("{}, Order attribute : ordSysId==[{}], status==[{}], direction==[{}], type==[{}], " +
                         "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}",
                 msg, getOrdSysId(), getStatus(), getDirection(), getType(), getInstrument().getInstrumentCode(),

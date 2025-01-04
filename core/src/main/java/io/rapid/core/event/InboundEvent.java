@@ -8,10 +8,10 @@ import io.mercury.serialization.json.JsonRecord;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
-import io.rapid.core.event.inbound.RawMarketData;
-import io.rapid.core.event.inbound.MarketDataSubscribeReport;
+import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
+import io.rapid.core.event.inbound.RawMarketData;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -27,6 +27,7 @@ public final class InboundEvent implements JsonSerializable {
     public static final EventFactory<InboundEvent> EVENT_FACTORY = InboundEvent::new;
 
     private static final AtomicBoolean isLogging = new AtomicBoolean(false);
+
 
     /**
      * 微秒时间戳
@@ -54,13 +55,13 @@ public final class InboundEvent implements JsonSerializable {
     @Getter
     private final AdaptorReport adaptorReport = new AdaptorReport();
     @Getter
-    private final MarketDataSubscribeReport marketDataSubscribeReport = new MarketDataSubscribeReport();
+    private final InstrumentStatusReport instrumentStatusReport = new InstrumentStatusReport();
     /// EVENT INSTANCE ///
 
     /**
      * For EventFactory Call
      */
-    private InboundEvent() {
+    InboundEvent() {
     }
 
     /**
@@ -133,10 +134,10 @@ public final class InboundEvent implements JsonSerializable {
      * @param event MarketDataSubscribeEvent
      * @return InboundEvent
      */
-    public InboundEvent updateWith(MarketDataSubscribeReport event) {
+    public InboundEvent updateWith(InstrumentStatusReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.MarketDataSubscribeReport;
-        this.marketDataSubscribeReport.copyFrom(event);
+        this.type = InboundEventType.InstrumentStatusReport;
+        this.instrumentStatusReport.copyFrom(event);
         return this;
     }
 
@@ -145,12 +146,13 @@ public final class InboundEvent implements JsonSerializable {
         return toJson();
     }
 
-    private final JsonRecord record = new JsonRecord().setEpochUnit(EpochUnit.MICROS);
-
-    @Nonnull
-    @Override
-    public String toJson() {
-        return record.setTitle(type.name())
+    /**
+     * @return JsonRecord
+     */
+    public JsonRecord toJsonRecord() {
+        return new JsonRecord()
+                .setTitle(type.name())
+                .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setRecord(switch (type) {
                     case RawMarketData -> rawMarketData;
@@ -159,9 +161,19 @@ public final class InboundEvent implements JsonSerializable {
                     case PositionsReport -> positionsReport;
                     case BalanceReport -> balanceReport;
                     case AdaptorReport -> adaptorReport;
-                    case MarketDataSubscribeReport -> marketDataSubscribeReport;
-                    case Invalid -> "Invalid";
-                }).toJson();
+                    case InstrumentStatusReport -> instrumentStatusReport;
+                    case Invalid -> null;
+                });
+    }
+
+
+    //public byte[] toFr() {}
+
+
+    @Nonnull
+    @Override
+    public String toJson() {
+        return toJsonRecord().toJson();
     }
 
     /**
@@ -178,6 +190,11 @@ public final class InboundEvent implements JsonSerializable {
         isLogging.set(false);
     }
 
+    /**
+     * 输出日志
+     *
+     * @return InboundEvent
+     */
     public InboundEvent logging() {
         if (isLogging.get())
             log.info("InboundEvent logging -> {}", this);

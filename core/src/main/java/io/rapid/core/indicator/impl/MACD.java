@@ -6,6 +6,7 @@ import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.base.FixedPeriodPoint;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.SavedMarketData;
 
 import java.time.Duration;
 
@@ -17,7 +18,7 @@ public final class MACD extends
     }
 
     @Override
-    protected void handleMarketData(RawMarketData marketData) {
+    protected void handleMarketData(SavedMarketData marketData) {
         // TODO Auto-generated method stub
     }
 
@@ -37,7 +38,7 @@ public final class MACD extends
         }
 
         @Override
-        protected void handleMarketData0(RawMarketData marketData) {
+        protected void handleMarketData0(SavedMarketData marketData) {
 
         }
 
