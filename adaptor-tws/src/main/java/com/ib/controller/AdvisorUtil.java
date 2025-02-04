@@ -3,15 +3,15 @@
 
 package com.ib.controller;
 
+import com.ib.client.Types.Method;
+import com.ib.controller.Profile.Allocation;
+import com.ib.controller.Profile.Type;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ib.client.Types.Method;
-import com.ib.controller.Profile.Allocation;
-import com.ib.controller.Profile.Type;
 
 
 public class AdvisorUtil {

@@ -3,7 +3,8 @@
 
 package com.ib.client;
 
-import static com.ib.controller.Formats.fmt;
+import com.ib.controller.ApiController;
+import com.ib.controller.ApiController.IContractDetailsHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,8 +13,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import com.ib.controller.ApiController;
-import com.ib.controller.ApiController.IContractDetailsHandler;
+import static com.ib.controller.Formats.fmt;
 
 public class Util {
     public static final String SPACE_SYMBOL = " ";
