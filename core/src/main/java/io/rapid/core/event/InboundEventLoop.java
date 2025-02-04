@@ -1,6 +1,6 @@
-package io.rapid.core.event.container;
+package io.rapid.core.event;
 
-import io.rapid.core.event.InboundEvent;
+import io.mercury.common.concurrent.disruptor.RingEventHandler;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
@@ -9,13 +9,13 @@ import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
 import io.rapid.core.event.inbound.RawMarketData;
 
-public abstract non-sealed class InboundEventLoop extends EventLoop<InboundEvent> {
+public abstract class InboundEventLoop extends RingEventHandler<InboundEvent> {
 
     /**
      * 默认使用单生产者
      */
     protected InboundEventLoop() {
-        this(EventLoop.singleProducer());
+        this(RingEventHandler.singleProducer());
     }
 
     /**
@@ -24,7 +24,7 @@ public abstract non-sealed class InboundEventLoop extends EventLoop<InboundEvent
      * @param builder Builder
      */
     protected InboundEventLoop(Builder builder) {
-        super(builder.name("inbound-eventbus"), InboundEvent.EVENT_FACTORY);
+        super(builder.name("inbound-loop"), InboundEvent.EVENT_FACTORY);
     }
 
     public void put(DepthMarketData in) {

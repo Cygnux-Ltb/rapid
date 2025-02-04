@@ -8,31 +8,27 @@ import javax.annotation.Nonnull;
 /**
  * @author yellow013
  */
+@Getter
 public final class Bar implements JsonSerializable {
 
     /**
      * 开盘价
      */
-    @Getter
     private final double open;
 
     /**
      * 最高价
      */
-    @Getter
     private double highest;
 
     /**
      * 最低价
      */
-
-    @Getter
     private double lowest;
 
     /**
      * 最新价
      */
-    @Getter
     private double last;
 
     public Bar(double open) {
@@ -71,6 +67,22 @@ public final class Bar implements JsonSerializable {
     @Override
     public String toJson() {
         return toString();
+    }
+
+    public double hl2() {
+        return 0.0d;
+    }
+
+    public double hlc3() {
+        return 0.0d;
+    }
+
+    public double hlcc4() {
+        return 0.0d;
+    }
+
+    public double ohlc4() {
+        return 0.0d;
     }
 
     public static void main(String[] args) {

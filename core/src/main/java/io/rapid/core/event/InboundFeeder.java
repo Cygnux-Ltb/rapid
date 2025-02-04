@@ -1,7 +1,6 @@
 package io.rapid.core.event;
 
 import io.mercury.common.state.StartupException;
-import io.rapid.core.event.container.InboundEventLoop;
 
 import java.io.Closeable;
 import java.io.IOException;

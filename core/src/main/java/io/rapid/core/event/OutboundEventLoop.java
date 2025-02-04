@@ -1,6 +1,6 @@
-package io.rapid.core.event.container;
+package io.rapid.core.event;
 
-import io.rapid.core.event.OutboundEvent;
+import io.mercury.common.concurrent.disruptor.RingEventHandler;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -8,15 +8,22 @@ import io.rapid.core.event.outbound.QueryOrder;
 import io.rapid.core.event.outbound.QueryPosition;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 
-public abstract non-sealed class OutboundEventLoop extends EventLoop<OutboundEvent> {
+public abstract class OutboundEventLoop extends RingEventHandler<OutboundEvent> {
 
+    /**
+     * 默认使用单生产者
+     */
     protected OutboundEventLoop() {
-        this(EventLoop.singleProducer());
+        this(RingEventHandler.singleProducer());
     }
 
+    /**
+     * 使用自定义的构建器
+     *
+     * @param builder Builder
+     */
     protected OutboundEventLoop(Builder builder) {
-        super(builder.name("outbound-eventbus"),
-                OutboundEvent.EVENT_FACTORY);
+        super(builder.name("outbound-loop"), OutboundEvent.EVENT_FACTORY);
     }
 
     public void publish(SubscribeMarketData in) {

@@ -1,6 +1,7 @@
 package io.rapid.core.event.enums;
 
 import io.rapid.core.trade.TrdConstant;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,11 +15,8 @@ public enum TrdDirection {
 
     ;
 
+    @Getter
     private final char code;
-
-    public char getCode() {
-        return code;
-    }
 
     /**
      * @param code int

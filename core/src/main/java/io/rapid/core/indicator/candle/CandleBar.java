@@ -1,6 +1,5 @@
 package io.rapid.core.indicator.candle;
 
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.base.BasePoint;
 import io.rapid.core.indicator.structure.Bar;
 import io.rapid.core.mdata.SavedMarketData;

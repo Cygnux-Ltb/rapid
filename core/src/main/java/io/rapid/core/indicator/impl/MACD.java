@@ -1,7 +1,6 @@
 package io.rapid.core.indicator.impl;
 
 import io.mercury.common.sequence.TimeWindow;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.base.FixedPeriodPoint;

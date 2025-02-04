@@ -4,7 +4,6 @@ import io.mercury.common.collections.MutableLists;
 import io.mercury.common.epoch.EpochTimeUtil;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.TimeWindow;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.base.FixedPeriodIndicator;
 import io.rapid.core.indicator.base.FixedPeriodPoint;
@@ -80,8 +79,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
                 }
                 newBar = pointSet.nextOf(currentPoint).orElseGet(null);
                 if (newBar == null) {
-                    log.error("TimeBar [{}-{}] next is null.", currentPointSerial.getStart(),
-                            currentPointSerial.getEnd());
+                    log.error("TimeBar [{}-{}] next is null.", currentPointSerial.getStart(), currentPointSerial.getEnd());
                     break;
                 }
             }

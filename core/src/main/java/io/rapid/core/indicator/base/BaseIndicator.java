@@ -3,7 +3,6 @@ package io.rapid.core.indicator.base;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.Indicator;
 import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.indicator.Point;

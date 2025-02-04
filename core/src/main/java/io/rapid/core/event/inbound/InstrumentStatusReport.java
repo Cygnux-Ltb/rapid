@@ -4,10 +4,7 @@ import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
 import io.rapid.core.event.enums.SubscribeStatus;
 import io.rapid.core.event.enums.TradingStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
