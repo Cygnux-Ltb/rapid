@@ -7,7 +7,6 @@ import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.core.strategy.StrategyException;
 import io.rapid.engine.order.OrderKeeper;
 import org.slf4j.Logger;
 

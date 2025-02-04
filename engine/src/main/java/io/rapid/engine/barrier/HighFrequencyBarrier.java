@@ -1,8 +1,8 @@
 package io.rapid.engine.barrier;
 
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.risk.OrderBarrier;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.annotation.concurrent.NotThreadSafe;

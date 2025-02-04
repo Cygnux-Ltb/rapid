@@ -8,7 +8,7 @@ import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.InboundEvent;
 import io.rapid.core.event.InboundFeeder;
 import io.rapid.core.event.OutboundHandler;
-import io.rapid.core.event.container.InboundEventLoop;
+import io.rapid.core.event.InboundEventLoop;
 import io.rapid.core.event.enums.MarketDataType;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.TrdAction;

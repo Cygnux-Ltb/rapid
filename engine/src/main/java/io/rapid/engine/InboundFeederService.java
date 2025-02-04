@@ -9,7 +9,7 @@ import io.mercury.transport.zmq.ZmqSubscriber;
 import io.rapid.core.adaptor.Adaptor;
 import io.rapid.core.event.InboundEventType;
 import io.rapid.core.event.InboundFeeder;
-import io.rapid.core.event.container.InboundEventLoop;
+import io.rapid.core.event.InboundEventLoop;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;

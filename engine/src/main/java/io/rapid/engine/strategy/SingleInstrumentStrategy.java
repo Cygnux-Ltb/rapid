@@ -6,7 +6,6 @@ import io.rapid.core.account.SubAccount;
 import io.rapid.core.instrument.Instrument;
 import org.slf4j.Logger;
 
-import javax.annotation.Nonnull;
 import java.util.Collections;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
@@ -24,8 +23,8 @@ public abstract class SingleInstrumentStrategy extends AbstractStrategy {
      * @param params       Params<K>
      * @param instrument   Instrument
      */
-    protected SingleInstrumentStrategy(int strategyId, @Nonnull String strategyName, SubAccount subAccount,
-                                       @Nonnull Params params, Instrument instrument) {
+    protected SingleInstrumentStrategy(int strategyId, String strategyName,
+                                       SubAccount subAccount, Params params, Instrument instrument) {
         super(strategyId, strategyName, subAccount, params,
                 ImmutableMaps.newImmutableIntMap(Collections.singletonList(instrument), Instrument::getInstrumentId)
         );

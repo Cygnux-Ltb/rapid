@@ -1,8 +1,8 @@
 package io.cygnux.engine.position;
 
+import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
-import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.engine.position.PositionKeeper;
 import org.junit.Test;
 
