@@ -1,5 +1,6 @@
 package io.rapid.adaptor.ctp.gateway;
 
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
 import org.rationalityfrontline.jctp.CThostFtdcForQuoteRspField;
 import org.rationalityfrontline.jctp.CThostFtdcMulticastInstrumentField;
@@ -7,7 +8,6 @@ import org.rationalityfrontline.jctp.CThostFtdcRspInfoField;
 import org.rationalityfrontline.jctp.CThostFtdcRspUserLoginField;
 import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 /**

@@ -1,5 +1,6 @@
 package io.rapid.adaptor.ctp.gateway;
 
+import io.mercury.common.annotation.NativeSpiImpl;
 import org.rationalityfrontline.jctp.CThostFtdcAccountregisterField;
 import org.rationalityfrontline.jctp.CThostFtdcBatchOrderActionField;
 import org.rationalityfrontline.jctp.CThostFtdcBrokerTradingAlgosField;
@@ -94,7 +95,6 @@ import org.rationalityfrontline.jctp.CThostFtdcTransferBankField;
 import org.rationalityfrontline.jctp.CThostFtdcTransferSerialField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
 import org.rationalityfrontline.jctp.CThostFtdcUserPasswordUpdateField;
-import io.mercury.common.annotation.NativeSpiImpl;
 
 @NativeSpiImpl
 public final class FtdcTraderSpi extends CThostFtdcTraderSpi {

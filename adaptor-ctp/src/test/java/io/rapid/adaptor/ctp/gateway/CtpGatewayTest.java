@@ -4,12 +4,12 @@ import io.mercury.common.collections.queue.Queue;
 import io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.event.FtdcRspEvent;
-import io.rapid.adaptor.ctp.param.FtdcParams;
-import io.rapid.adaptor.ctp.param.ImmutableFtdcParams;
 import io.rapid.adaptor.ctp.event.FtdcRspType;
 import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import io.rapid.adaptor.ctp.event.trader.FtdcOrder;
 import io.rapid.adaptor.ctp.event.trader.FtdcTrade;
+import io.rapid.adaptor.ctp.param.FtdcParams;
+import io.rapid.adaptor.ctp.param.ImmutableFtdcParams;
 import org.junit.Test;
 import org.slf4j.Logger;
 
