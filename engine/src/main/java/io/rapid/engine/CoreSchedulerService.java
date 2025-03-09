@@ -6,9 +6,9 @@ import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountManager;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.InboundEvent;
+import io.rapid.core.event.InboundEventLoop;
 import io.rapid.core.event.InboundFeeder;
 import io.rapid.core.event.OutboundHandler;
-import io.rapid.core.event.InboundEventLoop;
 import io.rapid.core.event.enums.MarketDataType;
 import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.TrdAction;
@@ -44,7 +44,7 @@ import static io.mercury.common.collections.MutableLists.newFastList;
 @Service("coreScheduler")
 public class CoreSchedulerService implements CoreScheduler {
 
-    private final MutableList<StrategySignal> signals = newFastList(64);
+    private final MutableList<StrategySignal> signals = newFastList(128);
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
 
@@ -116,7 +116,7 @@ public class CoreSchedulerService implements CoreScheduler {
     /**
      * 行情处理
      *
-     * @param event FastMarketData
+     * @param event RawMarketData
      */
     @Override
     public void handleRawMarketData(RawMarketData event) {
@@ -235,7 +235,7 @@ public class CoreSchedulerService implements CoreScheduler {
             return;
         }
         int targetQty = signal.getTargetQty();
-        TrdDirection targetDirection = targetQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT;
+        TrdDirection direction = targetQty > 0 ? TrdDirection.LONG : TrdDirection.SHORT;
         var strategy = strategyManager.getStrategy(signal.getStrategyId());
         var subAccountMapping = accountManager.getSubAccountMapping(signal.getSubAccountId());
         // TODO 改进子账户映射获取实际账户的逻辑
@@ -243,7 +243,7 @@ public class CoreSchedulerService implements CoreScheduler {
 
         // 创建父订单
         var parentOrder = new ParentOrder(signal.getStrategyId(), signal.getSubAccountId(), signal.getInstrumentCode(),
-                signal.getTargetQtyAbs(), signal.getOfferPrice(), OrdType.defaultType(), targetDirection);
+                signal.getTargetQtyAbs(), signal.getOfferPrice(), OrdType.defaultType(), direction);
 
         var position = positionManager.acquirePosition(account.getAccountId(), signal.getInstrumentCode());
 

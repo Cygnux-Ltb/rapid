@@ -2,7 +2,6 @@ package io.rapid.engine.strategy.manager;
 
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.impl.ChildOrder;
@@ -11,6 +10,7 @@ import io.rapid.engine.order.OrderKeeper;
 import org.slf4j.Logger;
 
 import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spscQueue;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * @author yellow013
@@ -19,7 +19,7 @@ import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spsc
  */
 public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AsyncMultiStrategyManager.class);
+    private static final Logger log = getLogger(AsyncMultiStrategyManager.class);
 
     private final Queue<QueueMsg> queue;
 

@@ -1,11 +1,8 @@
 package io.rapid.engine.strategy;
 
-import io.mercury.common.collections.MutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.instrument.Instrument;
 import io.rapid.core.strategy.Strategy;
-import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 
@@ -33,7 +30,7 @@ public final class StrategyKeeper implements Serializable {
     /**
      * 策略列表
      */
-    private static final MutableIntObjectMap<Strategy> StrategyMap = MutableMaps.newIntObjectMap();
+    private static final MutableIntObjectMap<Strategy> strategyMap = MutableMaps.newIntObjectMap();
 
     private StrategyKeeper() {
     }
@@ -44,31 +41,23 @@ public final class StrategyKeeper implements Serializable {
      * @param strategy Strategy<?>
      */
     public static void putStrategy(Strategy strategy) {
-        if (StrategyMap.containsKey(strategy.getStrategyId())) {
+        if (strategyMap.containsKey(strategy.getStrategyId())) {
             log.error("Strategy id is existed, Have stored or have duplicate strategy id");
         } else {
-            StrategyMap.put(strategy.getStrategyId(), strategy);
+            strategyMap.put(strategy.getStrategyId(), strategy);
             log.info("Put strategy, strategyId==[{}]", strategy.getStrategyId());
-            strategy.getInstruments().each(instrument -> {
-                SubscribedInstrumentMap.getIfAbsentPut(instrument.getInstrumentId(), MutableLists::newFastList).add(strategy);
-                log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
-                        instrument.getInstrumentId());
-            });
+//            strategy.getInstruments().each(instrument -> {
+//                SubscribedInstrumentMap.getIfAbsentPut(instrument.getInstrumentId(), MutableLists::newFastList).add(strategy);
+//                log.info("Add subscribe instrument, strategyId==[{}], instrumentId==[{}]", strategy.getStrategyId(),
+//                        instrument.getInstrumentId());
+//            });
             strategy.enable();
             log.info("Strategy is enable, strategyId==[{}]", strategy.getStrategyId());
         }
     }
 
     public static Strategy getStrategy(int strategyId) {
-        return StrategyMap.get(strategyId);
-    }
-
-    public static MutableList<Strategy> getSubscribedStrategy(Instrument instrument) {
-        return getSubscribedStrategy(instrument.getInstrumentId());
-    }
-
-    public static MutableList<Strategy> getSubscribedStrategy(int instrumentId) {
-        return SubscribedInstrumentMap.get(instrumentId);
+        return strategyMap.get(strategyId);
     }
 
     @Override

@@ -1,18 +1,14 @@
 package io.rapid.engine.strategy.manager;
 
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.OrderReport;
-import io.rapid.core.event.inbound.RawMarketData;
-import io.rapid.core.instrument.Instrument;
-import io.rapid.core.strategy.Strategy;
+import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.core.strategy.StrategyException;
 import io.rapid.engine.order.OrderKeeper;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 /**
  * @author yellow013
@@ -21,21 +17,21 @@ import javax.annotation.Nonnull;
  */
 public final class SyncMultiStrategyManager extends MultiStrategyManager {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(SyncMultiStrategyManager.class);
+    private static final Logger log = getLogger(SyncMultiStrategyManager.class);
 
     public SyncMultiStrategyManager() {
     }
 
-    @Override
-    public void onMarketData(@Nonnull RawMarketData marketData) {
-        subscribedMap.get(marketData.getInstrumentCode())
+
+    public void onMarketData(@Nonnull SavedMarketData marketData) {
+        subscribedMap.get(marketData.instrumentCode())
                 .each(strategy -> {
                     if (strategy.isEnabled())
-                        strategy.onMarketData(marketData);
+                        strategy.acceptMarketData(marketData);
                 });
     }
 
-    @Override
+
     public void onOrderEvent(@Nonnull OrderReport event) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                 event.getOrdSysId());
@@ -46,34 +42,13 @@ public final class SyncMultiStrategyManager extends MultiStrategyManager {
         strategyMap.get(order.getStrategyId()).onOrder(order);
     }
 
-    // TODO add pools
-    @Override
-    public void onAdaptorEvent(@Nonnull AdaptorReport event) {
-        log.info("Recv AdaptorEvent -> {}", event);
-    }
-
     @Override
     protected void close0() {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public ImmutableIntObjectMap<Strategy> getStrategies() {
-        return null;
-    }
-
-    @Override
-    public ImmutableIntObjectMap<Instrument> getInstruments() {
-        return null;
-    }
-
-    @Override
     public void onEvent(StrategyEvent event) {
-
-    }
-
-    @Override
-    public void onException(Exception exception) throws StrategyException {
 
     }
 

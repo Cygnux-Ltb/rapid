@@ -2,13 +2,10 @@ package io.rapid.engine.strategy;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.param.Params;
 import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.account.AccountManager;
 import io.rapid.core.account.SubAccount;
-import io.rapid.core.event.enums.OrdType;
-import io.rapid.core.event.enums.TrdAction;
 import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
@@ -18,14 +15,12 @@ import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.order.OrdSysIdAllocator;
 import io.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.rapid.core.order.Order;
-import io.rapid.core.order.impl.ChildOrder;
 import io.rapid.core.risk.CircuitBreaker;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyManager;
 import io.rapid.core.strategy.StrategySignal;
 import io.rapid.core.strategy.StrategySignalHandler;
-import io.rapid.engine.order.OrderKeeper;
 import io.rapid.engine.position.PositionKeeper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -42,12 +37,12 @@ import java.util.function.Supplier;
 import static io.mercury.common.lang.Asserter.atWithinRange;
 import static io.mercury.common.lang.Asserter.nonEmpty;
 import static io.mercury.common.lang.Asserter.nonNull;
-import static java.lang.Math.abs;
+import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 @Component
 public abstract class AbstractStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
 
-    private final static Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
+    private final static Logger log = getLogger(AbstractStrategy.class);
 
     /**
      * 策略ID
@@ -380,37 +375,6 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
         return position;
     }
 
-    protected void openPosition(Instrument instrument, int offerQty, TrdDirection direction) {
-        openPosition(instrument, offerQty, getLevel1Price(instrument, direction), OrdType.LIMITED, direction);
-    }
-
-    /**
-     * @param instrument 交易标的
-     * @param offerQty   委托数量
-     * @param ordType    订单类型
-     * @param direction  多空方向
-     */
-    protected void openPosition(Instrument instrument, int offerQty, OrdType ordType, TrdDirection direction) {
-        openPosition(instrument, offerQty, getLevel1Price(instrument, direction), ordType, direction);
-    }
-
-    /**
-     * @param instrument 交易标的
-     * @param offerQty   委托数量
-     * @param offerPrice 委托价格
-     * @param ordType    订单类型
-     * @param direction  多空方向
-     */
-    protected void openPosition(Instrument instrument, int offerQty, double offerPrice, OrdType ordType,
-                                TrdDirection direction) {
-        final ChildOrder order = OrderKeeper.createAndSaveChildOrder(allocator, strategyId, subAccount, account,
-                instrument, abs(offerQty), offerPrice, ordType, direction, TrdAction.OPEN);
-        order.logging(log, getStrategyName() + " :: Open position generate [ChildOrder]");
-        saveOrder(order);
-
-
-        order.logging(log, getStrategyName() + " :: Open position [ChildOrder] has been sent");
-    }
 
     /**
      * 平仓全部头寸

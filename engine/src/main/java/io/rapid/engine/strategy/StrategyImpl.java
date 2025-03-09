@@ -39,13 +39,13 @@ public class StrategyImpl extends AbstractStrategy {
     private final AdaptorReportHandler adaptorReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
                 getStrategyName(), event.getAdaptorId(), event.getChannelType(), event.isAvailable());
-        switch (event.getStatus()) {
-            case MD_ENABLED -> {
+        switch (event.getChannelType()) {
+            case MARKET_DATA -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 //adaptor.subscribeMarketData(instrument);
                 // log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
-            case TRADER_ENABLED -> {
+            case TRADING -> {
                 log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 // TODO
 //			adaptor.queryOrder(null);
