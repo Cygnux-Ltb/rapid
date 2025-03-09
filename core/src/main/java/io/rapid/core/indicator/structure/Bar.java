@@ -42,7 +42,7 @@ public final class Bar implements JsonSerializable {
      * @param price double
      * @return Bar
      */
-    public Bar onPrice(double price) {
+    public Bar addPrice(double price) {
         if (price > highest)
             highest = price;
         if (price < lowest)
@@ -87,7 +87,7 @@ public final class Bar implements JsonSerializable {
 
     public static void main(String[] args) {
 
-        Bar bar = new Bar(10D).onPrice(10000D).onPrice(100D).onPrice(1000D);
+        Bar bar = new Bar(10D).addPrice(10000D).addPrice(100D).addPrice(1000D);
         System.out.println(bar);
 
     }

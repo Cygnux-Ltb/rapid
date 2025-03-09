@@ -39,25 +39,16 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
-            <groupId>com.powsybl</groupId>
-            <artifactId>powsybl-math</artifactId>
-            <version>6.6.1</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-numbers-core</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>com.powsybl</groupId>
-            <artifactId>powsybl-math-native</artifactId>
-            <version>1.4.0</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.starlangsoftware</groupId>
-            <artifactId>Math</artifactId>
-            <version>1.0.9</version>
-        </dependency>
-
-
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-fury</artifactId>

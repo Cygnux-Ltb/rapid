@@ -165,7 +165,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
         @Override
         protected void handleMarketData0(SavedMarketData marketData) {
             // 处理当前价格
-            bar.onPrice(marketData.lastPrice());
+            bar.addPrice(marketData.lastPrice());
             // 记录当前价格
             priceRecord.add(marketData.lastPrice());
             // 总成交量增加处理当前行情

@@ -45,4 +45,10 @@ public final class SMA2 extends FixedPeriodIndicator<SmaPoint, SmaEvent> {
 
     }
 
+    public static void main(String[] args) {
+
+        
+
+    }
+
 }
