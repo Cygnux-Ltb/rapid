@@ -131,48 +131,48 @@ public final class FtdcReqConverter {
      */
     public CThostFtdcInputOrderField convertTo(NewOrder order) throws IllegalArgumentException {
         // 创建FTDC报单类型
-        var Field = new CThostFtdcInputOrderField();
+        var inputOrderField = new CThostFtdcInputOrderField();
         // 经纪公司代码
-        Field.setBrokerID(brokerId);
+        inputOrderField.setBrokerID(brokerId);
         // 投资者代码
-        Field.setInvestorID(investorId);
+        inputOrderField.setInvestorID(investorId);
         // 资金账号
-        Field.setAccountID(accountId);
+        inputOrderField.setAccountID(accountId);
         // 用户代码
-        Field.setUserID(userId);
+        inputOrderField.setUserID(userId);
         // IP地址
-        Field.setIPAddress(ipAddress);
+        inputOrderField.setIPAddress(ipAddress);
         // MAC地址
-        Field.setMacAddress(macAddress);
+        inputOrderField.setMacAddress(macAddress);
         // 设置交易所ID
-        Field.setExchangeID(order.getExchangeCode());
+        inputOrderField.setExchangeID(order.getExchangeCode());
         log.info("Set CThostFtdcInputOrderField -> ExchangeID == {}", order.getExchangeCode());
         // 设置交易标的
-        Field.setInstrumentID(order.getInstrumentCode());
+        inputOrderField.setInstrumentID(order.getInstrumentCode());
         log.info("Set CThostFtdcInputOrderField -> InstrumentID == {}", order.getInstrumentCode());
         // 设置报单价格
-        Field.setOrderPriceType(FtdcOrderPrice.LIMIT_PRICE);
+        inputOrderField.setOrderPriceType(FtdcOrderPrice.LIMIT_PRICE);
         log.info("Set CThostFtdcInputOrderField -> OrderPriceType == LimitPrice");
         // 设置开平标识
         switch (order.getAction()) {
             case OPEN -> {
                 // 设置为开仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.OPEN_STR);
+                inputOrderField.setCombOffsetFlag(FtdcOffsetFlag.OPEN_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Open");
             }
             case CLOSE -> {
                 // 设置为平仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_STR);
+                inputOrderField.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == Close");
             }
             case CLOSE_TODAY -> {
                 // 设置为平今仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_TODAY_STR);
+                inputOrderField.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_TODAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseToday");
             }
             case CLOSE_YESTERDAY -> {
                 // 设置为平昨仓
-                Field.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
+                inputOrderField.setCombOffsetFlag(FtdcOffsetFlag.CLOSE_YESTERDAY_STR);
                 log.info("Set CThostFtdcInputOrderField -> CombOffsetFlag == CloseYesterday");
             }
             case INVALID -> {
@@ -182,18 +182,18 @@ public final class FtdcReqConverter {
             }
         }
         // 设置投机标识
-        Field.setCombHedgeFlag(FtdcHedgeFlag.SPECULATION_STR);
+        inputOrderField.setCombHedgeFlag(FtdcHedgeFlag.SPECULATION_STR);
         log.info("Set CThostFtdcInputOrderField -> CombHedgeFlag == Speculation");
         // 设置买卖方向
         switch (order.getDirection()) {
             case LONG -> {
                 // 设置为买单
-                Field.setDirection(FtdcDirection.BUY);
+                inputOrderField.setDirection(FtdcDirection.BUY);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Buy");
             }
             case SHORT -> {
                 // 设置为卖单
-                Field.setDirection(FtdcDirection.SELL);
+                inputOrderField.setDirection(FtdcDirection.SELL);
                 log.info("Set CThostFtdcInputOrderField -> Direction == Sell");
             }
             case INVALID -> {
@@ -204,36 +204,36 @@ public final class FtdcReqConverter {
         }
         // 设置价格
         double limitPrice = order.getOfferPrice();
-        Field.setLimitPrice(limitPrice);
+        inputOrderField.setLimitPrice(limitPrice);
         log.info("Set CThostFtdcInputOrderField -> LimitPrice == {}", limitPrice);
         // 设置数量
         int volumeTotalOriginal = order.getOfferQty();
-        Field.setVolumeTotalOriginal(volumeTotalOriginal);
+        inputOrderField.setVolumeTotalOriginal(volumeTotalOriginal);
         log.info("Set CThostFtdcInputOrderField -> VolumeTotalOriginal == {}", volumeTotalOriginal);
         // 设置有效期类型
-        Field.setTimeCondition(FtdcTimeCondition.GFD);
+        inputOrderField.setTimeCondition(FtdcTimeCondition.GFD);
         log.info("Set CThostFtdcInputOrderField -> TimeCondition == GFD");
         // 设置成交量类型
-        Field.setVolumeCondition(FtdcVolumeCondition.AV);
+        inputOrderField.setVolumeCondition(FtdcVolumeCondition.AV);
         log.info("Set CThostFtdcInputOrderField -> VolumeCondition == AV");
         // 设置最小成交数量, 默认为1
-        Field.setMinVolume(1);
+        inputOrderField.setMinVolume(1);
         log.info("Set CThostFtdcInputOrderField -> MinVolume == 1");
         // 设置触发条件
-        Field.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
+        inputOrderField.setContingentCondition(FtdcContingentCondition.IMMEDIATELY);
         log.info("Set CThostFtdcInputOrderField -> ContingentCondition == Immediately");
         // 设置止损价格
-        Field.setStopPrice(0.0D);
+        inputOrderField.setStopPrice(0.0D);
         log.info("Set CThostFtdcInputOrderField -> StopPrice == 0.0D");
         // 设置强平原因: 此处固定为非强平
-        Field.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
+        inputOrderField.setForceCloseReason(FtdcForceCloseReason.NOT_FORCE_CLOSE);
         log.info("Set CThostFtdcInputOrderField -> ForceCloseReason == NotForceClose");
         // 设置自动挂起标识
-        Field.setIsAutoSuspend(0);
+        inputOrderField.setIsAutoSuspend(0);
         log.info("Set CThostFtdcInputOrderField -> IsAutoSuspend == 0");
         // 返回FTDC新订单对象
         log.info("Set CThostFtdcInputOrderField finished");
-        return Field;
+        return inputOrderField;
     }
 
     /**
@@ -282,26 +282,26 @@ public final class FtdcReqConverter {
      */
     public CThostFtdcInputOrderActionField convertTo(CancelOrder order) throws IllegalArgumentException {
         // 创建FTDC撤单类型
-        var Field = new CThostFtdcInputOrderActionField();
+        var inputOrderActionField = new CThostFtdcInputOrderActionField();
         // 经纪公司代码
-        Field.setBrokerID(brokerId);
+        inputOrderActionField.setBrokerID(brokerId);
         // 投资者代码
-        Field.setInvestorID(investorId);
+        inputOrderActionField.setInvestorID(investorId);
         // 用户代码
-        Field.setUserID(userId);
+        inputOrderActionField.setUserID(userId);
         // IP地址
-        Field.setIPAddress(ipAddress);
+        inputOrderActionField.setIPAddress(ipAddress);
         // MAC地址
-        Field.setMacAddress(macAddress);
+        inputOrderActionField.setMacAddress(macAddress);
         // 操作标志
-        Field.setActionFlag(FtdcActionFlag.DELETE);
+        inputOrderActionField.setActionFlag(FtdcActionFlag.DELETE);
         // 交易所代码
-        Field.setExchangeID(order.getExchangeCode());
+        inputOrderActionField.setExchangeID(order.getExchangeCode());
         // 合约代码
-        Field.setInstrumentID(order.getInstrumentCode());
+        inputOrderActionField.setInstrumentID(order.getInstrumentCode());
         // 返回FTDC撤单对象
         log.info("Set CThostFtdcInputOrderActionField finished");
-        return Field;
+        return inputOrderActionField;
     }
 
 }

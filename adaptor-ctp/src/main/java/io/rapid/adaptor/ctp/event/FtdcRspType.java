@@ -5,36 +5,36 @@ package io.rapid.adaptor.ctp.event;
  */
 public enum FtdcRspType {
 
-    Unsupported,
+    UNSUPPORTED,
 
-    FrontDisconnected,
+    FRONT_DISCONNECTED,
 
-    HeartBeatWarning,
+    HEARTBEAT_WARNING,
 
-    RspUserLogin,
+    RSP_USER_LOGIN,
 
-    UserLogout,
+    USER_LOGOUT,
 
-    RspError,
+    RSP_ERROR,
 
-    FtdcDepthMarketData,
+    FTDC_DEPTH_MARKET_DATA,
 
-    FtdcSpecificInstrument,
+    FTDC_SPECIFIC_INSTRUMENT,
 
-    FtdcInputOrder,
+    FTDC_INPUT_ORDER,
 
-    FtdcInputOrderAction,
+    FTDC_INPUT_ORDER_ACTION,
 
-    FtdcInstrumentStatus,
+    FTDC_INSTRUMENT_STATUS,
 
-    FtdcInvestorPosition,
+    FTDC_INVESTOR_POSITION,
 
-    FtdcOrder,
+    FTDC_ORDER,
 
-    FtdcOrderAction,
+    FTDC_ORDER_ACTION,
 
-    FtdcTrade,
+    FTDC_TRADE,
 
-    FtdcTradingAccount
+    FTDC_TRADING_ACCOUNT
 
 }

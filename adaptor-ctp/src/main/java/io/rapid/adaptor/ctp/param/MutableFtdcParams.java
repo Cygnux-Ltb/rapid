@@ -10,19 +10,19 @@ import java.time.LocalDateTime;
 
 import static io.mercury.common.datetime.pattern.impl.DatePattern.YYYYMMDD;
 import static io.mercury.common.net.NetworkProperties.getLocalMacAddress;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AccountId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AppId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.Password;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.UserId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.ACCOUNT_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.APP_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AUTH_CODE;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.BROKER_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.CURRENCY_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.INVESTOR_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.IP_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MAC_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MD_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.PASSWORD;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TRADER_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TRADING_DAY;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.USERID;
 import static io.rapid.core.instrument.futures.ChinaFutures.parseTradingDay;
 
 @Getter
@@ -60,31 +60,31 @@ public class MutableFtdcParams implements FtdcParams {
         var wrapper = new ConfigWrapper<FtdcParamKey>(config);
         return this
                 // 交易服务器地址
-                .setTraderAddr(wrapper.getStringOrThrows(TraderAddr))
+                .setTraderAddr(wrapper.getStringOrThrows(TRADER_ADDR))
                 // 行情服务器地址
-                .setMdAddr(wrapper.getStringOrThrows(MdAddr))
+                .setMdAddr(wrapper.getStringOrThrows(MD_ADDR))
                 // 应用ID
-                .setAppId(wrapper.getStringOrThrows(AppId))
+                .setAppId(wrapper.getStringOrThrows(APP_ID))
                 // 经纪商ID
-                .setBrokerId(wrapper.getStringOrThrows(BrokerId))
+                .setBrokerId(wrapper.getStringOrThrows(BROKER_ID))
                 // 投资者ID
-                .setInvestorId(wrapper.getStringOrThrows(InvestorId))
+                .setInvestorId(wrapper.getStringOrThrows(INVESTOR_ID))
                 // 账号ID
-                .setAccountId(wrapper.getStringOrThrows(AccountId))
+                .setAccountId(wrapper.getStringOrThrows(ACCOUNT_ID))
                 // 用户ID
-                .setUserId(wrapper.getStringOrThrows(UserId))
+                .setUserId(wrapper.getStringOrThrows(USERID))
                 // 密码
-                .setPassword(wrapper.getStringOrThrows(Password))
+                .setPassword(wrapper.getStringOrThrows(PASSWORD))
                 // 认证码
-                .setAuthCode(wrapper.getStringOrThrows(AuthCode))
+                .setAuthCode(wrapper.getStringOrThrows(AUTH_CODE))
                 // 客户端IP地址
-                .setIpAddr(wrapper.getString(IpAddr, "127.0.0.1"))
+                .setIpAddr(wrapper.getString(IP_ADDR, "127.0.0.1"))
                 // 客户端MAC地址
-                .setMacAddr(wrapper.getString(MacAddr, getLocalMacAddress()))
+                .setMacAddr(wrapper.getString(MAC_ADDR, getLocalMacAddress()))
                 // 结算货币
-                .setCurrencyId(wrapper.getString(CurrencyId, "CNY"))
+                .setCurrencyId(wrapper.getString(CURRENCY_ID, "CNY"))
                 // 交易日
-                .setTradingDay(wrapper.getString(TradingDay, YYYYMMDD.fmt(parseTradingDay(LocalDateTime.now()))));
+                .setTradingDay(wrapper.getString(TRADING_DAY, YYYYMMDD.fmt(parseTradingDay(LocalDateTime.now()))));
     }
 
 

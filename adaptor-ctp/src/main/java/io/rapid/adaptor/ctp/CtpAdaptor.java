@@ -119,14 +119,14 @@ public class CtpAdaptor extends AbstractAdaptor {
      */
     private void processFtdcRspEvent(FtdcRspEvent event) {
         switch (event.getType()) {
-            case FrontDisconnected -> {
+            case FRONT_DISCONNECTED -> {
                 var received = event.getFrontDisconnected();
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.Msg);
                 log.info("Received [FrontDisconnected] convert to [AdaptorReport] -> {}", report);
                 inboundEventLoop.put(report);
             }
-            case RspUserLogin -> {
+            case RSP_USER_LOGIN -> {
                 var received = event.getRspUserLogin();
                 var report = createAdaptorReportAndUpdate(received.Source,
                         true, received.ErrorMsg);
@@ -136,49 +136,49 @@ public class CtpAdaptor extends AbstractAdaptor {
                 log.info("Received [RspUserLogin] convert to [AdaptorReport] -> {}", report);
                 inboundEventLoop.put(report);
             }
-            case UserLogout -> {
+            case USER_LOGOUT -> {
                 var received = event.getUserLogout();
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.ErrorMsg);
                 log.info("Received [UserLogout] convert to [AdaptorReport] -> {}", report);
                 inboundEventLoop.put(report);
             }
-            case FtdcDepthMarketData -> inboundEventLoop
+            case FTDC_DEPTH_MARKET_DATA -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcDepthMarketData()));
 
-            case FtdcSpecificInstrument -> inboundEventLoop
+            case FTDC_SPECIFIC_INSTRUMENT -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcSpecificInstrument()));
 
-            case FtdcInstrumentStatus -> inboundEventLoop
+            case FTDC_INSTRUMENT_STATUS -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcInstrumentStatus()));
 
-            case FtdcInputOrder -> inboundEventLoop
+            case FTDC_INPUT_ORDER -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcInputOrder()));
 
-            case FtdcInputOrderAction -> inboundEventLoop
+            case FTDC_INPUT_ORDER_ACTION -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcInputOrderAction()));
 
-            case FtdcInvestorPosition -> inboundEventLoop
+            case FTDC_INVESTOR_POSITION -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcInvestorPosition()));
 
-            case FtdcOrder -> inboundEventLoop
+            case FTDC_ORDER -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcOrder()));
 
-            case FtdcOrderAction -> inboundEventLoop
+            case FTDC_ORDER_ACTION -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcOrderAction()));
 
-            case FtdcTrade -> inboundEventLoop
+            case FTDC_TRADE -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcTrade()));
 
-            case FtdcTradingAccount -> inboundEventLoop
+            case FTDC_TRADING_ACCOUNT -> inboundEventLoop
                     .put(ftdcRspConverter.convert(event.getFtdcTradingAccount()));
 
-            case HeartBeatWarning -> log
+            case HEARTBEAT_WARNING -> log
                     .warn("Received [HeartBeatWarning] Event -> {}", event.getHeartBeatWarning());
 
-            case RspError -> log.warn("Received [RspError] Event -> {}", event.getRspError());
+            case RSP_ERROR -> log.warn("Received [RspError] Event -> {}", event.getRspError());
 
-            case Unsupported -> log.error("Received Unsupported Event");
+            case UNSUPPORTED -> log.error("Received Unsupported Event");
 
             case null -> log.error("Received NULL Event");
         }
@@ -197,15 +197,12 @@ public class CtpAdaptor extends AbstractAdaptor {
     public AdaptorReport createAdaptorReportAndUpdate(EventSource source, boolean isAvailable,
                                                       String msg) {
         var report = AdaptorReport.builder();
-        switch (source) {
-            case MD -> {
-                this.isMdAvailable = isAvailable;
-                report.channelType(ChannelType.MARKET_DATA);
-            }
-            case TD -> {
-                this.isTraderAvailable = isAvailable;
-                report.channelType(ChannelType.TRADING);
-            }
+        if (source == EventSource.MD) {
+            this.isMdAvailable = isAvailable;
+            report.channelType(ChannelType.MARKET_DATA);
+        } else if (source == EventSource.TD) {
+            this.isTraderAvailable = isAvailable;
+            report.channelType(ChannelType.TRADING);
         }
         return report.adaptorId(adaptorId)
                 .accountId(account.getAccountId())
@@ -322,12 +319,12 @@ public class CtpAdaptor extends AbstractAdaptor {
     @Override
     protected boolean directNewOrder(@Nonnull NewOrder order) {
         try {
-            var InputOrderField = ftdcReqConverter.convertTo(order);
+            var field = ftdcReqConverter.convertTo(order);
             String orderRef = Integer.toString(orderRefKeeper.nextOrderRef());
             // 设置OrderRef
-            InputOrderField.setOrderRef(orderRef);
+            field.setOrderRef(orderRef);
             orderRefKeeper.binding(orderRef, order.getOrdSysId());
-            traderGateway.nativeReqOrderInsert(InputOrderField);
+            traderGateway.nativeReqOrderInsert(field);
             return true;
         } catch (Exception e) {
             log.error("{} -> Native ReqOrderInsert has exception -> {}", traderGatewayId, e.getMessage(), e);
@@ -338,14 +335,14 @@ public class CtpAdaptor extends AbstractAdaptor {
     @Override
     protected boolean directCancelOrder(@Nonnull CancelOrder order) {
         try {
-            var InputOrderActionField = ftdcReqConverter.convertTo(order);
+            var field = ftdcReqConverter.convertTo(order);
             String orderRef = orderRefKeeper.getOrderRef(order.getOrdSysId());
             int orderActionRef = orderRefKeeper.nextOrderRef();
             // 设置[OrderRef]
-            InputOrderActionField.setOrderRef(orderRef);
+            field.setOrderRef(orderRef);
             // 设置[OrderActionRef]
-            InputOrderActionField.setOrderActionRef(orderActionRef);
-            traderGateway.nativeReqOrderAction(InputOrderActionField);
+            field.setOrderActionRef(orderActionRef);
+            traderGateway.nativeReqOrderAction(field);
             return true;
         } catch (OrderRefNotFoundException e) {
             log.error(e.getMessage(), e);
@@ -360,7 +357,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final Object mutex = new Object();
 
     // 查询间隔, 依据CTP规定限制
-    private final long queryInterval = 1100L;
+    private static final long QUERY_INTERVAL = 1100L;
 
     @Override
     protected boolean directQueryOrder(@Nonnull QueryOrder query) {
@@ -371,7 +368,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                         () -> {
                             synchronized (mutex) {
                                 log.info("{} -> Ready to sent ReqQryOrder, Waiting...", adaptorId);
-                                Sleep.millis(queryInterval);
+                                Sleep.millis(QUERY_INTERVAL);
                                 traderGateway.nativeReqQryOrder();
                                 log.info("{} -> Has been sent ReqQryOrder", adaptorId);
                             }
@@ -397,7 +394,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                         () -> {
                             synchronized (mutex) {
                                 log.info("{} -> Ready to sent ReqQryInvestorPosition, Waiting...", adaptorId);
-                                Sleep.millis(queryInterval);
+                                Sleep.millis(QUERY_INTERVAL);
                                 traderGateway.nativeReqQryInvestorPosition(query.getExchangeCode(), query.getInstrumentCode());
                                 log.info("{} -> Has been sent ReqQryInvestorPosition", adaptorId);
                             }
@@ -423,7 +420,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                         () -> {
                             synchronized (mutex) {
                                 log.info("{} -> Ready to sent ReqQryTradingAccount, Waiting...", adaptorId);
-                                Sleep.millis(queryInterval);
+                                Sleep.millis(QUERY_INTERVAL);
                                 traderGateway.nativeReqQryTradingAccount();
                                 log.info("{} -> Has been sent ReqQryTradingAccount", adaptorId);
                             }

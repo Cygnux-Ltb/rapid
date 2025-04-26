@@ -4,9 +4,12 @@ import io.mercury.common.state.AvailableTime;
 
 import java.time.LocalTime;
 
-public enum CtpAdaptorAvailableTime implements AvailableTime {
+public final class CtpAdaptorAvailableTime implements AvailableTime {
 
-    INSTANCE;
+    public static final CtpAdaptorAvailableTime INSTANCE = new CtpAdaptorAvailableTime();
+
+    private CtpAdaptorAvailableTime() {
+    }
 
     @Override
     public boolean isAvailableAllTime() {

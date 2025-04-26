@@ -6,19 +6,19 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Properties;
 
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AccountId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AppId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.AuthCode;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.BrokerId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.CurrencyId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.InvestorId;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.IpAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.MacAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.MdAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.Password;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.TraderAddr;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.TradingDay;
-import static io.rapid.adaptor.ctp.param.FtdcParamKey.UserId;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.ACCOUNT_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.APP_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.AUTH_CODE;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.BROKER_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.CURRENCY_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.INVESTOR_ID;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.IP_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MAC_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.MD_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.PASSWORD;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TRADER_ADDR;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.TRADING_DAY;
+import static io.rapid.adaptor.ctp.param.FtdcParamKey.USERID;
 
 public final class ImmutableFtdcParams extends ImmutableParams implements FtdcParams {
 
@@ -49,67 +49,67 @@ public final class ImmutableFtdcParams extends ImmutableParams implements FtdcPa
 
     @Override
     public String getTraderAddr() {
-        return getString(TraderAddr);
+        return getString(TRADER_ADDR);
     }
 
     @Override
     public String getMdAddr() {
-        return getString(MdAddr);
+        return getString(MD_ADDR);
     }
 
     @Override
     public String getAppId() {
-        return getString(AppId);
+        return getString(APP_ID);
     }
 
     @Override
     public String getBrokerId() {
-        return getString(BrokerId);
+        return getString(BROKER_ID);
     }
 
     @Override
     public String getInvestorId() {
-        return getString(InvestorId);
+        return getString(INVESTOR_ID);
     }
 
     @Override
     public String getAccountId() {
-        return getString(AccountId);
+        return getString(ACCOUNT_ID);
     }
 
     @Override
     public String getUserId() {
-        return getString(UserId);
+        return getString(USERID);
     }
 
     @Override
     public String getPassword() {
-        return getString(Password);
+        return getString(PASSWORD);
     }
 
     @Override
     public String getAuthCode() {
-        return getString(AuthCode);
+        return getString(AUTH_CODE);
     }
 
     @Override
     public String getIpAddr() {
-        return getString(IpAddr);
+        return getString(IP_ADDR);
     }
 
     @Override
     public String getMacAddr() {
-        return getString(MacAddr);
+        return getString(MAC_ADDR);
     }
 
     @Override
     public String getTradingDay() {
-        return getString(TradingDay);
+        return getString(TRADING_DAY);
     }
 
     @Override
     public String getCurrencyId() {
-        return getString(CurrencyId);
+        return getString(CURRENCY_ID);
     }
 
 }

@@ -1,6 +1,7 @@
 package io.rapid.adaptor.ctp;
 
 import io.mercury.common.datetime.DateTimeUtil;
+import io.mercury.common.datetime.TimeZone;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.consts.FtdcDirection;
 import io.rapid.adaptor.ctp.consts.FtdcOffsetFlag;
@@ -172,16 +173,15 @@ public final class FtdcRspConverter {
     public InstrumentStatusReport convert(FtdcSpecificInstrument specificInstrument) {
         var report = new InstrumentStatusReport()
                 .setEpochMillis(currentTimeMillis())
-                .setActualDate(YYYYMMDD.now(SHFE.getZoneOffset()))
-                .setUpdateTime(HH_MM_SS.now(SHFE.getZoneOffset()))
+                .setActualDate(YYYYMMDD.now(TimeZone.CST))
+                .setUpdateTime(HH_MM_SS.now(TimeZone.CST))
                 .setSymbolCode(null)
                 .setInstrumentCode(specificInstrument.InstrumentID)
                 .setTradingStatus(TradingStatus.NOT_PROVIDED)
                 .setSubscribeStatus(
                         switch (specificInstrument.Source) {
-                            case SubMarketData, SubForQuoteRsp -> SubscribeStatus.SUBSCRIBED;
-                            case UnsubMarketData, UnsubForQuoteRsp -> SubscribeStatus.SUBSCRIPTION_FAILED;
-                            case null -> SubscribeStatus.NOT_PROVIDED;
+                            case SUB_MARKET_DATA, SUB_FOR_QUOTE -> SubscribeStatus.SUBSCRIBED;
+                            case UNSUB_MARKET_DATA, UNSUB_FOR_QUOTE -> SubscribeStatus.SUBSCRIPTION_FAILED;
                         }
                 )
                 .setMsg("FtdcSpecificInstrument-" + specificInstrument.Source);

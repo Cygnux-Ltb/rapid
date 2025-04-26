@@ -5,12 +5,12 @@ package io.rapid.adaptor.ctp.event.source;
  */
 public enum SpecificInstrumentSource {
 
-    SubMarketData,
+    SUB_MARKET_DATA,
 
-    UnsubMarketData,
+    UNSUB_MARKET_DATA,
 
-    SubForQuoteRsp,
+    SUB_FOR_QUOTE,
 
-    UnsubForQuoteRsp
+    UNSUB_FOR_QUOTE
 
 }

@@ -44,7 +44,7 @@ public final class FtdcRspEvent implements JsonSerializable {
      */
     @Setter
     @Accessors(chain = true)
-    private FtdcRspType type = FtdcRspType.Unsupported;
+    private FtdcRspType type = FtdcRspType.UNSUPPORTED;
 
     /**
      * 微秒时间戳
@@ -154,22 +154,22 @@ public final class FtdcRspEvent implements JsonSerializable {
         return record.setTitle(type.name())
                 .setEpochTime(epochMicros)
                 .setRecord(switch (type) {
-                    case FtdcDepthMarketData -> ftdcDepthMarketData;
-                    case FtdcOrder -> ftdcOrder;
-                    case FtdcTrade -> ftdcTrade;
-                    case FtdcInputOrder -> ftdcInputOrder;
-                    case FtdcInputOrderAction -> ftdcInputOrderAction;
-                    case FtdcOrderAction -> ftdcOrderAction;
-                    case HeartBeatWarning -> heartBeatWarning;
-                    case FtdcInstrumentStatus -> ftdcInstrumentStatus;
-                    case FtdcSpecificInstrument -> ftdcSpecificInstrument;
-                    case FtdcInvestorPosition -> ftdcInvestorPosition;
-                    case FtdcTradingAccount -> ftdcTradingAccount;
-                    case RspError -> rspError;
-                    case FrontDisconnected -> frontDisconnected;
-                    case RspUserLogin -> rspUserLogin;
-                    case UserLogout -> userLogout;
-                    case Unsupported -> null;
+                    case FTDC_DEPTH_MARKET_DATA -> ftdcDepthMarketData;
+                    case FTDC_ORDER -> ftdcOrder;
+                    case FTDC_TRADE -> ftdcTrade;
+                    case FTDC_INPUT_ORDER -> ftdcInputOrder;
+                    case FTDC_INPUT_ORDER_ACTION -> ftdcInputOrderAction;
+                    case FTDC_ORDER_ACTION -> ftdcOrderAction;
+                    case HEARTBEAT_WARNING -> heartBeatWarning;
+                    case FTDC_INSTRUMENT_STATUS -> ftdcInstrumentStatus;
+                    case FTDC_SPECIFIC_INSTRUMENT -> ftdcSpecificInstrument;
+                    case FTDC_INVESTOR_POSITION -> ftdcInvestorPosition;
+                    case FTDC_TRADING_ACCOUNT -> ftdcTradingAccount;
+                    case RSP_ERROR -> rspError;
+                    case FRONT_DISCONNECTED -> frontDisconnected;
+                    case RSP_USER_LOGIN -> rspUserLogin;
+                    case USER_LOGOUT -> userLogout;
+                    case UNSUPPORTED -> null;
                 });
     }
 

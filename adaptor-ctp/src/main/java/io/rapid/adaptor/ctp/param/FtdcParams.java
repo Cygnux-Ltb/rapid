@@ -70,23 +70,23 @@ public interface FtdcParams {
     }
 
     default CThostFtdcReqAuthenticateField getReqAuthenticateField() {
-        var Field = new CThostFtdcReqAuthenticateField();
-        Field.setAppID(getAppId());
-        Field.setUserID(getUserId());
-        Field.setBrokerID(getBrokerId());
-        Field.setAuthCode(getAuthCode());
-        return Field;
+        var authenticateField = new CThostFtdcReqAuthenticateField();
+        authenticateField.setAppID(getAppId());
+        authenticateField.setUserID(getUserId());
+        authenticateField.setBrokerID(getBrokerId());
+        authenticateField.setAuthCode(getAuthCode());
+        return authenticateField;
     }
 
     default CThostFtdcReqUserLoginField getReqUserLoginField() {
-        var Field = new CThostFtdcReqUserLoginField();
-        Field.setBrokerID(getBrokerId());
-        Field.setUserID(getUserId());
-        Field.setPassword(getPassword());
-        Field.setClientIPAddress(getIpAddr());
-        Field.setMacAddress(getMacAddr());
-        Field.setTradingDay(getTradingDay());
-        return Field;
+        var userLoginField = new CThostFtdcReqUserLoginField();
+        userLoginField.setBrokerID(getBrokerId());
+        userLoginField.setUserID(getUserId());
+        userLoginField.setPassword(getPassword());
+        userLoginField.setClientIPAddress(getIpAddr());
+        userLoginField.setMacAddress(getMacAddr());
+        userLoginField.setTradingDay(getTradingDay());
+        return userLoginField;
     }
 
 }

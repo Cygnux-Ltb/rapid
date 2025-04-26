@@ -12,22 +12,22 @@ public abstract non-sealed class FtdcRspHandlerImpl implements FtdcRspHandler {
     @Override
     public void handle(@Nonnull FtdcRspEvent event) {
         switch (event.getType()) {
-            case FrontDisconnected -> onFrontDisconnected(event);
-            case HeartBeatWarning -> onHeartBeatWarning(event);
-            case RspError -> onRspError(event);
-            case RspUserLogin -> onRspUserLogin(event);
-            case UserLogout -> onUserLogout(event);
-            case FtdcDepthMarketData -> onFtdcDepthMarketData(event);
-            case FtdcSpecificInstrument -> onFtdcSpecificInstrument(event);
-            case FtdcInputOrder -> onFtdcInputOrder(event);
-            case FtdcInputOrderAction -> onFtdcInputOrderAction(event);
-            case FtdcInstrumentStatus -> onFtdcInstrumentStatus(event);
-            case FtdcInvestorPosition -> onFtdcInvestorPosition(event);
-            case FtdcOrder -> onFtdcOrder(event);
-            case FtdcOrderAction -> onFtdcOrderAction(event);
-            case FtdcTrade -> onFtdcTrade(event);
-            case FtdcTradingAccount -> onFtdcTradingAccount(event);
-            case Unsupported -> onUnsupported(event);
+            case FRONT_DISCONNECTED -> onFrontDisconnected(event);
+            case HEARTBEAT_WARNING -> onHeartBeatWarning(event);
+            case RSP_ERROR -> onRspError(event);
+            case RSP_USER_LOGIN -> onRspUserLogin(event);
+            case USER_LOGOUT -> onUserLogout(event);
+            case FTDC_DEPTH_MARKET_DATA -> onFtdcDepthMarketData(event);
+            case FTDC_SPECIFIC_INSTRUMENT -> onFtdcSpecificInstrument(event);
+            case FTDC_INPUT_ORDER -> onFtdcInputOrder(event);
+            case FTDC_INPUT_ORDER_ACTION -> onFtdcInputOrderAction(event);
+            case FTDC_INSTRUMENT_STATUS -> onFtdcInstrumentStatus(event);
+            case FTDC_INVESTOR_POSITION -> onFtdcInvestorPosition(event);
+            case FTDC_ORDER -> onFtdcOrder(event);
+            case FTDC_ORDER_ACTION -> onFtdcOrderAction(event);
+            case FTDC_TRADE -> onFtdcTrade(event);
+            case FTDC_TRADING_ACCOUNT -> onFtdcTradingAccount(event);
+            case UNSUPPORTED -> onUnsupported(event);
             case null, default -> StaticLogger.error("NOTE FtdcRspHandlerImpl::handle, event -> {},", event);
         }
     }
@@ -40,42 +40,42 @@ public abstract non-sealed class FtdcRspHandlerImpl implements FtdcRspHandler {
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onUnsupported(FtdcRspEvent event);
+    protected abstract void onUnsupported(FtdcRspEvent event);
 
     /**
      * 通信连接断开
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFrontDisconnected(FtdcRspEvent event);
+    protected abstract void onFrontDisconnected(FtdcRspEvent event);
 
     /**
      * 心跳超时警告
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onHeartBeatWarning(FtdcRspEvent event);
+    protected abstract void onHeartBeatWarning(FtdcRspEvent event);
 
     /**
      * 错误应答
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onRspError(FtdcRspEvent event);
+    protected abstract void onRspError(FtdcRspEvent event);
 
     /**
      * 用户登录响应
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onRspUserLogin(FtdcRspEvent event);
+    protected abstract void onRspUserLogin(FtdcRspEvent event);
 
     /**
      * 用户登出请求(响应)
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onUserLogout(FtdcRspEvent event);
+    protected abstract void onUserLogout(FtdcRspEvent event);
 
     //////////////////////////////////// MD RSP ////////////////////////////////////
 
@@ -84,14 +84,14 @@ public abstract non-sealed class FtdcRspHandlerImpl implements FtdcRspHandler {
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcDepthMarketData(FtdcRspEvent event);
+    protected abstract void onFtdcDepthMarketData(FtdcRspEvent event);
 
     /**
      * 指定的合约
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcSpecificInstrument(FtdcRspEvent event);
+    protected abstract void onFtdcSpecificInstrument(FtdcRspEvent event);
 
 
     //////////////////////////////////// TRADER RSP ////////////////////////////////////
@@ -101,55 +101,55 @@ public abstract non-sealed class FtdcRspHandlerImpl implements FtdcRspHandler {
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcInputOrder(FtdcRspEvent event);
+    protected abstract void onFtdcInputOrder(FtdcRspEvent event);
 
     /**
      * 返回撤单提交错误
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcInputOrderAction(FtdcRspEvent event);
+    protected abstract void onFtdcInputOrderAction(FtdcRspEvent event);
 
     /**
      * 合约状态
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcInstrumentStatus(FtdcRspEvent event);
+    protected abstract void onFtdcInstrumentStatus(FtdcRspEvent event);
 
     /**
      * 持仓信息
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcInvestorPosition(FtdcRspEvent event);
+    protected abstract void onFtdcInvestorPosition(FtdcRspEvent event);
 
     /**
      * 报单推送
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcOrder(FtdcRspEvent event);
+    protected abstract void onFtdcOrder(FtdcRspEvent event);
 
     /**
      * 返回撤单错误
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcOrderAction(FtdcRspEvent event);
+    protected abstract void onFtdcOrderAction(FtdcRspEvent event);
 
     /**
      * 成交推送
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcTrade(FtdcRspEvent event);
+    protected abstract void onFtdcTrade(FtdcRspEvent event);
 
     /**
      * 账户信息(余额)
      *
      * @param event FtdcRspEvent
      */
-    abstract protected void onFtdcTradingAccount(FtdcRspEvent event);
+    protected abstract void onFtdcTradingAccount(FtdcRspEvent event);
 
 }

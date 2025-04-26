@@ -12,15 +12,15 @@ public class FtdcRsp {
     /**
      * 响应类型
      */
-    public FtdcRspType RspType;
+    public FtdcRspType type;
     /**
      * 时间戳
      */
-    public EpochRecord EpochRecord;
+    public EpochRecord epochRecord;
     /**
      * FTDC响应内容 - 已序列化
      */
-    public ByteBuffer RspContent;
+    public ByteBuffer content;
 
 }
 

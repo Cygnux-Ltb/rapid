@@ -32,8 +32,8 @@ import static io.mercury.common.lang.Asserter.nonNull;
 import static io.mercury.common.thread.Fibers.startNewFiber;
 import static io.mercury.common.thread.Threads.startNewMaxPriorityThread;
 import static io.rapid.adaptor.ctp.event.source.EventSource.MD;
-import static io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource.SubMarketData;
-import static io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource.UnsubMarketData;
+import static io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource.SUB_MARKET_DATA;
+import static io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource.UNSUB_MARKET_DATA;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonError;
 import static io.rapid.adaptor.ctp.gateway.FtdcFieldValidator.nonnull;
 
@@ -233,7 +233,7 @@ public final class FtdcMdGateway extends FtdcMdListenerImpl implements Closeable
                 && nonnull(Field, "MdGateway::fireRspSubMarketData", RequestID, IsLast)) {
             log.info("MdGateway::fireRspSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
                     RequestID, IsLast, Field.getInstrumentID());
-            publisher.publishSpecificInstrument(SubMarketData, Field, RspInfo, RequestID, IsLast);
+            publisher.publishSpecificInstrument(SUB_MARKET_DATA, Field, RspInfo, RequestID, IsLast);
         }
     }
 
@@ -252,7 +252,7 @@ public final class FtdcMdGateway extends FtdcMdListenerImpl implements Closeable
                 && nonnull(Field, "MdGateway::fireRspUnSubMarketData", RequestID, IsLast)) {
             log.info("MdGateway::fireRspUnSubMarketData -> RequestID==[{}], IsLast==[{}], InstrumentCode==[{}]",
                     RequestID, IsLast, Field.getInstrumentID());
-            publisher.publishSpecificInstrument(UnsubMarketData, Field, RspInfo, RequestID, IsLast);
+            publisher.publishSpecificInstrument(UNSUB_MARKET_DATA, Field, RspInfo, RequestID, IsLast);
         }
     }
 

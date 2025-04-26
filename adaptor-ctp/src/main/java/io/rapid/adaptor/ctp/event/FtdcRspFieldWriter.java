@@ -91,7 +91,7 @@ public final class FtdcRspFieldWriter {
         depthMarketData.UpdateMillisec = Field.getUpdateMillisec();
         depthMarketData.ActionDay = Field.getActionDay();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcDepthMarketData);
+                .setType(FtdcRspType.FTDC_DEPTH_MARKET_DATA);
     }
 
     /**
@@ -146,7 +146,7 @@ public final class FtdcRspFieldWriter {
         // 后台版本信息
         rspUserLogin.SysVersion = Field.getSysVersion();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.RspUserLogin);
+                .setType(FtdcRspType.RSP_USER_LOGIN);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class FtdcRspFieldWriter {
         userLogout.BrokerID = Field.getBrokerID();
         userLogout.UserID = Field.getUserID();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.UserLogout);
+                .setType(FtdcRspType.USER_LOGOUT);
     }
 
     /**
@@ -192,7 +192,7 @@ public final class FtdcRspFieldWriter {
         // 错误原因
         frontDisconnected.Msg = "FrontDisconnected-" + FtdcFrontDisconnectedReason.getPrompt(Reason);
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FrontDisconnected);
+                .setType(FtdcRspType.FRONT_DISCONNECTED);
     }
 
     /**
@@ -216,7 +216,7 @@ public final class FtdcRspFieldWriter {
         // 用户代码
         heartBeatWarning.UserID = UserID;
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.HeartBeatWarning);
+                .setType(FtdcRspType.HEARTBEAT_WARNING);
     }
 
     /**
@@ -240,7 +240,7 @@ public final class FtdcRspFieldWriter {
         rspError.RequestID = RequestID;
         rspError.IsLast = IsLast;
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.RspError);
+                .setType(FtdcRspType.RSP_ERROR);
     }
 
     /**
@@ -262,7 +262,7 @@ public final class FtdcRspFieldWriter {
         instrumentStatus.EnterTime = Field.getEnterTime();
         instrumentStatus.EnterReason = Field.getEnterReason();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInstrumentStatus);
+                .setType(FtdcRspType.FTDC_INSTRUMENT_STATUS);
     }
 
     /**
@@ -312,7 +312,7 @@ public final class FtdcRspFieldWriter {
         inputOrder.IPAddress = Field.getIPAddress();
         inputOrder.MacAddress = Field.getMacAddress();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInputOrder);
+                .setType(FtdcRspType.FTDC_INPUT_ORDER);
     }
 
     /**
@@ -349,7 +349,7 @@ public final class FtdcRspFieldWriter {
         inputOrderAction.IPAddress = Field.getIPAddress();
         inputOrderAction.MacAddress = Field.getMacAddress();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInputOrderAction);
+                .setType(FtdcRspType.FTDC_INPUT_ORDER_ACTION);
     }
 
 
@@ -467,7 +467,7 @@ public final class FtdcRspFieldWriter {
         // 6.3.15 版本使用
         investorPosition.PositionCostOffset = Field.getPositionCostOffset();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInvestorPosition);
+                .setType(FtdcRspType.FTDC_INVESTOR_POSITION);
     }
 
     /**
@@ -543,7 +543,7 @@ public final class FtdcRspFieldWriter {
         order.IPAddress = OrderField.getIPAddress();
         order.MacAddress = OrderField.getMacAddress();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcOrder);
+                .setType(FtdcRspType.FTDC_ORDER);
     }
 
     /**
@@ -613,7 +613,7 @@ public final class FtdcRspFieldWriter {
         // MAC地址
         orderAction.MacAddress = OrderActionField.getMacAddress();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcOrderAction);
+                .setType(FtdcRspType.FTDC_ORDER_ACTION);
     }
 
     /**
@@ -688,7 +688,7 @@ public final class FtdcRspFieldWriter {
         // 投资单元代码
         trade.InvestUnitID = TradeField.getInvestUnitID();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcTrade);
+                .setType(FtdcRspType.FTDC_TRADE);
     }
 
     /**
@@ -807,7 +807,7 @@ public final class FtdcRspFieldWriter {
         // 剩余换汇额度
         tradingAccount.RemainSwap = Field.getRemainSwap();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcTradingAccount);
+                .setType(FtdcRspType.FTDC_TRADING_ACCOUNT);
     }
 
     /**
@@ -835,7 +835,7 @@ public final class FtdcRspFieldWriter {
         // 合约代码
         specificInstrument.InstrumentID = Field.getInstrumentID();
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcSpecificInstrument);
+                .setType(FtdcRspType.FTDC_SPECIFIC_INSTRUMENT);
     }
 
 }

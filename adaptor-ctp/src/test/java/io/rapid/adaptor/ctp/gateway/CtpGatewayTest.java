@@ -46,7 +46,7 @@ public class CtpGatewayTest {
         final Queue<FtdcRspEvent> queue = SingleConsumerQueueWithJCT.mpscQueue("Simnow-Handle-Queue").capacity(128)
                 .process(msg -> {
                     switch (msg.getType()) {
-                        case FtdcRspType.FtdcDepthMarketData -> {
+                        case FtdcRspType.FTDC_DEPTH_MARKET_DATA -> {
                             FtdcDepthMarketData depthMarketData = msg.getFtdcDepthMarketData();
 //                            log.info(
 //                                    "Handle CThostFtdcDepthMarketDataField -> InstrumentID==[{}]  UpdateTime==[{}]  UpdateMillisec==[{}]  AskPrice1==[{}]  BidPrice1==[{}]",
@@ -54,11 +54,11 @@ public class CtpGatewayTest {
 //                                    depthMarketData.getUpdateMillisec(), depthMarketData.getAskPrice1(),
 //                                    depthMarketData.getBidPrice1());
                         }
-                        case FtdcOrder -> {
+                        case FTDC_ORDER -> {
                             FtdcOrder order = msg.getFtdcOrder();
                             log.info("Handle RtnOrder -> OrderRef==[{}]", order.OrderRef);
                         }
-                        case FtdcTrade -> {
+                        case FTDC_TRADE -> {
                             FtdcTrade trade = msg.getFtdcTrade();
                             log.info("Handle RtnTrade -> OrderRef==[{}]", trade.OrderRef);
                         }
