@@ -26,7 +26,7 @@ public class InstrumentStatusReport extends JsonBean implements Copyable<Instrum
     private String msg;
 
     @Override
-    public void copyFrom(InstrumentStatusReport source) {
+    public void copyValue(InstrumentStatusReport source) {
         // 复制行情订阅状态
         this.subscribeStatus = source.subscribeStatus;
         // 复制交易状态

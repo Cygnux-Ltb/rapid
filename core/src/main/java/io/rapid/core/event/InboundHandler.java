@@ -24,13 +24,13 @@ public interface InboundHandler extends EventHandler<InboundEvent>,
     @Override
     default void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
         switch (event.getType()) {
-            case RawMarketData -> handleRawMarketData(event.getRawMarketData());
-            case DepthMarketData -> handleDepthMarketData(event.getDepthMarketData());
-            case OrderReport -> handleOrderReport(event.getOrderReport());
-            case PositionsReport -> handlePositionsReport(event.getPositionsReport());
-            case BalanceReport -> handleBalanceReport(event.getBalanceReport());
-            case InstrumentStatusReport -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
-            case AdaptorReport -> handleAdaptorReport(event.getAdaptorReport());
+            case RAW_MARKET_DATA -> handleRawMarketData(event.getRawMarketData());
+            case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
+            case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
+            case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
+            case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
+            case INSTRUMENT_STATUS_REPORT -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
+            case ADAPTOR_STATUS_REPORT -> handleAdaptorReport(event.getAdaptorReport());
             case null, default ->
                     StaticLogger.error("NOTE InboundHandler::onEvent, event -> {}, sequence==[{}], endOfBatch==[{}]",
                             event, sequence, endOfBatch);

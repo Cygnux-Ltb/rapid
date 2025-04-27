@@ -41,7 +41,7 @@ public class DepthMarketData extends JsonBean implements Copyable<DepthMarketDat
     private int updateMillisec;
 
     @Override
-    public void copyFrom(DepthMarketData source) {
+    public void copyValue(DepthMarketData source) {
         // 复制时间戳
         this.epochMicros = source.epochMicros;
         // 复制交易标的ID

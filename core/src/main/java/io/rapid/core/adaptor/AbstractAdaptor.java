@@ -7,7 +7,7 @@ import io.mercury.common.state.EnableableComponent;
 import io.mercury.common.state.StartupException;
 import io.rapid.core.account.Account;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.enums.ChannelType;
+import io.rapid.core.event.enums.AdaptorType;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -88,27 +88,27 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
      */
     private void handleSendEvent(OutboundEvent event) {
         switch (event.getType()) {
-            case SubscribeMarketData -> {
+            case SUBSCRIBE_MARKET_DATA -> {
                 log.info("{} -> Call directSubscribeMarketData, event -> {} ", adaptorId, event);
                 directSubscribeMarketData(event.getSubscribeMarketData());
             }
-            case NewOrder -> {
+            case NEW_ORDER -> {
                 log.info("{} -> Call directNewOrder, event -> {} ", adaptorId, event);
                 directNewOrder(event.getNewOrder());
             }
-            case CancelOrder -> {
+            case CANCEL_ORDER -> {
                 log.info("{} -> Call directCancelOrder, event -> {} ", adaptorId, event);
                 directCancelOrder(event.getCancelOrder());
             }
-            case QueryOrder -> {
+            case QUERY_ORDER -> {
                 log.info("{} -> Call directQueryOrder, event -> {} ", adaptorId, event);
                 directQueryOrder(event.getQueryOrder());
             }
-            case QueryPosition -> {
+            case QUERY_POSITIONS -> {
                 log.info("{} -> Call directQueryPositions, event -> {} ", adaptorId, event);
                 directQueryPosition(event.getQueryPosition());
             }
-            case QueryBalance -> {
+            case QUERY_BALANCE -> {
                 log.info("{} -> Call directQueryBalance, event -> {} ", adaptorId, event);
                 directQueryBalance(event.getQueryBalance());
             }
@@ -131,12 +131,12 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     /**
      * 更新Adaptor状态
      *
-     * @param channelType ChannelType
+     * @param adaptorType ChannelType
      * @param isEnabled   boolean
      */
     @Override
-    public void updateStatus(ChannelType channelType, boolean isEnabled) {
-        switch (channelType) {
+    public void updateStatus(AdaptorType adaptorType, boolean isEnabled) {
+        switch (adaptorType) {
             case MARKET_DATA -> status.setMarketDataEnabled(isEnabled);
             case TRADING -> status.setTraderEnabled(isEnabled);
             case FULL -> status.setMarketDataEnabled(isEnabled)

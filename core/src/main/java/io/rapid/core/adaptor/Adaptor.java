@@ -3,7 +3,7 @@ package io.rapid.core.adaptor;
 import io.mercury.common.state.Enableable;
 import io.mercury.common.state.StartupException;
 import io.rapid.core.account.Account;
-import io.rapid.core.event.enums.ChannelType;
+import io.rapid.core.event.enums.AdaptorType;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -61,9 +61,9 @@ public sealed interface Adaptor extends Closeable, Enableable permits AbstractAd
     /**
      * 更新Adaptor状态
      *
-     * @param channelType AdaptorStatus
+     * @param adaptorType AdaptorStatus
      */
-    void updateStatus(ChannelType channelType, boolean isEnabled);
+    void updateStatus(AdaptorType adaptorType, boolean isEnabled);
 
     /**
      * 获取当前Adaptor状态

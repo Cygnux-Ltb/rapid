@@ -2,7 +2,7 @@ package io.rapid.core.event.inbound;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.rapid.core.event.enums.ChannelType;
+import io.rapid.core.event.enums.AdaptorType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,12 +24,12 @@ public class AdaptorReport extends JsonBean implements Copyable<AdaptorReport> {
     private long epochMillis;
     private int accountId;
     private String adaptorId;
-    private ChannelType channelType;
+    private AdaptorType adaptorType;
     private boolean isAvailable;
     private String msg;
 
     @Override
-    public void copyFrom(AdaptorReport source) {
+    public void copyValue(AdaptorReport source) {
         // 复制事件发生的时间 (Epoch Millisecond Unit)
         this.epochMillis = source.epochMillis;
         // 复制账户ID
@@ -37,7 +37,7 @@ public class AdaptorReport extends JsonBean implements Copyable<AdaptorReport> {
         // 复制适配器ID
         this.adaptorId = source.adaptorId;
         // 复制通道类型
-        this.channelType = source.channelType;
+        this.adaptorType = source.adaptorType;
         // 复制可用状态
         this.isAvailable = source.isAvailable;
         // 复制消息

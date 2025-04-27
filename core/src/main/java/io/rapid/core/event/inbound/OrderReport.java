@@ -48,7 +48,7 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
     private String msg;
 
     @Override
-    public void copyFrom(OrderReport source) {
+    public void copyValue(OrderReport source) {
         // 复制微秒级时间戳
         this.epochMicros = source.epochMicros;
         // 复制订单系统ID

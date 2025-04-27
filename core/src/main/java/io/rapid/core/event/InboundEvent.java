@@ -4,7 +4,7 @@ import com.lmax.disruptor.EventFactory;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.DepthMarketData;
@@ -39,7 +39,7 @@ public final class InboundEvent implements JsonSerializable {
      * 事件类型
      */
     @Getter
-    private InboundEventType type = InboundEventType.Invalid;
+    private InboundEventType type = InboundEventType.INVALID;
 
     /// EVENT INSTANCE ///
     @Getter
@@ -70,8 +70,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(RawMarketData event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.RawMarketData;
-        this.rawMarketData.copyFrom(event);
+        this.type = InboundEventType.RAW_MARKET_DATA;
+        this.rawMarketData.copyValue(event);
         return this;
     }
 
@@ -81,8 +81,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(DepthMarketData event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.DepthMarketData;
-        this.depthMarketData.copyFrom(event);
+        this.type = InboundEventType.DEPTH_MARKET_DATA;
+        this.depthMarketData.copyValue(event);
         return this;
     }
 
@@ -92,8 +92,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(OrderReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.OrderReport;
-        this.orderReport.copyFrom(event);
+        this.type = InboundEventType.ORDER_REPORT;
+        this.orderReport.copyValue(event);
         return this;
     }
 
@@ -103,8 +103,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(PositionsReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.PositionsReport;
-        this.positionsReport.copyFrom(event);
+        this.type = InboundEventType.POSITIONS_REPORT;
+        this.positionsReport.copyValue(event);
         return this;
     }
 
@@ -114,8 +114,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(BalanceReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.BalanceReport;
-        this.balanceReport.copyFrom(event);
+        this.type = InboundEventType.BALANCE_REPORT;
+        this.balanceReport.copyValue(event);
         return this;
     }
 
@@ -125,8 +125,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(AdaptorReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.AdaptorReport;
-        this.adaptorReport.copyFrom(event);
+        this.type = InboundEventType.ADAPTOR_STATUS_REPORT;
+        this.adaptorReport.copyValue(event);
         return this;
     }
 
@@ -136,8 +136,8 @@ public final class InboundEvent implements JsonSerializable {
      */
     public InboundEvent updateWith(InstrumentStatusReport event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.InstrumentStatusReport;
-        this.instrumentStatusReport.copyFrom(event);
+        this.type = InboundEventType.INSTRUMENT_STATUS_REPORT;
+        this.instrumentStatusReport.copyValue(event);
         return this;
     }
 
@@ -149,20 +149,20 @@ public final class InboundEvent implements JsonSerializable {
     /**
      * @return JsonRecord
      */
-    public JsonRecord toJsonRecord() {
-        return new JsonRecord()
+    public JsonObjectExt toJsonRecord() {
+        return new JsonObjectExt()
                 .setTitle(type.name())
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
-                .setRecord(switch (type) {
-                    case RawMarketData -> rawMarketData;
-                    case DepthMarketData -> depthMarketData;
-                    case OrderReport -> orderReport;
-                    case PositionsReport -> positionsReport;
-                    case BalanceReport -> balanceReport;
-                    case AdaptorReport -> adaptorReport;
-                    case InstrumentStatusReport -> instrumentStatusReport;
-                    case Invalid -> null;
+                .setObject(switch (type) {
+                    case RAW_MARKET_DATA -> rawMarketData;
+                    case DEPTH_MARKET_DATA -> depthMarketData;
+                    case ORDER_REPORT -> orderReport;
+                    case POSITIONS_REPORT -> positionsReport;
+                    case BALANCE_REPORT -> balanceReport;
+                    case ADAPTOR_STATUS_REPORT -> adaptorReport;
+                    case INSTRUMENT_STATUS_REPORT -> instrumentStatusReport;
+                    case INVALID -> null;
                 });
     }
 

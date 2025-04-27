@@ -1,6 +1,6 @@
 package io.rapid.core.event.enums;
 
-public enum ChannelType {
+public enum AdaptorType {
 
     MARKET_DATA,
 

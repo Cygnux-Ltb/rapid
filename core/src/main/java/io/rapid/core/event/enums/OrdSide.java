@@ -13,18 +13,22 @@ public enum OrdSide {
      * 无效
      */
     INVALID(OrdConstant.INVALID),
+
     /**
      * 买
      */
     BUY(OrdConstant.SIDE_BUY),
+
     /**
      * 卖
      */
     SELL(OrdConstant.SIDE_SELL),
+
     /**
      * 融资买入
      */
     MARGIN_BUY(OrdConstant.SIDE_MARGIN_BUY),
+
     /**
      * 融券卖出
      */

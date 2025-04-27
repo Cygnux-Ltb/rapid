@@ -74,7 +74,7 @@ public abstract non-sealed class AbstractAdaptorManager implements AdaptorManage
     public void onAdaptorEvent(AdaptorReport event) {
         var adaptor = getAdaptor(event.getAccountId());
         var currentStatus = adaptor.currentStatus();
-        var channelType = event.getChannelType();
+        var channelType = event.getAdaptorType();
         log.info("Adaptor -> [{}] current status update to [{}]",
                 adaptor.getAdaptorId(), currentStatus);
         adaptor.updateStatus(channelType, event.isAvailable());

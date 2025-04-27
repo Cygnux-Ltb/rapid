@@ -50,7 +50,7 @@ public class QueryBalance extends JsonBean implements Copyable<QueryBalance> {
     private String source;
 
     @Override
-    public void copyFrom(QueryBalance source) {
+    public void copyValue(QueryBalance source) {
         // 1. 复制生成时间 (Epoch Millisecond Unit)
         this.generateTime = source.generateTime;
         // 2. 复制发送时间 (Epoch Millisecond Unit)

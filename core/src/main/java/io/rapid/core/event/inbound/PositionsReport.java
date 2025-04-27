@@ -38,7 +38,7 @@ public class PositionsReport extends JsonBean implements Copyable<PositionsRepor
     private String msg;
 
     @Override
-    public void copyFrom(PositionsReport source) {
+    public void copyValue(PositionsReport source) {
         // 复制事件的时间戳
         this.epochMillis = source.epochMillis;
         // 复制经纪商ID

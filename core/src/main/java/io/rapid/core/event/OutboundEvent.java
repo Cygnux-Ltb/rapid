@@ -4,7 +4,7 @@ import com.lmax.disruptor.EventFactory;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -67,8 +67,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(NewOrder newOrder) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.NewOrder;
-        this.newOrder.copyFrom(newOrder);
+        this.type = OutboundEventType.NEW_ORDER;
+        this.newOrder.copyValue(newOrder);
         return this;
     }
 
@@ -78,8 +78,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(CancelOrder cancelOrder) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.CancelOrder;
-        this.cancelOrder.copyFrom(cancelOrder);
+        this.type = OutboundEventType.CANCEL_ORDER;
+        this.cancelOrder.copyValue(cancelOrder);
         return this;
     }
 
@@ -89,8 +89,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(QueryOrder queryOrder) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.QueryOrder;
-        this.queryOrder.copyFrom(queryOrder);
+        this.type = OutboundEventType.QUERY_ORDER;
+        this.queryOrder.copyValue(queryOrder);
         return this;
     }
 
@@ -100,8 +100,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(QueryPosition queryPosition) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.QueryPosition;
-        this.queryPosition.copyFrom(queryPosition);
+        this.type = OutboundEventType.QUERY_POSITIONS;
+        this.queryPosition.copyValue(queryPosition);
         return this;
     }
 
@@ -111,8 +111,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(QueryBalance queryBalance) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.QueryBalance;
-        this.queryBalance.copyFrom(queryBalance);
+        this.type = OutboundEventType.QUERY_BALANCE;
+        this.queryBalance.copyValue(queryBalance);
         return this;
     }
 
@@ -122,8 +122,8 @@ public final class OutboundEvent implements JsonSerializable {
      */
     public OutboundEvent updateWith(SubscribeMarketData subscribeMarketData) {
         this.epochMicros = micros();
-        this.type = OutboundEventType.SubscribeMarketData;
-        this.subscribeMarketData.copyFrom(subscribeMarketData);
+        this.type = OutboundEventType.SUBSCRIBE_MARKET_DATA;
+        this.subscribeMarketData.copyValue(subscribeMarketData);
         return this;
     }
 
@@ -135,17 +135,17 @@ public final class OutboundEvent implements JsonSerializable {
     @Nonnull
     @Override
     public String toJson() {
-        return new JsonRecord()
+        return new JsonObjectExt()
                 .setTitle(type.name())
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
-                .setRecord(switch (type) {
-                    case NewOrder -> newOrder;
-                    case CancelOrder -> cancelOrder;
-                    case QueryOrder -> queryOrder;
-                    case QueryPosition -> queryPosition;
-                    case QueryBalance -> queryBalance;
-                    case SubscribeMarketData -> subscribeMarketData;
+                .setObject(switch (type) {
+                    case NEW_ORDER -> newOrder;
+                    case CANCEL_ORDER -> cancelOrder;
+                    case QUERY_ORDER -> queryOrder;
+                    case QUERY_POSITIONS -> queryPosition;
+                    case QUERY_BALANCE -> queryBalance;
+                    case SUBSCRIBE_MARKET_DATA -> subscribeMarketData;
                 }).toJson();
     }
 

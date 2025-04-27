@@ -23,12 +23,12 @@ public interface OutboundHandler extends EventHandler<OutboundEvent>,
     @Override
     default void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) throws Exception {
         switch (event.getType()) {
-            case NewOrder -> handleNewOrder(event.getNewOrder());
-            case CancelOrder -> handleCancelOrder(event.getCancelOrder());
-            case QueryOrder -> handleQueryOrder(event.getQueryOrder());
-            case QueryPosition -> handleQueryPosition(event.getQueryPosition());
-            case QueryBalance -> handleQueryBalance(event.getQueryBalance());
-            case SubscribeMarketData -> handleSubscribeMarketData(event.getSubscribeMarketData());
+            case NEW_ORDER -> handleNewOrder(event.getNewOrder());
+            case CANCEL_ORDER -> handleCancelOrder(event.getCancelOrder());
+            case QUERY_ORDER -> handleQueryOrder(event.getQueryOrder());
+            case QUERY_POSITIONS -> handleQueryPosition(event.getQueryPosition());
+            case QUERY_BALANCE -> handleQueryBalance(event.getQueryBalance());
+            case SUBSCRIBE_MARKET_DATA -> handleSubscribeMarketData(event.getSubscribeMarketData());
             case null, default ->
                     StaticLogger.error("NOTE OutboundHandler::onEvent, event -> {}, sequence==[{}], endOfBatch==[{}]",
                             event, sequence, endOfBatch);
