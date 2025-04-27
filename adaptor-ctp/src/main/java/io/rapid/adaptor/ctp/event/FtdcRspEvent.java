@@ -3,7 +3,7 @@ package io.rapid.adaptor.ctp.event;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import io.rapid.adaptor.ctp.event.md.FtdcSpecificInstrument;
 import io.rapid.adaptor.ctp.event.shared.FrontDisconnected;
@@ -137,23 +137,23 @@ public final class FtdcRspEvent implements JsonSerializable {
         return toJson();
     }
 
-    public JsonRecord toJsonRecord() {
-        return setValue(new JsonRecord().setEpochUnit(EpochUnit.MICROS));
+    public JsonObjectExt toJsonObjectExt() {
+        return setValue(new JsonObjectExt().setEpochUnit(EpochUnit.MICROS));
     }
 
     // 复用Record
-    private final JsonRecord record = new JsonRecord().setEpochUnit(EpochUnit.MICROS);
+    private final JsonObjectExt jsonObjectExt = new JsonObjectExt().setEpochUnit(EpochUnit.MICROS);
 
     @Nonnull
     @Override
     public String toJson() {
-        return setValue(record).toJson();
+        return setValue(jsonObjectExt).toJson();
     }
 
-    private JsonRecord setValue(JsonRecord record) {
-        return record.setTitle(type.name())
+    private JsonObjectExt setValue(JsonObjectExt objectExt) {
+        return objectExt.setTitle(type.name())
                 .setEpochTime(epochMicros)
-                .setRecord(switch (type) {
+                .setObject(switch (type) {
                     case FTDC_DEPTH_MARKET_DATA -> ftdcDepthMarketData;
                     case FTDC_ORDER -> ftdcOrder;
                     case FTDC_TRADE -> ftdcTrade;

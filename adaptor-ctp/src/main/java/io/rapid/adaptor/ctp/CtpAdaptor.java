@@ -16,7 +16,7 @@ import io.rapid.core.adaptor.AdaptorRunningMode;
 import io.rapid.core.event.InboundEvent;
 import io.rapid.core.event.InboundEventLoop;
 import io.rapid.core.event.InboundHandler;
-import io.rapid.core.event.enums.ChannelType;
+import io.rapid.core.event.enums.AdaptorType;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
@@ -199,10 +199,10 @@ public class CtpAdaptor extends AbstractAdaptor {
         var report = AdaptorReport.builder();
         if (source == EventSource.MD) {
             this.isMdAvailable = isAvailable;
-            report.channelType(ChannelType.MARKET_DATA);
+            report.adaptorType(AdaptorType.MARKET_DATA);
         } else if (source == EventSource.TD) {
             this.isTraderAvailable = isAvailable;
-            report.channelType(ChannelType.TRADING);
+            report.adaptorType(AdaptorType.TRADING);
         }
         return report.adaptorId(adaptorId)
                 .accountId(account.getAccountId())
