@@ -76,14 +76,14 @@ public class CoreSchedulerService implements CoreScheduler {
         @Override
         public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
-                case RawMarketData -> handleRawMarketData(event.getRawMarketData());
-                case DepthMarketData -> handleDepthMarketData(event.getDepthMarketData());
-                case OrderReport -> handleOrderReport(event.getOrderReport());
-                case PositionsReport -> handlePositionsReport(event.getPositionsReport());
-                case BalanceReport -> handleBalanceReport(event.getBalanceReport());
-                case AdaptorReport -> handleAdaptorReport(event.getAdaptorReport());
-                case InstrumentStatusReport -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
-                case Invalid -> log.error("NOTE Unknown InboundEvent -> {}", event);
+                case RAW_MARKET_DATA -> handleRawMarketData(event.getRawMarketData());
+                case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
+                case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
+                case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
+                case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
+                case ADAPTOR_STATUS_REPORT -> handleAdaptorReport(event.getAdaptorReport());
+                case INSTRUMENT_STATUS_REPORT -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
+                case INVALID -> log.error("NOTE Unknown InboundEvent -> {}", event);
             }
         }
     };

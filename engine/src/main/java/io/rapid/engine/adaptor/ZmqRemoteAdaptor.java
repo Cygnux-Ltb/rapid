@@ -1,6 +1,6 @@
 package io.rapid.engine.adaptor;
 
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqPublisher;
 import io.rapid.core.account.Account;
@@ -52,7 +52,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     // TODO 性能扩展使用
     // private final FuryMsg furyMsg = new FuryMsg();
 
-    private final JsonRecord record = new JsonRecord();
+    private final JsonObjectExt record = new JsonObjectExt();
 
     @Override
     protected boolean directSubscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {

@@ -3,7 +3,7 @@ package io.rapid.engine;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.state.StartupException;
 import io.mercury.serialization.json.JsonParser;
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqSubscriber;
 import io.rapid.core.adaptor.Adaptor;
@@ -43,18 +43,18 @@ public class InboundFeederService implements InboundFeeder {
     private void handleMsg(byte[] topicBytes, byte[] bodyBytes) {
         String topic = new String(topicBytes);
         String body = new String(bodyBytes);
-        JsonRecord record = JsonParser.toObject(body, JsonRecord.class);
+        JsonObjectExt record = JsonParser.toObject(body, JsonObjectExt.class);
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
         switch (InboundEventType.valueOf(title)) {
-            case RawMarketData -> loop.put(record.getRecordWith(RawMarketData.class));
-            case DepthMarketData -> loop.put(record.getRecordWith(DepthMarketData.class));
-            case OrderReport -> loop.put(record.getRecordWith(OrderReport.class));
-            case PositionsReport -> loop.put(record.getRecordWith(PositionsReport.class));
-            case BalanceReport -> loop.put(record.getRecordWith(BalanceReport.class));
-            case AdaptorReport -> loop.put(record.getRecordWith(AdaptorReport.class));
-            case InstrumentStatusReport -> loop.put(record.getRecordWith(InstrumentStatusReport.class));
-            case Invalid -> log.error("Invalid event received -> {}", record);
+            case RAW_MARKET_DATA -> loop.put(record.getWith(RawMarketData.class));
+            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketData.class));
+            case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));
+            case POSITIONS_REPORT -> loop.put(record.getWith(PositionsReport.class));
+            case BALANCE_REPORT -> loop.put(record.getWith(BalanceReport.class));
+            case ADAPTOR_STATUS_REPORT -> loop.put(record.getWith(AdaptorReport.class));
+            case INSTRUMENT_STATUS_REPORT -> loop.put(record.getWith(InstrumentStatusReport.class));
+            case INVALID -> log.error("Invalid event received -> {}", record);
         }
 //        log.info("Received -> epochMicros == {}, title == {}, From topic -> {}", epochTime, title, topic);
 //        log.info("Received -> record == {}", record.getRecord());

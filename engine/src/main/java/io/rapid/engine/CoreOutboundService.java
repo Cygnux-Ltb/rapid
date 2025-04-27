@@ -31,17 +31,17 @@ public class CoreOutboundService implements OutboundHandler {
         public void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
-                case SubscribeMarketData -> adaptorManager
+                case SUBSCRIBE_MARKET_DATA -> adaptorManager
                         .commitSubscribeMarketData(event.getSubscribeMarketData());
-                case NewOrder -> adaptorManager
+                case NEW_ORDER -> adaptorManager
                         .commitNewOrder(event.getNewOrder());
-                case CancelOrder -> adaptorManager
+                case CANCEL_ORDER -> adaptorManager
                         .commitCancelOrder(event.getCancelOrder());
-                case QueryOrder -> adaptorManager
+                case QUERY_ORDER -> adaptorManager
                         .commitQueryOrder(event.getQueryOrder());
-                case QueryPosition -> adaptorManager
+                case QUERY_POSITIONS -> adaptorManager
                         .commitQueryPositions(event.getQueryPosition());
-                case QueryBalance -> adaptorManager
+                case QUERY_BALANCE -> adaptorManager
                         .commitQueryBalance(event.getQueryBalance());
             }
         }

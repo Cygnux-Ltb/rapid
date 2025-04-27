@@ -38,8 +38,8 @@ public class StrategyImpl extends AbstractStrategy {
 
     private final AdaptorReportHandler adaptorReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
-                getStrategyName(), event.getAdaptorId(), event.getChannelType(), event.isAvailable());
-        switch (event.getChannelType()) {
+                getStrategyName(), event.getAdaptorId(), event.getAdaptorType(), event.isAvailable());
+        switch (event.getAdaptorType()) {
             case MARKET_DATA -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 //adaptor.subscribeMarketData(instrument);
