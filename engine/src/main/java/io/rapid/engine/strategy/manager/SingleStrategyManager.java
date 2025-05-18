@@ -4,11 +4,12 @@ import io.mercury.common.lang.Throws;
 import io.mercury.common.util.ResourceUtil;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.order.OrderKeeper;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
 import io.rapid.core.strategy.StrategyManager;
-import io.rapid.engine.order.OrderKeeper;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,13 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  *
  * @author yellow013
  */
-@Service("singleStrategyManager")
+@Service("single")
 public class SingleStrategyManager implements StrategyManager {
 
     private static final Logger log = getLogger(SingleStrategyManager.class);
+
+    @Resource(name = "mem")
+    private OrderKeeper orderKeeper;
 
     /**
      * Only one strategy
@@ -70,7 +74,7 @@ public class SingleStrategyManager implements StrategyManager {
 
 
     public void onOrderEvent(@Nonnull OrderReport event) {
-        var order = OrderKeeper.handleOrderReport(event);
+        var order = orderKeeper.onOrderReport(event);
         // 调用策略实现的订单回调函数
         strategy.onOrder(order);
     }

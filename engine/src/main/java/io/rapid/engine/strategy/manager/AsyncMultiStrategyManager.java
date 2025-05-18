@@ -4,9 +4,8 @@ import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.mdata.SavedMarketData;
-import io.rapid.core.order.impl.ChildOrder;
+import io.rapid.core.order.Order;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.engine.order.OrderKeeper;
 import org.slf4j.Logger;
 
 import static io.mercury.common.concurrent.queue.SingleConsumerQueueWithJCT.spscQueue;
@@ -43,7 +42,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                             var event = msg.getOrderEvent();
                             log.info("Handle OrderEvent, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                                     event.getOrdSysId());
-                            ChildOrder order = OrderKeeper.handleOrderReport(event);
+                            Order order = orderKeeper.onOrderReport(event);
                             log.info(
                                     "Search Order OK. brokerSysId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
                                     event.getBrokerOrdSysId(), order.getStrategyId(),

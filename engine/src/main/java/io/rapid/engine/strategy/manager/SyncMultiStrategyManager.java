@@ -3,7 +3,6 @@ package io.rapid.engine.strategy.manager;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.strategy.StrategyEvent;
-import io.rapid.engine.order.OrderKeeper;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -35,7 +34,7 @@ public final class SyncMultiStrategyManager extends MultiStrategyManager {
     public void onOrderEvent(@Nonnull OrderReport event) {
         log.info("Handle OrderReport, brokerUniqueId==[{}], ordSysId==[{}]", event.getBrokerOrdSysId(),
                 event.getOrdSysId());
-        var order = OrderKeeper.handleOrderReport(event);
+        var order = orderKeeper.onOrderReport(event);
         log.info("Search Order OK. brokerUniqueId==[{}], strategyId==[{}], instrumentCode==[{}], ordSysId==[{}]",
                 event.getBrokerOrdSysId(), order.getStrategyId(),
                 order.getInstrument().getInstrumentCode(), event.getOrdSysId());

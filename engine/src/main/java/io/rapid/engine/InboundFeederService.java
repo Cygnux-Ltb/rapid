@@ -2,7 +2,7 @@ package io.rapid.engine;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.state.StartupException;
-import io.mercury.serialization.json.JsonParser;
+import io.mercury.serialization.json.JsonReader;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqSubscriber;
@@ -43,7 +43,7 @@ public class InboundFeederService implements InboundFeeder {
     private void handleMsg(byte[] topicBytes, byte[] bodyBytes) {
         String topic = new String(topicBytes);
         String body = new String(bodyBytes);
-        JsonObjectExt record = JsonParser.toObject(body, JsonObjectExt.class);
+        JsonObjectExt record = JsonReader.toObject(body, JsonObjectExt.class);
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
         switch (InboundEventType.valueOf(title)) {

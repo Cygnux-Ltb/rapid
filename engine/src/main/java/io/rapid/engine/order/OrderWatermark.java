@@ -1,9 +1,4 @@
 package io.rapid.engine.order;
 
-public class OrderWatermark {
-
-
-
-
-
+public final class OrderWatermark {
 }

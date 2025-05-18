@@ -5,8 +5,10 @@ import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.collections.MutableSets;
 import io.mercury.common.util.ResourceUtil;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.order.OrderKeeper;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.strategy.StrategyEvent;
+import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.set.MutableSet;
@@ -26,6 +28,9 @@ public class MultiStrategyManager extends AbstractStrategyManager {
      * Logger
      */
     private static final Logger log = getLogger(MultiStrategyManager.class);
+
+    @Resource(name = "mem")
+    protected OrderKeeper orderKeeper;
 
     /**
      * 策略列表

@@ -2,6 +2,7 @@ package io.rapid.engine.strategy;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.param.Params;
 import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.account.AccountManager;
@@ -37,12 +38,11 @@ import java.util.function.Supplier;
 import static io.mercury.common.lang.Asserter.atWithinRange;
 import static io.mercury.common.lang.Asserter.nonEmpty;
 import static io.mercury.common.lang.Asserter.nonNull;
-import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
 @Component
 public abstract class AbstractStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
 
-    private final static Logger log = getLogger(AbstractStrategy.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
 
     /**
      * 策略ID
