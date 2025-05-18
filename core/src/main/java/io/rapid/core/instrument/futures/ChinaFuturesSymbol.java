@@ -34,7 +34,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 铜
      */
-    CU(Exchange.SHFE, "cu", 1, 10,
+    CU(Exchange.SHFE, "cu", 1, 10d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 铜期货交易时段
             newImmutableList(
@@ -49,7 +49,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 铝
      */
-    AL(Exchange.SHFE, "al", 2, 5,
+    AL(Exchange.SHFE, "al", 2, 5d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 铝期货交易时段
             newImmutableList(
@@ -64,7 +64,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 锌
      */
-    ZN(Exchange.SHFE, "zn", 3, 5,
+    ZN(Exchange.SHFE, "zn", 3, 5d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 锌期货交易时段
             newImmutableList(
@@ -79,7 +79,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 镍
      */
-    NI(Exchange.SHFE, "ni", 4, 10,
+    NI(Exchange.SHFE, "ni", 4, 10d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 镍期货交易时段
             newImmutableList(
@@ -94,7 +94,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 黄金
      */
-    AU(Exchange.SHFE, "au", 5, 0.02,
+    AU(Exchange.SHFE, "au", 5, 0.02d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_4,
             // 黄金期货交易时段
             newImmutableList(
@@ -109,7 +109,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 白银
      */
-    AG(Exchange.SHFE, "ag", 6, 1,
+    AG(Exchange.SHFE, "ag", 6, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 白银期货交易时段
             newImmutableList(
@@ -124,7 +124,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 螺纹钢
      */
-    RB(Exchange.SHFE, "rb", 7, 10,
+    RB(Exchange.SHFE, "rb", 7, 10d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 螺纹钢期货交易时段
             newImmutableList(
@@ -139,7 +139,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 热卷扎板
      */
-    HC(Exchange.SHFE, "hc", 8, 10,
+    HC(Exchange.SHFE, "hc", 8, 10d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 热卷扎板期货交易时段
             newImmutableList(
@@ -154,7 +154,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 橡胶
      */
-    RU(Exchange.SHFE, "ru", 9, 5,
+    RU(Exchange.SHFE, "ru", 9, 5d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 橡胶期货交易时段
             newImmutableList(
@@ -169,7 +169,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 燃油
      */
-    FU(Exchange.SHFE, "fu", 10, 1,
+    FU(Exchange.SHFE, "fu", 10, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 燃油期货交易时段
             newImmutableList(
@@ -185,7 +185,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 原油
      */
-    SC(Exchange.SHINE, "sc", 1, 0.1,
+    SC(Exchange.SHINE, "sc", 1, 0.1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 原油期货交易时段
             newImmutableList(
@@ -201,7 +201,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 大豆
      */
-    A(Exchange.DCE, "a", 1, 1,
+    A(Exchange.DCE, "a", 1, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 大豆期货交易时段
             newImmutableList(
@@ -216,7 +216,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 豆粕
      */
-    M(Exchange.DCE, "m", 2, 1,
+    M(Exchange.DCE, "m", 2, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 豆粕期货交易时段
             newImmutableList(
@@ -231,7 +231,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 豆油
      */
-    Y(Exchange.DCE, "y", 3, 2,
+    Y(Exchange.DCE, "y", 3, 2d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 豆油期货交易时段
             newImmutableList(
@@ -246,7 +246,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 棕榈油
      */
-    P(Exchange.DCE, "p", 4, 2,
+    P(Exchange.DCE, "p", 4, 2d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棕榈油期货交易时段
             newImmutableList(
@@ -261,7 +261,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 玉米
      */
-    C(Exchange.DCE, "c", 5, 1,
+    C(Exchange.DCE, "c", 5, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棕榈油期货交易时段
             newImmutableList(
@@ -276,7 +276,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 铁矿石
      */
-    I(Exchange.DCE, "i", 6, 0.5,
+    I(Exchange.DCE, "i", 6, 0.5d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 铁矿石期货交易时段
             newImmutableList(
@@ -293,7 +293,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 棉花
      */
-    CF(Exchange.ZCE, "CF", 1, 5,
+    CF(Exchange.ZCE, "CF", 1, 5d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 棉花交易时段
             newImmutableList(
@@ -308,7 +308,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 白糖
      */
-    SR(Exchange.ZCE, "SR", 2, 1,
+    SR(Exchange.ZCE, "SR", 2, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 白糖交易时段
             newImmutableList(
@@ -336,7 +336,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 甲醇
      */
-    MA(Exchange.ZCE, "MA", 4, 1,
+    MA(Exchange.ZCE, "MA", 4, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 甲醇交易时段
             newImmutableList(
@@ -350,7 +350,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 菜粕
      */
-    RM(Exchange.ZCE, "RM", 5, 1,
+    RM(Exchange.ZCE, "RM", 5, 1d,
             PriorityCloseType.NONE, PriceMultiplier.NONE,
             // 菜粕交易时段
             newImmutableList(
@@ -365,7 +365,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 沪深300
      */
-    IF(Exchange.CFFEX, "IF", 1, 0.2,
+    IF(Exchange.CFFEX, "IF", 1, 0.2d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 沪深300期货交易时段
             newImmutableList(
@@ -378,7 +378,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 上证50
      */
-    IH(Exchange.CFFEX, "IH", 2, 0.2,
+    IH(Exchange.CFFEX, "IH", 2, 0.2d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 上证50期货交易时段
             newImmutableList(
@@ -391,7 +391,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 中证500
      */
-    IC(Exchange.CFFEX, "IC", 3, 0.2,
+    IC(Exchange.CFFEX, "IC", 3, 0.2d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 中证500期货交易时段
             newImmutableList(
@@ -404,7 +404,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 30年期国债
      */
-    TL(Exchange.CFFEX, "TL", 4, 0.01,
+    TL(Exchange.CFFEX, "TL", 4, 0.01d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 30年期国债期货交易时段
             newImmutableList(
@@ -417,7 +417,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 10年期国债
      */
-    T(Exchange.CFFEX, "T", 5, 0.005,
+    T(Exchange.CFFEX, "T", 5, 0.005d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 10年期国债期货交易时段
             newImmutableList(
@@ -430,7 +430,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 5年期国债
      */
-    TF(Exchange.CFFEX, "TF", 6, 0.005,
+    TF(Exchange.CFFEX, "TF", 6, 0.005d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 5年期国债期货交易时段
             newImmutableList(
@@ -443,7 +443,7 @@ public enum ChinaFuturesSymbol implements Symbol {
     /**
      * 2年期国债
      */
-    TS(Exchange.CFFEX, "TS", 7, 0.002,
+    TS(Exchange.CFFEX, "TS", 7, 0.002d,
             PriorityCloseType.NONE, PriceMultiplier.MULTIPLIER_2,
             // 2年期国债期货交易时段
             newImmutableList(

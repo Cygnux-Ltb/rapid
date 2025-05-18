@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>io.cygnux</groupId>
-            <artifactId>console-beans</artifactId>
+            <artifactId>console-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

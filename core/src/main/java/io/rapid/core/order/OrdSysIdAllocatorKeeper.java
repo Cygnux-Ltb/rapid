@@ -1,7 +1,9 @@
 package io.rapid.core.order;
 
+import io.mercury.common.lang.Predicates;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.SnowflakeAlgo;
+import io.rapid.core.strategy.Strategy;
 import org.slf4j.Logger;
 
 import javax.annotation.concurrent.ThreadSafe;
@@ -29,7 +31,7 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class OrdSysIdAllocatorKeeper {
 
-    private final static Logger log = Log4j2LoggerFactory.getLogger(OrdSysIdAllocatorKeeper.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(OrdSysIdAllocatorKeeper.class);
 
     private static final OrdSysIdAllocator[] allocators = new OrdSysIdAllocator[1024];
 
@@ -38,7 +40,7 @@ public final class OrdSysIdAllocatorKeeper {
      * @return OrdSysIdAllocator
      */
     public static OrdSysIdAllocator acquireAllocator(int strategyId) {
-        if (strategyId < 0 || strategyId > 1023) {
+        if (Predicates.atWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID)) {
             log.error("OrdSysIdAllocatorKeeper::newAllocator, strategyId==[{}] is not in range", strategyId);
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);
         }
@@ -54,7 +56,7 @@ public final class OrdSysIdAllocatorKeeper {
      * @return long
      */
     public static long nextOrdSysId(int strategyId) {
-        if (strategyId < 0 || strategyId > 1023)
+        if (Predicates.atWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID))
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);
         return allocators[strategyId].nextOrdSysId();
     }

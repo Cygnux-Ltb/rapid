@@ -249,15 +249,15 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     @Override
     public boolean startup() throws IOException, IllegalStateException, StartupException {
         try {
+            if (!isEnabled())
+                throw new IllegalStateException("[" + adaptorId + "] currently unavailable");
             return startup0();
-        } catch (IOException ioe) {
-            throw ioe;
         } catch (Exception e) {
-            throw new StartupException(adaptorId + " -> " + e.getMessage(), e);
+            throw new StartupException("[" + adaptorId + "] unable to start because: " + e.getMessage(), e);
         }
     }
 
     @AbstractFunction
-    protected abstract boolean startup0() throws Exception;
+    protected abstract boolean startup0();
 
 }

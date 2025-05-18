@@ -167,9 +167,6 @@ public final class InboundEvent implements JsonSerializable {
     }
 
 
-    //public byte[] toFr() {}
-
-
     @Nonnull
     @Override
     public String toJson() {

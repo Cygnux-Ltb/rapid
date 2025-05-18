@@ -23,7 +23,7 @@ public sealed interface Adaptor extends Closeable, Enableable permits AbstractAd
      * @return String
      */
     static String publishPath() {
-        return "from/adaptor";
+        return "adaptor/pub";
     }
 
     /**
@@ -32,7 +32,7 @@ public sealed interface Adaptor extends Closeable, Enableable permits AbstractAd
      * @return String
      */
     static String subscribePath() {
-        return "to/adaptor";
+        return "adaptor/sub";
     }
 
     /**

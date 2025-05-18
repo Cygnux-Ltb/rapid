@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
-import static io.mercury.common.collections.Capacity.L11_2048;
+import static io.mercury.common.collections.Capacity.HEX_1_000;
 import static io.mercury.common.collections.MutableMaps.newLongObjectMap;
 import static io.mercury.common.collections.MutableMaps.newObjectLongMap;
 import static io.mercury.common.datetime.TimeZone.CST;
@@ -21,25 +21,27 @@ import static io.rapid.core.order.OrdSysIdAllocator.FOR_EXTERNAL_ORDER;
 import static java.lang.System.currentTimeMillis;
 
 /**
+ * Next step adds persistence
+ *
  * @author yellow013
  * <p>
- * TODO - Add Persistence
+ *
  */
 @ThreadSafe
 public class OrderRefKeeperInHeap implements OrderRefKeeper {
 
     private static final Logger log = getLogger(OrderRefKeeperInHeap.class);
 
-    private final MutableObjectLongMap<String> orderRefMap = newObjectLongMap(L11_2048.size());
+    private final MutableObjectLongMap<String> orderRefMap = newObjectLongMap(HEX_1_000.size());
 
-    private final MutableLongObjectMap<String> ordSysIdMap = newLongObjectMap(L11_2048.size());
+    private final MutableLongObjectMap<String> ordSysIdMap = newLongObjectMap(HEX_1_000.size());
 
     OrderRefKeeperInHeap() {
     }
 
     @Override
     public synchronized void binding(String orderRef, long ordSysId) {
-        log.info("ORDER BINDING >>>> orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
+        log.info("REF_KEEPER ORDER BINDING >>>> orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMap.put(orderRef, ordSysId);
         ordSysIdMap.put(ordSysId, orderRef);
     }

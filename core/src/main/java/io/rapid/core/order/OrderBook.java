@@ -47,8 +47,8 @@ public final class OrderBook {
     /**
      * Use default Capacity.L07_SIZE, Size == 128
      */
-    OrderBook() {
-        this(Capacity.L07_128);
+    public OrderBook() {
+        this(Capacity.HEX_80);
     }
 
     /**

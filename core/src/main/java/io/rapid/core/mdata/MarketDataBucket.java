@@ -10,8 +10,8 @@ import org.eclipse.collections.api.list.MutableList;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Serializable;
 
-import static io.mercury.common.collections.Capacity.L04_16;
-import static io.mercury.common.collections.Capacity.L15_32768;
+import static io.mercury.common.collections.Capacity.HEX_10;
+import static io.mercury.common.collections.Capacity.HEX_8_000;
 
 @NotThreadSafe
 public final class MarketDataBucket extends AbstractMarketDataHandler implements Serializable {
@@ -26,10 +26,10 @@ public final class MarketDataBucket extends AbstractMarketDataHandler implements
     private final MutableList<SavedMarketData> saved;
 
     @Getter
-    private final MutableList<MarketDataConsumer> consumers = MutableLists.newFastList(L04_16.size());
+    private final MutableList<MarketDataConsumer> consumers = MutableLists.newFastList(HEX_10.size());
 
     public MarketDataBucket(Instrument instrument) {
-        this(instrument, L15_32768.size());
+        this(instrument, HEX_8_000.size());
     }
 
     public MarketDataBucket(Instrument instrument, int size) {
