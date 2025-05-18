@@ -301,10 +301,13 @@ public class CtpAdaptor extends AbstractAdaptor {
                     log.warn("{} -> Input instrument code array is null or empty", adaptorId);
                     return false;
                 }
-                mdGateway.nativeSubscribeMarketData(instrumentCodeSet
-                        .stream()
-                        .peek(code -> log.info("Subscribe instrument -> instrumentCode==[{}]", code))
-                        .toArray(String[]::new));
+                var instrumentCodes = new String[instrumentCodeSet.size()];
+                int i = -1;
+                for (String code : instrumentCodeSet) {
+                    log.info("Subscribe instrument -> instrumentCode==[{}]", code);
+                    instrumentCodes[++i] = code;
+                }
+                mdGateway.nativeSubscribeMarketData(instrumentCodes);
                 return true;
             } else {
                 log.warn("{} -> market not available, isMdAvailable==[{}]", mdGatewayId, isMdAvailable);
@@ -446,9 +449,9 @@ public class CtpAdaptor extends AbstractAdaptor {
             isTraderAvailable = false;
             mdGateway.close();
             traderGateway.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("{} -> Native close has exception -> {}", traderGatewayId, e.getMessage(), e);
-            throw new IOException(e);
+            throw e;
         }
     }
 

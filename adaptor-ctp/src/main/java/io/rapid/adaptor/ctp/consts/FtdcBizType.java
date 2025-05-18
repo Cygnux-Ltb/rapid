@@ -9,16 +9,20 @@ package io.rapid.adaptor.ctp.consts;
  * ///证券<br>
  * #define THOST_FTDC_BZTP_Stock '2'<br>
  */
-public interface FtdcBizType {
+public final class FtdcBizType {
 
     /**
      * 期货
      */
-    char FUTURE = '1';
+    public static final char FUTURE = '1';
 
     /**
      * 证券
      */
-    char STOCK = '2';
+    public static final char STOCK = '2';
+
+    private FtdcBizType() {
+    }
 
 }
+

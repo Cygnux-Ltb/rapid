@@ -11,28 +11,28 @@ import io.rapid.core.event.enums.TrdDirection;
  * ///空头 <br>
  * #define THOST_FTDC_PD_Short '3' <br>
  */
-public interface FtdcPosiDirection {
+public final class FtdcPosiDirection {
 
     /**
      * 净
      */
-    char NET = '0';
+    public static final char NET = '0';
 
     /**
      * 多头
      */
-    char LONG = '2';
+    public static final char LONG = '2';
 
     /**
      * 空头
      */
-    char SHORT = '3';
+    public static final char SHORT = '3';
 
     /**
      * @param ftdcPosiDirection int
      * @return TrdDirection
      */
-    static TrdDirection getTrdDirection(int ftdcPosiDirection) {
+    public static TrdDirection getTrdDirection(int ftdcPosiDirection) {
         return switch (ftdcPosiDirection) {
             // 多头
             case LONG -> TrdDirection.LONG;
@@ -41,6 +41,9 @@ public interface FtdcPosiDirection {
             // 未知
             default -> TrdDirection.INVALID;
         };
+    }
+
+    private FtdcPosiDirection() {
     }
 
 }

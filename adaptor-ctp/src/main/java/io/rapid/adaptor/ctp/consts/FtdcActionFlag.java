@@ -9,16 +9,19 @@ package io.rapid.adaptor.ctp.consts;
  * ///修改<br>
  * #define THOST_FTDC_AF_Modify '3'<br>
  */
-public interface FtdcActionFlag {
+public final class FtdcActionFlag {
 
     /**
      * 删除
      */
-    char DELETE = '0';
+    public static final char DELETE = '0';
 
     /**
      * 修改
      */
-    char MODIFY = '3';
+    public static final char MODIFY = '3';
+
+    private FtdcActionFlag() {
+    }
 
 }

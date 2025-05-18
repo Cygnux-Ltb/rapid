@@ -27,46 +27,45 @@ import io.rapid.core.event.enums.TradingStatus;
  * ///收盘<br>
  * #define THOST_FTDC_IS_Closed '6'<br>
  */
-public interface FtdcInstrumentStatus {
+public final class FtdcInstrumentStatus {
 
     /**
      * 开盘前
      */
-    char BEFORE_TRADING = '0';
+    public static final char BEFORE_TRADING = '0';
 
     /**
      * 非交易
      */
-    char NO_TRADING = '1';
+    public static final char NO_TRADING = '1';
 
     /**
      * 连续交易
      */
-    char CONTINUOUS = '2';
+    public static final char CONTINUOUS = '2';
 
     /**
      * 集合竞价报单
      */
-    char AUCTION_ORDERING = '3';
+    public static final char AUCTION_ORDERING = '3';
 
     /**
      * 集合竞价价格平衡
      */
-    char AUCTION_BALANCE = '4';
+    public static final char AUCTION_BALANCE = '4';
 
     /**
      * 集合竞价撮合
      */
-    char AUCTION_MATCH = '5';
+    public static final char AUCTION_MATCH = '5';
 
     /**
      * 收盘
      */
-    char CLOSED = '6';
+    public static final char CLOSED = '6';
 
-
-    static SubscribeStatus getSubscribeStatus(int InstrumentStatus) {
-        return switch (InstrumentStatus) {
+    public static SubscribeStatus getSubscribeStatus(int instrumentStatus) {
+        return switch (instrumentStatus) {
             case NO_TRADING, CLOSED -> SubscribeStatus.SUBSCRIPTION_UNAVAILABLE;
             case BEFORE_TRADING,
                  CONTINUOUS,
@@ -77,8 +76,8 @@ public interface FtdcInstrumentStatus {
         };
     }
 
-    static TradingStatus getTradingStatus(int InstrumentStatus) {
-        return switch (InstrumentStatus) {
+    public static TradingStatus getTradingStatus(int instrumentStatus) {
+        return switch (instrumentStatus) {
             case BEFORE_TRADING,
                  NO_TRADING -> TradingStatus.NO_TRADING;
             case CONTINUOUS,
@@ -90,8 +89,8 @@ public interface FtdcInstrumentStatus {
         };
     }
 
-    static String getPrompt(int InstrumentStatus) {
-        return switch (InstrumentStatus) {
+    public static String getPrompt(int instrumentStatus) {
+        return switch (instrumentStatus) {
             case BEFORE_TRADING -> "开盘前";
             case NO_TRADING -> "非交易";
             case CONTINUOUS -> "连续交易";
@@ -101,6 +100,9 @@ public interface FtdcInstrumentStatus {
             case CLOSED -> "收盘";
             default -> "NONE";
         };
+    }
+
+    private FtdcInstrumentStatus() {
     }
 
 }

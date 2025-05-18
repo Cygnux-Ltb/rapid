@@ -1,8 +1,11 @@
 package io.rapid.adaptor.ctp.consts;
 
-public interface FtdcFrontDisconnectedReason {
+public final class FtdcFrontDisconnectedReason {
 
-    static String getPrompt(int ftdcReason) {
+    private FtdcFrontDisconnectedReason() {
+    }
+
+    public static String getPrompt(int ftdcReason) {
         return switch (ftdcReason) {
             case 0x0001 -> "0x0001:适配器已关闭";
             case 0x1001 -> "0x1001:网络读失败";

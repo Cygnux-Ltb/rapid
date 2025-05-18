@@ -1,6 +1,6 @@
 package io.rapid.adaptor.ctp;
 
-import io.mercury.serialization.json.JsonParser;
+import io.mercury.serialization.json.JsonReader;
 import io.mercury.serialization.json.JsonWriter;
 import io.rapid.adaptor.ctp.event.shared.UserLogout;
 import io.rapid.adaptor.ctp.event.source.EventSource;
@@ -24,7 +24,7 @@ public class AvroTest {
 
         System.out.println(json);
 
-        UserLogout logout = JsonParser.toObject(json, UserLogout.class);
+        UserLogout logout = JsonReader.toObject(json, UserLogout.class);
 
         System.out.println(userLogout == logout);
 
