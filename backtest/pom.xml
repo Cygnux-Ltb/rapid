@@ -46,8 +46,8 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>io.cygnux</groupId>
-            <artifactId>console-service</artifactId>
+            <groupId>io.cygnux.rapid</groupId>
+            <artifactId>engine</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

@@ -3,8 +3,8 @@ package io.rapid.engine;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.OutboundEventLoop;
+import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Service
 public class CoreOutboundService implements OutboundHandler {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreOutboundService.class);
 
     @Resource
     private AdaptorManager adaptorManager;
@@ -109,7 +109,7 @@ public class CoreOutboundService implements OutboundHandler {
 
     /**
      * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
+     * with it. If the stream is already closed, then invoking this
      * method has no effect.
      *
      * <p> As noted in {@link AutoCloseable#close()}, cases where the
@@ -122,7 +122,7 @@ public class CoreOutboundService implements OutboundHandler {
      */
     @Override
     public void close() throws IOException {
-        // TODO 资源清理
+        // 实现资源清理
     }
 
 }

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- This is parent rapid pom.xml -->
+    <!-- This is a parent rapid pom.xml -->
     <groupId>io.cygnux.rapid</groupId>
     <artifactId>rapid</artifactId>
     <version>1.0</version>
@@ -93,7 +93,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.34</version>
+                <version>1.18.38</version>
             </dependency>
             <!-- Jakarta Annotations API -->
             <dependency>

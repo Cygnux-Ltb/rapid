@@ -2,8 +2,8 @@ package io.rapid.engine.service;
 
 import io.cygnuxltb.console.beans.response.SubAccountMappingRsp;
 import io.cygnuxltb.console.beans.response.SubAccountRsp;
-import io.cygnuxltb.console.component.ApplicationConfiguration;
-import io.cygnuxltb.console.service.AccountService;
+import io.cygnux.console.component.ApplicationConfiguration;
+import io.cygnux.console.service.AccountService;
 import io.mercury.common.collections.CollectionUtil;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

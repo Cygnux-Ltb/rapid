@@ -44,9 +44,9 @@ import static io.mercury.common.collections.MutableLists.newFastList;
 @Service("coreScheduler")
 public class CoreSchedulerService implements CoreScheduler {
 
-    private final MutableList<StrategySignal> signals = newFastList(128);
-
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
+
+    private final MutableList<StrategySignal> signals = newFastList(128);
 
     @Resource
     private MarketDataManager marketDataManager;
