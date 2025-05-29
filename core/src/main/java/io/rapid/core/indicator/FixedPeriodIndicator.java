@@ -1,13 +1,12 @@
-package io.rapid.core.indicator.base;
+package io.rapid.core.indicator;
 
 
-import io.rapid.core.indicator.IndicatorEvent;
 import io.rapid.core.instrument.Instrument;
 
 import java.time.Duration;
 
-public abstract class FixedPeriodIndicator<P extends FixedPeriodPoint, E extends IndicatorEvent>
-        extends BaseIndicator<P, E> {
+public abstract non-sealed class FixedPeriodIndicator<P extends FixedPeriodPoint, E extends IndicatorEvent>
+        extends AbstractIndicator<P, E> {
 
     protected final Duration duration;
 

@@ -1,12 +1,8 @@
-package io.rapid.core.indicator.base;
+package io.rapid.core.indicator;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.indicator.Indicator;
-import io.rapid.core.indicator.IndicatorEvent;
-import io.rapid.core.indicator.Point;
-import io.rapid.core.indicator.PointSet;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.SavedMarketData;
 import org.eclipse.collections.api.list.MutableList;
@@ -14,10 +10,10 @@ import org.slf4j.Logger;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
 
-public abstract class BaseIndicator<P extends BasePoint & Point, E extends IndicatorEvent>
-        implements Indicator<P, E> {
+public abstract sealed class AbstractIndicator<P extends AbstractPoint & Point, E extends IndicatorEvent>
+        implements Indicator<P, E> permits FixedPeriodIndicator, FloatPeriodIndicator {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(BaseIndicator.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractIndicator.class);
 
     /**
      * 指标对应的标的
@@ -49,11 +45,11 @@ public abstract class BaseIndicator<P extends BasePoint & Point, E extends Indic
      */
     protected MutableList<E> events = newFastList(8);
 
-    protected BaseIndicator(Instrument instrument) {
+    protected AbstractIndicator(Instrument instrument) {
         this(instrument, Capacity.HEX_100);
     }
 
-    protected BaseIndicator(Instrument instrument, Capacity capacity) {
+    protected AbstractIndicator(Instrument instrument, Capacity capacity) {
         this.instrument = instrument;
         this.pointSet = PointSet.newEmpty(capacity);
     }

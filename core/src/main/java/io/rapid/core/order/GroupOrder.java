@@ -1,6 +1,6 @@
 package io.rapid.core.order;
 
-import io.rapid.core.order.attribute.OrdTimestamp;
+import io.rapid.core.order.attr.OrdTimestamp;
 import io.rapid.core.order.impl.ChildOrder;
 import lombok.Getter;
 import org.eclipse.collections.api.set.ImmutableSet;

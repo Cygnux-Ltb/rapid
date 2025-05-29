@@ -15,7 +15,8 @@ import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.io.IOException;
 
-public sealed interface Adaptor extends Closeable, Enableable permits AbstractAdaptor {
+public sealed interface Adaptor extends Closeable, Enableable
+        permits AbstractAdaptor {
 
     /**
      * Adaptor 消息发布URI

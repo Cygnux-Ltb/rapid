@@ -1,8 +1,8 @@
-package io.rapid.core.indicator.base;
+package io.rapid.core.indicator;
 
 import io.mercury.common.sequence.TimePoint;
 
-public abstract class FloatPeriodPoint extends BasePoint {
+public abstract class FloatPeriodPoint extends AbstractPoint {
 
     private final TimePoint point;
 

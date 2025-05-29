@@ -1,4 +1,4 @@
-package io.rapid.core.order.attribute;
+package io.rapid.core.order.attr;
 
 import io.mercury.common.serialization.specific.JsonSerializable;
 import lombok.Getter;

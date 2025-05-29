@@ -3,7 +3,7 @@ package io.rapid.core.indicator.impl;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 import io.rapid.core.indicator.IndicatorEvent;
-import io.rapid.core.indicator.base.FixedPeriodIndicator;
+import io.rapid.core.indicator.FixedPeriodIndicator;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.SavedMarketData;
 import io.rapid.core.pool.TimeWindowPool;

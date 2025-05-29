@@ -63,6 +63,11 @@
             <artifactId>serialization-json</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.2.7</version>
+        </dependency>
+        <dependency>
             <groupId>io.cygnux</groupId>
             <artifactId>console-api</artifactId>
             <version>1.0</version>

@@ -6,10 +6,10 @@ import io.rapid.core.event.enums.OrdType;
 import io.rapid.core.event.enums.OrdValid;
 import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
-import io.rapid.core.order.attribute.OrdPrice;
-import io.rapid.core.order.attribute.OrdQty;
-import io.rapid.core.order.attribute.OrdRemark;
-import io.rapid.core.order.attribute.OrdTimestamp;
+import io.rapid.core.order.attr.OrdPrice;
+import io.rapid.core.order.attr.OrdQty;
+import io.rapid.core.order.attr.OrdRemark;
+import io.rapid.core.order.attr.OrdTimestamp;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;

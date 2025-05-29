@@ -1,20 +1,19 @@
-package io.rapid.core.indicator.base;
+package io.rapid.core.indicator;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.lang.Asserter;
-import io.rapid.core.indicator.Point;
 import io.rapid.core.mdata.SavedMarketData;
 
 /**
  * @author yellow013
  */
-public abstract class BasePoint implements Point {
+public abstract non-sealed class AbstractPoint implements Point {
 
     protected final int index;
 
     protected SavedMarketData preMarketData;
 
-    protected BasePoint(int index) {
+    protected AbstractPoint(int index) {
         Asserter.greaterThan(index, -1, "index");
         this.index = index;
     }

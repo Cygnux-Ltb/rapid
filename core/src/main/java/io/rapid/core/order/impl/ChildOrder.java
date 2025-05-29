@@ -7,8 +7,8 @@ import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.order.AbstractOrder;
-import io.rapid.core.order.attribute.OrdPrice;
-import io.rapid.core.order.attribute.OrdQty;
+import io.rapid.core.order.attr.OrdPrice;
+import io.rapid.core.order.attr.OrdQty;
 import io.rapid.core.strategy.Strategy;
 import io.rapid.core.trade.TradeRecord;
 import lombok.Getter;
@@ -17,8 +17,8 @@ import org.slf4j.Logger;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
 import static io.mercury.common.epoch.HighResolutionEpoch.micros;
-import static io.rapid.core.order.attribute.OrdPrice.withOffer;
-import static io.rapid.core.order.attribute.OrdQty.withOffer;
+import static io.rapid.core.order.attr.OrdPrice.withOffer;
+import static io.rapid.core.order.attr.OrdQty.withOffer;
 
 /**
  * 实际执行订单的最小执行单元, 不可再进行拆分, 可能根据合规, 账户情况等由ParentOrder拆分出多个ChildOrder

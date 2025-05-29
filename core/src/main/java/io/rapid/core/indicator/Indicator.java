@@ -9,7 +9,8 @@ import io.rapid.core.mdata.SavedMarketData;
  * @param <E> IndicatorEvent 类型
  * @author yellow013
  */
-public interface Indicator<P extends Point, E extends IndicatorEvent> {
+public sealed interface Indicator<P extends Point, E extends IndicatorEvent>
+        permits AbstractIndicator {
 
     Instrument getInstrument();
 

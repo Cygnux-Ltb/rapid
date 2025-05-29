@@ -1,11 +1,11 @@
-package io.rapid.core.indicator.base;
+package io.rapid.core.indicator;
 
 import io.mercury.common.sequence.TimeWindow;
 
 /**
  * @author yellow013
  */
-public abstract class FixedPeriodPoint extends BasePoint {
+public abstract class FixedPeriodPoint extends AbstractPoint {
 
     protected final TimeWindow window;
 

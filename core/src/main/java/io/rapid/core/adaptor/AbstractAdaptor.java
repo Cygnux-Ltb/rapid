@@ -29,7 +29,7 @@ import static io.mercury.common.lang.Asserter.nonNull;
 @ThreadSafe
 public abstract non-sealed class AbstractAdaptor extends EnableableComponent implements Adaptor {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractAdaptor.class);
+    protected final Logger log = Log4j2LoggerFactory.getLogger(this.getClass());
 
     /**
      * Adaptor标识
@@ -76,8 +76,8 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
         if (isAsync) {
             receiveQueue = RingEventbus
                     .singleProducer(OutboundEvent.EVENT_FACTORY)
-                    .name("receive-queue")
-                    .size(64)
+                    .name(adaptorId + "-receive-queue")
+                    .size(32)
                     .waitStrategy(Yielding.get())
                     .process(this::handleSendEvent);
         }

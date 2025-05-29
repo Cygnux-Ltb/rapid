@@ -1,11 +1,11 @@
 package io.rapid.core.indicator.candle;
 
-import io.rapid.core.indicator.base.BasePoint;
+import io.rapid.core.indicator.AbstractPoint;
 import io.rapid.core.indicator.structure.Bar;
 import io.rapid.core.mdata.SavedMarketData;
 import lombok.Getter;
 
-public final class CandleBar extends BasePoint {
+public final class CandleBar extends AbstractPoint {
 
     @Getter
     private final Bar bar;
