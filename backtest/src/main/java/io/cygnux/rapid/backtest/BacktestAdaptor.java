@@ -8,17 +8,19 @@ import io.rapid.core.event.outbound.QueryOrder;
 import io.rapid.core.event.outbound.QueryPosition;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component("backtestAdaptor")
 public class BacktestAdaptor extends AbstractAdaptor {
 
+    @Resource(name = "backtestMatchMachine")
+    private BacktestMatchMachine matchMachine;
+
     /**
      *
      */
-    protected BacktestAdaptor() {
+    public BacktestAdaptor() {
         super(new BacktestAccount(), false);
     }
 
@@ -29,6 +31,7 @@ public class BacktestAdaptor extends AbstractAdaptor {
 
     @Override
     protected boolean directNewOrder(@Nonnull NewOrder order) {
+
         return false;
     }
 
@@ -57,21 +60,9 @@ public class BacktestAdaptor extends AbstractAdaptor {
         return false;
     }
 
-    /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
-     *
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
-     *
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    public void close() throws IOException {
-        // TODO document why this method is empty
+    public void close() {
+        log.info("Closing BacktestAdaptor");
     }
+
 }

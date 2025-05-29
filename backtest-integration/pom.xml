@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>backtest</artifactId>
+    <artifactId>backtest-integration</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -17,35 +17,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>commons-concurrent</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>serialization-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>transport-zmq</artifactId>
+            <groupId>io.cygnux.rapid</groupId>
+            <artifactId>backtest</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>io.cygnux.rapid</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>engine</artifactId>
             <version>1.0</version>
         </dependency>
-
     </dependencies>
 
 </project>
