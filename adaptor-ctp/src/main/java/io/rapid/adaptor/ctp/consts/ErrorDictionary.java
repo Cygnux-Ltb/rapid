@@ -5,9 +5,12 @@ import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import static io.mercury.common.collections.ImmutableMaps.newImmutableIntMap;
 import static java.util.Arrays.asList;
 
-public interface ErrorDictionary {
+public final class ErrorDictionary {
 
-    ImmutableIntObjectMap<ErrorMsg> MSG_MAP = newImmutableIntMap(
+    private ErrorDictionary() {
+    }
+
+    private static final ImmutableIntObjectMap<ErrorMsg> MSG_MAP = newImmutableIntMap(
             asList(
                     new ErrorMsg(0, "NONE", "CTP:正确"),
                     new ErrorMsg(1, "INVALID_DATA_SYNC_STATUS", "CTP:不在已同步状态"),
@@ -133,7 +136,7 @@ public interface ErrorDictionary {
                     new ErrorMsg(151, "DEL_COMB_ACTION_NO_REC", "CTP:删除拆分组合指令, 没有找到该记录"),
                     new ErrorMsg(152, "DEL_COMB_ACTION_TOO_FAST", "CTP:删除拆分组合指令, 原指令需要等待30秒才能删除"),
                     new ErrorMsg(153, "COMB_ACTION_SHORT_MONEY", "CTP:拆分组合钱不足"),
-                    new ErrorMsg(154, "QK_BUSY", "CTP:查询核心忙 请稍后重试"),
+                    new ErrorMsg(154, "QK_BUSY", "CTP:查询核心忙, 请稍后重试"),
                     new ErrorMsg(155, "CFMMC_NO_CONNECTION", "CTP:未连接监控中心"),
                     new ErrorMsg(156, "CLOSE_OPTION_NO_MONEY", "CTP:平期权多头后资金为负(收益小于平仓手续费), 只可由风控人员强平"),
                     new ErrorMsg(157, "CANCEL_UNKNOWN_ORDER_UNSUPPORTED", "CTP:该交易所不支持撤销未知单"),
@@ -208,16 +211,16 @@ public interface ErrorDictionary {
                     new ErrorMsg(2053, "DC_DATA_CONTEXT", "建行银期, 信息滥缺(业务错误)或者数据内容相关(技术错误)"),
                     new ErrorMsg(2054, "CE_CONTENT_ERROR", "建行银期, 内容非法(业务错误)"),
                     new ErrorMsg(2055, "DO_DUPLICATE_OPERATION", "建行银期, 重复交易(业务错误)"),
-                    new ErrorMsg(2056, "TM_TIME", "建行银期,  时间与期限(业务错误)"),
+                    new ErrorMsg(2056, "TM_TIME", "建行银期, 时间与期限(业务错误)"),
                     new ErrorMsg(2057, "RC_RISK_CONTROL", "建行银期, 风险控制(业务错误)"),
                     new ErrorMsg(2058, "BL_BUSINESS_LOGIC", "建行银期, 业务逻辑(业务错误)"),
                     new ErrorMsg(2059, "NA_NA", "建行银期, 不确定交易结果(技术错误)"),
                     new ErrorMsg(2060, "HW_HARDWARE", "建行银期, 硬件错误(技术错误)"),
                     new ErrorMsg(2062, "IO_IO", "建行银期, 读写相关(技术错误)"),
-                    new ErrorMsg(2063, "DB_DATABASE", "建行银期,  数据库相关(技术错误)"),
+                    new ErrorMsg(2063, "DB_DATABASE", "建行银期, 数据库相关(技术错误)"),
                     new ErrorMsg(2064, "NC_NETWORK_COMMUNICATION", "建行银期, 网络通讯(技术错误)"),
                     new ErrorMsg(2065, "SS_SECURITY_SERVICE", "建行银期, 安全服务(技术错误)"),
-                    new ErrorMsg(2066, "CM_COMPONENTS", "建行银期,  组件模块(技术错误)"),
+                    new ErrorMsg(2066, "CM_COMPONENTS", "建行银期, 组件模块(技术错误)"),
                     new ErrorMsg(2067, "FC_FLOW_CONTROL", "建行银期, 流量控制(技术错误)"),
                     new ErrorMsg(2069, "TL_TECHNICAL_LOGIC", "建行银期, 技术逻辑(技术错误)"),
                     new ErrorMsg(2070, "AT_ABSOLUTE_TECHNIQUE", "建行银期, 纯技术性错误(技术错误)"),
@@ -243,12 +246,12 @@ public interface ErrorDictionary {
                     new ErrorMsg(3038, "FBE_DUP_CERT_NO", "CTP:银期换汇, 凭证号重复"),
                     new ErrorMsg(3039, "API_UNSUPPORTED_VERSION", "CTP: 不支持该API版本"),
                     new ErrorMsg(3040, "API_INVALID_KEY", "CTP: 无效的API KEY"),
-                    new ErrorMsg(3041, "OPTION_SELF_CLOSE_NOT_OPTION", "CTP:期权对冲,履约对冲:非期权合约"),
-                    new ErrorMsg(3042, "OPTION_SELF_CLOSE_DUPLICATE_REF", "CTP:期权对冲,履约对冲:请求引用不合法"),
-                    new ErrorMsg(3043, "OPTION_SELF_CLOSE_BAD_FIELD", "CTP:期权对冲,履约对冲:非法字段 "),
-                    new ErrorMsg(3044, "OPTION_SELF_CLOSE_REC_NOT_FOUND", "CTP:期权对冲,履约对冲:撤销未找到记录"),
-                    new ErrorMsg(3045, "OPTION_SELF_CLOSE_STATUS_ERR", "CTP:期权对冲,履约对冲:对冲状态不对, 不能撤销"),
-                    new ErrorMsg(3046, "OPTION_SELF_CLOSE_DOUBLE_SET_ERR", "CTP:期权对冲,履约对冲:不能重复设置, 只能先撤销再设置"),
+                    new ErrorMsg(3041, "OPTION_SELF_CLOSE_NOT_OPTION", "CTP:期权对冲, 履约对冲:非期权合约"),
+                    new ErrorMsg(3042, "OPTION_SELF_CLOSE_DUPLICATE_REF", "CTP:期权对冲, 履约对冲:请求引用不合法"),
+                    new ErrorMsg(3043, "OPTION_SELF_CLOSE_BAD_FIELD", "CTP:期权对冲, 履约对冲:非法字段 "),
+                    new ErrorMsg(3044, "OPTION_SELF_CLOSE_REC_NOT_FOUND", "CTP:期权对冲, 履约对冲:撤销未找到记录"),
+                    new ErrorMsg(3045, "OPTION_SELF_CLOSE_STATUS_ERR", "CTP:期权对冲, 履约对冲:对冲状态不对, 不能撤销"),
+                    new ErrorMsg(3046, "OPTION_SELF_CLOSE_DOUBLE_SET_ERR", "CTP:期权对冲, 履约对冲:不能重复设置, 只能先撤销再设置"),
                     new ErrorMsg(3047, "QUOTE_WRONG_HEDGE_TYPE", "CTP:报价不支持改投机套保类型"),
                     new ErrorMsg(4040, "API_FRONT_SHAKE_HAND_ERR", "CTP:API Front shake hand err"),
                     new ErrorMsg(4041, "DUPLICATE_SUBMIT", "CTP:DUPLICATE_SUBMIT"),
@@ -268,15 +271,15 @@ public interface ErrorDictionary {
             ), ErrorMsg::id);
 
 
-    static ErrorMsg getMsg(int id) {
+    public static ErrorMsg getMsg(int id) {
         return MSG_MAP.get(id);
     }
 
-    static String getPrompt(int id) {
+    public static String getPrompt(int id) {
         return getMsg(id).prompt();
     }
 
-    record ErrorMsg(
+    public record ErrorMsg(
             int id,
             String title,
             String prompt

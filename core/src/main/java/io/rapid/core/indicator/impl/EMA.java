@@ -2,10 +2,10 @@ package io.rapid.core.indicator.impl;
 
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
-import io.rapid.core.event.inbound.RawMarketData;
 import io.rapid.core.indicator.IndicatorEvent;
-import io.rapid.core.indicator.base.FixedPeriodIndicator;
+import io.rapid.core.indicator.FixedPeriodIndicator;
 import io.rapid.core.instrument.Instrument;
+import io.rapid.core.mdata.SavedMarketData;
 
 import java.time.Duration;
 
@@ -17,7 +17,7 @@ public final class EMA extends
     }
 
     @Override
-    protected void handleMarketData(RawMarketData marketData) {
+    protected void handleMarketData(SavedMarketData marketData) {
         // TODO Auto-generated method stub
     }
 
@@ -51,7 +51,7 @@ public final class EMA extends
         }
 
         @Override
-        protected void handleMarketData0(RawMarketData preMarketData) {
+        protected void handleMarketData0(SavedMarketData preMarketData) {
             // TODO Auto-generated method stub
 
         }

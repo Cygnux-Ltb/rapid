@@ -2,7 +2,7 @@ package io.rapid.core.indicator.impl;
 
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
-import io.rapid.core.indicator.base.FixedPeriodPoint;
+import io.rapid.core.indicator.FixedPeriodPoint;
 import io.rapid.core.instrument.Instrument;
 
 import java.time.Duration;

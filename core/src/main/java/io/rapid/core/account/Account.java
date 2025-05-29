@@ -1,6 +1,8 @@
 package io.rapid.core.account;
 
-import io.cygnuxltb.console.beans.outbound.AccountRsp;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.annotation.JSONField;
+import io.cygnuxltb.console.beans.response.AccountRsp;
 import io.mercury.common.state.EnableableComponent;
 import io.rapid.core.event.outbound.QueryBalance;
 import io.rapid.core.event.outbound.QueryOrder;
@@ -20,61 +22,49 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author yellow013
  */
+@Getter
 @Accessors(chain = true)
-public final class Account extends EnableableComponent implements Comparable<Account> {
+public class Account extends EnableableComponent implements Comparable<Account> {
 
     /**
      * 账户ID
      */
-    @Getter
-    private final int accountId;
+    protected final int accountId;
 
     /**
-     * 经纪商Code
+     * 经纪商CODE
      */
-    @Getter
-    private final String brokerCode;
+    protected final String brokerCode;
 
     /**
      * 投资者账户CODE (*在内部系统中使用唯一代码)
      */
-    @Getter
-    private final String investorCode;
+    protected final String investorCode;
 
     /**
      * 账户余额
      */
-    @Getter
     @Setter
-    private long balance;
+    protected long balance;
 
     /**
      * 信用额度
      */
-    @Getter
     @Setter
-    private long credit;
+    protected long credit;
 
     /**
      * 备注
      */
-    @Getter
     @Setter
-    private String remark = "";
+    protected String remark = "";
 
     // 备用, 数组下标, 用于快速访问本账户对应的仓位信息集合
     // private int positionManagerIndex;
 
-    /**
-     * 全部子账户
-     */
-    // private final MutableSet<SubAccount> subAccounts = MutableSets.newUnifiedSet();
     public Account(@Nonnull AccountRsp accountRsp) {
-        this(accountRsp.getAccountId(),
-                accountRsp.getBrokerCode(),
-                accountRsp.getInvestorCode(),
-                (long) accountRsp.getBalance(),
-                (long) accountRsp.getCredit());
+        this(accountRsp.getAccountId(), accountRsp.getBrokerCode(), accountRsp.getInvestorCode(),
+                (long) accountRsp.getBalance(), (long) accountRsp.getCredit());
         this.remark = accountRsp.getRemark();
     }
 
@@ -97,8 +87,8 @@ public final class Account extends EnableableComponent implements Comparable<Acc
     public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode,
                    long balance, long credit) {
         this.accountId = greaterThan(accountId, 0, "accountId");
-        this.investorCode = nonEmpty(investorCode, "investorId");
         this.brokerCode = nonEmpty(brokerCode, "brokerCode");
+        this.investorCode = nonEmpty(investorCode, "investorId");
         this.balance = balance;
         this.credit = credit;
         enable();
@@ -136,14 +126,15 @@ public final class Account extends EnableableComponent implements Comparable<Acc
 
     @Override
     public String toString() {
-        return "{\"accountId\" : " + accountId
-                + ", \"brokerCode\" : " + brokerCode
-                + ", \"investorCode\" : " + investorCode
-                + ", \"balance\" : " + balance
-                + ", \"credit\" : " + credit
-                + ", \"remark\" : " + remark
-                + ", \"isEnabled\" : " + isEnabled()
-                + "}";
+        return JSON.toJSONString(this);
+//        return "{\"accountId\" : " + accountId
+//                + ", \"brokerCode\" : " + brokerCode
+//                + ", \"investorCode\" : " + investorCode
+//                + ", \"balance\" : " + balance
+//                + ", \"credit\" : " + credit
+//                + ", \"remark\" : " + remark
+//                + ", \"isEnabled\" : " + isEnabled()
+//                + "}";
     }
 
     @Override
@@ -151,36 +142,47 @@ public final class Account extends EnableableComponent implements Comparable<Acc
         return Integer.compare(this.accountId, o.accountId);
     }
 
-    private String mdTopic;
-
     /**
-     * brokerCode + "/" + investorId + "/md"
+     * 此账户对应的Topic<br>
+     * brokerCode + "/" + investorCode
      *
      * @return String
      */
-    public String getMarketDataTopic() {
-        if (mdTopic == null)
-            mdTopic = (brokerCode + "/" + investorCode + "/md");
-        return mdTopic;
+    @JSONField(serialize = false)
+    public String getTopic() {
+        return brokerCode + "/" + investorCode;
     }
 
-    private String tdTopic;
-
     /**
-     * brokerCode + "/" + investorId + "/md"
+     * 此账户对应的行情Topic<br>
+     * Account::getTopic + "/md"
      *
      * @return String
      */
-    public String getTraderTopic() {
-        if (tdTopic == null)
-            tdTopic = (brokerCode + "/" + investorCode + "/td");
-        return tdTopic;
+    @JSONField(serialize = false)
+    public String getTopicByMd() {
+        return getTopic() + "/md";
+    }
+
+
+    /**
+     * 此账户对应的交易Topic<br>
+     * Account::getTopic + "/td"
+     *
+     * @return String
+     */
+    @JSONField(serialize = false)
+    public String getTopicByTd() {
+        return getTopic() + "/td";
     }
 
     public static void main(String[] args) {
-        Account account = new Account(1, "ZSQH", "200500");
+        var account = new Account(1, "ZSQH", "200500");
         System.out.println(account);
         System.out.println(account.toString().length());
+        System.out.println(account.getTopic());
+        System.out.println(account.getTopicByMd());
+        System.out.println(account.getTopicByTd());
     }
 
 }

@@ -41,33 +41,33 @@ public class DepthMarketData extends JsonBean implements Copyable<DepthMarketDat
     private int updateMillisec;
 
     @Override
-    public void copyFrom(DepthMarketData source) {
+    public void copyValue(DepthMarketData source) {
         // 复制时间戳
-        this.epochMicros = source.getEpochMicros();
+        this.epochMicros = source.epochMicros;
         // 复制交易标的ID
-        this.instrumentId = source.getInstrumentId();
+        this.instrumentId = source.instrumentId;
         // 复制交易标的代码
-        this.instrumentCode = source.getInstrumentCode();
+        this.instrumentCode = source.instrumentCode;
         // 复制最新价格
-        this.lastPrice = source.getLastPrice();
+        this.lastPrice = source.lastPrice;
         // 复制成交量
-        this.volume = source.getVolume();
+        this.volume = source.volume;
         // 复制成交额
-        this.turnover = source.getTurnover();
+        this.turnover = source.turnover;
         // 复制买价列表
-        this.bidPrices = source.getBidPrices();
+        this.bidPrices = source.bidPrices;
         // 复制买量列表
-        this.bidVolumes = source.getBidVolumes();
+        this.bidVolumes = source.bidVolumes;
         // 复制卖价列表
-        this.askPrices = source.getAskPrices();
+        this.askPrices = source.askPrices;
         // 复制卖量列表
-        this.askVolumes = source.getAskVolumes();
+        this.askVolumes = source.askVolumes;
         // 复制深度
-        this.depth = source.getDepth();
+        this.depth = source.depth;
 
-        this.tradingDay = source.getTradingDay();
-        this.updateTime = source.getUpdateTime();
-        this.updateMillisec = source.getUpdateMillisec();
+        this.tradingDay = source.tradingDay;
+        this.updateTime = source.updateTime;
+        this.updateMillisec = source.updateMillisec;
     }
 
 }

@@ -2,20 +2,20 @@ package io.rapid.core.event;
 
 public enum InboundEventType {
 
-    Invalid,
+    INVALID,
 
-    RawMarketData,
+    RAW_MARKET_DATA,
 
-    DepthMarketData,
+    DEPTH_MARKET_DATA,
 
-    MarketDataSubscribeReport,
+    INSTRUMENT_STATUS_REPORT,
 
-    OrderReport,
+    ADAPTOR_STATUS_REPORT,
 
-    AdaptorReport,
+    ORDER_REPORT,
 
-    PositionsReport,
+    POSITIONS_REPORT,
 
-    BalanceReport
+    BALANCE_REPORT
 
 }

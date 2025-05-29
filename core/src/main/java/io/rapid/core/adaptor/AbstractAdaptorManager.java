@@ -20,9 +20,6 @@ import java.util.stream.Stream;
 
 import static io.mercury.common.collections.MutableMaps.newIntObjectMap;
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
-import static io.rapid.core.event.enums.AdaptorStatus.ALL_ENABLE;
-import static io.rapid.core.event.enums.AdaptorStatus.MD_ENABLE;
-import static io.rapid.core.event.enums.AdaptorStatus.TRADER_ENABLE;
 
 /**
  * @author yellow013
@@ -36,8 +33,7 @@ import static io.rapid.core.event.enums.AdaptorStatus.TRADER_ENABLE;
  * 目前不保证这一过程的线程安全
  */
 @ThreadSafe
-public abstract non-sealed class AbstractAdaptorManager
-        implements AdaptorManager {
+public abstract non-sealed class AbstractAdaptorManager implements AdaptorManager {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractAdaptorManager.class);
 
@@ -50,7 +46,6 @@ public abstract non-sealed class AbstractAdaptorManager
      * 存储[Adaptor], 使用[adaptorId]索引
      */
     protected final MutableMap<String, Adaptor> mapByAdaptorId = newUnifiedMap();
-
 
     protected AtomicBoolean isClosed = new AtomicBoolean(false);
 
@@ -79,16 +74,10 @@ public abstract non-sealed class AbstractAdaptorManager
     public void onAdaptorEvent(AdaptorReport event) {
         var adaptor = getAdaptor(event.getAccountId());
         var currentStatus = adaptor.currentStatus();
-        var newStatus = event.getStatus();
-        // 当原有状态为[行情可用], 新状态为[交易可用]
-        if ((currentStatus == MD_ENABLE && newStatus == TRADER_ENABLE)
-                // 或原有状态为[交易可用], 新状态为[行情可用]
-                || (currentStatus == TRADER_ENABLE && newStatus == MD_ENABLE))
-            // 修改状态为[全部可用]
-            newStatus = ALL_ENABLE;
-        log.info("Adaptor -> [{}] current status is [{}] update to [{}]",
-                adaptor.getAdaptorId(), currentStatus, newStatus);
-        adaptor.updateStatus(newStatus);
+        var channelType = event.getAdaptorType();
+        log.info("Adaptor -> [{}] current status update to [{}]",
+                adaptor.getAdaptorId(), currentStatus);
+        adaptor.updateStatus(channelType, event.isAvailable());
     }
 
 

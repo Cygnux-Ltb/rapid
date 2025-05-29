@@ -1,6 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-
 import io.rapid.core.event.enums.OrdStatus;
 
 import javax.annotation.Nonnull;
@@ -37,74 +36,86 @@ import javax.annotation.Nonnull;
  *
  * @author yellow013
  */
-public interface FtdcOrderStatus {
+public final class FtdcOrderStatus {
 
     /**
      * 全部成交
      */
-    char AllTraded = '0';
+    public static final char ALL_TRADED = '0';
 
     /**
      * 部分成交还在队列中
      */
-    char PartTradedQueueing = '1';
-
+    public static final char PART_TRADED_QUEUEING = '1';
 
     /**
      * 部分成交不在队列中
      */
-    char PartTradedNotQueueing = '2';
+    public static final char PART_TRADED_NOT_QUEUEING = '2';
 
     /**
      * 未成交还在队列中
      */
-    char NoTradeQueueing = '3';
+    public static final char NO_TRADE_QUEUEING = '3';
 
     /**
      * 未成交不在队列中
      */
-    char NoTradeNotQueueing = '4';
+    public static final char NO_TRADE_NOT_QUEUEING = '4';
 
     /**
      * 撤单
      */
-    char Canceled = '5';
+    public static final char CANCELED = '5';
 
     /**
      * 未知
      */
-    char Unknown = 'a';
+    public static final char UNKNOWN = 'a';
 
     /**
      * 尚未触发
      */
-    char NotTouched = 'b';
+    public static final char NOT_TOUCHED = 'b';
 
     /**
      * 已触发
      */
-    char Touched = 'c';
+    public static final char TOUCHED = 'c';
 
     /**
      * 根据<b> [FTDC返回] </b>订单状态, 映射<b> [系统自定义] </b>订单状态
      *
-     * @param orderStatus char
+     * @param ftdcOrderStatus char
      * @return OrdStatus
      */
     @Nonnull
-    static OrdStatus withFtdcOrderStatus(char orderStatus) {
-        return switch (orderStatus) {
-            // 未成交不在队列中 or 未成交还在队列中 return [OrdStatus.New]
-            case NoTradeNotQueueing, NoTradeQueueing -> OrdStatus.NEW;
-            // 部分成交不在队列中 or 部分成交还在队列中 return [OrdStatus.PartiallyFilled]
-            case PartTradedNotQueueing, PartTradedQueueing -> OrdStatus.PARTIALLY_FILLED;
-            // 全部成交 return [OrdStatus.Filled]
-            case AllTraded -> OrdStatus.FILLED;
-            // 撤单 return [OrdStatus.Canceled]
-            case Canceled -> OrdStatus.CANCELED;
-            // return [OrdStatus.Invalid]
+    public static OrdStatus getOrdStatus(int ftdcOrderStatus) {
+        return switch (ftdcOrderStatus) {
+            case NO_TRADE_NOT_QUEUEING, NO_TRADE_QUEUEING -> OrdStatus.NEW;
+            case PART_TRADED_NOT_QUEUEING, PART_TRADED_QUEUEING -> OrdStatus.PARTIALLY_FILLED;
+            case ALL_TRADED -> OrdStatus.FILLED;
+            case CANCELED -> OrdStatus.CANCELED;
             default -> OrdStatus.UNKNOWN;
         };
+    }
+
+    public static String getPrompt(int ftdcOrderStatus) {
+        return switch (ftdcOrderStatus) {
+            case ALL_TRADED -> "全部成交";
+            case PART_TRADED_QUEUEING -> "部分成交还在队列中";
+            case PART_TRADED_NOT_QUEUEING -> "部分成交不在队列中";
+            case NO_TRADE_QUEUEING -> "未成交还在队列中";
+            case NO_TRADE_NOT_QUEUEING -> "未成交不在队列中";
+            case CANCELED -> "撤单";
+            case UNKNOWN -> "未知";
+            case NOT_TOUCHED -> "尚未触发";
+            case TOUCHED -> "已触发";
+            default -> "NONE";
+        };
+    }
+
+    private FtdcOrderStatus() {
     }
 
 }

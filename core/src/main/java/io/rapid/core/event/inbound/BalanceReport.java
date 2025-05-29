@@ -25,19 +25,22 @@ public class BalanceReport extends JsonBean implements Copyable<BalanceReport> {
     private String investorId;
     private long available;
     private String currencyId;
+    private String msg;
 
     @Override
-    public void copyFrom(BalanceReport source) {
+    public void copyValue(BalanceReport source) {
         // 复制事件发生的时间 (Epoch Millisecond Unit)
-        this.epochMillis = source.getEpochMillis();
+        this.epochMillis = source.epochMillis;
         // 复制经纪商ID
-        this.brokerId = source.getBrokerId();
+        this.brokerId = source.brokerId;
         // 复制投资者ID
-        this.investorId = source.getInvestorId();
+        this.investorId = source.investorId;
         // 复制可用余额
-        this.available = source.getAvailable();
+        this.available = source.available;
         // 复制货币ID
-        this.currencyId = source.getCurrencyId();
+        this.currencyId = source.currencyId;
+        // 复制消息
+        this.msg = source.msg;
     }
 
 }

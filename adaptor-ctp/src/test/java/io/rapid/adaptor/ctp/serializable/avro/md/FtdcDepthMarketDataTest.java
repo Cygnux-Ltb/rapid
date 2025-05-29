@@ -1,7 +1,7 @@
 package io.rapid.adaptor.ctp.serializable.avro.md;
 
 import com.alibaba.fastjson2.JSONObject;
-import io.mercury.serialization.json.JsonParser;
+import io.mercury.serialization.json.JsonReader;
 import io.mercury.serialization.json.JsonWriter;
 import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import org.apache.fury.Fury;
@@ -28,12 +28,12 @@ public class FtdcDepthMarketDataTest {
         String json = JsonWriter.toPrettyJsonHasNulls(md);
         System.out.println(json);
 
-        FtdcDepthMarketData md1 = JsonParser.toObject(json, FtdcDepthMarketData.class);
+        FtdcDepthMarketData md1 = JsonReader.toObject(json, FtdcDepthMarketData.class);
         System.out.println(JsonWriter.toJson(md1));
         System.out.println(md);
         System.out.println(md1);
 
-        JSONObject jsonObject = JsonParser.parseJson(json);
+        JSONObject jsonObject = JsonReader.parseJson(json);
         Object lastPrice = jsonObject.get("LastPrice");
         System.out.println(lastPrice.getClass().getName());
 

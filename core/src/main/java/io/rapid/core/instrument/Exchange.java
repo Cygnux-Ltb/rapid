@@ -123,7 +123,7 @@ public enum Exchange {
     }
 
     public static void main(String[] args) {
-        System.out.println(Exchange.parseExchangeId(InstrumentKeeper.getInstrument("rb2501")));
+        System.out.println(Exchange.parseExchangeId(InstrumentKeeper.getInstrumentByCode("rb2501")));
     }
 
 }

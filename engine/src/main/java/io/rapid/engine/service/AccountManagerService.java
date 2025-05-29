@@ -1,9 +1,9 @@
 package io.rapid.engine.service;
 
-import io.cygnuxltb.console.beans.outbound.SubAccountMappingRsp;
-import io.cygnuxltb.console.beans.outbound.SubAccountRsp;
-import io.cygnuxltb.console.component.ApplicationConfiguration;
-import io.cygnuxltb.console.service.AccountService;
+import io.cygnuxltb.console.beans.response.SubAccountMappingRsp;
+import io.cygnuxltb.console.beans.response.SubAccountRsp;
+import io.cygnux.console.component.ApplicationConfiguration;
+import io.cygnux.console.service.AccountService;
 import io.mercury.common.collections.CollectionUtil;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,11 +31,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author yellow013
  */
 @NotThreadSafe
-@Service
-public final class AccountManagerService implements Serializable, AccountManager {
-
-    @java.io.Serial
-    private static final long serialVersionUID = -6883109944757142986L;
+@Service("common")
+public final class AccountManagerService implements AccountManager {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AccountManagerService.class);
 

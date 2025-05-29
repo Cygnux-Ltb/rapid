@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.cygnuxltb.rapid</groupId>
-        <artifactId>parent</artifactId>
+        <groupId>io.cygnux.rapid</groupId>
+        <artifactId>rapid</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -40,6 +40,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-numbers-core</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.lucaventuri</groupId>
+            <artifactId>fibry</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-fury</artifactId>
         </dependency>
@@ -48,8 +63,13 @@
             <artifactId>serialization-json</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.cygnuxltb</groupId>
-            <artifactId>console-beans</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cygnux</groupId>
+            <artifactId>console-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

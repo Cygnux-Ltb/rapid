@@ -32,24 +32,33 @@ public class PositionsReport extends JsonBean implements Copyable<PositionsRepor
     private String exchangeCode;
     private String instrumentCode;
     private TrdDirection direction;
+    private int yesterdayQty;
+    private int todayQty;
     private int qty;
+    private String msg;
 
     @Override
-    public void copyFrom(PositionsReport source) {
-        // 1. 复制事件的时间戳
-        this.epochMillis = source.getEpochMillis();
-        // 2. 复制经纪商ID
-        this.brokerId = source.getBrokerId();
-        // 3. 复制投资者ID
-        this.investorId = source.getInvestorId();
-        // 4. 复制交易所代码
-        this.exchangeCode = source.getExchangeCode();
-        // 5. 复制交易标的代码
-        this.instrumentCode = source.getInstrumentCode();
-        // 6. 复制交易方向
-        this.direction = source.getDirection();
-        // 7. 复制持仓数量
-        this.qty = source.getQty();
+    public void copyValue(PositionsReport source) {
+        // 复制事件的时间戳
+        this.epochMillis = source.epochMillis;
+        // 复制经纪商ID
+        this.brokerId = source.brokerId;
+        // 复制投资者ID
+        this.investorId = source.investorId;
+        // 复制交易所代码
+        this.exchangeCode = source.exchangeCode;
+        // 复制交易标的代码
+        this.instrumentCode = source.instrumentCode;
+        // 复制交易方向
+        this.direction = source.direction;
+        // 复制昨持仓量
+        this.yesterdayQty = source.yesterdayQty;
+        // 复制今持仓量
+        this.todayQty = source.todayQty;
+        // 复制持仓量
+        this.qty = source.qty;
+        // 复制消息
+        this.msg = source.msg;
     }
 
 }

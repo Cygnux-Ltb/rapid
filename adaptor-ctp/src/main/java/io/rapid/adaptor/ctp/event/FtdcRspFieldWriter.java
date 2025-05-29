@@ -1,6 +1,7 @@
 package io.rapid.adaptor.ctp.event;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.rapid.adaptor.ctp.consts.FtdcFrontDisconnectedReason;
 import io.rapid.adaptor.ctp.event.source.EventSource;
 import io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource;
 import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
@@ -89,30 +90,28 @@ public final class FtdcRspFieldWriter {
         depthMarketData.UpdateTime = Field.getUpdateTime();
         depthMarketData.UpdateMillisec = Field.getUpdateMillisec();
         depthMarketData.ActionDay = Field.getActionDay();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcDepthMarketData);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_DEPTH_MARKET_DATA);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Source       EventSource
-     * @param Field        CThostFtdcRspUserLoginField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param event     FtdcRspEvent
+     * @param Source    EventSource
+     * @param Field     CThostFtdcRspUserLoginField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent writeRspUserLogin(FtdcRspEvent event,
-                                                 EventSource Source,
+    public static FtdcRspEvent writeRspUserLogin(FtdcRspEvent event, EventSource Source,
                                                  CThostFtdcRspUserLoginField Field,
-                                                 CThostFtdcRspInfoField RspInfoField,
+                                                 CThostFtdcRspInfoField RspInfo,
                                                  int RequestID, boolean IsLast) {
         var rspUserLogin = event.getRspUserLogin();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
         rspUserLogin.Source = Source;
-        rspUserLogin.ErrorID = RspInfoField.getErrorID();
-        rspUserLogin.ErrorMsg = RspInfoField.getErrorMsg();
+        rspUserLogin.ErrorID = RspInfo.getErrorID();
+        rspUserLogin.ErrorMsg = RspInfo.getErrorMsg();
         // 请求ID, 是否最后一条信息
         rspUserLogin.RequestID = RequestID;
         rspUserLogin.IsLast = IsLast;
@@ -146,64 +145,54 @@ public final class FtdcRspFieldWriter {
         rspUserLogin.GFEXTime = Field.getGFEXTime();
         // 后台版本信息
         rspUserLogin.SysVersion = Field.getSysVersion();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.RspUserLogin);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.RSP_USER_LOGIN);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Source       EventSource
-     * @param Field        CThostFtdcUserLogoutField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param event     FtdcRspEvent
+     * @param Source    EventSource
+     * @param Field     CThostFtdcUserLogoutField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeRspUserLogout(FtdcRspEvent event,
                                                   EventSource Source,
                                                   CThostFtdcUserLogoutField Field,
-                                                  CThostFtdcRspInfoField RspInfoField,
+                                                  CThostFtdcRspInfoField RspInfo,
                                                   int RequestID, boolean IsLast) {
         var userLogout = event.getUserLogout();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
         userLogout.Source = Source;
-        userLogout.ErrorID = RspInfoField.getErrorID();
-        userLogout.ErrorMsg = RspInfoField.getErrorMsg();
+        userLogout.ErrorID = RspInfo.getErrorID();
+        userLogout.ErrorMsg = RspInfo.getErrorMsg();
         // 请求ID, 是否最后一条信息
         userLogout.RequestID = RequestID;
         userLogout.IsLast = IsLast;
         // 经纪公司代码, 用户代码
         userLogout.BrokerID = Field.getBrokerID();
         userLogout.UserID = Field.getUserID();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.UserLogout);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.USER_LOGOUT);
     }
 
     /**
-     * @param event    FtdcRspEvent
-     * @param Source   EventSource
-     * @param Reason   int
-     * @param BrokerID String
-     * @param UserID   String
+     * @param event  FtdcRspEvent
+     * @param Source EventSource
+     * @param Reason int
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeFrontDisconnected(FtdcRspEvent event,
-                                                      EventSource Source, int Reason,
-                                                      String BrokerID, String UserID) {
+                                                      EventSource Source, int Reason) {
         var frontDisconnected = event.getFrontDisconnected();
         // 事件来源
         frontDisconnected.Source = Source;
         // 错误原因
-        frontDisconnected.Reason = Reason;
-        // 经纪公司代码
-        frontDisconnected.BrokerID = BrokerID;
-        // 用户代码
-        frontDisconnected.UserID = UserID;
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FrontDisconnected);
+        frontDisconnected.Msg = "FrontDisconnected-" + FtdcFrontDisconnectedReason.getPrompt(Reason);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FRONT_DISCONNECTED);
     }
 
     /**
@@ -227,7 +216,7 @@ public final class FtdcRspFieldWriter {
         // 用户代码
         heartBeatWarning.UserID = UserID;
         return event.setEpochMicros(micros())
-                .setType(FtdcRspType.HeartBeatWarning);
+                .setType(FtdcRspType.HEARTBEAT_WARNING);
     }
 
     /**
@@ -250,9 +239,8 @@ public final class FtdcRspFieldWriter {
         // 请求ID, 是否最后一条信息
         rspError.RequestID = RequestID;
         rspError.IsLast = IsLast;
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.RspError);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.RSP_ERROR);
     }
 
     /**
@@ -273,26 +261,25 @@ public final class FtdcRspFieldWriter {
         instrumentStatus.TradingSegmentSN = Field.getTradingSegmentSN();
         instrumentStatus.EnterTime = Field.getEnterTime();
         instrumentStatus.EnterReason = Field.getEnterReason();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInstrumentStatus);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_INSTRUMENT_STATUS);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Field        CThostFtdcInputOrderField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param IsLast       boolean
+     * @param event   FtdcRspEvent
+     * @param Field   CThostFtdcInputOrderField
+     * @param RspInfo CThostFtdcRspInfoField
+     * @param IsLast  boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInputOrder(FtdcRspEvent event,
                                                CThostFtdcInputOrderField Field,
-                                               CThostFtdcRspInfoField RspInfoField,
+                                               CThostFtdcRspInfoField RspInfo,
                                                boolean IsLast) {
         var inputOrder = event.getFtdcInputOrder();
         // [FTDC响应信息] - 错误代码, 错误信息
-        inputOrder.ErrorID = RspInfoField.getErrorID();
-        inputOrder.ErrorMsg = RspInfoField.getErrorMsg();
+        inputOrder.ErrorID = RspInfo.getErrorID();
+        inputOrder.ErrorMsg = RspInfo.getErrorMsg();
         inputOrder.IsLast = IsLast;
         inputOrder.BrokerID = Field.getBrokerID();
         inputOrder.InvestorID = Field.getInvestorID();
@@ -324,26 +311,25 @@ public final class FtdcRspFieldWriter {
         inputOrder.ClientID = Field.getClientID();
         inputOrder.IPAddress = Field.getIPAddress();
         inputOrder.MacAddress = Field.getMacAddress();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInputOrder);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_INPUT_ORDER);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Field        CThostFtdcInputOrderActionField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param IsLast       boolean
+     * @param event   FtdcRspEvent
+     * @param Field   CThostFtdcInputOrderActionField
+     * @param RspInfo CThostFtdcRspInfoField
+     * @param IsLast  boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInputOrderAction(FtdcRspEvent event,
                                                      CThostFtdcInputOrderActionField Field,
-                                                     CThostFtdcRspInfoField RspInfoField,
+                                                     CThostFtdcRspInfoField RspInfo,
                                                      boolean IsLast) {
         var inputOrderAction = event.getFtdcInputOrderAction();
         // [FTDC响应信息] - 错误代码, 错误信息
-        inputOrderAction.ErrorID = RspInfoField.getErrorID();
-        inputOrderAction.ErrorMsg = RspInfoField.getErrorMsg();
+        inputOrderAction.ErrorID = RspInfo.getErrorID();
+        inputOrderAction.ErrorMsg = RspInfo.getErrorMsg();
         inputOrderAction.IsLast = IsLast;
         inputOrderAction.BrokerID = Field.getBrokerID();
         inputOrderAction.InvestorID = Field.getInvestorID();
@@ -362,28 +348,27 @@ public final class FtdcRspFieldWriter {
         inputOrderAction.InvestUnitID = Field.getInvestUnitID();
         inputOrderAction.IPAddress = Field.getIPAddress();
         inputOrderAction.MacAddress = Field.getMacAddress();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInputOrderAction);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_INPUT_ORDER_ACTION);
     }
 
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Field        CThostFtdcInvestorPositionField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param event     FtdcRspEvent
+     * @param Field     CThostFtdcInvestorPositionField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInvestorPosition(FtdcRspEvent event,
                                                      CThostFtdcInvestorPositionField Field,
-                                                     CThostFtdcRspInfoField RspInfoField,
+                                                     CThostFtdcRspInfoField RspInfo,
                                                      int RequestID, boolean IsLast) {
         var investorPosition = event.getFtdcInvestorPosition();
         // [FTDC响应信息] - 错误代码, 错误信息
-        investorPosition.ErrorID = RspInfoField.getErrorID();
-        investorPosition.ErrorMsg = RspInfoField.getErrorMsg();
+        investorPosition.ErrorID = RspInfo.getErrorID();
+        investorPosition.ErrorMsg = RspInfo.getErrorMsg();
         investorPosition.RequestID = RequestID;
         investorPosition.IsLast = IsLast;
         // 合约代码
@@ -481,9 +466,8 @@ public final class FtdcRspFieldWriter {
         // 大商所持仓成本差值, 只有大商所使用
         // 6.3.15 版本使用
         investorPosition.PositionCostOffset = Field.getPositionCostOffset();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcInvestorPosition);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_INVESTOR_POSITION);
     }
 
     /**
@@ -558,9 +542,8 @@ public final class FtdcRspFieldWriter {
         order.CurrencyID = OrderField.getCurrencyID();
         order.IPAddress = OrderField.getIPAddress();
         order.MacAddress = OrderField.getMacAddress();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcOrder);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_ORDER);
     }
 
     /**
@@ -629,9 +612,8 @@ public final class FtdcRspFieldWriter {
         orderAction.IPAddress = OrderActionField.getIPAddress();
         // MAC地址
         orderAction.MacAddress = OrderActionField.getMacAddress();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcOrderAction);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_ORDER_ACTION);
     }
 
     /**
@@ -705,26 +687,25 @@ public final class FtdcRspFieldWriter {
         trade.TradeSource = TradeField.getTradeSource();
         // 投资单元代码
         trade.InvestUnitID = TradeField.getInvestUnitID();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcTrade);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_TRADE);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Field        CThostFtdcTradingAccountField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param event     FtdcRspEvent
+     * @param Field     CThostFtdcTradingAccountField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeTradingAccount(FtdcRspEvent event,
                                                    CThostFtdcTradingAccountField Field,
-                                                   CThostFtdcRspInfoField RspInfoField,
+                                                   CThostFtdcRspInfoField RspInfo,
                                                    int RequestID, boolean IsLast) {
         var tradingAccount = event.getFtdcTradingAccount();
-        tradingAccount.ErrorID = RspInfoField.getErrorID();
-        tradingAccount.ErrorMsg = RspInfoField.getErrorMsg();
+        tradingAccount.ErrorID = RspInfo.getErrorID();
+        tradingAccount.ErrorMsg = RspInfo.getErrorMsg();
         tradingAccount.RequestID = RequestID;
         tradingAccount.IsLast = IsLast;
         // 经纪公司代码
@@ -825,38 +806,36 @@ public final class FtdcRspFieldWriter {
         tradingAccount.FrozenSwap = Field.getFrozenSwap();
         // 剩余换汇额度
         tradingAccount.RemainSwap = Field.getRemainSwap();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcTradingAccount);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_TRADING_ACCOUNT);
     }
 
     /**
-     * @param event        FtdcRspEvent
-     * @param Source       SpecificInstrumentSource
-     * @param Field        CThostFtdcSpecificInstrumentField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param event     FtdcRspEvent
+     * @param Source    SpecificInstrumentSource
+     * @param Field     CThostFtdcSpecificInstrumentField
+     * @param RspInfo   CThostFtdcRspInfoField
+     * @param RequestID int
+     * @param IsLast    boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeSpecificInstrument(FtdcRspEvent event,
                                                        SpecificInstrumentSource Source,
                                                        CThostFtdcSpecificInstrumentField Field,
-                                                       CThostFtdcRspInfoField RspInfoField,
+                                                       CThostFtdcRspInfoField RspInfo,
                                                        int RequestID, boolean IsLast) {
         var specificInstrument = event.getFtdcSpecificInstrument();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
         specificInstrument.Source = Source;
-        specificInstrument.ErrorID = RspInfoField.getErrorID();
-        specificInstrument.ErrorMsg = RspInfoField.getErrorMsg();
+        specificInstrument.ErrorID = RspInfo.getErrorID();
+        specificInstrument.ErrorMsg = RspInfo.getErrorMsg();
         // 请求ID, 是否最后一条信息
         specificInstrument.RequestID = RequestID;
         specificInstrument.IsLast = IsLast;
         // 合约代码
         specificInstrument.InstrumentID = Field.getInstrumentID();
-        return event
-                .setEpochMicros(micros())
-                .setType(FtdcRspType.FtdcSpecificInstrument);
+        return event.setEpochMicros(micros())
+                .setType(FtdcRspType.FTDC_SPECIFIC_INSTRUMENT);
     }
 
 }

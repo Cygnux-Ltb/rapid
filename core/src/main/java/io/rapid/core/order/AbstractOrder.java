@@ -6,10 +6,10 @@ import io.rapid.core.event.enums.OrdValid;
 import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.instrument.InstrumentKeeper;
-import io.rapid.core.order.attribute.OrdPrice;
-import io.rapid.core.order.attribute.OrdQty;
-import io.rapid.core.order.attribute.OrdRemark;
-import io.rapid.core.order.attribute.OrdTimestamp;
+import io.rapid.core.order.attr.OrdPrice;
+import io.rapid.core.order.attr.OrdQty;
+import io.rapid.core.order.attr.OrdRemark;
+import io.rapid.core.order.attr.OrdTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -127,7 +127,7 @@ public abstract non-sealed class AbstractOrder implements Order {
         this.ordSysId = OrdSysIdAllocatorKeeper.nextOrdSysId(strategyId);
         this.strategyId = strategyId;
         this.subAccountId = subAccountId;
-        this.instrument = InstrumentKeeper.getInstrument(instrumentCode);
+        this.instrument = InstrumentKeeper.getInstrumentByCode(instrumentCode);
         this.accountId = accountId;
         this.qty = qty;
         this.price = price;
@@ -140,7 +140,7 @@ public abstract non-sealed class AbstractOrder implements Order {
             + "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}";
 
     @Override
-    public void toLog(Logger log, String msg) {
+    public void logging(Logger log, String msg) {
         log.info(LOG_TEMPLATE, msg, ordSysId, status, direction, type,
                 instrument.getInstrumentCode(), price, qty, timestamp, remark);
     }

@@ -47,14 +47,14 @@ public final class OrderBook {
     /**
      * Use default Capacity.L07_SIZE, Size == 128
      */
-    OrderBook() {
-        this(Capacity.L07_128);
+    public OrderBook() {
+        this(Capacity.HEX_80);
     }
 
     /**
      * @param capacity Capacity
      */
-    OrderBook(Capacity capacity) {
+    public OrderBook(Capacity capacity) {
         this.orderMap = newLongObjectMap(capacity.size());
         this.longOrderMap = newLongObjectMap(capacity.size());
         this.shortOrderMap = newLongObjectMap(capacity.size());
@@ -123,8 +123,9 @@ public final class OrderBook {
         return activeOrderMap.remove(order.getOrdSysId());
     }
 
-    public boolean isContainsOrder(long ordSysId) {
-        return orderMap.containsKey(ordSysId);
+
+    public boolean isExists(long ordSysId) {
+        return getOrder(ordSysId) != null;
     }
 
     @Nullable

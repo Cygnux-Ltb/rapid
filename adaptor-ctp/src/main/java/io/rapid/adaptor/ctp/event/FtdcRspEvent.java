@@ -1,10 +1,9 @@
 package io.rapid.adaptor.ctp.event;
 
-import com.lmax.disruptor.EventFactory;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
-import io.mercury.serialization.json.JsonRecord;
+import io.mercury.serialization.json.JsonObjectExt;
 import io.rapid.adaptor.ctp.event.md.FtdcDepthMarketData;
 import io.rapid.adaptor.ctp.event.md.FtdcSpecificInstrument;
 import io.rapid.adaptor.ctp.event.shared.FrontDisconnected;
@@ -29,7 +28,7 @@ import org.slf4j.Logger;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 事件循环使用Event类型
+ * 环形队列使用[FtdcEvent]类型
  *
  * @author yellow013
  */
@@ -38,8 +37,6 @@ public final class FtdcRspEvent implements JsonSerializable {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspEvent.class);
 
-    public static final EventFactory<FtdcRspEvent> EVENT_FACTORY = FtdcRspEvent::new;
-
     private static final AtomicBoolean isLogging = new AtomicBoolean(false);
 
     /**
@@ -47,7 +44,7 @@ public final class FtdcRspEvent implements JsonSerializable {
      */
     @Setter
     @Accessors(chain = true)
-    private FtdcRspType type = FtdcRspType.Unsupported;
+    private FtdcRspType type = FtdcRspType.UNSUPPORTED;
 
     /**
      * 微秒时间戳
@@ -132,7 +129,7 @@ public final class FtdcRspEvent implements JsonSerializable {
     /**
      * For EventFactory Call
      */
-    private FtdcRspEvent() {
+    FtdcRspEvent() {
     }
 
     @Override
@@ -140,41 +137,39 @@ public final class FtdcRspEvent implements JsonSerializable {
         return toJson();
     }
 
-    public JsonRecord toJsonRecord() {
-        return setValue(new JsonRecord().setEpochUnit(EpochUnit.MICROS));
+    public JsonObjectExt toJsonObjectExt() {
+        return setValue(new JsonObjectExt().setEpochUnit(EpochUnit.MICROS));
     }
 
     // 复用Record
-    private final JsonRecord record = new JsonRecord().setEpochUnit(EpochUnit.MICROS);
+    private final JsonObjectExt jsonObjectExt = new JsonObjectExt().setEpochUnit(EpochUnit.MICROS);
 
     @Nonnull
     @Override
     public String toJson() {
-        return setValue(record).toJson();
+        return setValue(jsonObjectExt).toJson();
     }
 
-    private JsonRecord setValue(JsonRecord record) {
-        return record.setTitle(type.name())
+    private JsonObjectExt setValue(JsonObjectExt objectExt) {
+        return objectExt.setTitle(type.name())
                 .setEpochTime(epochMicros)
-                .setRecord(switch (type) {
-                    case FtdcDepthMarketData -> ftdcDepthMarketData;
-                    case FtdcOrder -> ftdcOrder;
-                    case FtdcTrade -> ftdcTrade;
-                    case FtdcInputOrder -> ftdcInputOrder;
-                    case FtdcInputOrderAction -> ftdcInputOrderAction;
-                    case FtdcOrderAction -> ftdcOrderAction;
-                    case HeartBeatWarning -> heartBeatWarning;
-                    case FtdcInstrumentStatus -> ftdcInstrumentStatus;
-                    case FtdcSpecificInstrument -> ftdcSpecificInstrument;
-                    case FtdcInvestorPosition -> ftdcInvestorPosition;
-                    case FtdcTradingAccount -> ftdcTradingAccount;
-                    case RspError -> rspError;
-                    case Unsupported -> "Unsupported";
-                    case FrontDisconnected -> frontDisconnected;
-                    case RspUserLogin -> rspUserLogin;
-                    case UserLogout -> userLogout;
-                    case MdClosed -> "MdClosed";
-                    case TraderClosed -> "TraderClosed";
+                .setObject(switch (type) {
+                    case FTDC_DEPTH_MARKET_DATA -> ftdcDepthMarketData;
+                    case FTDC_ORDER -> ftdcOrder;
+                    case FTDC_TRADE -> ftdcTrade;
+                    case FTDC_INPUT_ORDER -> ftdcInputOrder;
+                    case FTDC_INPUT_ORDER_ACTION -> ftdcInputOrderAction;
+                    case FTDC_ORDER_ACTION -> ftdcOrderAction;
+                    case HEARTBEAT_WARNING -> heartBeatWarning;
+                    case FTDC_INSTRUMENT_STATUS -> ftdcInstrumentStatus;
+                    case FTDC_SPECIFIC_INSTRUMENT -> ftdcSpecificInstrument;
+                    case FTDC_INVESTOR_POSITION -> ftdcInvestorPosition;
+                    case FTDC_TRADING_ACCOUNT -> ftdcTradingAccount;
+                    case RSP_ERROR -> rspError;
+                    case FRONT_DISCONNECTED -> frontDisconnected;
+                    case RSP_USER_LOGIN -> rspUserLogin;
+                    case USER_LOGOUT -> userLogout;
+                    case UNSUPPORTED -> null;
                 });
     }
 

@@ -21,36 +21,39 @@ package io.rapid.adaptor.ctp.consts;
  * ///集合竞价有效<br>
  * #define THOST_FTDC_TC_GFA '6'<br>
  */
-public interface FtdcTimeCondition {
+public final class FtdcTimeCondition {
 
     /**
      * 立即完成, 否则撤销
      */
-    char IOC = '1';
+    public static final char IOC = '1';
 
     /**
      * 本节有效
      */
-    char GFS = '2';
+    public static final char GFS = '2';
 
     /**
      * 当日有效
      */
-    char GFD = '3';
+    public static final char GFD = '3';
 
     /**
      * 指定日期前有效
      */
-    char GTD = '4';
+    public static final char GTD = '4';
 
     /**
      * 撤销前有效
      */
-    char GTC = '5';
+    public static final char GTC = '5';
 
     /**
      * 集合竞价有效
      */
-    char GFA = '6';
+    public static final char GFA = '6';
+
+    private FtdcTimeCondition() {
+    }
 
 }

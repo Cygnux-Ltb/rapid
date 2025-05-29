@@ -51,36 +51,39 @@ package io.rapid.adaptor.ctp.consts;
  * ///五档价<br>
  * #define THOST_FTDC_OPT_FiveLevelPrice 'G'<br>
  */
-public interface FtdcOrderPrice {
+public final class FtdcOrderPrice {
 
     /**
      * 任意价
      */
-    char ANY_PRICE = '1';
+    public static final char ANY_PRICE = '1';
 
     /**
      * 限价
      */
-    char LIMIT_PRICE = '2';
+    public static final char LIMIT_PRICE = '2';
 
     /**
      * 最优价
      */
-    char BEST_PRICE = '3';
+    public static final char BEST_PRICE = '3';
 
     /**
      * 最新价
      */
-    char LAST_PRICE = '4';
+    public static final char LAST_PRICE = '4';
 
     /**
      * 卖一价
      */
-    char ASK_PRICE1 = '8';
+    public static final char ASK_PRICE1 = '8';
 
     /**
      * 买一价
      */
-    char BID_PRICE1 = 'C';
+    public static final char BID_PRICE1 = 'C';
+
+    private FtdcOrderPrice() {
+    }
 
 }

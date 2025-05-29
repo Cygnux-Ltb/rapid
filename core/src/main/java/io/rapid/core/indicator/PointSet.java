@@ -29,7 +29,7 @@ public final class PointSet<P extends Point> {
      * @return PointSet<P>
      */
     public static <P extends Point> PointSet<P> newEmpty() {
-        return new PointSet<>(Capacity.L07_128);
+        return new PointSet<>(Capacity.HEX_80);
     }
 
     /**

@@ -52,7 +52,7 @@ public final class MarketDataKeeper implements Serializable {
                 ? InstrumentKeeper.getInstruments()
                 : ImmutableLists.newImmutableList(
                 stream(instrumentCodes)
-                        .map(InstrumentKeeper::getInstrument)
+                        .map(InstrumentKeeper::getInstrumentByCode)
                         .toList());
         if (instruments.isEmpty())
             throw new IllegalStateException("No instrument provided, with -> " + StringSupport.toString(instrumentCodes));

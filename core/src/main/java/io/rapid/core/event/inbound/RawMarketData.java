@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class RawMarketData extends JsonBean implements Copyable<RawMarketData> {
+public class RawMarketData extends JsonBean implements Copyable<RawMarketData> {
 
     /**
      * 交易标的ID [*]
@@ -121,12 +121,8 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
      */
     private int updateMillisec;
 
-    public long getEpochMillis() {
-        return epochMicros / 1000;
-    }
-
     @Override
-    public void copyFrom(RawMarketData source) {
+    public void copyValue(RawMarketData source) {
         /// 复制交易标的ID
         this.instrumentId = source.instrumentId;
         /// 复制交易标的代码
@@ -165,7 +161,6 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
         this.askVolume1 = source.askVolume1;
         /// 复制平均价格
         this.averagePrice = source.averagePrice;
-
         /// 复制时间坐标相关字段
         this.epochMicros = source.epochMicros;
         this.tradingDay = source.tradingDay;
@@ -204,7 +199,7 @@ public final class RawMarketData extends JsonBean implements Copyable<RawMarketD
 
     public RawMarketData newInstance() {
         var instance = new RawMarketData();
-        instance.copyFrom(this);
+        instance.copyValue(this);
         return instance;
     }
 

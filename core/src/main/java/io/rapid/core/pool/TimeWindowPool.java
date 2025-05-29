@@ -33,7 +33,7 @@ public final class TimeWindowPool {
      * Map<(period + symbolId), Set<TimePeriod>>
      */
     private final MutableLongObjectMap<ImmutableSortedSet<TimeWindow>>
-            timeWindowPool = MutableMaps.newLongObjectMap();
+            timeWindowsMap = MutableMaps.newLongObjectMap();
 
     /**
      * 使用联合主键进行索引,高位为symbolId, 低位为period <br>
@@ -41,7 +41,7 @@ public final class TimeWindowPool {
      * Map<(period + symbolId), Map<SerialNumber,TimePeriod>>
      */
     private final MutableLongObjectMap<ImmutableLongObjectMap<TimeWindow>>
-            timePeriodMapPool = MutableMaps.newLongObjectMap();
+            timePeriodsMap = MutableMaps.newLongObjectMap();
 
     /**
      * @param date      LocalDate
@@ -77,8 +77,8 @@ public final class TimeWindowPool {
                         timePeriodMap.put(serial.orderNum(), serial);
                     });
             long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-            timeWindowPool.put(symbolTimeKey, timePeriodSet.toImmutable());
-            timePeriodMapPool.put(symbolTimeKey, timePeriodMap.toImmutable());
+            timeWindowsMap.put(symbolTimeKey, timePeriodSet.toImmutable());
+            timePeriodsMap.put(symbolTimeKey, timePeriodMap.toImmutable());
         }
     }
 
@@ -106,11 +106,11 @@ public final class TimeWindowPool {
      */
     public ImmutableSortedSet<TimeWindow> getTimePeriodSet(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        var timeWindows = timeWindowPool.get(symbolTimeKey);
+        var timeWindows = timeWindowsMap.get(symbolTimeKey);
         if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            timeWindows = timeWindowPool.get(symbolTimeKey);
+            timeWindows = timeWindowsMap.get(symbolTimeKey);
         }
         return timeWindows;
     }
@@ -131,11 +131,11 @@ public final class TimeWindowPool {
      */
     public ImmutableLongObjectMap<TimeWindow> getTimePeriodMap(Symbol symbol, Duration duration) {
         long symbolTimeKey = mergeSymbolTimeKey(symbol, duration);
-        var timeWindows = timePeriodMapPool.get(symbolTimeKey);
+        var timeWindows = timePeriodsMap.get(symbolTimeKey);
         if (timeWindows == null) {
             // TODO ??? LocalDate.now()
             register(LocalDate.now(), symbol, duration);
-            timeWindows = timePeriodMapPool.get(symbolTimeKey);
+            timeWindows = timePeriodsMap.get(symbolTimeKey);
         }
         return timeWindows;
     }

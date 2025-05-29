@@ -2,16 +2,16 @@ package io.rapid.core.event;
 
 public enum OutboundEventType {
 
-    NewOrder,
+    NEW_ORDER,
 
-    CancelOrder,
+    CANCEL_ORDER,
 
-    QueryOrder,
+    QUERY_ORDER,
 
-    QueryPosition,
+    QUERY_POSITIONS,
 
-    QueryBalance,
+    QUERY_BALANCE,
 
-    SubscribeMarketData,
+    SUBSCRIBE_MARKET_DATA,
 
 }

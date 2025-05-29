@@ -1,6 +1,5 @@
 package io.rapid.adaptor.ctp.consts;
 
-
 import io.rapid.core.event.enums.TrdDirection;
 
 /**
@@ -12,17 +11,17 @@ import io.rapid.core.event.enums.TrdDirection;
  * ///卖<br>
  * #define THOST_FTDC_D_Sell '1'<br>
  */
-public interface FtdcDirection {
+public final class FtdcDirection {
 
     /**
      * 买
      */
-    char BUY = '0';
+    public static final char BUY = '0';
 
     /**
      * 卖
      */
-    char SELL = '1';
+    public static final char SELL = '1';
 
     /**
      * 根据<b>[FTDC返回]</b>买卖方向类型, 映射<b>[系统自定义]</b>买卖方向类型类型
@@ -30,7 +29,7 @@ public interface FtdcDirection {
      * @param direction char
      * @return TrdDirection
      */
-    static TrdDirection withFtdcDirection(char direction) {
+    public static TrdDirection getTrdDirection(int direction) {
         return switch (direction) {
             // 买
             case BUY -> TrdDirection.LONG;
@@ -41,5 +40,7 @@ public interface FtdcDirection {
         };
     }
 
-}
+    private FtdcDirection() {
+    }
 
+}

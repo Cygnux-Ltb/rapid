@@ -88,10 +88,12 @@ public sealed interface Position extends Comparable<Position>, Serializable perm
 
     @Override
     default int compareTo(Position o) {
-        return this.getAccountId() < o.getAccountId() ? -1
-                : this.getAccountId() > o.getAccountId() ? 1
-                : compare(this.getInstrument().getInstrumentId(),
-                o.getInstrument().getInstrumentId());
+        if (this.getAccountId() < o.getAccountId())
+            return -1;
+        else if (this.getAccountId() > o.getAccountId())
+            return 1;
+        else return compare(this.getInstrument().getInstrumentId(),
+                    o.getInstrument().getInstrumentId());
     }
 
 }

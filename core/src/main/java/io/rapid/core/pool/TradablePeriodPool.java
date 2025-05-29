@@ -19,18 +19,18 @@ public final class TradablePeriodPool {
     }
 
     // Map<symbolId, ImmutableList<TradablePeriod>>
-    private static ImmutableIntObjectMap<ImmutableList<TradablePeriod>> Pool;
+    private static ImmutableIntObjectMap<ImmutableList<TradablePeriod>> POOL;
 
-    public synchronized static void register(Symbol[] symbols) {
+    public static synchronized void register(Symbol[] symbols) {
         requiredLength(symbols, 1, "symbols");
         var map = MutableMaps.<ImmutableList<TradablePeriod>>newIntObjectMap();
-        if (Pool != null)
-            Pool.forEachKeyValue(map::put);
+        if (POOL != null)
+            POOL.forEachKeyValue(map::put);
         for (var symbol : symbols) {
             if (!map.containsKey(symbol.getSymbolId()))
                 map.put(symbol.getSymbolId(), symbol.getTradablePeriods());
         }
-        Pool = map.toImmutable();
+        POOL = map.toImmutable();
     }
 
     /**
@@ -40,7 +40,7 @@ public final class TradablePeriodPool {
      * @return ImmutableList<TradablePeriod>
      */
     public static synchronized ImmutableList<TradablePeriod> getTradingPeriods(Instrument instrument) {
-        return Pool.get(instrument.getSymbol().getSymbolId());
+        return POOL.get(instrument.getSymbol().getSymbolId());
     }
 
     /**
@@ -50,7 +50,7 @@ public final class TradablePeriodPool {
      * @return ImmutableList<TradablePeriod>
      */
     public static synchronized ImmutableList<TradablePeriod> getTradingPeriods(Symbol symbol) {
-        return Pool.get(symbol.getSymbolId());
+        return POOL.get(symbol.getSymbolId());
     }
 
     /**

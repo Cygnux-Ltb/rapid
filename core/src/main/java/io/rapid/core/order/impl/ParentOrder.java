@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 
 import static io.cygnuxltb.console.beans.ValueLimitation.MAX_ACCOUNT_ID;
 import static io.mercury.common.collections.MutableLists.newFastList;
-import static io.rapid.core.order.attribute.OrdPrice.withOffer;
-import static io.rapid.core.order.attribute.OrdQty.withOffer;
+import static io.rapid.core.order.attr.OrdPrice.withOffer;
+import static io.rapid.core.order.attr.OrdQty.withOffer;
 
 /**
  * TODO 暂时无用,
@@ -63,7 +63,7 @@ public final class ParentOrder extends AbstractOrder {
             + "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}";
 
     @Override
-    public void toLog(Logger log, String msg) {
+    public void logging(Logger log, String msg) {
         log.info(LogTemplate, msg, ordSysId, status, direction, type,
                 instrument.getInstrumentCode(), price, qty, timestamp);
     }

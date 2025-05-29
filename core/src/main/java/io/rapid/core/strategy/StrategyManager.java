@@ -12,14 +12,12 @@ public interface StrategyManager {
 
     Strategy getStrategy(int strategyId);
 
+    void subscribeInstrument(Strategy strategy, Instrument... instruments);
+
     MutableIntObjectMap<Strategy> getStrategies();
 
     MutableIntObjectMap<Instrument> getInstruments();
 
-    long nextOrdSysId();
-
     void onEvent(StrategyEvent event);
-
-    void onException(Exception exception) throws StrategyException;
 
 }

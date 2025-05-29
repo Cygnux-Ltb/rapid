@@ -3,8 +3,8 @@ package io.rapid.engine;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.OutboundEventHandler;
-import io.rapid.core.event.container.OutboundEventLoop;
+import io.rapid.core.event.OutboundEventLoop;
+import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
 import io.rapid.core.event.outbound.QueryBalance;
@@ -18,24 +18,31 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class CoreOutboundService implements OutboundEventHandler {
+public class CoreOutboundService implements OutboundHandler {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(CoreOutboundService.class);
 
     @Resource
     private AdaptorManager adaptorManager;
 
     private final OutboundEventLoop eventLoop = new OutboundEventLoop() {
+
         @Override
-        protected void process(OutboundEvent event) {
+        public void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
-                case NewOrder -> adaptorManager.commitNewOrder(event.getNewOrder());
-                case CancelOrder -> adaptorManager.commitCancelOrder(event.getCancelOrder());
-                case SubscribeMarketData -> adaptorManager.commitSubscribeMarketData(event.getSubscribeMarketData());
-                case QueryOrder -> adaptorManager.commitQueryOrder(event.getQueryOrder());
-                case QueryPosition -> adaptorManager.commitQueryPositions(event.getQueryPosition());
-                case QueryBalance -> adaptorManager.commitQueryBalance(event.getQueryBalance());
+                case SUBSCRIBE_MARKET_DATA -> adaptorManager
+                        .commitSubscribeMarketData(event.getSubscribeMarketData());
+                case NEW_ORDER -> adaptorManager
+                        .commitNewOrder(event.getNewOrder());
+                case CANCEL_ORDER -> adaptorManager
+                        .commitCancelOrder(event.getCancelOrder());
+                case QUERY_ORDER -> adaptorManager
+                        .commitQueryOrder(event.getQueryOrder());
+                case QUERY_POSITIONS -> adaptorManager
+                        .commitQueryPositions(event.getQueryPosition());
+                case QUERY_BALANCE -> adaptorManager
+                        .commitQueryBalance(event.getQueryBalance());
             }
         }
     };
@@ -102,7 +109,7 @@ public class CoreOutboundService implements OutboundEventHandler {
 
     /**
      * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
+     * with it. If the stream is already closed, then invoking this
      * method has no effect.
      *
      * <p> As noted in {@link AutoCloseable#close()}, cases where the
@@ -115,7 +122,7 @@ public class CoreOutboundService implements OutboundEventHandler {
      */
     @Override
     public void close() throws IOException {
-        // TODO 资源清理
+        // 实现资源清理
     }
 
 }

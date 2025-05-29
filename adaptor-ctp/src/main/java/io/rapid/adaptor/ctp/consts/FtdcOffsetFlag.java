@@ -4,7 +4,6 @@ import io.rapid.core.event.enums.TrdAction;
 
 import javax.annotation.Nonnull;
 
-
 /**
  * ///TFtdcOffsetFlagType是一个开平标志类型<br>
  * <br>
@@ -29,72 +28,71 @@ import javax.annotation.Nonnull;
  * ///本地强平<br>
  * #define THOST_FTDC_OF_LocalForceClose '6'<br>
  */
-public interface FtdcOffsetFlag {
+public final class FtdcOffsetFlag {
 
     /**
      * 开仓 [char]
      */
-    char OPEN = '0';
+    public static final char OPEN = '0';
 
     /**
      * 开仓 [String]
      */
-    String OPEN_STR = String.valueOf(OPEN);
+    public static final String OPEN_STR = String.valueOf(OPEN);
 
     /**
      * 平仓 [char]
      */
-    char CLOSE = '1';
+    public static final char CLOSE = '1';
     /**
      * 平仓 [String]
      */
-    String CLOSE_STR = String.valueOf(CLOSE);
+    public static final String CLOSE_STR = String.valueOf(CLOSE);
 
     /**
      * 强平 [char]
      */
-    char FORCE_CLOSE = '2';
+    public static final char FORCE_CLOSE = '2';
     /**
      * 强平 [String]
      */
-    String FORCE_CLOSE_STR = String.valueOf(FORCE_CLOSE);
+    public static final String FORCE_CLOSE_STR = String.valueOf(FORCE_CLOSE);
 
     /**
      * 平今 [char]
      */
-    char CLOSE_TODAY = '3';
+    public static final char CLOSE_TODAY = '3';
     /**
      * 平今 [String]
      */
-    String CLOSE_TODAY_STR = String.valueOf(CLOSE_TODAY);
+    public static final String CLOSE_TODAY_STR = String.valueOf(CLOSE_TODAY);
 
     /**
      * 平昨 [char]
      */
-    char CLOSE_YESTERDAY = '4';
+    public static final char CLOSE_YESTERDAY = '4';
     /**
      * 平昨 [String]
      */
-    String CLOSE_YESTERDAY_STR = String.valueOf(CLOSE_YESTERDAY);
+    public static final String CLOSE_YESTERDAY_STR = String.valueOf(CLOSE_YESTERDAY);
 
     /**
      * 强减 [char]
      */
-    char FORCE_OFF = '5';
+    public static final char FORCE_OFF = '5';
     /**
      * 强减 [String]
      */
-    String FORCE_OFF_STR = String.valueOf(FORCE_OFF);
+    public static final String FORCE_OFF_STR = String.valueOf(FORCE_OFF);
 
     /**
      * 本地强平 [char]
      */
-    char LOCAL_FORCE_CLOSE = '6';
+    public static final char LOCAL_FORCE_CLOSE = '6';
     /**
      * 本地强平 [String]
      */
-    String LOCAL_FORCE_CLOSE_STR = String.valueOf(LOCAL_FORCE_CLOSE);
-
+    public static final String LOCAL_FORCE_CLOSE_STR = String.valueOf(LOCAL_FORCE_CLOSE);
 
     /**
      * 根据<b> [FTDC返回] </b>开平仓类型, 映射<b> [系统自定义] </b>开平仓类型
@@ -103,8 +101,8 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withFtdcOffsetFlag(@Nonnull String combOffsetFlag) {
-        return withFtdcOffsetFlag(combOffsetFlag.charAt(0));
+    public static TrdAction getTrdAction(@Nonnull String combOffsetFlag) {
+        return getTrdAction(combOffsetFlag.charAt(0));
     }
 
     /**
@@ -114,7 +112,7 @@ public interface FtdcOffsetFlag {
      * @return TrdAction
      */
     @Nonnull
-    static TrdAction withFtdcOffsetFlag(char offsetFlag) {
+    public static TrdAction getTrdAction(int offsetFlag) {
         return switch (offsetFlag) {
             // 开仓
             case OPEN -> TrdAction.OPEN;
@@ -129,4 +127,7 @@ public interface FtdcOffsetFlag {
         };
     }
 
+    private FtdcOffsetFlag() {
+    }
+    
 }

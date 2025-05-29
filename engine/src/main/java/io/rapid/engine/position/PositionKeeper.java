@@ -143,8 +143,8 @@ public final class PositionKeeper implements Serializable {
      * @param direction    交易方向
      * @return int
      */
-    public static int getCurrentSubAccountPositionLimit(int subAccountId, Instrument instrument,
-                                                        TrdDirection direction) {
+    public static int getSubAccountPositionLimit(int subAccountId, Instrument instrument,
+                                                 TrdDirection direction) {
         long key = mergePositionsKey(subAccountId, instrument);
         int currentQty = SubAccountInstrumentPos.get(key);
         return switch (direction) {
@@ -162,8 +162,8 @@ public final class PositionKeeper implements Serializable {
      * @param direction  交易方向
      * @return int
      */
-    public static int getCurrentAccountPositionLimit(int accountId, Instrument instrument,
-                                                     TrdDirection direction) {
+    public static int getAccountPositionLimit(int accountId, Instrument instrument,
+                                              TrdDirection direction) {
         long key = mergePositionsKey(accountId, instrument);
         int currentQty = AccountInstrumentPos.get(key);
         return switch (direction) {
@@ -180,7 +180,7 @@ public final class PositionKeeper implements Serializable {
      * @param instrument   交易标的
      * @return int
      */
-    public static int getCurrentSubAccountPosition(int subAccountId, Instrument instrument) {
+    public static int getSubAccountPosition(int subAccountId, Instrument instrument) {
         long positionKey = mergePositionsKey(subAccountId, instrument);
         int currentPosition = SubAccountInstrumentPos.get(positionKey);
         log.info("Get current position, subAccountId==[{}], instrumentCode==[{}], currentPosition==[{}]", subAccountId,
@@ -195,7 +195,7 @@ public final class PositionKeeper implements Serializable {
      * @param instrument 交易标的
      * @return int
      */
-    public static int getCurrentAccountPosition(int accountId, Instrument instrument) {
+    public static int getAccountPosition(int accountId, Instrument instrument) {
         long positionKey = mergePositionsKey(accountId, instrument);
         int currentPosition = AccountInstrumentPos.get(positionKey);
         log.info("Get current position, accountId==[{}], instrumentCode==[{}], currentPosition==[{}]",
@@ -215,7 +215,7 @@ public final class PositionKeeper implements Serializable {
      *
      * @param order 子订单
      */
-    public static void updateCurrentPosition(ChildOrder order) {
+    public static void updatePositionWith(ChildOrder order) {
         int subAccountId = order.getSubAccountId();
         Instrument instrument = order.getInstrument();
         int trdQty = order.getLastRecord().tradeQty();
@@ -225,8 +225,7 @@ public final class PositionKeeper implements Serializable {
                     case OPEN -> trdQty = abs(trdQty);
                     case CLOSE, CLOSE_TODAY, CLOSE_YESTERDAY -> trdQty = -abs(trdQty);
                     case INVALID ->
-                            log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
-                                    subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
+                            loggingInvalidAction(subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
                 }
             }
             case SHORT -> {
@@ -234,8 +233,7 @@ public final class PositionKeeper implements Serializable {
                     case OPEN -> trdQty = -abs(trdQty);
                     case CLOSE, CLOSE_TODAY, CLOSE_YESTERDAY -> trdQty = abs(trdQty);
                     case INVALID ->
-                            log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
-                                    subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
+                            loggingInvalidAction(subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
                 }
             }
             case INVALID ->
@@ -247,6 +245,11 @@ public final class PositionKeeper implements Serializable {
         int currentPos = beforePos + trdQty;
         SubAccountInstrumentPos.put(posKey, currentPos);
         log.info(UpdatePosLogTemplate, subAccountId, instrument.getInstrumentCode(), beforePos, trdQty, currentPos);
+    }
+
+    private static void loggingInvalidAction(int subAccountId, long ordSysId, String instrumentCode) {
+        log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
+                subAccountId, ordSysId, instrumentCode);
     }
 
     private static final String AddPosLogTemplate = "Add current position -> "
@@ -264,7 +267,7 @@ public final class PositionKeeper implements Serializable {
      * @param direction    方向
      * @param qty          仓位数量
      */
-    public static void addCurrentPosition(int subAccountId, Instrument instrument, TrdDirection direction, int qty) {
+    public static void addPosition(int subAccountId, Instrument instrument, TrdDirection direction, int qty) {
         switch (direction) {
             case LONG -> qty = abs(qty);
             case SHORT -> qty = -abs(qty);

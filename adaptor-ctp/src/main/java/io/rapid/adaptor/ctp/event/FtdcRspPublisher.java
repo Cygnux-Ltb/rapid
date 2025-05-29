@@ -50,7 +50,7 @@ public final class FtdcRspPublisher {
      */
     public FtdcRspPublisher(Processor<FtdcRspEvent> processor) {
         this.eventbus = RingEventbus
-                .multiProducer(FtdcRspEvent.EVENT_FACTORY)
+                .multiProducer(FtdcRspEvent::new)
                 .size(128)
                 .name("ftdc-eventbus")
                 .waitStrategy(Yielding.get())
@@ -60,13 +60,10 @@ public final class FtdcRspPublisher {
     /**
      * @param Source   EventSource
      * @param Reason   int
-     * @param BrokerID String
-     * @param UserID   String
      */
-    public void publishFrontDisconnected(EventSource Source, int Reason,
-                                         String BrokerID, String UserID) {
+    public void publishFrontDisconnected(EventSource Source, int Reason) {
         eventbus.publish((event, sequence) ->
-                writeFrontDisconnected(event, Source, Reason, BrokerID, UserID)
+                writeFrontDisconnected(event, Source, Reason)
         );
     }
 
