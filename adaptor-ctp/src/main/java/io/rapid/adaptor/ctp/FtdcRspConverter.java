@@ -25,7 +25,7 @@ import io.rapid.core.event.inbound.BalanceReport;
 import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.instrument.InstrumentKeeper;
 import io.rapid.core.order.OrderRefKeeper;
 import org.slf4j.Logger;
@@ -81,7 +81,7 @@ public final class FtdcRspConverter {
     /**
      * [RawMarketData]复用对象
      */
-    private final RawMarketData rawMarketData = new RawMarketData();
+    private final MarketDataReport marketDataReport = new MarketDataReport();
 
     /**
      * 转换
@@ -117,13 +117,13 @@ public final class FtdcRspConverter {
      * @param marketData FtdcDepthMarketData
      * @return FastMarketData
      */
-    public RawMarketData convert(FtdcDepthMarketData marketData) {
+    public MarketDataReport convert(FtdcDepthMarketData marketData) {
         // 业务日期
         // var actionDay = LocalDate.parse(marketData.ActionDay, actionDayFormatter);
         // 最后修改时间
         // var updateTime = LocalTime.parse(marketData.UpdateTime, updateTimeFormatter).plusNanos(marketData.UpdateMillisec * NANOS_PER_MILLIS);
         var instrument = InstrumentKeeper.getInstrumentByCode(marketData.InstrumentID);
-        return rawMarketData
+        return marketDataReport
                 // 交易标的ID
                 .setInstrumentId(instrument.getInstrumentId())
                 // 交易标的代码

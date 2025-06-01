@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component("backtestAdaptor")
 public class BacktestAdaptor extends AbstractAdaptor {
 
-    @Resource(name = "backtestMatchMachine")
+    @Resource
     private BacktestMatchMachine matchMachine;
 
     /**
@@ -64,5 +64,10 @@ public class BacktestAdaptor extends AbstractAdaptor {
     public void close() {
         log.info("Closing BacktestAdaptor");
     }
+
+    public void onNext(){
+        var nextMarketData = matchMachine.doNext();
+    }
+
 
 }

@@ -14,7 +14,7 @@ import io.rapid.core.account.Account;
 import io.rapid.core.adaptor.AbstractAdaptor;
 import io.rapid.core.adaptor.AdaptorRunningMode;
 import io.rapid.core.event.InboundEvent;
-import io.rapid.core.event.InboundEventLoop;
+import io.rapid.core.event.InboundEventbus;
 import io.rapid.core.event.InboundHandler;
 import io.rapid.core.event.enums.AdaptorType;
 import io.rapid.core.event.inbound.AdaptorReport;
@@ -80,7 +80,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     // 入站队列处理器
     private final InboundHandler inboundHandler;
 
-    private final InboundEventLoop inboundEventLoop = new InboundEventLoop() {
+    private final InboundEventbus inboundEventbus = new InboundEventbus() {
         @Override
         public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
             inboundHandler.onEvent(event, sequence, endOfBatch);
@@ -124,7 +124,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.Msg);
                 log.info("Received [FrontDisconnected] convert to [AdaptorReport] -> {}", report);
-                inboundEventLoop.put(report);
+                inboundEventbus.put(report);
             }
             case RSP_USER_LOGIN -> {
                 var received = event.getRspUserLogin();
@@ -134,43 +134,43 @@ public class CtpAdaptor extends AbstractAdaptor {
                 ftdcRspConverter.setTradingDay(received.TradingDay);
                 log.info("Updated [ReqConverter]&[RspConverter] internal TradingDay==[{}]", received.TradingDay);
                 log.info("Received [RspUserLogin] convert to [AdaptorReport] -> {}", report);
-                inboundEventLoop.put(report);
+                inboundEventbus.put(report);
             }
             case USER_LOGOUT -> {
                 var received = event.getUserLogout();
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.ErrorMsg);
                 log.info("Received [UserLogout] convert to [AdaptorReport] -> {}", report);
-                inboundEventLoop.put(report);
+                inboundEventbus.put(report);
             }
-            case FTDC_DEPTH_MARKET_DATA -> inboundEventLoop
+            case FTDC_DEPTH_MARKET_DATA -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcDepthMarketData()));
 
-            case FTDC_SPECIFIC_INSTRUMENT -> inboundEventLoop
+            case FTDC_SPECIFIC_INSTRUMENT -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcSpecificInstrument()));
 
-            case FTDC_INSTRUMENT_STATUS -> inboundEventLoop
+            case FTDC_INSTRUMENT_STATUS -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcInstrumentStatus()));
 
-            case FTDC_INPUT_ORDER -> inboundEventLoop
+            case FTDC_INPUT_ORDER -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcInputOrder()));
 
-            case FTDC_INPUT_ORDER_ACTION -> inboundEventLoop
+            case FTDC_INPUT_ORDER_ACTION -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcInputOrderAction()));
 
-            case FTDC_INVESTOR_POSITION -> inboundEventLoop
+            case FTDC_INVESTOR_POSITION -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcInvestorPosition()));
 
-            case FTDC_ORDER -> inboundEventLoop
+            case FTDC_ORDER -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcOrder()));
 
-            case FTDC_ORDER_ACTION -> inboundEventLoop
+            case FTDC_ORDER_ACTION -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcOrderAction()));
 
-            case FTDC_TRADE -> inboundEventLoop
+            case FTDC_TRADE -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcTrade()));
 
-            case FTDC_TRADING_ACCOUNT -> inboundEventLoop
+            case FTDC_TRADING_ACCOUNT -> inboundEventbus
                     .put(ftdcRspConverter.convert(event.getFtdcTradingAccount()));
 
             case HEARTBEAT_WARNING -> log
