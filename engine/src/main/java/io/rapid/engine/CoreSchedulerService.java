@@ -6,7 +6,7 @@ import io.rapid.core.account.Account;
 import io.rapid.core.account.AccountManager;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.InboundEvent;
-import io.rapid.core.event.InboundEventLoop;
+import io.rapid.core.event.InboundEventbus;
 import io.rapid.core.event.InboundFeeder;
 import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.enums.MarketDataType;
@@ -15,11 +15,11 @@ import io.rapid.core.event.enums.TrdAction;
 import io.rapid.core.event.enums.TrdDirection;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
-import io.rapid.core.event.inbound.DepthMarketData;
+import io.rapid.core.event.inbound.DepthMarketDataReport;
 import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 import io.rapid.core.instrument.Instrument;
 import io.rapid.core.mdata.MarketDataManager;
@@ -46,7 +46,7 @@ public class CoreSchedulerService implements CoreScheduler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreSchedulerService.class);
 
-    private final MutableList<StrategySignal> signals = newFastList(128);
+    private final MutableList<StrategySignal> signals = newFastList(64);
 
     @Resource
     private MarketDataManager marketDataManager;
@@ -72,12 +72,12 @@ public class CoreSchedulerService implements CoreScheduler {
     @Resource
     private OutboundHandler outboundHandler;
 
-    private final InboundEventLoop eventLoop = new InboundEventLoop() {
+    private final InboundEventbus eventLoop = new InboundEventbus() {
         @Override
         public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
-                case RAW_MARKET_DATA -> handleRawMarketData(event.getRawMarketData());
-                case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
+                case RAW_MARKET_DATA -> handleMarketDataReport(event.getMarketDataReport());
+                case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketDataReport());
                 case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
                 case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
                 case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
@@ -99,14 +99,13 @@ public class CoreSchedulerService implements CoreScheduler {
         eventFeeder.startup();
     }
 
-
     /**
      * 深度行情处理
      *
      * @param event DepthMarketData
      */
     @Override
-    public void handleDepthMarketData(DepthMarketData event) {
+    public void handleDepthMarketData(DepthMarketDataReport event) {
 
     }
 
@@ -119,7 +118,7 @@ public class CoreSchedulerService implements CoreScheduler {
      * @param event RawMarketData
      */
     @Override
-    public void handleRawMarketData(RawMarketData event) {
+    public void handleMarketDataReport(MarketDataReport event) {
         // 行情内核穿透
         log.info("Core process start count -> {}", ++marketDataCounter);
         marketDataManager.onMarketData(event);

@@ -3,7 +3,7 @@ package io.rapid.engine;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.core.adaptor.AdaptorManager;
 import io.rapid.core.event.OutboundEvent;
-import io.rapid.core.event.OutboundEventLoop;
+import io.rapid.core.event.OutboundEventbus;
 import io.rapid.core.event.OutboundHandler;
 import io.rapid.core.event.outbound.CancelOrder;
 import io.rapid.core.event.outbound.NewOrder;
@@ -25,7 +25,7 @@ public class CoreOutboundService implements OutboundHandler {
     @Resource
     private AdaptorManager adaptorManager;
 
-    private final OutboundEventLoop eventLoop = new OutboundEventLoop() {
+    private final OutboundEventbus eventLoop = new OutboundEventbus() {
 
         @Override
         public void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) {

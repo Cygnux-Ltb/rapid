@@ -32,7 +32,6 @@
         <module>core</module>
         <module>engine</module>
         <module>example</module>
-        <module>backtest-integration</module>
     </modules>
 
     <properties>

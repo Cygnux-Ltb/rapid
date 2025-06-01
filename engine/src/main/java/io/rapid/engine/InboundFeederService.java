@@ -9,14 +9,14 @@ import io.mercury.transport.zmq.ZmqSubscriber;
 import io.rapid.core.adaptor.Adaptor;
 import io.rapid.core.event.InboundEventType;
 import io.rapid.core.event.InboundFeeder;
-import io.rapid.core.event.InboundEventLoop;
+import io.rapid.core.event.InboundEventbus;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
-import io.rapid.core.event.inbound.DepthMarketData;
+import io.rapid.core.event.inbound.DepthMarketDataReport;
 import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class InboundFeederService implements InboundFeeder {
             .ipc(Adaptor.publishPath())
             .createSubscriber(this::handleMsg);
 
-    private InboundEventLoop loop;
+    private InboundEventbus loop;
 
     @Override
     public void startup() throws StartupException {
@@ -47,8 +47,8 @@ public class InboundFeederService implements InboundFeeder {
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
         switch (InboundEventType.valueOf(title)) {
-            case RAW_MARKET_DATA -> loop.put(record.getWith(RawMarketData.class));
-            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketData.class));
+            case RAW_MARKET_DATA -> loop.put(record.getWith(MarketDataReport.class));
+            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketDataReport.class));
             case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));
             case POSITIONS_REPORT -> loop.put(record.getWith(PositionsReport.class));
             case BALANCE_REPORT -> loop.put(record.getWith(BalanceReport.class));
@@ -67,7 +67,7 @@ public class InboundFeederService implements InboundFeeder {
     }
 
     @Override
-    public void addEventLoop(InboundEventLoop loop) {
+    public void addEventLoop(InboundEventbus loop) {
         this.loop = loop;
     }
 
