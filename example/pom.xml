@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.rapid.example.launch.ExampleLauncher</mainClass>
+                            <mainClass>io.cygnux.rapid.launch.ExampleLauncher</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

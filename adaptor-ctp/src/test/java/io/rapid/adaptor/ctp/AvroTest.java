@@ -2,8 +2,8 @@ package io.rapid.adaptor.ctp;
 
 import io.mercury.serialization.json.JsonReader;
 import io.mercury.serialization.json.JsonWriter;
-import io.rapid.adaptor.ctp.event.shared.UserLogout;
-import io.rapid.adaptor.ctp.event.source.EventSource;
+import io.cygnux.rapid.adaptor.ctp.event.shared.UserLogout;
+import io.cygnux.rapid.adaptor.ctp.event.source.EventSource;
 
 import java.io.IOException;
 
