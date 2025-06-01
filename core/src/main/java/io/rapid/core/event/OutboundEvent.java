@@ -37,7 +37,7 @@ public final class OutboundEvent implements JsonSerializable {
      * 事件类型
      */
     @Getter
-    private OutboundEventType type = null;
+    private OutboundEventType type = OutboundEventType.INVALID;
 
     /// EVENT INSTANCE ///
     @Getter
@@ -68,7 +68,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(NewOrder newOrder) {
         this.epochMicros = micros();
         this.type = OutboundEventType.NEW_ORDER;
-        this.newOrder.copyValue(newOrder);
+        this.newOrder.copyOf(newOrder);
         return this;
     }
 
@@ -79,7 +79,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(CancelOrder cancelOrder) {
         this.epochMicros = micros();
         this.type = OutboundEventType.CANCEL_ORDER;
-        this.cancelOrder.copyValue(cancelOrder);
+        this.cancelOrder.copyOf(cancelOrder);
         return this;
     }
 
@@ -90,7 +90,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(QueryOrder queryOrder) {
         this.epochMicros = micros();
         this.type = OutboundEventType.QUERY_ORDER;
-        this.queryOrder.copyValue(queryOrder);
+        this.queryOrder.copyOf(queryOrder);
         return this;
     }
 
@@ -101,7 +101,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(QueryPosition queryPosition) {
         this.epochMicros = micros();
         this.type = OutboundEventType.QUERY_POSITIONS;
-        this.queryPosition.copyValue(queryPosition);
+        this.queryPosition.copyOf(queryPosition);
         return this;
     }
 
@@ -112,7 +112,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(QueryBalance queryBalance) {
         this.epochMicros = micros();
         this.type = OutboundEventType.QUERY_BALANCE;
-        this.queryBalance.copyValue(queryBalance);
+        this.queryBalance.copyOf(queryBalance);
         return this;
     }
 
@@ -123,7 +123,7 @@ public final class OutboundEvent implements JsonSerializable {
     public OutboundEvent updateWith(SubscribeMarketData subscribeMarketData) {
         this.epochMicros = micros();
         this.type = OutboundEventType.SUBSCRIBE_MARKET_DATA;
-        this.subscribeMarketData.copyValue(subscribeMarketData);
+        this.subscribeMarketData.copyOf(subscribeMarketData);
         return this;
     }
 
@@ -146,6 +146,7 @@ public final class OutboundEvent implements JsonSerializable {
                     case QUERY_POSITIONS -> queryPosition;
                     case QUERY_BALANCE -> queryBalance;
                     case SUBSCRIBE_MARKET_DATA -> subscribeMarketData;
+                    case INVALID -> "INVALID";
                 }).toJson();
     }
 

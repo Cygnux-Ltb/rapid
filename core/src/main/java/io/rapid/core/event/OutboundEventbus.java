@@ -8,12 +8,12 @@ import io.rapid.core.event.outbound.QueryOrder;
 import io.rapid.core.event.outbound.QueryPosition;
 import io.rapid.core.event.outbound.SubscribeMarketData;
 
-public abstract class OutboundEventLoop extends RingEventHandler<OutboundEvent> {
+public abstract class OutboundEventbus extends RingEventHandler<OutboundEvent> {
 
     /**
      * 默认使用单生产者
      */
-    protected OutboundEventLoop() {
+    protected OutboundEventbus() {
         this(RingEventHandler.singleProducer());
     }
 
@@ -22,8 +22,8 @@ public abstract class OutboundEventLoop extends RingEventHandler<OutboundEvent> 
      *
      * @param builder Builder
      */
-    protected OutboundEventLoop(Builder builder) {
-        super(builder.name("outbound-loop"), OutboundEvent.EVENT_FACTORY);
+    protected OutboundEventbus(Builder builder) {
+        super(builder.name("outbound-eventbus"), OutboundEvent.EVENT_FACTORY);
     }
 
     public void publish(SubscribeMarketData in) {

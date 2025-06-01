@@ -7,11 +7,11 @@ import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
-import io.rapid.core.event.inbound.DepthMarketData;
+import io.rapid.core.event.inbound.DepthMarketDataReport;
 import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -43,9 +43,9 @@ public final class InboundEvent implements JsonSerializable {
 
     /// EVENT INSTANCE ///
     @Getter
-    private final RawMarketData rawMarketData = new RawMarketData();
+    private final MarketDataReport marketDataReport = new MarketDataReport();
     @Getter
-    private final DepthMarketData depthMarketData = new DepthMarketData();
+    private final DepthMarketDataReport depthMarketDataReport = new DepthMarketDataReport();
     @Getter
     private final OrderReport orderReport = new OrderReport();
     @Getter
@@ -68,10 +68,10 @@ public final class InboundEvent implements JsonSerializable {
      * @param event FastMarketDataEvent
      * @return InboundEvent
      */
-    public InboundEvent updateWith(RawMarketData event) {
+    public InboundEvent updateWith(MarketDataReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.RAW_MARKET_DATA;
-        this.rawMarketData.copyValue(event);
+        this.marketDataReport.copyOf(event);
         return this;
     }
 
@@ -79,10 +79,10 @@ public final class InboundEvent implements JsonSerializable {
      * @param event DepthMarketDataEvent
      * @return InboundEvent
      */
-    public InboundEvent updateWith(DepthMarketData event) {
+    public InboundEvent updateWith(DepthMarketDataReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.DEPTH_MARKET_DATA;
-        this.depthMarketData.copyValue(event);
+        this.depthMarketDataReport.copyOf(event);
         return this;
     }
 
@@ -93,7 +93,7 @@ public final class InboundEvent implements JsonSerializable {
     public InboundEvent updateWith(OrderReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.ORDER_REPORT;
-        this.orderReport.copyValue(event);
+        this.orderReport.copyOf(event);
         return this;
     }
 
@@ -104,7 +104,7 @@ public final class InboundEvent implements JsonSerializable {
     public InboundEvent updateWith(PositionsReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.POSITIONS_REPORT;
-        this.positionsReport.copyValue(event);
+        this.positionsReport.copyOf(event);
         return this;
     }
 
@@ -115,7 +115,7 @@ public final class InboundEvent implements JsonSerializable {
     public InboundEvent updateWith(BalanceReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.BALANCE_REPORT;
-        this.balanceReport.copyValue(event);
+        this.balanceReport.copyOf(event);
         return this;
     }
 
@@ -126,7 +126,7 @@ public final class InboundEvent implements JsonSerializable {
     public InboundEvent updateWith(AdaptorReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.ADAPTOR_STATUS_REPORT;
-        this.adaptorReport.copyValue(event);
+        this.adaptorReport.copyOf(event);
         return this;
     }
 
@@ -137,7 +137,7 @@ public final class InboundEvent implements JsonSerializable {
     public InboundEvent updateWith(InstrumentStatusReport event) {
         this.epochMicros = micros();
         this.type = InboundEventType.INSTRUMENT_STATUS_REPORT;
-        this.instrumentStatusReport.copyValue(event);
+        this.instrumentStatusReport.copyOf(event);
         return this;
     }
 
@@ -155,8 +155,8 @@ public final class InboundEvent implements JsonSerializable {
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setObject(switch (type) {
-                    case RAW_MARKET_DATA -> rawMarketData;
-                    case DEPTH_MARKET_DATA -> depthMarketData;
+                    case RAW_MARKET_DATA -> marketDataReport;
+                    case DEPTH_MARKET_DATA -> depthMarketDataReport;
                     case ORDER_REPORT -> orderReport;
                     case POSITIONS_REPORT -> positionsReport;
                     case BALANCE_REPORT -> balanceReport;

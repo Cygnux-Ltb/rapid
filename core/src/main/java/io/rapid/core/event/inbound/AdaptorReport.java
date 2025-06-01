@@ -29,7 +29,7 @@ public class AdaptorReport extends JsonBean implements Copyable<AdaptorReport> {
     private String msg;
 
     @Override
-    public void copyValue(AdaptorReport source) {
+    public void copyOf(AdaptorReport source) {
         // 复制事件发生的时间 (Epoch Millisecond Unit)
         this.epochMillis = source.epochMillis;
         // 复制账户ID

@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RawMarketData extends JsonBean implements Copyable<RawMarketData> {
+public class MarketDataReport extends JsonBean implements Copyable<MarketDataReport> {
 
     /**
      * 交易标的ID [*]
@@ -122,7 +122,7 @@ public class RawMarketData extends JsonBean implements Copyable<RawMarketData> {
     private int updateMillisec;
 
     @Override
-    public void copyValue(RawMarketData source) {
+    public void copyOf(MarketDataReport source) {
         /// 复制交易标的ID
         this.instrumentId = source.instrumentId;
         /// 复制交易标的代码
@@ -171,35 +171,19 @@ public class RawMarketData extends JsonBean implements Copyable<RawMarketData> {
 
     public SavedMarketData dump() {
         return new SavedMarketData(
-                this.instrumentId,
-                this.instrumentCode,
-                this.lastPrice,
-                this.volume,
-                this.volumeDelta,
-                this.turnover,
-                this.turnoverDelta,
-                this.openPrice,
-                this.highestPrice,
-                this.lowestPrice,
-                this.upperLimitPrice,
-                this.lowerLimitPrice,
-                this.openInterest,
-                this.bidPrice1,
-                this.bidVolume1,
-                this.askPrice1,
-                this.askVolume1,
-                this.averagePrice,
-                this.epochMicros,
-                this.tradingDay,
-                this.actualDate,
-                this.updateTime,
-                this.updateMillisec
+                this.instrumentId, this.instrumentCode, this.lastPrice,
+                this.volume, this.volumeDelta, this.turnover, this.turnoverDelta,
+                this.openPrice, this.highestPrice, this.lowestPrice,
+                this.upperLimitPrice, this.lowerLimitPrice, this.openInterest,
+                this.bidPrice1, this.bidVolume1, this.askPrice1, this.askVolume1,
+                this.averagePrice, this.epochMicros, this.tradingDay,
+                this.actualDate, this.updateTime, this.updateMillisec
         );
     }
 
-    public RawMarketData newInstance() {
-        var instance = new RawMarketData();
-        instance.copyValue(this);
+    public MarketDataReport newInstance() {
+        var instance = new MarketDataReport();
+        instance.copyOf(this);
         return instance;
     }
 

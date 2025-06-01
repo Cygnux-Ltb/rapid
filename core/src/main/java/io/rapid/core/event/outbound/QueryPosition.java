@@ -66,7 +66,7 @@ public class QueryPosition extends JsonBean implements Copyable<QueryPosition> {
     private String source;
 
     @Override
-    public void copyValue(QueryPosition source) {
+    public void copyOf(QueryPosition source) {
         // 1. 复制生成时间 (Epoch Millisecond Unit)
         this.generateTime = source.generateTime;
         // 2. 复制发送时间 (Epoch Millisecond Unit)

@@ -1,7 +1,7 @@
 package io.rapid.core.handler.impl;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.handler.MarketDataHandler;
 import org.slf4j.Logger;
 
@@ -19,7 +19,7 @@ public final class MarketDataLogger implements MarketDataHandler {
     }
 
     @Override
-    public void onMarketData(final RawMarketData marketData) {
+    public void onMarketData(final MarketDataReport marketData) {
         log.info("[RawMarketData] logging -> {}", marketData);
     }
 

@@ -2,6 +2,8 @@ package io.rapid.core.event;
 
 public enum OutboundEventType {
 
+    INVALID,
+
     NEW_ORDER,
 
     CANCEL_ORDER,

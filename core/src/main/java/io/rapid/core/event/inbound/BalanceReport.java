@@ -28,7 +28,7 @@ public class BalanceReport extends JsonBean implements Copyable<BalanceReport> {
     private String msg;
 
     @Override
-    public void copyValue(BalanceReport source) {
+    public void copyOf(BalanceReport source) {
         // 复制事件发生的时间 (Epoch Millisecond Unit)
         this.epochMillis = source.epochMillis;
         // 复制经纪商ID

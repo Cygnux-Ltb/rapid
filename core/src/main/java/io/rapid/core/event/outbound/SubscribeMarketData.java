@@ -30,7 +30,7 @@ public class SubscribeMarketData extends JsonBean implements Copyable<SubscribeM
     private String recvAddr;
 
     @Override
-    public void copyValue(SubscribeMarketData source) {
+    public void copyOf(SubscribeMarketData source) {
         this.accountId = source.accountId;
         this.type = source.type;
         this.instrumentCodes = source.instrumentCodes;

@@ -2,7 +2,7 @@ package io.rapid.core.trade;
 
 import io.mercury.common.sequence.OrderedObject;
 import io.rapid.core.event.enums.TrdDirection;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.order.impl.ChildOrder;
 
 public class StopLoss implements OrderedObject<StopLoss> {
@@ -67,7 +67,7 @@ public class StopLoss implements OrderedObject<StopLoss> {
         return ordSysId;
     }
 
-    public final boolean isStopLoss(RawMarketData marketData) {
+    public final boolean isStopLoss(MarketDataReport marketData) {
         return switch (direction) {
             case LONG -> stopPrice < marketData.getAskPrice1();
             case SHORT -> stopPrice > marketData.getBidPrice1();

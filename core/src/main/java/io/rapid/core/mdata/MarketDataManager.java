@@ -1,11 +1,11 @@
 package io.rapid.core.mdata;
 
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.instrument.Instrument;
 
 public interface MarketDataManager {
 
-    default void onMarketData(RawMarketData marketData) {
+    default void onMarketData(MarketDataReport marketData) {
         getBucket(marketData.getInstrumentCode()).onMarketData(marketData);
     }
 

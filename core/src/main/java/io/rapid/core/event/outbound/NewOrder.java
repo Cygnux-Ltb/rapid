@@ -115,7 +115,7 @@ public class NewOrder extends JsonBean implements Copyable<NewOrder> {
 
 
     @Override
-    public void copyValue(NewOrder source) {
+    public void copyOf(NewOrder source) {
         // 1. 复制生成时间 (Epoch Microsecond Unit)
         this.generateTime = source.generateTime;
         // 2. 复制发送时间 (Epoch Microsecond Unit)

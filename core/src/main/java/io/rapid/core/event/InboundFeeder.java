@@ -13,7 +13,7 @@ public interface InboundFeeder extends
 
     void shutdown() throws IOException;
 
-    void addEventLoop(InboundEventLoop loop);
+    void addEventLoop(InboundEventbus loop);
 
     @Override
     default void close() throws IOException {

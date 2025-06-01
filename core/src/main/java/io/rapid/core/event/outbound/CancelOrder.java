@@ -70,7 +70,7 @@ public class CancelOrder extends JsonBean implements Copyable<CancelOrder> {
     private String remark;
 
     @Override
-    public void copyValue(CancelOrder source) {
+    public void copyOf(CancelOrder source) {
         // 1. 复制生成时间 (Epoch Microsecond Unit)
         this.generateTime = source.generateTime;
         // 2. 复制发送时间 (Epoch Microsecond Unit)

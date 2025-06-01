@@ -121,7 +121,7 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
     }
 
     @Override
-    public void copyValue(StrategySignal source) {
+    public void copyOf(StrategySignal source) {
         // 复制生成时间 (Epoch Microsecond Unit)
         this.generateTime = source.generateTime;
         // 复制发送时间 (Epoch Microsecond Unit)

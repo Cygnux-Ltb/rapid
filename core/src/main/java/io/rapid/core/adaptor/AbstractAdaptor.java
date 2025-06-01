@@ -79,14 +79,14 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
                     .name(adaptorId + "-receive-queue")
                     .size(32)
                     .waitStrategy(Yielding.get())
-                    .process(this::handleSendEvent);
+                    .process(this::handleOutboundEvent);
         }
     }
 
     /**
      * @param event SendEvent
      */
-    private void handleSendEvent(OutboundEvent event) {
+    private void handleOutboundEvent(OutboundEvent event) {
         switch (event.getType()) {
             case SUBSCRIBE_MARKET_DATA -> {
                 log.info("{} -> Call directSubscribeMarketData, event -> {} ", adaptorId, event);

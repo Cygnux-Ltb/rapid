@@ -4,11 +4,11 @@ import com.lmax.disruptor.EventHandler;
 import io.mercury.common.log4j2.StaticLogger;
 import io.rapid.core.event.inbound.AdaptorReport;
 import io.rapid.core.event.inbound.BalanceReport;
-import io.rapid.core.event.inbound.DepthMarketData;
+import io.rapid.core.event.inbound.DepthMarketDataReport;
 import io.rapid.core.event.inbound.InstrumentStatusReport;
 import io.rapid.core.event.inbound.OrderReport;
 import io.rapid.core.event.inbound.PositionsReport;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 
 import java.io.Closeable;
 
@@ -24,8 +24,8 @@ public interface InboundHandler extends EventHandler<InboundEvent>,
     @Override
     default void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
         switch (event.getType()) {
-            case RAW_MARKET_DATA -> handleRawMarketData(event.getRawMarketData());
-            case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
+            case RAW_MARKET_DATA -> handleMarketDataReport(event.getMarketDataReport());
+            case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketDataReport());
             case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
             case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
             case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
@@ -42,14 +42,14 @@ public interface InboundHandler extends EventHandler<InboundEvent>,
      *
      * @param event FastMarketData
      */
-    void handleRawMarketData(RawMarketData event);
+    void handleMarketDataReport(MarketDataReport event);
 
     /**
      * [2].深度行情处理
      *
      * @param event DepthMarketData
      */
-    void handleDepthMarketData(DepthMarketData event);
+    void handleDepthMarketData(DepthMarketDataReport event);
 
     /**
      * [3].订单回报处理

@@ -1,20 +1,19 @@
 package io.rapid.core.mdata;
 
 import io.mercury.common.collections.MutableLists;
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import io.rapid.core.handler.impl.AbstractMarketDataHandler;
 import io.rapid.core.instrument.Instrument;
 import lombok.Getter;
 import org.eclipse.collections.api.list.MutableList;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import java.io.Serializable;
 
 import static io.mercury.common.collections.Capacity.HEX_10;
 import static io.mercury.common.collections.Capacity.HEX_8_000;
 
 @NotThreadSafe
-public final class MarketDataBucket extends AbstractMarketDataHandler implements Serializable {
+public final class MarketDataBucket extends AbstractMarketDataHandler {
 
     @Getter
     private final Instrument instrument;
@@ -38,7 +37,7 @@ public final class MarketDataBucket extends AbstractMarketDataHandler implements
     }
 
     @Override
-    protected void handleMarketData(RawMarketData marketData) {
+    protected void handleMarketData(MarketDataReport marketData) {
         var dumped = marketData.dump();
         saved.add(dumped);
         snapshot.updateWith(marketData);

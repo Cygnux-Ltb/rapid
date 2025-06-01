@@ -70,7 +70,7 @@ public class QueryOrder extends JsonBean implements Copyable<QueryOrder> {
     private String source;
 
     @Override
-    public void copyValue(QueryOrder source) {
+    public void copyOf(QueryOrder source) {
         // 1. 复制生成时间 (Epoch Millisecond Unit)
         this.generateTime = source.generateTime;
         // 2. 复制发送时间 (Epoch Millisecond Unit)

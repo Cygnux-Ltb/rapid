@@ -1,6 +1,6 @@
 package io.rapid.core.mdata;
 
-import io.rapid.core.event.inbound.RawMarketData;
+import io.rapid.core.event.inbound.MarketDataReport;
 import lombok.Getter;
 
 @Getter
@@ -21,7 +21,7 @@ public final class MarketDataSnapshot {
     MarketDataSnapshot() {
     }
 
-    void updateWith(RawMarketData marketData) {
+    void updateWith(MarketDataReport marketData) {
         bidPrice1 = marketData.getBidPrice1();
         bidVolume1 = marketData.getBidVolume1();
         askPrice1 = marketData.getAskPrice1();
