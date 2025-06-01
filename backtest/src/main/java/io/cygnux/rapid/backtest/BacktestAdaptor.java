@@ -1,12 +1,12 @@
 package io.cygnux.rapid.backtest;
 
-import io.rapid.core.adaptor.AbstractAdaptor;
-import io.rapid.core.event.outbound.CancelOrder;
-import io.rapid.core.event.outbound.NewOrder;
-import io.rapid.core.event.outbound.QueryBalance;
-import io.rapid.core.event.outbound.QueryOrder;
-import io.rapid.core.event.outbound.QueryPosition;
-import io.rapid.core.event.outbound.SubscribeMarketData;
+import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
+import io.cygnux.rapid.core.event.outbound.CancelOrder;
+import io.cygnux.rapid.core.event.outbound.NewOrder;
+import io.cygnux.rapid.core.event.outbound.QueryBalance;
+import io.cygnux.rapid.core.event.outbound.QueryOrder;
+import io.cygnux.rapid.core.event.outbound.QueryPosition;
+import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -65,8 +65,8 @@ public class BacktestAdaptor extends AbstractAdaptor {
         log.info("Closing BacktestAdaptor");
     }
 
-    public void onNext(){
-        var nextMarketData = matchMachine.doNext();
+    public void onNext() {
+        matchMachine.doNext();
     }
 
 

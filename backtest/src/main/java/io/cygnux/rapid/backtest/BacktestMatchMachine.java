@@ -1,10 +1,10 @@
 package io.cygnux.rapid.backtest;
 
-import io.rapid.core.event.InboundHandler;
-import io.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.InboundHandler;
+import io.cygnux.rapid.core.event.inbound.MarketDataReport;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,9 @@ public final class BacktestMatchMachine {
     @Resource
     private InboundHandler inboundHandler;
 
-    private MutableSet<MarketDataReport> marketDataSet;
+    private MutableIntObjectMap<MarketDataReport> marketDataSet;
+
+    private int index = 0;
 
     @PostConstruct
     private void init(){
@@ -25,9 +27,10 @@ public final class BacktestMatchMachine {
     }
 
 
-    public MarketDataReport doNext(){
-
-        return null;
+    public void doNext(){
+        MarketDataReport removed = marketDataSet.remove(index);
+        index++;
+        inboundHandler.handleMarketDataReport(removed);
     }
 
 }
