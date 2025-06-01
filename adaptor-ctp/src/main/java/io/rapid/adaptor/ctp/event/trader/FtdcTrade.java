@@ -79,7 +79,7 @@ import io.mercury.serialization.json.JsonWriter;
  * };
  * </pre>
  */
-public class FtdcTrade {
+public final class FtdcTrade {
 
     /**
      * (自定义增加字段) 接收时[Epoch微秒]

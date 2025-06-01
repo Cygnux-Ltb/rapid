@@ -5,7 +5,7 @@ import io.mercury.serialization.json.JsonWriter;
 /**
  * 合约状态
  */
-public class FtdcInstrumentStatus {
+public final class FtdcInstrumentStatus {
 
     /**
      * 交易所代码

@@ -159,14 +159,14 @@ public class FtdcDepthMarketData {
      * 持仓量
      */
     public double OpenInterest;
-//    /**
-//     * 收盘价
-//     */
-//    public double ClosePrice;
-//    /**
-//     * 结算价
-//     */
-//    public double SettlementPrice;
+    /**
+     * 收盘价
+     */
+    public double ClosePrice;
+    /**
+     * 结算价
+     */
+    public double SettlementPrice;
     /**
      * 涨停板价
      */
@@ -175,14 +175,14 @@ public class FtdcDepthMarketData {
      * 跌停板价
      */
     public double LowerLimitPrice;
-//    /**
-//     * 昨Delta
-//     */
-//    public double PreDelta;
-//    /**
-//     * 今Delta
-//     */
-//    public double CurrDelta;
+    /**
+     * 昨Delta
+     */
+    public double PreDelta;
+    /**
+     * 今Delta
+     */
+    public double CurrDelta;
     /**
      * 第一档买价
      */

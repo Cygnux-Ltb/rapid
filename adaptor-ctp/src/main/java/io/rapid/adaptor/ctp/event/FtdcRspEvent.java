@@ -79,52 +79,52 @@ public final class FtdcRspEvent implements JsonSerializable {
     /**
      * 行情
      */
-    private final FtdcDepthMarketData ftdcDepthMarketData = new FtdcDepthMarketData();
+    private final FtdcDepthMarketData depthMarketData = new FtdcDepthMarketData();
     /**
      * 指定的合约
      */
-    private final FtdcSpecificInstrument ftdcSpecificInstrument = new FtdcSpecificInstrument();
+    private final FtdcSpecificInstrument specificInstrument = new FtdcSpecificInstrument();
 
     //////////////////////////////////// TRADER RSP ////////////////////////////////////
     /**
      * 返回报单错误
      */
-    private final FtdcInputOrder ftdcInputOrder = new FtdcInputOrder();
+    private final FtdcInputOrder inputOrder = new FtdcInputOrder();
 
     /**
      * 返回撤单提交错误
      */
-    private final FtdcInputOrderAction ftdcInputOrderAction = new FtdcInputOrderAction();
+    private final FtdcInputOrderAction inputOrderAction = new FtdcInputOrderAction();
 
     /**
      * 合约状态
      */
-    private final FtdcInstrumentStatus ftdcInstrumentStatus = new FtdcInstrumentStatus();
+    private final FtdcInstrumentStatus instrumentStatus = new FtdcInstrumentStatus();
 
     /**
      * 持仓信息
      */
-    private final FtdcInvestorPosition ftdcInvestorPosition = new FtdcInvestorPosition();
+    private final FtdcInvestorPosition investorPosition = new FtdcInvestorPosition();
 
     /**
      * 报单推送
      */
-    private final FtdcOrder ftdcOrder = new FtdcOrder();
+    private final FtdcOrder order = new FtdcOrder();
 
     /**
      * 返回撤单错误
      */
-    private final FtdcOrderAction ftdcOrderAction = new FtdcOrderAction();
+    private final FtdcOrderAction orderAction = new FtdcOrderAction();
 
     /**
      * 成交推送
      */
-    private final FtdcTrade ftdcTrade = new FtdcTrade();
+    private final FtdcTrade trade = new FtdcTrade();
 
     /**
      * 账户信息(余额)
      */
-    private final FtdcTradingAccount ftdcTradingAccount = new FtdcTradingAccount();
+    private final FtdcTradingAccount tradingAccount = new FtdcTradingAccount();
 
     /**
      * For EventFactory Call
@@ -154,17 +154,17 @@ public final class FtdcRspEvent implements JsonSerializable {
         return objectExt.setTitle(type.name())
                 .setEpochTime(epochMicros)
                 .setObject(switch (type) {
-                    case FTDC_DEPTH_MARKET_DATA -> ftdcDepthMarketData;
-                    case FTDC_ORDER -> ftdcOrder;
-                    case FTDC_TRADE -> ftdcTrade;
-                    case FTDC_INPUT_ORDER -> ftdcInputOrder;
-                    case FTDC_INPUT_ORDER_ACTION -> ftdcInputOrderAction;
-                    case FTDC_ORDER_ACTION -> ftdcOrderAction;
+                    case FTDC_DEPTH_MARKET_DATA -> depthMarketData;
+                    case FTDC_ORDER -> order;
+                    case FTDC_TRADE -> trade;
+                    case FTDC_INPUT_ORDER -> inputOrder;
+                    case FTDC_INPUT_ORDER_ACTION -> inputOrderAction;
+                    case FTDC_ORDER_ACTION -> orderAction;
                     case HEARTBEAT_WARNING -> heartBeatWarning;
-                    case FTDC_INSTRUMENT_STATUS -> ftdcInstrumentStatus;
-                    case FTDC_SPECIFIC_INSTRUMENT -> ftdcSpecificInstrument;
-                    case FTDC_INVESTOR_POSITION -> ftdcInvestorPosition;
-                    case FTDC_TRADING_ACCOUNT -> ftdcTradingAccount;
+                    case FTDC_INSTRUMENT_STATUS -> instrumentStatus;
+                    case FTDC_SPECIFIC_INSTRUMENT -> specificInstrument;
+                    case FTDC_INVESTOR_POSITION -> investorPosition;
+                    case FTDC_TRADING_ACCOUNT -> tradingAccount;
                     case RSP_ERROR -> rspError;
                     case FRONT_DISCONNECTED -> frontDisconnected;
                     case RSP_USER_LOGIN -> rspUserLogin;

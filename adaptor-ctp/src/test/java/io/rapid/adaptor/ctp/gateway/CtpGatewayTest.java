@@ -47,7 +47,7 @@ public class CtpGatewayTest {
                 .process(msg -> {
                     switch (msg.getType()) {
                         case FtdcRspType.FTDC_DEPTH_MARKET_DATA -> {
-                            FtdcDepthMarketData depthMarketData = msg.getFtdcDepthMarketData();
+                            FtdcDepthMarketData depthMarketData = msg.getDepthMarketData();
 //                            log.info(
 //                                    "Handle CThostFtdcDepthMarketDataField -> InstrumentID==[{}]  UpdateTime==[{}]  UpdateMillisec==[{}]  AskPrice1==[{}]  BidPrice1==[{}]",
 //                                    depthMarketData.getInstrumentID(), depthMarketData.getUpdateTime(),
@@ -55,11 +55,11 @@ public class CtpGatewayTest {
 //                                    depthMarketData.getBidPrice1());
                         }
                         case FTDC_ORDER -> {
-                            FtdcOrder order = msg.getFtdcOrder();
+                            FtdcOrder order = msg.getOrder();
                             log.info("Handle RtnOrder -> OrderRef==[{}]", order.OrderRef);
                         }
                         case FTDC_TRADE -> {
-                            FtdcTrade trade = msg.getFtdcTrade();
+                            FtdcTrade trade = msg.getTrade();
                             log.info("Handle RtnTrade -> OrderRef==[{}]", trade.OrderRef);
                         }
                         default -> {

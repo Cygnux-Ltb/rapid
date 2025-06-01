@@ -145,7 +145,7 @@ import io.mercury.serialization.json.JsonWriter;
  * };
  * </pre>
  */
-public class FtdcOrder {
+public final class FtdcOrder {
 
     /**
      * (自定义增加字段) 接收时[Epoch微秒]

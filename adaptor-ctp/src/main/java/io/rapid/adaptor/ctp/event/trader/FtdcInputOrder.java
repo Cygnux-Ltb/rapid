@@ -77,7 +77,7 @@ import io.mercury.serialization.json.JsonWriter;
  * };
  * </pre>
  */
-public class FtdcInputOrder {
+public final class FtdcInputOrder {
 
     /**
      * FTDC响应信息 - 错误代码

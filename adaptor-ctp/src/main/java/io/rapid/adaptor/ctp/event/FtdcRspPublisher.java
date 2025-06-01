@@ -2,7 +2,6 @@ package io.rapid.adaptor.ctp.event;
 
 import io.mercury.common.concurrent.disruptor.RingEventbus;
 import io.mercury.common.functional.Processor;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.event.source.EventSource;
 import io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource;
 import org.rationalityfrontline.jctp.CThostFtdcDepthMarketDataField;
@@ -18,7 +17,6 @@ import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
 import org.rationalityfrontline.jctp.CThostFtdcTradeField;
 import org.rationalityfrontline.jctp.CThostFtdcTradingAccountField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
-import org.slf4j.Logger;
 
 import static io.mercury.common.concurrent.disruptor.base.CommonStrategy.Yielding;
 import static io.rapid.adaptor.ctp.event.FtdcRspFieldWriter.writeDepthMarketData;
@@ -39,8 +37,6 @@ import static io.rapid.adaptor.ctp.event.FtdcRspFieldWriter.writeTradingAccount;
 
 public final class FtdcRspPublisher {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspPublisher.class);
-
     private final RingEventbus<FtdcRspEvent> eventbus;
 
     /**
@@ -58,159 +54,155 @@ public final class FtdcRspPublisher {
     }
 
     /**
-     * @param Source   EventSource
-     * @param Reason   int
+     * @param eventSource EventSource
+     * @param reason      int
      */
-    public void publishFrontDisconnected(EventSource Source, int Reason) {
+    public void publishFrontDisconnected(EventSource eventSource, int reason) {
         eventbus.publish((event, sequence) ->
-                writeFrontDisconnected(event, Source, Reason)
-        );
+                writeFrontDisconnected(event, eventSource, reason));
     }
 
     /**
-     * @param TimeLapse int
-     * @param BrokerID  String
-     * @param UserID    String
+     * @param timeLapse int
+     * @param brokerID  String
+     * @param userID    String
      */
-    public void publishHeartBeatWarning(EventSource Source, int TimeLapse,
-                                        String BrokerID, String UserID) {
+    public void publishHeartBeatWarning(EventSource eventSource, int timeLapse,
+                                        String brokerID, String userID) {
         eventbus.publish((event, sequence) ->
-                writeHeartBeatWarning(event, Source, TimeLapse, BrokerID, UserID)
-        );
+                writeHeartBeatWarning(event, eventSource, timeLapse, brokerID, userID));
     }
 
     /**
-     * @param Field     CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param rspInfoField CThostFtdcRspInfoField
+     * @param requestID    int
+     * @param isLast       boolean
      */
-    public void publishRspError(EventSource Source, CThostFtdcRspInfoField Field,
-                                int RequestID, boolean IsLast) {
+    public void publishRspError(EventSource eventSource, CThostFtdcRspInfoField rspInfoField,
+                                int requestID, boolean isLast) {
         eventbus.publish((event, sequence) ->
-                writeRspError(event, Source, Field, RequestID, IsLast)
-        );
+                writeRspError(event, eventSource, rspInfoField, requestID, isLast));
     }
 
     /**
-     * @param Field        CThostFtdcRspUserLoginField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param rspUserLoginField CThostFtdcRspUserLoginField
+     * @param rspInfoField      CThostFtdcRspInfoField
+     * @param requestID         int
+     * @param isLast            boolean
      */
-    public void publishRspUserLogin(EventSource Source, CThostFtdcRspUserLoginField Field,
-                                    CThostFtdcRspInfoField RspInfoField, int RequestID, boolean IsLast) {
+    public void publishRspUserLogin(EventSource eventSource, CThostFtdcRspUserLoginField rspUserLoginField,
+                                    CThostFtdcRspInfoField rspInfoField, int requestID, boolean isLast) {
         eventbus.publish((event, sequence) ->
-                writeRspUserLogin(event, Source, Field, RspInfoField, RequestID, IsLast)
-        );
+                writeRspUserLogin(event, eventSource, rspUserLoginField, rspInfoField, requestID, isLast));
     }
 
 
-    public void publishUserLogout(EventSource Source, CThostFtdcUserLogoutField Field,
-                                  CThostFtdcRspInfoField RspInfoField, int RequestID, boolean IsLast) {
+    public void publishUserLogout(EventSource eventSource, CThostFtdcUserLogoutField userLogoutField,
+                                  CThostFtdcRspInfoField rspInfoField, int requestID, boolean isLast) {
         eventbus.publish((event, sequence) ->
-                writeRspUserLogout(event, Source, Field, RspInfoField, RequestID, IsLast)
-        );
+                writeRspUserLogout(event, eventSource, userLogoutField, rspInfoField, requestID, isLast));
     }
 
     /**
-     * @param DepthMarketDataField CThostFtdcDepthMarketDataField
+     * @param depthMarketDataField CThostFtdcDepthMarketDataField
      */
-    public void publishDepthMarketData(CThostFtdcDepthMarketDataField DepthMarketDataField) {
-        eventbus.publish((event, sequence) -> writeDepthMarketData(event, DepthMarketDataField));
-    }
-
-    /**
-     * @param OrderField CThostFtdcOrderField
-     */
-    public void publishOrder(CThostFtdcOrderField OrderField) {
-        eventbus.publish((event, sequence) -> writeOrder(event, OrderField));
-    }
-
-
-    /**
-     * @param TradeField CThostFtdcTradeField
-     */
-    public void publishTrade(CThostFtdcTradeField TradeField) {
-        eventbus.publish((event, sequence) -> writeTrade(event, TradeField));
-    }
-
-
-    /**
-     * @param Field CThostFtdcInputOrderField
-     */
-    public void publishInputOrder(CThostFtdcInputOrderField Field,
-                                  CThostFtdcRspInfoField RspInfoField, boolean IsLast) {
+    public void publishDepthMarketData(CThostFtdcDepthMarketDataField depthMarketDataField) {
         eventbus.publish((event, sequence) ->
-                writeInputOrder(event, Field, RspInfoField, IsLast)
-        );
+                writeDepthMarketData(event, depthMarketDataField));
     }
 
     /**
-     * @param Field CThostFtdcInputOrderActionField
+     * @param orderField CThostFtdcOrderField
      */
-    public void publishInputOrderAction(CThostFtdcInputOrderActionField Field,
-                                        CThostFtdcRspInfoField RspInfoField, boolean IsLast) {
+    public void publishOrder(CThostFtdcOrderField orderField) {
         eventbus.publish((event, sequence) ->
-                writeInputOrderAction(event, Field, RspInfoField, IsLast)
-        );
+                writeOrder(event, orderField));
     }
 
-    /**
-     * @param Field CThostFtdcOrderActionField
-     */
-    public void publishOrderAction(CThostFtdcOrderActionField Field) {
-        eventbus.publish((event, sequence) -> writeOrderAction(event, Field));
-    }
 
     /**
-     * @param Field        CThostFtdcTradingAccountField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param tradeField CThostFtdcTradeField
      */
-    public void publishTradingAccount(CThostFtdcTradingAccountField Field,
-                                      CThostFtdcRspInfoField RspInfoField,
-                                      int RequestID, boolean IsLast) {
+    public void publishTrade(CThostFtdcTradeField tradeField) {
         eventbus.publish((event, sequence) ->
-                writeTradingAccount(event, Field, RspInfoField, RequestID, IsLast)
-        );
+                writeTrade(event, tradeField));
     }
 
+
     /**
-     * @param Field        CThostFtdcInvestorPositionField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param inputOrderField CThostFtdcInputOrderField
      */
-    public void publishInvestorPosition(CThostFtdcInvestorPositionField Field,
-                                        CThostFtdcRspInfoField RspInfoField,
-                                        int RequestID, boolean IsLast) {
+    public void publishInputOrder(CThostFtdcInputOrderField inputOrderField,
+                                  CThostFtdcRspInfoField rspInfoField, boolean isLast) {
         eventbus.publish((event, sequence) ->
-                writeInvestorPosition(event, Field, RspInfoField, RequestID, IsLast)
-        );
+                writeInputOrder(event, inputOrderField, rspInfoField, isLast));
     }
 
     /**
-     * @param Field CThostFtdcInstrumentStatusField
+     * @param inputOrderActionField CThostFtdcInputOrderActionField
      */
-    public void publishInstrumentStatus(CThostFtdcInstrumentStatusField Field) {
-        eventbus.publish((event, sequence) -> writeInstrumentStatus(event, Field));
-    }
-
-    /**
-     * @param Source       SpecificInstrumentSource
-     * @param Field        CThostFtdcSpecificInstrumentField
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
-     */
-    public void publishSpecificInstrument(SpecificInstrumentSource Source,
-                                          CThostFtdcSpecificInstrumentField Field,
-                                          CThostFtdcRspInfoField RspInfoField,
-                                          int RequestID, boolean IsLast) {
+    public void publishInputOrderAction(CThostFtdcInputOrderActionField inputOrderActionField,
+                                        CThostFtdcRspInfoField rspInfoField, boolean isLast) {
         eventbus.publish((event, sequence) ->
-                writeSpecificInstrument(event, Source, Field, RspInfoField, RequestID, IsLast)
-        );
+                writeInputOrderAction(event, inputOrderActionField, rspInfoField, isLast));
+    }
+
+    /**
+     * @param orderActionField CThostFtdcOrderActionField
+     */
+    public void publishOrderAction(CThostFtdcOrderActionField orderActionField) {
+        eventbus.publish((event, sequence) ->
+                writeOrderAction(event, orderActionField));
+    }
+
+    /**
+     * @param tradingAccountField CThostFtdcTradingAccountField
+     * @param rspInfoField        CThostFtdcRspInfoField
+     * @param requestID           int
+     * @param isLast              boolean
+     */
+    public void publishTradingAccount(CThostFtdcTradingAccountField tradingAccountField,
+                                      CThostFtdcRspInfoField rspInfoField,
+                                      int requestID, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                writeTradingAccount(event, tradingAccountField, rspInfoField, requestID, isLast));
+    }
+
+    /**
+     * @param investorPositionField CThostFtdcInvestorPositionField
+     * @param rspInfoField          CThostFtdcRspInfoField
+     * @param requestID             int
+     * @param isLast                boolean
+     */
+    public void publishInvestorPosition(CThostFtdcInvestorPositionField investorPositionField,
+                                        CThostFtdcRspInfoField rspInfoField,
+                                        int requestID, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                writeInvestorPosition(event, investorPositionField, rspInfoField, requestID, isLast));
+    }
+
+    /**
+     * @param instrumentStatusField CThostFtdcInstrumentStatusField
+     */
+    public void publishInstrumentStatus(CThostFtdcInstrumentStatusField instrumentStatusField) {
+        eventbus.publish((event, sequence) ->
+                writeInstrumentStatus(event, instrumentStatusField));
+    }
+
+    /**
+     * @param specificInstrumentSource SpecificInstrumentSource
+     * @param specificInstrumentField  CThostFtdcSpecificInstrumentField
+     * @param rspInfoField             CThostFtdcRspInfoField
+     * @param requestID                int
+     * @param isLast                   boolean
+     */
+    public void publishSpecificInstrument(SpecificInstrumentSource specificInstrumentSource,
+                                          CThostFtdcSpecificInstrumentField specificInstrumentField,
+                                          CThostFtdcRspInfoField rspInfoField,
+                                          int requestID, boolean isLast) {
+        eventbus.publish((event, sequence) ->
+                writeSpecificInstrument(event, specificInstrumentSource,
+                        specificInstrumentField, rspInfoField, requestID, isLast));
     }
 
 }

@@ -5,7 +5,7 @@ import io.mercury.serialization.json.JsonWriter;
 /**
  * FtdcInvestorPosition
  */
-public class FtdcInvestorPosition {
+public final class FtdcInvestorPosition {
 
     /**
      * FTDC响应信息 - 错误代码

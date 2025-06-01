@@ -1,7 +1,6 @@
 package io.rapid.adaptor.ctp;
 
 import io.mercury.common.collections.MutableSets;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.Sleep;
 import io.rapid.adaptor.ctp.event.FtdcRspEvent;
 import io.rapid.adaptor.ctp.event.FtdcRspPublisher;
@@ -28,7 +27,6 @@ import io.rapid.core.order.OrderRefKeeper;
 import io.rapid.core.order.OrderRefNotFoundException;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,8 +35,6 @@ import static io.mercury.common.thread.Fibers.startNewFiber;
 import static java.lang.System.currentTimeMillis;
 
 public class CtpAdaptor extends AbstractAdaptor {
-
-    private static final Logger log = Log4j2LoggerFactory.getLogger(CtpAdaptor.class);
 
     // CTP OrderRef分配器
     private final OrderRefKeeper orderRefKeeper;
@@ -144,34 +140,34 @@ public class CtpAdaptor extends AbstractAdaptor {
                 inboundEventbus.put(report);
             }
             case FTDC_DEPTH_MARKET_DATA -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcDepthMarketData()));
+                    .put(ftdcRspConverter.convert(event.getDepthMarketData()));
 
             case FTDC_SPECIFIC_INSTRUMENT -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcSpecificInstrument()));
+                    .put(ftdcRspConverter.convert(event.getSpecificInstrument()));
 
             case FTDC_INSTRUMENT_STATUS -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcInstrumentStatus()));
+                    .put(ftdcRspConverter.convert(event.getInstrumentStatus()));
 
             case FTDC_INPUT_ORDER -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcInputOrder()));
+                    .put(ftdcRspConverter.convert(event.getInputOrder()));
 
             case FTDC_INPUT_ORDER_ACTION -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcInputOrderAction()));
+                    .put(ftdcRspConverter.convert(event.getInputOrderAction()));
 
             case FTDC_INVESTOR_POSITION -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcInvestorPosition()));
+                    .put(ftdcRspConverter.convert(event.getInvestorPosition()));
 
             case FTDC_ORDER -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcOrder()));
+                    .put(ftdcRspConverter.convert(event.getOrder()));
 
             case FTDC_ORDER_ACTION -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcOrderAction()));
+                    .put(ftdcRspConverter.convert(event.getOrderAction()));
 
             case FTDC_TRADE -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcTrade()));
+                    .put(ftdcRspConverter.convert(event.getTrade()));
 
             case FTDC_TRADING_ACCOUNT -> inboundEventbus
-                    .put(ftdcRspConverter.convert(event.getFtdcTradingAccount()));
+                    .put(ftdcRspConverter.convert(event.getTradingAccount()));
 
             case HEARTBEAT_WARNING -> log
                     .warn("Received [HeartBeatWarning] Event -> {}", event.getHeartBeatWarning());

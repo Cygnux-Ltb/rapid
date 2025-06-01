@@ -1,6 +1,5 @@
 package io.rapid.adaptor.ctp.event;
 
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.rapid.adaptor.ctp.consts.FtdcFrontDisconnectedReason;
 import io.rapid.adaptor.ctp.event.source.EventSource;
 import io.rapid.adaptor.ctp.event.source.SpecificInstrumentSource;
@@ -17,823 +16,822 @@ import org.rationalityfrontline.jctp.CThostFtdcSpecificInstrumentField;
 import org.rationalityfrontline.jctp.CThostFtdcTradeField;
 import org.rationalityfrontline.jctp.CThostFtdcTradingAccountField;
 import org.rationalityfrontline.jctp.CThostFtdcUserLogoutField;
-import org.slf4j.Logger;
 
 import static io.mercury.common.epoch.HighResolutionEpoch.micros;
 
 public final class FtdcRspFieldWriter {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(FtdcRspFieldWriter.class);
+    private FtdcRspFieldWriter() {
+    }
 
     /**
-     * @param event FtdcRspEvent
-     * @param Field CThostFtdcDepthMarketDataField
+     * @param event                FtdcRspEvent
+     * @param depthMarketDataField CThostFtdcDepthMarketDataField
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeDepthMarketData(FtdcRspEvent event,
-                                                    CThostFtdcDepthMarketDataField Field) {
-        var depthMarketData = event.getFtdcDepthMarketData();
+                                                    CThostFtdcDepthMarketDataField depthMarketDataField) {
+        var depthMarketData = event.getDepthMarketData();
         depthMarketData.RecvEpochMicros = micros();
         // 交易日, 合约ID, 交易所ID, 合约在交易所的代码
-        depthMarketData.TradingDay = Field.getTradingDay();
-        depthMarketData.InstrumentID = Field.getInstrumentID();
-//        depthMarketData.ExchangeID = Field.getExchangeID();
-//        depthMarketData.ExchangeInstID = Field.getExchangeInstID();
+        depthMarketData.TradingDay = depthMarketDataField.getTradingDay();
+        depthMarketData.InstrumentID = depthMarketDataField.getInstrumentID();
+//        depthMarketData.ExchangeID = depthMarketDataField.getExchangeID();
+//        depthMarketData.ExchangeInstID = depthMarketDataField.getExchangeInstID();
         // 最新价
-        depthMarketData.LastPrice = Field.getLastPrice();
+        depthMarketData.LastPrice = depthMarketDataField.getLastPrice();
         // 昨结算价, 昨收盘, 昨持仓量
-        depthMarketData.PreSettlementPrice = Field.getPreSettlementPrice();
-        depthMarketData.PreClosePrice = Field.getPreClosePrice();
-        depthMarketData.PreOpenInterest = Field.getPreOpenInterest();
+        depthMarketData.PreSettlementPrice = depthMarketDataField.getPreSettlementPrice();
+        depthMarketData.PreClosePrice = depthMarketDataField.getPreClosePrice();
+        depthMarketData.PreOpenInterest = depthMarketDataField.getPreOpenInterest();
         // 开盘价, 最高价, 最低价
-        depthMarketData.OpenPrice = Field.getOpenPrice();
-        depthMarketData.HighestPrice = Field.getHighestPrice();
-        depthMarketData.LowestPrice = Field.getLowestPrice();
+        depthMarketData.OpenPrice = depthMarketDataField.getOpenPrice();
+        depthMarketData.HighestPrice = depthMarketDataField.getHighestPrice();
+        depthMarketData.LowestPrice = depthMarketDataField.getLowestPrice();
         // 成交量, 成交金额, 持仓量
-        depthMarketData.Volume = Field.getVolume();
-        depthMarketData.Turnover = Field.getTurnover();
-        depthMarketData.OpenInterest = Field.getOpenInterest();
+        depthMarketData.Volume = depthMarketDataField.getVolume();
+        depthMarketData.Turnover = depthMarketDataField.getTurnover();
+        depthMarketData.OpenInterest = depthMarketDataField.getOpenInterest();
         // 收盘价, 结算价
-//        depthMarketData.ClosePrice = Field.getClosePrice();
-//        depthMarketData.SettlementPrice = Field.getSettlementPrice();
+//        depthMarketData.ClosePrice = depthMarketDataField.getClosePrice();
+//        depthMarketData.SettlementPrice = depthMarketDataField.getSettlementPrice();
         // 涨停板价, 跌停板价
-        depthMarketData.UpperLimitPrice = Field.getUpperLimitPrice();
-        depthMarketData.LowerLimitPrice = Field.getLowerLimitPrice();
+        depthMarketData.UpperLimitPrice = depthMarketDataField.getUpperLimitPrice();
+        depthMarketData.LowerLimitPrice = depthMarketDataField.getLowerLimitPrice();
         // 昨Delta, 今Delta
-//        depthMarketData.PreDelta = Field.getPreDelta();
-//        depthMarketData.CurrDelta = Field.getCurrDelta();
+//        depthMarketData.PreDelta = depthMarketDataField.getPreDelta();
+//        depthMarketData.CurrDelta = depthMarketDataField.getCurrDelta();
         // 五档买价卖价及买量卖量 v
-        depthMarketData.BidPrice1 = Field.getBidPrice1();
-        depthMarketData.BidVolume1 = Field.getBidVolume1();
-        depthMarketData.AskPrice1 = Field.getAskPrice1();
-        depthMarketData.AskVolume1 = Field.getAskVolume1();
-//        depthMarketData.BidPrice2 = Field.getBidPrice2();
-//        depthMarketData.BidVolume2 = Field.getBidVolume2();
-//        depthMarketData.AskPrice2 = Field.getAskPrice2();
-//        depthMarketData.AskVolume2 = Field.getAskVolume2();
-//        depthMarketData.BidPrice3 = Field.getBidPrice3();
-//        depthMarketData.BidVolume3 = Field.getBidVolume3();
-//        depthMarketData.AskPrice3 = Field.getAskPrice3();
-//        depthMarketData.AskVolume3 = Field.getAskVolume3();
-//        depthMarketData.BidPrice4 = Field.getBidPrice4();
-//        depthMarketData.BidVolume4 = Field.getBidVolume4();
-//        depthMarketData.AskPrice4 = Field.getAskPrice4();
-//        depthMarketData.AskVolume4 = Field.getAskVolume4();
-//        depthMarketData.BidPrice5 = Field.getBidPrice5();
-//        depthMarketData.BidVolume5 = Field.getBidVolume5();
-//        depthMarketData.AskPrice5 = Field.getAskPrice5();
-//        depthMarketData.AskVolume5 = Field.getAskVolume5();
+        depthMarketData.BidPrice1 = depthMarketDataField.getBidPrice1();
+        depthMarketData.BidVolume1 = depthMarketDataField.getBidVolume1();
+        depthMarketData.AskPrice1 = depthMarketDataField.getAskPrice1();
+        depthMarketData.AskVolume1 = depthMarketDataField.getAskVolume1();
+//        depthMarketData.BidPrice2 = depthMarketDataField.getBidPrice2();
+//        depthMarketData.BidVolume2 = depthMarketDataField.getBidVolume2();
+//        depthMarketData.AskPrice2 = depthMarketDataField.getAskPrice2();
+//        depthMarketData.AskVolume2 = depthMarketDataField.getAskVolume2();
+//        depthMarketData.BidPrice3 = depthMarketDataField.getBidPrice3();
+//        depthMarketData.BidVolume3 = depthMarketDataField.getBidVolume3();
+//        depthMarketData.AskPrice3 = depthMarketDataField.getAskPrice3();
+//        depthMarketData.AskVolume3 = depthMarketDataField.getAskVolume3();
+//        depthMarketData.BidPrice4 = depthMarketDataField.getBidPrice4();
+//        depthMarketData.BidVolume4 = depthMarketDataField.getBidVolume4();
+//        depthMarketData.AskPrice4 = depthMarketDataField.getAskPrice4();
+//        depthMarketData.AskVolume4 = depthMarketDataField.getAskVolume4();
+//        depthMarketData.BidPrice5 = depthMarketDataField.getBidPrice5();
+//        depthMarketData.BidVolume5 = depthMarketDataField.getBidVolume5();
+//        depthMarketData.AskPrice5 = depthMarketDataField.getAskPrice5();
+//        depthMarketData.AskVolume5 = depthMarketDataField.getAskVolume5();
         // 五档买价卖价及买量卖量 ^
         // 平均价格
-        depthMarketData.AveragePrice = Field.getAveragePrice();
+        depthMarketData.AveragePrice = depthMarketDataField.getAveragePrice();
         // 更新时间, 更新毫秒数, 业务日期
-        depthMarketData.UpdateTime = Field.getUpdateTime();
-        depthMarketData.UpdateMillisec = Field.getUpdateMillisec();
-        depthMarketData.ActionDay = Field.getActionDay();
+        depthMarketData.UpdateTime = depthMarketDataField.getUpdateTime();
+        depthMarketData.UpdateMillisec = depthMarketDataField.getUpdateMillisec();
+        depthMarketData.ActionDay = depthMarketDataField.getActionDay();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_DEPTH_MARKET_DATA);
     }
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Source    EventSource
-     * @param Field     CThostFtdcRspUserLoginField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param event             FtdcRspEvent
+     * @param eventSource       EventSource
+     * @param rspUserLoginField CThostFtdcRspUserLoginField
+     * @param rspInfoField      CThostFtdcRspInfoField
+     * @param requestID         int
+     * @param isLast            boolean
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent writeRspUserLogin(FtdcRspEvent event, EventSource Source,
-                                                 CThostFtdcRspUserLoginField Field,
-                                                 CThostFtdcRspInfoField RspInfo,
-                                                 int RequestID, boolean IsLast) {
+    public static FtdcRspEvent writeRspUserLogin(FtdcRspEvent event, EventSource eventSource,
+                                                 CThostFtdcRspUserLoginField rspUserLoginField,
+                                                 CThostFtdcRspInfoField rspInfoField,
+                                                 int requestID, boolean isLast) {
         var rspUserLogin = event.getRspUserLogin();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
-        rspUserLogin.Source = Source;
-        rspUserLogin.ErrorID = RspInfo.getErrorID();
-        rspUserLogin.ErrorMsg = RspInfo.getErrorMsg();
+        rspUserLogin.Source = eventSource;
+        rspUserLogin.ErrorID = rspInfoField.getErrorID();
+        rspUserLogin.ErrorMsg = rspInfoField.getErrorMsg();
         // 请求ID, 是否最后一条信息
-        rspUserLogin.RequestID = RequestID;
-        rspUserLogin.IsLast = IsLast;
+        rspUserLogin.RequestID = requestID;
+        rspUserLogin.IsLast = isLast;
         // 交易日
-        rspUserLogin.TradingDay = Field.getTradingDay();
+        rspUserLogin.TradingDay = rspUserLoginField.getTradingDay();
         // 登录成功时间
-        rspUserLogin.LoginTime = Field.getLoginTime();
+        rspUserLogin.LoginTime = rspUserLoginField.getLoginTime();
         // 经纪公司代码
-        rspUserLogin.BrokerID = Field.getBrokerID();
+        rspUserLogin.BrokerID = rspUserLoginField.getBrokerID();
         // 用户代码
-        rspUserLogin.UserID = Field.getUserID();
+        rspUserLogin.UserID = rspUserLoginField.getUserID();
         // 交易系统名称
-        rspUserLogin.SystemName = Field.getSystemName();
+        rspUserLogin.SystemName = rspUserLoginField.getSystemName();
         // 前置编号
-        rspUserLogin.FrontID = Field.getFrontID();
+        rspUserLogin.FrontID = rspUserLoginField.getFrontID();
         // 会话编号
-        rspUserLogin.SessionID = Field.getSessionID();
+        rspUserLogin.SessionID = rspUserLoginField.getSessionID();
         // 最大报单引用
-        rspUserLogin.MaxOrderRef = Field.getMaxOrderRef();
+        rspUserLogin.MaxOrderRef = rspUserLoginField.getMaxOrderRef();
         // 上期所时间
-        rspUserLogin.SHFETime = Field.getSHFETime();
+        rspUserLogin.SHFETime = rspUserLoginField.getSHFETime();
         // 大商所时间
-        rspUserLogin.DCETime = Field.getDCETime();
+        rspUserLogin.DCETime = rspUserLoginField.getDCETime();
         // 郑商所时间
-        rspUserLogin.CZCETime = Field.getCZCETime();
+        rspUserLogin.CZCETime = rspUserLoginField.getCZCETime();
         // 中金所时间
-        rspUserLogin.FFEXTime = Field.getFFEXTime();
+        rspUserLogin.FFEXTime = rspUserLoginField.getFFEXTime();
         // 能源中心时间
-        rspUserLogin.INETime = Field.getINETime();
+        rspUserLogin.INETime = rspUserLoginField.getINETime();
         // 广期所时间
-        rspUserLogin.GFEXTime = Field.getGFEXTime();
+        rspUserLogin.GFEXTime = rspUserLoginField.getGFEXTime();
         // 后台版本信息
-        rspUserLogin.SysVersion = Field.getSysVersion();
+        rspUserLogin.SysVersion = rspUserLoginField.getSysVersion();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.RSP_USER_LOGIN);
     }
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Source    EventSource
-     * @param Field     CThostFtdcUserLogoutField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param event           FtdcRspEvent
+     * @param eventSource     EventSource
+     * @param userLogoutField CThostFtdcUserLogoutField
+     * @param rspInfoField    CThostFtdcRspInfoField
+     * @param requestID       int
+     * @param isLast          boolean
      * @return FtdcRspEvent
      */
-    public static FtdcRspEvent writeRspUserLogout(FtdcRspEvent event,
-                                                  EventSource Source,
-                                                  CThostFtdcUserLogoutField Field,
-                                                  CThostFtdcRspInfoField RspInfo,
-                                                  int RequestID, boolean IsLast) {
+    public static FtdcRspEvent writeRspUserLogout(FtdcRspEvent event, EventSource eventSource,
+                                                  CThostFtdcUserLogoutField userLogoutField,
+                                                  CThostFtdcRspInfoField rspInfoField,
+                                                  int requestID, boolean isLast) {
         var userLogout = event.getUserLogout();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
-        userLogout.Source = Source;
-        userLogout.ErrorID = RspInfo.getErrorID();
-        userLogout.ErrorMsg = RspInfo.getErrorMsg();
+        userLogout.Source = eventSource;
+        userLogout.ErrorID = rspInfoField.getErrorID();
+        userLogout.ErrorMsg = rspInfoField.getErrorMsg();
         // 请求ID, 是否最后一条信息
-        userLogout.RequestID = RequestID;
-        userLogout.IsLast = IsLast;
+        userLogout.RequestID = requestID;
+        userLogout.IsLast = isLast;
         // 经纪公司代码, 用户代码
-        userLogout.BrokerID = Field.getBrokerID();
-        userLogout.UserID = Field.getUserID();
+        userLogout.BrokerID = userLogoutField.getBrokerID();
+        userLogout.UserID = userLogoutField.getUserID();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.USER_LOGOUT);
     }
 
     /**
-     * @param event  FtdcRspEvent
-     * @param Source EventSource
-     * @param Reason int
+     * @param event       FtdcRspEvent
+     * @param eventSource EventSource
+     * @param reason      int
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeFrontDisconnected(FtdcRspEvent event,
-                                                      EventSource Source, int Reason) {
+                                                      EventSource eventSource, int reason) {
         var frontDisconnected = event.getFrontDisconnected();
         // 事件来源
-        frontDisconnected.Source = Source;
+        frontDisconnected.Source = eventSource;
         // 错误原因
-        frontDisconnected.Msg = "FrontDisconnected-" + FtdcFrontDisconnectedReason.getPrompt(Reason);
+        frontDisconnected.Msg = "FrontDisconnected-" + FtdcFrontDisconnectedReason.getPrompt(reason);
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FRONT_DISCONNECTED);
     }
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Source    EventSource
-     * @param TimeLapse int
-     * @param BrokerID  String
-     * @param UserID    String
+     * @param event       FtdcRspEvent
+     * @param eventSource EventSource
+     * @param timeLapse   int
+     * @param brokerID    String
+     * @param userID      String
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeHeartBeatWarning(FtdcRspEvent event,
-                                                     EventSource Source, int TimeLapse,
-                                                     String BrokerID, String UserID) {
+                                                     EventSource eventSource, int timeLapse,
+                                                     String brokerID, String userID) {
         var heartBeatWarning = event.getHeartBeatWarning();
         // 事件来源
-        heartBeatWarning.Source = Source;
+        heartBeatWarning.Source = eventSource;
         // 距离上次接收报文的时间
-        heartBeatWarning.TimeLapse = TimeLapse;
+        heartBeatWarning.TimeLapse = timeLapse;
         // 经纪公司代码
-        heartBeatWarning.BrokerID = BrokerID;
+        heartBeatWarning.BrokerID = brokerID;
         // 用户代码
-        heartBeatWarning.UserID = UserID;
+        heartBeatWarning.UserID = userID;
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.HEARTBEAT_WARNING);
     }
 
     /**
      * @param event        FtdcRspEvent
-     * @param Source       EventSource
-     * @param RspInfoField CThostFtdcRspInfoField
-     * @param RequestID    int
-     * @param IsLast       boolean
+     * @param eventSource  EventSource
+     * @param rspInfoField CThostFtdcRspInfoField
+     * @param requestID    int
+     * @param isLast       boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeRspError(FtdcRspEvent event,
-                                             EventSource Source,
-                                             CThostFtdcRspInfoField RspInfoField,
-                                             int RequestID, boolean IsLast) {
+                                             EventSource eventSource,
+                                             CThostFtdcRspInfoField rspInfoField,
+                                             int requestID, boolean isLast) {
         var rspError = event.getRspError();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
-        rspError.Source = Source;
-        rspError.ErrorID = RspInfoField.getErrorID();
-        rspError.ErrorMsg = RspInfoField.getErrorMsg();
+        rspError.Source = eventSource;
+        rspError.ErrorID = rspInfoField.getErrorID();
+        rspError.ErrorMsg = rspInfoField.getErrorMsg();
         // 请求ID, 是否最后一条信息
-        rspError.RequestID = RequestID;
-        rspError.IsLast = IsLast;
+        rspError.RequestID = requestID;
+        rspError.IsLast = isLast;
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.RSP_ERROR);
     }
 
     /**
-     * @param event FtdcRspEvent
-     * @param Field CThostFtdcInstrumentStatusField
+     * @param event                 FtdcRspEvent
+     * @param instrumentStatusField CThostFtdcInstrumentStatusField
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInstrumentStatus(FtdcRspEvent event,
-                                                     CThostFtdcInstrumentStatusField Field) {
-        var instrumentStatus = event.getFtdcInstrumentStatus();
+                                                     CThostFtdcInstrumentStatusField instrumentStatusField) {
+        var instrumentStatus = event.getInstrumentStatus();
         // 交易所代码, 合约在交易所的代码, 结算组代码, 合约代码
-        instrumentStatus.ExchangeID = Field.getExchangeID();
-        instrumentStatus.ExchangeInstID = Field.getExchangeInstID();
-        instrumentStatus.SettlementGroupID = Field.getSettlementGroupID();
-        instrumentStatus.InstrumentID = Field.getInstrumentID();
+        instrumentStatus.ExchangeID = instrumentStatusField.getExchangeID();
+        instrumentStatus.ExchangeInstID = instrumentStatusField.getExchangeInstID();
+        instrumentStatus.SettlementGroupID = instrumentStatusField.getSettlementGroupID();
+        instrumentStatus.InstrumentID = instrumentStatusField.getInstrumentID();
         // 合约交易状态, 交易阶段编号, 进入本状态时间, 进入本状态原因
-        instrumentStatus.InstrumentStatus = Field.getInstrumentStatus();
-        instrumentStatus.TradingSegmentSN = Field.getTradingSegmentSN();
-        instrumentStatus.EnterTime = Field.getEnterTime();
-        instrumentStatus.EnterReason = Field.getEnterReason();
+        instrumentStatus.InstrumentStatus = instrumentStatusField.getInstrumentStatus();
+        instrumentStatus.TradingSegmentSN = instrumentStatusField.getTradingSegmentSN();
+        instrumentStatus.EnterTime = instrumentStatusField.getEnterTime();
+        instrumentStatus.EnterReason = instrumentStatusField.getEnterReason();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_INSTRUMENT_STATUS);
     }
 
     /**
-     * @param event   FtdcRspEvent
-     * @param Field   CThostFtdcInputOrderField
-     * @param RspInfo CThostFtdcRspInfoField
-     * @param IsLast  boolean
+     * @param event           FtdcRspEvent
+     * @param inputOrderField CThostFtdcInputOrderField
+     * @param rspInfoField    CThostFtdcRspInfoField
+     * @param isLast          boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInputOrder(FtdcRspEvent event,
-                                               CThostFtdcInputOrderField Field,
-                                               CThostFtdcRspInfoField RspInfo,
-                                               boolean IsLast) {
-        var inputOrder = event.getFtdcInputOrder();
+                                               CThostFtdcInputOrderField inputOrderField,
+                                               CThostFtdcRspInfoField rspInfoField,
+                                               boolean isLast) {
+        var inputOrder = event.getInputOrder();
         // [FTDC响应信息] - 错误代码, 错误信息
-        inputOrder.ErrorID = RspInfo.getErrorID();
-        inputOrder.ErrorMsg = RspInfo.getErrorMsg();
-        inputOrder.IsLast = IsLast;
-        inputOrder.BrokerID = Field.getBrokerID();
-        inputOrder.InvestorID = Field.getInvestorID();
-        inputOrder.InstrumentID = Field.getInstrumentID();
-        inputOrder.OrderRef = Field.getOrderRef();
-        inputOrder.UserID = Field.getUserID();
-        inputOrder.OrderPriceType = Field.getOrderPriceType();
-        inputOrder.Direction = Field.getDirection();
-        inputOrder.CombOffsetFlag = Field.getCombOffsetFlag();
-        inputOrder.CombHedgeFlag = Field.getCombHedgeFlag();
-        inputOrder.LimitPrice = Field.getLimitPrice();
-        inputOrder.VolumeTotalOriginal = Field.getVolumeTotalOriginal();
-        inputOrder.TimeCondition = Field.getTimeCondition();
-        inputOrder.GTDDate = Field.getGTDDate();
-        inputOrder.VolumeCondition = Field.getVolumeCondition();
-        inputOrder.MinVolume = Field.getMinVolume();
-        inputOrder.ContingentCondition = Field.getContingentCondition();
-        inputOrder.StopPrice = Field.getStopPrice();
-        inputOrder.ForceCloseReason = Field.getForceCloseReason();
-        inputOrder.IsAutoSuspend = Field.getIsAutoSuspend();
-        inputOrder.BusinessUnit = Field.getBusinessUnit();
-        inputOrder.RequestID = Field.getRequestID();
-        inputOrder.UserForceClose = Field.getUserForceClose();
-        inputOrder.IsSwapOrder = Field.getIsSwapOrder();
-        inputOrder.ExchangeID = Field.getExchangeID();
-        inputOrder.InvestUnitID = Field.getInvestUnitID();
-        inputOrder.AccountID = Field.getAccountID();
-        inputOrder.CurrencyID = Field.getCurrencyID();
-        inputOrder.ClientID = Field.getClientID();
-        inputOrder.IPAddress = Field.getIPAddress();
-        inputOrder.MacAddress = Field.getMacAddress();
+        inputOrder.ErrorID = rspInfoField.getErrorID();
+        inputOrder.ErrorMsg = rspInfoField.getErrorMsg();
+        inputOrder.IsLast = isLast;
+        inputOrder.BrokerID = inputOrderField.getBrokerID();
+        inputOrder.InvestorID = inputOrderField.getInvestorID();
+        inputOrder.InstrumentID = inputOrderField.getInstrumentID();
+        inputOrder.OrderRef = inputOrderField.getOrderRef();
+        inputOrder.UserID = inputOrderField.getUserID();
+        inputOrder.OrderPriceType = inputOrderField.getOrderPriceType();
+        inputOrder.Direction = inputOrderField.getDirection();
+        inputOrder.CombOffsetFlag = inputOrderField.getCombOffsetFlag();
+        inputOrder.CombHedgeFlag = inputOrderField.getCombHedgeFlag();
+        inputOrder.LimitPrice = inputOrderField.getLimitPrice();
+        inputOrder.VolumeTotalOriginal = inputOrderField.getVolumeTotalOriginal();
+        inputOrder.TimeCondition = inputOrderField.getTimeCondition();
+        inputOrder.GTDDate = inputOrderField.getGTDDate();
+        inputOrder.VolumeCondition = inputOrderField.getVolumeCondition();
+        inputOrder.MinVolume = inputOrderField.getMinVolume();
+        inputOrder.ContingentCondition = inputOrderField.getContingentCondition();
+        inputOrder.StopPrice = inputOrderField.getStopPrice();
+        inputOrder.ForceCloseReason = inputOrderField.getForceCloseReason();
+        inputOrder.IsAutoSuspend = inputOrderField.getIsAutoSuspend();
+        inputOrder.BusinessUnit = inputOrderField.getBusinessUnit();
+        inputOrder.RequestID = inputOrderField.getRequestID();
+        inputOrder.UserForceClose = inputOrderField.getUserForceClose();
+        inputOrder.IsSwapOrder = inputOrderField.getIsSwapOrder();
+        inputOrder.ExchangeID = inputOrderField.getExchangeID();
+        inputOrder.InvestUnitID = inputOrderField.getInvestUnitID();
+        inputOrder.AccountID = inputOrderField.getAccountID();
+        inputOrder.CurrencyID = inputOrderField.getCurrencyID();
+        inputOrder.ClientID = inputOrderField.getClientID();
+        inputOrder.IPAddress = inputOrderField.getIPAddress();
+        inputOrder.MacAddress = inputOrderField.getMacAddress();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_INPUT_ORDER);
     }
 
     /**
-     * @param event   FtdcRspEvent
-     * @param Field   CThostFtdcInputOrderActionField
-     * @param RspInfo CThostFtdcRspInfoField
-     * @param IsLast  boolean
+     * @param event                 FtdcRspEvent
+     * @param inputOrderActionField CThostFtdcInputOrderActionField
+     * @param rspInfoField          CThostFtdcRspInfoField
+     * @param isLast                boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInputOrderAction(FtdcRspEvent event,
-                                                     CThostFtdcInputOrderActionField Field,
-                                                     CThostFtdcRspInfoField RspInfo,
-                                                     boolean IsLast) {
-        var inputOrderAction = event.getFtdcInputOrderAction();
+                                                     CThostFtdcInputOrderActionField inputOrderActionField,
+                                                     CThostFtdcRspInfoField rspInfoField,
+                                                     boolean isLast) {
+        var inputOrderAction = event.getInputOrderAction();
         // [FTDC响应信息] - 错误代码, 错误信息
-        inputOrderAction.ErrorID = RspInfo.getErrorID();
-        inputOrderAction.ErrorMsg = RspInfo.getErrorMsg();
-        inputOrderAction.IsLast = IsLast;
-        inputOrderAction.BrokerID = Field.getBrokerID();
-        inputOrderAction.InvestorID = Field.getInvestorID();
-        inputOrderAction.OrderActionRef = Field.getOrderActionRef();
-        inputOrderAction.OrderRef = Field.getOrderRef();
-        inputOrderAction.RequestID = Field.getRequestID();
-        inputOrderAction.FrontID = Field.getFrontID();
-        inputOrderAction.SessionID = Field.getSessionID();
-        inputOrderAction.ExchangeID = Field.getExchangeID();
-        inputOrderAction.OrderSysID = Field.getOrderSysID();
-        inputOrderAction.ActionFlag = Field.getActionFlag();
-        inputOrderAction.LimitPrice = Field.getLimitPrice();
-        inputOrderAction.VolumeChange = Field.getVolumeChange();
-        inputOrderAction.UserID = Field.getUserID();
-        inputOrderAction.InstrumentID = Field.getInstrumentID();
-        inputOrderAction.InvestUnitID = Field.getInvestUnitID();
-        inputOrderAction.IPAddress = Field.getIPAddress();
-        inputOrderAction.MacAddress = Field.getMacAddress();
+        inputOrderAction.ErrorID = rspInfoField.getErrorID();
+        inputOrderAction.ErrorMsg = rspInfoField.getErrorMsg();
+        inputOrderAction.IsLast = isLast;
+        inputOrderAction.BrokerID = inputOrderActionField.getBrokerID();
+        inputOrderAction.InvestorID = inputOrderActionField.getInvestorID();
+        inputOrderAction.OrderActionRef = inputOrderActionField.getOrderActionRef();
+        inputOrderAction.OrderRef = inputOrderActionField.getOrderRef();
+        inputOrderAction.RequestID = inputOrderActionField.getRequestID();
+        inputOrderAction.FrontID = inputOrderActionField.getFrontID();
+        inputOrderAction.SessionID = inputOrderActionField.getSessionID();
+        inputOrderAction.ExchangeID = inputOrderActionField.getExchangeID();
+        inputOrderAction.OrderSysID = inputOrderActionField.getOrderSysID();
+        inputOrderAction.ActionFlag = inputOrderActionField.getActionFlag();
+        inputOrderAction.LimitPrice = inputOrderActionField.getLimitPrice();
+        inputOrderAction.VolumeChange = inputOrderActionField.getVolumeChange();
+        inputOrderAction.UserID = inputOrderActionField.getUserID();
+        inputOrderAction.InstrumentID = inputOrderActionField.getInstrumentID();
+        inputOrderAction.InvestUnitID = inputOrderActionField.getInvestUnitID();
+        inputOrderAction.IPAddress = inputOrderActionField.getIPAddress();
+        inputOrderAction.MacAddress = inputOrderActionField.getMacAddress();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_INPUT_ORDER_ACTION);
     }
 
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Field     CThostFtdcInvestorPositionField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param event                 FtdcRspEvent
+     * @param investorPositionField CThostFtdcInvestorPositionField
+     * @param rspInfoField          CThostFtdcRspInfoField
+     * @param requestID             int
+     * @param isLast                boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeInvestorPosition(FtdcRspEvent event,
-                                                     CThostFtdcInvestorPositionField Field,
-                                                     CThostFtdcRspInfoField RspInfo,
-                                                     int RequestID, boolean IsLast) {
-        var investorPosition = event.getFtdcInvestorPosition();
+                                                     CThostFtdcInvestorPositionField investorPositionField,
+                                                     CThostFtdcRspInfoField rspInfoField,
+                                                     int requestID, boolean isLast) {
+        var investorPosition = event.getInvestorPosition();
         // [FTDC响应信息] - 错误代码, 错误信息
-        investorPosition.ErrorID = RspInfo.getErrorID();
-        investorPosition.ErrorMsg = RspInfo.getErrorMsg();
-        investorPosition.RequestID = RequestID;
-        investorPosition.IsLast = IsLast;
+        investorPosition.ErrorID = rspInfoField.getErrorID();
+        investorPosition.ErrorMsg = rspInfoField.getErrorMsg();
+        investorPosition.RequestID = requestID;
+        investorPosition.IsLast = isLast;
         // 合约代码
-        investorPosition.InstrumentID = Field.getInstrumentID();
+        investorPosition.InstrumentID = investorPositionField.getInstrumentID();
         // 经纪公司代码
-        investorPosition.BrokerID = Field.getBrokerID();
+        investorPosition.BrokerID = investorPositionField.getBrokerID();
         // 投资者代码
-        investorPosition.InvestorID = Field.getInvestorID();
+        investorPosition.InvestorID = investorPositionField.getInvestorID();
         // 持仓多空方向
-        investorPosition.PosiDirection = Field.getPosiDirection();
+        investorPosition.PosiDirection = investorPositionField.getPosiDirection();
         // 投机套保标志
-        investorPosition.HedgeFlag = Field.getHedgeFlag();
+        investorPosition.HedgeFlag = investorPositionField.getHedgeFlag();
         // 持仓日期
-        investorPosition.PositionDate = Field.getPositionDate();
+        investorPosition.PositionDate = investorPositionField.getPositionDate();
         // 上日持仓
-        investorPosition.YdPosition = Field.getYdPosition();
+        investorPosition.YdPosition = investorPositionField.getYdPosition();
         // 今日持仓
-        investorPosition.Position = Field.getPosition();
+        investorPosition.Position = investorPositionField.getPosition();
         // 多头冻结
-        investorPosition.LongFrozen = Field.getLongFrozen();
+        investorPosition.LongFrozen = investorPositionField.getLongFrozen();
         // 空头冻结
-        investorPosition.ShortFrozen = Field.getShortFrozen();
+        investorPosition.ShortFrozen = investorPositionField.getShortFrozen();
         // 开仓冻结金额
-        investorPosition.LongFrozenAmount = Field.getLongFrozenAmount();
+        investorPosition.LongFrozenAmount = investorPositionField.getLongFrozenAmount();
         // 开仓冻结金额
-        investorPosition.ShortFrozenAmount = Field.getShortFrozenAmount();
+        investorPosition.ShortFrozenAmount = investorPositionField.getShortFrozenAmount();
         // 开仓量
-        investorPosition.OpenVolume = Field.getOpenVolume();
+        investorPosition.OpenVolume = investorPositionField.getOpenVolume();
         // 平仓量
-        investorPosition.CloseVolume = Field.getCloseVolume();
+        investorPosition.CloseVolume = investorPositionField.getCloseVolume();
         // 开仓金额
-        investorPosition.OpenAmount = Field.getOpenAmount();
+        investorPosition.OpenAmount = investorPositionField.getOpenAmount();
         // 平仓金额
-        investorPosition.CloseAmount = Field.getCloseAmount();
+        investorPosition.CloseAmount = investorPositionField.getCloseAmount();
         // 持仓成本
-        investorPosition.PositionCost = Field.getPositionCost();
+        investorPosition.PositionCost = investorPositionField.getPositionCost();
         // 上次占用的保证金
-        investorPosition.PreMargin = Field.getPreMargin();
+        investorPosition.PreMargin = investorPositionField.getPreMargin();
         // 占用的保证金
-        investorPosition.UseMargin = Field.getUseMargin();
+        investorPosition.UseMargin = investorPositionField.getUseMargin();
         // 冻结的保证金
-        investorPosition.FrozenMargin = Field.getFrozenMargin();
+        investorPosition.FrozenMargin = investorPositionField.getFrozenMargin();
         // 冻结的资金
-        investorPosition.FrozenCash = Field.getFrozenCash();
+        investorPosition.FrozenCash = investorPositionField.getFrozenCash();
         // 冻结的手续费
-        investorPosition.FrozenCommission = Field.getFrozenCommission();
+        investorPosition.FrozenCommission = investorPositionField.getFrozenCommission();
         // 资金差额
-        investorPosition.CashIn = Field.getCashIn();
+        investorPosition.CashIn = investorPositionField.getCashIn();
         // 手续费
-        investorPosition.Commission = Field.getCommission();
+        investorPosition.Commission = investorPositionField.getCommission();
         // 平仓盈亏
-        investorPosition.CloseProfit = Field.getCloseProfit();
+        investorPosition.CloseProfit = investorPositionField.getCloseProfit();
         // 持仓盈亏
-        investorPosition.PositionProfit = Field.getPositionProfit();
+        investorPosition.PositionProfit = investorPositionField.getPositionProfit();
         // 上次结算价
-        investorPosition.PreSettlementPrice = Field.getPreSettlementPrice();
+        investorPosition.PreSettlementPrice = investorPositionField.getPreSettlementPrice();
         // 本次结算价
-        investorPosition.SettlementPrice = Field.getSettlementPrice();
+        investorPosition.SettlementPrice = investorPositionField.getSettlementPrice();
         // 交易日
-        investorPosition.TradingDay = Field.getTradingDay();
+        investorPosition.TradingDay = investorPositionField.getTradingDay();
         // 结算编号
-        investorPosition.SettlementID = Field.getSettlementID();
+        investorPosition.SettlementID = investorPositionField.getSettlementID();
         // 开仓成本
-        investorPosition.OpenCost = Field.getOpenCost();
+        investorPosition.OpenCost = investorPositionField.getOpenCost();
         // 交易所保证金
-        investorPosition.ExchangeMargin = Field.getExchangeMargin();
+        investorPosition.ExchangeMargin = investorPositionField.getExchangeMargin();
         // 组合成交形成的持仓
-        investorPosition.CombPosition = Field.getCombPosition();
+        investorPosition.CombPosition = investorPositionField.getCombPosition();
         // 组合多头冻结
-        investorPosition.CombLongFrozen = Field.getCombLongFrozen();
+        investorPosition.CombLongFrozen = investorPositionField.getCombLongFrozen();
         // 组合空头冻结
-        investorPosition.CombShortFrozen = Field.getCombShortFrozen();
+        investorPosition.CombShortFrozen = investorPositionField.getCombShortFrozen();
         // 逐日盯市平仓盈亏
-        investorPosition.CloseProfitByDate = Field.getCloseProfitByDate();
+        investorPosition.CloseProfitByDate = investorPositionField.getCloseProfitByDate();
         // 逐笔对冲平仓盈亏
-        investorPosition.CloseProfitByTrade = Field.getCloseProfitByTrade();
+        investorPosition.CloseProfitByTrade = investorPositionField.getCloseProfitByTrade();
         // 今日持仓
-        investorPosition.TodayPosition = Field.getTodayPosition();
+        investorPosition.TodayPosition = investorPositionField.getTodayPosition();
         // 保证金率
-        investorPosition.MarginRateByMoney = Field.getMarginRateByMoney();
+        investorPosition.MarginRateByMoney = investorPositionField.getMarginRateByMoney();
         // 保证金率(按手数)
-        investorPosition.MarginRateByVolume = Field.getMarginRateByVolume();
+        investorPosition.MarginRateByVolume = investorPositionField.getMarginRateByVolume();
         // 执行冻结
-        investorPosition.StrikeFrozen = Field.getStrikeFrozen();
+        investorPosition.StrikeFrozen = investorPositionField.getStrikeFrozen();
         // 执行冻结金额
-        investorPosition.StrikeFrozenAmount = Field.getStrikeFrozenAmount();
+        investorPosition.StrikeFrozenAmount = investorPositionField.getStrikeFrozenAmount();
         // 放弃执行冻结
-        investorPosition.AbandonFrozen = Field.getAbandonFrozen();
+        investorPosition.AbandonFrozen = investorPositionField.getAbandonFrozen();
         // 交易所代码
-        investorPosition.ExchangeID = Field.getExchangeID();
+        investorPosition.ExchangeID = investorPositionField.getExchangeID();
         // 执行冻结的昨仓
-        investorPosition.YdStrikeFrozen = Field.getYdStrikeFrozen();
+        investorPosition.YdStrikeFrozen = investorPositionField.getYdStrikeFrozen();
         // 投资单元代码
-        investorPosition.InvestUnitID = Field.getInvestUnitID();
+        investorPosition.InvestUnitID = investorPositionField.getInvestUnitID();
         // 大商所持仓成本差值, 只有大商所使用
         // 6.3.15 版本使用
-        investorPosition.PositionCostOffset = Field.getPositionCostOffset();
+        investorPosition.PositionCostOffset = investorPositionField.getPositionCostOffset();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_INVESTOR_POSITION);
     }
 
     /**
      * @param event      FtdcRspEvent
-     * @param OrderField CThostFtdcOrderField
+     * @param orderField CThostFtdcOrderField
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeOrder(FtdcRspEvent event,
-                                          CThostFtdcOrderField OrderField) {
-        var order = event.getFtdcOrder();
+                                          CThostFtdcOrderField orderField) {
+        var order = event.getOrder();
         order.RecvEpochMicros = micros();
-        order.BrokerID = OrderField.getBrokerID();
-        order.InvestorID = OrderField.getInvestorID();
-        order.InstrumentID = OrderField.getInstrumentID();
-        order.OrderRef = OrderField.getOrderRef();
-        order.UserID = OrderField.getUserID();
-        order.OrderPriceType = OrderField.getOrderPriceType();
-        order.Direction = OrderField.getDirection();
-        order.CombOffsetFlag = OrderField.getCombOffsetFlag();
-        order.CombHedgeFlag = OrderField.getCombHedgeFlag();
-        order.LimitPrice = OrderField.getLimitPrice();
-        order.VolumeTotalOriginal = OrderField.getVolumeTotalOriginal();
-        order.TimeCondition = OrderField.getTimeCondition();
-        order.GTDDate = OrderField.getGTDDate();
-        order.VolumeCondition = OrderField.getVolumeCondition();
-        order.MinVolume = OrderField.getMinVolume();
-        order.ContingentCondition = OrderField.getContingentCondition();
-        order.StopPrice = OrderField.getStopPrice();
-        order.ForceCloseReason = OrderField.getForceCloseReason();
-        order.IsAutoSuspend = OrderField.getIsAutoSuspend();
-        order.BusinessUnit = OrderField.getBusinessUnit();
-        order.RequestID = OrderField.getRequestID();
-        order.OrderLocalID = OrderField.getOrderLocalID();
-        order.ExchangeID = OrderField.getExchangeID();
-        order.ParticipantID = OrderField.getParticipantID();
-        order.ClientID = OrderField.getClientID();
-        order.ExchangeInstID = OrderField.getExchangeInstID();
-        order.TraderID = OrderField.getTraderID();
-        order.InstallID = OrderField.getInstallID();
-        order.OrderSubmitStatus = OrderField.getOrderSubmitStatus();
-        order.NotifySequence = OrderField.getNotifySequence();
-        order.TradingDay = OrderField.getTradingDay();
-        order.SettlementID = OrderField.getSettlementID();
-        order.OrderSysID = OrderField.getOrderSysID();
-        order.OrderSource = OrderField.getOrderSource();
-        order.OrderStatus = OrderField.getOrderStatus();
-        order.OrderType = OrderField.getOrderType();
-        order.VolumeTraded = OrderField.getVolumeTraded();
-        order.VolumeTotal = OrderField.getVolumeTotal();
-        order.InsertDate = OrderField.getInsertDate();
-        order.InsertTime = OrderField.getInsertTime();
-        order.ActiveTime = OrderField.getActiveTime();
-        order.SuspendTime = OrderField.getSuspendTime();
-        order.UpdateTime = OrderField.getUpdateTime();
-        order.CancelTime = OrderField.getCancelTime();
-        order.ActiveTraderID = OrderField.getActiveTraderID();
-        order.ClearingPartID = OrderField.getClearingPartID();
-        order.SequenceNo = OrderField.getSequenceNo();
-        order.FrontID = OrderField.getFrontID();
-        order.SessionID = OrderField.getSessionID();
-        order.UserProductInfo = OrderField.getUserProductInfo();
-        order.StatusMsg = OrderField.getStatusMsg();
-        order.UserForceClose = OrderField.getUserForceClose();
-        order.ActiveUserID = OrderField.getActiveUserID();
-        order.BrokerOrderSeq = OrderField.getBrokerOrderSeq();
-        order.RelativeOrderSysID = OrderField.getRelativeOrderSysID();
-        order.ZCETotalTradedVolume = OrderField.getZCETotalTradedVolume();
-        order.IsSwapOrder = OrderField.getIsSwapOrder();
-        order.BranchID = OrderField.getBranchID();
-        order.InvestUnitID = OrderField.getInvestUnitID();
-        order.AccountID = OrderField.getAccountID();
-        order.CurrencyID = OrderField.getCurrencyID();
-        order.IPAddress = OrderField.getIPAddress();
-        order.MacAddress = OrderField.getMacAddress();
+        order.BrokerID = orderField.getBrokerID();
+        order.InvestorID = orderField.getInvestorID();
+        order.InstrumentID = orderField.getInstrumentID();
+        order.OrderRef = orderField.getOrderRef();
+        order.UserID = orderField.getUserID();
+        order.OrderPriceType = orderField.getOrderPriceType();
+        order.Direction = orderField.getDirection();
+        order.CombOffsetFlag = orderField.getCombOffsetFlag();
+        order.CombHedgeFlag = orderField.getCombHedgeFlag();
+        order.LimitPrice = orderField.getLimitPrice();
+        order.VolumeTotalOriginal = orderField.getVolumeTotalOriginal();
+        order.TimeCondition = orderField.getTimeCondition();
+        order.GTDDate = orderField.getGTDDate();
+        order.VolumeCondition = orderField.getVolumeCondition();
+        order.MinVolume = orderField.getMinVolume();
+        order.ContingentCondition = orderField.getContingentCondition();
+        order.StopPrice = orderField.getStopPrice();
+        order.ForceCloseReason = orderField.getForceCloseReason();
+        order.IsAutoSuspend = orderField.getIsAutoSuspend();
+        order.BusinessUnit = orderField.getBusinessUnit();
+        order.RequestID = orderField.getRequestID();
+        order.OrderLocalID = orderField.getOrderLocalID();
+        order.ExchangeID = orderField.getExchangeID();
+        order.ParticipantID = orderField.getParticipantID();
+        order.ClientID = orderField.getClientID();
+        order.ExchangeInstID = orderField.getExchangeInstID();
+        order.TraderID = orderField.getTraderID();
+        order.InstallID = orderField.getInstallID();
+        order.OrderSubmitStatus = orderField.getOrderSubmitStatus();
+        order.NotifySequence = orderField.getNotifySequence();
+        order.TradingDay = orderField.getTradingDay();
+        order.SettlementID = orderField.getSettlementID();
+        order.OrderSysID = orderField.getOrderSysID();
+        order.OrderSource = orderField.getOrderSource();
+        order.OrderStatus = orderField.getOrderStatus();
+        order.OrderType = orderField.getOrderType();
+        order.VolumeTraded = orderField.getVolumeTraded();
+        order.VolumeTotal = orderField.getVolumeTotal();
+        order.InsertDate = orderField.getInsertDate();
+        order.InsertTime = orderField.getInsertTime();
+        order.ActiveTime = orderField.getActiveTime();
+        order.SuspendTime = orderField.getSuspendTime();
+        order.UpdateTime = orderField.getUpdateTime();
+        order.CancelTime = orderField.getCancelTime();
+        order.ActiveTraderID = orderField.getActiveTraderID();
+        order.ClearingPartID = orderField.getClearingPartID();
+        order.SequenceNo = orderField.getSequenceNo();
+        order.FrontID = orderField.getFrontID();
+        order.SessionID = orderField.getSessionID();
+        order.UserProductInfo = orderField.getUserProductInfo();
+        order.StatusMsg = orderField.getStatusMsg();
+        order.UserForceClose = orderField.getUserForceClose();
+        order.ActiveUserID = orderField.getActiveUserID();
+        order.BrokerOrderSeq = orderField.getBrokerOrderSeq();
+        order.RelativeOrderSysID = orderField.getRelativeOrderSysID();
+        order.ZCETotalTradedVolume = orderField.getZCETotalTradedVolume();
+        order.IsSwapOrder = orderField.getIsSwapOrder();
+        order.BranchID = orderField.getBranchID();
+        order.InvestUnitID = orderField.getInvestUnitID();
+        order.AccountID = orderField.getAccountID();
+        order.CurrencyID = orderField.getCurrencyID();
+        order.IPAddress = orderField.getIPAddress();
+        order.MacAddress = orderField.getMacAddress();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_ORDER);
     }
 
     /**
      * @param event            FtdcRspEvent
-     * @param OrderActionField CThostFtdcOrderActionField
+     * @param orderActionField CThostFtdcOrderActionField
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeOrderAction(FtdcRspEvent event,
-                                                CThostFtdcOrderActionField OrderActionField) {
-        var orderAction = event.getFtdcOrderAction();
+                                                CThostFtdcOrderActionField orderActionField) {
+        var orderAction = event.getOrderAction();
         // 经纪公司代码
-        orderAction.BrokerID = OrderActionField.getBrokerID();
+        orderAction.BrokerID = orderActionField.getBrokerID();
         // 投资者代码
-        orderAction.InvestorID = OrderActionField.getInvestorID();
+        orderAction.InvestorID = orderActionField.getInvestorID();
         // 报单操作引用
-        orderAction.OrderActionRef = OrderActionField.getOrderActionRef();
+        orderAction.OrderActionRef = orderActionField.getOrderActionRef();
         // 报单引用
-        orderAction.OrderRef = OrderActionField.getOrderRef();
+        orderAction.OrderRef = orderActionField.getOrderRef();
         // 请求编号
-        orderAction.RequestID = OrderActionField.getRequestID();
+        orderAction.RequestID = orderActionField.getRequestID();
         // 前置编号
-        orderAction.FrontID = OrderActionField.getFrontID();
+        orderAction.FrontID = orderActionField.getFrontID();
         // 会话编号
-        orderAction.SessionID = OrderActionField.getSessionID();
+        orderAction.SessionID = orderActionField.getSessionID();
         // 交易所代码
-        orderAction.ExchangeID = OrderActionField.getExchangeID();
+        orderAction.ExchangeID = orderActionField.getExchangeID();
         // 报单编号
-        orderAction.OrderSysID = OrderActionField.getOrderSysID();
+        orderAction.OrderSysID = orderActionField.getOrderSysID();
         // 操作标志
-        orderAction.ActionFlag = OrderActionField.getActionFlag();
+        orderAction.ActionFlag = orderActionField.getActionFlag();
         // 价格
-        orderAction.LimitPrice = OrderActionField.getLimitPrice();
+        orderAction.LimitPrice = orderActionField.getLimitPrice();
         // 数量变化
-        orderAction.VolumeChange = OrderActionField.getVolumeChange();
+        orderAction.VolumeChange = orderActionField.getVolumeChange();
         // 操作日期
-        orderAction.ActionDate = OrderActionField.getActionDate();
+        orderAction.ActionDate = orderActionField.getActionDate();
         // 操作时间
-        orderAction.ActionTime = OrderActionField.getActionTime();
+        orderAction.ActionTime = orderActionField.getActionTime();
         // 交易所交易员代码
-        orderAction.TraderID = OrderActionField.getTraderID();
+        orderAction.TraderID = orderActionField.getTraderID();
         // 安装编号
-        orderAction.InstallID = OrderActionField.getInstallID();
+        orderAction.InstallID = orderActionField.getInstallID();
         // 本地报单编号
-        orderAction.OrderLocalID = OrderActionField.getOrderLocalID();
+        orderAction.OrderLocalID = orderActionField.getOrderLocalID();
         // 操作本地编号
-        orderAction.ActionLocalID = OrderActionField.getActionLocalID();
+        orderAction.ActionLocalID = orderActionField.getActionLocalID();
         // 会员代码
-        orderAction.ParticipantID = OrderActionField.getParticipantID();
+        orderAction.ParticipantID = orderActionField.getParticipantID();
         // 客户代码
-        orderAction.ClientID = OrderActionField.getClientID();
+        orderAction.ClientID = orderActionField.getClientID();
         // 业务单元
-        orderAction.BusinessUnit = OrderActionField.getBusinessUnit();
+        orderAction.BusinessUnit = orderActionField.getBusinessUnit();
         // 报单操作状态
-        orderAction.OrderActionStatus = OrderActionField.getOrderActionStatus();
+        orderAction.OrderActionStatus = orderActionField.getOrderActionStatus();
         // 用户代码
-        orderAction.UserID = OrderActionField.getUserID();
+        orderAction.UserID = orderActionField.getUserID();
         // 状态信息
-        orderAction.StatusMsg = OrderActionField.getStatusMsg();
+        orderAction.StatusMsg = orderActionField.getStatusMsg();
         // 合约代码
-        orderAction.InstrumentID = OrderActionField.getInstrumentID();
+        orderAction.InstrumentID = orderActionField.getInstrumentID();
         // 营业部编号
-        orderAction.BranchID = OrderActionField.getBranchID();
+        orderAction.BranchID = orderActionField.getBranchID();
         // 投资单元代码
-        orderAction.InvestUnitID = OrderActionField.getInvestUnitID();
+        orderAction.InvestUnitID = orderActionField.getInvestUnitID();
         // IP地址
-        orderAction.IPAddress = OrderActionField.getIPAddress();
+        orderAction.IPAddress = orderActionField.getIPAddress();
         // MAC地址
-        orderAction.MacAddress = OrderActionField.getMacAddress();
+        orderAction.MacAddress = orderActionField.getMacAddress();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_ORDER_ACTION);
     }
 
     /**
      * @param event      FtdcRspEvent
-     * @param TradeField CThostFtdcTradeField
+     * @param tradeField CThostFtdcTradeField
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeTrade(FtdcRspEvent event,
-                                          CThostFtdcTradeField TradeField) {
-        var trade = event.getFtdcTrade();
+                                          CThostFtdcTradeField tradeField) {
+        var trade = event.getTrade();
         trade.RecvEpochMicros = micros();
         // 经纪公司代码
-        trade.BrokerID = TradeField.getBrokerID();
+        trade.BrokerID = tradeField.getBrokerID();
         // 投资者代码
-        trade.InvestorID = TradeField.getInvestorID();
+        trade.InvestorID = tradeField.getInvestorID();
         // 合约代码
-        trade.InstrumentID = TradeField.getInstrumentID();
+        trade.InstrumentID = tradeField.getInstrumentID();
         // 报单引用
-        trade.OrderRef = TradeField.getOrderRef();
+        trade.OrderRef = tradeField.getOrderRef();
         // 用户代码
-        trade.UserID = TradeField.getUserID();
+        trade.UserID = tradeField.getUserID();
         // 交易所代码
-        trade.ExchangeID = TradeField.getExchangeID();
+        trade.ExchangeID = tradeField.getExchangeID();
         // 成交编号
-        trade.TradeID = TradeField.getTradeID();
+        trade.TradeID = tradeField.getTradeID();
         // 买卖方向
-        trade.Direction = TradeField.getDirection();
+        trade.Direction = tradeField.getDirection();
         // 报单编号
-        trade.OrderSysID = TradeField.getOrderSysID();
+        trade.OrderSysID = tradeField.getOrderSysID();
         // 会员代码
-        trade.ParticipantID = TradeField.getParticipantID();
+        trade.ParticipantID = tradeField.getParticipantID();
         // 客户代码
-        trade.ClientID = TradeField.getClientID();
+        trade.ClientID = tradeField.getClientID();
         // 交易角色
-        trade.TradingRole = TradeField.getTradingRole();
+        trade.TradingRole = tradeField.getTradingRole();
         // 合约在交易所的代码
-        trade.ExchangeInstID = TradeField.getExchangeInstID();
+        trade.ExchangeInstID = tradeField.getExchangeInstID();
         // 开平标志
-        trade.OffsetFlag = TradeField.getOffsetFlag();
+        trade.OffsetFlag = tradeField.getOffsetFlag();
         // 投机套保标志
-        trade.HedgeFlag = TradeField.getHedgeFlag();
+        trade.HedgeFlag = tradeField.getHedgeFlag();
         // 价格
-        trade.Price = TradeField.getPrice();
+        trade.Price = tradeField.getPrice();
         // 数量
-        trade.Volume = TradeField.getVolume();
+        trade.Volume = tradeField.getVolume();
         // 成交日期
-        trade.TradeDate = TradeField.getTradeDate();
+        trade.TradeDate = tradeField.getTradeDate();
         // 成交时间
-        trade.TradeTime = TradeField.getTradeTime();
+        trade.TradeTime = tradeField.getTradeTime();
         // 成交类型
-        trade.TradeType = TradeField.getTradeType();
+        trade.TradeType = tradeField.getTradeType();
         // 成交价来源
-        trade.PriceSource = TradeField.getPriceSource();
+        trade.PriceSource = tradeField.getPriceSource();
         // 交易所交易员代码
-        trade.TraderID = TradeField.getTraderID();
+        trade.TraderID = tradeField.getTraderID();
         // 本地报单编号
-        trade.OrderLocalID = TradeField.getOrderLocalID();
+        trade.OrderLocalID = tradeField.getOrderLocalID();
         // 结算会员编号
-        trade.ClearingPartID = TradeField.getClearingPartID();
+        trade.ClearingPartID = tradeField.getClearingPartID();
         // 业务单元
-        trade.BusinessUnit = TradeField.getBusinessUnit();
+        trade.BusinessUnit = tradeField.getBusinessUnit();
         // 序号
-        trade.SequenceNo = TradeField.getSequenceNo();
+        trade.SequenceNo = tradeField.getSequenceNo();
         // 交易日
-        trade.TradingDay = TradeField.getTradingDay();
+        trade.TradingDay = tradeField.getTradingDay();
         // 结算编号
-        trade.SettlementID = TradeField.getSettlementID();
+        trade.SettlementID = tradeField.getSettlementID();
         // 经纪公司报单编号
-        trade.BrokerOrderSeq = TradeField.getBrokerOrderSeq();
+        trade.BrokerOrderSeq = tradeField.getBrokerOrderSeq();
         // 成交来源
-        trade.TradeSource = TradeField.getTradeSource();
+        trade.TradeSource = tradeField.getTradeSource();
         // 投资单元代码
-        trade.InvestUnitID = TradeField.getInvestUnitID();
+        trade.InvestUnitID = tradeField.getInvestUnitID();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_TRADE);
     }
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Field     CThostFtdcTradingAccountField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param event               FtdcRspEvent
+     * @param tradingAccountField CThostFtdcTradingAccountField
+     * @param rspInfoField        CThostFtdcRspInfoField
+     * @param requestID           int
+     * @param isLast              boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeTradingAccount(FtdcRspEvent event,
-                                                   CThostFtdcTradingAccountField Field,
-                                                   CThostFtdcRspInfoField RspInfo,
-                                                   int RequestID, boolean IsLast) {
-        var tradingAccount = event.getFtdcTradingAccount();
-        tradingAccount.ErrorID = RspInfo.getErrorID();
-        tradingAccount.ErrorMsg = RspInfo.getErrorMsg();
-        tradingAccount.RequestID = RequestID;
-        tradingAccount.IsLast = IsLast;
+                                                   CThostFtdcTradingAccountField tradingAccountField,
+                                                   CThostFtdcRspInfoField rspInfoField,
+                                                   int requestID, boolean isLast) {
+        var tradingAccount = event.getTradingAccount();
+        tradingAccount.ErrorID = rspInfoField.getErrorID();
+        tradingAccount.ErrorMsg = rspInfoField.getErrorMsg();
+        tradingAccount.RequestID = requestID;
+        tradingAccount.IsLast = isLast;
         // 经纪公司代码
-        tradingAccount.BrokerID = Field.getBrokerID();
+        tradingAccount.BrokerID = tradingAccountField.getBrokerID();
         // 投资者账号
-        tradingAccount.AccountID = Field.getAccountID();
+        tradingAccount.AccountID = tradingAccountField.getAccountID();
         // 上次质押金额
-        tradingAccount.PreMortgage = Field.getPreMortgage();
+        tradingAccount.PreMortgage = tradingAccountField.getPreMortgage();
         // 上次信用额度
-        tradingAccount.PreCredit = Field.getPreCredit();
+        tradingAccount.PreCredit = tradingAccountField.getPreCredit();
         // 上次存款额
-        tradingAccount.PreDeposit = Field.getPreDeposit();
+        tradingAccount.PreDeposit = tradingAccountField.getPreDeposit();
         // 上次结算准备金
-        tradingAccount.PreBalance = Field.getPreBalance();
+        tradingAccount.PreBalance = tradingAccountField.getPreBalance();
         // 上次占用的保证金
-        tradingAccount.PreMargin = Field.getPreMargin();
+        tradingAccount.PreMargin = tradingAccountField.getPreMargin();
         // 利息基数
-        tradingAccount.InterestBase = Field.getInterestBase();
+        tradingAccount.InterestBase = tradingAccountField.getInterestBase();
         // 利息收入
-        tradingAccount.Interest = Field.getInterest();
+        tradingAccount.Interest = tradingAccountField.getInterest();
         // 入金金额
-        tradingAccount.Deposit = Field.getDeposit();
+        tradingAccount.Deposit = tradingAccountField.getDeposit();
         // 出金金额
-        tradingAccount.Withdraw = Field.getWithdraw();
+        tradingAccount.Withdraw = tradingAccountField.getWithdraw();
         // 冻结的保证金
-        tradingAccount.FrozenMargin = Field.getFrozenMargin();
+        tradingAccount.FrozenMargin = tradingAccountField.getFrozenMargin();
         // 冻结的资金
-        tradingAccount.FrozenCash = Field.getFrozenCash();
+        tradingAccount.FrozenCash = tradingAccountField.getFrozenCash();
         // 冻结的手续费
-        tradingAccount.FrozenCommission = Field.getFrozenCommission();
+        tradingAccount.FrozenCommission = tradingAccountField.getFrozenCommission();
         // 当前保证金总额
-        tradingAccount.CurrMargin = Field.getCurrMargin();
+        tradingAccount.CurrMargin = tradingAccountField.getCurrMargin();
         // 资金差额
-        tradingAccount.CashIn = Field.getCashIn();
+        tradingAccount.CashIn = tradingAccountField.getCashIn();
         // 手续费
-        tradingAccount.Commission = Field.getCommission();
+        tradingAccount.Commission = tradingAccountField.getCommission();
         // 平仓盈亏
-        tradingAccount.CloseProfit = Field.getCloseProfit();
+        tradingAccount.CloseProfit = tradingAccountField.getCloseProfit();
         // 持仓盈亏
-        tradingAccount.PositionProfit = Field.getPositionProfit();
+        tradingAccount.PositionProfit = tradingAccountField.getPositionProfit();
         // 期货结算准备金
-        tradingAccount.Balance = Field.getBalance();
+        tradingAccount.Balance = tradingAccountField.getBalance();
         // 可用资金
-        tradingAccount.Available = Field.getAvailable();
+        tradingAccount.Available = tradingAccountField.getAvailable();
         // 可取资金
-        tradingAccount.WithdrawQuota = Field.getWithdrawQuota();
+        tradingAccount.WithdrawQuota = tradingAccountField.getWithdrawQuota();
         // 基本准备金
-        tradingAccount.Reserve = Field.getReserve();
+        tradingAccount.Reserve = tradingAccountField.getReserve();
         // 交易日
-        tradingAccount.TradingDay = Field.getTradingDay();
+        tradingAccount.TradingDay = tradingAccountField.getTradingDay();
         // 结算编号
-        tradingAccount.SettlementID = Field.getSettlementID();
+        tradingAccount.SettlementID = tradingAccountField.getSettlementID();
         // 信用额度
-        tradingAccount.Credit = Field.getCredit();
+        tradingAccount.Credit = tradingAccountField.getCredit();
         // 质押金额
-        tradingAccount.Mortgage = Field.getMortgage();
+        tradingAccount.Mortgage = tradingAccountField.getMortgage();
         // 交易所保证金
-        tradingAccount.ExchangeMargin = Field.getExchangeMargin();
+        tradingAccount.ExchangeMargin = tradingAccountField.getExchangeMargin();
         // 投资者交割保证金
-        tradingAccount.DeliveryMargin = Field.getDeliveryMargin();
+        tradingAccount.DeliveryMargin = tradingAccountField.getDeliveryMargin();
         // 交易所交割保证金
-        tradingAccount.ExchangeDeliveryMargin = Field.getExchangeDeliveryMargin();
+        tradingAccount.ExchangeDeliveryMargin = tradingAccountField.getExchangeDeliveryMargin();
         // 保底期货结算准备金
-        tradingAccount.ReserveBalance = Field.getReserveBalance();
+        tradingAccount.ReserveBalance = tradingAccountField.getReserveBalance();
         // 币种代码
-        tradingAccount.CurrencyID = Field.getCurrencyID();
+        tradingAccount.CurrencyID = tradingAccountField.getCurrencyID();
         // 上次货币质入金额
-        tradingAccount.PreFundMortgageIn = Field.getPreFundMortgageIn();
+        tradingAccount.PreFundMortgageIn = tradingAccountField.getPreFundMortgageIn();
         // 上次货币质出金额
-        tradingAccount.PreFundMortgageOut = Field.getPreFundMortgageOut();
+        tradingAccount.PreFundMortgageOut = tradingAccountField.getPreFundMortgageOut();
         // 货币质入金额
-        tradingAccount.FundMortgageIn = Field.getFundMortgageIn();
+        tradingAccount.FundMortgageIn = tradingAccountField.getFundMortgageIn();
         // 货币质出金额
-        tradingAccount.FundMortgageOut = Field.getFundMortgageOut();
+        tradingAccount.FundMortgageOut = tradingAccountField.getFundMortgageOut();
         // 货币质押余额
-        tradingAccount.FundMortgageAvailable = Field.getFundMortgageAvailable();
+        tradingAccount.FundMortgageAvailable = tradingAccountField.getFundMortgageAvailable();
         // 可质押货币金额
-        tradingAccount.MortgageableFund = Field.getMortgageableFund();
+        tradingAccount.MortgageableFund = tradingAccountField.getMortgageableFund();
         // 特殊产品占用保证金
-        tradingAccount.SpecProductMargin = Field.getSpecProductMargin();
+        tradingAccount.SpecProductMargin = tradingAccountField.getSpecProductMargin();
         // 特殊产品冻结保证金
-        tradingAccount.SpecProductFrozenMargin = Field.getSpecProductFrozenMargin();
+        tradingAccount.SpecProductFrozenMargin = tradingAccountField.getSpecProductFrozenMargin();
         // 特殊产品手续费
-        tradingAccount.SpecProductCommission = Field.getSpecProductCommission();
+        tradingAccount.SpecProductCommission = tradingAccountField.getSpecProductCommission();
         // 特殊产品冻结手续费
-        tradingAccount.SpecProductFrozenCommission = Field.getSpecProductFrozenCommission();
+        tradingAccount.SpecProductFrozenCommission = tradingAccountField.getSpecProductFrozenCommission();
         // 特殊产品持仓盈亏
-        tradingAccount.SpecProductPositionProfit = Field.getSpecProductPositionProfit();
+        tradingAccount.SpecProductPositionProfit = tradingAccountField.getSpecProductPositionProfit();
         // 特殊产品平仓盈亏
-        tradingAccount.SpecProductCloseProfit = Field.getSpecProductCloseProfit();
+        tradingAccount.SpecProductCloseProfit = tradingAccountField.getSpecProductCloseProfit();
         // 根据持仓盈亏算法计算的特殊产品持仓盈亏
-        tradingAccount.SpecProductPositionProfitByAlg = Field.getSpecProductPositionProfitByAlg();
+        tradingAccount.SpecProductPositionProfitByAlg = tradingAccountField.getSpecProductPositionProfitByAlg();
         // 特殊产品交易所保证金
-        tradingAccount.SpecProductExchangeMargin = Field.getSpecProductExchangeMargin();
+        tradingAccount.SpecProductExchangeMargin = tradingAccountField.getSpecProductExchangeMargin();
         // 业务类型
-        tradingAccount.BizType = Field.getBizType();
+        tradingAccount.BizType = tradingAccountField.getBizType();
         // 延时换汇冻结金额
-        tradingAccount.FrozenSwap = Field.getFrozenSwap();
+        tradingAccount.FrozenSwap = tradingAccountField.getFrozenSwap();
         // 剩余换汇额度
-        tradingAccount.RemainSwap = Field.getRemainSwap();
+        tradingAccount.RemainSwap = tradingAccountField.getRemainSwap();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_TRADING_ACCOUNT);
     }
 
     /**
-     * @param event     FtdcRspEvent
-     * @param Source    SpecificInstrumentSource
-     * @param Field     CThostFtdcSpecificInstrumentField
-     * @param RspInfo   CThostFtdcRspInfoField
-     * @param RequestID int
-     * @param IsLast    boolean
+     * @param event                    FtdcRspEvent
+     * @param specificInstrumentSource SpecificInstrumentSource
+     * @param specificInstrumentField  CThostFtdcSpecificInstrumentField
+     * @param rspInfoField             CThostFtdcRspInfoField
+     * @param requestID                int
+     * @param isLast                   boolean
      * @return FtdcRspEvent
      */
     public static FtdcRspEvent writeSpecificInstrument(FtdcRspEvent event,
-                                                       SpecificInstrumentSource Source,
-                                                       CThostFtdcSpecificInstrumentField Field,
-                                                       CThostFtdcRspInfoField RspInfo,
-                                                       int RequestID, boolean IsLast) {
-        var specificInstrument = event.getFtdcSpecificInstrument();
+                                                       SpecificInstrumentSource specificInstrumentSource,
+                                                       CThostFtdcSpecificInstrumentField specificInstrumentField,
+                                                       CThostFtdcRspInfoField rspInfoField,
+                                                       int requestID, boolean isLast) {
+        var specificInstrument = event.getSpecificInstrument();
         // 事件来源, [FTDC响应信息] - 错误代码, 错误信息
-        specificInstrument.Source = Source;
-        specificInstrument.ErrorID = RspInfo.getErrorID();
-        specificInstrument.ErrorMsg = RspInfo.getErrorMsg();
+        specificInstrument.Source = specificInstrumentSource;
+        specificInstrument.ErrorID = rspInfoField.getErrorID();
+        specificInstrument.ErrorMsg = rspInfoField.getErrorMsg();
         // 请求ID, 是否最后一条信息
-        specificInstrument.RequestID = RequestID;
-        specificInstrument.IsLast = IsLast;
+        specificInstrument.RequestID = requestID;
+        specificInstrument.IsLast = isLast;
         // 合约代码
-        specificInstrument.InstrumentID = Field.getInstrumentID();
+        specificInstrument.InstrumentID = specificInstrumentField.getInstrumentID();
         return event.setEpochMicros(micros())
                 .setType(FtdcRspType.FTDC_SPECIFIC_INSTRUMENT);
     }

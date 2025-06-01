@@ -5,7 +5,7 @@ import io.mercury.serialization.json.JsonWriter;
 /**
  * FtdcOrderAction
  */
-public class FtdcOrderAction {
+public final class FtdcOrderAction {
 
     /**
      * FTDC响应信息 - 错误代码
