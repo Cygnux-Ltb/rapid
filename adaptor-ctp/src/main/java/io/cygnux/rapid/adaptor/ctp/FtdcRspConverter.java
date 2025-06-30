@@ -25,7 +25,7 @@ import io.cygnux.rapid.core.event.inbound.BalanceReport;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import io.cygnux.rapid.core.instrument.InstrumentKeeper;
 import io.cygnux.rapid.core.order.OrderRefKeeper;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public final class FtdcRspConverter {
 
     private final DateTimeFormatter actionDayFormatter = YYYYMMDD.newFormatter();
 
-    private final OrderRefKeeper orderRefKeeper = OrderRefKeeper.IN_HEAP_INSTANCE;
+    private final OrderRefKeeper orderRefKeeper = OrderRefKeeper.DEFAULT;
 
     // 经纪公司代码
     private final String brokerId;
@@ -81,7 +81,7 @@ public final class FtdcRspConverter {
     /**
      * [RawMarketData]复用对象
      */
-    private final MarketDataReport marketDataReport = new MarketDataReport();
+    private final FastMarketData fastMarketData = new FastMarketData();
 
     /**
      * 转换
@@ -117,13 +117,13 @@ public final class FtdcRspConverter {
      * @param marketData FtdcDepthMarketData
      * @return FastMarketData
      */
-    public MarketDataReport convert(FtdcDepthMarketData marketData) {
+    public FastMarketData convert(FtdcDepthMarketData marketData) {
         // 业务日期
         // var actionDay = LocalDate.parse(marketData.ActionDay, actionDayFormatter);
         // 最后修改时间
         // var updateTime = LocalTime.parse(marketData.UpdateTime, updateTimeFormatter).plusNanos(marketData.UpdateMillisec * NANOS_PER_MILLIS);
         var instrument = InstrumentKeeper.getInstrumentByCode(marketData.InstrumentID);
-        return marketDataReport
+        return fastMarketData
                 // 交易标的ID
                 .setInstrumentId(instrument.getInstrumentId())
                 // 交易标的代码

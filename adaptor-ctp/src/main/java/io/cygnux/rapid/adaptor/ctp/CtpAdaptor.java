@@ -1,7 +1,5 @@
 package io.cygnux.rapid.adaptor.ctp;
 
-import io.mercury.common.collections.MutableSets;
-import io.mercury.common.thread.Sleep;
 import io.cygnux.rapid.adaptor.ctp.event.FtdcRspEvent;
 import io.cygnux.rapid.adaptor.ctp.event.FtdcRspPublisher;
 import io.cygnux.rapid.adaptor.ctp.event.source.EventSource;
@@ -12,8 +10,6 @@ import io.cygnux.rapid.adaptor.ctp.param.FtdcParams;
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
 import io.cygnux.rapid.core.adaptor.AdaptorRunningMode;
-import io.cygnux.rapid.core.event.InboundEvent;
-import io.cygnux.rapid.core.event.InboundEventbus;
 import io.cygnux.rapid.core.event.InboundHandler;
 import io.cygnux.rapid.core.event.enums.AdaptorType;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
@@ -25,6 +21,8 @@ import io.cygnux.rapid.core.event.outbound.QueryPosition;
 import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
 import io.cygnux.rapid.core.order.OrderRefKeeper;
 import io.cygnux.rapid.core.order.OrderRefNotFoundException;
+import io.mercury.common.collections.MutableSets;
+import io.mercury.common.thread.Sleep;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
@@ -77,15 +75,7 @@ public class CtpAdaptor extends AbstractAdaptor {
     // 扩展FTDC应答处理器
     private final FtdcRspHandler extFtdcRspHandler;
 
-    // 入站队列处理器
-    private final InboundHandler inboundHandler;
 
-    private final InboundEventbus inboundEventbus = new InboundEventbus() {
-        @Override
-        public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
-            inboundHandler.onEvent(event, sequence, endOfBatch);
-        }
-    };
 
     /**
      * 传入[FtdcRspHandler]实现
@@ -97,11 +87,10 @@ public class CtpAdaptor extends AbstractAdaptor {
     private CtpAdaptor(@Nonnull Builder builder,
                        @Nonnull InboundHandler inboundHandler,
                        @Nullable FtdcRspHandler extFtdcRspHandler) {
-        super(builder.account, builder.isAsync);
+        super(builder.account, builder.isAsync, inboundHandler);
         this.params = builder.params;
         this.runningMode = builder.runningMode;
         this.orderRefKeeper = builder.orderRefKeeper;
-        this.inboundHandler = inboundHandler;
         this.extFtdcRspHandler = extFtdcRspHandler;
         // 传递[OrderRefKeeper]实现
         if (extFtdcRspHandler != null) {
@@ -470,7 +459,7 @@ public class CtpAdaptor extends AbstractAdaptor {
         private final FtdcParams params;
         private boolean isAsync = false;
         private AdaptorRunningMode runningMode = AdaptorRunningMode.FULL;
-        private OrderRefKeeper orderRefKeeper = OrderRefKeeper.IN_HEAP_INSTANCE;
+        private OrderRefKeeper orderRefKeeper = OrderRefKeeper.DEFAULT;
 
         private Builder(Account account, FtdcParams params) {
             this.account = account;
