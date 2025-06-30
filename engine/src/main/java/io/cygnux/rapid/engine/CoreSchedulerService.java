@@ -1,6 +1,5 @@
 package io.cygnux.rapid.engine;
 
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.cygnux.rapid.core.CoreScheduler;
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.account.AccountManager;
@@ -15,11 +14,11 @@ import io.cygnux.rapid.core.event.enums.TrdAction;
 import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketDataReport;
+import io.cygnux.rapid.core.event.inbound.DepthMarketData;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
 import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.MarketDataManager;
@@ -31,6 +30,7 @@ import io.cygnux.rapid.core.strategy.StrategyManager;
 import io.cygnux.rapid.core.strategy.StrategySignal;
 import io.cygnux.rapid.core.trade.TradeCommand;
 import io.cygnux.rapid.core.trade.TradeCommandProducer;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
@@ -76,8 +76,8 @@ public class CoreSchedulerService implements CoreScheduler {
         @Override
         public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
-                case RAW_MARKET_DATA -> handleMarketDataReport(event.getMarketDataReport());
-                case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketDataReport());
+                case FAST_MARKET_DATA -> handleFastMarketData(event.getFastMarketData());
+                case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
                 case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
                 case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
                 case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
@@ -102,10 +102,10 @@ public class CoreSchedulerService implements CoreScheduler {
     /**
      * 深度行情处理
      *
-     * @param event DepthMarketData
+     * @param marketData DepthMarketData
      */
     @Override
-    public void handleDepthMarketData(DepthMarketDataReport event) {
+    public void handleDepthMarketData(DepthMarketData marketData) {
 
     }
 
@@ -115,13 +115,13 @@ public class CoreSchedulerService implements CoreScheduler {
     /**
      * 行情处理
      *
-     * @param event RawMarketData
+     * @param marketData RawMarketData
      */
     @Override
-    public void handleMarketDataReport(MarketDataReport event) {
+    public void handleFastMarketData(FastMarketData marketData) {
         // 行情内核穿透
         log.info("Core process start count -> {}", ++marketDataCounter);
-        marketDataManager.onMarketData(event);
+        marketDataManager.onMarketData(marketData);
         // 处理本次内核穿透信号
         handleSignal(signals);
         log.info("Core process end count -> {}", marketDataCounter);
@@ -130,38 +130,38 @@ public class CoreSchedulerService implements CoreScheduler {
     /**
      * 交易标的状态回报处理
      *
-     * @param event InstrumentStatusReport
+     * @param report InstrumentStatusReport
      */
     @Override
-    public void handleInstrumentStatusReport(InstrumentStatusReport event) {
-        log.info("CoreSchedulerService::handleInstrumentStatusReport, [InstrumentStatusReport] -> {}", event);
-        event.getSubscribeStatus();
+    public void handleInstrumentStatusReport(InstrumentStatusReport report) {
+        log.info("CoreSchedulerService::handleInstrumentStatusReport, [InstrumentStatusReport] -> {}", report);
+        report.getSubscribeStatus();
     }
 
     /**
      * 订单回报处理
      *
-     * @param event OrderReport
+     * @param report OrderReport
      */
     @Override
-    public void handleOrderReport(OrderReport event) {
-        log.info("CoreSchedulerService::handleOrderReport, [OrderReport] -> {}", event);
+    public void handleOrderReport(OrderReport report) {
+        log.info("CoreSchedulerService::handleOrderReport, [OrderReport] -> {}", report);
     }
 
     /**
      * Adaptor回报处理
      *
-     * @param event AdaptorReport
+     * @param report AdaptorReport
      */
     @Override
-    public void handleAdaptorReport(AdaptorReport event) {
-        log.info("CoreSchedulerService::handleAdaptorReport, [AdaptorReport] -> {}", event);
-        adaptorManager.onAdaptorEvent(event);
-        var currentStatus = adaptorManager.getCurrentStatus(event.getAccountId());
-        log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, event.getAdaptorId());
+    public void handleAdaptorReport(AdaptorReport report) {
+        log.info("CoreSchedulerService::handleAdaptorReport, [AdaptorReport] -> {}", report);
+        adaptorManager.onAdaptorEvent(report);
+        var currentStatus = adaptorManager.getCurrentStatus(report.getAccountId());
+        log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, report.getAdaptorId());
         if (currentStatus.isMarketDataEnabled()) {
             var subscribeMarketData = new SubscribeMarketData()
-                    .setAccountId(event.getAccountId())
+                    .setAccountId(report.getAccountId())
                     .setType(MarketDataType.FAST)
                     .setInstrumentCodes(strategyManager.getInstruments()
                             .stream()
@@ -173,7 +173,7 @@ public class CoreSchedulerService implements CoreScheduler {
             outboundHandler.handleSubscribeMarketData(subscribeMarketData);
         }
         if (currentStatus.isTraderEnabled()) {
-            Account account = accountManager.getAccount(event.getAccountId());
+            Account account = accountManager.getAccount(report.getAccountId());
 
             /// 查询订单 ///
             var queryOrder = account.newQueryOrder()
@@ -201,22 +201,22 @@ public class CoreSchedulerService implements CoreScheduler {
     /**
      * 持仓回报处理
      *
-     * @param event PositionsReport
+     * @param report PositionsReport
      */
     @Override
-    public void handlePositionsReport(PositionsReport event) {
-        log.info("CoreSchedulerService::handlePositionsReport, [PositionsReport] -> {}", event);
+    public void handlePositionsReport(PositionsReport report) {
+        log.info("CoreSchedulerService::handlePositionsReport, [PositionsReport] -> {}", report);
 
     }
 
     /**
      * 余额回报处理
      *
-     * @param event BalanceReport
+     * @param report BalanceReport
      */
     @Override
-    public void handleBalanceReport(BalanceReport event) {
-        log.info("CoreSchedulerService::handleBalanceReport, [BalanceReport] -> {}", event);
+    public void handleBalanceReport(BalanceReport report) {
+        log.info("CoreSchedulerService::handleBalanceReport, [BalanceReport] -> {}", report);
     }
 
     @Resource

@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.service;
 
-import io.cygnux.console.api.response.SubAccountMappingRsp;
-import io.cygnux.console.api.response.SubAccountRsp;
+import io.cygnux.console.api.resp.SubAccountMappingRsp;
+import io.cygnux.console.api.resp.SubAccountRsp;
 import io.cygnux.console.component.ApplicationConfiguration;
 import io.cygnux.console.service.AccountService;
 import io.mercury.common.collections.CollectionUtil;

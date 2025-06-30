@@ -24,7 +24,7 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  *
  * @author yellow013
  */
-@Service("single")
+@Service("singleStrategyManager")
 public class SingleStrategyManager implements StrategyManager {
 
     private static final Logger log = getLogger(SingleStrategyManager.class);

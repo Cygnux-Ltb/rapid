@@ -12,11 +12,11 @@ import io.cygnux.rapid.core.event.InboundFeeder;
 import io.cygnux.rapid.core.event.InboundEventbus;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketDataReport;
+import io.cygnux.rapid.core.event.inbound.DepthMarketData;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +47,8 @@ public class InboundFeederService implements InboundFeeder {
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
         switch (InboundEventType.valueOf(title)) {
-            case RAW_MARKET_DATA -> loop.put(record.getWith(MarketDataReport.class));
-            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketDataReport.class));
+            case FAST_MARKET_DATA -> loop.put(record.getWith(FastMarketData.class));
+            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketData.class));
             case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));
             case POSITIONS_REPORT -> loop.put(record.getWith(PositionsReport.class));
             case BALANCE_REPORT -> loop.put(record.getWith(BalanceReport.class));

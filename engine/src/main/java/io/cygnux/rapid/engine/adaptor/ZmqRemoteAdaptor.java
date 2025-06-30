@@ -1,16 +1,17 @@
 package io.cygnux.rapid.engine.adaptor;
 
-import io.mercury.serialization.json.JsonObjectExt;
-import io.mercury.transport.zmq.ZmqConfigurator;
-import io.mercury.transport.zmq.ZmqPublisher;
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
+import io.cygnux.rapid.core.event.InboundHandler;
 import io.cygnux.rapid.core.event.outbound.CancelOrder;
 import io.cygnux.rapid.core.event.outbound.NewOrder;
 import io.cygnux.rapid.core.event.outbound.QueryBalance;
 import io.cygnux.rapid.core.event.outbound.QueryOrder;
 import io.cygnux.rapid.core.event.outbound.QueryPosition;
 import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.mercury.serialization.json.JsonObjectExt;
+import io.mercury.transport.zmq.ZmqConfigurator;
+import io.mercury.transport.zmq.ZmqPublisher;
 import org.apache.fury.Fury;
 
 import javax.annotation.Nonnull;
@@ -37,8 +38,8 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     /**
      * @param account Account
      */
-    public ZmqRemoteAdaptor(@Nonnull Account account) {
-        super(account, false);
+    public ZmqRemoteAdaptor(@Nonnull Account account, InboundHandler inboundHandler) {
+        super(account, false, inboundHandler);
         this.publisher = ZmqConfigurator
                 .ipc(publishPath())
                 .createPublisherWithBinary();
