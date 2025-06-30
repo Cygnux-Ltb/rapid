@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.mdata;
 
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import lombok.Getter;
 
 @Getter
@@ -21,7 +21,7 @@ public final class MarketDataSnapshot {
     MarketDataSnapshot() {
     }
 
-    void updateWith(MarketDataReport marketData) {
+    void updateWith(FastMarketData marketData) {
         bidPrice1 = marketData.getBidPrice1();
         bidVolume1 = marketData.getBidVolume1();
         askPrice1 = marketData.getAskPrice1();

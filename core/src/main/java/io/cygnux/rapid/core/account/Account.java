@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.account;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import io.cygnux.console.api.response.AccountRsp;
+import io.cygnux.console.api.resp.AccountRsp;
 import io.mercury.common.state.EnableableComponent;
 import io.cygnux.rapid.core.event.outbound.QueryBalance;
 import io.cygnux.rapid.core.event.outbound.QueryOrder;

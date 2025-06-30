@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.order;
 
-import io.mercury.common.epoch.EpochTimeUtil;
+import io.mercury.common.epoch.EpochUtil;
 import io.mercury.common.thread.Sleep;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
@@ -83,7 +83,7 @@ public class OrderRefKeeperInHeap implements OrderRefKeeper {
      * 如果当前时间在基准时间之后, 则使用当天的基准时间;
      * 如果在基准时间之前, 则使用前一天的基准时间
      */
-    public static final long EPOCH_BASELINE_POINT = EpochTimeUtil.getEpochMillis(
+    public static final long EPOCH_BASELINE_POINT = EpochUtil.getEpochMillis(
             ZonedDateTime.of(LocalTime.now().isBefore(BASELINE_TIME)
                             ? LocalDate.now().minusDays(1)
                             : LocalDate.now(),

@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.mdata;
 
 import io.mercury.common.collections.MutableLists;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import io.cygnux.rapid.core.handler.impl.AbstractMarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
 import lombok.Getter;
@@ -37,7 +37,7 @@ public final class MarketDataBucket extends AbstractMarketDataHandler {
     }
 
     @Override
-    protected void handleMarketData(MarketDataReport marketData) {
+    protected void handleMarketData(FastMarketData marketData) {
         var dumped = marketData.dump();
         saved.add(dumped);
         snapshot.updateWith(marketData);

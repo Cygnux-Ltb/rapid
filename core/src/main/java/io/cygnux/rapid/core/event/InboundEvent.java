@@ -7,11 +7,11 @@ import io.mercury.common.serialization.specific.JsonSerializable;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketDataReport;
+import io.cygnux.rapid.core.event.inbound.DepthMarketData;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import lombok.Getter;
 import org.slf4j.Logger;
 
@@ -43,9 +43,9 @@ public final class InboundEvent implements JsonSerializable {
 
     /// EVENT INSTANCE ///
     @Getter
-    private final MarketDataReport marketDataReport = new MarketDataReport();
+    private final FastMarketData fastMarketData = new FastMarketData();
     @Getter
-    private final DepthMarketDataReport depthMarketDataReport = new DepthMarketDataReport();
+    private final DepthMarketData depthMarketData = new DepthMarketData();
     @Getter
     private final OrderReport orderReport = new OrderReport();
     @Getter
@@ -68,10 +68,10 @@ public final class InboundEvent implements JsonSerializable {
      * @param event FastMarketDataEvent
      * @return InboundEvent
      */
-    public InboundEvent updateWith(MarketDataReport event) {
+    public InboundEvent updateWith(FastMarketData event) {
         this.epochMicros = micros();
-        this.type = InboundEventType.RAW_MARKET_DATA;
-        this.marketDataReport.copyOf(event);
+        this.type = InboundEventType.FAST_MARKET_DATA;
+        this.fastMarketData.copyOf(event);
         return this;
     }
 
@@ -79,10 +79,10 @@ public final class InboundEvent implements JsonSerializable {
      * @param event DepthMarketDataEvent
      * @return InboundEvent
      */
-    public InboundEvent updateWith(DepthMarketDataReport event) {
+    public InboundEvent updateWith(DepthMarketData event) {
         this.epochMicros = micros();
         this.type = InboundEventType.DEPTH_MARKET_DATA;
-        this.depthMarketDataReport.copyOf(event);
+        this.depthMarketData.copyOf(event);
         return this;
     }
 
@@ -155,8 +155,8 @@ public final class InboundEvent implements JsonSerializable {
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setObject(switch (type) {
-                    case RAW_MARKET_DATA -> marketDataReport;
-                    case DEPTH_MARKET_DATA -> depthMarketDataReport;
+                    case FAST_MARKET_DATA -> fastMarketData;
+                    case DEPTH_MARKET_DATA -> depthMarketData;
                     case ORDER_REPORT -> orderReport;
                     case POSITIONS_REPORT -> positionsReport;
                     case BALANCE_REPORT -> balanceReport;

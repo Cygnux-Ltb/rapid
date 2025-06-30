@@ -33,6 +33,10 @@ public class CancelOrder extends JsonBean implements Copyable<CancelOrder> {
      */
     private long ordSysId;
     /**
+     * 交易标的ID
+     */
+    private int instrumentId;
+    /**
      * 交易标的代码
      */
     private String instrumentCode;
@@ -77,23 +81,25 @@ public class CancelOrder extends JsonBean implements Copyable<CancelOrder> {
         this.sendTime = source.sendTime;
         // 3. 复制订单ID
         this.ordSysId = source.ordSysId;
-        // 4. 复制交易标的代码
+        // 4. 复制交易标的ID
+        this.instrumentId = source.instrumentId;
+        // 5. 复制交易标的代码
         this.instrumentCode = source.instrumentCode;
-        // 5. 复制交易所代码
+        // 6. 复制交易所代码
         this.exchangeCode = source.exchangeCode;
-        // 6. 复制账户ID
+        // 7. 复制账户ID
         this.accountId = source.accountId;
-        // 7. 复制经纪商ID
+        // 8. 复制经纪商ID
         this.brokerId = source.brokerId;
-        // 8. 复制子账户ID
+        // 9. 复制子账户ID
         this.subAccountId = source.subAccountId;
-        // 9. 复制策略ID
+        // 10. 复制策略ID
         this.strategyId = source.strategyId;
-        // 10. 复制延迟时间 (毫秒)
+        // 11. 复制延迟时间 (毫秒)
         this.delayMillis = source.delayMillis;
-        // 11. 复制操作ID
+        // 12. 复制操作ID
         this.operatorId = source.operatorId;
-        // 12. 复制备注
+        // 13. 复制备注
         this.remark = source.remark;
     }
 

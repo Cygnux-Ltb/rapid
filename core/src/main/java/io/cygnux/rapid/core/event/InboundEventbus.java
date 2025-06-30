@@ -3,11 +3,11 @@ package io.cygnux.rapid.core.event;
 import io.mercury.common.concurrent.disruptor.RingEventHandler;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketDataReport;
+import io.cygnux.rapid.core.event.inbound.DepthMarketData;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 
 public abstract class InboundEventbus extends RingEventHandler<InboundEvent> {
 
@@ -27,11 +27,11 @@ public abstract class InboundEventbus extends RingEventHandler<InboundEvent> {
         super(builder.name("inbound-eventbus"), InboundEvent.EVENT_FACTORY);
     }
 
-    public void put(DepthMarketDataReport in) {
+    public void put(DepthMarketData in) {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 
-    public void put(MarketDataReport in) {
+    public void put(FastMarketData in) {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 

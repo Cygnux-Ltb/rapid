@@ -1,11 +1,9 @@
 package io.cygnux.rapid.core.adaptor;
 
-import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.concurrent.disruptor.RingEventbus;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.EnableableComponent;
-import io.mercury.common.state.StartupException;
 import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.event.InboundEvent;
+import io.cygnux.rapid.core.event.InboundEventbus;
+import io.cygnux.rapid.core.event.InboundHandler;
 import io.cygnux.rapid.core.event.OutboundEvent;
 import io.cygnux.rapid.core.event.enums.AdaptorType;
 import io.cygnux.rapid.core.event.outbound.CancelOrder;
@@ -14,6 +12,11 @@ import io.cygnux.rapid.core.event.outbound.QueryBalance;
 import io.cygnux.rapid.core.event.outbound.QueryOrder;
 import io.cygnux.rapid.core.event.outbound.QueryPosition;
 import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.concurrent.disruptor.RingEventbus;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.state.StartupException;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -63,16 +66,27 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
      */
     private RingEventbus<OutboundEvent> receiveQueue;
 
+    // 入站队列处理器
+    protected final InboundHandler inboundHandler;
+
+    protected final InboundEventbus inboundEventbus = new InboundEventbus() {
+        @Override
+        public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
+            inboundHandler.onEvent(event, sequence, endOfBatch);
+        }
+    };
+
     /**
      * @param account Account
      * @param isAsync boolean
      */
-    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync) {
+    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync, InboundHandler inboundHandler) {
         nonNull(account, "account");
         this.account = account;
         this.isAsync = isAsync;
         this.adaptorId = this.getClass().getSimpleName() +
                 "-" + account.getBrokerCode() + ":" + account.getInvestorCode();
+        this.inboundHandler = inboundHandler;
         if (isAsync) {
             receiveQueue = RingEventbus
                     .singleProducer(OutboundEvent.EVENT_FACTORY)

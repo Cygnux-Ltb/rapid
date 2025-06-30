@@ -1,11 +1,11 @@
 package io.cygnux.rapid.core.mdata;
 
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import io.cygnux.rapid.core.instrument.Instrument;
 
 public interface MarketDataManager {
 
-    default void onMarketData(MarketDataReport marketData) {
+    default void onMarketData(FastMarketData marketData) {
         getBucket(marketData.getInstrumentCode()).onMarketData(marketData);
     }
 

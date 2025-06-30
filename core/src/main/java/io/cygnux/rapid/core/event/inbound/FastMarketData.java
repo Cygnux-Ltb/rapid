@@ -1,8 +1,8 @@
 package io.cygnux.rapid.core.event.inbound;
 
+import io.cygnux.rapid.core.mdata.SavedMarketData;
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MarketDataReport extends JsonBean implements Copyable<MarketDataReport> {
+public class FastMarketData extends JsonBean implements Copyable<FastMarketData> {
 
     /**
      * 交易标的ID [*]
@@ -122,46 +122,46 @@ public class MarketDataReport extends JsonBean implements Copyable<MarketDataRep
     private int updateMillisec;
 
     @Override
-    public void copyOf(MarketDataReport source) {
-        /// 复制交易标的ID
+    public void copyOf(FastMarketData source) {
+        // 复制交易标的ID
         this.instrumentId = source.instrumentId;
-        /// 复制交易标的代码
+        // 复制交易标的代码
         this.instrumentCode = source.instrumentCode;
-        /// 复制最新价格
+        // 复制最新价格
         this.lastPrice = source.lastPrice;
-        /// 复制成交量
+        // 复制成交量
         this.volume = source.volume;
-        /// 复制成交量偏移
+        // 复制成交量偏移
         this.volumeDelta = source.volumeDelta;
-        /// 复制成交金额
+        // 复制成交金额
         this.turnover = source.turnover;
-        /// 复制成交金额偏移
+        // 复制成交金额偏移
         this.turnoverDelta = source.turnoverDelta;
-        /// 复制持仓量
+        // 复制持仓量
         this.openInterest = source.openInterest;
-        /// 复制持仓量偏移
+        // 复制持仓量偏移
         this.openInterestDelta = source.openInterestDelta;
-        /// 复制今开盘价
+        // 复制今开盘价
         this.openPrice = source.openPrice;
-        /// 复制今最高价
+        // 复制今最高价
         this.highestPrice = source.highestPrice;
-        /// 复制今最低价
+        // 复制今最低价
         this.lowestPrice = source.lowestPrice;
-        /// 复制今涨停板价
+        // 复制今涨停板价
         this.upperLimitPrice = source.upperLimitPrice;
-        /// 复制今跌停板价
+        // 复制今跌停板价
         this.lowerLimitPrice = source.lowerLimitPrice;
-        /// 复制买价1
+        // 复制买价1
         this.bidPrice1 = source.bidPrice1;
-        /// 复制买量1
+        // 复制买量1
         this.bidVolume1 = source.bidVolume1;
-        /// 复制卖价1
+        // 复制卖价1
         this.askPrice1 = source.askPrice1;
-        /// 复制卖量1
+        // 复制卖量1
         this.askVolume1 = source.askVolume1;
-        /// 复制平均价格
+        // 复制平均价格
         this.averagePrice = source.averagePrice;
-        /// 复制时间坐标相关字段
+        // 复制时间坐标相关字段
         this.epochMicros = source.epochMicros;
         this.tradingDay = source.tradingDay;
         this.actualDate = source.actualDate;
@@ -181,8 +181,8 @@ public class MarketDataReport extends JsonBean implements Copyable<MarketDataRep
         );
     }
 
-    public MarketDataReport newInstance() {
-        var instance = new MarketDataReport();
+    public FastMarketData newInstance() {
+        var instance = new FastMarketData();
         instance.copyOf(this);
         return instance;
     }

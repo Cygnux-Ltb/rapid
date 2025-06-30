@@ -1,6 +1,5 @@
 package io.cygnux.rapid.core.adaptor;
 
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.outbound.CancelOrder;
 import io.cygnux.rapid.core.event.outbound.NewOrder;
@@ -8,6 +7,7 @@ import io.cygnux.rapid.core.event.outbound.QueryBalance;
 import io.cygnux.rapid.core.event.outbound.QueryOrder;
 import io.cygnux.rapid.core.event.outbound.QueryPosition;
 import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public abstract non-sealed class AbstractAdaptorManager implements AdaptorManage
         Stream.of(adaptors).forEach(adaptor -> {
             var account = adaptor.getBoundAccount();
             mapByAccountId.put(account.getAccountId(), adaptor);
-            // mapByAdaptorId.put(adaptor.getAdaptorId(), adaptor);
+            mapByAdaptorId.put(adaptor.getAdaptorId(), adaptor);
             log.info("PUT [Adaptor] to AdaptorManager, accountId==[{}], adaptorId==[{}], remark==[{}]",
                     account.getAccountId(), adaptor.getAdaptorId(), account.getRemark());
         });
@@ -227,7 +227,7 @@ public abstract non-sealed class AbstractAdaptorManager implements AdaptorManage
 
     /**
      * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
+     * with it. If the stream is already closed, then invoking this
      * method has no effect.
      *
      * <p> As noted in {@link AutoCloseable#close()}, cases where the
@@ -241,7 +241,9 @@ public abstract non-sealed class AbstractAdaptorManager implements AdaptorManage
     @Override
     public void close() throws IOException {
         if (isClosed.compareAndSet(false, true)) {
-
+            for (Adaptor adaptor : mapByAdaptorId.values()) {
+                adaptor.close();
+            }
         }
     }
 

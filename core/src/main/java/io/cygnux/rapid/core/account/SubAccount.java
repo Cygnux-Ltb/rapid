@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.account;
 
-import io.cygnux.console.api.response.SubAccountRsp;
+import io.cygnux.console.api.resp.SubAccountRsp;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.state.EnableableComponent;
 import lombok.Getter;

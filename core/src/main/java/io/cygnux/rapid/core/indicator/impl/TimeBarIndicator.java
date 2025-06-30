@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.indicator.impl;
 
 import io.mercury.common.collections.MutableLists;
-import io.mercury.common.epoch.EpochTimeUtil;
+import io.mercury.common.epoch.EpochUtil;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.TimeWindow;
 import io.cygnux.rapid.core.indicator.IndicatorEvent;
@@ -52,7 +52,7 @@ public final class TimeBarIndicator extends FixedPeriodIndicator<TimeBarIndicato
     @Override
     protected void handleMarketData(SavedMarketData marketData) {
         TimeWindow currentPointSerial = currentPoint.getWindow();
-        LocalDateTime marketDatetime = EpochTimeUtil.ofEpochMillis(marketData.epochMicros() / 1000,
+        LocalDateTime marketDatetime = EpochUtil.ofEpochMillis(marketData.epochMicros() / 1000,
                         instrument.getZoneOffset())
                 .toLocalDateTime();
         if (currentPointSerial.isPeriod(marketDatetime)) {

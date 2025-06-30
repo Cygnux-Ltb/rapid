@@ -1,14 +1,14 @@
 package io.cygnux.rapid.core.event;
 
 import com.lmax.disruptor.EventHandler;
-import io.mercury.common.log4j2.StaticLogger;
 import io.cygnux.rapid.core.event.inbound.AdaptorReport;
 import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketDataReport;
+import io.cygnux.rapid.core.event.inbound.DepthMarketData;
+import io.cygnux.rapid.core.event.inbound.FastMarketData;
 import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
 import io.cygnux.rapid.core.event.inbound.OrderReport;
 import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.mercury.common.log4j2.StaticLogger;
 
 import java.io.Closeable;
 
@@ -24,8 +24,8 @@ public interface InboundHandler extends EventHandler<InboundEvent>,
     @Override
     default void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
         switch (event.getType()) {
-            case RAW_MARKET_DATA -> handleMarketDataReport(event.getMarketDataReport());
-            case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketDataReport());
+            case FAST_MARKET_DATA -> handleFastMarketData(event.getFastMarketData());
+            case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
             case ORDER_REPORT -> handleOrderReport(event.getOrderReport());
             case POSITIONS_REPORT -> handlePositionsReport(event.getPositionsReport());
             case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
@@ -40,50 +40,50 @@ public interface InboundHandler extends EventHandler<InboundEvent>,
     /**
      * [1].快速行情处理
      *
-     * @param event FastMarketData
+     * @param marketData FastMarketData
      */
-    void handleMarketDataReport(MarketDataReport event);
+    void handleFastMarketData(FastMarketData marketData);
 
     /**
      * [2].深度行情处理
      *
-     * @param event DepthMarketData
+     * @param marketData DepthMarketData
      */
-    void handleDepthMarketData(DepthMarketDataReport event);
+    void handleDepthMarketData(DepthMarketData marketData);
 
     /**
      * [3].订单回报处理
      *
-     * @param event OrderReport
+     * @param report OrderReport
      */
-    void handleOrderReport(OrderReport event);
+    void handleOrderReport(OrderReport report);
 
     /**
      * [4].持仓回报处理
      *
-     * @param event PositionsReport
+     * @param report PositionsReport
      */
-    void handlePositionsReport(PositionsReport event);
+    void handlePositionsReport(PositionsReport report);
 
     /**
      * [5].余额回报处理
      *
-     * @param event BalanceReport
+     * @param report BalanceReport
      */
-    void handleBalanceReport(BalanceReport event);
+    void handleBalanceReport(BalanceReport report);
 
     /**
      * [6].Adaptor回报处理
      *
-     * @param event AdaptorReport
+     * @param report AdaptorReport
      */
-    void handleAdaptorReport(AdaptorReport event);
+    void handleAdaptorReport(AdaptorReport report);
 
     /**
      * [7].交易标的状态回报处理
      *
-     * @param event InstrumentStatusReport
+     * @param report InstrumentStatusReport
      */
-    void handleInstrumentStatusReport(InstrumentStatusReport event);
+    void handleInstrumentStatusReport(InstrumentStatusReport report);
 
 }

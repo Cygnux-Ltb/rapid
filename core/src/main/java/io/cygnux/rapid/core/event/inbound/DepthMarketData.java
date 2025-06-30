@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepthMarketDataReport extends JsonBean implements Copyable<DepthMarketDataReport> {
+public class DepthMarketData extends JsonBean implements Copyable<DepthMarketData> {
 
     /**
      * 接收时[Epoch微秒]
@@ -41,7 +41,7 @@ public class DepthMarketDataReport extends JsonBean implements Copyable<DepthMar
     private int updateMillisec;
 
     @Override
-    public void copyOf(DepthMarketDataReport source) {
+    public void copyOf(DepthMarketData source) {
         // 复制时间戳
         this.epochMicros = source.epochMicros;
         // 复制交易标的ID
