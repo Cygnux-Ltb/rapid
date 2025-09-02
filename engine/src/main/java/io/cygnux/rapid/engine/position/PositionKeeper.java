@@ -1,14 +1,15 @@
 package io.cygnux.rapid.engine.position;
 
+import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.order.impl.ChildOrder;
+import io.cygnux.rapid.core.stream.enums.TrdDirection;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.BitOperator;
 import io.mercury.serialization.json.JsonWriter;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.order.impl.ChildOrder;
 import org.eclipse.collections.api.map.primitive.MutableLongIntMap;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.Serial;
@@ -25,6 +26,7 @@ import static java.lang.Math.abs;
  * @author yellow013
  */
 @NotThreadSafe
+@Component("inHeap")
 public final class PositionKeeper implements Serializable {
 
     @Serial
@@ -41,7 +43,7 @@ public final class PositionKeeper implements Serializable {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentPos = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap subAccountInstrumentPos = MutableMaps.newLongIntMap();
 
     /**
      * [subAccount]的[instrument]最大多仓持仓限制<br>
@@ -49,7 +51,7 @@ public final class PositionKeeper implements Serializable {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentLongLimit = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap subAccountInstrumentLongLimit = MutableMaps.newLongIntMap();
 
     /**
      * [subAccount]的[instrument]最大空仓持仓限制<br>
@@ -57,7 +59,7 @@ public final class PositionKeeper implements Serializable {
      * 高位subAccountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap SubAccountInstrumentShortLimit = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap subAccountInstrumentShortLimit = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]持仓数量<br>
@@ -65,7 +67,7 @@ public final class PositionKeeper implements Serializable {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentPos = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap accountInstrumentPos = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]最大多仓持仓限制<br>
@@ -73,7 +75,7 @@ public final class PositionKeeper implements Serializable {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentLongLimit = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap accountInstrumentLongLimit = MutableMaps.newLongIntMap();
 
     /**
      * [account]的[instrument]最大空仓持仓限制<br>
@@ -81,9 +83,9 @@ public final class PositionKeeper implements Serializable {
      * 高位accountId<br>
      * 低位instrumentId
      */
-    private static final MutableLongIntMap AccountInstrumentShortLimit = MutableMaps.newLongIntMap();
+    private final MutableLongIntMap accountInstrumentShortLimit = MutableMaps.newLongIntMap();
 
-    private PositionKeeper() {
+    public PositionKeeper() {
     }
 
     /**
@@ -105,15 +107,15 @@ public final class PositionKeeper implements Serializable {
      * @param longLimitQty  多仓限制
      * @param shortLimitQty 空仓限制
      */
-    public static void setSubAccountPositionsLimit(int subAccountId, Instrument instrument,
-                                                   int longLimitQty, int shortLimitQty) {
+    public void setSubAccountPositionsLimit(int subAccountId, Instrument instrument,
+                                            int longLimitQty, int shortLimitQty) {
         long key = mergePositionsKey(subAccountId, instrument);
-        SubAccountInstrumentLongLimit.put(key, abs(longLimitQty));
+        subAccountInstrumentLongLimit.put(key, abs(longLimitQty));
         log.info("Set long positions limit -> subAccountId==[{}], instrument -> {}, longLimitQty==[{}]", subAccountId,
-                instrument, SubAccountInstrumentLongLimit.get(key));
-        SubAccountInstrumentShortLimit.put(key, -abs(shortLimitQty));
+                instrument, subAccountInstrumentLongLimit.get(key));
+        subAccountInstrumentShortLimit.put(key, -abs(shortLimitQty));
         log.info("Set short positions limit -> subAccountId==[{}], instrument -> {}, shortLimitQty==[{}]", subAccountId,
-                instrument, SubAccountInstrumentShortLimit.get(key));
+                instrument, subAccountInstrumentShortLimit.get(key));
     }
 
     /**
@@ -124,15 +126,15 @@ public final class PositionKeeper implements Serializable {
      * @param longLimitQty  多仓限制
      * @param shortLimitQty 空仓限制
      */
-    public static void setAccountPositionsLimit(int accountId, Instrument instrument,
-                                                int longLimitQty, int shortLimitQty) {
+    public void setAccountPositionsLimit(int accountId, Instrument instrument,
+                                         int longLimitQty, int shortLimitQty) {
         long key = mergePositionsKey(accountId, instrument);
-        AccountInstrumentLongLimit.put(key, abs(longLimitQty));
+        accountInstrumentLongLimit.put(key, abs(longLimitQty));
         log.info("Set long positions limit -> accountId==[{}], instrument -> {}, longLimitQty==[{}]", accountId,
-                instrument, AccountInstrumentLongLimit.get(key));
-        AccountInstrumentShortLimit.put(key, -abs(shortLimitQty));
+                instrument, accountInstrumentLongLimit.get(key));
+        accountInstrumentShortLimit.put(key, -abs(shortLimitQty));
         log.info("Set short positions limit -> accountId==[{}], instrument -> {}, shortLimitQty==[{}]", accountId,
-                instrument, AccountInstrumentShortLimit.get(key));
+                instrument, accountInstrumentShortLimit.get(key));
     }
 
     /**
@@ -143,13 +145,13 @@ public final class PositionKeeper implements Serializable {
      * @param direction    交易方向
      * @return int
      */
-    public static int getSubAccountPositionLimit(int subAccountId, Instrument instrument,
-                                                 TrdDirection direction) {
+    public int getSubAccountPositionLimit(int subAccountId, Instrument instrument,
+                                          TrdDirection direction) {
         long key = mergePositionsKey(subAccountId, instrument);
-        int currentQty = SubAccountInstrumentPos.get(key);
+        int currentQty = subAccountInstrumentPos.get(key);
         return switch (direction) {
-            case LONG -> SubAccountInstrumentLongLimit.get(key) - currentQty;
-            case SHORT -> SubAccountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> subAccountInstrumentLongLimit.get(key) - currentQty;
+            case SHORT -> subAccountInstrumentShortLimit.get(key) - currentQty;
             default -> 0;
         };
     }
@@ -162,13 +164,13 @@ public final class PositionKeeper implements Serializable {
      * @param direction  交易方向
      * @return int
      */
-    public static int getAccountPositionLimit(int accountId, Instrument instrument,
-                                              TrdDirection direction) {
+    public int getAccountPositionLimit(int accountId, Instrument instrument,
+                                       TrdDirection direction) {
         long key = mergePositionsKey(accountId, instrument);
-        int currentQty = AccountInstrumentPos.get(key);
+        int currentQty = accountInstrumentPos.get(key);
         return switch (direction) {
-            case LONG -> AccountInstrumentLongLimit.get(key) - currentQty;
-            case SHORT -> AccountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> accountInstrumentLongLimit.get(key) - currentQty;
+            case SHORT -> accountInstrumentShortLimit.get(key) - currentQty;
             default -> 0;
         };
     }
@@ -180,9 +182,9 @@ public final class PositionKeeper implements Serializable {
      * @param instrument   交易标的
      * @return int
      */
-    public static int getSubAccountPosition(int subAccountId, Instrument instrument) {
+    public int getSubAccountPosition(int subAccountId, Instrument instrument) {
         long positionKey = mergePositionsKey(subAccountId, instrument);
-        int currentPosition = SubAccountInstrumentPos.get(positionKey);
+        int currentPosition = subAccountInstrumentPos.get(positionKey);
         log.info("Get current position, subAccountId==[{}], instrumentCode==[{}], currentPosition==[{}]", subAccountId,
                 instrument.getInstrumentCode(), currentPosition);
         return currentPosition;
@@ -195,27 +197,20 @@ public final class PositionKeeper implements Serializable {
      * @param instrument 交易标的
      * @return int
      */
-    public static int getAccountPosition(int accountId, Instrument instrument) {
+    public int getAccountPosition(int accountId, Instrument instrument) {
         long positionKey = mergePositionsKey(accountId, instrument);
-        int currentPosition = AccountInstrumentPos.get(positionKey);
+        int currentPosition = accountInstrumentPos.get(positionKey);
         log.info("Get current position, accountId==[{}], instrumentCode==[{}], currentPosition==[{}]",
                 accountId, instrument.getInstrumentCode(), currentPosition);
         return currentPosition;
     }
-
-    private static final String UpdatePosLogTemplate = "Update position -> "
-            + "subAccountId==[{}], "
-            + "instrumentCode==[{}], "
-            + "beforePos==[{}], "
-            + "trdQty==[{}], "
-            + "currentPos==[{}]";
 
     /**
      * 根据子单状态变化更新持仓信息
      *
      * @param order 子订单
      */
-    public static void updatePositionWith(ChildOrder order) {
+    public void updatePositionWith(ChildOrder order) {
         int subAccountId = order.getSubAccountId();
         Instrument instrument = order.getInstrument();
         int trdQty = order.getLastRecord().tradeQty();
@@ -241,23 +236,17 @@ public final class PositionKeeper implements Serializable {
                             subAccountId, order.getOrdSysId(), instrument.getInstrumentCode());
         }
         long posKey = mergePositionsKey(subAccountId, instrument);
-        int beforePos = SubAccountInstrumentPos.get(posKey);
+        int beforePos = subAccountInstrumentPos.get(posKey);
         int currentPos = beforePos + trdQty;
-        SubAccountInstrumentPos.put(posKey, currentPos);
-        log.info(UpdatePosLogTemplate, subAccountId, instrument.getInstrumentCode(), beforePos, trdQty, currentPos);
+        subAccountInstrumentPos.put(posKey, currentPos);
+        log.info("Update position -> subAccountId==[{}], instrumentCode==[{}], beforePos==[{}], trdQty==[{}], currentPos==[{}]",
+                subAccountId, instrument.getInstrumentCode(), beforePos, trdQty, currentPos);
     }
 
     private static void loggingInvalidAction(int subAccountId, long ordSysId, String instrumentCode) {
         log.error("Order action is [Invalid], subAccountId==[{}], ordSysId==[{}], instrumentCode==[{}]",
                 subAccountId, ordSysId, instrumentCode);
     }
-
-    private static final String AddPosLogTemplate = "Add current position -> "
-            + "subAccountId==[{}], "
-            + "instrumentCode==[{}], "
-            + "beforePos==[{}], "
-            + "qty==[{}], "
-            + "currentPos==[{}]";
 
     /**
      * 添加当前头寸
@@ -267,7 +256,7 @@ public final class PositionKeeper implements Serializable {
      * @param direction    方向
      * @param qty          仓位数量
      */
-    public static void addPosition(int subAccountId, Instrument instrument, TrdDirection direction, int qty) {
+    public void addPosition(int subAccountId, Instrument instrument, TrdDirection direction, int qty) {
         switch (direction) {
             case LONG -> qty = abs(qty);
             case SHORT -> qty = -abs(qty);
@@ -276,18 +265,19 @@ public final class PositionKeeper implements Serializable {
                             subAccountId, instrument.getInstrumentCode(), qty);
         }
         long key = mergePositionsKey(subAccountId, instrument);
-        int beforePos = SubAccountInstrumentPos.get(key);
+        int beforePos = subAccountInstrumentPos.get(key);
         int currentPos = beforePos + qty;
-        SubAccountInstrumentPos.put(key, currentPos);
-        log.info(AddPosLogTemplate, subAccountId, instrument.getInstrumentCode(), beforePos, qty, currentPos);
+        subAccountInstrumentPos.put(key, currentPos);
+        log.info("Add current position -> subAccountId==[{}], instrumentCode==[{}], beforePos==[{}], qty==[{}], currentPos==[{}]",
+                subAccountId, instrument.getInstrumentCode(), beforePos, qty, currentPos);
     }
 
     @Override
     public String toString() {
         var map = new HashMap<String, Object>();
-        map.put("SubAccountInstrumentPos", SubAccountInstrumentPos);
-        map.put("SubAccountInstrumentLongLimit", SubAccountInstrumentLongLimit);
-        map.put("SubAccountInstrumentShortLimit", SubAccountInstrumentShortLimit);
+        map.put("SubAccountInstrumentPos", subAccountInstrumentPos);
+        map.put("SubAccountInstrumentLongLimit", subAccountInstrumentLongLimit);
+        map.put("SubAccountInstrumentShortLimit", subAccountInstrumentShortLimit);
         return JsonWriter.toJson(map);
     }
 

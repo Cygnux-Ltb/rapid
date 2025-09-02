@@ -2,13 +2,13 @@ package io.cygnux.rapid.engine.adaptor;
 
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
-import io.cygnux.rapid.core.event.InboundHandler;
-import io.cygnux.rapid.core.event.outbound.CancelOrder;
-import io.cygnux.rapid.core.event.outbound.NewOrder;
-import io.cygnux.rapid.core.event.outbound.QueryBalance;
-import io.cygnux.rapid.core.event.outbound.QueryOrder;
-import io.cygnux.rapid.core.event.outbound.QueryPosition;
-import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.adaptor.event.CancelOrder;
+import io.cygnux.rapid.core.adaptor.event.NewOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryBalance;
+import io.cygnux.rapid.core.adaptor.event.QueryOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryPosition;
+import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqPublisher;
@@ -38,7 +38,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     /**
      * @param account Account
      */
-    public ZmqRemoteAdaptor(@Nonnull Account account, InboundHandler inboundHandler) {
+    public ZmqRemoteAdaptor(@Nonnull Account account, StreamEventHandler inboundHandler) {
         super(account, false, inboundHandler);
         this.publisher = ZmqConfigurator
                 .ipc(publishPath())

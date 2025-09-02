@@ -1,16 +1,16 @@
 package io.cygnux.rapid.engine;
 
+import io.cygnux.rapid.core.adaptor.SentEvent;
+import io.cygnux.rapid.core.adaptor.SentEventHandler;
+import io.cygnux.rapid.core.adaptor.SentEventbus;
+import io.cygnux.rapid.core.adaptor.event.CancelOrder;
+import io.cygnux.rapid.core.adaptor.event.NewOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryBalance;
+import io.cygnux.rapid.core.adaptor.event.QueryOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryPosition;
+import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
+import io.cygnux.rapid.core.manager.AdaptorManager;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.cygnux.rapid.core.adaptor.AdaptorManager;
-import io.cygnux.rapid.core.event.OutboundEvent;
-import io.cygnux.rapid.core.event.OutboundEventbus;
-import io.cygnux.rapid.core.event.OutboundHandler;
-import io.cygnux.rapid.core.event.outbound.CancelOrder;
-import io.cygnux.rapid.core.event.outbound.NewOrder;
-import io.cygnux.rapid.core.event.outbound.QueryBalance;
-import io.cygnux.rapid.core.event.outbound.QueryOrder;
-import io.cygnux.rapid.core.event.outbound.QueryPosition;
-import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class CoreOutboundService implements OutboundHandler {
+public class CoreOutboundService implements SentEventHandler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreOutboundService.class);
 
     @Resource
     private AdaptorManager adaptorManager;
 
-    private final OutboundEventbus eventLoop = new OutboundEventbus() {
+    private final SentEventbus eventLoop = new SentEventbus() {
 
         @Override
-        public void onEvent(OutboundEvent event, long sequence, boolean endOfBatch) {
+        public void onEvent(SentEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
                 case SUBSCRIBE_MARKET_DATA -> adaptorManager
@@ -43,6 +43,7 @@ public class CoreOutboundService implements OutboundHandler {
                         .commitQueryPositions(event.getQueryPosition());
                 case QUERY_BALANCE -> adaptorManager
                         .commitQueryBalance(event.getQueryBalance());
+                case INVALID -> log.warn("HAS INVALID EVENT type: {}", event.getType());
             }
         }
     };

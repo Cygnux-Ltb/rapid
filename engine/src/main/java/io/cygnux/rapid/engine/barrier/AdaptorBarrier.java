@@ -10,7 +10,6 @@ public class AdaptorBarrier implements OrderBarrier {
 
 	@Override
 	public boolean filter(ChildOrder order) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

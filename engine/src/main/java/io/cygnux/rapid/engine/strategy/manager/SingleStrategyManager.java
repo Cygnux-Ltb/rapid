@@ -1,21 +1,28 @@
 package io.cygnux.rapid.engine.strategy.manager;
 
-import io.mercury.common.lang.Throws;
-import io.mercury.common.util.ResourceUtil;
-import io.cygnux.rapid.core.event.inbound.OrderReport;
+import io.cygnux.console.service.StrategyService;
+import io.cygnux.rapid.core.account.SubAccount;
+import io.cygnux.rapid.core.stream.event.OrderReport;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.OrderKeeper;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
-import io.cygnux.rapid.core.strategy.StrategyManager;
+import io.cygnux.rapid.core.manager.StrategyManager;
+import io.cygnux.rapid.core.strategy.StrategyParam;
+import io.cygnux.rapid.engine.status.ApplicationStatus;
+import io.mercury.common.collections.MutableSets;
+import io.mercury.common.lang.Throws;
+import io.mercury.common.util.ResourceUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.Set;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
@@ -24,17 +31,25 @@ import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
  *
  * @author yellow013
  */
+@Primary
 @Service("singleStrategyManager")
 public class SingleStrategyManager implements StrategyManager {
 
     private static final Logger log = getLogger(SingleStrategyManager.class);
 
-    @Resource(name = "mem")
+    @Resource(name = "inHeap")
     private OrderKeeper orderKeeper;
+
+    @Resource
+    private ApplicationStatus applicationStatus;
+
+    @Resource
+    private StrategyService strategyService;
 
     /**
      * Only one strategy
      */
+    @Resource
     private Strategy strategy;
 
     @PostConstruct
@@ -70,6 +85,24 @@ public class SingleStrategyManager implements StrategyManager {
     @Override
     public void onEvent(StrategyEvent event) {
 
+    }
+
+    @Override
+    public Set<StrategyParam> getParams(int strategyId) {
+        return strategyService.getStrategyParam(applicationStatus.getUserid(), strategyId)
+                .stream()
+                .map(resp -> new StrategyParam()
+                        .setAlgoId(resp.getAlgoId())
+                        .setAlgoName(resp.getAlgoDisplayName())
+                        .setParamName(resp.getParamName())
+                        .setParamType(resp.getParamType())
+                        .setParamValue(resp.getParamValue())
+                ).collect(MutableSets.newCollector());
+    }
+
+    @Override
+    public SubAccount getSubAccount(int strategyId) {
+        return null;
     }
 
 

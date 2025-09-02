@@ -5,9 +5,9 @@ import io.cygnux.rapid.core.trade.TradeCommand;
 import io.cygnux.rapid.core.trade.TradeCommandProducer;
 import org.springframework.stereotype.Component;
 
-import static io.cygnux.rapid.core.event.enums.TrdAction.CLOSE;
-import static io.cygnux.rapid.core.event.enums.TrdAction.INVALID;
-import static io.cygnux.rapid.core.event.enums.TrdAction.OPEN;
+import static io.cygnux.rapid.core.stream.enums.TrdAction.CLOSE;
+import static io.cygnux.rapid.core.stream.enums.TrdAction.INVALID;
+import static io.cygnux.rapid.core.stream.enums.TrdAction.OPEN;
 import static java.lang.Math.abs;
 
 /**

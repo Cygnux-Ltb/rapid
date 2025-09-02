@@ -2,32 +2,32 @@ package io.cygnux.rapid.engine;
 
 import io.cygnux.rapid.core.CoreScheduler;
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.account.AccountManager;
-import io.cygnux.rapid.core.adaptor.AdaptorManager;
-import io.cygnux.rapid.core.event.InboundEvent;
-import io.cygnux.rapid.core.event.InboundEventbus;
-import io.cygnux.rapid.core.event.InboundFeeder;
-import io.cygnux.rapid.core.event.OutboundHandler;
-import io.cygnux.rapid.core.event.enums.MarketDataType;
-import io.cygnux.rapid.core.event.enums.OrdType;
-import io.cygnux.rapid.core.event.enums.TrdAction;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
-import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketData;
-import io.cygnux.rapid.core.event.inbound.FastMarketData;
-import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.inbound.OrderReport;
-import io.cygnux.rapid.core.event.inbound.PositionsReport;
-import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.cygnux.rapid.core.adaptor.SentEventHandler;
+import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
 import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.MarketDataManager;
-import io.cygnux.rapid.core.order.OrderManager;
+import io.cygnux.rapid.core.manager.AccountManager;
+import io.cygnux.rapid.core.manager.AdaptorManager;
+import io.cygnux.rapid.core.manager.MarketDataManager;
+import io.cygnux.rapid.core.manager.OrderManager;
+import io.cygnux.rapid.core.manager.PositionManager;
+import io.cygnux.rapid.core.manager.StrategyManager;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import io.cygnux.rapid.core.order.impl.ParentOrder;
-import io.cygnux.rapid.core.position.PositionManager;
-import io.cygnux.rapid.core.strategy.StrategyManager;
-import io.cygnux.rapid.core.strategy.StrategySignal;
+import io.cygnux.rapid.core.stream.StreamEvent;
+import io.cygnux.rapid.core.stream.StreamEventFeeder;
+import io.cygnux.rapid.core.stream.StreamEventbus;
+import io.cygnux.rapid.core.stream.enums.MarketDataType;
+import io.cygnux.rapid.core.stream.enums.OrdType;
+import io.cygnux.rapid.core.stream.enums.TrdAction;
+import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.stream.event.AdaptorReport;
+import io.cygnux.rapid.core.stream.event.BalanceReport;
+import io.cygnux.rapid.core.stream.event.DepthMarketData;
+import io.cygnux.rapid.core.stream.event.FastMarketData;
+import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.stream.event.PositionsReport;
+import io.cygnux.rapid.core.stream.event.StrategySignal;
 import io.cygnux.rapid.core.trade.TradeCommand;
 import io.cygnux.rapid.core.trade.TradeCommandProducer;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -36,8 +36,6 @@ import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 import static io.mercury.common.collections.MutableLists.newFastList;
 
@@ -67,14 +65,14 @@ public class CoreSchedulerService implements CoreScheduler {
     private AdaptorManager adaptorManager;
 
     @Resource
-    private InboundFeeder eventFeeder;
+    private StreamEventFeeder eventFeeder;
 
     @Resource
-    private OutboundHandler outboundHandler;
+    private SentEventHandler sentEventHandler;
 
-    private final InboundEventbus eventLoop = new InboundEventbus() {
+    private final StreamEventbus eventLoop = new StreamEventbus() {
         @Override
-        public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
+        public void onEvent(StreamEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
                 case FAST_MARKET_DATA -> handleFastMarketData(event.getFastMarketData());
                 case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
@@ -83,6 +81,7 @@ public class CoreSchedulerService implements CoreScheduler {
                 case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
                 case ADAPTOR_STATUS_REPORT -> handleAdaptorReport(event.getAdaptorReport());
                 case INSTRUMENT_STATUS_REPORT -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
+                case STRATEGY_SIGNAL -> handleStrategySignal(event.getStrategySignal());
                 case INVALID -> log.error("NOTE Unknown InboundEvent -> {}", event);
             }
         }
@@ -92,7 +91,7 @@ public class CoreSchedulerService implements CoreScheduler {
     @PostConstruct
     public void init() {
         // 注册事件循环队列, 用于接收事件并且处理
-        eventFeeder.addEventLoop(eventLoop);
+        eventFeeder.addEventbus(eventLoop);
 
 
         // 启动事件提供者
@@ -123,7 +122,7 @@ public class CoreSchedulerService implements CoreScheduler {
         log.info("Core process start count -> {}", ++marketDataCounter);
         marketDataManager.onMarketData(marketData);
         // 处理本次内核穿透信号
-        handleSignal(signals);
+        handleStrategySignal(signals);
         log.info("Core process end count -> {}", marketDataCounter);
     }
 
@@ -170,7 +169,7 @@ public class CoreSchedulerService implements CoreScheduler {
                     // TODO 补充接收地址
                     .setRecvAddr("");
             log.info("Publish [SubscribeMarketData] in loop -> {}", subscribeMarketData);
-            outboundHandler.handleSubscribeMarketData(subscribeMarketData);
+            sentEventHandler.handleSubscribeMarketData(subscribeMarketData);
         }
         if (currentStatus.isTraderEnabled()) {
             Account account = accountManager.getAccount(report.getAccountId());
@@ -180,21 +179,21 @@ public class CoreSchedulerService implements CoreScheduler {
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryOrder] in loop -> {}", queryOrder);
-            outboundHandler.handleQueryOrder(queryOrder);
+            sentEventHandler.handleQueryOrder(queryOrder);
 
             /// 查询仓位 ///
             var queryPosition = account.newQueryPosition()
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryPosition] in loop -> {}", queryPosition);
-            outboundHandler.handleQueryPosition(queryPosition);
+            sentEventHandler.handleQueryPosition(queryPosition);
 
             /// 查询余额 ///
             var queryBalance = account.newQueryBalance()
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryBalance] in loop -> {}", queryBalance);
-            outboundHandler.handleQueryBalance(queryBalance);
+            sentEventHandler.handleQueryBalance(queryBalance);
         }
     }
 
@@ -206,7 +205,6 @@ public class CoreSchedulerService implements CoreScheduler {
     @Override
     public void handlePositionsReport(PositionsReport report) {
         log.info("CoreSchedulerService::handlePositionsReport, [PositionsReport] -> {}", report);
-
     }
 
     /**
@@ -228,7 +226,7 @@ public class CoreSchedulerService implements CoreScheduler {
      * @param signal StrategySignal
      */
     @Override
-    public void handleSignal(StrategySignal signal) {
+    public void handleStrategySignal(StrategySignal signal) {
         if (!signal.isVerification()) {
             log.error("CoreSchedulerService::handleSignal, Signal is invalid, [Signal] -> {}", signal);
             return;
@@ -260,7 +258,7 @@ public class CoreSchedulerService implements CoreScheduler {
             // 存储子订单
             orderManager.putOrder(longChildOrder);
             // 发送多单
-            outboundHandler.handleNewOrder(longChildOrder.toNewOrder());
+            sentEventHandler.handleNewOrder(longChildOrder.toNewOrder());
         }
 
         // 空单指令处理
@@ -271,34 +269,14 @@ public class CoreSchedulerService implements CoreScheduler {
             // 存储子订单
             orderManager.putOrder(shortChildOrder);
             // 发送空单
-            outboundHandler.handleNewOrder(shortChildOrder.toNewOrder());
+            sentEventHandler.handleNewOrder(shortChildOrder.toNewOrder());
         }
 
     }
 
-
     @Override
     public void onSignal(StrategySignal signal) {
         signals.add(signal);
-    }
-
-
-    /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
-     *
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
-     *
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    public void close() throws IOException {
-        // TODO 资源清理
     }
 
 }

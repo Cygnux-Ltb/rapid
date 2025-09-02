@@ -2,9 +2,9 @@ package io.cygnux.rapid.engine.strategy.manager;
 
 
 import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.MarketDataManager;
+import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.strategy.Strategy;
-import io.cygnux.rapid.core.strategy.StrategyManager;
+import io.cygnux.rapid.core.manager.StrategyManager;
 import jakarta.annotation.Resource;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;

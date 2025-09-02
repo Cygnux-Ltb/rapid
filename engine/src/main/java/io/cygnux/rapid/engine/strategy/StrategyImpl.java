@@ -1,10 +1,7 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.mercury.common.collections.ImmutableMaps;
-import io.mercury.common.epoch.EpochUnit;
-import io.mercury.common.param.Params;
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
+import io.cygnux.rapid.core.stream.event.AdaptorReport;
 import io.cygnux.rapid.core.handler.AdaptorReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
@@ -13,12 +10,12 @@ import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.core.strategy.StrategyException;
+import io.mercury.common.epoch.EpochUnit;
+import io.mercury.common.param.Params;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.util.List;
-import java.util.function.Supplier;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
@@ -31,8 +28,7 @@ public class StrategyImpl extends AbstractStrategy {
     protected StrategyImpl(int strategyId, @Nonnull String strategyName,
                            @Nonnull SubAccount subAccount, @Nonnull Params params,
                            MarketDataHandler marketDataHandler, @Nonnull Instrument... instruments) {
-        super(strategyId, strategyName, subAccount, params,
-                ImmutableMaps.newImmutableIntMap(List.of(instruments), Instrument::getInstrumentId));
+        super(strategyId, strategyName, subAccount, instruments);
         this.marketDataHandler = marketDataHandler;
     }
 
@@ -100,16 +96,6 @@ public class StrategyImpl extends AbstractStrategy {
     }
 
     @Override
-    protected boolean verification() {
-        return false;
-    }
-
-    @Override
-    public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
-        return null;
-    }
-
-    @Override
     protected void handleMarketData(SavedMarketData marketData) {
 
     }
@@ -142,11 +128,6 @@ public class StrategyImpl extends AbstractStrategy {
     @Override
     public boolean enable() {
         return false;
-    }
-
-    @Override
-    public void close() throws IOException {
-
     }
 
 }
