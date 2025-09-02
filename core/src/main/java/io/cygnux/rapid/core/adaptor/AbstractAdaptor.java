@@ -1,17 +1,16 @@
 package io.cygnux.rapid.core.adaptor;
 
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.event.InboundEvent;
-import io.cygnux.rapid.core.event.InboundEventbus;
-import io.cygnux.rapid.core.event.InboundHandler;
-import io.cygnux.rapid.core.event.OutboundEvent;
-import io.cygnux.rapid.core.event.enums.AdaptorType;
-import io.cygnux.rapid.core.event.outbound.CancelOrder;
-import io.cygnux.rapid.core.event.outbound.NewOrder;
-import io.cygnux.rapid.core.event.outbound.QueryBalance;
-import io.cygnux.rapid.core.event.outbound.QueryOrder;
-import io.cygnux.rapid.core.event.outbound.QueryPosition;
-import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.cygnux.rapid.core.stream.StreamEvent;
+import io.cygnux.rapid.core.stream.StreamEventbus;
+import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.stream.enums.AdaptorType;
+import io.cygnux.rapid.core.adaptor.event.CancelOrder;
+import io.cygnux.rapid.core.adaptor.event.NewOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryBalance;
+import io.cygnux.rapid.core.adaptor.event.QueryOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryPosition;
+import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.concurrent.disruptor.RingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -64,14 +63,14 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     /**
      * 接收队列
      */
-    private RingEventbus<OutboundEvent> receiveQueue;
+    private RingEventbus<SentEvent> receiveQueue;
 
     // 入站队列处理器
-    protected final InboundHandler inboundHandler;
+    protected final StreamEventHandler inboundHandler;
 
-    protected final InboundEventbus inboundEventbus = new InboundEventbus() {
+    protected final StreamEventbus streamEventbus = new StreamEventbus() {
         @Override
-        public void onEvent(InboundEvent event, long sequence, boolean endOfBatch) throws Exception {
+        public void onEvent(StreamEvent event, long sequence, boolean endOfBatch) throws Exception {
             inboundHandler.onEvent(event, sequence, endOfBatch);
         }
     };
@@ -80,7 +79,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
      * @param account Account
      * @param isAsync boolean
      */
-    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync, InboundHandler inboundHandler) {
+    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync, StreamEventHandler inboundHandler) {
         nonNull(account, "account");
         this.account = account;
         this.isAsync = isAsync;
@@ -89,7 +88,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
         this.inboundHandler = inboundHandler;
         if (isAsync) {
             receiveQueue = RingEventbus
-                    .singleProducer(OutboundEvent.EVENT_FACTORY)
+                    .singleProducer(SentEvent.EVENT_FACTORY)
                     .name(adaptorId + "-receive-queue")
                     .size(32)
                     .waitStrategy(Yielding.get())
@@ -100,7 +99,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     /**
      * @param event SendEvent
      */
-    private void handleOutboundEvent(OutboundEvent event) {
+    private void handleOutboundEvent(SentEvent event) {
         switch (event.getType()) {
             case SUBSCRIBE_MARKET_DATA -> {
                 log.info("{} -> Call directSubscribeMarketData, event -> {} ", adaptorId, event);

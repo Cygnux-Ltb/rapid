@@ -1,10 +1,10 @@
 package io.cygnux.rapid.core.order;
 
 import io.mercury.common.sequence.OrderedObject;
-import io.cygnux.rapid.core.event.enums.OrdStatus;
-import io.cygnux.rapid.core.event.enums.OrdType;
-import io.cygnux.rapid.core.event.enums.OrdValid;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.stream.enums.OrdStatus;
+import io.cygnux.rapid.core.stream.enums.OrdType;
+import io.cygnux.rapid.core.stream.enums.OrdValid;
+import io.cygnux.rapid.core.stream.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.attr.OrdPrice;
 import io.cygnux.rapid.core.order.attr.OrdQty;

@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.trade;
 
-import io.cygnux.rapid.core.event.enums.TrdAction;
+import io.cygnux.rapid.core.stream.enums.TrdAction;
 
 public record TradeCommand
         (// [多仓]开/平

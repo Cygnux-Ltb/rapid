@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.handler.impl;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
+import io.cygnux.rapid.core.stream.event.AdaptorReport;
 import io.cygnux.rapid.core.handler.AdaptorReportHandler;
 import org.slf4j.Logger;
 

@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.position;
 
 
-import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.stream.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.Order;
 

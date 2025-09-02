@@ -6,7 +6,7 @@ import io.mercury.common.lang.Asserter;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
 import io.mercury.serialization.json.JsonWriter;
-import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
+import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
 import io.cygnux.rapid.core.instrument.futures.ChinaFuturesSymbol;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
