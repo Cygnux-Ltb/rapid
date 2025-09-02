@@ -10,15 +10,15 @@ import io.cygnux.rapid.adaptor.ctp.param.FtdcParams;
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
 import io.cygnux.rapid.core.adaptor.AdaptorRunningMode;
-import io.cygnux.rapid.core.event.InboundHandler;
-import io.cygnux.rapid.core.event.enums.AdaptorType;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
-import io.cygnux.rapid.core.event.outbound.CancelOrder;
-import io.cygnux.rapid.core.event.outbound.NewOrder;
-import io.cygnux.rapid.core.event.outbound.QueryBalance;
-import io.cygnux.rapid.core.event.outbound.QueryOrder;
-import io.cygnux.rapid.core.event.outbound.QueryPosition;
-import io.cygnux.rapid.core.event.outbound.SubscribeMarketData;
+import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.stream.enums.AdaptorType;
+import io.cygnux.rapid.core.stream.event.AdaptorReport;
+import io.cygnux.rapid.core.adaptor.event.CancelOrder;
+import io.cygnux.rapid.core.adaptor.event.NewOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryBalance;
+import io.cygnux.rapid.core.adaptor.event.QueryOrder;
+import io.cygnux.rapid.core.adaptor.event.QueryPosition;
+import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
 import io.cygnux.rapid.core.order.OrderRefKeeper;
 import io.cygnux.rapid.core.order.OrderRefNotFoundException;
 import io.mercury.common.collections.MutableSets;
@@ -76,7 +76,6 @@ public class CtpAdaptor extends AbstractAdaptor {
     private final FtdcRspHandler extFtdcRspHandler;
 
 
-
     /**
      * 传入[FtdcRspHandler]实现
      *
@@ -85,7 +84,7 @@ public class CtpAdaptor extends AbstractAdaptor {
      * @param inboundHandler    InboundEventHandler
      */
     private CtpAdaptor(@Nonnull Builder builder,
-                       @Nonnull InboundHandler inboundHandler,
+                       @Nonnull StreamEventHandler inboundHandler,
                        @Nullable FtdcRspHandler extFtdcRspHandler) {
         super(builder.account, builder.isAsync, inboundHandler);
         this.params = builder.params;
@@ -117,7 +116,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.Msg);
                 log.info("Received [FrontDisconnected] convert to [AdaptorReport] -> {}", report);
-                inboundEventbus.put(report);
+                streamEventbus.put(report);
             }
             case RSP_USER_LOGIN -> {
                 var received = event.getRspUserLogin();
@@ -127,43 +126,43 @@ public class CtpAdaptor extends AbstractAdaptor {
                 ftdcRspConverter.setTradingDay(received.TradingDay);
                 log.info("Updated [ReqConverter]&[RspConverter] internal TradingDay==[{}]", received.TradingDay);
                 log.info("Received [RspUserLogin] convert to [AdaptorReport] -> {}", report);
-                inboundEventbus.put(report);
+                streamEventbus.put(report);
             }
             case USER_LOGOUT -> {
                 var received = event.getUserLogout();
                 var report = createAdaptorReportAndUpdate(received.Source,
                         false, received.ErrorMsg);
                 log.info("Received [UserLogout] convert to [AdaptorReport] -> {}", report);
-                inboundEventbus.put(report);
+                streamEventbus.put(report);
             }
-            case FTDC_DEPTH_MARKET_DATA -> inboundEventbus
+            case FTDC_DEPTH_MARKET_DATA -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getDepthMarketData()));
 
-            case FTDC_SPECIFIC_INSTRUMENT -> inboundEventbus
+            case FTDC_SPECIFIC_INSTRUMENT -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getSpecificInstrument()));
 
-            case FTDC_INSTRUMENT_STATUS -> inboundEventbus
+            case FTDC_INSTRUMENT_STATUS -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getInstrumentStatus()));
 
-            case FTDC_INPUT_ORDER -> inboundEventbus
+            case FTDC_INPUT_ORDER -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getInputOrder()));
 
-            case FTDC_INPUT_ORDER_ACTION -> inboundEventbus
+            case FTDC_INPUT_ORDER_ACTION -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getInputOrderAction()));
 
-            case FTDC_INVESTOR_POSITION -> inboundEventbus
+            case FTDC_INVESTOR_POSITION -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getInvestorPosition()));
 
-            case FTDC_ORDER -> inboundEventbus
+            case FTDC_ORDER -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getOrder()));
 
-            case FTDC_ORDER_ACTION -> inboundEventbus
+            case FTDC_ORDER_ACTION -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getOrderAction()));
 
-            case FTDC_TRADE -> inboundEventbus
+            case FTDC_TRADE -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getTrade()));
 
-            case FTDC_TRADING_ACCOUNT -> inboundEventbus
+            case FTDC_TRADING_ACCOUNT -> streamEventbus
                     .put(ftdcRspConverter.convert(event.getTradingAccount()));
 
             case HEARTBEAT_WARNING -> log
@@ -481,9 +480,14 @@ public class CtpAdaptor extends AbstractAdaptor {
             return this;
         }
 
-        public CtpAdaptor build(InboundHandler inboundHandler, FtdcRspHandler ftdcRspHandler) {
-            return new CtpAdaptor(this, inboundHandler, ftdcRspHandler);
+        public CtpAdaptor build(StreamEventHandler inboundHandler) {
+            return build(inboundHandler);
         }
+
+        public CtpAdaptor build(StreamEventHandler inboundHandler, FtdcRspHandler extFtdcRspHandler) {
+            return new CtpAdaptor(this, inboundHandler, extFtdcRspHandler);
+        }
+
 
     }
 

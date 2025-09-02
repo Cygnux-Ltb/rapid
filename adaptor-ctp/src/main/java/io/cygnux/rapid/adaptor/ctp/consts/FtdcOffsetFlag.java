@@ -1,6 +1,6 @@
 package io.cygnux.rapid.adaptor.ctp.consts;
 
-import io.cygnux.rapid.core.event.enums.TrdAction;
+import io.cygnux.rapid.core.stream.enums.TrdAction;
 
 import javax.annotation.Nonnull;
 
