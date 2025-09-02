@@ -1,21 +1,19 @@
 package io.cygnux.rapid.backtest;
 
 import io.cygnux.rapid.core.CoreScheduler;
-import io.cygnux.rapid.core.event.InboundHandler;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
-import io.cygnux.rapid.core.event.inbound.BalanceReport;
-import io.cygnux.rapid.core.event.inbound.DepthMarketData;
-import io.cygnux.rapid.core.event.inbound.FastMarketData;
-import io.cygnux.rapid.core.event.inbound.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.inbound.OrderReport;
-import io.cygnux.rapid.core.event.inbound.PositionsReport;
+import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.stream.event.AdaptorReport;
+import io.cygnux.rapid.core.stream.event.BalanceReport;
+import io.cygnux.rapid.core.stream.event.DepthMarketData;
+import io.cygnux.rapid.core.stream.event.FastMarketData;
+import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.stream.event.PositionsReport;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service("backtestScheduler")
-public class BacktestScheduler implements InboundHandler {
+public class BacktestScheduler implements StreamEventHandler {
 
     @Resource(name = "coreScheduler")
     private CoreScheduler scheduler;
@@ -88,11 +86,6 @@ public class BacktestScheduler implements InboundHandler {
     @Override
     public void handleInstrumentStatusReport(InstrumentStatusReport report) {
         scheduler.handleInstrumentStatusReport(report);
-    }
-
-    @Override
-    public void close() throws IOException {
-        scheduler.close();
     }
 
 }
