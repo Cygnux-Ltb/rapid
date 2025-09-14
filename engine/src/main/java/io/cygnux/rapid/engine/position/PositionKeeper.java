@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 
 import static java.lang.Math.abs;
@@ -26,11 +24,8 @@ import static java.lang.Math.abs;
  * @author yellow013
  */
 @NotThreadSafe
-@Component("inHeap")
-public final class PositionKeeper implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = -23036653515185236L;
+@Component
+public final class PositionKeeper {
 
     /**
      * Logger
@@ -85,8 +80,6 @@ public final class PositionKeeper implements Serializable {
      */
     private final MutableLongIntMap accountInstrumentShortLimit = MutableMaps.newLongIntMap();
 
-    public PositionKeeper() {
-    }
 
     /**
      * 合并持仓主键
@@ -109,13 +102,13 @@ public final class PositionKeeper implements Serializable {
      */
     public void setSubAccountPositionsLimit(int subAccountId, Instrument instrument,
                                             int longLimitQty, int shortLimitQty) {
-        long key = mergePositionsKey(subAccountId, instrument);
-        subAccountInstrumentLongLimit.put(key, abs(longLimitQty));
+        long mergedKey = mergePositionsKey(subAccountId, instrument);
+        subAccountInstrumentLongLimit.put(mergedKey, abs(longLimitQty));
         log.info("Set long positions limit -> subAccountId==[{}], instrument -> {}, longLimitQty==[{}]", subAccountId,
-                instrument, subAccountInstrumentLongLimit.get(key));
-        subAccountInstrumentShortLimit.put(key, -abs(shortLimitQty));
+                instrument, subAccountInstrumentLongLimit.get(mergedKey));
+        subAccountInstrumentShortLimit.put(mergedKey, -abs(shortLimitQty));
         log.info("Set short positions limit -> subAccountId==[{}], instrument -> {}, shortLimitQty==[{}]", subAccountId,
-                instrument, subAccountInstrumentShortLimit.get(key));
+                instrument, subAccountInstrumentShortLimit.get(mergedKey));
     }
 
     /**
@@ -128,13 +121,13 @@ public final class PositionKeeper implements Serializable {
      */
     public void setAccountPositionsLimit(int accountId, Instrument instrument,
                                          int longLimitQty, int shortLimitQty) {
-        long key = mergePositionsKey(accountId, instrument);
-        accountInstrumentLongLimit.put(key, abs(longLimitQty));
+        long mergedKey = mergePositionsKey(accountId, instrument);
+        accountInstrumentLongLimit.put(mergedKey, abs(longLimitQty));
         log.info("Set long positions limit -> accountId==[{}], instrument -> {}, longLimitQty==[{}]", accountId,
-                instrument, accountInstrumentLongLimit.get(key));
-        accountInstrumentShortLimit.put(key, -abs(shortLimitQty));
+                instrument, accountInstrumentLongLimit.get(mergedKey));
+        accountInstrumentShortLimit.put(mergedKey, -abs(shortLimitQty));
         log.info("Set short positions limit -> accountId==[{}], instrument -> {}, shortLimitQty==[{}]", accountId,
-                instrument, accountInstrumentShortLimit.get(key));
+                instrument, accountInstrumentShortLimit.get(mergedKey));
     }
 
     /**
@@ -147,11 +140,11 @@ public final class PositionKeeper implements Serializable {
      */
     public int getSubAccountPositionLimit(int subAccountId, Instrument instrument,
                                           TrdDirection direction) {
-        long key = mergePositionsKey(subAccountId, instrument);
-        int currentQty = subAccountInstrumentPos.get(key);
+        long mergedKey = mergePositionsKey(subAccountId, instrument);
+        int currentQty = subAccountInstrumentPos.get(mergedKey);
         return switch (direction) {
-            case LONG -> subAccountInstrumentLongLimit.get(key) - currentQty;
-            case SHORT -> subAccountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> subAccountInstrumentLongLimit.get(mergedKey) - currentQty;
+            case SHORT -> subAccountInstrumentShortLimit.get(mergedKey) - currentQty;
             default -> 0;
         };
     }
@@ -166,11 +159,11 @@ public final class PositionKeeper implements Serializable {
      */
     public int getAccountPositionLimit(int accountId, Instrument instrument,
                                        TrdDirection direction) {
-        long key = mergePositionsKey(accountId, instrument);
-        int currentQty = accountInstrumentPos.get(key);
+        long mergedKey = mergePositionsKey(accountId, instrument);
+        int currentQty = accountInstrumentPos.get(mergedKey);
         return switch (direction) {
-            case LONG -> accountInstrumentLongLimit.get(key) - currentQty;
-            case SHORT -> accountInstrumentShortLimit.get(key) - currentQty;
+            case LONG -> accountInstrumentLongLimit.get(mergedKey) - currentQty;
+            case SHORT -> accountInstrumentShortLimit.get(mergedKey) - currentQty;
             default -> 0;
         };
     }
@@ -183,8 +176,8 @@ public final class PositionKeeper implements Serializable {
      * @return int
      */
     public int getSubAccountPosition(int subAccountId, Instrument instrument) {
-        long positionKey = mergePositionsKey(subAccountId, instrument);
-        int currentPosition = subAccountInstrumentPos.get(positionKey);
+        long mergedKey = mergePositionsKey(subAccountId, instrument);
+        int currentPosition = subAccountInstrumentPos.get(mergedKey);
         log.info("Get current position, subAccountId==[{}], instrumentCode==[{}], currentPosition==[{}]", subAccountId,
                 instrument.getInstrumentCode(), currentPosition);
         return currentPosition;
@@ -198,8 +191,8 @@ public final class PositionKeeper implements Serializable {
      * @return int
      */
     public int getAccountPosition(int accountId, Instrument instrument) {
-        long positionKey = mergePositionsKey(accountId, instrument);
-        int currentPosition = accountInstrumentPos.get(positionKey);
+        long mergedKey = mergePositionsKey(accountId, instrument);
+        int currentPosition = accountInstrumentPos.get(mergedKey);
         log.info("Get current position, accountId==[{}], instrumentCode==[{}], currentPosition==[{}]",
                 accountId, instrument.getInstrumentCode(), currentPosition);
         return currentPosition;

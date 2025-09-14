@@ -1,8 +1,8 @@
 package io.cygnux.rapid.core.stream.event;
 
+import io.cygnux.rapid.core.stream.enums.OrdValid;
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.stream.enums.OrdValid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 
 import static io.mercury.common.util.StringSupport.isNullOrEmpty;
 import static java.lang.Math.abs;
-
 
 /**
  * 策略信号

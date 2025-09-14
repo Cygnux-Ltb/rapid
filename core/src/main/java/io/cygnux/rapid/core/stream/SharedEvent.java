@@ -1,6 +1,7 @@
 package io.cygnux.rapid.core.stream;
 
 import com.lmax.disruptor.EventFactory;
+import io.cygnux.rapid.core.strategy.StrategySlotCounter;
 import io.cygnux.rapid.core.stream.event.AdaptorReport;
 import io.cygnux.rapid.core.stream.event.BalanceReport;
 import io.cygnux.rapid.core.stream.event.DepthMarketData;
@@ -17,130 +18,152 @@ import lombok.Getter;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static io.mercury.common.epoch.HighResolutionEpoch.micros;
 
-public final class StreamEvent implements JsonSerializable {
+/**
+ * 核心共享事件
+ */
+@NotThreadSafe
+public final class SharedEvent implements JsonSerializable {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(StreamEvent.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SharedEvent.class);
 
-    public static final EventFactory<StreamEvent> EVENT_FACTORY = StreamEvent::new;
+    public static final EventFactory<SharedEvent> EVENT_FACTORY = SharedEvent::new;
 
     private static final AtomicBoolean isLogging = new AtomicBoolean(false);
-
 
     /**
      * 微秒时间戳
      */
     @Getter
     private long epochMicros;
-
     /**
      * 事件类型
      */
     @Getter
-    private StreamEventType type = StreamEventType.INVALID;
+    private SharedEventType type = SharedEventType.INVALID;
 
     /// EVENT INSTANCE ///
     @Getter
     private final FastMarketData fastMarketData = new FastMarketData();
+
     @Getter
     private final DepthMarketData depthMarketData = new DepthMarketData();
-    @Getter
-    private final OrderReport orderReport = new OrderReport();
-    @Getter
-    private final PositionsReport positionsReport = new PositionsReport();
-    @Getter
-    private final BalanceReport balanceReport = new BalanceReport();
-    @Getter
-    private final AdaptorReport adaptorReport = new AdaptorReport();
+
     @Getter
     private final InstrumentStatusReport instrumentStatusReport = new InstrumentStatusReport();
+
     @Getter
-    private final StrategySignal strategySignal = new StrategySignal();
+    private final AdaptorReport adaptorReport = new AdaptorReport();
+
+    @Getter
+    private final PositionsReport positionsReport = new PositionsReport();
+
+    @Getter
+    private final BalanceReport balanceReport = new BalanceReport();
+
+    @Getter
+    private final OrderReport orderReport = new OrderReport();
+
+    @Getter
+    private final StrategySignal[] strategySignalSlot;
     /// EVENT INSTANCE ///
 
     /**
      * For EventFactory Call
      */
-    StreamEvent() {
+    private SharedEvent() {
+        this.strategySignalSlot = new StrategySignal[StrategySlotCounter.getCurrentValue()];
     }
 
     /**
-     * @param event FastMarketDataEvent
-     * @return InboundEvent
+     * @param event FastMarketData
+     * @return SharedEvent
      */
-    public StreamEvent updateWith(FastMarketData event) {
+    public SharedEvent updateWith(FastMarketData event) {
         this.epochMicros = micros();
-        this.type = StreamEventType.FAST_MARKET_DATA;
+        this.type = SharedEventType.FAST_MARKET_DATA;
         this.fastMarketData.copyOf(event);
         return this;
     }
 
     /**
-     * @param event DepthMarketDataEvent
-     * @return InboundEvent
+     * @param event DepthMarketData
+     * @return SharedEvent
      */
-    public StreamEvent updateWith(DepthMarketData event) {
+    public SharedEvent updateWith(DepthMarketData event) {
         this.epochMicros = micros();
-        this.type = StreamEventType.DEPTH_MARKET_DATA;
+        this.type = SharedEventType.DEPTH_MARKET_DATA;
         this.depthMarketData.copyOf(event);
         return this;
     }
 
     /**
-     * @param event OrderEvent
-     * @return InboundEvent
+     * @param event InstrumentStatusReport
+     * @return SharedEvent
      */
-    public StreamEvent updateWith(OrderReport event) {
+    public SharedEvent updateWith(InstrumentStatusReport event) {
         this.epochMicros = micros();
-        this.type = StreamEventType.ORDER_REPORT;
-        this.orderReport.copyOf(event);
+        this.type = SharedEventType.INSTRUMENT_STATUS_REPORT;
+        this.instrumentStatusReport.copyOf(event);
         return this;
     }
 
     /**
-     * @param event PositionsEvent
-     * @return InboundEvent
+     * @param event AdaptorReport
+     * @return SharedEvent
      */
-    public StreamEvent updateWith(PositionsReport event) {
+    public SharedEvent updateWith(AdaptorReport event) {
         this.epochMicros = micros();
-        this.type = StreamEventType.POSITIONS_REPORT;
-        this.positionsReport.copyOf(event);
-        return this;
-    }
-
-    /**
-     * @param event BalanceEvent
-     * @return InboundEvent
-     */
-    public StreamEvent updateWith(BalanceReport event) {
-        this.epochMicros = micros();
-        this.type = StreamEventType.BALANCE_REPORT;
-        this.balanceReport.copyOf(event);
-        return this;
-    }
-
-    /**
-     * @param event AdaptorEvent
-     * @return InboundEvent
-     */
-    public StreamEvent updateWith(AdaptorReport event) {
-        this.epochMicros = micros();
-        this.type = StreamEventType.ADAPTOR_STATUS_REPORT;
+        this.type = SharedEventType.ADAPTOR_STATUS_REPORT;
         this.adaptorReport.copyOf(event);
         return this;
     }
 
     /**
-     * @param event MarketDataSubscribeEvent
-     * @return InboundEvent
+     * @param event PositionsReport
+     * @return SharedEvent
      */
-    public StreamEvent updateWith(InstrumentStatusReport event) {
+    public SharedEvent updateWith(PositionsReport event) {
         this.epochMicros = micros();
-        this.type = StreamEventType.INSTRUMENT_STATUS_REPORT;
-        this.instrumentStatusReport.copyOf(event);
+        this.type = SharedEventType.POSITIONS_REPORT;
+        this.positionsReport.copyOf(event);
+        return this;
+    }
+
+    /**
+     * @param event BalanceReport
+     * @return SharedEvent
+     */
+    public SharedEvent updateWith(BalanceReport event) {
+        this.epochMicros = micros();
+        this.type = SharedEventType.BALANCE_REPORT;
+        this.balanceReport.copyOf(event);
+        return this;
+    }
+
+    /**
+     * @param event OrderReport
+     * @return SharedEvent
+     */
+    public SharedEvent updateWith(OrderReport event) {
+        this.epochMicros = micros();
+        this.type = SharedEventType.ORDER_REPORT;
+        this.orderReport.copyOf(event);
+        return this;
+    }
+
+    /**
+     * @param event OrderReport
+     * @return SharedEvent
+     */
+    public SharedEvent updateWith(int slot, StrategySignal event) {
+        this.epochMicros = micros();
+        this.type = SharedEventType.STRATEGY_SIGNAL;
+        this.strategySignalSlot[slot].copyOf(event);
         return this;
     }
 
@@ -165,7 +188,8 @@ public final class StreamEvent implements JsonSerializable {
                     case BALANCE_REPORT -> balanceReport;
                     case ADAPTOR_STATUS_REPORT -> adaptorReport;
                     case INSTRUMENT_STATUS_REPORT -> instrumentStatusReport;
-                    case STRATEGY_SIGNAL -> strategySignal;
+                    case STRATEGY_SIGNAL -> strategySignalSlot;
+                    case SKIP -> "SKIP";
                     case INVALID -> null;
                 });
     }
@@ -196,7 +220,7 @@ public final class StreamEvent implements JsonSerializable {
      *
      * @return InboundEvent
      */
-    public StreamEvent logging() {
+    public SharedEvent logging() {
         if (isLogging.get())
             log.info("InboundEvent logging -> {}", this);
         return this;

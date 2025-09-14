@@ -25,7 +25,7 @@ public class AdaptorReport extends JsonBean implements Copyable<AdaptorReport> {
     private int accountId;
     private String adaptorId;
     private AdaptorType adaptorType;
-    private boolean isAvailable;
+    private boolean available;
     private String msg;
 
     @Override
@@ -39,7 +39,7 @@ public class AdaptorReport extends JsonBean implements Copyable<AdaptorReport> {
         // 复制通道类型
         this.adaptorType = source.adaptorType;
         // 复制可用状态
-        this.isAvailable = source.isAvailable;
+        this.available = source.available;
         // 复制消息
         this.msg = source.msg;
     }

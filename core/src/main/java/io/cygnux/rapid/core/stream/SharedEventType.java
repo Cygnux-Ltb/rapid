@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.stream;
 
-public enum StreamEventType {
+public enum SharedEventType {
 
     INVALID,
 

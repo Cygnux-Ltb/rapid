@@ -23,7 +23,7 @@ public interface StrategyManager {
 
     MutableIntObjectMap<Strategy> getStrategies();
 
-    default Strategy[] toArray() {
+    default Strategy[] strategies() {
         return CollectionUtil.toArray(getStrategies().toList(), Strategy[]::new);
     }
 

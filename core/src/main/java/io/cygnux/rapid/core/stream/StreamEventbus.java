@@ -9,7 +9,7 @@ import io.cygnux.rapid.core.stream.event.OrderReport;
 import io.cygnux.rapid.core.stream.event.PositionsReport;
 import io.mercury.common.concurrent.disruptor.RingEventHandler;
 
-public abstract class StreamEventbus extends RingEventHandler<StreamEvent> {
+public abstract class StreamEventbus extends RingEventHandler<SharedEvent> {
 
     /**
      * 默认使用单生产者
@@ -24,7 +24,7 @@ public abstract class StreamEventbus extends RingEventHandler<StreamEvent> {
      * @param builder Builder
      */
     protected StreamEventbus(Builder builder) {
-        super(builder.name("stream-eventbus"), StreamEvent.EVENT_FACTORY);
+        super(builder.name("stream-eventbus"), SharedEvent.EVENT_FACTORY);
     }
 
     public void put(DepthMarketData in) {

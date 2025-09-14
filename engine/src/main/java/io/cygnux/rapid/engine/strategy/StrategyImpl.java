@@ -15,7 +15,6 @@ import io.mercury.common.param.Params;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 

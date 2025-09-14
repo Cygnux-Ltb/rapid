@@ -7,7 +7,7 @@ import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqSubscriber;
 import io.cygnux.rapid.core.adaptor.Adaptor;
-import io.cygnux.rapid.core.stream.StreamEventType;
+import io.cygnux.rapid.core.stream.SharedEventType;
 import io.cygnux.rapid.core.stream.StreamEventFeeder;
 import io.cygnux.rapid.core.stream.StreamEventbus;
 import io.cygnux.rapid.core.stream.event.AdaptorReport;
@@ -46,7 +46,7 @@ public class StreamEventFeederService implements StreamEventFeeder {
         JsonObjectExt record = JsonReader.toObject(body, JsonObjectExt.class);
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
-        switch (StreamEventType.valueOf(title)) {
+        switch (SharedEventType.valueOf(title)) {
             case FAST_MARKET_DATA -> loop.put(record.getWith(FastMarketData.class));
             case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketData.class));
             case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));

@@ -201,7 +201,7 @@ public class CtpAdaptor extends AbstractAdaptor {
                 .accountId(account.getAccountId())
                 .epochMillis(currentTimeMillis())
                 .msg(msg == null ? "" : msg)
-                .isAvailable(isAvailable).build();
+                .available(isAvailable).build();
     }
 
     @PostConstruct

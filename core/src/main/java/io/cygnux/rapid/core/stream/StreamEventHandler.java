@@ -21,10 +21,10 @@ import io.mercury.common.log4j2.StaticLogger;
  *
  * @author yellow013
  */
-public interface StreamEventHandler extends EventHandler<StreamEvent> {
+public interface StreamEventHandler extends EventHandler<SharedEvent> {
 
     @Override
-    default void onEvent(StreamEvent event, long sequence, boolean endOfBatch) throws Exception {
+    default void onEvent(SharedEvent event, long sequence, boolean endOfBatch) throws Exception {
         switch (event.getType()) {
             case FAST_MARKET_DATA -> handleFastMarketData(event.getFastMarketData());
             case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());

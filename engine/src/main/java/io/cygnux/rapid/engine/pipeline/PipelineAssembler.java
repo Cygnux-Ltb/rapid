@@ -12,7 +12,7 @@ import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.manager.PositionManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
 import io.cygnux.rapid.core.strategy.StrategySignalHandler;
-import io.cygnux.rapid.core.stream.StreamEvent;
+import io.cygnux.rapid.core.stream.SharedEvent;
 import io.cygnux.rapid.core.stream.StreamEventFeeder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.PostConstruct;
@@ -20,6 +20,7 @@ import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class PipelineAssembler {
@@ -50,27 +51,30 @@ public class PipelineAssembler {
     @Resource
     private StreamEventFeeder eventFeeder;
 
-    private Disruptor<StreamEvent> disruptor;
+    private Disruptor<SharedEvent> disruptor;
 
     @PostConstruct
     public void assembly() {
-        disruptor = new Disruptor<>(StreamEvent.EVENT_FACTORY, 1024,
+        disruptor = new Disruptor<>(SharedEvent.EVENT_FACTORY, 1024,
                 (Runnable runnable) -> Thread.ofPlatform().name("pipeline-worker").start(runnable),
                 ProducerType.SINGLE, new BusySpinWaitStrategy());
         disruptor.setDefaultExceptionHandler(new InternalExceptionHandler());
         // 顺序处理链
-        disruptor.handleEventsWith(
-
-                adaptorManager,
+        disruptor
+                /// 1. 管理器同时更新状态
+                .handleEventsWith(
+                        adaptorManager,
                         marketDataManager,
                         accountManager,
                         orderManager,
                         positionManager)
-                .then(strategyManager.toArray())
+                /// 2. 策略处理
+                .then(strategyManager.strategies())
+                /// 3. 信号处理
                 .then(signalHandler);
 
 
-        RingBuffer<StreamEvent> ringBuffer = disruptor.getRingBuffer();
+        RingBuffer<SharedEvent> ringBuffer = disruptor.getRingBuffer();
 
         // 模拟行情驱动
         for (int i = 0; i < 100; i++) {
@@ -85,8 +89,8 @@ public class PipelineAssembler {
     }
 
     // 异常处理器
-    static class InternalExceptionHandler implements ExceptionHandler<StreamEvent> {
-        public void handleEventException(Throwable e, long seq, StreamEvent event) {
+    static class InternalExceptionHandler implements ExceptionHandler<SharedEvent> {
+        public void handleEventException(Throwable e, long seq, SharedEvent event) {
             log.error("handle event has exception: {}, seq: {}, event: {}", e.getMessage(), seq, event, e);
         }
 

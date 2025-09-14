@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.adaptor;
 
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.stream.StreamEvent;
+import io.cygnux.rapid.core.stream.SharedEvent;
 import io.cygnux.rapid.core.stream.StreamEventbus;
 import io.cygnux.rapid.core.stream.StreamEventHandler;
 import io.cygnux.rapid.core.stream.enums.AdaptorType;
@@ -70,7 +70,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
 
     protected final StreamEventbus streamEventbus = new StreamEventbus() {
         @Override
-        public void onEvent(StreamEvent event, long sequence, boolean endOfBatch) throws Exception {
+        public void onEvent(SharedEvent event, long sequence, boolean endOfBatch) throws Exception {
             inboundHandler.onEvent(event, sequence, endOfBatch);
         }
     };

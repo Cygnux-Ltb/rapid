@@ -13,7 +13,7 @@ import io.cygnux.rapid.core.manager.PositionManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import io.cygnux.rapid.core.order.impl.ParentOrder;
-import io.cygnux.rapid.core.stream.StreamEvent;
+import io.cygnux.rapid.core.stream.SharedEvent;
 import io.cygnux.rapid.core.stream.StreamEventFeeder;
 import io.cygnux.rapid.core.stream.StreamEventbus;
 import io.cygnux.rapid.core.stream.enums.MarketDataType;
@@ -72,7 +72,7 @@ public class CoreSchedulerService implements CoreScheduler {
 
     private final StreamEventbus eventLoop = new StreamEventbus() {
         @Override
-        public void onEvent(StreamEvent event, long sequence, boolean endOfBatch) throws Exception {
+        public void onEvent(SharedEvent event, long sequence, boolean endOfBatch) throws Exception {
             switch (event.getType()) {
                 case FAST_MARKET_DATA -> handleFastMarketData(event.getFastMarketData());
                 case DEPTH_MARKET_DATA -> handleDepthMarketData(event.getDepthMarketData());
@@ -81,7 +81,7 @@ public class CoreSchedulerService implements CoreScheduler {
                 case BALANCE_REPORT -> handleBalanceReport(event.getBalanceReport());
                 case ADAPTOR_STATUS_REPORT -> handleAdaptorReport(event.getAdaptorReport());
                 case INSTRUMENT_STATUS_REPORT -> handleInstrumentStatusReport(event.getInstrumentStatusReport());
-                case STRATEGY_SIGNAL -> handleStrategySignal(event.getStrategySignal());
+                case STRATEGY_SIGNAL -> handleStrategySignal(event.getStrategySignalSlot());
                 case INVALID -> log.error("NOTE Unknown InboundEvent -> {}", event);
             }
         }
