@@ -7,10 +7,10 @@ import io.cygnux.rapid.core.adaptor.event.QueryBalance;
 import io.cygnux.rapid.core.adaptor.event.QueryOrder;
 import io.cygnux.rapid.core.adaptor.event.QueryPosition;
 import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
 import io.mercury.common.file.FileScanner;
 import io.mercury.common.lang.exception.RuntimeIOException;
 import io.mercury.common.sys.SysProperties;
@@ -100,9 +100,9 @@ public class BacktestAdaptor extends AbstractAdaptor implements BacktestControll
         report.setQty(0);
         report.setMsg("BACKTEST");
         report.setDirection(TrdDirection.LONG);
-        inboundHandler.handlePositionsReport(report);
+        inboundHandler.firePositionsReport(report);
         report.setDirection(TrdDirection.SHORT);
-        inboundHandler.handlePositionsReport(report);
+        inboundHandler.firePositionsReport(report);
         return true;
     }
 
@@ -144,7 +144,7 @@ public class BacktestAdaptor extends AbstractAdaptor implements BacktestControll
         // 将成交回报放入待发送队列
         reports.each(waitingSendReports::offer);
         // 推送行情到下游处理器
-        inboundHandler.handleFastMarketData(marketData);
+        inboundHandler.fireFastMarketData(marketData);
         sendOrderReport(nano);
     }
 
@@ -157,7 +157,7 @@ public class BacktestAdaptor extends AbstractAdaptor implements BacktestControll
             while (!waitingSendReports.isEmpty()) {
                 var report = waitingSendReports.poll();
                 log.info("BacktestAdaptor::sendOrderReport NANO {}, send report: {}", nano, report);
-                inboundHandler.handleOrderReport(report);
+                inboundHandler.fireOrderReport(report);
             }
         }
     }

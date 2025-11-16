@@ -1,19 +1,19 @@
 package io.cygnux.rapid.backtest;
 
 import io.cygnux.rapid.core.CoreScheduler;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
-import io.cygnux.rapid.core.stream.event.BalanceReport;
-import io.cygnux.rapid.core.stream.event.DepthMarketData;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 @Service("backtestScheduler")
-public class BacktestScheduler implements StreamEventHandler {
+public class BacktestScheduler implements SharedEventHandler {
 
     @Resource(name = "coreScheduler")
     private CoreScheduler scheduler;
@@ -24,8 +24,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param marketData FastMarketData
      */
     @Override
-    public void handleFastMarketData(FastMarketData marketData) {
-        scheduler.handleFastMarketData(marketData);
+    public void fireFastMarketData(FastMarketData marketData) {
+        scheduler.fireFastMarketData(marketData);
     }
 
     /**
@@ -34,8 +34,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param marketData DepthMarketData
      */
     @Override
-    public void handleDepthMarketData(DepthMarketData marketData) {
-        scheduler.handleDepthMarketData(marketData);
+    public void fireDepthMarketData(DepthMarketData marketData) {
+        scheduler.fireDepthMarketData(marketData);
     }
 
     /**
@@ -44,8 +44,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param report OrderReport
      */
     @Override
-    public void handleOrderReport(OrderReport report) {
-        scheduler.handleOrderReport(report);
+    public void fireOrderReport(OrderReport report) {
+        scheduler.fireOrderReport(report);
     }
 
     /**
@@ -54,8 +54,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param report PositionsReport
      */
     @Override
-    public void handlePositionsReport(PositionsReport report) {
-        scheduler.handlePositionsReport(report);
+    public void firePositionsReport(PositionsReport report) {
+        scheduler.firePositionsReport(report);
     }
 
     /**
@@ -64,8 +64,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param report BalanceReport
      */
     @Override
-    public void handleBalanceReport(BalanceReport report) {
-        scheduler.handleBalanceReport(report);
+    public void fireBalanceReport(BalanceReport report) {
+        scheduler.fireBalanceReport(report);
     }
 
     /**
@@ -74,8 +74,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param report AdaptorReport
      */
     @Override
-    public void handleAdaptorReport(AdaptorReport report) {
-        scheduler.handleAdaptorReport(report);
+    public void fireAdaptorReport(AdaptorReport report) {
+        scheduler.fireAdaptorReport(report);
     }
 
     /**
@@ -84,8 +84,8 @@ public class BacktestScheduler implements StreamEventHandler {
      * @param report InstrumentStatusReport
      */
     @Override
-    public void handleInstrumentStatusReport(InstrumentStatusReport report) {
-        scheduler.handleInstrumentStatusReport(report);
+    public void fireInstrumentStatusReport(InstrumentStatusReport report) {
+        scheduler.fireInstrumentStatusReport(report);
     }
 
 }
