@@ -42,7 +42,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>3.5.5</spring-boot.version>
-        <spring.version>6.2.10</spring.version>
+        <spring.version>6.2.11</spring.version>
         <mercury.version>1.0.1</mercury.version>
     </properties>
 
@@ -95,7 +95,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.38</version>
+                <version>1.18.40</version>
             </dependency>
             <!-- Jakarta Annotations API -->
             <dependency>
