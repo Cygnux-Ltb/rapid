@@ -21,7 +21,7 @@ public abstract class AbstractSymbol implements Symbol {
     @Getter
     protected final ImmutableList<TradablePeriod> tradablePeriods;
 
-    public AbstractSymbol(int symbolId, String symbolCode, Exchange exchange, PriceMultiplier multiplier,
+    protected AbstractSymbol(int symbolId, String symbolCode, Exchange exchange, PriceMultiplier multiplier,
                           ImmutableList<TradablePeriod> tradablePeriods) {
         this.symbolId = symbolId;
         this.symbolCode = symbolCode;

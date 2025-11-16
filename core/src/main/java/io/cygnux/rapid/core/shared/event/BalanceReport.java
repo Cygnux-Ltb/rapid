@@ -1,4 +1,4 @@
-package io.cygnux.rapid.core.stream.event;
+package io.cygnux.rapid.core.shared.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;

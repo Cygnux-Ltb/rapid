@@ -2,10 +2,10 @@ package io.cygnux.rapid.core.adaptor.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.stream.enums.OrdType;
-import io.cygnux.rapid.core.stream.enums.OrdValid;
-import io.cygnux.rapid.core.stream.enums.TrdAction;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.OrdType;
+import io.cygnux.rapid.core.shared.enums.OrdValid;
+import io.cygnux.rapid.core.shared.enums.TrdAction;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

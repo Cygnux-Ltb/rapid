@@ -3,11 +3,11 @@
  * <p>
  * DO NOT EDIT DIRECTLY
  */
-package io.cygnux.rapid.core.stream.event;
+package io.cygnux.rapid.core.shared.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

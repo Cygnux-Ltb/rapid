@@ -1,9 +1,9 @@
 package io.cygnux.rapid.core.order;
 
-import io.cygnux.rapid.core.stream.enums.OrdStatus;
-import io.cygnux.rapid.core.stream.enums.OrdType;
-import io.cygnux.rapid.core.stream.enums.OrdValid;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.OrdStatus;
+import io.cygnux.rapid.core.shared.enums.OrdType;
+import io.cygnux.rapid.core.shared.enums.OrdValid;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.instrument.InstrumentKeeper;
 import io.cygnux.rapid.core.order.attr.OrdPrice;
@@ -20,9 +20,6 @@ import org.slf4j.Logger;
  * @author yellow013
  */
 public abstract non-sealed class AbstractOrder implements Order {
-
-    @java.io.Serial
-    private static final long serialVersionUID = -3444258095612091354L;
 
     /**
      * ordSysId

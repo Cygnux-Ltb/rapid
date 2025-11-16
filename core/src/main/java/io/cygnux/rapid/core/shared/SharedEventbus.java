@@ -1,20 +1,20 @@
-package io.cygnux.rapid.core.stream;
+package io.cygnux.rapid.core.shared;
 
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
-import io.cygnux.rapid.core.stream.event.BalanceReport;
-import io.cygnux.rapid.core.stream.event.DepthMarketData;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
 import io.mercury.common.concurrent.disruptor.RingEventHandler;
 
-public abstract class StreamEventbus extends RingEventHandler<SharedEvent> {
+public abstract class SharedEventbus extends RingEventHandler<SharedEvent> {
 
     /**
      * 默认使用单生产者
      */
-    protected StreamEventbus() {
+    protected SharedEventbus() {
         this(RingEventHandler.singleProducer());
     }
 
@@ -23,7 +23,7 @@ public abstract class StreamEventbus extends RingEventHandler<SharedEvent> {
      *
      * @param builder Builder
      */
-    protected StreamEventbus(Builder builder) {
+    protected SharedEventbus(Builder builder) {
         super(builder.name("stream-eventbus"), SharedEvent.EVENT_FACTORY);
     }
 

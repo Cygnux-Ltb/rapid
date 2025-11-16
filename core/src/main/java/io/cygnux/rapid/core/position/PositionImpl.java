@@ -1,11 +1,9 @@
 package io.cygnux.rapid.core.position;
 
 
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.Order;
-
-import java.io.Serial;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 
 /**
  * 持仓对象基础实现
@@ -13,9 +11,6 @@ import java.io.Serial;
  * @author yellow013
  */
 public non-sealed class PositionImpl implements Position {
-
-    @Serial
-    private static final long serialVersionUID = 7464979857942714749L;
 
     private final int accountId;
 
@@ -72,6 +67,7 @@ public non-sealed class PositionImpl implements Position {
         switch (direction) {
             case LONG -> currentLongQty = qty;
             case SHORT -> currentShortQty = qty;
+            default -> {}
         }
     }
 

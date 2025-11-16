@@ -1,11 +1,11 @@
-package io.cygnux.rapid.core.stream;
+package io.cygnux.rapid.core.shared;
 
 import io.mercury.common.state.StartupException;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-public interface StreamEventFeeder extends
+public interface SharedEventFeeder extends
         // 用于清理资源
         Closeable {
 
@@ -13,7 +13,7 @@ public interface StreamEventFeeder extends
 
     void shutdown() throws IOException;
 
-    void addEventbus(StreamEventbus eventbus);
+    void addEventbus(SharedEventbus eventbus);
 
     @Override
     default void close() throws IOException {

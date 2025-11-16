@@ -1,6 +1,5 @@
 package io.cygnux.rapid.core.instrument.stock;
 
-import io.mercury.common.collections.ImmutableLists;
 import io.cygnux.rapid.core.instrument.AbstractInstrument;
 import io.cygnux.rapid.core.instrument.Exchange;
 import io.cygnux.rapid.core.instrument.Instrument;
@@ -8,6 +7,7 @@ import io.cygnux.rapid.core.instrument.Symbol;
 import io.cygnux.rapid.core.instrument.TradablePeriod;
 import io.cygnux.rapid.core.instrument.enums.InstrumentType;
 import io.cygnux.rapid.core.instrument.enums.PriceMultiplier;
+import io.mercury.common.collections.ImmutableLists;
 import lombok.Getter;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -22,8 +22,7 @@ public abstract class AbstractStock extends AbstractInstrument implements Symbol
     @Getter
     private final ImmutableList<Instrument> instruments;
 
-    protected AbstractStock(int instrumentId, String instrumentCode, Exchange exchange,
-                            PriceMultiplier priceMultiplier, int tickSize,
+    protected AbstractStock(int instrumentId, String instrumentCode, Exchange exchange, int tickSize,
                             ImmutableList<TradablePeriod> tradablePeriods) {
         super(instrumentId, instrumentCode, exchange);
         this.tickSize = tickSize;

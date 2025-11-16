@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.handler;
 
-import io.cygnux.rapid.core.stream.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
 
 @FunctionalInterface
 public interface MarketDataHandler {

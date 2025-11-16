@@ -1,15 +1,16 @@
-package io.cygnux.rapid.core.stream;
+package io.cygnux.rapid.core.shared;
 
 import com.lmax.disruptor.EventFactory;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.shared.event.ControlCommand;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
+import io.cygnux.rapid.core.shared.event.StrategySignal;
 import io.cygnux.rapid.core.strategy.StrategySlotCounter;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
-import io.cygnux.rapid.core.stream.event.BalanceReport;
-import io.cygnux.rapid.core.stream.event.DepthMarketData;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
-import io.cygnux.rapid.core.stream.event.StrategySignal;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
@@ -24,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static io.mercury.common.epoch.HighResolutionEpoch.micros;
 
 /**
- * 核心共享事件
+ * 核心事件模型
  */
 @NotThreadSafe
 public final class SharedEvent implements JsonSerializable {
@@ -46,37 +47,29 @@ public final class SharedEvent implements JsonSerializable {
     @Getter
     private SharedEventType type = SharedEventType.INVALID;
 
-    /// EVENT INSTANCE ///
     @Getter
-    private final FastMarketData fastMarketData = new FastMarketData();
+    private final Payload payload = new Payload(
+            new ControlCommand(),
+            new FastMarketData(),
+            new DepthMarketData(),
+            new InstrumentStatusReport(),
+            new AdaptorReport(),
+            new PositionsReport(),
+            new BalanceReport(),
+            new OrderReport()
+    );
 
+    /**
+     * 设置策略信号槽位, 多个策略可同时进行读写, 每个策略只写入自己的槽位
+     */
     @Getter
-    private final DepthMarketData depthMarketData = new DepthMarketData();
-
-    @Getter
-    private final InstrumentStatusReport instrumentStatusReport = new InstrumentStatusReport();
-
-    @Getter
-    private final AdaptorReport adaptorReport = new AdaptorReport();
-
-    @Getter
-    private final PositionsReport positionsReport = new PositionsReport();
-
-    @Getter
-    private final BalanceReport balanceReport = new BalanceReport();
-
-    @Getter
-    private final OrderReport orderReport = new OrderReport();
-
-    @Getter
-    private final StrategySignal[] strategySignalSlot;
-    /// EVENT INSTANCE ///
+    private final StrategySignal[] strategySignals;
 
     /**
      * For EventFactory Call
      */
     private SharedEvent() {
-        this.strategySignalSlot = new StrategySignal[StrategySlotCounter.getCurrentValue()];
+        this.strategySignals = new StrategySignal[StrategySlotCounter.getCurrentCount()];
     }
 
     /**
@@ -86,7 +79,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(FastMarketData event) {
         this.epochMicros = micros();
         this.type = SharedEventType.FAST_MARKET_DATA;
-        this.fastMarketData.copyOf(event);
+        this.payload.fastMarketData.copyOf(event);
         return this;
     }
 
@@ -97,7 +90,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(DepthMarketData event) {
         this.epochMicros = micros();
         this.type = SharedEventType.DEPTH_MARKET_DATA;
-        this.depthMarketData.copyOf(event);
+        this.payload.depthMarketData.copyOf(event);
         return this;
     }
 
@@ -108,7 +101,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(InstrumentStatusReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.INSTRUMENT_STATUS_REPORT;
-        this.instrumentStatusReport.copyOf(event);
+        this.payload.instrumentStatusReport.copyOf(event);
         return this;
     }
 
@@ -119,7 +112,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(AdaptorReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.ADAPTOR_STATUS_REPORT;
-        this.adaptorReport.copyOf(event);
+        this.payload.adaptorReport.copyOf(event);
         return this;
     }
 
@@ -130,7 +123,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(PositionsReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.POSITIONS_REPORT;
-        this.positionsReport.copyOf(event);
+        this.payload.positionsReport.copyOf(event);
         return this;
     }
 
@@ -141,7 +134,7 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(BalanceReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.BALANCE_REPORT;
-        this.balanceReport.copyOf(event);
+        this.payload.balanceReport.copyOf(event);
         return this;
     }
 
@@ -152,18 +145,20 @@ public final class SharedEvent implements JsonSerializable {
     public SharedEvent updateWith(OrderReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.ORDER_REPORT;
-        this.orderReport.copyOf(event);
+        this.payload.orderReport.copyOf(event);
         return this;
     }
 
     /**
-     * @param event OrderReport
+     *
+     * @param slot  int
+     * @param event StrategySignal
      * @return SharedEvent
      */
     public SharedEvent updateWith(int slot, StrategySignal event) {
         this.epochMicros = micros();
-        this.type = SharedEventType.STRATEGY_SIGNAL;
-        this.strategySignalSlot[slot].copyOf(event);
+        this.type = SharedEventType.STRATEGY_SIGNALS;
+        this.strategySignals[slot].copyOf(event);
         return this;
     }
 
@@ -181,14 +176,15 @@ public final class SharedEvent implements JsonSerializable {
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setObject(switch (type) {
-                    case FAST_MARKET_DATA -> fastMarketData;
-                    case DEPTH_MARKET_DATA -> depthMarketData;
-                    case ORDER_REPORT -> orderReport;
-                    case POSITIONS_REPORT -> positionsReport;
-                    case BALANCE_REPORT -> balanceReport;
-                    case ADAPTOR_STATUS_REPORT -> adaptorReport;
-                    case INSTRUMENT_STATUS_REPORT -> instrumentStatusReport;
-                    case STRATEGY_SIGNAL -> strategySignalSlot;
+                    case CONTROL_COMMAND -> payload.controlCommand;
+                    case FAST_MARKET_DATA -> payload.fastMarketData;
+                    case DEPTH_MARKET_DATA -> payload.depthMarketData;
+                    case ORDER_REPORT -> payload.orderReport;
+                    case POSITIONS_REPORT -> payload.positionsReport;
+                    case BALANCE_REPORT -> payload.balanceReport;
+                    case ADAPTOR_STATUS_REPORT -> payload.adaptorReport;
+                    case INSTRUMENT_STATUS_REPORT -> payload.instrumentStatusReport;
+                    case STRATEGY_SIGNALS -> strategySignals;
                     case SKIP -> "SKIP";
                     case INVALID -> null;
                 });
@@ -224,6 +220,17 @@ public final class SharedEvent implements JsonSerializable {
         if (isLogging.get())
             log.info("InboundEvent logging -> {}", this);
         return this;
+    }
+
+    public record Payload(
+            ControlCommand controlCommand,
+            FastMarketData fastMarketData,
+            DepthMarketData depthMarketData,
+            InstrumentStatusReport instrumentStatusReport,
+            AdaptorReport adaptorReport,
+            PositionsReport positionsReport,
+            BalanceReport balanceReport,
+            OrderReport orderReport) {
     }
 
 }

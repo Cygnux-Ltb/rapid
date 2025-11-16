@@ -1,4 +1,4 @@
-package io.cygnux.rapid.core.stream.event;
+package io.cygnux.rapid.core.shared.event;
 
 import io.cygnux.rapid.core.mdata.SavedMarketData;
 import io.mercury.common.serialization.Copyable;

@@ -1,8 +1,10 @@
-package io.cygnux.rapid.core.stream;
+package io.cygnux.rapid.core.shared;
 
 public enum SharedEventType {
 
     INVALID,
+
+    CONTROL_COMMAND,
 
     FAST_MARKET_DATA,
 
@@ -18,7 +20,7 @@ public enum SharedEventType {
 
     BALANCE_REPORT,
 
-    STRATEGY_SIGNAL,
+    STRATEGY_SIGNALS,
 
     SKIP,
 

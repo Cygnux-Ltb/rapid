@@ -7,15 +7,22 @@ public final class StrategySlotCounter {
     private StrategySlotCounter() {
     }
 
-    private static final AtomicInteger SLOT_COUNTER = new AtomicInteger(1);
+    private static final AtomicInteger COUNT = new AtomicInteger(1);
 
-
-    public static int getCurrentValue() {
-        return SLOT_COUNTER.get();
+    public static int getCurrentCount() {
+        return COUNT.get();
     }
 
-    public static void setValue(int slotCount) {
-        SLOT_COUNTER.set(slotCount);
+    public static void setCount(int count) {
+        COUNT.set(count);
+    }
+
+    public static int incr() {
+        return COUNT.incrementAndGet();
+    }
+
+    public static int decr() {
+        return COUNT.decrementAndGet();
     }
 
 }

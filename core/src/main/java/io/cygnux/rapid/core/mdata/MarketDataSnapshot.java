@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.mdata;
 
-import io.cygnux.rapid.core.stream.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
 import lombok.Getter;
 
 @Getter

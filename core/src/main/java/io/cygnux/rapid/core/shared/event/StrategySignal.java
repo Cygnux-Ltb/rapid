@@ -1,6 +1,6 @@
-package io.cygnux.rapid.core.stream.event;
+package io.cygnux.rapid.core.shared.event;
 
-import io.cygnux.rapid.core.stream.enums.OrdValid;
+import io.cygnux.rapid.core.shared.enums.OrdValid;
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
 import lombok.AllArgsConstructor;
@@ -83,11 +83,11 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
     /**
      * 订单比例
      */
-    private double ratioOfBalance;
+    private double rateOfBalance;
     /**
      * 胜率
      */
-    private double ratioOfWin;
+    private double rateOfWin;
     /**
      * 延迟时间
      */
@@ -100,6 +100,10 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
      * 备注
      */
     private String remark;
+    /**
+     * 是否有效
+     */
+    private boolean available;
 
     /**
      * TargetQty ABS
@@ -150,9 +154,9 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
         // 复制止损价格
         this.stopLoss = source.stopLoss;
         // 复制订单比例
-        this.ratioOfBalance = source.ratioOfBalance;
+        this.rateOfBalance = source.rateOfBalance;
         // 复制胜率
-        this.ratioOfWin = source.ratioOfWin;
+        this.rateOfWin = source.rateOfWin;
         // 复制延迟时间
         this.delayMillis = source.delayMillis;
         // 复制操作ID
@@ -171,6 +175,5 @@ public class StrategySignal extends JsonBean implements Copyable<StrategySignal>
         // targetQty or orderWatermark 未提供
         return targetQty != 0 || orderWatermark != 0;
     }
-
 
 }

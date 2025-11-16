@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.adaptor.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.stream.enums.MarketDataType;
+import io.cygnux.rapid.core.shared.enums.MarketDataType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

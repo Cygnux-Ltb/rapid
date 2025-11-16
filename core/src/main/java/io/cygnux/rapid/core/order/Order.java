@@ -1,24 +1,23 @@
 package io.cygnux.rapid.core.order;
 
-import io.mercury.common.sequence.OrderedObject;
-import io.cygnux.rapid.core.stream.enums.OrdStatus;
-import io.cygnux.rapid.core.stream.enums.OrdType;
-import io.cygnux.rapid.core.stream.enums.OrdValid;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.attr.OrdPrice;
 import io.cygnux.rapid.core.order.attr.OrdQty;
 import io.cygnux.rapid.core.order.attr.OrdRemark;
 import io.cygnux.rapid.core.order.attr.OrdTimestamp;
+import io.cygnux.rapid.core.shared.enums.OrdStatus;
+import io.cygnux.rapid.core.shared.enums.OrdType;
+import io.cygnux.rapid.core.shared.enums.OrdValid;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.mercury.common.sequence.OrderedObject;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
 
 /**
  * @author yellow013
  */
-public sealed interface Order extends OrderedObject<Order>, Serializable permits AbstractOrder {
+public sealed interface Order extends OrderedObject<Order> permits AbstractOrder {
 
     /**
      * ordSysId构成, 使用雪花算法实现<br>

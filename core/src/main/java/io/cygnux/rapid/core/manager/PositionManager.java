@@ -5,14 +5,22 @@ import io.cygnux.rapid.core.instrument.InstrumentKeeper;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import io.cygnux.rapid.core.position.AccountPosition;
 import io.cygnux.rapid.core.position.Position;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
 
 /**
  * 持仓管理接口
  *
  * @author yellow013
  */
-public interface PositionManager extends StreamEventHandler {
+public interface PositionManager extends SharedEventHandler {
+
+
+
+    @Override
+    default void firePositionsReport(PositionsReport report) {
+
+    }
 
     /**
      * 获取实际账户持仓集合

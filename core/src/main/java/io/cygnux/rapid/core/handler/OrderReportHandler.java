@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.handler;
 
-import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
 
 /**
  * 订单回报处理器

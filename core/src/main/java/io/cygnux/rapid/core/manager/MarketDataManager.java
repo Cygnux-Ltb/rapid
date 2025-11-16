@@ -1,15 +1,34 @@
 package io.cygnux.rapid.core.manager;
 
+import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.MarketDataBucket;
 import io.cygnux.rapid.core.mdata.MarketDataSnapshot;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
 
-public interface MarketDataManager extends StreamEventHandler {
+public interface MarketDataManager extends SharedEventHandler {
+
+    @Override
+    default void fireInstrumentStatusReport(InstrumentStatusReport report) {
+        onInstrumentStatusReport(report);
+    }
+
+    void onInstrumentStatusReport(InstrumentStatusReport report);
+
+    @Override
+    default void fireFastMarketData(FastMarketData marketData) {
+        onMarketData(marketData);
+    }
 
     default void onMarketData(FastMarketData marketData) {
         getBucket(marketData.getInstrumentCode()).onMarketData(marketData);
+    }
+
+    @Override
+    default void fireDepthMarketData(DepthMarketData marketData) {
+
     }
 
     MarketDataBucket getBucket(String instrumentCode);

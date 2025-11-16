@@ -1,8 +1,8 @@
-package io.cygnux.rapid.core.stream.event;
+package io.cygnux.rapid.core.shared.event;
 
-import io.cygnux.rapid.core.stream.enums.OrdStatus;
-import io.cygnux.rapid.core.stream.enums.TrdAction;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.OrdStatus;
+import io.cygnux.rapid.core.shared.enums.TrdAction;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
 import lombok.AllArgsConstructor;

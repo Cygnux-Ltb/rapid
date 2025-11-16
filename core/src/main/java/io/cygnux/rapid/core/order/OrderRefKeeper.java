@@ -15,5 +15,4 @@ public interface OrderRefKeeper {
 
     int nextOrderRef();
 
-
 }

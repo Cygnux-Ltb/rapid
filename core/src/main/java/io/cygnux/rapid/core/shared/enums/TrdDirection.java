@@ -1,4 +1,4 @@
-package io.cygnux.rapid.core.stream.enums;
+package io.cygnux.rapid.core.shared.enums;
 
 import io.cygnux.rapid.core.trade.TrdConstant;
 import lombok.Getter;

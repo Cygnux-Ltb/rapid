@@ -8,15 +8,22 @@ import io.cygnux.rapid.core.adaptor.event.QueryBalance;
 import io.cygnux.rapid.core.adaptor.event.QueryOrder;
 import io.cygnux.rapid.core.adaptor.event.QueryPosition;
 import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.Closeable;
 
 @ThreadSafe
-public interface AdaptorManager extends Closeable, StreamEventHandler {
+public interface AdaptorManager extends Closeable, SharedEventHandler {
+
+    void onAdaptorReport(AdaptorReport report);
+
+    @Override
+    default void fireAdaptorReport(AdaptorReport report) {
+        onAdaptorReport(report);
+    }
 
     boolean isClosed();
 

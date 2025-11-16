@@ -7,7 +7,7 @@ import io.cygnux.rapid.core.mdata.MarketDataConsumer;
 import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.order.OrderHandler;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.mercury.common.state.Enableable;
@@ -24,10 +24,8 @@ public interface Strategy extends
         Comparable<Strategy>,
         // 行情处理
         MarketDataConsumer,
-        // 订单处理
-        OrderHandler,
         // 流事件处理器
-        StreamEventHandler {
+        SharedEventHandler {
 
     Strategy setParams(Params params);
 

@@ -1,9 +1,6 @@
 package io.cygnux.rapid.core;
 
-import io.cygnux.rapid.core.stream.StreamEventHandler;
-import io.cygnux.rapid.core.stream.event.StrategySignal;
-import io.cygnux.rapid.core.strategy.StrategySignalHandler;
-import org.eclipse.collections.api.list.MutableList;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
 
 /**
  * 需要实现的事件调度器接口<p>
@@ -12,21 +9,7 @@ import org.eclipse.collections.api.list.MutableList;
  * 2.负责策略信号的收集与处理.<p>
  * 3.负责管理出站事件的发布.
  */
-public interface CoreScheduler extends StreamEventHandler, StrategySignalHandler {
-
-    /**
-     * 对本次数据运行产生的信号进行处理
-     */
-    default void handleStrategySignal(MutableList<StrategySignal> signals) {
-        signals.each(this::handleStrategySignal);
-        signals.clear();
-    }
-
-    /**
-     * 对本次数据运行产生的信号进行处理
-     *
-     * @param signal StrategySignal
-     */
-    void handleStrategySignal(StrategySignal signal);
+@Deprecated
+public interface CoreScheduler extends SharedEventHandler {
 
 }

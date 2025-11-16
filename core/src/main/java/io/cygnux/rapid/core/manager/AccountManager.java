@@ -5,9 +5,33 @@ import io.cygnux.rapid.core.account.AccountException;
 import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.account.SubAccountException;
 import io.cygnux.rapid.core.account.SubAccountMapping;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
 
-public interface AccountManager extends StreamEventHandler {
+/**
+ * Account管理器接口
+ *
+ */
+public interface AccountManager extends SharedEventHandler {
+
+    /**
+     *
+     * @param report AdaptorReport
+     */
+    void onAdaptorReport(AdaptorReport report);
+
+    @Override
+    default void fireAdaptorReport(AdaptorReport report) {
+        onAdaptorReport(report);
+    }
+
+    void onBalanceReport(BalanceReport report);
+
+    @Override
+    default void fireBalanceReport(BalanceReport report) {
+        onBalanceReport(report);
+    }
 
     /**
      * @param subAccount SubAccount

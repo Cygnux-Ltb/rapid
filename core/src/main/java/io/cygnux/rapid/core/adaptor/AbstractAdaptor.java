@@ -1,10 +1,10 @@
 package io.cygnux.rapid.core.adaptor;
 
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.stream.SharedEvent;
-import io.cygnux.rapid.core.stream.StreamEventbus;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
-import io.cygnux.rapid.core.stream.enums.AdaptorType;
+import io.cygnux.rapid.core.shared.SharedEvent;
+import io.cygnux.rapid.core.shared.SharedEventbus;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.shared.enums.AdaptorType;
 import io.cygnux.rapid.core.adaptor.event.CancelOrder;
 import io.cygnux.rapid.core.adaptor.event.NewOrder;
 import io.cygnux.rapid.core.adaptor.event.QueryBalance;
@@ -66,9 +66,9 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
     private RingEventbus<SentEvent> receiveQueue;
 
     // 入站队列处理器
-    protected final StreamEventHandler inboundHandler;
+    protected final SharedEventHandler inboundHandler;
 
-    protected final StreamEventbus streamEventbus = new StreamEventbus() {
+    protected final SharedEventbus aggregateEventbus = new SharedEventbus() {
         @Override
         public void onEvent(SharedEvent event, long sequence, boolean endOfBatch) throws Exception {
             inboundHandler.onEvent(event, sequence, endOfBatch);
@@ -79,7 +79,7 @@ public abstract non-sealed class AbstractAdaptor extends EnableableComponent imp
      * @param account Account
      * @param isAsync boolean
      */
-    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync, StreamEventHandler inboundHandler) {
+    protected AbstractAdaptor(@Nonnull Account account, boolean isAsync, SharedEventHandler inboundHandler) {
         nonNull(account, "account");
         this.account = account;
         this.isAsync = isAsync;

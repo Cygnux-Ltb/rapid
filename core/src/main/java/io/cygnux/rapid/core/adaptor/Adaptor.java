@@ -3,7 +3,7 @@ package io.cygnux.rapid.core.adaptor;
 import io.mercury.common.state.Enableable;
 import io.mercury.common.state.StartupException;
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.stream.enums.AdaptorType;
+import io.cygnux.rapid.core.shared.enums.AdaptorType;
 import io.cygnux.rapid.core.adaptor.event.CancelOrder;
 import io.cygnux.rapid.core.adaptor.event.NewOrder;
 import io.cygnux.rapid.core.adaptor.event.QueryBalance;

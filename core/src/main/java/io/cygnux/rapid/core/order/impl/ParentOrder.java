@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.order.impl;
 
-import io.cygnux.rapid.core.stream.enums.OrdType;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.OrdType;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import io.cygnux.rapid.core.order.AbstractOrder;
 import lombok.Getter;
 import org.eclipse.collections.api.list.MutableList;
