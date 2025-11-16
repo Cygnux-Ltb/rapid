@@ -1,6 +1,6 @@
 package io.cygnux.rapid.adaptor.ctp.consts;
 
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
 
 /**
  * TFtdcDirectionType是一个买卖方向类型 <br>

@@ -1,6 +1,6 @@
 package io.cygnux.rapid.adaptor.ctp.consts;
 
-import io.cygnux.rapid.core.stream.enums.OrdStatus;
+import io.cygnux.rapid.core.shared.enums.OrdStatus;
 
 import javax.annotation.Nonnull;
 
