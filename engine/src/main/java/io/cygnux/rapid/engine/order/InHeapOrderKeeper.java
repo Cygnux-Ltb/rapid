@@ -2,11 +2,12 @@ package io.cygnux.rapid.engine.order;
 
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.order.OrderBook;
+import io.cygnux.rapid.core.order.OrderBookImpl;
 import io.cygnux.rapid.core.order.OrderKeeper;
 import io.cygnux.rapid.core.order.attr.OrdPrice;
 import io.cygnux.rapid.core.order.attr.OrdQty;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
-import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -20,6 +21,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import static io.cygnux.rapid.core.order.impl.ChildOrder.newWithExternal;
 import static io.cygnux.rapid.engine.order.OrderActuator.updateOrderWith;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 统一管理订单<br>
@@ -29,9 +31,9 @@ import static io.cygnux.rapid.engine.order.OrderActuator.updateOrderWith;
  *
  * @author yellow013
  */
-
 @NotThreadSafe
 @Component("inHeap")
+@org.springframework.core.annotation.Order(HIGHEST_PRECEDENCE)
 public final class InHeapOrderKeeper implements OrderKeeper {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(InHeapOrderKeeper.class);
@@ -39,7 +41,7 @@ public final class InHeapOrderKeeper implements OrderKeeper {
     /**
      * 存储所有的order
      */
-    private final OrderBook allOrders = new OrderBook(Capacity.HEX_2_000);
+    private final OrderBook allOrders = new OrderBookImpl(Capacity.HEX_2_000);
 
     /**
      * 按照subAccountId分组存储
@@ -89,7 +91,7 @@ public final class InHeapOrderKeeper implements OrderKeeper {
      */
     @Override
     public OrderBook getSubAccountOrderBook(int subAccountId) {
-        return subAccountOrders.getIfAbsentPut(subAccountId, () -> new OrderBook(Capacity.HEX_100));
+        return subAccountOrders.getIfAbsentPut(subAccountId, () -> new OrderBookImpl(Capacity.HEX_100));
     }
 
     /**
@@ -98,7 +100,7 @@ public final class InHeapOrderKeeper implements OrderKeeper {
      */
     @Override
     public OrderBook getAccountOrderBook(int accountId) {
-        return accountOrders.getIfAbsentPut(accountId, () -> new OrderBook(Capacity.HEX_100));
+        return accountOrders.getIfAbsentPut(accountId, () -> new OrderBookImpl(Capacity.HEX_100));
     }
 
     /**
@@ -107,7 +109,7 @@ public final class InHeapOrderKeeper implements OrderKeeper {
      */
     @Override
     public OrderBook getStrategyOrderBook(int strategyId) {
-        return strategyOrders.getIfAbsentPut(strategyId, () -> new OrderBook(Capacity.HEX_200));
+        return strategyOrders.getIfAbsentPut(strategyId, () -> new OrderBookImpl(Capacity.HEX_200));
     }
 
     /**
@@ -116,7 +118,7 @@ public final class InHeapOrderKeeper implements OrderKeeper {
      */
     @Override
     public OrderBook getInstrumentOrderBook(int instrumentId) {
-        return instrumentOrders.getIfAbsentPut(instrumentId, () -> new OrderBook(Capacity.HEX_200));
+        return instrumentOrders.getIfAbsentPut(instrumentId, () -> new OrderBookImpl(Capacity.HEX_200));
     }
 
     /**
@@ -137,24 +139,6 @@ public final class InHeapOrderKeeper implements OrderKeeper {
 
 
     /**
-     * @param order Order
-     */
-    private void updateOrder(ChildOrder order) {
-        switch (order.getStatus()) {
-            case FILLED, CANCELED, NEW_REJECTED, CANCEL_REJECTED -> {
-                allOrders.finishOrder(order);
-                getSubAccountOrderBook(order.getSubAccountId()).finishOrder(order);
-                getAccountOrderBook(order.getAccountId()).finishOrder(order);
-                getStrategyOrderBook(order.getStrategyId()).finishOrder(order);
-                getInstrumentOrderBook(order.getInstrument()).finishOrder(order);
-            }
-            default ->
-                    log.info("Not need processed, strategyId==[{}], ordSysId==[{}], status==[{}]", order.getStrategyId(),
-                            order.getOrdSysId(), order.getStatus());
-        }
-    }
-
-    /**
      * 处理订单回报
      *
      * @param report OrderReport
@@ -162,15 +146,15 @@ public final class InHeapOrderKeeper implements OrderKeeper {
      */
     @Override
     public ChildOrder onOrderReport(@Nonnull OrderReport report) {
-        log.info("Handle OrderEvent, report -> {}", report);
+        log.info("onOrderReport start, report -> {}", report);
         // 根据订单回报查找所属订单
         var order = getOrder(report.getOrdSysId());
         if (order == null) {
             // 处理订单由外部系统发出而收到报单回报的情况
-            log.warn("Received other source order, ordSysId==[{}]", report.getOrdSysId());
+            log.warn("onOrderReport received other source order, ordSysId==[{}]", report.getOrdSysId());
             // 根据成交回报创建新订单, 放入OrderBook托管
             // 用于构建外部来源的新订单, 通常是根据系统未托管的订单回报构建, 此时需要传递订单当前状态
-            ChildOrder childOrder = newWithExternal(report.getAccountId(), report.getInstrumentCode(),
+            var childOrder = newWithExternal(report.getAccountId(), report.getInstrumentCode(),
                     OrdQty.withOffer(report.getOfferQty()).addFilledQty(report.getFilledQty()),
                     OrdPrice.withOffer(report.getOfferPrice()), report.getDirection(), report.getAction());
             childOrder.setBrokerRef0(report.getOrderRef());
@@ -187,6 +171,24 @@ public final class InHeapOrderKeeper implements OrderKeeper {
         // 更新Keeper内订单
         updateOrder(childOrder);
         return childOrder;
+    }
+
+    /**
+     * @param order Order
+     */
+    private void updateOrder(ChildOrder order) {
+        switch (order.getStatus()) {
+            case FILLED, CANCELED, NEW_REJECTED, CANCEL_REJECTED -> {
+                allOrders.onCompleted(order);
+                getSubAccountOrderBook(order.getSubAccountId()).onCompleted(order);
+                getAccountOrderBook(order.getAccountId()).onCompleted(order);
+                getStrategyOrderBook(order.getStrategyId()).onCompleted(order);
+                getInstrumentOrderBook(order.getInstrument()).onCompleted(order);
+            }
+            default ->
+                    log.info("Not need processed, strategyId==[{}], ordSysId==[{}], status==[{}]", order.getStrategyId(),
+                            order.getOrdSysId(), order.getStatus());
+        }
     }
 
 

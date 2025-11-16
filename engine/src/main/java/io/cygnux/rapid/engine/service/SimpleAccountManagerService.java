@@ -10,6 +10,8 @@ import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.account.SubAccountException;
 import io.cygnux.rapid.core.account.SubAccountMapping;
 import io.cygnux.rapid.core.manager.AccountManager;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.mercury.common.collections.CollectionUtil;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -18,6 +20,7 @@ import jakarta.annotation.Resource;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.slf4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -25,16 +28,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+
 /**
  * 用于全局管理 [Account]
  *
  * @author yellow013
  */
 @NotThreadSafe
-@Service("common")
-public final class AccountManagerService implements AccountManager {
+@Service
+@Order(HIGHEST_PRECEDENCE)
+public final class SimpleAccountManagerService implements AccountManager {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(AccountManagerService.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SimpleAccountManagerService.class);
 
     /**
      * 存储[SubAccount]信息, 一对一关系, 以subAccountId索引
@@ -67,7 +73,7 @@ public final class AccountManagerService implements AccountManager {
     @Resource
     private AccountService service;
 
-    private AccountManagerService() {
+    private SimpleAccountManagerService() {
     }
 
     @PostConstruct
@@ -95,6 +101,20 @@ public final class AccountManagerService implements AccountManager {
                 throw ise;
             }
         }
+    }
+
+    /**
+     *
+     * @param report AdaptorReport
+     */
+    @Override
+    public void onAdaptorReport(AdaptorReport report) {
+
+    }
+
+    @Override
+    public void onBalanceReport(BalanceReport report) {
+
     }
 
     @Override

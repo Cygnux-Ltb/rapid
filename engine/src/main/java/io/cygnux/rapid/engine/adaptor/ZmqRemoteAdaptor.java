@@ -2,7 +2,7 @@ package io.cygnux.rapid.engine.adaptor;
 
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adaptor.AbstractAdaptor;
-import io.cygnux.rapid.core.stream.StreamEventHandler;
+import io.cygnux.rapid.core.shared.SharedEventHandler;
 import io.cygnux.rapid.core.adaptor.event.CancelOrder;
 import io.cygnux.rapid.core.adaptor.event.NewOrder;
 import io.cygnux.rapid.core.adaptor.event.QueryBalance;
@@ -38,7 +38,7 @@ public class ZmqRemoteAdaptor extends AbstractAdaptor {
     /**
      * @param account Account
      */
-    public ZmqRemoteAdaptor(@Nonnull Account account, StreamEventHandler inboundHandler) {
+    public ZmqRemoteAdaptor(@Nonnull Account account, SharedEventHandler inboundHandler) {
         super(account, false, inboundHandler);
         this.publisher = ZmqConfigurator
                 .ipc(publishPath())

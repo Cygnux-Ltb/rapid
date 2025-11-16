@@ -40,13 +40,6 @@
             <artifactId>console-service</artifactId>
             <version>1.0</version>
         </dependency>
-        <!-- The first Java Actor System supporting fibers from Project Loom -->
-        <dependency>
-            <groupId>eu.lucaventuri</groupId>
-            <artifactId>fibry</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-
     </dependencies>
 
 </project>

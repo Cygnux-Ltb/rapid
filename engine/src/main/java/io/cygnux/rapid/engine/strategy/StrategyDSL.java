@@ -27,8 +27,9 @@ public final class StrategyDSL {
 
         public StrategyBuilder setInstrument(Instrument... instruments) {
             this.instruments = ImmutableMaps.newImmutableIntMap(
-                    ImmutableSets.from(instruments),
-                    Instrument::getInstrumentId);
+                    Instrument::getInstrumentId,
+                    ImmutableSets.from(instruments)
+                    );
             return this;
         }
 

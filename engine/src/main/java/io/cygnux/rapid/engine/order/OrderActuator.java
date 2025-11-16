@@ -1,8 +1,8 @@
 package io.cygnux.rapid.engine.order;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.cygnux.rapid.core.stream.enums.OrdStatus;
-import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.shared.enums.OrdStatus;
+import io.cygnux.rapid.core.shared.event.OrderReport;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import org.slf4j.Logger;
 

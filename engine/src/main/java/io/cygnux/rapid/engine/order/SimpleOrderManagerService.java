@@ -1,16 +1,19 @@
 package io.cygnux.rapid.engine.order;
 
 import io.cygnux.rapid.core.manager.AccountManager;
-import io.cygnux.rapid.core.stream.event.OrderReport;
+import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.order.OrderBook;
 import io.cygnux.rapid.core.order.OrderKeeper;
-import io.cygnux.rapid.core.manager.OrderManager;
+import io.cygnux.rapid.core.shared.event.OrderReport;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+
 @Service
-public final class OrderManagerService implements OrderManager {
+@org.springframework.core.annotation.Order(HIGHEST_PRECEDENCE + 1)
+public final class SimpleOrderManagerService implements OrderManager {
 
     @Resource
     private AccountManager accountManager;
@@ -18,7 +21,7 @@ public final class OrderManagerService implements OrderManager {
     @Resource(name = "inHeap")
     private OrderKeeper orderKeeper;
 
-    private OrderManagerService() {
+    private SimpleOrderManagerService() {
     }
 
     @Override
@@ -34,8 +37,8 @@ public final class OrderManagerService implements OrderManager {
     }
 
     @Override
-    public Order getOrder(long orderSysId) {
-        return orderKeeper.getOrder(orderSysId);
+    public Order getOrder(long ordSysId) {
+        return orderKeeper.getOrder(ordSysId);
     }
 
     @Override

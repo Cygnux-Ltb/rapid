@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.strategy;
 
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
 import io.cygnux.rapid.core.handler.AdaptorReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;

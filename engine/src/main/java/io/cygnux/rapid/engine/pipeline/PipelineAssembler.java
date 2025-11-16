@@ -11,18 +11,20 @@ import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.manager.PositionManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
-import io.cygnux.rapid.core.strategy.StrategySignalHandler;
-import io.cygnux.rapid.core.stream.SharedEvent;
-import io.cygnux.rapid.core.stream.StreamEventFeeder;
+import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
+import io.cygnux.rapid.core.shared.SharedEvent;
+import io.cygnux.rapid.core.shared.SharedEventFeeder;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
 @Component
+@Order
 public class PipelineAssembler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(PipelineAssembler.class);
@@ -46,10 +48,10 @@ public class PipelineAssembler {
     private StrategyManager strategyManager;
 
     @Resource
-    private StrategySignalHandler signalHandler;
+    private StrategySignalAggregator signalHandler;
 
     @Resource
-    private StreamEventFeeder eventFeeder;
+    private SharedEventFeeder eventFeeder;
 
     private Disruptor<SharedEvent> disruptor;
 

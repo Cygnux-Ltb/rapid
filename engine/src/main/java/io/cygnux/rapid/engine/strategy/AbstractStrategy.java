@@ -12,12 +12,12 @@ import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.risk.CircuitBreaker;
+import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.event.StrategySignal;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.core.strategy.StrategyParam;
-import io.cygnux.rapid.core.strategy.StrategySignalHandler;
-import io.cygnux.rapid.core.stream.enums.TrdDirection;
-import io.cygnux.rapid.core.stream.event.StrategySignal;
+import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
 import io.cygnux.rapid.engine.position.PositionKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
@@ -30,7 +30,6 @@ import lombok.Getter;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
@@ -39,7 +38,6 @@ import java.util.stream.Stream;
 import static io.mercury.common.lang.Asserter.atWithinRange;
 import static io.mercury.common.lang.Asserter.nonEmpty;
 
-@Component
 public abstract class AbstractStrategy extends EnableableComponent
         implements Strategy, CircuitBreaker {
 
@@ -109,7 +107,7 @@ public abstract class AbstractStrategy extends EnableableComponent
     protected PositionKeeper positionKeeper;
 
     @Resource(name = "coreScheduler")
-    protected StrategySignalHandler signalHandler;
+    protected StrategySignalAggregator signalHandler;
 
     protected AbstractStrategy(int strategyId, String strategyName,
                                SubAccount subAccount, Instrument... instruments) {

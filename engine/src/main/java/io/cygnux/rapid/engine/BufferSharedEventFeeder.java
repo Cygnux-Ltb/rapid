@@ -1,16 +1,16 @@
 package io.cygnux.rapid.engine;
 
 import io.cygnux.rapid.core.adaptor.Adaptor;
-import io.cygnux.rapid.core.stream.StreamEventFeeder;
-import io.cygnux.rapid.core.stream.SharedEventType;
-import io.cygnux.rapid.core.stream.StreamEventbus;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
-import io.cygnux.rapid.core.stream.event.BalanceReport;
-import io.cygnux.rapid.core.stream.event.DepthMarketData;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
-import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
+import io.cygnux.rapid.core.shared.SharedEventFeeder;
+import io.cygnux.rapid.core.shared.SharedEventType;
+import io.cygnux.rapid.core.shared.SharedEventbus;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.state.StartupException;
 import io.mercury.serialization.json.JsonObjectExt;
@@ -25,15 +25,15 @@ import java.io.IOException;
 import static io.mercury.common.thread.Threads.startNewMaxPriorityThread;
 
 @Service
-public class BufferStreamEventFeeder implements StreamEventFeeder {
+public class BufferSharedEventFeeder implements SharedEventFeeder {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(BufferStreamEventFeeder.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(BufferSharedEventFeeder.class);
 
     private final ZmqSubscriber subscriber = ZmqConfigurator
             .ipc(Adaptor.publishPath())
             .createSubscriber(this::handleMsg);
 
-    private StreamEventbus loop;
+    private SharedEventbus eventbus;
 
     @Override
     public void startup() throws StartupException {
@@ -47,13 +47,13 @@ public class BufferStreamEventFeeder implements StreamEventFeeder {
         long epochTime = record.getEpochTime();
         String title = record.getTitle();
         switch (SharedEventType.valueOf(title)) {
-            case FAST_MARKET_DATA -> loop.put(record.getWith(FastMarketData.class));
-            case DEPTH_MARKET_DATA -> loop.put(record.getWith(DepthMarketData.class));
-            case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));
-            case POSITIONS_REPORT -> loop.put(record.getWith(PositionsReport.class));
-            case BALANCE_REPORT -> loop.put(record.getWith(BalanceReport.class));
-            case ADAPTOR_STATUS_REPORT -> loop.put(record.getWith(AdaptorReport.class));
-            case INSTRUMENT_STATUS_REPORT -> loop.put(record.getWith(InstrumentStatusReport.class));
+            case FAST_MARKET_DATA -> eventbus.put(record.getWith(FastMarketData.class));
+            case DEPTH_MARKET_DATA -> eventbus.put(record.getWith(DepthMarketData.class));
+            case ORDER_REPORT -> eventbus.put(record.getWith(OrderReport.class));
+            case POSITIONS_REPORT -> eventbus.put(record.getWith(PositionsReport.class));
+            case BALANCE_REPORT -> eventbus.put(record.getWith(BalanceReport.class));
+            case ADAPTOR_STATUS_REPORT -> eventbus.put(record.getWith(AdaptorReport.class));
+            case INSTRUMENT_STATUS_REPORT -> eventbus.put(record.getWith(InstrumentStatusReport.class));
             case INVALID -> log.error("Invalid event received -> {}", record);
         }
 //        log.info("Received -> epochMicros == {}, title == {}, From topic -> {}", epochTime, title, topic);
@@ -67,8 +67,8 @@ public class BufferStreamEventFeeder implements StreamEventFeeder {
     }
 
     @Override
-    public void addEventbus(StreamEventbus eventbus) {
-        this.loop = eventbus;
+    public void addEventbus(SharedEventbus eventbus) {
+        this.eventbus = eventbus;
     }
 
 }

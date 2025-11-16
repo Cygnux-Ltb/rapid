@@ -7,16 +7,16 @@ import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqSubscriber;
 import io.cygnux.rapid.core.adaptor.Adaptor;
-import io.cygnux.rapid.core.stream.SharedEventType;
-import io.cygnux.rapid.core.stream.StreamEventFeeder;
-import io.cygnux.rapid.core.stream.StreamEventbus;
-import io.cygnux.rapid.core.stream.event.AdaptorReport;
-import io.cygnux.rapid.core.stream.event.BalanceReport;
-import io.cygnux.rapid.core.stream.event.DepthMarketData;
-import io.cygnux.rapid.core.stream.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.stream.event.OrderReport;
-import io.cygnux.rapid.core.stream.event.PositionsReport;
-import io.cygnux.rapid.core.stream.event.FastMarketData;
+import io.cygnux.rapid.core.shared.SharedEventType;
+import io.cygnux.rapid.core.shared.SharedEventFeeder;
+import io.cygnux.rapid.core.shared.SharedEventbus;
+import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.shared.event.DepthMarketData;
+import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.shared.event.PositionsReport;
+import io.cygnux.rapid.core.shared.event.FastMarketData;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +25,15 @@ import java.io.IOException;
 import static io.mercury.common.thread.Threads.startNewMaxPriorityThread;
 
 @Service
-public class StreamEventFeederService implements StreamEventFeeder {
+public class SharedEventFeederService implements SharedEventFeeder {
 
-    private static final Logger log = Log4j2LoggerFactory.getLogger(StreamEventFeederService.class);
+    private static final Logger log = Log4j2LoggerFactory.getLogger(SharedEventFeederService.class);
 
     private final ZmqSubscriber subscriber = ZmqConfigurator
             .ipc(Adaptor.publishPath())
             .createSubscriber(this::handleMsg);
 
-    private StreamEventbus loop;
+    private SharedEventbus loop;
 
     @Override
     public void startup() throws StartupException {
@@ -67,7 +67,7 @@ public class StreamEventFeederService implements StreamEventFeeder {
     }
 
     @Override
-    public void addEventbus(StreamEventbus eventbus) {
+    public void addEventbus(SharedEventbus eventbus) {
         this.loop = eventbus;
     }
 
