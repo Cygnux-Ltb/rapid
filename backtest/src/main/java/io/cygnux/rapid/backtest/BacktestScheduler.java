@@ -2,7 +2,7 @@ package io.cygnux.rapid.backtest;
 
 import io.cygnux.rapid.core.CoreScheduler;
 import io.cygnux.rapid.core.shared.SharedEventHandler;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
 import io.cygnux.rapid.core.shared.event.FastMarketData;
@@ -74,7 +74,7 @@ public class BacktestScheduler implements SharedEventHandler {
      * @param report AdaptorReport
      */
     @Override
-    public void fireAdaptorReport(AdaptorReport report) {
+    public void fireAdaptorReport(AdapterReport report) {
         scheduler.fireAdaptorReport(report);
     }
 

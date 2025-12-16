@@ -6,7 +6,7 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import io.cygnux.rapid.core.manager.AccountManager;
-import io.cygnux.rapid.core.manager.AdaptorManager;
+import io.cygnux.rapid.core.manager.AdapterManager;
 import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.manager.PositionManager;
@@ -30,7 +30,7 @@ public class PipelineAssembler {
     private static final Logger log = Log4j2LoggerFactory.getLogger(PipelineAssembler.class);
 
     @Resource
-    private AdaptorManager adaptorManager;
+    private AdapterManager adapterManager;
 
     @Resource
     private MarketDataManager marketDataManager;
@@ -65,7 +65,7 @@ public class PipelineAssembler {
         disruptor
                 /// 1. 管理器同时更新状态
                 .handleEventsWith(
-                        adaptorManager,
+                        adapterManager,
                         marketDataManager,
                         accountManager,
                         orderManager,

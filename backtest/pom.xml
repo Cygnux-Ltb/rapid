@@ -5,16 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.cygnux.rapid</groupId>
-        <artifactId>rapid</artifactId>
+        <artifactId>parent</artifactId>
         <version>1.0</version>
     </parent>
 
     <artifactId>backtest</artifactId>
+    <name>backtest</name>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>

@@ -1,8 +1,8 @@
 package io.cygnux.rapid.engine.strategy;
 
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
-import io.cygnux.rapid.core.handler.AdaptorReportHandler;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
+import io.cygnux.rapid.core.handler.AdapterReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.SavedMarketData;
@@ -31,10 +31,10 @@ public class StrategyImpl extends AbstractStrategy {
         this.marketDataHandler = marketDataHandler;
     }
 
-    private final AdaptorReportHandler adaptorReportHandler = event -> {
+    private final AdapterReportHandler adapterReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
-                getStrategyName(), event.getAdaptorId(), event.getAdaptorType(), event.isAvailable());
-        switch (event.getAdaptorType()) {
+                getStrategyName(), event.getAdaptorId(), event.getAdapterType(), event.isAvailable());
+        switch (event.getAdapterType()) {
             case MARKET_DATA -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 //adaptor.subscribeMarketData(instrument);
@@ -59,8 +59,8 @@ public class StrategyImpl extends AbstractStrategy {
 
     };
 
-    public void onAdaptorEvent(@Nonnull AdaptorReport event) {
-        adaptorReportHandler.onAdaptorReport(event);
+    public void onAdaptorEvent(@Nonnull AdapterReport event) {
+        adapterReportHandler.onAdapterReport(event);
     }
 
     @Override

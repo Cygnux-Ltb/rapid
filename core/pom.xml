@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.cygnux.rapid</groupId>
-        <artifactId>rapid</artifactId>
+        <artifactId>parent</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -12,8 +12,6 @@
     <name>core</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
@@ -22,7 +20,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <enablePreview>true</enablePreview>
                     <parameters>true</parameters>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

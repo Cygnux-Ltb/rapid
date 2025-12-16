@@ -4,8 +4,8 @@ import io.cygnux.rapid.core.shared.enums.OrdStatus;
 import io.cygnux.rapid.core.shared.enums.TrdDirection;
 import io.cygnux.rapid.core.shared.event.FastMarketData;
 import io.cygnux.rapid.core.shared.event.OrderReport;
-import io.cygnux.rapid.core.adaptor.event.CancelOrder;
-import io.cygnux.rapid.core.adaptor.event.NewOrder;
+import io.cygnux.rapid.core.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.adapter.event.NewOrder;
 import io.mercury.common.collections.ImmutableLists;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.epoch.HighResolutionEpoch;
@@ -128,7 +128,7 @@ public final class ImmediatelyMatchMachine {
         report.setTradePrice(newOrder.getOfferPrice());
         report.setOfferTime("");
         report.setUpdateTime("");
-        report.setMsg("");
+        report.setRemark("");
         return report;
     }
 

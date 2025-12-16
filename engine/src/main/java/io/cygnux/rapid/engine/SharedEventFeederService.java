@@ -6,11 +6,11 @@ import io.mercury.serialization.json.JsonReader;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqSubscriber;
-import io.cygnux.rapid.core.adaptor.Adaptor;
+import io.cygnux.rapid.core.adapter.Adapter;
 import io.cygnux.rapid.core.shared.SharedEventType;
 import io.cygnux.rapid.core.shared.SharedEventFeeder;
 import io.cygnux.rapid.core.shared.SharedEventbus;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
 import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
@@ -30,7 +30,7 @@ public class SharedEventFeederService implements SharedEventFeeder {
     private static final Logger log = Log4j2LoggerFactory.getLogger(SharedEventFeederService.class);
 
     private final ZmqSubscriber subscriber = ZmqConfigurator
-            .ipc(Adaptor.publishPath())
+            .ipc(Adapter.publishPath())
             .createSubscriber(this::handleMsg);
 
     private SharedEventbus loop;
@@ -52,7 +52,7 @@ public class SharedEventFeederService implements SharedEventFeeder {
             case ORDER_REPORT -> loop.put(record.getWith(OrderReport.class));
             case POSITIONS_REPORT -> loop.put(record.getWith(PositionsReport.class));
             case BALANCE_REPORT -> loop.put(record.getWith(BalanceReport.class));
-            case ADAPTOR_STATUS_REPORT -> loop.put(record.getWith(AdaptorReport.class));
+            case ADAPTOR_STATUS_REPORT -> loop.put(record.getWith(AdapterReport.class));
             case INSTRUMENT_STATUS_REPORT -> loop.put(record.getWith(InstrumentStatusReport.class));
             case INVALID -> log.error("Invalid event received -> {}", record);
         }

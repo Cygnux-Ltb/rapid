@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.shared;
 
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
 import io.cygnux.rapid.core.shared.event.FastMarketData;
@@ -39,7 +39,7 @@ public abstract class SharedEventbus extends RingEventHandler<SharedEvent> {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 
-    public void put(AdaptorReport in) {
+    public void put(AdapterReport in) {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 

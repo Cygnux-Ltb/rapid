@@ -5,7 +5,7 @@
 
     <!-- This is a parent rapid pom.xml -->
     <groupId>io.cygnux.rapid</groupId>
-    <artifactId>rapid</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
@@ -26,12 +26,12 @@
     </developers>
 
     <modules>
-        <module>adaptor-ctp</module>
-        <module>adaptor-fix</module>
+        <module>adapter</module>
         <module>backtest</module>
         <module>core</module>
         <module>engine</module>
         <module>example</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
@@ -41,7 +41,7 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>3.5.5</spring-boot.version>
+        <spring-boot.version>3.5.8</spring-boot.version>
         <spring.version>6.2.11</spring.version>
         <mercury.version>1.0.1</mercury.version>
     </properties>
@@ -52,9 +52,8 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.14.0</version>
+                    <version>3.14.1</version>
                     <configuration>
-                        <enablePreview>true</enablePreview>
                         <parameters>true</parameters>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
@@ -71,7 +70,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerArgument>-parameters</compilerArgument>
-                    <enablePreview>true</enablePreview>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>
@@ -95,7 +93,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.40</version>
+                <version>1.18.42</version>
             </dependency>
             <!-- Jakarta Annotations API -->
             <dependency>
@@ -118,6 +116,11 @@
             <dependency>
                 <groupId>io.mercury</groupId>
                 <artifactId>persistence-h2</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>persistence-chronicle</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <!-- serialization -->

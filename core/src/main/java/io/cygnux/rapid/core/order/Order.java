@@ -157,10 +157,12 @@ public sealed interface Order extends OrderedObject<Order> permits AbstractOrder
      * @param msg String
      */
     default void logging(Logger log, String msg) {
-        log.info("{}, Order attribute : ordSysId==[{}], status==[{}], direction==[{}], type==[{}], " +
-                        "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}",
-                msg, getOrdSysId(), getStatus(), getDirection(), getType(), getInstrument().getInstrumentCode(),
-                getPrice(), getQty(), getTimestamp(), getRemark());
+        log.info("""
+                        {}, Order attr : ordSysId==[{}], status==[{}], direction==[{}], type==[{}],
+                        "instrumentCode==[{}], price -> {}, qty -> {}, timestamp -> {}, remark -> {}
+                        """,
+                msg, getOrdSysId(), getStatus(), getDirection(), getType(),
+                getInstrument().getInstrumentCode(), getPrice(), getQty(), getTimestamp(), getRemark());
     }
 
     @Override

@@ -1,15 +1,15 @@
 package io.cygnux.rapid.engine;
 
-import io.cygnux.rapid.core.adaptor.SentEvent;
-import io.cygnux.rapid.core.adaptor.SentEventHandler;
-import io.cygnux.rapid.core.adaptor.SentEventbus;
-import io.cygnux.rapid.core.adaptor.event.CancelOrder;
-import io.cygnux.rapid.core.adaptor.event.NewOrder;
-import io.cygnux.rapid.core.adaptor.event.QueryBalance;
-import io.cygnux.rapid.core.adaptor.event.QueryOrder;
-import io.cygnux.rapid.core.adaptor.event.QueryPosition;
-import io.cygnux.rapid.core.adaptor.event.SubscribeMarketData;
-import io.cygnux.rapid.core.manager.AdaptorManager;
+import io.cygnux.rapid.core.adapter.SentEvent;
+import io.cygnux.rapid.core.adapter.SentEventHandler;
+import io.cygnux.rapid.core.adapter.SentEventbus;
+import io.cygnux.rapid.core.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.adapter.event.NewOrder;
+import io.cygnux.rapid.core.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.manager.AdapterManager;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class CoreOutboundService implements SentEventHandler {
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreOutboundService.class);
 
     @Resource
-    private AdaptorManager adaptorManager;
+    private AdapterManager adapterManager;
 
     private final SentEventbus eventLoop = new SentEventbus() {
 
@@ -31,17 +31,17 @@ public class CoreOutboundService implements SentEventHandler {
         public void onEvent(SentEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
-                case SUBSCRIBE_MARKET_DATA -> adaptorManager
+                case SUBSCRIBE_MARKET_DATA -> adapterManager
                         .commitSubscribeMarketData(event.getSubscribeMarketData());
-                case NEW_ORDER -> adaptorManager
+                case NEW_ORDER -> adapterManager
                         .commitNewOrder(event.getNewOrder());
-                case CANCEL_ORDER -> adaptorManager
+                case CANCEL_ORDER -> adapterManager
                         .commitCancelOrder(event.getCancelOrder());
-                case QUERY_ORDER -> adaptorManager
+                case QUERY_ORDER -> adapterManager
                         .commitQueryOrder(event.getQueryOrder());
-                case QUERY_POSITIONS -> adaptorManager
+                case QUERY_POSITIONS -> adapterManager
                         .commitQueryPositions(event.getQueryPosition());
-                case QUERY_BALANCE -> adaptorManager
+                case QUERY_BALANCE -> adapterManager
                         .commitQueryBalance(event.getQueryBalance());
                 case INVALID -> log.warn("HAS INVALID EVENT type: {}", event.getType());
             }

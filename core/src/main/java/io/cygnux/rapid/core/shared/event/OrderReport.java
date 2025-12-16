@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.slf4j.Logger;
 
 /**
  * 订单回报
@@ -45,7 +46,7 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
     private double tradePrice;
     private String offerTime;
     private String updateTime;
-    private String msg;
+    private String remark;
 
     @Override
     public void copyOf(OrderReport source) {
@@ -88,7 +89,7 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
         // 复制更新时间
         this.updateTime = source.updateTime;
         // 复制消息
-        this.msg = source.msg;
+        this.remark = source.remark;
     }
 
     public OrderReport clear() {
@@ -131,8 +132,21 @@ public class OrderReport extends JsonBean implements Copyable<OrderReport> {
         // 擦除更新时间
         this.updateTime = null;
         // 擦除消息
-        this.msg = null;
+        this.remark = null;
         return this;
+    }
+
+    public void logging(Logger log, String msg) {
+        log.info("""
+                        {}, OrderReport attr : epochMicros[{}], ordSysId[{}], tradingDay[{}], brokerId[{}],
+                        investorId[{}], accountId[{}], orderRef[{}], brokerOrdSysId[{}], exchangeCode[{}],
+                        instrumentCode[{}], status[{}], direction[{}], action[{}], offerQty[{}], filledQty[{}],
+                        offerPrice[{}], tradePrice[{}], offerTime[{}], updateTime[{}], remark[{}]
+                        """,
+                msg, epochMicros, ordSysId, tradingDay, brokerId,
+                investorId, accountId, orderRef, brokerOrdSysId, exchangeCode,
+                instrumentCode, status, direction, action, offerQty, filledQty,
+                offerPrice, tradePrice, offerTime, updateTime, remark);
     }
 
 }

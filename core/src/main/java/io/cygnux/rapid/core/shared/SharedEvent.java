@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.shared;
 
 import com.lmax.disruptor.EventFactory;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.ControlCommand;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
@@ -53,7 +53,7 @@ public final class SharedEvent implements JsonSerializable {
             new FastMarketData(),
             new DepthMarketData(),
             new InstrumentStatusReport(),
-            new AdaptorReport(),
+            new AdapterReport(),
             new PositionsReport(),
             new BalanceReport(),
             new OrderReport()
@@ -109,10 +109,10 @@ public final class SharedEvent implements JsonSerializable {
      * @param event AdaptorReport
      * @return SharedEvent
      */
-    public SharedEvent updateWith(AdaptorReport event) {
+    public SharedEvent updateWith(AdapterReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.ADAPTOR_STATUS_REPORT;
-        this.payload.adaptorReport.copyOf(event);
+        this.payload.adapterReport.copyOf(event);
         return this;
     }
 
@@ -182,7 +182,7 @@ public final class SharedEvent implements JsonSerializable {
                     case ORDER_REPORT -> payload.orderReport;
                     case POSITIONS_REPORT -> payload.positionsReport;
                     case BALANCE_REPORT -> payload.balanceReport;
-                    case ADAPTOR_STATUS_REPORT -> payload.adaptorReport;
+                    case ADAPTOR_STATUS_REPORT -> payload.adapterReport;
                     case INSTRUMENT_STATUS_REPORT -> payload.instrumentStatusReport;
                     case STRATEGY_SIGNALS -> strategySignals;
                     case SKIP -> "SKIP";
@@ -227,7 +227,7 @@ public final class SharedEvent implements JsonSerializable {
             FastMarketData fastMarketData,
             DepthMarketData depthMarketData,
             InstrumentStatusReport instrumentStatusReport,
-            AdaptorReport adaptorReport,
+            AdapterReport adapterReport,
             PositionsReport positionsReport,
             BalanceReport balanceReport,
             OrderReport orderReport) {

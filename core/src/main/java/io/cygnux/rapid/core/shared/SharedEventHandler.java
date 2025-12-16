@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.shared;
 
 import com.lmax.disruptor.EventHandler;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
 import io.cygnux.rapid.core.shared.event.FastMarketData;
@@ -27,7 +27,7 @@ public interface SharedEventHandler extends EventHandler<SharedEvent> {
             case SKIP -> fireSkip();
             case FAST_MARKET_DATA -> fireFastMarketData(event.getPayload().fastMarketData());
             case DEPTH_MARKET_DATA -> fireDepthMarketData(event.getPayload().depthMarketData());
-            case ADAPTOR_STATUS_REPORT -> fireAdaptorReport(event.getPayload().adaptorReport());
+            case ADAPTOR_STATUS_REPORT -> fireAdaptorReport(event.getPayload().adapterReport());
             case INSTRUMENT_STATUS_REPORT -> fireInstrumentStatusReport(event.getPayload().instrumentStatusReport());
             case ORDER_REPORT -> fireOrderReport(event.getPayload().orderReport());
             case POSITIONS_REPORT -> firePositionsReport(event.getPayload().positionsReport());
@@ -96,7 +96,7 @@ public interface SharedEventHandler extends EventHandler<SharedEvent> {
      *
      * @param report AdaptorReport
      */
-    default void fireAdaptorReport(AdaptorReport report) {
+    default void fireAdaptorReport(AdapterReport report) {
         throw new NotImplementedMethodException(this.getClass(), "fireAdaptorReport");
     }
 

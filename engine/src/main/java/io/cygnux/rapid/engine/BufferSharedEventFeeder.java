@@ -1,10 +1,9 @@
 package io.cygnux.rapid.engine;
 
-import io.cygnux.rapid.core.adaptor.Adaptor;
 import io.cygnux.rapid.core.shared.SharedEventFeeder;
 import io.cygnux.rapid.core.shared.SharedEventType;
 import io.cygnux.rapid.core.shared.SharedEventbus;
-import io.cygnux.rapid.core.shared.event.AdaptorReport;
+import io.cygnux.rapid.core.shared.event.AdapterReport;
 import io.cygnux.rapid.core.shared.event.BalanceReport;
 import io.cygnux.rapid.core.shared.event.DepthMarketData;
 import io.cygnux.rapid.core.shared.event.FastMarketData;
@@ -30,7 +29,7 @@ public class BufferSharedEventFeeder implements SharedEventFeeder {
     private static final Logger log = Log4j2LoggerFactory.getLogger(BufferSharedEventFeeder.class);
 
     private final ZmqSubscriber subscriber = ZmqConfigurator
-            .ipc(Adaptor.publishPath())
+            .ipc(Adapter.publishPath())
             .createSubscriber(this::handleMsg);
 
     private SharedEventbus eventbus;
@@ -52,7 +51,7 @@ public class BufferSharedEventFeeder implements SharedEventFeeder {
             case ORDER_REPORT -> eventbus.put(record.getWith(OrderReport.class));
             case POSITIONS_REPORT -> eventbus.put(record.getWith(PositionsReport.class));
             case BALANCE_REPORT -> eventbus.put(record.getWith(BalanceReport.class));
-            case ADAPTOR_STATUS_REPORT -> eventbus.put(record.getWith(AdaptorReport.class));
+            case ADAPTOR_STATUS_REPORT -> eventbus.put(record.getWith(AdapterReport.class));
             case INSTRUMENT_STATUS_REPORT -> eventbus.put(record.getWith(InstrumentStatusReport.class));
             case INVALID -> log.error("Invalid event received -> {}", record);
         }

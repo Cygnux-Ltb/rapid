@@ -13,6 +13,7 @@ import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.risk.CircuitBreaker;
 import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.shared.event.OrderReport;
 import io.cygnux.rapid.core.shared.event.StrategySignal;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
@@ -152,8 +153,9 @@ public abstract class AbstractStrategy extends EnableableComponent
     @AbstractFunction
     protected abstract void handleMarketData(SavedMarketData marketData);
 
+
     @Override
-    public void onOrder(@Nonnull Order order) {
+    public void fireOrderReport(OrderReport report) {
         order.logging(log, "Call onOrder function");
         handleOrder(order);
     }
@@ -186,15 +188,14 @@ public abstract class AbstractStrategy extends EnableableComponent
         if (initialized) {
             boolean enable = super.enable();
             if (enable)
-                log.info("{}::enable success. strategyId==[{}], isEnable==[{}]",
+                log.info("{} enable success. strategyId==[{}], isEnable==[{}]",
                         strategyName, strategyId, isEnabled());
             else
-                log.info(
-                        "{}::enable failure. strategyId==[{}], isEnable==[{}]",
+                log.info("{} enable failure. strategyId==[{}], isEnable==[{}]",
                         strategyName, strategyId, isEnabled());
             return enable;
         } else {
-            log.info("{}::enable failure, strategy is not initialized. strategyId==[{}], isEnable==[{}]",
+            log.info("{} enable failure, strategy is not initialized. strategyId==[{}], isEnable==[{}]",
                     strategyName, strategyId, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
@@ -280,7 +281,8 @@ public abstract class AbstractStrategy extends EnableableComponent
      * @param limitPrice 限定价格
      * @param floatTick  允许浮动点差
      */
-    protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty, double limitPrice, int floatTick) {
+    protected void newTradeSignal(Instrument instrument, TrdDirection direction,
+                                  int targetQty, double limitPrice, int floatTick) {
         double offerPrice = (Double.isNaN(limitPrice) || limitPrice == 0.0D)
                 ? getLevel1Price(instrument, direction)
                 : limitPrice;
