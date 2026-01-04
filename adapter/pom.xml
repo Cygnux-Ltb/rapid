@@ -114,7 +114,7 @@
             </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
-                <artifactId>serialization-fury</artifactId>
+                <artifactId>serialization-fory</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>
