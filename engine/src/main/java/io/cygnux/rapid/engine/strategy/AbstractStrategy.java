@@ -12,9 +12,9 @@ import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.risk.CircuitBreaker;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
-import io.cygnux.rapid.core.shared.event.OrderReport;
-import io.cygnux.rapid.core.shared.event.StrategySignal;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.event.sent.StrategySignal;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.core.strategy.StrategyParam;
@@ -23,7 +23,7 @@ import io.cygnux.rapid.engine.position.PositionKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.state.AvailableComponent;
 import io.mercury.serialization.json.JsonWriter;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -36,10 +36,10 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.mercury.common.lang.Asserter.atWithinRange;
-import static io.mercury.common.lang.Asserter.nonEmpty;
+import static io.mercury.common.lang.Validator.atWithinRange;
+import static io.mercury.common.lang.Validator.nonEmpty;
 
-public abstract class AbstractStrategy extends EnableableComponent
+public abstract class AbstractStrategy extends AvailableComponent
         implements Strategy, CircuitBreaker {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);

@@ -2,7 +2,7 @@ package io.cygnux.rapid.engine.strategy.manager;
 
 import io.cygnux.console.service.StrategyService;
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.OrderKeeper;
 import io.cygnux.rapid.core.strategy.Strategy;

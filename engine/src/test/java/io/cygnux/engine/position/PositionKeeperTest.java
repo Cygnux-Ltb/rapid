@@ -2,7 +2,7 @@ package io.cygnux.engine.position;
 
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.instrument.InstrumentKeeper;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.engine.position.PositionKeeper;
 import org.junit.Test;
 

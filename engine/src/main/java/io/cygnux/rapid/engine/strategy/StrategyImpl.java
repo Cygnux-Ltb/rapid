@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.strategy;
 
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
 import io.cygnux.rapid.core.handler.AdapterReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
@@ -59,7 +59,7 @@ public class StrategyImpl extends AbstractStrategy {
 
     };
 
-    public void onAdaptorEvent(@Nonnull AdapterReport event) {
+    public void onAdapterEvent(@Nonnull AdapterStatusReport event) {
         adapterReportHandler.onAdapterReport(event);
     }
 

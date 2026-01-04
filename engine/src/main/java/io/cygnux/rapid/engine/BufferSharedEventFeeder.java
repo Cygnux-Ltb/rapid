@@ -1,15 +1,16 @@
 package io.cygnux.rapid.engine;
 
-import io.cygnux.rapid.core.shared.SharedEventFeeder;
-import io.cygnux.rapid.core.shared.SharedEventType;
-import io.cygnux.rapid.core.shared.SharedEventbus;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
-import io.cygnux.rapid.core.shared.event.BalanceReport;
-import io.cygnux.rapid.core.shared.event.DepthMarketData;
-import io.cygnux.rapid.core.shared.event.FastMarketData;
-import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.shared.event.OrderReport;
-import io.cygnux.rapid.core.shared.event.PositionsReport;
+import io.cygnux.rapid.core.adapter.Adapter;
+import io.cygnux.rapid.core.event.SharedEventFeeder;
+import io.cygnux.rapid.core.event.SharedEventType;
+import io.cygnux.rapid.core.event.SharedEventbus;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.event.received.BalanceReport;
+import io.cygnux.rapid.core.event.received.DepthMarketData;
+import io.cygnux.rapid.core.event.received.FastMarketData;
+import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.event.received.PositionsReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.state.StartupException;
 import io.mercury.serialization.json.JsonObjectExt;
@@ -29,7 +30,7 @@ public class BufferSharedEventFeeder implements SharedEventFeeder {
     private static final Logger log = Log4j2LoggerFactory.getLogger(BufferSharedEventFeeder.class);
 
     private final ZmqSubscriber subscriber = ZmqConfigurator
-            .ipc(Adapter.publishPath())
+            .ipc(Adapter.publishPath)
             .createSubscriber(this::handleMsg);
 
     private SharedEventbus eventbus;
@@ -51,7 +52,7 @@ public class BufferSharedEventFeeder implements SharedEventFeeder {
             case ORDER_REPORT -> eventbus.put(record.getWith(OrderReport.class));
             case POSITIONS_REPORT -> eventbus.put(record.getWith(PositionsReport.class));
             case BALANCE_REPORT -> eventbus.put(record.getWith(BalanceReport.class));
-            case ADAPTOR_STATUS_REPORT -> eventbus.put(record.getWith(AdapterReport.class));
+            case ADAPTER_STATUS_REPORT -> eventbus.put(record.getWith(AdapterStatusReport.class));
             case INSTRUMENT_STATUS_REPORT -> eventbus.put(record.getWith(InstrumentStatusReport.class));
             case INVALID -> log.error("Invalid event received -> {}", record);
         }

@@ -2,28 +2,28 @@ package io.cygnux.rapid.engine.adapter;
 
 import io.cygnux.rapid.core.account.Account;
 import io.cygnux.rapid.core.adapter.AbstractAdapter;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
 import io.cygnux.rapid.core.adapter.event.CancelOrder;
 import io.cygnux.rapid.core.adapter.event.NewOrder;
 import io.cygnux.rapid.core.adapter.event.QueryBalance;
 import io.cygnux.rapid.core.adapter.event.QueryOrder;
 import io.cygnux.rapid.core.adapter.event.QueryPosition;
 import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.event.SharedEventHandler;
 import io.mercury.serialization.json.JsonObjectExt;
 import io.mercury.transport.zmq.ZmqConfigurator;
 import io.mercury.transport.zmq.ZmqPublisher;
-import org.apache.fury.Fury;
+import org.apache.fory.Fory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.IOException;
 
-import static org.apache.fury.config.Language.JAVA;
+import static org.apache.fory.config.Language.JAVA;
 
 @NotThreadSafe
 public class ZmqRemoteAdapter extends AbstractAdapter {
 
-    private final Fury fury = Fury.builder().withLanguage(JAVA)
+    private final Fory fory = Fory.builder().withLanguage(JAVA)
             .requireClassRegistration(true)
             .build();
 
@@ -50,7 +50,7 @@ public class ZmqRemoteAdapter extends AbstractAdapter {
     }
 
     // TODO 性能扩展使用
-    // private final FuryMsg furyMsg = new FuryMsg();
+    // private final ForyMsg foryMsg = new ForyMsg();
 
     private final JsonObjectExt record = new JsonObjectExt();
 

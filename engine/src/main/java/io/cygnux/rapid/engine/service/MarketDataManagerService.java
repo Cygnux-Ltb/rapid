@@ -3,7 +3,7 @@ package io.cygnux.rapid.engine.service;
 import io.cygnux.rapid.core.mdata.MarketDataBucket;
 import io.cygnux.rapid.core.mdata.MarketDataKeeper;
 import io.cygnux.rapid.core.manager.MarketDataManager;
-import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
 import org.springframework.stereotype.Service;
 
 @Service

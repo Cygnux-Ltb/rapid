@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.service;
 
 import io.cygnux.rapid.core.adapter.AbstractAdapterManager;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public final class AdapterManagerService extends AbstractAdapterManager {
 
 
     @Override
-    public void onAdaptorReport(AdapterReport report) {
+    public void onAdapterReport(AdapterStatusReport report) {
 
     }
 

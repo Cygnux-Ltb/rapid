@@ -12,17 +12,17 @@ import io.cygnux.rapid.core.manager.PositionManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import io.cygnux.rapid.core.order.impl.ParentOrder;
-import io.cygnux.rapid.core.shared.SharedEvent;
-import io.cygnux.rapid.core.shared.SharedEventFeeder;
-import io.cygnux.rapid.core.shared.SharedEventbus;
-import io.cygnux.rapid.core.shared.enums.MarketDataType;
-import io.cygnux.rapid.core.shared.enums.OrdType;
-import io.cygnux.rapid.core.shared.enums.TrdAction;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
-import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
-import io.cygnux.rapid.core.shared.event.OrderReport;
-import io.cygnux.rapid.core.shared.event.StrategySignal;
+import io.cygnux.rapid.core.event.SharedEvent;
+import io.cygnux.rapid.core.event.SharedEventFeeder;
+import io.cygnux.rapid.core.event.SharedEventbus;
+import io.cygnux.rapid.core.event.enums.MarketDataType;
+import io.cygnux.rapid.core.event.enums.OrdType;
+import io.cygnux.rapid.core.event.enums.TrdAction;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.event.sent.StrategySignal;
 import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
 import io.cygnux.rapid.core.trade.TradeCommand;
 import io.cygnux.rapid.core.trade.TradeCommandProducer;
@@ -82,7 +82,7 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                 case ORDER_REPORT -> fireOrderReport(event.getPayload().orderReport());
                 case POSITIONS_REPORT -> firePositionsReport(event.getPayload().positionsReport());
                 case BALANCE_REPORT -> fireBalanceReport(event.getPayload().balanceReport());
-                case ADAPTOR_STATUS_REPORT -> fireAdaptorReport(event.getPayload().adapterReport());
+                case ADAPTER_STATUS_REPORT -> fireAdapterReport(event.getPayload().adapterReport());
                 case INSTRUMENT_STATUS_REPORT ->
                         fireInstrumentStatusReport(event.getPayload().instrumentStatusReport());
                 case STRATEGY_SIGNALS -> fireStrategySignals(event.getStrategySignals());
@@ -149,9 +149,9 @@ public class CoreSchedulerService implements StrategySignalAggregator {
      * @param report AdaptorReport
      */
     @Override
-    public void fireAdaptorReport(AdapterReport report) {
-        log.info("CoreSchedulerService::handleAdaptorReport, [AdaptorReport] -> {}", report);
-        adapterManager.onAdaptorEvent(report);
+    public void fireAdapterReport(AdapterStatusReport report) {
+        log.info("CoreSchedulerService::handleAdapterReport, [AdapterReport] -> {}", report);
+        adapterManager.onAdapterEvent(report);
         var currentStatus = adapterManager.getCurrentStatus(report.getAccountId());
         log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, report.getAdaptorId());
         if (currentStatus.isMarketDataEnabled()) {
@@ -163,7 +163,7 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                             .map(Instrument::getInstrumentCode)
                             .toList())
                     // TODO 补充接收地址
-                    .setRecvAddr("");
+                    .setReceivedAddr("");
             log.info("Publish [SubscribeMarketData] in loop -> {}", subscribeMarketData);
             sentEventHandler.handleSubscribeMarketData(subscribeMarketData);
         }

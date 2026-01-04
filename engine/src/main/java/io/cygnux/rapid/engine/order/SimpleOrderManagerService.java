@@ -5,7 +5,7 @@ import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.order.OrderBook;
 import io.cygnux.rapid.core.order.OrderKeeper;
-import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

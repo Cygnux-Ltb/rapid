@@ -10,8 +10,8 @@ import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.account.SubAccountException;
 import io.cygnux.rapid.core.account.SubAccountMapping;
 import io.cygnux.rapid.core.manager.AccountManager;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
-import io.cygnux.rapid.core.shared.event.BalanceReport;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.event.received.BalanceReport;
 import io.mercury.common.collections.CollectionUtil;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -108,7 +108,7 @@ public final class SimpleAccountManagerService implements AccountManager {
      * @param report AdaptorReport
      */
     @Override
-    public void onAdaptorReport(AdapterReport report) {
+    public void onAdapterReport(AdapterStatusReport report) {
 
     }
 
