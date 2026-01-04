@@ -35,8 +35,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-core</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-jul</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-slf4j2-impl</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -48,7 +61,7 @@
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
-            <artifactId>serialization-fury</artifactId>
+            <artifactId>serialization-fory</artifactId>
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
@@ -58,18 +71,6 @@
             <groupId>io.mercury</groupId>
             <artifactId>persistence-chronicle</artifactId>
         </dependency>
-        <!-- Java wrapper for CTP -->
-        <dependency>
-            <groupId>org.rationalityfrontline</groupId>
-            <artifactId>jctp</artifactId>
-            <version>6.7.8-1.0.5</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>io.cygnux</groupId>
             <artifactId>console-api</artifactId>
@@ -78,6 +79,11 @@
         <dependency>
             <groupId>io.cygnux.rapid</groupId>
             <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cygnux.rapid</groupId>
+            <artifactId>gateway-ctp</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
