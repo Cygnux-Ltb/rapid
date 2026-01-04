@@ -1,4 +1,4 @@
-package io.cygnux.rapid.adaptor.fix;
+package io.cygnux.rapid.adapter.fix;
 
 /**
  * Hello world!
