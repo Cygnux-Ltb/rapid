@@ -29,9 +29,11 @@
         <module>adapter</module>
         <module>backtest</module>
         <module>core</module>
+        <module>core-types</module>
         <module>engine</module>
         <module>example</module>
         <module>gateway</module>
+        <module>infra</module>
     </modules>
 
     <properties>
@@ -41,8 +43,8 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>3.5.8</spring-boot.version>
-        <spring.version>6.2.11</spring.version>
+        <spring-boot.version>3.5.9</spring-boot.version>
+        <spring.version>6.2.15</spring.version>
         <mercury.version>1.0.1</mercury.version>
     </properties>
 
@@ -131,7 +133,7 @@
             </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
-                <artifactId>serialization-fury</artifactId>
+                <artifactId>serialization-fory</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>
