@@ -40,7 +40,7 @@
         <dependency>
             <groupId>io.cygnux.rapid</groupId>
             <artifactId>core</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>

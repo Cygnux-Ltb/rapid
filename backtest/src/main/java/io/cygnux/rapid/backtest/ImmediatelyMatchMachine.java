@@ -1,9 +1,9 @@
 package io.cygnux.rapid.backtest;
 
-import io.cygnux.rapid.core.shared.enums.OrdStatus;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
-import io.cygnux.rapid.core.shared.event.FastMarketData;
-import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.event.enums.OrdStatus;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.event.received.FastMarketData;
+import io.cygnux.rapid.core.event.received.OrderReport;
 import io.cygnux.rapid.core.adapter.event.CancelOrder;
 import io.cygnux.rapid.core.adapter.event.NewOrder;
 import io.mercury.common.collections.ImmutableLists;
