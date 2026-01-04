@@ -27,17 +27,10 @@
     </developers>
 
     <modules>
-        <module>gateway-ctp-api</module>
-        <module>gateway-ctp-service</module>
+        <module>gateway-ctp</module>
     </modules>
 
     <properties>
-        <java.version>21</java.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
@@ -81,7 +74,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.40</version>
+                <version>1.18.42</version>
             </dependency>
             <!-- Jakarta Annotations API -->
             <dependency>
@@ -114,7 +107,7 @@
             </dependency>
             <dependency>
                 <groupId>io.mercury</groupId>
-                <artifactId>serialization-fury</artifactId>
+                <artifactId>serialization-fory</artifactId>
                 <version>${mercury.version}</version>
             </dependency>
             <dependency>
