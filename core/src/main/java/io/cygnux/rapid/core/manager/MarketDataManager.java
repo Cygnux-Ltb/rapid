@@ -3,10 +3,10 @@ package io.cygnux.rapid.core.manager;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.MarketDataBucket;
 import io.cygnux.rapid.core.mdata.MarketDataSnapshot;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
-import io.cygnux.rapid.core.shared.event.DepthMarketData;
-import io.cygnux.rapid.core.shared.event.FastMarketData;
-import io.cygnux.rapid.core.shared.event.InstrumentStatusReport;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.event.received.DepthMarketData;
+import io.cygnux.rapid.core.event.received.FastMarketData;
+import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
 
 public interface MarketDataManager extends SharedEventHandler {
 

@@ -14,7 +14,7 @@ public enum AdapterRunningMode {
         for (AdapterRunningMode mode : values())
             if (mode.name().equalsIgnoreCase(name))
                 return mode;
-        throw new IllegalArgumentException("Unknown AdaptorRunningMode: " + name);
+        throw new IllegalArgumentException("Unknown AdapterRunningMode: " + name);
     }
 
 }

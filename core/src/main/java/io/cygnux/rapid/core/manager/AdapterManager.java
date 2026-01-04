@@ -8,8 +8,8 @@ import io.cygnux.rapid.core.adapter.event.QueryBalance;
 import io.cygnux.rapid.core.adapter.event.QueryOrder;
 import io.cygnux.rapid.core.adapter.event.QueryPosition;
 import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
@@ -18,33 +18,33 @@ import java.io.Closeable;
 @ThreadSafe
 public interface AdapterManager extends Closeable, SharedEventHandler {
 
-    void onAdaptorReport(AdapterReport report);
+    void onAdapterReport(AdapterStatusReport report);
 
     @Override
-    default void fireAdaptorReport(AdapterReport report) {
-        onAdaptorReport(report);
+    default void fireAdapterReport(AdapterStatusReport report) {
+        onAdapterReport(report);
     }
 
     boolean isClosed();
 
-    void putAdaptor(@Nonnull Adapter... adaptors);
+    void putAdapter(@Nonnull Adapter... adaptors);
 
-    Adapter getAdaptor(int accountId);
+    Adapter getAdapter(int accountId);
 
-    Adapter getAdaptor(String adaptorId);
+    Adapter getAdapter(String adaptorId);
 
     default AdapterStatus getCurrentStatus(int accountId) {
-        return getAdaptor(accountId).currentStatus();
+        return getAdapter(accountId).currentStatus();
     }
 
     default AdapterStatus getCurrentStatus(String adaptorId) {
-        return getAdaptor(adaptorId).currentStatus();
+        return getAdapter(adaptorId).currentStatus();
     }
 
     /**
      * @param event AdaptorReport
      */
-    void onAdaptorEvent(AdapterReport event);
+    void onAdapterEvent(AdapterStatusReport event);
 
     /**
      * 提交行情订阅

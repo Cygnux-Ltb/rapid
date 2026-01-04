@@ -17,7 +17,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import java.time.Duration;
 import java.time.LocalDate;
 
-import static io.mercury.common.lang.Asserter.requiredLength;
+import static io.mercury.common.lang.Validator.requiredLength;
 
 @ThreadSafe
 public final class TimeWindowPool {

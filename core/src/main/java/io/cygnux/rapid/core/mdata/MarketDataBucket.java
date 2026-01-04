@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.mdata;
 
 import io.mercury.common.collections.MutableLists;
-import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.event.received.FastMarketData;
 import io.cygnux.rapid.core.handler.impl.AbstractMarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
 import lombok.Getter;

@@ -1,20 +1,20 @@
 package io.cygnux.rapid.core.adapter;
 
 import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.shared.SharedEvent;
-import io.cygnux.rapid.core.shared.SharedEventbus;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
-import io.cygnux.rapid.core.shared.enums.AdapterType;
 import io.cygnux.rapid.core.adapter.event.CancelOrder;
 import io.cygnux.rapid.core.adapter.event.NewOrder;
 import io.cygnux.rapid.core.adapter.event.QueryBalance;
 import io.cygnux.rapid.core.adapter.event.QueryOrder;
 import io.cygnux.rapid.core.adapter.event.QueryPosition;
 import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.event.SharedEvent;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.event.SharedEventbus;
+import io.cygnux.rapid.core.event.enums.AdapterType;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.concurrent.disruptor.RingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.state.AvailableComponent;
 import io.mercury.common.state.StartupException;
 import org.slf4j.Logger;
 
@@ -23,20 +23,20 @@ import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 
 import static io.mercury.common.concurrent.disruptor.base.CommonStrategy.Yielding;
-import static io.mercury.common.lang.Asserter.nonNull;
+import static io.mercury.common.lang.Validator.nonNull;
 
 /**
  * @author yellow013
  */
 @ThreadSafe
-public abstract non-sealed class AbstractAdapter extends EnableableComponent implements Adapter {
+public abstract non-sealed class AbstractAdapter extends AvailableComponent implements Adapter {
 
     protected final Logger log = Log4j2LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Adaptor标识
+     * Adapter标识
      */
-    protected final String adaptorId;
+    protected final String adapterId;
 
     /**
      * 托管投资账户
@@ -83,13 +83,13 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
         nonNull(account, "account");
         this.account = account;
         this.isAsync = isAsync;
-        this.adaptorId = this.getClass().getSimpleName() +
+        this.adapterId = this.getClass().getSimpleName() +
                 "-" + account.getBrokerCode() + ":" + account.getInvestorCode();
         this.inboundHandler = inboundHandler;
         if (isAsync) {
             receiveQueue = RingEventbus
                     .singleProducer(SentEvent.EVENT_FACTORY)
-                    .name(adaptorId + "-receive-queue")
+                    .name(adapterId + "-receive-queue")
                     .size(32)
                     .waitStrategy(Yielding.get())
                     .process(this::handleOutboundEvent);
@@ -102,37 +102,37 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     private void handleOutboundEvent(SentEvent event) {
         switch (event.getType()) {
             case SUBSCRIBE_MARKET_DATA -> {
-                log.info("{} -> Call directSubscribeMarketData, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directSubscribeMarketData, event -> {} ", adapterId, event);
                 directSubscribeMarketData(event.getSubscribeMarketData());
             }
             case NEW_ORDER -> {
-                log.info("{} -> Call directNewOrder, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directNewOrder, event -> {} ", adapterId, event);
                 directNewOrder(event.getNewOrder());
             }
             case CANCEL_ORDER -> {
-                log.info("{} -> Call directCancelOrder, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directCancelOrder, event -> {} ", adapterId, event);
                 directCancelOrder(event.getCancelOrder());
             }
             case QUERY_ORDER -> {
-                log.info("{} -> Call directQueryOrder, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directQueryOrder, event -> {} ", adapterId, event);
                 directQueryOrder(event.getQueryOrder());
             }
             case QUERY_POSITIONS -> {
-                log.info("{} -> Call directQueryPositions, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directQueryPositions, event -> {} ", adapterId, event);
                 directQueryPosition(event.getQueryPosition());
             }
             case QUERY_BALANCE -> {
-                log.info("{} -> Call directQueryBalance, event -> {} ", adaptorId, event);
+                log.info("{} -> Call directQueryBalance, event -> {} ", adapterId, event);
                 directQueryBalance(event.getQueryBalance());
             }
-            default -> log.warn("{} -> Unprocessable event -> {}", adaptorId, event);
+            default -> log.warn("{} -> Unprocessable event -> {}", adapterId, event);
         }
     }
 
     @Nonnull
     @Override
-    public String getAdaptorId() {
-        return adaptorId;
+    public String getAdapterId() {
+        return adapterId;
     }
 
     @Nonnull
@@ -172,11 +172,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean subscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData) {
         if (isAsync) {
-            log.info("{} Async SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
+            log.info("{} Async SubscribeMarketData -> {}", adapterId, subscribeMarketData);
             receiveQueue.publish((event, sequence) -> event.updateWith(subscribeMarketData));
             return true;
         } else {
-            log.info("{} Sync SubscribeMarketData -> {}", adaptorId, subscribeMarketData);
+            log.info("{} Sync SubscribeMarketData -> {}", adapterId, subscribeMarketData);
             return directSubscribeMarketData(subscribeMarketData);
         }
     }
@@ -184,11 +184,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean newOrder(@Nonnull NewOrder order) {
         if (isAsync) {
-            log.info("{} Async NewOrder -> {}", adaptorId, order);
+            log.info("{} Async NewOrder -> {}", adapterId, order);
             receiveQueue.publish((event, sequence) -> event.updateWith(order));
             return true;
         } else {
-            log.info("{} Sync NewOrder -> {}", adaptorId, order);
+            log.info("{} Sync NewOrder -> {}", adapterId, order);
             return directNewOrder(order);
         }
     }
@@ -196,11 +196,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean cancelOrder(@Nonnull CancelOrder order) {
         if (isAsync) {
-            log.info("{} Async CancelOrder -> {}", adaptorId, order);
+            log.info("{} Async CancelOrder -> {}", adapterId, order);
             receiveQueue.publish((event, sequence) -> event.updateWith(order));
             return true;
         } else {
-            log.info("{} Sync CancelOrder -> {}", adaptorId, order);
+            log.info("{} Sync CancelOrder -> {}", adapterId, order);
             return directCancelOrder(order);
         }
     }
@@ -208,11 +208,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean queryOrder(@Nonnull QueryOrder query) {
         if (isAsync) {
-            log.info("{} Async QueryOrder -> {}", adaptorId, query);
+            log.info("{} Async QueryOrder -> {}", adapterId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Sync QueryOrder -> {}", adaptorId, query);
+            log.info("{} Sync QueryOrder -> {}", adapterId, query);
             return directQueryOrder(query);
         }
     }
@@ -220,11 +220,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean queryPosition(@Nonnull QueryPosition query) {
         if (isAsync) {
-            log.info("{} Async QueryPositions -> {}", adaptorId, query);
+            log.info("{} Async QueryPositions -> {}", adapterId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Sync QueryPositions -> {}", adaptorId, query);
+            log.info("{} Sync QueryPositions -> {}", adapterId, query);
             return directQueryPosition(query);
         }
     }
@@ -232,11 +232,11 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     @Override
     public boolean queryBalance(@Nonnull QueryBalance query) {
         if (isAsync) {
-            log.info("{} Async QueryBalance -> {}", adaptorId, query);
+            log.info("{} Async QueryBalance -> {}", adapterId, query);
             receiveQueue.publish((event, sequence) -> event.updateWith(query));
             return true;
         } else {
-            log.info("{} Sync QueryBalance -> {}", adaptorId, query);
+            log.info("{} Sync QueryBalance -> {}", adapterId, query);
             return directQueryBalance(query);
         }
     }
@@ -263,10 +263,10 @@ public abstract non-sealed class AbstractAdapter extends EnableableComponent imp
     public boolean startup() throws IOException, IllegalStateException, StartupException {
         try {
             if (!isEnabled())
-                throw new IllegalStateException("[" + adaptorId + "] currently unavailable");
+                throw new IllegalStateException("[" + adapterId + "] currently unavailable");
             return startup0();
         } catch (Exception e) {
-            throw new StartupException("[" + adaptorId + "] unable to start because: " + e.getMessage(), e);
+            throw new StartupException("[" + adapterId + "] unable to start because: " + e.getMessage(), e);
         }
     }
 

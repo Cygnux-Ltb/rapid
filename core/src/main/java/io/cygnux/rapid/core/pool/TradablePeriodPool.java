@@ -10,7 +10,7 @@ import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import javax.annotation.concurrent.ThreadSafe;
 import java.time.LocalTime;
 
-import static io.mercury.common.lang.Asserter.requiredLength;
+import static io.mercury.common.lang.Validator.requiredLength;
 
 @ThreadSafe
 public final class TradablePeriodPool {

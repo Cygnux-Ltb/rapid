@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.handler.impl;
 
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
 import io.cygnux.rapid.core.handler.OrderReportHandler;
 import org.slf4j.Logger;
 

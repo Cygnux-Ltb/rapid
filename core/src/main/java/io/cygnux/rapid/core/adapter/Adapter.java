@@ -7,32 +7,26 @@ import io.cygnux.rapid.core.adapter.event.QueryBalance;
 import io.cygnux.rapid.core.adapter.event.QueryOrder;
 import io.cygnux.rapid.core.adapter.event.QueryPosition;
 import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.shared.enums.AdapterType;
-import io.mercury.common.state.Enableable;
+import io.cygnux.rapid.core.event.enums.AdapterType;
+import io.mercury.common.state.Available;
 import io.mercury.common.state.StartupException;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
 import java.io.IOException;
 
-public sealed interface Adapter extends Closeable, Enableable
+public sealed interface Adapter extends Closeable, Available
         permits AbstractAdapter {
 
     /**
      * Adaptor 消息发布URI
-     *
      */
-    String publishPath = "adaptor/pub";
-
+    String publishPath = "adapter/pub";
 
     /**
      * Adaptor 消息接收URI
-     *
-     * @return String
      */
-    static String subscribePath() {
-        return "adaptor/sub";
-    }
+    String subscribePath = "adapter/sub";
 
     /**
      * Adaptor 接收消息使用的Topic, 调用[Account::getTopic]
@@ -46,7 +40,7 @@ public sealed interface Adapter extends Closeable, Enableable
 
     // ############################## 状态相关 ############################## //
 
-    String getAdaptorId();
+    String getAdapterId();
 
     /**
      * 获取Adaptor绑定交易账户

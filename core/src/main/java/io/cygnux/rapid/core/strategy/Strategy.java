@@ -1,16 +1,15 @@
 package io.cygnux.rapid.core.strategy;
 
-import io.cygnux.console.api.ValueLimitation;
 import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.MarketDataConsumer;
 import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
-import io.cygnux.rapid.core.order.OrderHandler;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.types.id.StrategyID;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
-import io.mercury.common.state.Enableable;
+import io.mercury.common.state.Available;
 
 import javax.annotation.Nonnull;
 
@@ -19,7 +18,7 @@ import javax.annotation.Nonnull;
  */
 public interface Strategy extends
         // 可用状态控制
-        Enableable,
+        Available,
         // 优先级排序
         Comparable<Strategy>,
         // 行情处理
@@ -52,9 +51,9 @@ public interface Strategy extends
         return Integer.compare(this.getStrategyId(), o.getStrategyId());
     }
 
-    int MIN_STRATEGY_ID = ValueLimitation.MIN_STRATEGY_ID;
+    int MIN_STRATEGY_ID = StrategyID.MIN_STRATEGY_ID;
 
-    int MAX_STRATEGY_ID = ValueLimitation.MAX_STRATEGY_ID;
+    int MAX_STRATEGY_ID = StrategyID.MAX_STRATEGY_ID;
 
     int EXTERNAL_ORDER_STRATEGY_ID = 0;
 

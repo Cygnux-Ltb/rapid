@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.mdata;
 
 import io.mercury.common.collections.ImmutableLists;
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.lang.Asserter;
+import io.mercury.common.lang.Validator;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.util.StringSupport;
 import io.cygnux.rapid.core.instrument.Instrument;
@@ -46,7 +46,7 @@ public final class MarketDataKeeper implements Serializable {
     }
 
     public MarketDataKeeper(String... instrumentCodes) {
-        Asserter.requiredLength(instrumentCodes, 1, "instrumentCodes");
+        Validator.requiredLength(instrumentCodes, 1, "instrumentCodes");
         var map = MutableMaps.<String, MarketDataBucket>newUnifiedMap();
         var instruments = instrumentCodes.length == 1 && instrumentCodes[0].isEmpty()
                 ? InstrumentKeeper.getInstruments()

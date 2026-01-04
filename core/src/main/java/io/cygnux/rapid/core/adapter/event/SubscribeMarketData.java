@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.adapter.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.shared.enums.MarketDataType;
+import io.cygnux.rapid.core.event.enums.MarketDataType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,14 +27,14 @@ public class SubscribeMarketData extends JsonBean implements Copyable<SubscribeM
     private String investorId;
     private MarketDataType type;
     private List<String> instrumentCodes;
-    private String recvAddr;
+    private String receivedAddr;
 
     @Override
     public void copyOf(SubscribeMarketData source) {
         this.accountId = source.accountId;
         this.type = source.type;
         this.instrumentCodes = source.instrumentCodes;
-        this.recvAddr = source.recvAddr;
+        this.receivedAddr = source.receivedAddr;
     }
 
 }

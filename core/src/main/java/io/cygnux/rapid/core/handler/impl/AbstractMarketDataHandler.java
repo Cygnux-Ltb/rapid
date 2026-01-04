@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.handler.impl;
 
-import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.event.received.FastMarketData;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 
 import javax.annotation.concurrent.NotThreadSafe;

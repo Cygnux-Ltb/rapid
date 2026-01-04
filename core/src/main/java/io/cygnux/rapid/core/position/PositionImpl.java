@@ -3,7 +3,7 @@ package io.cygnux.rapid.core.position;
 
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.Order;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 
 /**
  * 持仓对象基础实现

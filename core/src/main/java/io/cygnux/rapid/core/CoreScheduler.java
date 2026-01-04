@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core;
 
-import io.cygnux.rapid.core.shared.SharedEventHandler;
+import io.cygnux.rapid.core.event.SharedEventHandler;
 
 /**
  * 需要实现的事件调度器接口<p>

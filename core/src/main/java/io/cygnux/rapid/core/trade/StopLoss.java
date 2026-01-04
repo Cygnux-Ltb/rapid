@@ -1,8 +1,8 @@
 package io.cygnux.rapid.core.trade;
 
 import io.mercury.common.sequence.OrderedObject;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
-import io.cygnux.rapid.core.shared.event.FastMarketData;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.event.received.FastMarketData;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 
 public class StopLoss implements OrderedObject<StopLoss> {

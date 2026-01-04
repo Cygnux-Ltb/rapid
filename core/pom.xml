@@ -48,21 +48,16 @@
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
-            <artifactId>serialization-fury</artifactId>
+            <artifactId>serialization-fory</artifactId>
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>serialization-json</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cygnux</groupId>
-            <artifactId>console-api</artifactId>
-            <version>1.0</version>
+            <groupId>io.cygnux.rapid</groupId>
+            <artifactId>core-types</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

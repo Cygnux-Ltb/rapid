@@ -5,8 +5,8 @@ import io.cygnux.rapid.core.instrument.InstrumentKeeper;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 import io.cygnux.rapid.core.position.AccountPosition;
 import io.cygnux.rapid.core.position.Position;
-import io.cygnux.rapid.core.shared.SharedEventHandler;
-import io.cygnux.rapid.core.shared.event.PositionsReport;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.event.received.PositionsReport;
 
 /**
  * 持仓管理接口

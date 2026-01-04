@@ -2,10 +2,10 @@ package io.cygnux.rapid.core.adapter.event;
 
 import io.mercury.common.serialization.Copyable;
 import io.mercury.serialization.json.JsonBean;
-import io.cygnux.rapid.core.shared.enums.OrdType;
-import io.cygnux.rapid.core.shared.enums.OrdValid;
-import io.cygnux.rapid.core.shared.enums.TrdAction;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.event.enums.OrdType;
+import io.cygnux.rapid.core.event.enums.OrdValid;
+import io.cygnux.rapid.core.event.enums.TrdAction;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -112,7 +112,6 @@ public class NewOrder extends JsonBean implements Copyable<NewOrder> {
      * 操作来源
      */
     private String source;
-
 
     @Override
     public void copyOf(NewOrder source) {

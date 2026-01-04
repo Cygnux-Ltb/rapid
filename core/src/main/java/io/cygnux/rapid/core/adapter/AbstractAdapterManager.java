@@ -7,7 +7,7 @@ import io.cygnux.rapid.core.adapter.event.QueryOrder;
 import io.cygnux.rapid.core.adapter.event.QueryPosition;
 import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.manager.AdapterManager;
-import io.cygnux.rapid.core.shared.event.AdapterReport;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -46,38 +46,38 @@ public abstract class AbstractAdapterManager implements AdapterManager {
     /**
      * 存储[Adaptor], 使用[adaptorId]索引
      */
-    protected final MutableMap<String, Adapter> mapByAdaptorId = newUnifiedMap();
+    protected final MutableMap<String, Adapter> mapByAdapterId = newUnifiedMap();
 
     protected AtomicBoolean isClosed = new AtomicBoolean(false);
 
     @Override
-    public void putAdaptor(@Nonnull Adapter... adaptors) {
+    public void putAdapter(@Nonnull Adapter... adaptors) {
         Stream.of(adaptors).forEach(adaptor -> {
             var account = adaptor.getBoundAccount();
             mapByAccountId.put(account.getAccountId(), adaptor);
-            mapByAdaptorId.put(adaptor.getAdaptorId(), adaptor);
+            mapByAdapterId.put(adaptor.getAdapterId(), adaptor);
             log.info("PUT [Adaptor] to AdaptorManager, accountId==[{}], adaptorId==[{}], remark==[{}]",
-                    account.getAccountId(), adaptor.getAdaptorId(), account.getRemark());
+                    account.getAccountId(), adaptor.getAdapterId(), account.getRemark());
         });
     }
 
     @Override
-    public Adapter getAdaptor(int accountId) {
+    public Adapter getAdapter(int accountId) {
         return mapByAccountId.get(accountId);
     }
 
     @Override
-    public Adapter getAdaptor(String adaptorId) {
-        return mapByAdaptorId.get(adaptorId);
+    public Adapter getAdapter(String adaptorId) {
+        return mapByAdapterId.get(adaptorId);
     }
 
     @Override
-    public void onAdaptorEvent(AdapterReport event) {
-        var adaptor = getAdaptor(event.getAccountId());
+    public void onAdapterEvent(AdapterStatusReport event) {
+        var adaptor = getAdapter(event.getAccountId());
         var currentStatus = adaptor.currentStatus();
         var channelType = event.getAdapterType();
         log.info("Adaptor -> [{}] current status update to [{}]",
-                adaptor.getAdaptorId(), currentStatus);
+                adaptor.getAdapterId(), currentStatus);
         adaptor.updateStatus(channelType, event.isAvailable());
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param subscribeMarketData SubscribeMarketData
      */
     public boolean commitSubscribeMarketData(SubscribeMarketData subscribeMarketData) {
-        var adaptor = getAdaptor(subscribeMarketData.getAccountId());
+        var adaptor = getAdapter(subscribeMarketData.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitSubscribeMarketData adaptor is NULL, accountId==[{}]",
                     subscribeMarketData.getAccountId());
@@ -111,7 +111,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param order NewOrder
      */
     public boolean commitNewOrder(NewOrder order) {
-        var adaptor = getAdaptor(order.getAccountId());
+        var adaptor = getAdapter(order.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitNewOrder adaptor is NULL, accountId==[{}]",
                     order.getAccountId());
@@ -134,7 +134,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param order CancelOrder
      */
     public boolean commitCancelOrder(CancelOrder order) {
-        var adaptor = getAdaptor(order.getAccountId());
+        var adaptor = getAdapter(order.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitCancelOrder adaptor is NULL, accountId==[{}]",
                     order.getAccountId());
@@ -157,7 +157,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param query QueryOrder
      */
     public boolean commitQueryOrder(QueryOrder query) {
-        var adaptor = getAdaptor(query.getAccountId());
+        var adaptor = getAdapter(query.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitQueryOrder adaptor is NULL, accountId==[{}]",
                     query.getAccountId());
@@ -180,7 +180,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param query QueryPositions
      */
     public boolean commitQueryPositions(QueryPosition query) {
-        var adaptor = getAdaptor(query.getAccountId());
+        var adaptor = getAdapter(query.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitQueryPositions adaptor is NULL, accountId==[{}]",
                     query.getAccountId());
@@ -203,7 +203,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
      * @param query QueryBalance
      */
     public boolean commitQueryBalance(QueryBalance query) {
-        var adaptor = getAdaptor(query.getAccountId());
+        var adaptor = getAdapter(query.getAccountId());
         if (adaptor == null) {
             log.error("AbstractAdaptorManager::commitQueryBalance adaptor is NULL, accountId==[{}]",
                     query.getAccountId());
@@ -242,7 +242,7 @@ public abstract class AbstractAdapterManager implements AdapterManager {
     @Override
     public void close() throws IOException {
         if (isClosed.compareAndSet(false, true)) {
-            for (Adapter adaptor : mapByAdaptorId.values()) {
+            for (Adapter adaptor : mapByAdapterId.values()) {
                 adaptor.close();
             }
         }

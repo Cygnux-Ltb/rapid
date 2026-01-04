@@ -1,13 +1,13 @@
 package io.cygnux.rapid.core.instrument;
 
-import io.mercury.common.state.Enableable;
+import io.mercury.common.state.Available;
 import io.cygnux.rapid.core.instrument.enums.InstrumentType;
 import io.cygnux.rapid.core.instrument.enums.PriceMultiplier;
 import io.cygnux.rapid.core.instrument.enums.PriorityCloseType;
 
 import java.time.ZoneOffset;
 
-public sealed interface Instrument extends Enableable, Comparable<Instrument>
+public sealed interface Instrument extends Available, Comparable<Instrument>
         permits AbstractInstrument {
 
     /**

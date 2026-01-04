@@ -19,7 +19,6 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QueryBalance extends JsonBean implements Copyable<QueryBalance> {
-
     /**
      * Epoch Millisecond Unit
      */

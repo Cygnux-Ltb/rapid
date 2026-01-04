@@ -5,10 +5,10 @@ import io.cygnux.rapid.core.order.attr.OrdPrice;
 import io.cygnux.rapid.core.order.attr.OrdQty;
 import io.cygnux.rapid.core.order.attr.OrdRemark;
 import io.cygnux.rapid.core.order.attr.OrdTimestamp;
-import io.cygnux.rapid.core.shared.enums.OrdStatus;
-import io.cygnux.rapid.core.shared.enums.OrdType;
-import io.cygnux.rapid.core.shared.enums.OrdValid;
-import io.cygnux.rapid.core.shared.enums.TrdDirection;
+import io.cygnux.rapid.core.event.enums.OrdStatus;
+import io.cygnux.rapid.core.event.enums.OrdType;
+import io.cygnux.rapid.core.event.enums.OrdValid;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.mercury.common.sequence.OrderedObject;
 import org.slf4j.Logger;
 

@@ -19,7 +19,6 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CancelOrder extends JsonBean implements Copyable<CancelOrder> {
-
     /**
      * Epoch Microsecond Unit
      */

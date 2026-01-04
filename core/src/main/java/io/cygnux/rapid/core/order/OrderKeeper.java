@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.order;
 
-import io.cygnux.rapid.core.shared.event.OrderReport;
+import io.cygnux.rapid.core.event.received.OrderReport;
 import io.cygnux.rapid.core.instrument.Instrument;
 
 import javax.annotation.Nonnull;
