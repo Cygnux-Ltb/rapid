@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- This is a parent gateway pom.xml -->
+    <parent>
+        <groupId>io.cygnux.rapid</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>gateway-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>gateway</name>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>yellow013</name>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>gateway-ctp</module>
+    </modules>
+
+    <properties>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.14.1</version>
+                    <configuration>
+                        <parameters>true</parameters>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <release>${java.version}</release>
+                        <encoding>UTF-8</encoding>
+                        <fork>true</fork>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <release>${java.version}</release>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.42</version>
+            </dependency>
+            <!-- Jakarta Annotations API -->
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <!-- commons -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>commons-core</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>commons-concurrent</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- persistence -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>persistence-h2</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- serialization -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-json</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-fory</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>serialization-sbe</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <!-- transport -->
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-zmq</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-rabbitmq</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mercury</groupId>
+                <artifactId>transport-aeron</artifactId>
+                <version>${mercury.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

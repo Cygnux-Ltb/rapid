@@ -1,21 +1,23 @@
 package io.cygnux.engine.position;
 
-import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.instrument.InstrumentKeeper;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.engine.position.PositionKeeper;
 import org.junit.Test;
 
 
 public class PositionKeeperTest {
 
+    private PositionKeeper positionKeeper;
+
     @Test
     public void test() {
         int subAccountId = 10;
         Instrument rb2010 = InstrumentKeeper.getInstrumentByCode("rb2010");
-        PositionKeeper.setSubAccountPositionsLimit(subAccountId, rb2010, 10, 10);
-        PositionKeeper.addPosition(subAccountId, rb2010, TrdDirection.LONG, 10);
-        PositionKeeper.addPosition(subAccountId, rb2010, TrdDirection.SHORT, 15);
+        positionKeeper.setSubAccountPositionsLimit(subAccountId, rb2010, 10, 10);
+        positionKeeper.addPosition(subAccountId, rb2010, TrdDirection.LONG, 10);
+        positionKeeper.addPosition(subAccountId, rb2010, TrdDirection.SHORT, 15);
     }
 
     @Test

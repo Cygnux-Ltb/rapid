@@ -5,7 +5,7 @@ public interface OrderRefKeeper {
     /**
      * 提供简单内存实现的管理器实例
      */
-    OrderRefKeeper IN_HEAP_INSTANCE = new OrderRefKeeperInHeap();
+    OrderRefKeeper DEFAULT = new OrderRefKeeperInHeap();
 
     void binding(String orderRef, long ordSysId);
 
@@ -14,6 +14,5 @@ public interface OrderRefKeeper {
     String getOrderRef(long ordSysId) throws OrderRefNotFoundException;
 
     int nextOrderRef();
-
 
 }

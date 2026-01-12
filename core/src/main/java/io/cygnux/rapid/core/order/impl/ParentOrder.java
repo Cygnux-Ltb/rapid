@@ -7,7 +7,7 @@ import lombok.Getter;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
-import static io.cygnux.console.api.ValueLimitation.MAX_ACCOUNT_ID;
+import static io.cygnux.rapid.core.types.ValueLimitation.MAX_ACCOUNT_ID;
 import static io.mercury.common.collections.MutableLists.newFastList;
 import static io.cygnux.rapid.core.order.attr.OrdPrice.withOffer;
 import static io.cygnux.rapid.core.order.attr.OrdQty.withOffer;
@@ -22,7 +22,6 @@ import static io.cygnux.rapid.core.order.attr.OrdQty.withOffer;
  */
 public final class ParentOrder extends AbstractOrder {
 
-    @java.io.Serial
     private static final long serialVersionUID = -5096106824571703291L;
 
     /**

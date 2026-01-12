@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.order;
 
-import io.mercury.common.epoch.EpochTimeUtil;
+import io.mercury.common.epoch.EpochUtil;
 import io.mercury.common.thread.Sleep;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableObjectLongMap;
@@ -12,12 +12,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
+import static io.cygnux.rapid.core.order.OrdSysIdAllocator.FOR_EXTERNAL_ORDER;
 import static io.mercury.common.collections.Capacity.HEX_1_000;
 import static io.mercury.common.collections.MutableMaps.newLongObjectMap;
 import static io.mercury.common.collections.MutableMaps.newObjectLongMap;
 import static io.mercury.common.datetime.TimeZone.CST;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
-import static io.cygnux.rapid.core.order.OrdSysIdAllocator.FOR_EXTERNAL_ORDER;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -41,7 +41,7 @@ public class OrderRefKeeperInHeap implements OrderRefKeeper {
 
     @Override
     public synchronized void binding(String orderRef, long ordSysId) {
-        log.info("REF_KEEPER ORDER BINDING >>>> orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
+        log.info("ORDER REF_KEEPER BINDING >>>> orderRef==[{}] <==> ordSysId==[{}]", orderRef, ordSysId);
         orderRefMap.put(orderRef, ordSysId);
         ordSysIdMap.put(ordSysId, orderRef);
     }
@@ -83,7 +83,7 @@ public class OrderRefKeeperInHeap implements OrderRefKeeper {
      * 如果当前时间在基准时间之后, 则使用当天的基准时间;
      * 如果在基准时间之前, 则使用前一天的基准时间
      */
-    public static final long EPOCH_BASELINE_POINT = EpochTimeUtil.getEpochMillis(
+    public static final long EPOCH_BASELINE_POINT = EpochUtil.getEpochMillis(
             ZonedDateTime.of(LocalTime.now().isBefore(BASELINE_TIME)
                             ? LocalDate.now().minusDays(1)
                             : LocalDate.now(),

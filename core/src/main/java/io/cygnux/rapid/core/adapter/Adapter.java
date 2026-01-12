@@ -1,0 +1,146 @@
+package io.cygnux.rapid.core.adapter;
+
+import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.adapter.event.NewOrder;
+import io.cygnux.rapid.core.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.event.enums.AdapterType;
+import io.mercury.common.state.Available;
+import io.mercury.common.state.StartupException;
+
+import javax.annotation.Nonnull;
+import java.io.Closeable;
+import java.io.IOException;
+
+public sealed interface Adapter extends Closeable, Available
+        permits AbstractAdapter {
+
+    /**
+     * Adaptor 消息发布URI
+     */
+    String publishPath = "adapter/pub";
+
+    /**
+     * Adaptor 消息接收URI
+     */
+    String subscribePath = "adapter/sub";
+
+    /**
+     * Adaptor 接收消息使用的Topic, 调用[Account::getTopic]
+     *
+     * @return String
+     */
+    default String subscribeTopic() {
+        var account = getBoundAccount();
+        return account.getTopic();
+    }
+
+    // ############################## 状态相关 ############################## //
+
+    String getAdapterId();
+
+    /**
+     * 获取Adaptor绑定交易账户
+     *
+     * @return Account
+     */
+    @Nonnull
+    Account getBoundAccount();
+
+
+    /**
+     * 更新Adaptor状态
+     *
+     * @param adapterType AdaptorStatus
+     */
+    void updateStatus(AdapterType adapterType, boolean isEnabled);
+
+    /**
+     * 获取当前Adaptor状态
+     *
+     * @return AdaptorStatus
+     */
+    AdapterStatus currentStatus();
+
+    /**
+     * Adaptor 启动函数
+     *
+     * @return boolean
+     */
+    boolean startup() throws IOException, IllegalStateException, StartupException;
+
+    // ############################## 行情相关 ############################## //
+
+    /**
+     * 订阅行情
+     *
+     * @param subscribeMarketData SubscribeMarketData
+     */
+    boolean subscribeMarketData(@Nonnull SubscribeMarketData subscribeMarketData);
+
+    default String getMarketDataTopic() {
+        return getBoundAccount().getTopicByMd();
+    }
+
+    // ############################## 交易相关 ############################## //
+
+    /**
+     * 发送订单请求
+     *
+     * @param order NewOrder
+     * @return boolean
+     */
+    boolean newOrder(@Nonnull NewOrder order);
+
+    /**
+     * 发送撤单请求
+     *
+     * @param order CancelOrder
+     * @return boolean
+     */
+    boolean cancelOrder(@Nonnull CancelOrder order);
+
+    /**
+     * 查询订单
+     *
+     * @param query QueryOrder
+     * @return boolean
+     */
+    boolean queryOrder(@Nonnull QueryOrder query);
+
+    default boolean queryOrder() {
+        return queryOrder(getBoundAccount().newQueryOrder());
+    }
+
+    /**
+     * 查询持仓
+     *
+     * @param query QueryPositions
+     * @return boolean
+     */
+    boolean queryPosition(@Nonnull QueryPosition query);
+
+    default boolean queryPosition() {
+        return queryPosition(getBoundAccount().newQueryPosition());
+    }
+
+    /**
+     * 查询余额
+     *
+     * @param query QueryBalance
+     * @return boolean
+     */
+    boolean queryBalance(@Nonnull QueryBalance query);
+
+    default boolean queryBalance() {
+        return queryBalance(getBoundAccount().newQueryBalance());
+    }
+
+    default String getTraderTopic() {
+        return getBoundAccount().getTopicByTd();
+    }
+
+}

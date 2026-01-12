@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.trade;
 
 import io.mercury.common.sequence.OrderedObject;
 import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.inbound.MarketDataReport;
+import io.cygnux.rapid.core.event.received.FastMarketData;
 import io.cygnux.rapid.core.order.impl.ChildOrder;
 
 public class StopLoss implements OrderedObject<StopLoss> {
@@ -67,7 +67,7 @@ public class StopLoss implements OrderedObject<StopLoss> {
         return ordSysId;
     }
 
-    public final boolean isStopLoss(MarketDataReport marketData) {
+    public final boolean isStopLoss(FastMarketData marketData) {
         return switch (direction) {
             case LONG -> stopPrice < marketData.getAskPrice1();
             case SHORT -> stopPrice > marketData.getBidPrice1();

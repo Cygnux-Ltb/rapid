@@ -2,14 +2,17 @@ package io.cygnux.rapid.core.indicator;
 
 
 import io.cygnux.rapid.core.instrument.Instrument;
+import lombok.Getter;
 
 import java.time.Duration;
 
 public abstract non-sealed class FixedPeriodIndicator<P extends FixedPeriodPoint, E extends IndicatorEvent>
         extends AbstractIndicator<P, E> {
 
+    @Getter
     protected final Duration duration;
 
+    @Getter
     protected final int cycle;
 
     /**
@@ -29,14 +32,6 @@ public abstract non-sealed class FixedPeriodIndicator<P extends FixedPeriodPoint
         super(instrument);
         this.duration = duration;
         this.cycle = cycle;
-    }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public int getCycle() {
-        return cycle;
     }
 
 }

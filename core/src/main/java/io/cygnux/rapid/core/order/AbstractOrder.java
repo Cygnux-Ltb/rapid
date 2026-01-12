@@ -21,9 +21,6 @@ import org.slf4j.Logger;
  */
 public abstract non-sealed class AbstractOrder implements Order {
 
-    @java.io.Serial
-    private static final long serialVersionUID = -3444258095612091354L;
-
     /**
      * ordSysId
      */

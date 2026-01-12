@@ -1,5 +1,7 @@
 package io.cygnux.rapid.engine.strategy.manager;
 
+import io.cygnux.rapid.core.account.SubAccount;
+import io.cygnux.rapid.core.strategy.StrategyParam;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.collections.MutableSets;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Set;
 
 import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
@@ -29,7 +32,7 @@ public class MultiStrategyManager extends AbstractStrategyManager {
      */
     private static final Logger log = getLogger(MultiStrategyManager.class);
 
-    @Resource(name = "mem")
+    @Resource(name = "inHeap")
     protected OrderKeeper orderKeeper;
 
     /**
@@ -63,6 +66,16 @@ public class MultiStrategyManager extends AbstractStrategyManager {
     @Override
     public void onEvent(StrategyEvent event) {
 
+    }
+
+    @Override
+    public Set<StrategyParam> getParams(int strategyId) {
+        return Set.of();
+    }
+
+    @Override
+    public SubAccount getSubAccount(int strategyId) {
+        return null;
     }
 
     @AbstractFunction

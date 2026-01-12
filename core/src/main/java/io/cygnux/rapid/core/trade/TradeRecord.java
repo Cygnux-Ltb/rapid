@@ -15,9 +15,11 @@ public record TradeRecord(// 订单编号
 
     @Override
     public int compareTo(TradeRecord o) {
-        return this.ordSysId < o.ordSysId ? -1
-                : this.ordSysId > o.ordSysId ? 1
-                : Integer.compare(this.sequence, o.sequence);
+        if (this.ordSysId < o.ordSysId)
+            return -1;
+        if (this.ordSysId > o.ordSysId)
+            return 1;
+        return Integer.compare(this.sequence, o.sequence);
     }
 
     @Override

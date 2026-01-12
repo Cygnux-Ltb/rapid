@@ -2,11 +2,11 @@ package io.cygnux.rapid.core.instrument;
 
 public enum CryptocurrencyExchange {
 
-    Binance,
+    BINANCE,
 
-    OkEx,
+    OK_EX,
 
-    OkCoin,
+    OK_COIN,
 
     ;
 

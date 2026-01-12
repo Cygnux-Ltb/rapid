@@ -1,5 +1,6 @@
 package io.cygnux.rapid.strategy;
 
+import io.cygnux.rapid.engine.strategy.AbstractStrategy;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import io.cygnux.rapid.core.account.SubAccount;
@@ -10,16 +11,15 @@ import io.cygnux.rapid.core.mdata.SavedMarketData;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
-import io.cygnux.rapid.engine.strategy.SingleInstrumentStrategy;
 import jakarta.annotation.Nonnull;
 
 /**
  * @author yellow013
  */
-public final class ExampleSmaStrategy extends SingleInstrumentStrategy implements SMA.SmaEvent {
+public final class ExampleSmaStrategy extends AbstractStrategy implements SMA.SmaEvent {
 
-    public ExampleSmaStrategy(SubAccount subAccount, Params params, Instrument instrument) {
-        super(100, "ExampleSmaStrategy", subAccount, params, instrument);
+    public ExampleSmaStrategy(SubAccount subAccount, Instrument instrument) {
+        super(100, "ExampleSmaStrategy", subAccount,  instrument);
     }
 
     @Override
@@ -37,11 +37,6 @@ public final class ExampleSmaStrategy extends SingleInstrumentStrategy implement
 
     }
 
-
-    @Override
-    protected boolean verification() {
-        return false;
-    }
 
     @Override
     protected void handleMarketData(SavedMarketData marketData) {
@@ -76,11 +71,6 @@ public final class ExampleSmaStrategy extends SingleInstrumentStrategy implement
     @Override
     public String getEventName() {
         return null;
-    }
-
-    @Override
-    public void close() {
-
     }
 
 }

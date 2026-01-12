@@ -1,11 +1,8 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.mercury.common.collections.ImmutableMaps;
-import io.mercury.common.epoch.EpochUnit;
-import io.mercury.common.param.Params;
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.event.inbound.AdaptorReport;
-import io.cygnux.rapid.core.handler.AdaptorReportHandler;
+import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.handler.AdapterReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.SavedMarketData;
@@ -13,12 +10,11 @@ import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.core.strategy.StrategyException;
+import io.mercury.common.epoch.EpochUnit;
+import io.mercury.common.param.Params;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
-import java.util.List;
-import java.util.function.Supplier;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;
 
@@ -31,15 +27,14 @@ public class StrategyImpl extends AbstractStrategy {
     protected StrategyImpl(int strategyId, @Nonnull String strategyName,
                            @Nonnull SubAccount subAccount, @Nonnull Params params,
                            MarketDataHandler marketDataHandler, @Nonnull Instrument... instruments) {
-        super(strategyId, strategyName, subAccount, params,
-                ImmutableMaps.newImmutableIntMap(List.of(instruments), Instrument::getInstrumentId));
+        super(strategyId, strategyName, subAccount, instruments);
         this.marketDataHandler = marketDataHandler;
     }
 
-    private final AdaptorReportHandler adaptorReportHandler = event -> {
+    private final AdapterReportHandler adapterReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
-                getStrategyName(), event.getAdaptorId(), event.getAdaptorType(), event.isAvailable());
-        switch (event.getAdaptorType()) {
+                getStrategyName(), event.getAdaptorId(), event.getAdapterType(), event.isAvailable());
+        switch (event.getAdapterType()) {
             case MARKET_DATA -> {
                 log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
                 //adaptor.subscribeMarketData(instrument);
@@ -64,8 +59,8 @@ public class StrategyImpl extends AbstractStrategy {
 
     };
 
-    public void onAdaptorEvent(@Nonnull AdaptorReport event) {
-        adaptorReportHandler.onAdaptorReport(event);
+    public void onAdapterEvent(@Nonnull AdapterStatusReport event) {
+        adapterReportHandler.onAdapterReport(event);
     }
 
     @Override
@@ -97,16 +92,6 @@ public class StrategyImpl extends AbstractStrategy {
     @Override
     public void onEpochTime(long epochTime, EpochUnit epochUnit) {
 
-    }
-
-    @Override
-    protected boolean verification() {
-        return false;
-    }
-
-    @Override
-    public Strategy initialize(@Nonnull Supplier<Boolean> initializer) {
-        return null;
     }
 
     @Override
@@ -142,11 +127,6 @@ public class StrategyImpl extends AbstractStrategy {
     @Override
     public boolean enable() {
         return false;
-    }
-
-    @Override
-    public void close() throws IOException {
-
     }
 
 }

@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.indicator;
 
 import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.lang.Asserter;
+import io.mercury.common.lang.Validator;
 import io.cygnux.rapid.core.mdata.SavedMarketData;
 
 /**
@@ -14,7 +14,7 @@ public abstract non-sealed class AbstractPoint implements Point {
     protected SavedMarketData preMarketData;
 
     protected AbstractPoint(int index) {
-        Asserter.greaterThan(index, -1, "index");
+        Validator.greaterThan(index, -1, "index");
         this.index = index;
     }
 

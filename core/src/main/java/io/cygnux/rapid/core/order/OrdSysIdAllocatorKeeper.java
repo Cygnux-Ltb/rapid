@@ -40,7 +40,7 @@ public final class OrdSysIdAllocatorKeeper {
      * @return OrdSysIdAllocator
      */
     public static OrdSysIdAllocator acquireAllocator(int strategyId) {
-        if (Predicates.atWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID)) {
+        if (Predicates.isAtWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID)) {
             log.error("OrdSysIdAllocatorKeeper::newAllocator, strategyId==[{}] is not in range", strategyId);
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);
         }
@@ -56,7 +56,7 @@ public final class OrdSysIdAllocatorKeeper {
      * @return long
      */
     public static long nextOrdSysId(int strategyId) {
-        if (Predicates.atWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID))
+        if (Predicates.isAtWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID))
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);
         return allocators[strategyId].nextOrdSysId();
     }

@@ -2,19 +2,18 @@ package io.cygnux.rapid.core.account;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import io.cygnux.console.api.response.AccountRsp;
-import io.mercury.common.state.EnableableComponent;
-import io.cygnux.rapid.core.event.outbound.QueryBalance;
-import io.cygnux.rapid.core.event.outbound.QueryOrder;
-import io.cygnux.rapid.core.event.outbound.QueryPosition;
+import io.cygnux.rapid.core.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.adapter.event.QueryPosition;
+import io.mercury.common.state.AvailableComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
 
-import static io.mercury.common.lang.Asserter.greaterThan;
-import static io.mercury.common.lang.Asserter.nonEmpty;
+import static io.mercury.common.lang.Validator.greaterThan;
+import static io.mercury.common.lang.Validator.nonEmpty;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -24,7 +23,7 @@ import static java.lang.System.currentTimeMillis;
  */
 @Getter
 @Accessors(chain = true)
-public class Account extends EnableableComponent implements Comparable<Account> {
+public class Account extends AvailableComponent implements Comparable<Account> {
 
     /**
      * 账户ID
@@ -62,12 +61,6 @@ public class Account extends EnableableComponent implements Comparable<Account> 
     // 备用, 数组下标, 用于快速访问本账户对应的仓位信息集合
     // private int positionManagerIndex;
 
-    public Account(@Nonnull AccountRsp accountRsp) {
-        this(accountRsp.getAccountId(), accountRsp.getBrokerCode(), accountRsp.getInvestorCode(),
-                (long) accountRsp.getBalance(), (long) accountRsp.getCredit());
-        this.remark = accountRsp.getRemark();
-    }
-
     /**
      * @param accountId    int
      * @param brokerCode   String
@@ -86,9 +79,12 @@ public class Account extends EnableableComponent implements Comparable<Account> 
      */
     public Account(int accountId, @Nonnull String brokerCode, @Nonnull String investorCode,
                    long balance, long credit) {
-        this.accountId = greaterThan(accountId, 0, "accountId");
-        this.brokerCode = nonEmpty(brokerCode, "brokerCode");
-        this.investorCode = nonEmpty(investorCode, "investorId");
+        greaterThan(accountId, 0, "accountId");
+        nonEmpty(brokerCode, "brokerCode");
+        nonEmpty(investorCode, "investorId");
+        this.accountId = accountId;
+        this.brokerCode = brokerCode;
+        this.investorCode = investorCode;
         this.balance = balance;
         this.credit = credit;
         enable();

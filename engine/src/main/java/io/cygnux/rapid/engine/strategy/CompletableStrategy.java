@@ -1,7 +1,5 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.mercury.common.epoch.EpochUnit;
-import io.mercury.common.param.Params;
 import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.SavedMarketData;
@@ -10,10 +8,11 @@ import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.core.strategy.StrategyException;
+import io.mercury.common.epoch.EpochUnit;
+import io.mercury.common.param.Params;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 public class CompletableStrategy extends CompletableFuture<Strategy> implements Strategy {
 
@@ -45,12 +44,6 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
     @Override
     public void addInstrument(Instrument instrument) {
 
-    }
-
-
-    @Override
-    public Strategy initialize(Supplier<Boolean> initializer) {
-        return null;
     }
 
     @Override
@@ -86,11 +79,6 @@ public class CompletableStrategy extends CompletableFuture<Strategy> implements 
 
     @Override
     public void onOrder(@Nonnull Order order) {
-
-    }
-
-    @Override
-    public void close() {
 
     }
 

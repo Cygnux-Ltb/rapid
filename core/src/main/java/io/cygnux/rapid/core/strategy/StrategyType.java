@@ -2,10 +2,10 @@ package io.cygnux.rapid.core.strategy;
 
 public enum StrategyType {
 
-    Swing,
+    SWING,
 
-    Trend,
+    TREND,
 
-    Reversal
+    REVERSAL
 
 }

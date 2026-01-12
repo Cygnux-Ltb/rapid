@@ -1,14 +1,12 @@
 package io.cygnux.rapid.core.position;
 
-import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.order.Order;
-
-import java.io.Serializable;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
 
 import static java.lang.Integer.compare;
 
-public sealed interface Position extends Comparable<Position>, Serializable permits PositionImpl {
+public sealed interface Position extends Comparable<Position> permits PositionImpl {
 
     /**
      * 投资者账户ID

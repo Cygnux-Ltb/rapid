@@ -1,46 +1,46 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.mercury.common.annotation.AbstractFunction;
-import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.param.Params;
-import io.mercury.common.state.EnableableComponent;
-import io.cygnux.rapid.core.account.AccountManager;
 import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.instrument.InstrumentKeeper;
-import io.cygnux.rapid.core.mdata.MarketDataManager;
+import io.cygnux.rapid.core.manager.AccountManager;
+import io.cygnux.rapid.core.manager.MarketDataManager;
+import io.cygnux.rapid.core.manager.StrategyManager;
 import io.cygnux.rapid.core.mdata.MarketDataSnapshot;
 import io.cygnux.rapid.core.mdata.SavedMarketData;
 import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.order.Order;
 import io.cygnux.rapid.core.risk.CircuitBreaker;
+import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.event.sent.StrategySignal;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
-import io.cygnux.rapid.core.strategy.StrategyManager;
-import io.cygnux.rapid.core.strategy.StrategySignal;
-import io.cygnux.rapid.core.strategy.StrategySignalHandler;
+import io.cygnux.rapid.core.strategy.StrategyParam;
+import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
 import io.cygnux.rapid.engine.position.PositionKeeper;
+import io.mercury.common.annotation.AbstractFunction;
+import io.mercury.common.collections.MutableMaps;
+import io.mercury.common.log4j2.Log4j2LoggerFactory;
+import io.mercury.common.state.AvailableComponent;
+import io.mercury.serialization.json.JsonWriter;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.Getter;
-import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
 import org.eclipse.collections.api.map.primitive.MutableLongObjectMap;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
-import java.util.function.Supplier;
+import java.util.Set;
+import java.util.stream.Stream;
 
-import static io.mercury.common.lang.Asserter.atWithinRange;
-import static io.mercury.common.lang.Asserter.nonEmpty;
-import static io.mercury.common.lang.Asserter.nonNull;
+import static io.mercury.common.lang.Validator.atWithinRange;
+import static io.mercury.common.lang.Validator.nonEmpty;
 
-@Component
-public abstract class AbstractStrategy extends EnableableComponent implements Strategy, CircuitBreaker {
+public abstract class AbstractStrategy extends AvailableComponent
+        implements Strategy, CircuitBreaker {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
 
@@ -88,8 +88,7 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
     /**
      * 策略参数
      */
-    @Getter
-    protected final Params params;
+    protected final Set<StrategyParam> params;
 
     /**
      * OrderSysID分配器
@@ -105,25 +104,26 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
     @Resource
     protected StrategyManager strategyManager;
 
+    @Resource
+    protected PositionKeeper positionKeeper;
+
     @Resource(name = "coreScheduler")
-    protected StrategySignalHandler signalHandler;
+    protected StrategySignalAggregator signalHandler;
 
     protected AbstractStrategy(int strategyId, String strategyName,
-                               SubAccount subAccount, Params params,
-                               ImmutableIntObjectMap<Instrument> instruments) {
+                               SubAccount subAccount, Instrument... instruments) {
         atWithinRange(strategyId, MIN_STRATEGY_ID, MAX_STRATEGY_ID, "strategyId");
         nonEmpty(strategyName, "strategyName");
-        nonNull(subAccount, "subAccount");
-        nonNull(params, "params");
         this.strategyId = strategyId;
         this.strategyName = strategyName;
         this.subAccount = subAccount;
         this.subAccountId = subAccount.getSubAccountId();
-        this.params = params;
+        Stream.of(instruments)
+                .forEach(instrument -> this.instruments.put(instrument.getInstrumentId(), instrument));
+        this.params = strategyManager.getParams(strategyId);
         this.allocator = OrdSysIdAllocatorKeeper.acquireAllocator(strategyId);
-        log.info("Strategy -> {} initialized", strategyName);
-        log.info("Strategy -> {} print params", params);
-        params.showParams(log);
+        log.info("Strategy -> {} | show params: {}", strategyName,
+                log.isInfoEnabled() ? JsonWriter.toJson(params) : "");
     }
 
     @PostConstruct
@@ -134,17 +134,11 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
         } else {
             log.info("Strategy -> {} validation failed", strategyName);
         }
+        log.info("Strategy -> {} initialized", strategyName);
     }
 
-    protected abstract boolean verification();
-
-    @Override
-    public Strategy initialize(Supplier<Boolean> initializer) {
-        if (initializer == null)
-            initializer = () -> true;
-        this.initialized = initializer.get();
-        log.info("Initialize result initSuccess==[{}]", initialized);
-        return this;
+    protected boolean verification() {
+        return true;
     }
 
     @Override
@@ -159,8 +153,9 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
     @AbstractFunction
     protected abstract void handleMarketData(SavedMarketData marketData);
 
+
     @Override
-    public void onOrder(@Nonnull Order order) {
+    public void fireOrderReport(OrderReport report) {
         order.logging(log, "Call onOrder function");
         handleOrder(order);
     }
@@ -193,15 +188,14 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
         if (initialized) {
             boolean enable = super.enable();
             if (enable)
-                log.info("{}::enable success. strategyId==[{}], isEnable==[{}]",
+                log.info("{} enable success. strategyId==[{}], isEnable==[{}]",
                         strategyName, strategyId, isEnabled());
             else
-                log.info(
-                        "{}::enable failure. strategyId==[{}], isEnable==[{}]",
+                log.info("{} enable failure. strategyId==[{}], isEnable==[{}]",
                         strategyName, strategyId, isEnabled());
             return enable;
         } else {
-            log.info("{}::enable failure, strategy is not initialized. strategyId==[{}], isEnable==[{}]",
+            log.info("{} enable failure, strategy is not initialized. strategyId==[{}], isEnable==[{}]",
                     strategyName, strategyId, isEnabled());
             throw new IllegalStateException("Strategy has been initialized");
         }
@@ -287,13 +281,11 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
      * @param limitPrice 限定价格
      * @param floatTick  允许浮动点差
      */
-    protected void newTradeSignal(Instrument instrument, TrdDirection direction, int targetQty, double limitPrice, int floatTick) {
-        double offerPrice;
-        if (Double.isNaN(limitPrice) || limitPrice == 0.0D)
-            offerPrice = getLevel1Price(instrument, direction);
-        else
-            offerPrice = limitPrice;
-
+    protected void newTradeSignal(Instrument instrument, TrdDirection direction,
+                                  int targetQty, double limitPrice, int floatTick) {
+        double offerPrice = (Double.isNaN(limitPrice) || limitPrice == 0.0D)
+                ? getLevel1Price(instrument, direction)
+                : limitPrice;
         var signal = new StrategySignal();
 
         signal.setInstrumentId(instrument.getInstrumentId());
@@ -368,7 +360,7 @@ public abstract class AbstractStrategy extends EnableableComponent implements St
      * @return int
      */
     protected int getCurrentPosition(int subAccountId, Instrument instrument) {
-        int position = PositionKeeper.getSubAccountPosition(subAccountId, instrument);
+        int position = positionKeeper.getSubAccountPosition(subAccountId, instrument);
         if (position == 0)
             log.warn("{} :: No position, subAccountId==[{}], instrument -> {}", getStrategyName(), subAccountId,
                     instrument);

@@ -1,108 +1,117 @@
 package io.cygnux.rapid.core.instrument;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
- * 货币类型(代码)
+ * 货币类型
  */
-public interface Currency {
+@Getter
+@AllArgsConstructor
+public enum Currency {
 
     /**
      * 美元
      */
-    String USD = "USD";
+    USD("USD"),
 
     /**
      * 日元
      */
-    String JPY = "JPY";
+    JPY("JPY"),
 
     /**
      * 在岸人民币
      */
-    String CNY = "CNY";
+    CNY("CNY"),
 
     /**
      * 离岸人民币
      */
-    String CNH = "CNH";
+    CNH("CNH"),
 
     /**
      * 港币
      */
-    String HKD = "HKD";
+    HKD("HKD"),
 
     /**
      * 欧元
      */
-    String EUR = "EUR";
+    EUR("EUR"),
 
     /**
      * 英镑
      */
-    String GBP = "GBP";
+    GBP("GBP"),
 
     /**
      * 瑞士法郎
      */
-    String CHF = "CHF";
+    CHF("CHF"),
 
     /**
      * 加元
      */
-    String CAD = "CAD";
+    CAD("CAD"),
 
     /**
      * 澳元
      */
-    String AUD = "AUD";
+    AUD("AUD"),
 
     /**
      * 印尼盾
      */
-    String IDR = "IDR";
+    IDR("IDR"),
 
     /**
      * 马来西亚林吉特
      */
-    String MYR = "MYR";
+    MYR("MYR"),
 
     /**
      * 新西兰元
      */
-    String NZD = "NZD";
+    NZD("NZD"),
 
     /**
      * 菲律宾比索
      */
-    String PHP = "PHP";
+    PHP("PHP"),
 
     /**
      * 俄罗斯卢布
      */
-    String SUR = "SUR";
+    SUR("SUR"),
 
     /**
      * 新加坡元
      */
-    String SGD = "SGD";
+    SGD("SGD"),
 
     /**
      * 韩国元
      */
-    String KRW = "KRW";
+    KRW("KRW"),
 
     /**
      * 泰国铢
      */
-    String THB = "THB";
+    THB("THB"),
 
     /**
      * 未知货币代码
      */
-    String UNKNOWN = "UNKNOWN";
+    UNKNOWN("UNKNOWN"),
 
     /**
      * 空货币代码
      */
-    String NONE = "NONE";
+    NONE("NONE"),
+
+    ;
+
+    private final String code;
 
 }

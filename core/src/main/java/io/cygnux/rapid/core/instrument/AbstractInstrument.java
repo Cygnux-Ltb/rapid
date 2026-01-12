@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.instrument;
 
-import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.state.AvailableComponent;
 import io.mercury.serialization.json.JsonWriter;
 import io.cygnux.rapid.core.event.enums.SubscribeStatus;
 import io.cygnux.rapid.core.event.enums.TradingStatus;
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 
-public abstract non-sealed class AbstractInstrument extends EnableableComponent
+public abstract non-sealed class AbstractInstrument extends AvailableComponent
         implements Instrument {
 
     /**

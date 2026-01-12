@@ -7,6 +7,4 @@ public final class LoggingUtil {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(LoggingUtil.class);
 
-
-
 }

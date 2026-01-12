@@ -1,9 +1,9 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.mercury.common.collections.ImmutableMaps;
-import io.mercury.common.collections.ImmutableSets;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.strategy.Strategy;
+import io.mercury.common.collections.ImmutableMaps;
+import io.mercury.common.collections.ImmutableSets;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 
 public final class StrategyDSL {
@@ -27,8 +27,8 @@ public final class StrategyDSL {
 
         public StrategyBuilder setInstrument(Instrument... instruments) {
             this.instruments = ImmutableMaps.newImmutableIntMap(
-                    ImmutableSets.from(instruments),
-                    Instrument::getInstrumentId);
+                    Instrument::getInstrumentId,
+                    ImmutableSets.from(instruments));
             return this;
         }
 

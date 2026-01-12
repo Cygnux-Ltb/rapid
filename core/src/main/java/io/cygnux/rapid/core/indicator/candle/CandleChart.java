@@ -6,8 +6,6 @@ public final class CandleChart  {
 
 
 
-
-
     public CandleChart(final Instrument instrument) {
     }
 

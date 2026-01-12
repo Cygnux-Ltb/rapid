@@ -1,34 +1,30 @@
 package io.cygnux.rapid.core.strategy;
 
-import io.cygnux.console.api.ValueLimitation;
-import io.mercury.common.epoch.EpochUnit;
-import io.mercury.common.param.Params;
-import io.mercury.common.state.Enableable;
 import io.cygnux.rapid.core.account.SubAccount;
 import io.cygnux.rapid.core.instrument.Instrument;
 import io.cygnux.rapid.core.mdata.MarketDataConsumer;
 import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
-import io.cygnux.rapid.core.order.OrderHandler;
+import io.cygnux.rapid.core.event.SharedEventHandler;
+import io.cygnux.rapid.core.types.id.StrategyID;
+import io.mercury.common.epoch.EpochUnit;
+import io.mercury.common.param.Params;
+import io.mercury.common.state.Available;
 
 import javax.annotation.Nonnull;
-import java.io.Closeable;
-import java.util.function.Supplier;
 
 /**
  * 策略接口
  */
 public interface Strategy extends
         // 可用状态控制
-        Enableable,
+        Available,
         // 优先级排序
         Comparable<Strategy>,
         // 行情处理
         MarketDataConsumer,
-        // 订单处理
-        OrderHandler,
-        // 资源清理
-        Closeable {
+        // 流事件处理器
+        SharedEventHandler {
 
     Strategy setParams(Params params);
 
@@ -44,8 +40,6 @@ public interface Strategy extends
 
     void addInstrument(Instrument instrument);
 
-    Strategy initialize(Supplier<Boolean> initializer);
-
     void onEpochTime(long epochTime, EpochUnit epochUnit);
 
     void onStrategyEvent(@Nonnull StrategyEvent event);
@@ -57,9 +51,9 @@ public interface Strategy extends
         return Integer.compare(this.getStrategyId(), o.getStrategyId());
     }
 
-    int MIN_STRATEGY_ID = ValueLimitation.MIN_STRATEGY_ID;
+    int MIN_STRATEGY_ID = StrategyID.MIN_STRATEGY_ID;
 
-    int MAX_STRATEGY_ID = ValueLimitation.MAX_STRATEGY_ID;
+    int MAX_STRATEGY_ID = StrategyID.MAX_STRATEGY_ID;
 
     int EXTERNAL_ORDER_STRATEGY_ID = 0;
 

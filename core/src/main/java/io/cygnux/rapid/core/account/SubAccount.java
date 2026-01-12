@@ -1,8 +1,8 @@
 package io.cygnux.rapid.core.account;
 
-import io.cygnux.console.api.response.SubAccountRsp;
+import io.cygnux.rapid.core.types.id.SubAccountID;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.EnableableComponent;
+import io.mercury.common.state.AvailableComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
-import static io.cygnux.console.api.ValueLimitation.MAX_SUB_ACCOUNT_ID;
-import static io.cygnux.console.api.ValueLimitation.MIN_SUB_ACCOUNT_ID;
-import static io.mercury.common.lang.Asserter.atWithinRange;
+import static io.mercury.common.lang.Validator.atWithinRange;
 import static io.mercury.common.util.ArrayUtil.isNullOrEmpty;
 import static io.mercury.common.util.StringSupport.nonEmpty;
 
@@ -23,7 +21,7 @@ import static io.mercury.common.util.StringSupport.nonEmpty;
  * @author yellow013
  */
 @Accessors(chain = true)
-public final class SubAccount extends EnableableComponent implements Comparable<SubAccount> {
+public final class SubAccount extends AvailableComponent implements Comparable<SubAccount> {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(SubAccount.class);
 
@@ -78,25 +76,17 @@ public final class SubAccount extends EnableableComponent implements Comparable<
         this.subAccountMapping = null;
     }
 
-    public SubAccount(SubAccountRsp subAccountRsp) {
-        this(subAccountRsp.getSubAccountId(),
-                subAccountRsp.getSubAccountName(),
-                (long) subAccountRsp.getTotalAvailable(),
-                (long) subAccountRsp.getDailyAvailable(), (Account) null);
-    }
-
-    public SubAccount(int subAccountId, String subAccountName, @Nullable Account... accounts) {
+    public SubAccount(SubAccountID subAccountId, String subAccountName, @Nullable Account... accounts) {
         this(subAccountId, subAccountName,
                 isNullOrEmpty(accounts) ? 0 :
                         Stream.of(accounts).mapToLong(Account::getBalance).sum(),
                 0, accounts);
     }
 
-    public SubAccount(int subAccountId, String subAccountName, long balance, long dailyBalance,
+    public SubAccount(SubAccountID subAccountId, String subAccountName, long balance, long dailyBalance,
                       @Nullable Account... accounts) {
-        atWithinRange(subAccountId, MIN_SUB_ACCOUNT_ID, MAX_SUB_ACCOUNT_ID, "subAccountId");
-        this.subAccountId = subAccountId;
-        this.subAccountMapping = new SubAccountMapping(subAccountId);
+        this.subAccountId = subAccountId.value();
+        this.subAccountMapping = new SubAccountMapping(subAccountId.value());
         if (!isNullOrEmpty(accounts))
             bindAccount(accounts);
         this.balance = balance;
@@ -134,7 +124,7 @@ public final class SubAccount extends EnableableComponent implements Comparable<
     }
 
     public static void main(String[] args) {
-        SubAccount subAccount = new SubAccount(10, "TEST_SUB",
+        SubAccount subAccount = new SubAccount(SubAccountID.of(10), "TEST_SUB",
                 new Account(1, "HYQH", "200500", 100000, 0));
         System.out.println(subAccount);
         System.out.println(subAccount.toString().length());
