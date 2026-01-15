@@ -1,0 +1,57 @@
+*{padding: 0;margin: 0;}
+[class^="doc-"]{box-sizing: border-box;}
+.doc-header a, .doc-content a {display: block;text-decoration: none;color: #353535;cursor: pointer;}
+ul {list-style: none;}
+body {position: relative;width: 100%;height: 100%;background-color: #eee;}
+.doc-header {position: absolute;top: 0;left: 0;width: 100%;padding: 0 20px;*padding: 0;background-color: #ffffff;border-bottom: solid 1px #eee;box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);z-index: 10;}
+.doc-header h1.logo {display: inline-block;*width: 300px;*float: left;}
+.doc-header h1.logo > a {position: relative;color: #39f;font-size: 18px;line-height: 80px;padding-left: 80px;}
+.doc-header h1.logo > a::before {content: '';position: absolute;display: block;height: 54px;width: 60px;top: 13px;left: 0;background-size: 100%;}
+.doc-tab {float: right;*padding-right: 20px;}
+.doc-tab ul.tabs > li.tab {display: inline-block;*float: left;}
+.doc-tab ul.tabs > li.tab > a {color: #657180;font-size: 14px;line-height: 80px;padding: 0 15px;}
+.doc-tab ul.tabs > li.tab > a:hover {color: #39f;}
+.doc-tab ul.tabs > li.tab.active > a {color: #39f;border-bottom: solid 2px #39f;}
+.doc-content {position: absolute;top: 80px;bottom: 0;*bottom: auto;bottom: auto\9;left: 20px;right: 20px;border-left: solid 1px #eee;border-right: solid 1px #eee;background-color: #ffffff;padding-left: 260px;*overflow: hidden;}
+.doc-nav {position: absolute;width: 270px;left: 0;top: 0;height: 100%;overflow: auto;border-right: solid 1px #eee;}
+.doc-nav li > a {color: #657180;padding: 0 15px;}
+.doc-nav li > a:hover {color: #39f;}
+.doc-nav li.active > a {color: #39f;}
+.doc-nav ul.menus > li.menu > a {line-height: 60px;font-size: 16px;}
+.doc-nav ul.pages {padding-left: 15px;}
+.doc-nav ul.pages > li a {line-height: 40px;font-size: 14px;}
+.doc-nav ul.pages > li a:hover {background-color: #F3F3F3;}
+.doc-nav ul.pages > li.active > a {background-color: #F3F3F3;border-right: 2px solid #3399FF;}
+.doc-markdown {overflow: auto;height: 100%;padding: 15px 50px;}
+/*修改大体样式*/
+.markdown-body{font-size: 14px!important;color: #495060!important;font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif!important;line-height: 30px!important;}
+.markdown-body h4{font-size: 18px!important;}
+.markdown-body hr{margin: 10px 0;height: 1px;background-color: #E1E4E8;border: 0;}
+.hljs-comment, .hljs-quote{font-style: normal!important;}
+.markdown-body table th, .markdown-body table td{font-size: 12px;line-height: 30px;}
+.markdown-body .highlight pre, .markdown-body pre{font-size: 100%!important;}
+.markdown-body h4 {margin-top: 0 !important;font-weight: 600;}
+.doc-nav ul.menus > li.menu > a{color: #3399FF;}
+.doc-nav{padding-left: 10px;}
+.doc-markdown iframe {width:100%;height: 100%;border:0;margin:0;padding:0;}
+.doc-markdown h2{margin-bottom: 10px; font-weight: 400; color: #1f2f3d; font-size: 28px;}
+.doc-markdown h3{font-size: 22px; font-weight: 400; margin: 0 0 16px; color: #1f2d3d;}
+.doc-markdown h3 ~ P {margin-bottom: 10px;}
+.doc-markdown > ul{margin-bottom: 50px; padding-left: 0;}
+.doc-markdown > ul li{font-size: 14px; margin-bottom: 10px; color: #99a9bf; list-style: none;}
+.doc-markdown > ul li:before{content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%; vertical-align: middle; background-color: #5e6d82; margin-right: 5px;}
+.doc-markdown > ul li strong{color: #5e6d82; font-weight: 400;}
+.doc-markdown pre{margin-top:10px;margin-bottom:70px;}
+.doc-markdown table.javaex-table{margin-bottom:70px;}
+.doc-markdown .javaex-grid-9 > ul{margin-bottom: 50px; padding-left: 0;}
+.doc-markdown .javaex-grid-9 > ul li{font-size: 14px; margin-bottom: 10px; color: #99a9bf; list-style: none;}
+.doc-markdown .javaex-grid-9 > ul li:before{content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%; vertical-align: middle; background-color: #5e6d82; margin-right: 5px;}
+.doc-markdown .javaex-grid-9 > ul li strong{color: #5e6d82; font-weight: 400;}
+
+body{color: #495060!important;background-color: #fff!important;}
+h4{font-size: 18px!important;margin-top: 0 !important;font-weight: 600;line-height: 30px!important;}
+hr{margin: 10px 0;height: 1px;background-color: #E1E4E8;border: 0;}
+.doc-markdown pre {padding: 10px;overflow: auto;line-height: 1.45;background-color: #f6f8fa;}
+.doc-markdown h5{margin-top: 24px;margin-bottom: 16px;font-weight: 600;line-height: 1.25;font-size: 16px;}
+.doc-markdown .word{background-color:#f6f8fa;padding:10px 20px;font-size: 16px;}
+.divhr {height: 1px;border: none;border-top: 1px dashed #ddd;margin: 20px auto;}

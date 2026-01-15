@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SearchBar 搜索栏</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>SearchBar 搜索栏</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>表单提交</h3>
+				<pre><code class="html">&lt;div class="javaex-search-bar"&gt;
+	&lt;form id="form1" action="https://m.iqiyi.com/search.html?key=" class="javaex-search-input-area"&gt;
+		&lt;i class="javaex-icon icon-search"&gt;&lt;/i&gt;
+		&lt;input type="search" name="keyword" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" /&gt;
+		&lt;i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"&gt;&lt;/i&gt;
+	&lt;/form&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	$('#form1 input[type="search"]').bind("keydown",function (e) {
+		$(this).parent().find(".icon-cancel").show();
+	});
+
+	function clearKeyword(obj) {
+		$('input[name="keyword"]').val("");
+		$(obj).hide();
+	}
+&lt;/script&gt;</code></pre>
+				
+				<h3>事件监听，阻止表单提交</h3>
+				<pre><code class="html">&lt;div class="javaex-search-bar"&gt;
+	&lt;form id="form2" action="" class="javaex-search-input-area" onsubmit="return false;"&gt;
+		&lt;i class="javaex-icon icon-search"&gt;&lt;/i&gt;
+		&lt;input type="search" name="keyword" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" /&gt;
+		&lt;i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"&gt;&lt;/i&gt;
+	&lt;/form&gt;
+	&lt;a href="javascript:;" class="javaex-search-action" onclick="searchKeyword()"&gt;搜索&lt;/a&gt;
+&lt;/div&gt;
+ 
+&lt;script&gt;
+	$('#form2 input[type="search"]').bind("keydown",function (e) {
+		if (13 === e.keyCode) {
+			let keyword= $('input[name="keyword"]').val();
+			doSearch(keyword);
+		} else {
+			$(this).parent().find(".icon-cancel").show();
+		}
+	});
+ 
+	function clearKeyword(obj) {
+		$('input[name="keyword"]').val("");
+		$(obj).hide();
+	}
+ 
+	function searchKeyword() {
+		let keyword= $('input[name="keyword"]').val();
+		doSearch(keyword);
+	}
+ 
+	function doSearch(keyword) {
+		console.log(keyword);
+		// ajax提交
+	}
+
+	/**
+	 * 即时搜索
+	 */
+	$('#form2 input[type="search"]').bind("input propertychange", function() {
+		instantSearch();
+	});
+	function instantSearch() {
+		let searchval = $.trim($('input[name="keyword"]').val());
+		console.log(searchval);
+		// ajax提交
+	}
+&lt;/script&gt;
+</code></pre>
+
+				<h3>自定义背景色</h3>
+				<pre><code class="html">&lt;div class="javaex-search-bar" style="background: linear-gradient(90deg,#16e05a,#16e09d);"&gt;
+	&lt;form id="form3" action="" class="javaex-search-input-area" onsubmit="return false;"&gt;
+		&lt;i class="javaex-icon icon-search"&gt;&lt;/i&gt;
+		&lt;input type="search" name="keyword" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" /&gt;
+		&lt;i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"&gt;&lt;/i&gt;
+	&lt;/form&gt;
+	&lt;a href="javascript:;" class="javaex-search-action" style="color:#fff;" onclick="searchKeyword()"&gt;搜索&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>显示全部 icon</h3>
+				<pre><code class="html">&lt;div class="javaex-search-bar"&gt;
+	&lt;a href="javascript:;" onclick="history.back()" class="javaex-search-left"&gt;&lt;i class="javaex-icon icon-angle-left"&gt;&lt;/i&gt;&lt;/a&gt;
+	&lt;form id="form4" action="" class="javaex-search-input-area" onsubmit="return false;"&gt;
+		&lt;i class="javaex-icon icon-search"&gt;&lt;/i&gt;
+		&lt;input type="search" name="keyword4" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" /&gt;
+		&lt;i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"&gt;&lt;/i&gt;
+	&lt;/form&gt;
+	&lt;a href="javascript:;" class="javaex-search-action" onclick="searchKeyword()"&gt;搜索&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="SearchBar_搜索栏1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DatePicker 日期选择器</title>
+<script src="../js/ui.js"></script>
+<style>
+	.doc-markdown{overflow:visible;}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>DatePicker 日期选择器</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>可以使用div、span或input等其他元素来承载日期组件</strong></li>
+			<li><strong>如果你想用框架内置的表单验证插件在表单中对其进行验证。则必须使用input元素来承载，并且将初始化日期设置为空（缺省date属性）</strong></li>
+			<li><strong>建议使用input元素来承载，因为div文本清空时，可能会造成抖动效果</strong></li>
+		</ul>
+		
+		<h3>单选日期</h3>
+		<input type="text" id="date1" class="javaex-date" style="width: 140px;" value="" readonly/>
+		
+		<pre><code>&lt;!--不一定是input，可以使用div或span等其他元素--&gt;
+&lt;input type="text" id="date1" class="javaex-date" style="width: 140px;" value="" readonly/&gt;
+
+&lt;script&gt;
+	javaex.date({
+		id : "date1",		// 承载日期组件的id
+		monthNum : 1,		// 1代表选择单日日期
+		time : "2022-01-01",	// 选择的日期
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.date);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>承载日期组件的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>monthNum</td>
+					<td>1</td>
+					<td>选择单日日期还是范围日期。1代表选择单日日期；2或3代表选择范围日期</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>time</td>
+					<td></td>
+					<td>选择的日期</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>alignment</td>
+					<td>left</td>
+					<td>日期选择框的对齐方式。left代表左对齐；right代表右对齐</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>minTime</td>
+					<td></td>
+					<td>最小可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxTime</td>
+					<td></td>
+					<td>最大可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>重新选择日期之后返回一个时间对象。按照示例上的写</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>范围日期</h3>
+		<input type="text" id="date2" class="javaex-date" style="width: 220px;" value="" readonly/>
+		
+		<pre><code>&lt;!--不一定是input，可以使用div或span等其他元素--&gt;
+&lt;input type="text" id="date2" class="javaex-date" style="width: 220px;" value="" readonly/&gt;
+
+&lt;script&gt;
+	javaex.date({
+		id : "date2",		// 承载日期组件的id
+		monthNum : 2,		// 2代表选择范围日期
+		beginDate : "2017-08-01",	// 开始日期
+		endDate : "2017-08-20",		// 结束日期
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.beginDate + " - " + rtn.endDate);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>承载日期组件的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>monthNum</td>
+					<td>1</td>
+					<td>选择单日日期还是范围日期。1代表选择单日日期；2或3代表选择范围日期</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>beginDate</td>
+					<td></td>
+					<td>开始日期</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>endDate</td>
+					<td></td>
+					<td>结束日期</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>splitLine</td>
+					<td> - </td>
+					<td>两个日期之间的连接符</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>alignment</td>
+					<td>left</td>
+					<td>日期选择框的对齐方式。left代表左对齐；right代表右对齐</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>minTime</td>
+					<td></td>
+					<td>最小可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxTime</td>
+					<td></td>
+					<td>最大可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>重新选择日期之后返回一个时间对象。按照示例上的写</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.date({
+		id : "date1",		// 承载日期组件的id
+		monthNum : 1,		// 1代表选择单日日期
+		time : "2022-01-01",	// 选择的日期
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.date);
+		}
+	});
+
+	javaex.date({
+		id : "date2",		// 承载日期组件的id
+		monthNum : 2,		// 2代表选择范围日期
+		beginDate : "2017-08-01",	// 开始日期
+		endDate : "2017-08-20",		// 结束日期
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.beginDate + " - " + rtn.endDate);
+		}
+	});
+</script>
+</html>

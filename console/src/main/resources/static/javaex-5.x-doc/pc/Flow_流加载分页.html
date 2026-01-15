@@ -1,0 +1,130 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Flow 流加载分页</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Flow 流加载分页</h2>
+		<hr>
+
+		<h3>代码示例</h3>
+		<pre><code>&lt;div id="content"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+	// 页数（这里就是写0）
+	var pageNum = 0;
+	// 每次请求的数据个数
+	var pageSize = 5;
+	
+	// 调用上滑加载组件
+	javaex.flow({
+		id : "content",	// 数据区域的id
+		loadDataFunction : function() {
+			pageNum++;
+			// 拼接HTML
+			var resultHtml = '';
+			$.ajax({
+				url : "https://api.github.com/search/users?q=fullname:jach",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"page" : pageNum,
+					"per_page" : pageSize
+				},
+				success: function(rtn) {
+					// 根据实际数据自行编写下列代码
+					let items = rtn.items;
+					if (items!=null && items.length&gt;0) {
+						$.each(items, function(index, item) {
+							resultHtml += '&lt;p class="javaex-toast"&gt;\
+												&lt;div class="javaex-avatar" circle style="height: 50px; width: 50px; line-height: 50px;"&gt;\
+													&lt;img src="'+item.avatar_url+'" /&gt;\
+												&lt;/div&gt;\
+												&lt;span&gt;'+item.login+'&lt;/span&gt;\
+											&lt;/p&gt;';
+						});
+					} else {
+						// 如果没有数据，结束加载（需要传入数据区域的id）
+						javaex.over("content");
+
+						setTimeout(function() {
+							$("#content").after('&lt;div class="no-data tc mt-20" style="color: #999;"&gt;没有更多了&lt;/div&gt;');
+						}, 200);
+					}
+
+					// 建议延迟加载
+					setTimeout(function() {
+						$("#content").append(resultHtml);
+					}, 500);
+
+					$(window).trigger("scroll");
+				}
+			});
+		}
+	});
+&lt;/script&gt;</code></pre>
+		
+		<h3>演示</h3>
+		<div class="javaex-block has-border">
+			<div id="content" class="javaex-main-10"></div>
+		</div>
+	</div>
+</body>
+<script>
+	// 页数（这里就是写0）
+	var pageNum = 0;
+	// 每次请求的数据个数
+	var pageSize = 5;
+	
+	// 调用上滑加载组件
+	javaex.flow({
+		id : "content",	// 数据区域的id
+		loadDataFunction : function() {
+			pageNum++;
+			// 拼接HTML
+			var resultHtml = '';
+			$.ajax({
+				url : "https://api.github.com/search/users?q=fullname:jach",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"page" : pageNum,
+					"per_page" : pageSize
+				},
+				success: function(rtn) {
+					// 根据实际数据自行编写下列代码
+					let items = rtn.items;
+					if (items!=null && items.length>0) {
+						$.each(items, function(index, item) {
+							resultHtml += '<p class="javaex-toast">\
+												<div class="javaex-avatar" circle style="height: 50px; width: 50px; line-height: 50px;">\
+													<img src="'+item.avatar_url+'" />\
+												</div>\
+												<span>'+item.login+'</span>\
+											</p>';
+						});
+					} else {
+						// 如果没有数据，结束加载（需要传入数据区域的id）
+						javaex.over("content");
+
+						setTimeout(function() {
+							$("#content").after('<div class="no-data tc mt-20" style="color: #999;">没有更多了</div>');
+						}, 200);
+					}
+
+					// 建议延迟加载
+					setTimeout(function() {
+						$("#content").append(resultHtml);
+					}, 500);
+
+					$(window).trigger("scroll");
+				}
+			});
+		}
+	});
+</script>
+
+</html>

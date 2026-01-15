@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.demo-lazyload img {
+    box-sizing: border-box;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 12px;
+}
+</style>
+<body>
+	<div class="demo-lazyload" style="padding:20px 10px;">
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/210716.46788093.jpg"/>
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/181928.45891757.jpg"/>
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/203611.73700942.jpg"/>
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/202556.12361455.jpg"/>
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/202724.93232158.jpg"/>
+		<img data-original="http://img5.mtime.cn/mg/2019/01/23/162511.90867650.jpg"/>
+	</div>
+</body>
+<script>
+	javaex.lazyload({
+		selector : "img"    // jquery选择器
+	});
+ 
+	// 如果初始化不显示图片，可以添加如下代码激活滚动条以触发
+	$(window).trigger("scroll");
+</script>
+</html>
