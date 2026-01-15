@@ -1,6 +1,6 @@
 package io.cygnux.rapid.adapter.ctp.component;
 
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.cygnux.rapid.adapter.ctp.param.ImmutableFtdcParams;
 import io.cygnux.rapid.gateway.ctp.FtdcParams;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;

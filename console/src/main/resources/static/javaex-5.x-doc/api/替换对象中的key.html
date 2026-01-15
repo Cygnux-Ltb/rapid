@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>替换对象中的key</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>替换对象中的key</h2>
+		<hr>
+		
+		<h3>递归遍历嵌套对象，并替换所有匹配的key</h3>
+		<pre><code class="html">/**
+ * 递归遍历嵌套对象，并替换所有匹配的key
+ * @param obj : 需要遍历的对象
+ * @param searchStringArr : key的字符串数组
+ * @param replaceStringArr : 替换的字符串数组
+ * @returns 返回修改后的对象
+ */
+var newObj = javaex.deepReplaceKeyName(obj, searchStringArr, replaceStringArr);</code></pre>
+
+		<h3>示例</h3>
+		<p>当我们使用tree树形组件时，前端组件的key都是定死的，后端返回的数据需要和前端定义的保持一致，否则，前端还需要自己重新遍历替换key。此API方法就可以解决这个痛点。</p>
+		<pre><code class="html">var newObj = javaex.deepReplaceKeyName(list, ['id', 'parentId'], ['modifyId', 'modifyParentId']);
+console.log(newObj);</code></pre>
+
+		<h4>修改前</h4>
+		<img src="https://webimg.javaex.cn/FlxWH8uh-mDHbvdTotfIVZvbU3Bi" />
+
+		<h4 style="margin-top:40px !important;">修改后</h4>
+		<img src="https://webimg.javaex.cn/FnSlawaPKjlPHbBLkCkBgZtSuY72" />
+		<br/><br/><br/><br/>
+	</div>
+</body>
+</html>

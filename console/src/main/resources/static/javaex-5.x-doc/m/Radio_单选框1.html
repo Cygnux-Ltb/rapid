@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-btn.blue {
+    color: rgb(255, 255, 255);
+    background-color: rgb(64, 158, 255);
+}
+.javaex-btn.wathet {
+    color: rgb(16, 140, 238);
+    background-color: rgb(234, 246, 254);
+}
+</style>
+<body style="padding:0.1rem;">
+	<div class="mb-10">基础用法</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" fill name="radio" value="1"/>单选框未选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" fill name="radio" value="2" checked />单选框选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" fill name="radio2" value="3" disabled="disabled" />单选框未选中（只读）
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" fill name="radio2" value="4" checked disabled="disabled" />单选框选中（只读）
+		</div>
+	</div>
+	
+	<div class="mt-20 mb-10">搭配单元格组件使用</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" cell name="radio4" value="1" />单选框未选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" cell name="radio4" value="2" checked/>单选框选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" cell name="radio5" value="3" disabled="disabled"/>单选框未选中（只读）
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="radio" cell name="radio5" value="4" checked disabled="disabled"/>单选框选中（只读）
+		</div>
+	</div>
+
+	<div class="mt-20 mb-10">伪单选框</div>
+	<div style="background:#fff;padding:0.1rem;">
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="1" checked/>入门型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="2"/>标准型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="3"/>企业型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="4"/>豪华型</label>
+	</div>
+</body>
+<script>
+	javaex.fakeRadio({
+		name : "radio3",
+		uncheckClass : "wathet", // 未选中时添加的class
+		checkedClass : "blue", 	// 选中时添加的class
+		isInit : true,			// 初始化是否调用回调函数
+		callback : function(rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+	
+	// jquery原生方法取值
+	$(':radio[name="radio3"]').change(function() {
+		console.log($(this).val());
+	});
+</script>
+</html>

@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Input 输入框</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Input 输入框</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;文本&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" placeholder="请输入文本" autocomplete="off"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;密码&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="password" class="javaex-field-control" placeholder="请输入密码" autocomplete="off" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;&lt;label class="required"&gt;必填label&lt;/label&gt;&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" placeholder="请输入文本" autocomplete="off" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>label右对齐</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label tr"&gt;文本&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" placeholder="请输入文本" autocomplete="off"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label tr"&gt;密码&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="password" class="javaex-field-control" placeholder="请输入密码" autocomplete="off" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label tr"&gt;&lt;label class="required"&gt;必填label&lt;/label&gt;&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" placeholder="请输入文本" autocomplete="off" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>禁用输入框</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;只读&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" value="输入框只读" placeholder="请输入文本" readonly autocomplete="off"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;禁用&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control" value="输入框已禁用" placeholder="请输入文本" disabled autocomplete="off" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>输入框内容对齐</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;文本&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;input type="text" class="javaex-field-control tr" placeholder="输入框内容右对齐" autocomplete="off"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+				
+				
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Input_输入框1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DateTimePicker 日期时间选择器</title>
+<script src="../js/ui.js"></script>
+<style>
+	.doc-markdown{overflow:visible;}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>DateTimePicker 日期时间选择器</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>可以使用div、span或input等其他元素来承载日期组件</strong></li>
+			<li><strong>如果你想用框架内置的表单验证插件在表单中对其进行验证。则必须使用input元素来承载，并且将初始化日期设置为空（缺省date属性）</strong></li>
+			<li><strong>建议使用input元素来承载，因为div文本清空时，可能会造成抖动效果</strong></li>
+		</ul>
+		
+		<h3>单选日期带时分秒</h3>
+		<input type="text" id="date3" class="javaex-date" style="width: 200px;" value="" readonly/>
+		
+		<pre><code>&lt;input type="text" id="date3" class="javaex-date" style="width: 200px;" value="" readonly/&gt;
+
+&lt;script&gt;
+	javaex.date({
+		id : "date3",	// 承载日期组件的id
+		format : "yyyy-MM-dd HH:mm:ss",	// 控件类型
+		time : "2018-04-15 01:01:01",	// 选择的时间
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.date);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>承载日期组件的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>monthNum</td>
+					<td>1</td>
+					<td>选择单日日期还是范围日期。1代表选择单日日期；2或3代表选择范围日期。<font color="red">这里必须是1</font></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>format</td>
+					<td>yyyy-MM-dd</td>
+					<td>控件类型：yyyy-MM-dd 或 yyyy-MM-dd HH:mm:ss</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>time</td>
+					<td></td>
+					<td>选择的日期，带上时分秒。如不带，则默认为00:00:00</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>alignment</td>
+					<td>left</td>
+					<td>日期选择框的对齐方式。left代表左对齐；right代表右对齐</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>minTime</td>
+					<td></td>
+					<td>最小可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxTime</td>
+					<td></td>
+					<td>最大可选时间，格式2018-08-15，亦可简写为today</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>重新选择日期之后返回一个时间对象。按照示例上的写</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.date({
+		id : "date3",	// 承载日期组件的id
+		format : "yyyy-MM-dd HH:mm:ss",
+		time : "2018-04-15 01:01:01",	// 选择的时间
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.date);
+		}
+	});
+</script>
+</html>

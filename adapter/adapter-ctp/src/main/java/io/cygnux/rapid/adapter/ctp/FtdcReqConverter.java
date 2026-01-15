@@ -1,7 +1,7 @@
 package io.cygnux.rapid.adapter.ctp;
 
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
 import io.cygnux.rapid.gateway.ctp.FtdcParams;
 import io.cygnux.rapid.gateway.ctp.consts.FtdcActionFlag;
 import io.cygnux.rapid.gateway.ctp.consts.FtdcContingentCondition;

@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ImagePreview 图片预览</title>
+<script src="../js/ui.js"></script>
+<style>
+#demo li img {
+	float:left;
+}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>ImagePreview 图片预览</h2>
+		<hr>
+		
+		<h3>单图放大</h3>
+		<div class="javaex-image" style="width:200px;height:200px;">
+			<a href="javascript:;" onclick="img(this)">
+				<img class="javaex-img" fit="cover" src="https://webimg.javaex.cn/Ft0-o8l5oCgH9dQUV67eMVODZVU_" />
+			</a>
+		</div>
+		
+		<pre><code class="html">&lt;div class="javaex-image" style="width:200px;height:200px;"&gt;
+	&lt;a href="javascript:;" onclick="img(this)"&gt;
+		&lt;img class="javaex-img" fit="cover" src="https://webimg.javaex.cn/Ft0-o8l5oCgH9dQUV67eMVODZVU_" /&gt;
+	&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	// obj为当前点击的元素对象
+	function img(obj) {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : obj.children[0].src	// 图片地址
+		});
+	}
+	
+	// 或者下面这种写法
+	$("img").click(function() {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : $(this).attr("src")	// 图片地址
+		});
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>必须是image</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>图片地址，就按照示例中的写</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>多图切换</h3>
+		<!--下列样式仅仅是为了排版，实际使用中不需要这么写-->
+		<div id="demo">
+			<ul>
+				<li><img src="https://webimg.javaex.cn/92077a68d67a78cca1de1ce2e4b08a1ea921c217.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/5cfe48094dbe28947c2d94800a98cd8a78d4081d.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/1c9da1497ba20e835d701d3cf72777d0fb2739e5.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/64e1ec8152b6d737a477c1bbc6196387cfa71533.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/7575c327ca98514e79588e55a184d848a6a62bf0.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/5acb646241a9628e9c95569e4452009fbec1e031.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/2a9aa91cc207c76c5f663be92d824066090f4ad5.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/8442ee45190d03843ce28d5f38cb6ea65eca4709.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/e3aa2791d2915683dd31144c4f2c84bc97ec7997.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/d53d40bde5795b008f33cf4d5d3710438c2fe560.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/cc260a42377b5d6c00bdbebc7aa5d25f4e838816.jpg" width="auto" height="200px"/></li>
+				<li><img src="https://webimg.javaex.cn/60a9e9e31bf8d09185cf37151c88a1254276e9fb.jpg" width="auto" height="200px"/></li>
+			</ul>
+		</div>
+		<span class="clearfix"></span>
+		<pre><code class="html">&lt;style&gt;
+	#demo li img {
+		float:left;
+	}
+&lt;/style&gt;
+
+&lt;!--下列样式仅仅是为了排版，实际使用中不需要这么写--&gt;
+&lt;div id="demo"&gt;
+	&lt;ul&gt;
+		&lt;li&gt;&lt;img src="https://img5.mtime.cn/mg/2017/12/14/160632.57240275.jpg" width="200px" height="auto"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img src="https://img5.mtime.cn/mg/2017/11/23/160823.83070133.jpg" width="200px" height="auto"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img src="https://img5.mtime.cn/mg/2017/12/01/100905.24583483.jpg" width="200px" height="auto"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img src="https://img5.mtime.cn/mg/2017/12/18/173438.11723856.jpg" width="200px" height="auto"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img src="https://img5.mtime.cn/mg/2017/09/05/140933.83342333.jpg" width="200px" height="auto"/&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	// 请按实际需求填写jquery选择器，最终指定到img即可
+	$("#demo li img").click(function() {
+		javaex.imagePreview({
+			type : "images",	// 弹出层类型
+			selector : "#demo li img",	// jquery选择器，和上面保持一致
+			url : $(this).attr("src")	// 图片地址，就这么写
+		});
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>必须是images</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>selector</td>
+					<td></td>
+					<td>jquery选择器，和调用的选择器保持一致</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>图片地址，就按照示例中的写</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>placeholder</td>
+					<td>data:image/png;base64...</td>
+					<td>图片延迟加载时的占位内容</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>dataOriginal</td>
+					<td>data-original</td>
+					<td>图片延迟加载时，从该属性中获取真正的图片地址</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	// obj为当前点击的元素对象
+	function img(obj) {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : obj.children[0].src	// 图片地址
+		});
+	}
+	
+	// 多图数组
+	$("#demo li img").click(function() {
+		javaex.imagePreview({
+			type : "images",	// 弹出层类型
+			selector : "#demo li img",	// jquery选择器，和上面保持一致
+			url : $(this).attr("src")	// 图片地址，就这么写
+		});
+	});
+</script>
+</html>

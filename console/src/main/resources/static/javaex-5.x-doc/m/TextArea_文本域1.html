@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+	input[type="checkbox"][switch].switch-text:before {
+		content: "√×";
+	}
+</style>
+<body style="padding:0.1rem;">
+	<div class="mb-10">高度自适应</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell">
+			<div class="javaex-cell-title javaex-field-label">留言</div>
+			<div class="javaex-cell-value javaex-field-value">
+				<div class="javaex-field-body">
+					<textarea id="test1" class="javaex-field-control" placeholder="请输入留言"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-20 mb-10">显示字数统计</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell">
+			<div class="javaex-cell-title javaex-field-label">留言</div>
+			<div class="javaex-cell-value javaex-field-value">
+				<div class="javaex-field-body">
+					<textarea id="test2" class="javaex-field-control" placeholder="请输入留言"></textarea>
+				</div>
+				<div class="javaex-field-word-limit"><span id="checklen">0</span>/50</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	javaex.textarea({
+		id : "test1",
+		autoHeight : true
+	});
+
+	javaex.textarea({
+		id : "test2",
+		autoHeight : true,
+		checklenId : "checklen",
+		maxlength : 50,
+		callback : function() {
+			console.log("已达到最大长度");
+		}
+	});
+</script>
+</html>

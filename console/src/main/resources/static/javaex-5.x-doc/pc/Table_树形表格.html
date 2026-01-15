@@ -1,0 +1,182 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Table 树形表格</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Table 树形表格</h2>
+		<hr>
+		
+		<table id="table" class="javaex-table td-c-1" style="margin-bottom:40px;">
+			<thead>
+				<tr>
+					<th class="javaex-table-num-col"></th>
+					<th>名称</th>
+					<th>备注</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="tree_1" parentId="tree_-1">
+					<td>1</td>
+					<td>中国</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_2" parentId="tree_1">
+					<td>2</td>
+					<td>江苏省</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_3" parentId="tree_2">
+					<td>3</td>
+					<td>无锡</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_4" parentId="tree_2">
+					<td>4</td>
+					<td>南京</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_5" parentId="tree_4">
+					<td>5</td>
+					<td>夫子庙</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_6" parentId="tree_4">
+					<td>6</td>
+					<td>秦淮河</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_7" parentId="tree_1">
+					<td>7</td>
+					<td>北京市</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr id="tree_8" parentId="tree_7">
+					<td>8</td>
+					<td>北京</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<p class="mb-10">为数据所在的tr行添加id和parentId属性即可，建议添加前缀_</p>
+		<pre><code>&lt;table id="table" class="javaex-table td-c-1"&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="javaex-table-num-col"&gt;&lt;/th&gt;
+			&lt;th&gt;名称&lt;/th&gt;
+			&lt;th&gt;备注&lt;/th&gt;
+			&lt;th&gt;操作&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+		&lt;tr id="tree_1" parentId="tree_-1"&gt;
+			&lt;td&gt;1&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_2" parentId="tree_1"&gt;
+			&lt;td&gt;2&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_3" parentId="tree_2"&gt;
+			&lt;td&gt;3&lt;/td&gt;
+			&lt;td&gt;无锡&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_4" parentId="tree_2"&gt;
+			&lt;td&gt;4&lt;/td&gt;
+			&lt;td&gt;南京&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_5" parentId="tree_4"&gt;
+			&lt;td&gt;5&lt;/td&gt;
+			&lt;td&gt;夫子庙&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_6" parentId="tree_4"&gt;
+			&lt;td&gt;6&lt;/td&gt;
+			&lt;td&gt;秦淮河&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_7" parentId="tree_1"&gt;
+			&lt;td&gt;7&lt;/td&gt;
+			&lt;td&gt;北京市&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr id="tree_8" parentId="tree_7"&gt;
+			&lt;td&gt;8&lt;/td&gt;
+			&lt;td&gt;北京&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+	javaex.table({
+		id : "table",
+		tree : 2      // 第几列是树形结构，从1开始计
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>表格id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>tree</td>
+					<td></td>
+					<td>第几列是树形结构，从1开始计</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isClose</td>
+					<td>false</td>
+					<td>是否默认为闭合状态</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.table({
+		id : "table",
+		tree : 2      // 第几列是树形结构，从1开始计
+	});
+</script>
+</html>

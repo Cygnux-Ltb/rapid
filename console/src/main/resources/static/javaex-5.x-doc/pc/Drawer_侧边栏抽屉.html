@@ -1,0 +1,189 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Drawer 侧边栏抽屉</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Drawer 侧边栏抽屉</h2>
+		<hr>
+		
+		<h3>使用方法一：自定义页面</h3>
+		<div id="drawer" class="javaex-drawer">
+			<div class="javaex-drawer-header">
+				<div class="javaex-drawer-title">我是标题</div>
+				<a class="javaex-drawer-close" href="javascript:;" onclick="hideDrawer()"><span class="icon-close"></span></a>
+			</div>
+			<div class="javaex-drawer-content">
+				// 这里编写你的代码
+			</div>
+		</div>
+		<button class="javaex-btn primary" onclick="test1()">点我弹窗</button>
+		
+		<pre><code>&lt;!-- 在页面上写一个如下的代码后再调用组件 --&gt;
+&lt;div id="drawer" class="javaex-drawer"&gt;
+	&lt;div class="javaex-drawer-header"&gt;
+		&lt;div class="javaex-drawer-title"&gt;我是标题&lt;/div&gt;
+		&lt;a class="javaex-drawer-close" href="javascript:;" onclick="hideDrawer()"&gt;&lt;span class="icon-close"&gt;&lt;/span&gt;&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-drawer-content"&gt;
+		// 这里编写你的代码
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;button class="javaex-btn primary" onclick="test1()"&gt;点我弹窗&lt;/button&gt;
+
+&lt;script&gt;
+	function test1() {
+		javaex.drawer({
+			id : "drawer",
+			width : "500px",
+			closeOnClickMask : true,
+			position : "right",
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	}
+
+    /**
+     * 隐藏侧边栏
+     */
+    function hideDrawer() {
+        $(".javaex-mask").remove();
+        $("#drawer").css("transform", "translateX(0px)");
+    }
+&lt;/script&gt;</code></pre>
+
+		<h3>使用方法一：iframe加载另一个页面</h3>
+		<button class="javaex-btn primary" onclick="test2()">点我弹窗</button>
+		
+		<pre><code>&lt;button class="javaex-btn primary" onclick="test2()"&gt;点我弹窗&lt;/button&gt;
+
+&lt;script&gt;
+	function test2() {
+		javaex.drawer({
+			width : "500px",
+			title : "我是标题",
+			url : "https://www.baidu.com/",
+			closeOnClickMask : true,
+			position : "right",
+			close : function() {
+				console.log("点x关闭时产生的回调");
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	}
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td>随机字符串</td>
+					<td>自定义页面必须指定id，iframe嵌套可以不指定</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>width</td>
+					<td>70%</td>
+					<td>弹出层宽度。支持： 500、500px、30% 这3种写法</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>position</td>
+					<td>right</td>
+					<td>弹出位置，可选值：left、right</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>closeOnClickMask</td>
+					<td>false</td>
+					<td>是否允许点击遮罩关闭</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>title</td>
+					<td>温馨提示</td>
+					<td>弹出层标题，自定义页面时不用填该选项</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>closeIcon</td>
+					<td>true</td>
+					<td>是否显示右上角关闭 X，自定义页面时不用填该选项</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>使用iframe嵌套时需要该参数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>close</td>
+					<td></td>
+					<td>点击右上角X关闭弹出层时的回调函数。仅在iframe嵌套时有效</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	function test1() {
+		javaex.drawer({
+			id : "drawer",
+			width : "500px",
+			closeOnClickMask : true,
+			position : "right",
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	}
+
+	function test2() {
+		javaex.drawer({
+			width : "500px",
+			title : "我是标题",
+			url : "http://www.javaex.cn/",
+			closeOnClickMask : true,
+			position : "right",
+			close : function() {
+				console.log("点x关闭时产生的回调");
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	}
+
+    /**
+     * 隐藏侧边栏
+     */
+    function hideDrawer() {
+        $(".javaex-mask").remove();
+        $("#drawer").css("transform", "translateX(0px)");
+    }
+</script>
+</html>

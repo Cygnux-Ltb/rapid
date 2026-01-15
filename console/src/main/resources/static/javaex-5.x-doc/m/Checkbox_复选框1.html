@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-btn.blue {
+    color: rgb(255, 255, 255);
+    background-color: rgb(64, 158, 255);
+}
+.javaex-btn.wathet {
+    color: rgb(16, 140, 238);
+    background-color: rgb(234, 246, 254);
+}
+</style>
+<body style="padding:0.1rem;">
+	<div class="mb-10">基础用法</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox" value="1"/>复选框未选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox" value="2" checked/>复选框选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox" value="3" disabled="disabled"/>复选框未选中（只读）
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox" value="4" checked disabled="disabled"/>复选框选中（只读）
+		</div>
+	</div>
+	
+	<div class="mt-20 mb-10">全选 | 取消全选</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox4" listen="listen-1" value="1"/>全选
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="2" />子级复选框
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="3" disabled="disabled"/>子级复选框（禁用）
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="4" />子级复选框
+		</div>
+	</div>
+
+	<div class="mt-20 mb-10">搭配单元格组件使用</div>
+	<div class="javaex-cell-group-warp">
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" cell name="checkbox2" value="11" />复选框未选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" cell name="checkbox2" value="22" checked/>复选框选中
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" cell name="checkbox2" value="3" disabled="disabled"/>复选框未选中（只读）
+		</div>
+		<div class="javaex-cell javaex-cell-clickable">
+			<input type="checkbox" cell name="checkbox2" value="4" checked disabled="disabled"/>复选框选中（只读）
+		</div>
+	</div>
+
+	<div class="mt-20 mb-10">伪复选框</div>
+	<div style="background:#fff;padding:0.1rem;">
+		<label class="javaex-btn"><input type="checkbox" fake name="checkbox3" value="1" checked/>入门型</label>
+		<label class="javaex-btn"><input type="checkbox" fake name="checkbox3" value="2"/>标准型</label>
+		<label class="javaex-btn"><input type="checkbox" fake name="checkbox3" value="3"/>企业型</label>
+		<label class="javaex-btn"><input type="checkbox" fake name="checkbox3" value="4"/>豪华型</label>
+	</div>
+</body>
+<script>
+	javaex.fakeCheckbox({
+		name : "checkbox3",
+		uncheckClass : "wathet", // 未选中时添加的class
+		checkedClass : "blue" 	// 选中时添加的class
+	});
+</script>
+</html>

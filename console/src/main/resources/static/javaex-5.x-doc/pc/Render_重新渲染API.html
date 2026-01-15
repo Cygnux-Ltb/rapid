@@ -1,0 +1,23 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Render 重新渲染API</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Render 重新渲染API</h2>
+		<hr>
+		
+		<h3>渲染样式，而非数据</h3>
+		<ul>
+			<li><strong>页面加载完后，如果需要动态添加html代码</strong></li>
+			<li><strong>这动态添加的代码将不受页面初始化加载的js的束缚，此时，需要重新渲染，让其支持</strong></li>
+			<li><strong>目前仅支持radio和checkbox的渲染。其他组件，例如select，请在js拼接代码 或 手动设置值 后再调用javaex.select()组件</strong></li>
+		</ul>
+
+		<pre><code>javaex.render();</code></pre>
+	</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 package io.cygnux.rapid.core.pool;
 
 import io.mercury.common.collections.MutableMaps;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.instrument.Symbol;
-import io.cygnux.rapid.core.instrument.TradablePeriod;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Symbol;
+import io.cygnux.rapid.core.types.instrument.TradablePeriod;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
 

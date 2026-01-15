@@ -1,0 +1,194 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Animation 内置动画</title>
+<script src="../js/ui.js"></script>
+<style>
+ul.javaex-equal-5 li {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 25px;
+	padding: 10px 0;
+	margin-right: -1px;
+	margin-bottom: -1px;
+	margin-left: -1px;
+	margin-right: -1px;
+	border: 1px solid #e2e2e2;
+	font-size: 14px;
+	text-align: center;
+	color: #666;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+ul.javaex-equal-5 li:before {
+    width: 0px;
+    height: 0px;
+}
+.tip {
+	display: block;
+	margin: 4px auto;
+	padding: 20px;
+	border: 1px solid #bce8f1;
+	border-radius: 2px;
+	background-color: #d9edf7;
+	color: #31708f;
+	width: 130px;
+	text-align: center;
+}
+*{box-sizing:content-box;}
+</style>
+
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Animation 内置动画</h2>
+		<hr>
+
+		<h3>代码</h3>
+		<pre><code>&lt;!--修改javaex-animated-fadein-down为其他动画属性，可实现不同的动画效果--&gt;
+&lt;div class="javaex-animated-fadein-down"&gt;内容&lt;/div&gt;</code></pre>
+
+		<h3 style="margin-top:50px;">鼠标点击触发</h3>
+		<div class="javaex-block">
+			<h1 id="animated" class="" style="text-align: center;">我是来测试的</h1>
+			<br />
+			<ul class="javaex-equal-5 clear">
+				<li>
+					<a href="javascript:;" onClick="javaexShake()"><p class="tip">左右摇晃</p></a>
+					javaex-animated-shake
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexBounce()"><p class="tip">弹跳</p></a>
+					javaex-animated-bounce
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexPulse()"><p class="tip">跳动</p></a>
+					javaex-animated-pulse
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexFadeinLeft()"><p class="tip">左侧飞入</p></a>
+					javaex-animated-fadein-left
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexBounceinLeft()"><p class="tip">左侧飞入并反弹</p></a>
+					javaex-animated-bouncein-left
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexFadeinRight()"><p class="tip">右侧飞入</p></a>
+					javaex-animated-fadein-right
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexBounceinRight()"><p class="tip">右侧飞入并反弹</p></a>
+					javaex-animated-bouncein-right
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexFadeinUp()"><p class="tip">向上滑动</p></a>
+					javaex-animated-fadein-up
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexFadeinDown()"><p class="tip">向下滑动</p></a>
+					javaex-animated-fadein-down
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexBounceoutLeft()"><p class="tip">左侧飞出</p></a>
+					javaex-animated-bounceout-left
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexBounceoutRight()"><p class="tip">右侧飞出</p></a>
+					javaex-animated-bounceout-right
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexZoomIn()"><p class="tip">缩放淡入</p></a>
+					javaex-animated-zoom-in
+				</li>
+				<li>
+					<a href="javascript:;" onClick="javaexZoomOut()"><p class="tip">缩放淡出</p></a>
+					javaex-animated-zoom-out
+				</li>
+			</ul>
+		</div>
+
+		<h3 style="margin-top:70px;">鼠标移入触发</h3>
+		<ul class="javaex-equal-5 clear">
+			<li>
+				<p class="tip javaex-hover-pulse">跳动</p>
+				javaex-hover-pulse
+			</li>
+			<li>
+				<p class="tip javaex-hover-fadein-up">向上滑动</p>
+				javaex-hover-fadein-up
+			</li>
+			<li>
+				<p class="tip javaex-hover-fadein-right">向右滑动</p>
+				javaex-hover-fadein-right
+			</li>
+			<li>
+				<p class="tip javaex-hover-fadein-down">向下滑动</p>
+				javaex-hover-fadein-down
+			</li>
+			<li>
+				<p class="tip javaex-hover-fadein-left">向左滑动</p>
+				javaex-hover-fadein-left
+			</li>
+		<ul>
+	</div>
+</body>
+<script>
+		function javaexFadeinDown() {
+			$("#animated").addClass("javaex-animated-fadein-down");
+			setTimeout(removeClass, 800);
+		}
+		function javaexShake() {
+			$("#animated").addClass("javaex-animated-shake");
+			setTimeout(removeClass, 800);
+		}
+		function javaexBounce() {
+			$("#animated").addClass("javaex-animated-bounce");
+			setTimeout(removeClass, 800);
+		}
+		function javaexPulse() {
+			$("#animated").addClass("javaex-animated-pulse");
+			setTimeout(removeClass, 800);
+		}
+		function javaexFadeinLeft() {
+			$("#animated").addClass("javaex-animated-fadein-left");
+			setTimeout(removeClass, 800);
+		}
+		function javaexFadeinRight() {
+			$("#animated").addClass("javaex-animated-fadein-right");
+			setTimeout(removeClass, 800);
+		}
+		function javaexFadeinUp() {
+			$("#animated").addClass("javaex-animated-fadein-up");
+			setTimeout(removeClass, 800);
+		}
+		function javaexBounceoutLeft() {
+			$("#animated").addClass("javaex-animated-bounceout-left");
+			setTimeout(removeClass, 800);
+		}
+		function javaexBounceoutRight() {
+			$("#animated").addClass("javaex-animated-bounceout-right");
+			setTimeout(removeClass, 800);
+		}
+		function javaexZoomIn() {
+			$("#animated").addClass("javaex-animated-zoom-in");
+			setTimeout(removeClass, 800);
+		}
+		function javaexZoomOut() {
+			$("#animated").addClass("javaex-animated-zoom-out");
+			setTimeout(removeClass, 800);
+		}
+		function javaexBounceinLeft() {
+			$("#animated").addClass("javaex-animated-bouncein-left");
+			setTimeout(removeClass, 800);
+		}
+		function javaexBounceinRight() {
+			$("#animated").addClass("javaex-animated-bouncein-right");
+			setTimeout(removeClass, 800);
+		}
+		function removeClass() {
+			$("#animated").removeClass();
+		}
+	</script>
+</html>

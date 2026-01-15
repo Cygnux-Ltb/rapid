@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.strategy.manager;
 
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import org.slf4j.Logger;
 

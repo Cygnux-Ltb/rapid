@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+
+<body>
+	<div id="tab" class="javaex-tab-select" style="height: 100vh;">
+		<div class="javaex-tab-select-nav">
+			<div class="javaex-sidebar-item">
+				<div class="javaex-sidebar-item-text">江苏</div>
+			</div>
+			<div class="javaex-sidebar-item">
+				<div class="javaex-sidebar-item-text">浙江</div>
+			</div>
+			<div class="javaex-sidebar-item">
+				<div class="javaex-sidebar-item-text">
+					广东
+					<div class="javaex-badge">5</div>
+				</div>
+			</div>
+		</div>
+		<div class="javaex-tab-select-content">
+			<div class="javaex-tabpane">南京</div>
+			<div class="javaex-tabpane">杭州</div>
+			<div class="javaex-tabpane">广州</div>
+		</div>
+	</div>
+</body>
+<script>
+	javaex.tabSelect({
+		id : "tab",
+		current : 1,
+		callback: function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+</script>
+</html>

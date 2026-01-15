@@ -1,13 +1,13 @@
 package io.cygnux.rapid.core.adapter;
 
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
 import io.cygnux.rapid.core.manager.AdapterManager;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
@@ -29,7 +29,7 @@ import static io.mercury.common.collections.MutableMaps.newUnifiedMap;
  * 1.以[accountId]查找Adaptor<br>
  * TODO 修改为线程安全的管理器<br>
  * <p>
- * 如果程序运行中不修改Adaptor的引用则可以在多个线程中调用Get函数<br>
+ * 如果程序运行中不修改Adapter的引用则可以在多个线程中调用Get函数<br>
  * 如果运行中Adaptor崩溃, 重新创建Adaptor则需要重新Put<br>
  * 目前不保证这一过程的线程安全
  */
@@ -51,13 +51,13 @@ public abstract class AbstractAdapterManager implements AdapterManager {
     protected AtomicBoolean isClosed = new AtomicBoolean(false);
 
     @Override
-    public void putAdapter(@Nonnull Adapter... adaptors) {
-        Stream.of(adaptors).forEach(adaptor -> {
-            var account = adaptor.getBoundAccount();
-            mapByAccountId.put(account.getAccountId(), adaptor);
-            mapByAdapterId.put(adaptor.getAdapterId(), adaptor);
-            log.info("PUT [Adaptor] to AdaptorManager, accountId==[{}], adaptorId==[{}], remark==[{}]",
-                    account.getAccountId(), adaptor.getAdapterId(), account.getRemark());
+    public void putAdapter(@Nonnull Adapter... adapters) {
+        Stream.of(adapters).forEach(adapter -> {
+            var account = adapter.getBoundAccount();
+            mapByAccountId.put(account.getAccountId(), adapter);
+            mapByAdapterId.put(adapter.getAdapterId(), adapter);
+            log.info("PUT [Adapter] to AdapterManager, accountId==[{}], adapterId==[{}], remark==[{}]",
+                    account.getAccountId(), adapter.getAdapterId(), account.getRemark());
         });
     }
 
@@ -67,12 +67,12 @@ public abstract class AbstractAdapterManager implements AdapterManager {
     }
 
     @Override
-    public Adapter getAdapter(String adaptorId) {
-        return mapByAdapterId.get(adaptorId);
+    public Adapter getAdapter(String adapterId) {
+        return mapByAdapterId.get(adapterId);
     }
 
     @Override
-    public void onAdapterEvent(AdapterStatusReport event) {
+    public void onAdapterEvent(AdapterReport event) {
         var adaptor = getAdapter(event.getAccountId());
         var currentStatus = adaptor.currentStatus();
         var channelType = event.getAdapterType();

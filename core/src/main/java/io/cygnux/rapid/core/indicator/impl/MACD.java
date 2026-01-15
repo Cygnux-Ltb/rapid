@@ -1,16 +1,15 @@
 package io.cygnux.rapid.core.indicator.impl;
 
-import io.mercury.common.sequence.TimeWindow;
-import io.cygnux.rapid.core.indicator.IndicatorEvent;
 import io.cygnux.rapid.core.indicator.FixedPeriodIndicator;
 import io.cygnux.rapid.core.indicator.FixedPeriodPoint;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.indicator.IndicatorEvent;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
+import io.mercury.common.sequence.TimeWindow;
 
 import java.time.Duration;
 
-public final class MACD extends
-        FixedPeriodIndicator<MACD.MacdPoint, MACD.MacdEvent> {
+public final class MACD extends FixedPeriodIndicator<MACD.MacdPoint, MACD.MacdEvent> {
 
     public MACD(Instrument instrument, Duration duration) {
         super(instrument, duration);

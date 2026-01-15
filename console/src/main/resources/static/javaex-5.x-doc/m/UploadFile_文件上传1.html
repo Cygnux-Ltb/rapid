@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+body{
+background:#fff;
+}
+</style>
+<body style="padding:10px;">
+	<a href="javascript:;" class="javaex-file-container javaex-btn primary">
+		文件上传
+		<input type="file" class="javaex-file" id="upload" />
+	</a>
+</body>
+<script>
+	var now = javaex.now();
+
+	/**
+	 * 本框架目前不支持数据的双向绑定，所以必须点击上传按钮后再调用该组件，不然param中自定义的参数值无法改变
+	 * #upload 是 <input type="file" />的id
+	 * 
+	 * 如果不需要传递file以外的参数（或者自定义的参数值是不会变的），则可以不需要 click() 点击事件，直接在 script 标签对里调用组件
+	 * 当然，我强烈建议你把组件的调用写在点击事件里
+	 */
+	$("#upload").click(function() {
+		javaex.uploadFile({
+			url : "https://imgbb.com/json",     // 请求路径
+			id : "upload",        // <input type="file" />的id
+			param : {
+				"file" : "source",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+				"type" : "file",    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+				"action" : "upload",
+				"timestamp" : new Date(now).getTime(),
+				"auth_token" : "f115dac7561da8078d60ffb5f943ae8e4f47b1d1"
+			},
+			isShowTip : true,
+			chooseAfter : function (rtn) {
+				// 选择文件后的回调函数，会返回一些文件信息
+				console.log(rtn.filename);
+				console.log(rtn.filesize);
+				console.log(rtn.fileSuffix);
+ 
+				// 通常可以在此处调用一个定时函数，配合进度条来友好得显示excel导入数据的进度
+			},
+			callback : function (rtn) {
+				console.log(rtn);
+			}
+		});
+	});
+</script>
+</html>

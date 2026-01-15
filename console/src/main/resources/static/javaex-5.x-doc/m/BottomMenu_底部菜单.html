@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BottomMenu 底部菜单</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>BottomMenu 底部菜单</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<pre><code class="html">&lt;div id="bottomMenu" class="javaex-bottommenu"&gt;
+	&lt;div class="javaex-bottommenu-item"&gt;&lt;a href="javascript:;"&gt;无弹出菜单&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="javaex-bottommenu-item javaex-menu-box"&gt;
+		弹出菜单2
+		&lt;div class="javaex-bottommenu-submenu"&gt;
+			&lt;ul&gt;
+				&lt;li&gt;&lt;a href="javascript:;"&gt;弹出菜单2-1&lt;/a&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;a href="javascript:;"&gt;弹出菜单2-2&lt;/a&gt;&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-bottommenu-flag"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-bottommenu-item javaex-menu-box"&gt;
+		弹出菜单3
+		&lt;div class="javaex-bottommenu-submenu"&gt;
+			&lt;ul&gt;
+				&lt;li&gt;&lt;a href="javascript:;"&gt;弹出菜单3-1&lt;/a&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;a href="javascript:;"&gt;弹出菜单3-2&lt;/a&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;a href="javascript:;"&gt;弹出菜单3-3&lt;/a&gt;&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-bottommenu-flag"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.bottomMenu({
+		id : "bottomMenu"
+	});
+&lt;/script&gt;</code></pre>
+			
+			<h3>参数说明</h3>
+			<table class="javaex-table">
+				<thead>
+					<tr>
+						<th>参数</th>
+						<th>默认值</th>
+						<th>说明</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>id</td>
+						<td></td>
+						<td>底部菜单的id（必填）</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="BottomMenu_底部菜单1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

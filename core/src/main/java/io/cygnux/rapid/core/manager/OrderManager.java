@@ -1,11 +1,11 @@
 package io.cygnux.rapid.core.manager;
 
-import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.order.Order;
+import io.cygnux.rapid.core.types.account.Account;
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.order.Order;
 import io.cygnux.rapid.core.order.OrderBook;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
 
 import javax.annotation.Nullable;
 

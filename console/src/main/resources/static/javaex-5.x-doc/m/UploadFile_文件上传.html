@@ -1,0 +1,153 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UploadFile 文件上传</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>UploadFile 文件上传</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+			<pre><code>&lt;a href="javascript:;" class="javaex-file-container javaex-btn primary"&gt;
+	文件上传
+	&lt;input type="file" class="javaex-file" id="upload" /&gt;
+&lt;/a&gt;
+
+&lt;script&gt;
+	/**
+	 * 本框架目前不支持数据的双向绑定，所以必须点击上传按钮后再调用该组件，不然param中自定义的参数值无法改变
+	 * #upload 是 &lt;input type="file" /&gt;的id
+	 * 
+	 * 如果不需要传递file以外的参数（或者自定义的参数值是不会变的），则可以不需要 click() 点击事件，直接在 script 标签对里调用组件
+	 * 当然，我强烈建议你把组件的调用写在点击事件里
+	 */
+	$("#upload").click(function() {
+		javaex.uploadFile({
+			url : "${pageContext.request.contextPath}/upload/upload.json",     // 请求路径
+			id : "upload",        // &lt;input type="file" /&gt;的id
+			param : {
+				"file" : "file",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+				"type" : "2",    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+				"action" : "upload"
+			},
+			isShowTip : true,
+			chooseAfter : function (rtn) {
+				// 选择文件后的回调函数，会返回一些文件信息
+				console.log(rtn.filename);
+				console.log(rtn.filesize);
+				console.log(rtn.fileSuffix);
+ 
+				// 通常可以在此处调用一个定时函数，配合进度条来友好得显示excel导入数据的进度
+			},
+			callback : function (rtn) {
+				console.log(rtn);
+			}
+		});
+	});
+&lt;/script&gt;</code></pre>
+				
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th style="width:200px;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>后台请求路径</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>&lt;input type="file" /&gt;的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>param</td>
+					<td>{"file":"file"}</td>
+					<td><pre style="margin-bottom:0;"><code>param : {
+	"file" : "file",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+	"projectId" : projectId,    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+	"type" : "2"
+}</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>header</td>
+					<td></td>
+					<td><pre style="margin-bottom:0;"><code>header : {
+	"token" : "123456",
+	"token2" : "xxxx"
+}</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxSize</td>
+					<td></td>
+					<td>文件的大小上限，单位M，0或空为不限制</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowTip</td>
+					<td>false</td>
+					<td>是否显示上传提示，显示时，当前页面将无法点击</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>sendCookie</td>
+					<td>false</td>
+					<td>是否发送cookie</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>crossDomain</td>
+					<td>true</td>
+					<td>是否允许跨域</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>获取后台返回的数据</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>chooseBefore</td>
+					<td></td>
+					<td>选择文件前的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>chooseAfter</td>
+					<td></td>
+					<td>选择文件后的回调函数</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="UploadFile_文件上传1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

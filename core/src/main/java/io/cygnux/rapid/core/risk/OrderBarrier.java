@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.risk;
 
-import io.cygnux.rapid.core.order.impl.ChildOrder;
+import io.cygnux.rapid.core.types.order.impl.ChildOrder;
 
 import java.util.function.Predicate;
 

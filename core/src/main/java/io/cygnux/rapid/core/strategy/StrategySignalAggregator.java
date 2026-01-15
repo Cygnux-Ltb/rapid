@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.strategy;
 
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.sent.StrategySignal;
+import io.cygnux.rapid.core.types.event.sent.StrategySignal;
 
 /**
  * 策略信号处理器

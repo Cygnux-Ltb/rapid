@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Classify 分类筛选</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Classify 分类筛选</h2>
+		<hr>
+		
+		<div class="javaex-classify-list">
+			<div class="javaex-classify-item">
+				<span class="javaex-classify-title">类型：</span>
+				<div class="javaex-classify-list-outer">
+					<ul id="16" class="javaex-classify-ul">
+						<li class="javaex-classify-li" val="">
+							<a href="javascript:;" class="javaex-classify-letter">全部</a>
+						</li>
+						<li class="javaex-classify-li" val="54">
+							<a href="javascript:;" class="javaex-classify-letter">TV版</a>
+						</li>
+						<li class="javaex-classify-li" val="55">
+							<a href="javascript:;" class="javaex-classify-letter">OVA版</a>
+						</li>
+						<li class="javaex-classify-li" val="56">
+							<a href="javascript:;" class="javaex-classify-letter">剧场版</a>
+						</li>
+						<li class="javaex-classify-li" val="57">
+							<a href="javascript:;" class="javaex-classify-letter">真人版</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="javaex-classify-item">
+				<span class="javaex-classify-title">地区：</span>
+				<div class="javaex-classify-list-outer">
+					<ul id="17" class="javaex-classify-ul">
+						<li class="javaex-classify-li" val="">
+							<a href="javascript:;" class="javaex-classify-letter">全部</a>
+						</li>
+						<li class="javaex-classify-li" val="54">
+							<a href="javascript:;" class="javaex-classify-letter">中国</a>
+						</li>
+						<li class="javaex-classify-li" val="55">
+							<a href="javascript:;" class="javaex-classify-letter">日本</a>
+						</li>
+						<li class="javaex-classify-li" val="56">
+							<a href="javascript:;" class="javaex-classify-letter">其他</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<pre><code>&lt;div class="javaex-classify-list"&gt;
+	&lt;div class="javaex-classify-item"&gt;
+		&lt;span class="javaex-classify-title"&gt;类型：&lt;/span&gt;
+		&lt;div class="javaex-classify-list-outer"&gt;
+			&lt;ul id="16" class="javaex-classify-ul"&gt;
+				&lt;li class="javaex-classify-li" val=""&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;全部&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="54"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;TV版&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="55"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;OVA版&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="56"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;剧场版&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="57"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;真人版&lt;/a&gt;
+				&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-classify-item"&gt;
+		&lt;span class="javaex-classify-title"&gt;地区：&lt;/span&gt;
+		&lt;div class="javaex-classify-list-outer"&gt;
+			&lt;ul id="17" class="javaex-classify-ul"&gt;
+				&lt;li class="javaex-classify-li" val=""&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;全部&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="54"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;中国&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="55"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;日本&lt;/a&gt;
+				&lt;/li&gt;
+				&lt;li class="javaex-classify-li" val="56"&gt;
+					&lt;a href="javascript:;" class="javaex-classify-letter"&gt;其他&lt;/a&gt;
+				&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.classify({
+		selector : "ul.javaex-classify-ul",
+		// 点击后，返回一个回调函数
+		callback: function (rtn) {
+			console.log(rtn);
+			// 数组转为字符串
+			var str = rtn.join("&");
+			console.log(str);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>selector</td>
+					<td></td>
+					<td>jquery选择器，指定到ul即可</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化就自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回一个数组形式，包含了分类的id和对应的类型的值。<font color="red">分类和对应的值中间有等号</font> ["leixing=", "fengge=6"]</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.classify({
+		selector : "ul.javaex-classify-ul",
+		// 点击后，返回一个回调函数
+		callback: function (rtn) {
+			console.log(rtn);
+			// 数组转为字符串
+			var str = rtn.join("&");
+			console.log(str);
+		}
+	});
+</script>
+</html>

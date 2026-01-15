@@ -1,16 +1,15 @@
 package io.cygnux.rapid.core.indicator.impl;
 
+import io.cygnux.rapid.core.indicator.FixedPeriodIndicator;
+import io.cygnux.rapid.core.indicator.IndicatorEvent;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
-import io.cygnux.rapid.core.indicator.IndicatorEvent;
-import io.cygnux.rapid.core.indicator.FixedPeriodIndicator;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
 
 import java.time.Duration;
 
-public final class EMA extends
-        FixedPeriodIndicator<EMA.EmaPoint, EMA.EmaEvent> {
+public final class EMA extends FixedPeriodIndicator<EMA.EmaPoint, EMA.EmaEvent> {
 
     public EMA(Instrument instrument, Duration duration, int cycle) {
         super(instrument, duration);

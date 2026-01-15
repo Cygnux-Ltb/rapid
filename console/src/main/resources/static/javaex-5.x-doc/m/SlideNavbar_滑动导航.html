@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SlideNavbar 滑动导航</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>SlideNavbar 滑动导航</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<pre><code class="html">&lt;div id="tabbar" class="javaex-slideNavbar-container"&gt;
+	&lt;div class="javaex-slideNavbar"&gt;
+		&lt;a href="javascript:;" class="active"&gt;全部&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;电影&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;剧集&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;动漫&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;音乐&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;娱乐&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;舞蹈&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;文章&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;鱼塘&lt;/a&gt;
+		&lt;a href="javascript:;"&gt;广告&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	$("#tabbar a").click(function() {
+		$(this).addClass("active").siblings().removeClass("active");
+	});
+&lt;/script&gt;</code></pre>
+			
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="SlideNavbar_滑动导航1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

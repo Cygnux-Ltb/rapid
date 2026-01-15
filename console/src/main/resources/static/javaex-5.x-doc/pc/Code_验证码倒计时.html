@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Code 验证码倒计时</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Code 验证码倒计时</h2>
+		<hr>
+		
+		<a href="javascript:;" style="color: #0087e0;" id="get-code" onclick="getCode()">获取验证码</a>
+		
+		<pre><code class="html">&lt;a href="javascript:;" style="color: #0087e0;" id="get-code" onclick="getCode()"&gt;获取验证码&lt;/a&gt;
+
+&lt;script&gt;
+	function getCode() {
+		javaex.code({
+			id : "get-code"
+		});
+	}
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>点击触发的元素id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>second</td>
+					<td>45</td>
+					<td>倒计时秒数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>text</td>
+					<td>获取验证码</td>
+					<td>倒计时结束后，重新显示的文字</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>设为reset时，可以手动重置</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	function getCode() {
+		javaex.code({
+			id : "get-code"
+		});
+	}
+</script>
+</html>

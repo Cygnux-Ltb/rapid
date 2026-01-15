@@ -1,0 +1,193 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UploadAvatar 头像上传</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>UploadAvatar 头像上传</h2>
+		<hr>
+		
+		<div class="javaex-block has-border">
+			<div class="javaex-banner"><span class="javaex-block-fixed"></span>修改头像</div>
+			<div class="javaex-main">
+				<p class="javaex-alert" warning>请勿使用包含不良信息或敏感内容的图片作为用户头像。</p>
+				<!--上传组件区域-->
+				<div class="javaex-unit clear mt-20">
+					<a href="javascript:;" class="javaex-file-container javaex-btn primary">
+						上传本地照片
+						<input type="file" class="javaex-file" id="upload-avatar" accept="image/gif, image/jpeg, image/jpg, image/png" />
+					</a>
+					<p class="javaex-hint">支持JPG、GIF、PNG格式，文件应小于5M，文件太大将导致无法读取</p>
+				</div>
+				<!--头像上传预览区域-->
+				<div class="javaex-unit clear">
+					<div class="javaex-avatar-original">
+						<div id="image-box" class="javaex-image-box">
+							<!--裁剪层-->
+							<div id="cut-box" class="javaex-cut-box"></div>
+							<!--背景层（可移动图片）-->
+							<div id="move-box" class="javaex-move-box"></div>
+						</div>
+						<!--放大、缩小-->
+						<span id="narrow" class="icon-zoom-out" style="color: #666;font-size: 20px;"></span>
+						<span id="enlarge" class="icon-zoom-in" style="color: #666;font-size: 20px;float: right;"></span>
+					</div>
+					<!--裁剪后的预览区域-->
+					<div class="javaex-avatar-preview">
+						<p class="javaex-toast">您上传的头像会自动生成3种尺寸，请注意中、小尺寸的头像是否清晰。</p>
+						<div class="javaex-avatar-view">
+							<div class="javaex-view-avatar180">
+								<div class="javaex-avatar180"></div>
+								<p class="javaex-hint">大尺寸头像，180像素X180像素</p>
+							</div>
+							<div class="javaex-view-avatar50">
+								<div class="javaex-avatar50"></div>
+								<p class="javaex-hint">中尺寸头像，50像素X50像素</p>
+							</div>
+							<div class="javaex-view-avatar30">
+								<div class="javaex-avatar30"></div>
+								<p class="javaex-hint">小尺寸头像，30像素X30像素</p>
+							</div>
+						</div>
+					</div>
+					<!--自动返回裁剪后的图片地址-->
+					<input type="hidden" id="data-url" value="" />
+				</div>
+				<!--保存头像-->
+				<a href="javascript:;" class="javaex-btn yes">保存头像</a>
+				<a href="javascript:;" class="javaex-btn no">取消</a>
+			</div>
+		</div>
+
+		<pre><code>&lt;div class="javaex-block has-border"&gt;
+	&lt;div class="javaex-banner"&gt;&lt;span class="javaex-block-fixed"&gt;&lt;/span&gt;修改头像&lt;/div&gt;
+	&lt;div class="javaex-main"&gt;
+		&lt;p class="javaex-alert" warning&gt;请勿使用包含不良信息或敏感内容的图片作为用户头像。&lt;/p&gt;
+		&lt;!--上传组件区域--&gt;
+		&lt;div class="javaex-unit clear mt-20"&gt;
+			&lt;a href="javascript:;" class="javaex-file-container javaex-btn primary"&gt;
+				上传本地照片
+				&lt;input type="file" class="javaex-file" id="upload-avatar" accept="image/gif, image/jpeg, image/jpg, image/png" /&gt;
+			&lt;/a&gt;
+			&lt;p class="javaex-hint"&gt;支持JPG、GIF、PNG格式，文件应小于5M，文件太大将导致无法读取&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;!--头像上传预览区域--&gt;
+		&lt;div class="javaex-unit clear"&gt;
+			&lt;div class="javaex-avatar-original"&gt;
+				&lt;div id="image-box" class="javaex-image-box"&gt;
+					&lt;!--裁剪层--&gt;
+					&lt;div id="cut-box" class="javaex-cut-box"&gt;&lt;/div&gt;
+					&lt;!--背景层（可移动图片）--&gt;
+					&lt;div id="move-box" class="javaex-move-box"&gt;&lt;/div&gt;
+				&lt;/div&gt;
+				&lt;!--放大、缩小--&gt;
+				&lt;span id="narrow" class="icon-zoom-out" style="color: #666;font-size: 20px;"&gt;&lt;/span&gt;
+				&lt;span id="enlarge" class="icon-zoom-in" style="color: #666;font-size: 20px;float: right;"&gt;&lt;/span&gt;
+			&lt;/div&gt;
+			&lt;!--裁剪后的预览区域--&gt;
+			&lt;div class="javaex-avatar-preview"&gt;
+				&lt;p class="javaex-toast"&gt;您上传的头像会自动生成3种尺寸，请注意中、小尺寸的头像是否清晰。&lt;/p&gt;
+				&lt;div class="javaex-avatar-view"&gt;
+					&lt;div class="javaex-view-avatar180"&gt;
+						&lt;div class="javaex-avatar180"&gt;&lt;/div&gt;
+						&lt;p class="javaex-hint"&gt;大尺寸头像，180像素X180像素&lt;/p&gt;
+					&lt;/div&gt;
+					&lt;div class="javaex-view-avatar50"&gt;
+						&lt;div class="javaex-avatar50"&gt;&lt;/div&gt;
+						&lt;p class="javaex-hint"&gt;中尺寸头像，50像素X50像素&lt;/p&gt;
+					&lt;/div&gt;
+					&lt;div class="javaex-view-avatar30"&gt;
+						&lt;div class="javaex-avatar30"&gt;&lt;/div&gt;
+						&lt;p class="javaex-hint"&gt;小尺寸头像，30像素X30像素&lt;/p&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;!--自动返回裁剪后的图片地址--&gt;
+			&lt;input type="hidden" id="data-url" value="" /&gt;
+		&lt;/div&gt;
+		&lt;!--保存头像--&gt;
+		&lt;a href="javascript:;" class="javaex-btn yes"&gt;保存头像&lt;/a&gt;
+		&lt;a href="javascript:;" class="javaex-btn no"&gt;取消&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	// 点击上传（必须用change）
+	$("#upload-avatar").change(function() {
+		javaex.uploadAvatar(
+			this,     // 必填
+			{
+				imgDivId : "image-box",    // 本地上传的图片区域id
+				cutBox : "cut-box",        // 裁剪区域id
+				moveBox : "move-box",      // 背景区域id，可拖动
+				dataUrl : "data-url",      // 最终将图片地址返回给哪个input存储
+				type : "base64"            // 图片地址类型，目前仅支持base64
+			}
+		);
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>imgDivId</td>
+					<td>image-box</td>
+					<td>本地上传的图片区域id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>cutBox</td>
+					<td>cut-box</td>
+					<td>裁剪区域id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>moveBox</td>
+					<td>move-box</td>
+					<td>背景区域id，可拖动</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>dataUrl</td>
+					<td>data-url</td>
+					<td>最终将图片地址返回给哪个input存储</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>type</td>
+					<td>base64</td>
+					<td>图片地址类型，目前仅支持base64</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	// 点击上传（必须用change）
+	$("#upload-avatar").change(function() {
+		javaex.uploadAvatar(
+			this,     // 必填
+			{
+				imgDivId : "image-box",    // 本地上传的图片区域id
+				cutBox : "cut-box",        // 裁剪区域id
+				moveBox : "move-box",      // 背景区域id，可拖动
+				dataUrl : "data-url",      // 最终将图片地址返回给哪个input存储
+				type : "base64"            // 图片地址类型，目前仅支持base64
+			}
+		);
+	});
+</script>
+</html>

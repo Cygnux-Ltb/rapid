@@ -1,0 +1,153 @@
+
+# [REST] - PNL(盈亏)服务
+## 查询PNL (查询盈亏)
+
+**URL:** `/pnl/v1`
+
+**Type:** `GET`
+
+
+**Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
+
+**Description:** 查询PNL (查询盈亏)
+
+
+
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|td|int32|true|交易日|-|
+|strategyId|int32|true|策略ID|-|
+
+
+**Request-example:**
+```bash
+curl -X GET -i /pnl/v1?td=0&strategyId=0
+```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|avgBuyPrice|double|平均多头价格|-|
+|avgSellPrice|double|平均空头价格|-|
+|buyQty|int32|多头数量|-|
+|sellQty|int32|空头数量|-|
+|todayLong|int32|今多头数量|-|
+|todayShort|int32|今空头数量|-|
+|yesterdayLong|int32|昨多头数量|-|
+|yesterdayShort|int32|昨空头数量|-|
+|netPosition|int32|净头寸|-|
+|aggregatedFee|double|聚合交易手续费|-|
+|turnover|int32|成交额|-|
+|approved|int32|认证状态|-|
+
+**Response-example:**
+```json
+[
+  {
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "avgBuyPrice": 0.0,
+    "avgSellPrice": 0.0,
+    "buyQty": 0,
+    "sellQty": 0,
+    "todayLong": 0,
+    "todayShort": 0,
+    "yesterdayLong": 0,
+    "yesterdayShort": 0,
+    "netPosition": 0,
+    "aggregatedFee": 0.0,
+    "turnover": 0,
+    "approved": 0
+  }
+]
+```
+
+## 更新PNL (内部接口, 策略引擎调用)
+
+**URL:** `/pnl/v1`
+
+**Type:** `PUT`
+
+
+**Content-Type:** `application/json;charset=utf-8`
+
+**Description:** 更新PNL (内部接口, 策略引擎调用)
+
+
+
+
+
+**Request-example:**
+```bash
+curl -X PUT -H 'Content-Type: application/json;charset=utf-8' -i /pnl/v1
+```
+
+**Response-example:**
+```json
+OK
+```
+
+## 查询结算PNL (查询结算盈亏)
+
+**URL:** `/pnl/v1/settlement`
+
+**Type:** `GET`
+
+
+**Content-Type:** `application/x-www-form-urlencoded;charset=UTF-8`
+
+**Description:** 查询结算PNL (查询结算盈亏)
+
+
+
+**Query-parameters:**
+
+| Parameter | Type | Required | Description | Since |
+|-----------|------|----------|-------------|-------|
+|td|int32|true|[int] 交易日|-|
+|strategyId|int32|true|[int] 策略ID|-|
+
+
+**Request-example:**
+```bash
+curl -X GET -i /pnl/v1/settlement?td=0&strategyId=0
+```
+
+**Response-fields:**
+
+| Field | Type | Description | Since |
+|-------|------|-------------|-------|
+|strategyId|int32|策略ID|-|
+|instrumentCode|string|交易标的代码 [*]|-|
+|tradingDay|int32|交易日 [*]|-|
+|position|int32|仓位|-|
+|totalPnl|double|盈亏|-|
+|netPnl|double|净盈亏|-|
+|tradingCost|double|交易成本|-|
+|exposure|double|风险暴露|-|
+|approved|int32|认证状态|-|
+
+**Response-example:**
+```json
+[
+  {
+    "strategyId": 0,
+    "instrumentCode": "",
+    "tradingDay": 0,
+    "position": 0,
+    "totalPnl": 0.0,
+    "netPnl": 0.0,
+    "tradingCost": 0.0,
+    "exposure": 0.0,
+    "approved": 0
+  }
+]
+```
+

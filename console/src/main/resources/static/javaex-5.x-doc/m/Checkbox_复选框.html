@@ -1,0 +1,137 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Checkbox 复选框</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<style>
+.doc-markdown .javaex-grid-9 > ul {
+    margin-bottom: 10px;
+    padding-left: 0px;
+}
+</style>
+<body>
+	<div class="doc-markdown">
+		<h2>Checkbox 复选框</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<ul>
+					<li><strong>默认点击文字也会勾选，可以不用在外面包一层label。</strong></li>
+					<li><strong>如果没有文字，则必须写一个空格 或者 直接用label标签包起来。</strong></li>
+					<li><strong>如果是ajax获取数据后拼接的代码，需要调用 javaex.render(); 重新渲染样式。</strong></li>
+				</ul>
+				<pre><code class="html">&lt;input type="checkbox" fill name="checkbox" value="1"/&gt;复选框未选中&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox" value="2" checked/&gt;复选框选中&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox" value="3" disabled="disabled"/&gt;复选框未选中（只读）&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox" value="4" checked disabled="disabled"/&gt;复选框选中（只读）&lt;br&gt;</code></pre>
+				
+				<h3>全选 | 取消全选</h3>
+				<ul style="margin-bottom: 0;">
+					<li><strong>添加 listen 属性。父级：listen-X，子级： listen-X-Y</strong></li>
+					<li><strong>X、Y并不仅限于数字，例如：父级：listen-table，子级： listen-table-next 也是可以的</strong></li>
+				</ul>
+				<pre><code class="html">&lt;input type="checkbox" fill name="checkbox4" listen="listen-1" value="1"/&gt;全选&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="2" /&gt;子级复选框&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="3" disabled="disabled"/&gt;子级复选框（禁用）&lt;br&gt;
+&lt;input type="checkbox" fill name="checkbox4" listen="listen-1-2" value="4" /&gt;子级复选框&lt;br&gt;</code></pre>
+
+				<h3>针对复选框的 listen="listen-x" 属性全选。如果你想监听例如至少勾选一个复选框，才解除按钮的禁止点击状态，请调用如下方法，并将你的逻辑写在回调函数里</h3>
+				<pre><code class="html">// 监听复选框选中事件
+javaex.listenCheckbox({
+	callback : function() {
+		// 把你的逻辑写在这里
+	}
+});</code></pre>
+
+				<h3>搭配单元格组件使用</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+		&lt;input type="checkbox" cell name="checkbox2" value="1" /&gt;复选框未选中
+	&lt;/div&gt;
+	&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+		&lt;input type="checkbox" cell name="checkbox2" value="2" checked/&gt;复选框选中
+	&lt;/div&gt;
+	&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+		&lt;input type="checkbox" cell name="checkbox2" value="3" disabled="disabled"/&gt;复选框未选中（只读）
+	&lt;/div&gt;
+	&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+		&lt;input type="checkbox" cell name="checkbox2" value="4" checked disabled="disabled"/&gt;复选框选中（只读）
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>伪单选框</h3>
+				<p>一定要在外面包一层label，并且需要自己写一点点样式</p>
+				<pre><code class="html">&lt;style&gt;
+	.javaex-btn.blue {
+	    color: rgb(255, 255, 255);
+	    background-color: rgb(64, 158, 255);
+	}
+	.javaex-btn.wathet {
+	    color: rgb(16, 140, 238);
+	    background-color: rgb(234, 246, 254);
+	}
+&lt;/style&gt;
+
+&lt;label class="javaex-btn"&gt;&lt;input type="checkbox" fake name="checkbox3" value="1" checked/&gt;入门型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="checkbox" fake name="checkbox3" value="2"/&gt;标准型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="checkbox" fake name="checkbox3" value="3"/&gt;企业型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="checkbox" fake name="checkbox3" value="4"/&gt;豪华型&lt;/label&gt;
+
+&lt;script&gt;
+	javaex.fakeCheckbox({
+		name : "checkbox3",
+		uncheckClass : "wathet", // 未选中时添加的class
+		checkedClass : "blue" 	// 选中时添加的class
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>name</td>
+							<td></td>
+							<td>checkbox的name属性</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>uncheckClass</td>
+							<td></td>
+							<td>未选中时往label标签添加的class</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>checkedClass</td>
+							<td></td>
+							<td>选中时往label标签添加的class</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Checkbox_复选框1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

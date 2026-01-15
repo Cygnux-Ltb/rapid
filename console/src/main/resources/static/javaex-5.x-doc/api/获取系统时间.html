@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>获取系统时间</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>获取系统时间</h2>
+		<hr>
+		
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:45%;">方法</th>
+					<th style="width:45%;">说明</th>
+					<th style="width:10%;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var now = javaex.now();</code></pre></td>
+					<td>返回当前时间，格式yyyy-MM-dd HH:mm:ss</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var year = javaex.getYear();</code></pre></td>
+					<td>返回当前年份</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var month = javaex.getMonth();</code></pre></td>
+					<td>返回当前月份</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var day = javaex.getDay();</code></pre></td>
+					<td>返回当前日</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var today = javaex.getToday();</code></pre></td>
+					<td>返回今日日期，格式yyyy-MM-dd</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="html">var week = javaex.getWeek();</code></pre></td>
+					<td>返回当日所属星期（1=周一，2=周二...7=周日）</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>/* 
+ * 获得时间差
+ * startTime : 开始时间（时间格式为 yyyy-MM-dd HH:mm:ss 例如：2018-06-21 00:00:00）
+ * endTime : 结束时间（时间格式为 yyyy-MM-dd HH:mm:ss 例如：2018-06-21 00:00:00）
+ * type : 返回精度（second，minute，hour，day）
+ */
+var diff = javaex.getTimeDiff(startTime, endTime, type);</code></pre></td>
+					<td>获得时间差</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>/* 
+ * 获得两个日期之间的周次数
+ * startDate : 开始日期（时间格式为 yyyy-MM-dd 例如：2021-09-01）
+ * endDate : 结束日期（时间格式为 yyyy-MM-dd 例如：2022-06-28）
+ */
+var diff = javaex.getWeekDiff(startDate, endDate);</code></pre></td>
+					<td>获得两个日期之间的周次数</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

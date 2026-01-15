@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Loading 加载</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Loading 加载</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code>&lt;div class="javaex-loading"&gt;
+	&lt;span class="javaex-loading-spinner javaex-loading-spinner-circular"&gt;
+		&lt;svg class="javaex-loading-circular" viewBox="25 25 50 50"&gt;
+			&lt;circle cx="50" cy="50" r="20" fill="none"&gt;&lt;/circle&gt;
+		&lt;/svg&gt;
+	&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>自定义颜色</h3>
+				<pre><code>&lt;style&gt;
+.javaex-loading .myclass {
+    color: rgb(25, 137, 250);
+}
+&lt;/style&gt;
+
+&lt;div class="javaex-loading"&gt;
+	&lt;span class="javaex-loading-spinner javaex-loading-spinner-circular myclass"&gt;
+		&lt;svg class="javaex-loading-circular" viewBox="25 25 50 50"&gt;
+			&lt;circle cx="50" cy="50" r="20" fill="none"&gt;&lt;/circle&gt;
+		&lt;/svg&gt;
+	&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>自定义大小</h3>
+				<pre><code>&lt;style&gt;
+.javaex-loading .mysize {
+    width: 0.24rem;
+    height: 0.24rem;
+}
+&lt;/style&gt;
+
+&lt;div class="javaex-loading"&gt;
+	&lt;span class="javaex-loading-spinner javaex-loading-spinner-circular mysize"&gt;
+		&lt;svg class="javaex-loading-circular" viewBox="25 25 50 50"&gt;
+			&lt;circle cx="50" cy="50" r="20" fill="none"&gt;&lt;/circle&gt;
+		&lt;/svg&gt;
+	&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>加载文案</h3>
+				<pre><code>&lt;div class="javaex-loading"&gt;
+	&lt;span class="javaex-loading-spinner javaex-loading-spinner-circular"&gt;
+		&lt;svg class="javaex-loading-circular" viewBox="25 25 50 50"&gt;
+			&lt;circle cx="50" cy="50" r="20" fill="none"&gt;&lt;/circle&gt;
+		&lt;/svg&gt;
+	&lt;/span&gt;
+	&lt;span class="javaex-loading-desc"&gt;加载中...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+				
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Loading_加载1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

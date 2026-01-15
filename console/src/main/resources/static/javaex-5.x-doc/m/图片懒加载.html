@@ -1,0 +1,111 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片懒加载</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>
+	img {
+		width: 570px;
+		height: 360px;
+	}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h4>图片懒加载</h4>
+		<hr>
+		
+		<div class="word">
+			该组件基于jquery.lazyload.js修改，加载过的图片不再重复加载，结合javaex后支持tab切换和幻灯片
+		</div>
+		
+		<h5>使用方式</h5>
+		<pre><code class="html">&lt;script&gt;
+	javaex.lazyload({
+		selector : "img"	// jquery选择器
+	});
+&lt;/script&gt;</code></pre>
+		
+		<h5>演示</h5>
+		<div style="width: 570px;margin: 0 auto;">
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/210716.46788093.jpg"/>
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/181928.45891757.jpg"/>
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/203611.73700942.jpg"/>
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/202556.12361455.jpg"/>
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/202724.93232158.jpg"/>
+			<img data-original="http://img5.mtime.cn/mg/2019/01/23/162511.90867650.jpg"/>
+		</div>
+
+		<h5>代码</h5>
+		<pre><code class="html">&lt;style&gt;
+	img {
+		width: 570px;
+		height: 360px;
+	}
+&lt;/style&gt;
+
+&lt;div style="width: 570px;margin: 0 auto;"&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/210716.46788093.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/181928.45891757.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/203611.73700942.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/202556.12361455.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/202724.93232158.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/162511.90867650.jpg"/&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.lazyload({
+		selector : "img"	// jquery选择器
+	});
+&lt;/script&gt;</code></pre>
+		
+		<p class="divhr"></p>
+
+		<h5>参数说明（使用属性默认值时，可以缺省该属性）</h5>
+		<table class="table color2">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>属性名</th>
+					<th>默认值</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>selector</td>
+					<td></td>
+					<td>jquery选择器，最终指定到img即可。例如：".focus-bg img"</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>threshold</td>
+					<td>100</td>
+					<td>提前多少像素开始加载</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>dataOriginal</td>
+					<td>data-original</td>
+					<td>占位属性（图片延迟加载时，从该属性中获取真正的图片地址）</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>placeholder</td>
+					<td>“灰色”</td>
+					<td>占位图</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.lazyload({
+		selector : "img"	// jquery选择器
+	});
+</script>
+</html>

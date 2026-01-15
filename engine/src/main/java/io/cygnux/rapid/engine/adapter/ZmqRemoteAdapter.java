@@ -1,16 +1,16 @@
 package io.cygnux.rapid.engine.adapter;
 
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.cygnux.rapid.core.adapter.AbstractAdapter;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.event.SharedEventHandler;
 import io.mercury.serialization.json.JsonObjectExt;
-import io.mercury.transport.zmq.ZmqConfigurator;
+import io.mercury.transport.zmq.ZmqCfg;
 import io.mercury.transport.zmq.ZmqPublisher;
 import org.apache.fory.Fory;
 
@@ -39,7 +39,7 @@ public class ZmqRemoteAdapter extends AbstractAdapter {
      */
     public ZmqRemoteAdapter(@Nonnull Account account, SharedEventHandler inboundHandler) {
         super(account, false, inboundHandler);
-        this.publisher = ZmqConfigurator
+        this.publisher = ZmqCfg
                 .ipc(publishPath)
                 .createPublisherWithBinary();
     }

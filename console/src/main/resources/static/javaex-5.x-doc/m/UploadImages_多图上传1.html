@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+body{
+background:#fff;
+}
+</style>
+<body style="padding:10px;">
+	<div class="mb-10">基础用法：点击上传</div>
+	<div id="container" class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-upload">
+				<i class="javaex-badge-wrapper javaex-icon icon-camera"></i>
+				<input type="file" id="upload" class="javaex-uploader-input" accept="image/*">
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var now = javaex.now();
+
+	javaex.uploadImages({
+		id : "upload",			// <input type="file" />的id
+		dataType : "url",		// 返回的数据类型：base64 或 url
+		image : {
+			url : "https://imgbb.com/json",	// 请求路径
+			prefix : "",	// 前缀，如果后台返回的图片地址不是完整的链接，可以添加前缀
+			imgUrl : "image.image.url"	// 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "/1.jpg"}}
+		},
+		param : {
+			"file" : "source",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+			"type" : "file",    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+			"action" : "upload",
+			"timestamp" : new Date(now).getTime(),
+			"auth_token" : "f115dac7561da8078d60ffb5f943ae8e4f47b1d1"
+		},
+		imgList : ['http://webimg.javaex.cn/Fv7_P5dmShg1-deGM21gF8qCfSDL'],	// 图片回显
+		maxNum : 3,	// 最多上传多少张图片
+		callback : function (rtn) {
+			console.log(rtn);
+		},
+		deleteImage : function() {
+			console.log("做点什么吧");
+		},
+		chooseBefore : function() {
+			console.log("选择文件前的回调函数");
+		},
+		chooseAfter : function(rtn) {
+			console.log("选择文件后的回调函数");
+			// 选择文件后的回调函数，会返回一些文件信息
+			console.log(rtn.filename);
+			console.log(rtn.filesize);
+			console.log(rtn.fileSuffix);
+		}
+	});
+</script>
+</html>

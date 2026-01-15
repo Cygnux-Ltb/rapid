@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>仿DNF论坛</title>
+<script src="../js/ui.js"></script>
+<style>
+.javaex-swiper .javaex-swiper-prev, .javaex-swiper .javaex-swiper-next{top: 100px;}
+.javaex-swiper .javaex-swiper-next{right: 0px;}
+.javaex-swiper .javaex-swiper-prev a, .javaex-swiper .javaex-swiper-next a{display: block; width: 26px; height: 100px;}
+.javaex-swiper .javaex-swiper-prev a{background:url(http://webimg.javaex.cn/slider_btn_prev.png) no-repeat;}
+.javaex-swiper .javaex-swiper-prev a:hover{background-position:0 -100px;}
+.javaex-swiper .javaex-swiper-next a{background:url(http://webimg.javaex.cn/slider_btn_next.png) no-repeat;}
+.javaex-swiper .javaex-swiper-next a:hover{background-position:0 -100px;}
+.javaex-swiper-focus-box{top: 5px; left: 4px;}
+.javaex-swiper-focus-box li{float: left; margin-right: 1px; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 10px; cursor: pointer;}
+.javaex-swiper-focus-box li{background: rgba(0,0,0,0.3); color: #FFF; overflow: hidden;}
+.javaex-swiper-focus-box li.on{background: rgba(255,255,255,0.5); color: #000; font-weight: 700;}
+.javaex-swiper ul.javaex-swiper-focus-bg li span.title{position:absolute;bottom:0;left:0;margin-bottom:0;width:100%;height:32px;line-height:32px;font-size:14px;text-indent:10px;color: #FFF; overflow: hidden; text-align: center; padding: 0; background: url(https://dnf.gamebbs.qq.com/template/acgi_ax0/images/black_so32.png) repeat-x; text-shadow: 0 -1px 1px rgba(0,0,0,.25);animation: fastr20 0.5s; -webkit-animation: fastr20 0.5s; -moz-animation: fastr20 0.5s;}
+
+@keyframes fastr20{0%{opacity:0;transform:translate(0,20px);}100%{opacity:1;transform:translate(0,0);}}
+@-webkit-keyframes fastr20{0%{opacity:0;-webkit-transform:translate(0,20px);}100%{opacity:1;-webkit-transform:translate(0,0);}}
+@-moz-keyframes fastr20{0%{opacity:0;-moz-transform:translate(0,20px);}100%{opacity:1;-moz-transform:translate(0,0);}}
+
+.javaex-swiper{width: 550px; height: 320px;}
+.javaex-swiper ul.javaex-swiper-focus-bg li{width: 550px; height: 320px;}
+.javaex-swiper ul.javaex-swiper-focus-bg img{width: 100%; height: 100%;}
+</style>
+</head>
+
+<body>
+	<div class="doc-markdown">
+		<h2>仿DNF论坛</h2>
+		<hr>
+
+		<div style="width: 550px; height: 320px; margin: 0 auto;">
+			<!--幻灯片-->
+			<div id="swiper" class="javaex-swiper">
+				<!--背景大图-->
+				<ul class="javaex-swiper-focus-bg">
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_18_153923qoam7pscpdp30d0c.jpg/0"/>
+						</a>
+						<span class="title">中国传统文化&DNF</span>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_18_172358z0hswxwnueuhhs3j.jpg/0"/>
+						</a>
+						<span class="title">春节活动汇聚</span>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_08_171929iraq5sjgp9rz5djq.png/0"/>
+						</a>
+						<span class="title">2019新春礼包</span>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201812_21_211026i565i565a54cj2nf.jpg/0"/>
+						</a>
+						<span class="title">春节内容抢先看</span>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201812_29_192137zkigohhk4zrilthb.jpg/0"/>
+						</a>
+						<span class="title">春节版本活动和商城</span>
+					</li>
+				</ul>
+
+				<!--左右切换，如果不需要左右箭头切换的话，直接去掉这个div即可-->
+				<div class="javaex-swiper-prev-next">
+					<!--上一张-->
+					<div class="javaex-swiper-prev"><a href="javascript:;"></a></div>
+					<!--下一张-->
+					<div class="javaex-swiper-next"><a href="javascript:;"></a></div>
+				</div>
+
+				<!--焦点，如果不需要焦点的话，直接去掉这个div即可-->
+				<div class="javaex-swiper-focus-box">
+					<ul>
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;style&gt;
+.javaex-swiper .javaex-swiper-prev, .javaex-swiper .javaex-swiper-next{top: 100px;}
+.javaex-swiper .javaex-swiper-next{right: 0px;}
+.javaex-swiper .javaex-swiper-prev a, .javaex-swiper .javaex-swiper-next a{display: block; width: 26px; height: 100px;}
+.javaex-swiper .javaex-swiper-prev a{background:url(http://webimg.javaex.cn/slider_btn_prev.png) no-repeat;}
+.javaex-swiper .javaex-swiper-prev a:hover{background-position:0 -100px;}
+.javaex-swiper .javaex-swiper-next a{background:url(http://webimg.javaex.cn/slider_btn_next.png) no-repeat;}
+.javaex-swiper .javaex-swiper-next a:hover{background-position:0 -100px;}
+.javaex-swiper-focus-box{top: 5px; left: 4px;}
+.javaex-swiper-focus-box li{float: left; margin-right: 1px; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 10px; cursor: pointer;}
+.javaex-swiper-focus-box li{background: rgba(0,0,0,0.3); color: #FFF; overflow: hidden;}
+.javaex-swiper-focus-box li.on{background: rgba(255,255,255,0.5); color: #000; font-weight: 700;}
+.javaex-swiper ul.javaex-swiper-focus-bg li span.title{position:absolute;bottom:0;left:0;margin-bottom:0;width:100%;height:32px;line-height:32px;font-size:14px;text-indent:10px;color: #FFF; overflow: hidden; text-align: center; padding: 0; background: url(https://dnf.gamebbs.qq.com/template/acgi_ax0/images/black_so32.png) repeat-x; text-shadow: 0 -1px 1px rgba(0,0,0,.25);animation: fastr20 0.5s; -webkit-animation: fastr20 0.5s; -moz-animation: fastr20 0.5s;}
+
+@keyframes fastr20{0%{opacity:0;transform:translate(0,20px);}100%{opacity:1;transform:translate(0,0);}}
+@-webkit-keyframes fastr20{0%{opacity:0;-webkit-transform:translate(0,20px);}100%{opacity:1;-webkit-transform:translate(0,0);}}
+@-moz-keyframes fastr20{0%{opacity:0;-moz-transform:translate(0,20px);}100%{opacity:1;-moz-transform:translate(0,0);}}
+
+.javaex-swiper{width: 550px; height: 320px;}
+.javaex-swiper ul.javaex-swiper-focus-bg li{width: 550px; height: 320px;}
+.javaex-swiper ul.javaex-swiper-focus-bg img{width: 100%; height: 100%;}
+&lt;/style&gt;
+
+&lt;!--幻灯片--&gt;
+&lt;div id="swiper" class="javaex-swiper"&gt;
+	&lt;!--背景大图--&gt;
+	&lt;ul class="javaex-swiper-focus-bg"&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_18_153923qoam7pscpdp30d0c.jpg/0"/&gt;
+			&lt;/a&gt;
+			&lt;span class="title"&gt;中国传统文化&DNF&lt;/span&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_18_172358z0hswxwnueuhhs3j.jpg/0"/&gt;
+			&lt;/a&gt;
+			&lt;span class="title"&gt;春节活动汇聚&lt;/span&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201901_08_171929iraq5sjgp9rz5djq.png/0"/&gt;
+			&lt;/a&gt;
+			&lt;span class="title"&gt;2019新春礼包&lt;/span&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201812_21_211026i565i565a54cj2nf.jpg/0"/&gt;
+			&lt;/a&gt;
+			&lt;span class="title"&gt;春节内容抢先看&lt;/span&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="https://p.qpic.cn/dnfbbspic/0/dnfbbs_dnfbbs_dnf_gamebbs_qq_com_forum_201812_29_192137zkigohhk4zrilthb.jpg/0"/&gt;
+			&lt;/a&gt;
+			&lt;span class="title"&gt;春节版本活动和商城&lt;/span&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+
+	&lt;!--左右切换，如果不需要左右箭头切换的话，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-prev-next"&gt;
+		&lt;!--上一张--&gt;
+		&lt;div class="javaex-swiper-prev"&gt;&lt;a href="javascript:;"&gt;&lt;/a&gt;&lt;/div&gt;
+		&lt;!--下一张--&gt;
+		&lt;div class="javaex-swiper-next"&gt;&lt;a href="javascript:;"&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;!--焦点，如果不需要焦点的话，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-focus-box"&gt;
+		&lt;ul&gt;
+			&lt;li&gt;1&lt;/li&gt;
+			&lt;li&gt;2&lt;/li&gt;
+			&lt;li&gt;3&lt;/li&gt;
+			&lt;li&gt;4&lt;/li&gt;
+			&lt;li&gt;5&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.swiper({
+		id : "swiper",
+		effect : "smooth"
+	});
+&lt;/script&gt;</code></pre>
+	</div>
+</body>
+<script>
+	javaex.swiper({
+		id : "swiper",
+		effect : "smooth"
+	});
+</script>
+</html>

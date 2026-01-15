@@ -1,0 +1,452 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FormValidation 表单验证</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>FormValidation 表单验证</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>ajax提交表单时，如果input type为submit，则会无限进入error回调函数</strong></li>
+			<li><strong>原生表单提交时，如果表单内出现id或name为submit，则无法提交</strong></li>
+			<li><strong>要实现验证，必须没有兄弟元素，也就是相对于父级来说，它是独子。如果他存在兄弟元素，你只需要给它套一层&lt;span&gt;&lt;/span&gt;之类的即可</strong></li>
+		</ul>
+		
+		<h3>文字信息默认是右对齐的，如果你想左对齐的话，只需要在 class="javaex-unit-left" 的基础上加一个 class="tl" 即可</h3>
+		<pre><code>class="javaex-unit-left tl"</code></pre>
+		
+		<h3>如果左侧文字太长，可以修改如下样式</h3>
+		<pre><code>&lt;style&gt;
+/* javaex-unit-left 默认宽度为80px */
+/* javaex-unit-right 左外边距在 javaex-unit-left 的基础上再追加 10px */
+.javaex-unit .javaex-unit-left {
+	width: 100px;
+}
+.javaex-unit .javaex-unit-right {
+	margin-left: 110px;
+}
+&lt;/style&gt;</code></pre>
+
+		<h3>表单提交验证演示</h3>
+		<form id="form" style="width: 800px;">
+			<!--文本框-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle required">登录账号</p></div>
+				<div class="javaex-unit-right">
+					<input type="text" class="javaex-text" data-type="phone|email" error-msg="手机号或邮箱格式错误" placeholder="请输入手机号或邮箱" />
+				</div>
+			</div>
+			
+			<!--单选框-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle">性别</p></div>
+				<div class="javaex-unit-right">
+					<ul class="javaex-equal-8 clear">
+						<li><input type="radio" fill name="sex" checked/>男</li>
+						<li><input type="radio" fill name="sex" />女</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!--复选框-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle">兴趣</p></div>
+				<div class="javaex-unit-right">
+					<ul class="javaex-equal-8 clear">
+						<li><input type="checkbox" fill name="interest" />吃饭</li>
+						<li><input type="checkbox" fill name="interest" />睡觉</li>
+						<li><input type="checkbox" fill name="interest" />打豆豆</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!--下拉选择框-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle required">学历</p></div>
+				<div class="javaex-unit-right">
+					<select id="select" data-type="required">
+						<option value="">请选择</option>
+						<option value="1">大专</option>
+						<option value="2">本科</option>
+						<option value="3">硕士</option>
+						<option value="4">博士</option>
+						<option value="5">博士后</option>
+					</select>
+				</div>
+			</div>
+			
+			<!--日期选择框-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle">注册时间</p></div>
+				<div class="javaex-unit-right">
+					<input type="text" id="date" class="javaex-date" style="width: 180px;" value="" readonly/>
+				</div>
+			</div>
+			
+			<!--文本域-->
+			<div class="javaex-unit clear">
+				<div class="javaex-unit-left"><p class="subtitle">简介</p></div>
+				<div class="javaex-unit-right">
+					<textarea class="javaex-desc" placeholder="请填写简介"></textarea>
+					<!--提示说明-->
+					<p class="javaex-hint">请填写个人简介。简介中不得包含令人反感的信息，且长度应在10到255个字符之间。</p>
+				</div>
+			</div>
+			
+			<!--提交按钮-->
+			<div class="javaex-unit clear tc">
+				<input type="button" id="return" class="javaex-btn no" value="返回" />
+				<input type="button" id="save" class="javaex-btn yes" value="保存" />
+			</div>
+		</form>
+		
+		<pre><code>&lt;form id="form"&gt;
+	&lt;!--文本框--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle required"&gt;登录账号&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;input type="text" class="javaex-text" data-type="phone|email" error-msg="手机号或邮箱格式错误" placeholder="请输入手机号或邮箱" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--单选框--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle"&gt;性别&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;ul class="javaex-equal-8 clear"&gt;
+				&lt;li&gt;&lt;input type="radio" fill name="sex" checked/&gt;男&lt;/li&gt;
+				&lt;li&gt;&lt;input type="radio" fill name="sex" /&gt;女&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--复选框--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle"&gt;兴趣&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;ul class="javaex-equal-8 clear"&gt;
+				&lt;li&gt;&lt;input type="checkbox" fill name="interest" /&gt;吃饭&lt;/li&gt;
+				&lt;li&gt;&lt;input type="checkbox" fill name="interest" /&gt;睡觉&lt;/li&gt;
+				&lt;li&gt;&lt;input type="checkbox" fill name="interest" /&gt;打豆豆&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--下拉选择框--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle required"&gt;学历&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;select id="select" data-type="required"&gt;
+				&lt;option value=""&gt;请选择&lt;/option&gt;
+				&lt;option value="1"&gt;大专&lt;/option&gt;
+				&lt;option value="2"&gt;本科&lt;/option&gt;
+				&lt;option value="3"&gt;硕士&lt;/option&gt;
+				&lt;option value="4"&gt;博士&lt;/option&gt;
+				&lt;option value="5"&gt;博士后&lt;/option&gt;
+			&lt;/select&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--日期选择框--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle"&gt;注册时间&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;input type="text" id="date" class="javaex-date" style="width: 180px;" value="" readonly/&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--文本域--&gt;
+	&lt;div class="javaex-unit clear"&gt;
+		&lt;div class="javaex-unit-left"&gt;&lt;p class="subtitle"&gt;简介&lt;/p&gt;&lt;/div&gt;
+		&lt;div class="javaex-unit-right"&gt;
+			&lt;textarea class="javaex-desc" placeholder="请填写简介"&gt;&lt;/textarea&gt;
+			&lt;!--提示说明--&gt;
+			&lt;p class="javaex-hint"&gt;请填写个人简介。简介中不得包含令人反感的信息，且长度应在10到255个字符之间。&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;!--提交按钮--&gt;
+	&lt;div class="javaex-unit clear tc"&gt;
+		&lt;input type="button" id="return" class="javaex-btn no" value="返回" /&gt;
+		&lt;input type="button" id="save" class="javaex-btn yes" value="保存" /&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+	javaex.select({
+		id : "select",
+		isSearch : false
+	});
+	
+	javaex.date({
+		id : "date",	// 承载日期组件的id
+		monthNum : 1,		// 1代表选择单日日期
+		date : "2018-01-01",	// 选择的日期
+		callback : function(rtn) {
+			
+		}
+	});
+	
+	// 监听点击保存按钮事件
+	$("#save").click(function() {
+		// 表单验证函数
+		if (javaexVerify()) {
+			// 返回错误信息时，可以添加自定义异常提示。参数为元素id和提示
+			// addErrorMsg("username", "用户名不存在");
+			// 提交
+			// $("#form").submit();
+			alert("验证通过");
+		}
+	});
+	
+	// 监听点击返回按钮事件
+	$("#return").click(function() {
+		// alert("返回");
+		// window.location.href = document.referrer;
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>表单验证说明</h3>
+		<table class="javaex-table" style="margin-bottom:20px;">
+			<thead>
+				<tr>
+					<th>属性</th>
+					<th>说明</th>
+					<th>是否必填</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>data-type</td>
+					<td>验证类型</td>
+					<td>必填</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>error-msg</td>
+					<td>错误提示</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>error-pos</td>
+					<td>错误提示距离（默认自动识别，可以根据实际情况调整，例如填写32）</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>error-tip-id</td>
+					<td>固定错误提示位置的id<br/>添加该属性时，会在固定位置显示错误信息</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>error-mode</td>
+					<td>错误展现形式，通常用于表格中的input框，基本上要配合error-pos一起使用<br/>不添加该属性时为默认样式，可选值：error-mode="2"</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+ 		<pre><code>示例
+&lt;input type="text" data-type="money" error-msg="金额格式错误" /&gt;
+
+满足多个验证类型中的一个即通过验证，示例
+&lt;input type="text" class="javaex-text" data-type="phone|email" error-msg="手机号或邮箱格式错误" /&gt;
+
+如果你想允许该项为空，但是一旦有值，又要验证其类型，可以这样写
+&lt;input type="text" class="javaex-text" data-type="null|nonnegative_int" error-msg="数字格式不正确" /&gt;
+
+如果仅仅是验证必填，则只需要 data-type="required" 即可，不需要 error-msg 属性，示例
+&lt;input type="text" class="javaex-text" data-type="required" /&gt;
+
+调用javaexVerify()函数进行表单验证，返回true时，代表验证通过
+
+验证通过后，如果你想添加异常信息，如用户名已存在。可以调用 addErrorMsg(参数1, 参数2) 函数添加
+参数1元素的id （input之类的id）
+参数2自定义提示</code></pre>
+
+		<h3>固定错误提示位置说明</h3>
+		<pre><code>添加一个标签，该标签可以放任意位置，并为其指定一个id
+&lt;p id="loginreg-error-tip" class="javaex-error-info vh"&gt;&lt;/p&gt;
+
+追加一个 error-tip-id 即可
+&lt;input type="text" class="text" data-type="phone|email" error-msg="手机号或邮箱格式错误" error-tip-id="loginreg-error-tip" placeholder="请输入手机号或邮箱"/&gt;
+</code></pre>
+
+		<h3>表单验证函数</h3>
+		<pre><code class="javascript">/**
+ * 校验整个页面
+ */
+if (javaexVerify()) {
+	alert("验证通过");
+}
+
+/**
+ * 校验局部区域
+ * selector ： jquery选择器，例如 #form1
+ * flag : 校验失败时，是否自动定位到第一个错误的元素（true | false）
+ */
+if (javaexVerify(selector, flag)) {
+	alert("验证通过");
+}</code></pre>
+
+		<h3>框架内置验证类型</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>验证类型名称</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>required</td>
+					<td>必填</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>money</td>
+					<td>0 + 正整数 + 最多2位小数(正数)</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>int</td>
+					<td>整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>positive_int</td>
+					<td>正整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>negative_int</td>
+					<td>负整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonnegative_int</td>
+					<td>非负整数：正整数 + 0</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonpositive_int</td>
+					<td>非正整数：负整数 + 0</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>positive_decimal</td>
+					<td>正小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>negative_decimal</td>
+					<td>负小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonnegative_decimal</td>
+					<td>非负小数：0 + 正小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonpositive_decimal</td>
+					<td>非正小数：0 + 负小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>email</td>
+					<td>邮箱</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>phone</td>
+					<td>手机号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>idcard</td>
+					<td>身份证号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>chinese</td>
+					<td>中文</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>english</td>
+					<td>英文字母</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>english_number</td>
+					<td>英文字母或数字</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>qq</td>
+					<td>qq号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>car_number</td>
+					<td>车牌号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>account</td>
+					<td>账号：只能输入5-10个以字母开头，可带数字、下划线的字符串</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>password</td>
+					<td>密码：6到16位字母或数字或它们的组合</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>health</td>
+					<td>视力、身高、体重：正整数 + 最多1位小数(正数)</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.select({
+		id : "select",
+		isSearch : false
+	});
+	
+	javaex.date({
+		id : "date",	// 承载日期组件的id
+		monthNum : 1,		// 1代表选择单日日期
+		date : "2018-01-01",	// 选择的日期
+		callback : function(rtn) {
+			
+		}
+	});
+	
+	// 监听点击保存按钮事件
+	$("#save").click(function() {
+		// 表单验证函数
+		if (javaexVerify()) {
+			// 返回错误信息时，可以添加自定义异常提示。参数为元素id和提示
+			// addErrorMsg("username", "用户名不存在");
+			// 提交
+			// $("#form").submit();
+			alert("验证通过");
+		}
+	});
+</script>
+</html>

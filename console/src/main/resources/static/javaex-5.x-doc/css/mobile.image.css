@@ -1,0 +1,2 @@
+.device{position: relative; display: block; width: 395px; height: 813px; font-family: "Helvetica Neue", sans-serif; background-image: url(../images/device-sprite.png); background-size: 300%; background-repeat: no-repeat; background-position: 0 0; -webkit-transition: background-image 0.1s linear; transition: background-image 0.1s linear;}
+.device .device-content{position: absolute; top: 117px; left: 37px; width: 321px; height: 569px; overflow: hidden; font-size: 0.85rem; line-height: 1.05rem; background: #eeeeee;}

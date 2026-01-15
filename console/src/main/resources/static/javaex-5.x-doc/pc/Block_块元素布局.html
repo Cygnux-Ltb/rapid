@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Block 块元素布局</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Block 块元素布局</h2>
+		<hr>
+		
+		<h3>块元素</h3>
+		<div style="width:1000px;">
+			<div class="javaex-block has-border">
+				<div class="javaex-banner"><span class="javaex-block-fixed"></span>标题</div>
+				<div class="javaex-main-10">
+					<p class="javaex-toast">
+						测试文字<br />
+						测试文字测试文字测试文字测试文字
+					</p>
+					<hr class="javaex-divider"/>
+					<p class="javaex-toast">
+						测试文字<br />
+						测试文字测试文字测试文字测试文字
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;div class="javaex-block has-border"&gt;
+	&lt;div class="javaex-banner"&gt;&lt;span class="javaex-block-fixed"&gt;&lt;/span&gt;标题&lt;/div&gt;
+	&lt;div class="javaex-main-10"&gt;
+		&lt;p class="javaex-toast"&gt;
+			测试文字&lt;br /&gt;
+			测试文字测试文字测试文字测试文字
+		&lt;/p&gt;
+		&lt;hr class="javaex-divider"/&gt;
+		&lt;p class="javaex-toast"&gt;
+			测试文字&lt;br /&gt;
+			测试文字测试文字测试文字测试文字
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>属性</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>class="javaex-block"</td>
+					<td>该属性修饰的div表示一块内容区域<br/>追加 has-border 属性可以追加边框。 写法：class="javaex-block has-border"</td>
+				</tr>
+				<tr>
+					<td>class="javaex-banner"</td>
+					<td>该属性修饰的div表示块元素的名称，是专门用来修饰class="javaex-block"的，写在class="javaex-block"内。可以缺省</td>
+				</tr>
+				<tr>
+					<td>class="javaex-block-fixed"</td>
+					<td>添加该代码，可以在标题前多加一根竖线</td>
+				</tr>
+				<tr>
+					<td>class="javaex-main" 或 class="javaex-main-10"</td>
+					<td>
+						该属性修饰的div表示填写正文内容，写在class="javaex-block"内，与class="javaex-banner"同级<br/>
+						该属性的div会产生20px的内边距<br/>
+						class="javaex-main-10"会产生10px的内边距<br/>
+						可以缺省
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

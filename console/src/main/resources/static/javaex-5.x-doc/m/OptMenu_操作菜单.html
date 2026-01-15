@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>OptMenu 操作菜单</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>OptMenu 操作菜单</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<pre><code class="html">&lt;button id="demo" class="javaex-btn default" block size="large"&gt;点击调用操作菜单&lt;/button&gt;
+
+&lt;script&gt;
+	$("#demo").click(function() {
+		let id = "abc";
+		javaex.optMenu({
+			title : "操作说明的标题",
+			menus : {
+				// 允许加图标等样式，但是最外层必须用单引号包裹
+				'&lt;span class="icon-trash"&gt;&lt;/span&gt; 删除' : 'del(\''+ id +'\')',
+				'&lt;span class="icon-block"&gt;&lt;/span&gt; 禁用' : 'disable(\''+ id +'\')'
+			}
+		});
+	});
+
+	function del(id) {
+		alert("点击了删除，传参：" + id);
+	}
+	
+	function disable(id) {
+		alert("点击了禁用，传参：" + id);
+	}
+&lt;/script&gt;</code></pre>
+			
+			<h3>参数说明</h3>
+			<table class="javaex-table">
+				<thead>
+					<tr>
+						<th>参数</th>
+						<th>默认值</th>
+						<th>说明</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>title</td>
+						<td></td>
+						<td>不为空时，会显示标题</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>menus</td>
+						<td></td>
+						<td>自定义菜单</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="OptMenu_操作菜单1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

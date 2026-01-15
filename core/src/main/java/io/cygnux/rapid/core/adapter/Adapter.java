@@ -1,13 +1,13 @@
 package io.cygnux.rapid.core.adapter;
 
-import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.event.enums.AdapterType;
+import io.cygnux.rapid.core.types.account.Account;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.adapter.enums.AdapterType;
 import io.mercury.common.state.Available;
 import io.mercury.common.state.StartupException;
 

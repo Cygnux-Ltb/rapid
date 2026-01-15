@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+body{
+background:#fff;
+}
+
+</style>
+<body style="padding:10px;">
+	<div class="mb-10">基础用法：点击上传</div>
+	<div id="container" class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-upload">
+				<i class="javaex-badge-wrapper javaex-icon icon-camera"></i>
+				<input type="file" id="upload" class="javaex-uploader-input" accept="image/*">
+			</div>
+		</div>
+	</div>
+	
+	<div class="mb-10 mt-20">各种状态：待上传</div>
+	<div class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-upload">
+				<i class="javaex-badge-wrapper javaex-icon icon-camera"></i>
+				<input type="file" class="javaex-uploader-input" accept="image/*">
+			</div>
+		</div>
+	</div>
+	
+	<div class="mb-10 mt-20">各种状态：上传中</div>
+	<div class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-preview">
+				<div class="javaex-image javaex-uploader-preview-image">
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" class="javaex-image-img" style="object-fit: cover;">
+				</div>
+				<div class="javaex-uploader-mask">
+					<div class="javaex-loading javaex-uploader-loading">
+						<span class="javaex-loading-spinner javaex-loading-spinner-circular">
+							<svg class="javaex-loading-circular" viewBox="25 25 50 50">
+								<circle cx="50" cy="50" r="20" fill="none"></circle>
+							</svg>
+						</span>
+					</div>
+					<div class="javaex-uploader-mask-message">上传中...</div>
+				</div>
+				<div class="javaex-uploader-preview-delete javaex-uploader-preview-delete-shadow">
+					<i class="javaex-badge-wrapper javaex-icon javaex-icon-cross icon-close"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-10 mt-20">各种状态：上传失败</div>
+	<div class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-preview">
+				<div class="javaex-image javaex-uploader-preview-image">
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" class="javaex-image-img" style="object-fit: cover;">
+				</div>
+				<div class="javaex-uploader-mask">
+					<i class="javaex-badge-wrapper javaex-icon icon-close"></i>
+					<div class="javaex-uploader-mask-message">上传失败</div>
+				</div>
+				<div class="javaex-uploader-preview-delete javaex-uploader-preview-delete-shadow">
+					<i class="javaex-badge-wrapper javaex-icon javaex-icon-cross icon-close"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-10 mt-20">各种状态：上传成功或图片回显</div>
+	<div class="javaex-uploader">
+		<div class="javaex-uploader-wrapper">
+			<div class="javaex-uploader-preview">
+				<div class="javaex-image javaex-uploader-preview-image">
+					<img src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" class="javaex-image-img" style="object-fit: cover;">
+				</div>
+				<div class="javaex-uploader-preview-delete javaex-uploader-preview-delete-shadow">
+					<i class="javaex-badge-wrapper javaex-icon javaex-icon-cross icon-close"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var now = javaex.now();
+
+	javaex.uploadImage({
+		url : "https://imgbb.com/json",	// 请求路径
+		id : "upload",			// <input type="file" />的id
+		param : {
+			"file" : "source",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+			"type" : "file",    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+			"action" : "upload",
+			"timestamp" : new Date(now).getTime(),
+			"auth_token" : "f115dac7561da8078d60ffb5f943ae8e4f47b1d1"
+		},
+		dataType : "url",		// 返回的数据类型：base64 或 url
+		imageSrc : "",
+		callback : function (rtn) {
+			console.log(rtn);
+			// 单图上传需要手动填充图片
+			$("#container img").attr("src", rtn.image.image.url);
+		},
+		deleteImage : function() {
+			console.log("做点什么吧");
+		},
+		chooseBefore : function() {
+			console.log("选择文件前的回调函数");
+		},
+		chooseAfter : function(rtn) {
+			console.log("选择文件后的回调函数");
+			// 选择文件后的回调函数，会返回一些文件信息
+			console.log(rtn.filename);
+			console.log(rtn.filesize);
+			console.log(rtn.fileSuffix);
+		}
+	});
+</script>
+</html>

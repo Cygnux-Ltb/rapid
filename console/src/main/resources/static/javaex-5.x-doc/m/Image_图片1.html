@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.mb-10 {margin-bottom:5px;}
+.text {
+    margin-top: 5px;
+    text-align: center;
+    color: rgb(153, 153, 153);
+}
+.javaex-equal-3 .javaex-image {
+	margin:0 auto;
+}
+.javaex-equal-3 li{
+	margin-bottom:5px;
+}
+</style>
+<body style="padding:10px;">
+	<div class="mb-10">基础用法</div>
+	<div class="javaex-image" style="width: 80px; height: 80px;">
+		<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" />
+	</div>
+	
+	<br />
+	<div class="mb-10">填充模式</div>
+	<ul class="javaex-equal-3 clear">
+		<li>
+			<div class="javaex-image" style="width: 80px; height: 80px;">
+				<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="contain" />
+			</div>
+			<div class="text">contain</div>
+		</li>
+		<li>
+			<div class="javaex-image" style="width: 80px; height: 80px;">
+				<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" />
+			</div>
+			<div class="text">cover</div>
+		</li>
+		<li>
+			<div class="javaex-image" style="width: 80px; height: 80px;">
+				<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="fill" />
+			</div>
+			<div class="text">fill</div>
+		</li>
+		<li>
+			<div class="javaex-image" style="width: 80px; height: 80px;">
+				<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="none" />
+			</div>
+			<div class="text">none</div>
+		</li>
+		<li>
+			<div class="javaex-image" style="width: 80px; height: 80px;">
+				<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="scale-down" />
+			</div>
+			<div class="text">scale-down</div>
+		</li>
+	</ul>
+	
+	<br />
+	<div class="mb-10">圆形图片</div>
+	<div class="javaex-image javaex-image-round" style="width: 80px; height: 80px;">
+		<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" />
+	</div>
+	
+	<br />
+	<div class="mb-10">加载中提示 | 加载失败</div>
+	<div style="background:#fff;padding:10px;">
+		<ul class="javaex-equal-3 clear">
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="" fit="cover" />
+					<div class="javaex-img-loading"><i class="javaex-icon icon-circular-graph"></i></div>
+				</div>
+				<div class="text">加载中...</div>
+			</li>
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="" fit="cover" />
+					<div class="javaex-img-error">加载失败</div>
+				</div>
+				<div class="text">加载失败</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

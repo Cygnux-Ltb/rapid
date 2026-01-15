@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Close 关闭弹出层API</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Close 关闭弹出层API</h2>
+		<hr>
+		
+		<h3>当前页面关闭弹出层</h3>
+		<pre><code class="javascript">/**
+ * 关闭弹出层
+ * id : 不填时，关闭所有弹出层。仅在当页面存在多个弹出层，需要关闭指定弹出层时才填写
+ */
+javaex.close(id);
+
+// 刷新页面
+window.location.reload();</code></pre>
+		
+		<h3>弹出页面关闭弹出层</h3>
+		<pre><code class="javascript">/**
+ * 关闭弹出层
+ * id : 不填时，关闭所有弹出层。仅在当页面存在多个弹出层，需要关闭指定弹出层时才填写
+ */
+parent.javaex.close(id);
+
+// 刷新页面
+parent.location.reload();</code></pre>
+		
+	</div>
+</body>
+</html>

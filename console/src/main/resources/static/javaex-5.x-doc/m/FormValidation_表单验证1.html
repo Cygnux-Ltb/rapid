@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-select-inputval {
+    text-align: left;
+}
+</style>
+<body style="padding:0.1rem;">
+	<div class="mb-10">基础用法</div>
+	<form id="form">
+		<div class="javaex-cell-group-warp">
+			<div class="javaex-cell">
+				<div class="javaex-cell-title javaex-field-label"><label class="required">必填项</label></div>
+				<div class="javaex-cell-value javaex-field-value">
+					<div class="javaex-field-body">
+						<input type="text" class="javaex-field-control" data-type="required" placeholder="请输入文本" autocomplete="off"/>
+					</div>
+				</div>
+			</div>
+			<div class="javaex-cell">
+				<div class="javaex-cell-title javaex-field-label"><label class="required">格式校验</label></div>
+				<div class="javaex-cell-value javaex-field-value">
+					<div class="javaex-field-body">
+						<input type="text" class="javaex-field-control" data-type="phone|email" error-msg="手机号或邮箱格式错误" placeholder="请输入手机号或邮箱" autocomplete="off" />
+					</div>
+				</div>
+			</div>
+			<div class="javaex-cell">
+				<div class="javaex-cell-title javaex-field-label"><label class="required">非空时校验</label></div>
+				<div class="javaex-cell-value javaex-field-value">
+					<div class="javaex-field-body">
+						<input type="text" class="javaex-field-control" data-type="null|positive_int" error-msg="请填写正整数" placeholder="请输入正整数" autocomplete="off" />
+					</div>
+				</div>
+			</div>
+			<div class="javaex-cell">
+				<div class="javaex-cell-title javaex-field-label"><label class="required">请选择城市</label></div>
+				<div class="javaex-cell-value javaex-field-value">
+					<div class="javaex-field-body">
+						<select id="select1" data-type="required">
+							<option value="">请选择</option>
+							<option value="1">北京市</option>
+							<option value="2" >天津市</option>
+							<option value="3">沈阳市</option>
+							<option value="4">长春市</option>
+							<option value="5">哈尔滨市</option>
+							<option value="6">上海市</option>
+							<option value="7">南京市</option>
+							<option value="8">武汉市</option>
+							<option value="9">广州市</option>
+							<option value="10">重庆市</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="button" id="save" class="javaex-btn primary" block round value="提交" />
+	</form>
+</body>
+<script>
+	// 监听点击保存按钮事件
+	$("#save").click(function() {
+		// 表单验证函数
+		if (javaexVerify()) {
+			javaex.toast({
+				content : "数据提交中...",
+				type : "loading"
+			});
+			
+			// ajax提交
+			// ...
+			
+			setTimeout(function() {
+				javaex.toast({
+					content : "验证通过",
+					type : "success"
+				});
+			}, 2000);
+		}
+	});
+
+	javaex.select({
+		id : "select1",
+		title : "请选择城市",
+		callback: function (rtn) {
+			console.log(rtn);
+		}
+	});
+</script>
+</html>

@@ -1,12 +1,12 @@
 package io.cygnux.rapid.core.manager;
 
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.instrument.InstrumentKeeper;
-import io.cygnux.rapid.core.order.impl.ChildOrder;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
+import io.cygnux.rapid.core.types.order.impl.ChildOrder;
 import io.cygnux.rapid.core.position.AccountPosition;
-import io.cygnux.rapid.core.position.Position;
+import io.cygnux.rapid.core.types.position.Position;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 
 /**
  * 持仓管理接口
@@ -15,11 +15,8 @@ import io.cygnux.rapid.core.event.received.PositionsReport;
  */
 public interface PositionManager extends SharedEventHandler {
 
-
-
     @Override
     default void firePositionsReport(PositionsReport report) {
-
     }
 
     /**

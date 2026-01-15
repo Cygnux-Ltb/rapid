@@ -2,7 +2,7 @@ package io.cygnux.rapid.core.indicator.candle;
 
 import io.cygnux.rapid.core.indicator.AbstractPoint;
 import io.cygnux.rapid.core.indicator.structure.Bar;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import lombok.Getter;
 
 public final class CandleBar extends AbstractPoint {

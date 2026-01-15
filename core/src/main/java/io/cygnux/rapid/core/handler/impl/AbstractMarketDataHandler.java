@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.handler.impl;
 
-import io.cygnux.rapid.core.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -17,9 +17,9 @@ public abstract class AbstractMarketDataHandler implements MarketDataHandler {
 
     @Override
     public void onMarketData(FastMarketData marketData) {
+        this.prev = this.curr;
         this.curr = marketData;
-        handleMarketData(marketData);
-        this.prev = marketData;
+        handleMarketData(this.curr);
     }
 
     protected abstract void handleMarketData(FastMarketData marketData);

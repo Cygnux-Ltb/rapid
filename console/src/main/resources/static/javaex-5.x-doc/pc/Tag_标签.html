@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tag 标签</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Tag 标签</h2>
+		<hr>
+
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>该组件没有用回调函数返回标签数组，而是采用input来存储数据，数据格式为： xxx,xxxx</strong></li>
+			<li><strong>是为了迎合 ajax 序列化提交</strong></li>
+		</ul>
+		
+		<h3>基础用法</h3>
+		<div id="tag" class="javaex-tagbox"></div>
+		<input type="hidden" id="tag-result" name="tag" value="" />
+		<p class="javaex-hint">最多添加6个标签</p>
+		
+		<pre><code class="html">&lt;div id="tag" class="javaex-tagbox"&gt;&lt;/div&gt;
+&lt;input type="hidden" id="tag-result" name="tag" value="" /&gt;
+&lt;p class="javaex-hint"&gt;最多添加6个标签&lt;/p&gt;
+
+&lt;script&gt;
+	javaex.tag({
+		id : "tag",
+		inputId : "tag-result",
+		tags : ['回显数据1', '回显数据2']
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>javaex-tagbox的ID</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>inputId</td>
+					<td></td>
+					<td>记录最终结果的input的id。结果格式为 xxx,xxxx</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxNum</td>
+					<td>6</td>
+					<td>标签数量上限</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>tags</td>
+					<td></td>
+					<td>标签回显，数组或list</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.tag({
+		id : "tag",
+		inputId : "tag-result",
+		tags : ['回显数据1', '回显数据2']
+	});
+</script>
+</html>

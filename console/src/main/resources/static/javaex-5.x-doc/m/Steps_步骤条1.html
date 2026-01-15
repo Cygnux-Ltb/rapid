@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.steps-wrapper {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #fff;
+}
+</style>
+<body>
+	<div class="mb-10 ml-10 mt-10">基础用法</div>
+	<div class="steps-wrapper">
+		<ul id="steps1" class="javaex-steps">
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">1</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">步骤一</div>
+				</div>
+			</li>
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">2</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">步骤二</div>
+				</div>
+			</li>
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">3</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">步骤三</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="mb-10 mt-20 ml-10">竖向步骤条</div>
+	<div class="steps-wrapper" style="height: 300px; padding: 15px 30px;">
+		<ul id="steps2" class="javaex-steps javaex-steps-vertical">
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">1</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">已完成</div>
+					<div class="javaex-step-content">您的订单已经打包完成，商品已发出</div>
+				</div>
+			</li>
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">2</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">进行中</div>
+					<div class="javaex-step-content">您的订单正在配送途中</div>
+				</div>
+			</li>
+			<li class="javaex-step">
+				<div class="javaex-step-head">
+					<div class="javaex-step-line"></div>
+					<div class="javaex-step-icon is-text">3</div>
+				</div>
+				<div class="javaex-step-main">
+					<div class="javaex-step-title">未开始</div>
+					<div class="javaex-step-content">收货地址为：北京市经济技术开发区科创十一街</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+<script>
+	javaex.steps({
+		id : "steps1",
+		stepProcess : 2
+	});
+
+	javaex.steps({
+		id : "steps2",
+		stepProcess : 2
+	});
+</script>
+</html>

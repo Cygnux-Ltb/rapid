@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-cell {
+    cursor: pointer;
+}
+</style>
+<body>
+	<div style="padding:20px 10px;">
+		<div class="mb-10">基础用法</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo1" class="javaex-cell">
+				<div class="javaex-cell-title">确定弹框（带标题）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo2" class="javaex-cell">
+				<div class="javaex-cell-title">确定弹框（不带标题）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo3" class="javaex-cell">
+				<div class="javaex-cell-title">确定取消弹框（不带标题）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+		
+		<div class="mb-10 mt-20">圆角按钮样式</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo4" class="javaex-cell">
+				<div class="javaex-cell-title">确定弹框（带标题）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo5" class="javaex-cell">
+				<div class="javaex-cell-title">确定取消弹框（带标题）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$("#demo1").click(function() {
+		var id = "111";
+		javaex.alert({
+			title : "我是标题",
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+
+	$("#demo2").click(function() {
+		var id = "222";
+		javaex.alert({
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+
+	$("#demo3").click(function() {
+		var id = "333";
+		javaex.confirm({
+			content : "确定要删除么？",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			cancel : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+
+	$("#demo4").click(function() {
+		var id = "111";
+		javaex.alert({
+			type : "button",
+			title : "我是标题",
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+
+	$("#demo5").click(function() {
+		var id = "333";
+		javaex.confirm({
+			type : "button",
+			title : "我是标题",
+			content : "确定要删除么？",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			cancel : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+</script>
+</html>

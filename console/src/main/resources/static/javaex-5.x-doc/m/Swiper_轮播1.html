@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-swiper-focus-box {left: 50%; bottom: 0.15rem;}
+.javaex-swiper-focus-box ul li{opacity: .7; height: 0.08rem; width: 0.08rem; border-radius: 0.04rem; background-color: #eee; display: inline-block; text-indent: -9999px; font-size: 0; margin: 0 0.04rem; vertical-align: middle;}
+.javaex-swiper-focus-box ul li.on{opacity: 1;background-color: #ff851b;}
+
+.javaex-swiper {max-width: 4.14rem; height: 1.8rem;}
+.javaex-swiper ul.javaex-swiper-focus-bg li {width: 4.14rem; height: 1.8rem;}
+.javaex-swiper ul.javaex-swiper-focus-bg img {width: 100%; height: 100%;}
+</style>
+<body>
+	<!--幻灯片-->
+	<div id="swiper" class="javaex-swiper">
+		<!--背景大图-->
+		<ul class="javaex-swiper-focus-bg">
+			<li>
+				<a href="javascript:;">
+					<img src="http://imgs.aixifan.com/test-douw/2019_0_26/1548478468913.png"/>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<img src="http://imgs.aixifan.com/test-douw/2019_0_28/1548649140987.jpg"/>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<img src="http://imgs.aixifan.com/test-douw/2019_0_27/1548584627763.jpg"/>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<img src="http://imgs.aixifan.com/test-douw/2019_0_25/1548425503502.jpg"/>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<img src="http://imgs.aixifan.com/test-douw/2019_0_26/1548478468913.png"/>
+				</a>
+			</li>
+		</ul>
+
+		<!--标题，如果不需要，直接去掉这个div即可-->
+		<!--
+		<div class="focus-title">
+			<ul>
+				<li><span class="title">标题1</span></li>
+				<li><span class="title">标题2</span></li>
+				<li><span class="title">标题3</span></li>
+				<li><span class="title">标题4</span></li>
+				<li><span class="title">标题5</span></li>
+			</ul>
+		</div>
+		-->
+	 
+		<!--焦点，如果不需要焦点的话，直接去掉这个div即可-->
+		<div class="javaex-swiper-focus-box">
+			<!--如果使用默认焦点样式，则下面的 ul 可以缺省-->
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script>
+	javaex.swiper({
+		id : "swiper",
+		focusCenter : true,
+		callback : function(rtn) {
+			console.log(rtn.index);
+		}
+	});
+</script>
+</html>

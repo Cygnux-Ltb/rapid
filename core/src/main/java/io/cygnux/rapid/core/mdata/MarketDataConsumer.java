@@ -1,5 +1,7 @@
 package io.cygnux.rapid.core.mdata;
 
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
+
 import java.util.function.Consumer;
 
 @FunctionalInterface

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+
+</style>
+<body>
+	<div style="padding:20px 10px;">
+		<div class="mb-10">基础用法</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo" class="javaex-cell">
+				<div class="javaex-cell-title">居中弹出</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo1" class="javaex-cell">
+				<div class="javaex-cell-title">顶部弹出</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo2" class="javaex-cell">
+				<div class="javaex-cell-title">底部弹出</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo3" class="javaex-cell">
+				<div class="javaex-cell-title">左侧弹出</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo4" class="javaex-cell">
+				<div class="javaex-cell-title">右侧弹出</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+		
+		<div class="mb-10 mt-20">关闭图标</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo5" class="javaex-cell">
+				<div class="javaex-cell-title">关闭图标</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+
+		<div class="mb-10 mt-20">圆角弹框</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo6" class="javaex-cell">
+				<div class="javaex-cell-title">圆角弹框</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+	</div>
+	
+	<div id="popup" class="javaex-popup javaex-popup-center" style="padding: 30px 50px; display:none;">内容</div>
+
+	<div id="popup1" class="javaex-popup javaex-popup-top" style="height:30%; display:none;"></div>
+
+	<div id="popup2" class="javaex-popup javaex-popup-bottom" style="height:30%; display:none;"></div>
+
+	<div id="popup3" class="javaex-popup javaex-popup-left" style="width:50%; display:none;"></div>
+
+	<div id="popup4" class="javaex-popup javaex-popup-right" style="width:50%; display:none;"></div>
+
+	<div id="popup5" class="javaex-popup javaex-popup-bottom" style="height:30%; display:none;"></div>
+
+	<div id="popup6" class="javaex-popup javaex-popup-bottom" round style="height:30%; display:none;"></div>
+</body>
+<script>
+	$("#demo").click(function() {
+		javaex.popup({
+			id : "popup",
+			position : "center"
+		});
+	});
+	
+	$("#demo1").click(function() {
+		javaex.popup({
+			id : "popup1",
+			position : "top"
+		});
+	});
+
+	$("#demo2").click(function() {
+		javaex.popup({
+			id : "popup2",
+			position : "bottom"
+		});
+	});
+
+	$("#demo3").click(function() {
+		javaex.popup({
+			id : "popup3",
+			position : "left"
+		});
+	});
+
+	$("#demo4").click(function() {
+		javaex.popup({
+			id : "popup4",
+			position : "right"
+		});
+	});
+
+	$("#demo5").click(function() {
+		javaex.popup({
+			id : "popup5",
+			position : "bottom",
+			closeable : true,
+			closeIconPosition : "top-right"
+		});
+	});
+
+	$("#demo6").click(function() {
+		javaex.popup({
+			id : "popup6",
+			position : "bottom"
+		});
+	});
+</script>
+</html>

@@ -1,8 +1,8 @@
 package io.cygnux.rapid.core.indicator;
 
 
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 
 /**
  * @param <P> Point 类型

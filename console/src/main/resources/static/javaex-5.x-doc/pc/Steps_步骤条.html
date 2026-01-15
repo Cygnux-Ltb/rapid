@@ -1,0 +1,217 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Steps 步骤条</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Steps 步骤条</h2>
+		<hr>
+		
+		<h3>基本用法</h3>
+		<div class="steps-wrapper">
+			<ul id="steps1" class="javaex-steps">
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">1</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">步骤一</div>
+					</div>
+				</li>
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">2</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">步骤二</div>
+					</div>
+				</li>
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">3</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">步骤三</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<pre><code class="html">&lt;style&gt;
+.steps-wrapper {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #fff;
+}
+&lt;/style&gt;
+
+&lt;div class="steps-wrapper"&gt;
+	&lt;ul id="steps1" class="javaex-steps"&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;1&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;步骤一&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;2&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;步骤二&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;3&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;步骤三&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.steps({
+		id : "steps1",
+		stepProcess : 2
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>竖向步骤条</h3>
+		<div class="steps-wrapper" style="height: 300px; padding: 15px 30px;">
+			<ul id="steps2" class="javaex-steps javaex-steps-vertical">
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">1</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">已完成</div>
+						<div class="javaex-step-content">您的订单已经打包完成，商品已发出</div>
+					</div>
+				</li>
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">2</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">进行中</div>
+						<div class="javaex-step-content">您的订单正在配送途中</div>
+					</div>
+				</li>
+				<li class="javaex-step">
+					<div class="javaex-step-head">
+						<div class="javaex-step-line"></div>
+						<div class="javaex-step-icon is-text">3</div>
+					</div>
+					<div class="javaex-step-main">
+						<div class="javaex-step-title">未开始</div>
+						<div class="javaex-step-content">收货地址为：北京市经济技术开发区科创十一街</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<pre><code class="html">&lt;style&gt;
+.steps-wrapper {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #fff;
+}
+&lt;/style&gt;
+
+&lt;div class="steps-wrapper" style="height: 300px; padding: 15px 30px;"&gt;
+	&lt;ul id="steps2" class="javaex-steps javaex-steps-vertical"&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;1&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;已完成&lt;/div&gt;
+				&lt;div class="javaex-step-content"&gt;您的订单已经打包完成，商品已发出&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;2&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;进行中&lt;/div&gt;
+				&lt;div class="javaex-step-content"&gt;您的订单正在配送途中&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;li class="javaex-step"&gt;
+			&lt;div class="javaex-step-head"&gt;
+				&lt;div class="javaex-step-line"&gt;&lt;/div&gt;
+				&lt;div class="javaex-step-icon is-text"&gt;3&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-step-main"&gt;
+				&lt;div class="javaex-step-title"&gt;未开始&lt;/div&gt;
+				&lt;div class="javaex-step-content"&gt;收货地址为：北京市经济技术开发区科创十一街&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.steps({
+		id : "steps2",
+		stepProcess : 2
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+				<table class="javaex-table">
+				<thead>
+					<tr>
+						<th>参数</th>
+						<th>默认值</th>
+						<th>说明</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>id</td>
+						<td></td>
+						<td>容器ID</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>stepProcess</td>
+						<td>1</td>
+						<td>当前进行到哪一步，从1开始计</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</body>
+<script>
+	javaex.steps({
+		id : "steps1",
+		stepProcess : 2
+	});
+
+	javaex.steps({
+		id : "steps2",
+		stepProcess : 2
+	});
+</script>
+</html>

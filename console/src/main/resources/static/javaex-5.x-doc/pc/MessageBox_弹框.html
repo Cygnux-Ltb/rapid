@@ -1,0 +1,181 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MessageBox 弹框</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>MessageBox 弹框</h2>
+		<hr>
+		
+		<h3>确定弹框</h3>
+		<button id="demo1" class="javaex-btn primary">点我弹窗</button>
+		
+		<pre><code>&lt;button id="demo1" class="javaex-btn primary"&gt;点我弹窗&lt;/button&gt;
+
+&lt;script&gt;
+	$("#demo1").click(function() {
+		var id = "xxx";
+		javaex.alert({
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>确定取消询问框</h3>
+		<button id="demo2" class="javaex-btn primary">点我弹窗</button>
+		
+		<pre><code>&lt;button id="demo2" class="javaex-btn primary"&gt;点我弹窗&lt;/button&gt;
+
+&lt;script&gt;
+	$("#demo2").click(function() {
+		javaex.confirm({
+			content : "确定要删除么",
+			confirm : function() {
+				console.log("点击了确定按钮");
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				return false;
+			}
+		});
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>mask</td>
+					<td>true</td>
+					<td>是否使用遮罩。如果你想无限弹窗，必须将mask设置为false</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>id</td>
+					<td>随机</td>
+					<td>如果页面同时存在多个弹层，可以自己指定id，并调用关闭弹层函数关闭指定弹层</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>width</td>
+					<td>300</td>
+					<td>弹出层宽度</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxHeight</td>
+					<td></td>
+					<td>弹出层内容区域最大高度，内容超出时，会显示滚动条</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>top</td>
+					<td>30%</td>
+					<td>距离顶部距离，支持 200px 这种写法。人的视线其实是要高于电脑屏幕的水平线的，所以这边没有设置成居中</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>title</td>
+					<td>温馨提示</td>
+					<td>弹出层标题</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>closeIcon</td>
+					<td>true</td>
+					<td>是否显示右上角关闭 X</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>content</td>
+					<td></td>
+					<td>弹出层内容。可以是html代码</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>textAlign</td>
+					<td>left</td>
+					<td>内容位置。left：居左，center：居中，right：居右</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>confirmName</td>
+					<td>确定</td>
+					<td>确定按钮名称</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>cancelName</td>
+					<td>取消</td>
+					<td>取消按钮名称</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>confirm</td>
+					<td></td>
+					<td>点击确定按钮后的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>cancel</td>
+					<td></td>
+					<td>点击取消按钮后的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>close</td>
+					<td></td>
+					<td>点击右上角X关闭弹出层时的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	$("#demo1").click(function() {
+		var id = "xxx";
+		javaex.alert({
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	});
+	
+	$("#demo2").click(function() {
+		javaex.confirm({
+			content : "确定要删除么",
+			confirm : function() {
+				console.log("点击了确定按钮");
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	});
+</script>
+</html>

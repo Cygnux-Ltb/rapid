@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TimePicker 时间选择器</title>
+<script src="../js/ui.js"></script>
+<style>
+	.doc-markdown{overflow:visible;}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>TimePicker 时间选择器</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>可以使用div、span或input等其他元素来承载日期组件</strong></li>
+			<li><strong>如果你想用框架内置的表单验证插件在表单中对其进行验证。则必须使用input元素来承载，并且将初始化日期设置为空（缺省date属性）</strong></li>
+			<li><strong>建议使用input元素来承载，因为div文本清空时，可能会造成抖动效果</strong></li>
+		</ul>
+		
+		<h3>任意时间点</h3>
+		<input type="text" id="time" class="javaex-time" style="width:100px;" value="" readonly/>
+		
+		<pre><code>&lt;input type="text" id="time" class="javaex-time" style="width:100px;" value="" readonly/&gt;
+
+&lt;script&gt;
+	javaex.time({
+		id : "time",		// 承载时间组件的id
+		time : "11:08:00",
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.time);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>承载时间组件的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>time</td>
+					<td></td>
+					<td>格式为11:08:00，不填则为空</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>重新选择时间之后返回一个时间对象。按照示例上的写</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.time({
+		id : "time",	// 承载时间组件的id
+		time : "11:08:00",
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			alert(rtn.time);
+		}
+	});
+</script>
+</html>

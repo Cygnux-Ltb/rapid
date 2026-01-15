@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+
+<body style="padding:10px;background:#fff;">
+	<div class="mb-10">基础用法</div>
+	<div id="progress1" class="javaex-circleprogress" style="height: 100px;width: 100px;"></div>
+	
+	<div class="mb-10" style="margin-top:50px;">自定义宽度</div>
+	<div id="progress2" class="javaex-circleprogress" style="height: 100px;width: 100px;"></div>
+</body>
+<script>
+	javaex.progress({
+		id : "progress1",
+		mode : "circle",
+		percent : 50,
+		isShowPercent : true
+	});
+
+	javaex.progress({
+		id : "progress2",
+		mode : "circle",
+		width : 10,
+		percent : 50,
+		isShowPercent : true
+	});
+</script>
+</html>

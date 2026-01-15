@@ -1,9 +1,9 @@
 package io.cygnux.rapid.core.order;
 
+import io.cygnux.rapid.core.strategy.Strategy;
 import io.mercury.common.lang.Predicates;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.sequence.SnowflakeAlgo;
-import io.cygnux.rapid.core.strategy.Strategy;
 import org.slf4j.Logger;
 
 import javax.annotation.concurrent.ThreadSafe;
@@ -39,7 +39,7 @@ public final class OrdSysIdAllocatorKeeper {
      * @param strategyId int
      * @return OrdSysIdAllocator
      */
-    public static OrdSysIdAllocator acquireAllocator(int strategyId) {
+    public static synchronized OrdSysIdAllocator acquireAllocator(int strategyId) {
         if (Predicates.isAtWithinRange(strategyId, Strategy.MIN_STRATEGY_ID, Strategy.MAX_STRATEGY_ID)) {
             log.error("OrdSysIdAllocatorKeeper::newAllocator, strategyId==[{}] is not in range", strategyId);
             throw new IllegalArgumentException("strategyId is illegal, [strategyId]=" + strategyId);

@@ -1,12 +1,12 @@
 package io.cygnux.rapid.core.event;
 
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.DepthMarketData;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.DepthMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 import io.mercury.common.concurrent.disruptor.RingEventHandler;
 
 public abstract class SharedEventbus extends RingEventHandler<SharedEvent> {
@@ -39,7 +39,7 @@ public abstract class SharedEventbus extends RingEventHandler<SharedEvent> {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 
-    public void put(AdapterStatusReport in) {
+    public void put(AdapterReport in) {
         eventbus.publish((event, sequence) -> event.updateWith(in));
     }
 

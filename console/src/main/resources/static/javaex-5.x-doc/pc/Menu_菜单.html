@@ -1,0 +1,140 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Menu 菜单</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Menu 菜单</h2>
+		<hr>
+		
+		<h3>侧栏</h3>
+		<div style="background-color: #f6f8fa;width: 500px;height: 500px;padding: 20px;">
+			<div class="javaex-menu-container">
+				<div id="menu" class="javaex-menu">
+					<ul>
+						<li class="javaex-menu-item alone hover">
+							<a href="javaScript:;">管理中心</a>
+						</li>
+					</ul>
+					<ul>
+						<li class="javaex-menu-item">
+							<a href="javascript:;">个人中心<i class="icon-angle-down"></i></a>
+							<ul>
+								<li><a href="javaScript:;">修改头像</a></li>
+								<li><a href="javaScript:;">修改密码</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul>
+						<li class="javaex-menu-item">
+							<a href="javascript:;">设置<i class="icon-angle-down"></i></a>
+							<ul>
+								<li><a href="javaScript:;">个人主页信息</a></li>
+								<li><a href="javaScript:;">身份认证</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	
+		<pre><code>&lt;div class="javaex-menu-container"&gt;
+	&lt;div id="menu" class="javaex-menu"&gt;
+		&lt;ul&gt;
+			&lt;li class="javaex-menu-item alone hover"&gt;
+				&lt;a href="javaScript:;"&gt;管理中心&lt;/a&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+		&lt;ul&gt;
+			&lt;li class="javaex-menu-item"&gt;
+				&lt;a href="javascript:;"&gt;个人中心&lt;i class="icon-angle-down"&gt;&lt;/i&gt;&lt;/a&gt;
+				&lt;ul&gt;
+					&lt;li&gt;&lt;a href="javaScript:;"&gt;修改头像&lt;/a&gt;&lt;/li&gt;
+					&lt;li&gt;&lt;a href="javaScript:;"&gt;修改密码&lt;/a&gt;&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+		&lt;ul&gt;
+			&lt;li class="javaex-menu-item"&gt;
+				&lt;a href="javascript:;"&gt;设置&lt;i class="icon-angle-down"&gt;&lt;/i&gt;&lt;/a&gt;
+				&lt;ul&gt;
+					&lt;li&gt;&lt;a href="javaScript:;"&gt;个人主页信息&lt;/a&gt;&lt;/li&gt;
+					&lt;li&gt;&lt;a href="javaScript:;"&gt;身份认证&lt;/a&gt;&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.menu({
+		id : "menu"
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>菜单id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isAutoSelected</td>
+					<td>false</td>
+					<td>
+						刷新页面或跳转页面后，是否根据之前点击的链接自动展开并选中高亮。<br />
+						并不一定适用所有项目。无效时，请设置为false
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>key</td>
+					<td>key</td>
+					<td>
+						默认内容标识<br />
+						假设当前菜单的链接都是参数id不同，而首次打开时，又不带参数id，则可以将key置为空，例如：
+						<pre><code>/doc/xx/1
+/doc/xx/2
+/doc/xx/...</code></pre>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>
+						默认需要高亮的链接<br />
+						当上述key为空时，会自动高亮该链接对应的菜单，并自动展开
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowAll</td>
+					<td>false</td>
+					<td>左侧菜单是否初始化全部展开</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.menu({
+		id : "menu"
+	});
+</script>
+</html>

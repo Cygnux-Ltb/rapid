@@ -1,5 +1,7 @@
 package io.cygnux.rapid.core.order;
 
+import io.cygnux.rapid.core.types.order.OrderRefNotFoundException;
+
 public interface OrderRefKeeper {
 
     /**

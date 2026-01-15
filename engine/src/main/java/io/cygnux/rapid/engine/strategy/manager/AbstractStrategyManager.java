@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.strategy.manager;
 
 
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.manager.StrategyManager;

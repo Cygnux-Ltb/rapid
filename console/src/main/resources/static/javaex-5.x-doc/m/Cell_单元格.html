@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cell 单元格</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Cell 单元格</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-title"&gt;我是标题&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;描述文字&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-title"&gt;
+		&lt;div&gt;我是标题&lt;/div&gt;
+		&lt;div class="javaex-cell-title-desc"&gt;副标题描述信息&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;描述文字&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>尺寸设置 large</h3>
+				<pre><code class="html">&lt;div class="javaex-cell" large&gt;
+	&lt;div class="javaex-cell-title"&gt;我是标题&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;描述文字&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="javaex-cell" large&gt;
+	&lt;div class="javaex-cell-title"&gt;
+		&lt;div&gt;我是标题&lt;/div&gt;
+		&lt;div class="javaex-cell-title-desc"&gt;副标题描述信息&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;描述文字&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>只设置 value</h3>
+				<pre><code class="html">&lt;div class="javaex-cell"&gt;
+	&lt;div&gt;自定义内容&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>展示箭头</h3>
+				<pre><code class="html">&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-title"&gt;我是标题&lt;/div&gt;
+	&lt;i class="javaex-icon icon-angle-right"&gt;&lt;/i&gt;
+&lt;/div&gt;
+&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-title"&gt;我是标题&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;内容&lt;/div&gt;
+	&lt;i class="javaex-icon javaex-right-icon icon-angle-right"&gt;&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>链接 | 分组用法</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+		&lt;div class="javaex-cell-title"&gt;链接&lt;/div&gt;
+		&lt;i class="javaex-icon javaex-right-icon icon-angle-right"&gt;&lt;/i&gt;
+	&lt;/div&gt;
+	&lt;a href="http://www.javaex.cn" target="_blank"&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-title"&gt;URL跳转&lt;/div&gt;
+			&lt;div class="javaex-cell-value"&gt;www.javaex.cn&lt;/div&gt;
+			&lt;i class="javaex-icon javaex-right-icon icon-angle-right"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+	&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>展示图标</h3>
+				<pre><code class="html">&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-icon"&gt;&lt;i class="javaex-icon javaex-left-icon icon-user-o"&gt;&lt;/i&gt;&lt;/div&gt;
+	&lt;div class="javaex-cell-title"&gt;我是标题&lt;/div&gt;
+	&lt;i class="javaex-icon javaex-right-icon icon-angle-right"&gt;&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>垂直居中</h3>
+				<pre><code class="html">&lt;div class="javaex-cell javaex-cell-center"&gt;
+	&lt;div class="javaex-cell-title"&gt;
+		&lt;div&gt;我是标题&lt;/div&gt;
+		&lt;div class="javaex-cell-title-desc"&gt;副标题描述信息&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-cell-value"&gt;描述文字&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Cell_单元格1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

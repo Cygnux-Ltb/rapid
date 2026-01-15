@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.indicator;
 
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 
 public abstract non-sealed class FloatPeriodIndicator<P extends FloatPeriodPoint, E extends IndicatorEvent>
         extends AbstractIndicator<P, E> {

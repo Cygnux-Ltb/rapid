@@ -1,0 +1,137 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Image 图片</title>
+<script src="../js/ui.js"></script>
+</head>
+<style>
+.doc-markdown > ul li:before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    vertical-align: middle;
+    background-color: transparent;
+    margin-right: 5px;
+}
+</style>
+<body>
+	<div class="doc-markdown">
+		<h2>Image 图片</h2>
+		<hr>
+		
+		<h3>基础用法</h3>
+		<p>基础用法与原生 img 标签一致，可以设置 src、width、height、alt 等原生属性。</p>
+		<div class="javaex-image" style="width: 80px; height: 80px;">
+			<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" />
+		</div>
+		<pre><code class="html">&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" /&gt;
+&lt;/div&gt;</code></pre>
+				
+		<h3>填充模式</h3>
+		<p>通过 fit 属性可以设置图片填充模式，等同于原生的 object-fit 属性，可选值见下方表格。</p>
+		<ul class="javaex-equal-5 clear">
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="contain" />
+				</div>
+				<div class="text">contain</div>
+			</li>
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" />
+				</div>
+				<div class="text">cover</div>
+			</li>
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="fill" />
+				</div>
+				<div class="text">fill</div>
+			</li>
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="none" />
+				</div>
+				<div class="text">none</div>
+			</li>
+			<li>
+				<div class="javaex-image" style="width: 80px; height: 80px;">
+					<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="scale-down" />
+				</div>
+				<div class="text">scale-down</div>
+			</li>
+		</ul>
+		<pre><code class="html">// contain
+&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="contain" /&gt;
+&lt;/div&gt;
+
+// cover
+&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" /&gt;
+&lt;/div&gt;
+
+// fill
+&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="fill" /&gt;
+&lt;/div&gt;
+
+// none
+&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="none" /&gt;
+&lt;/div&gt;
+
+// scale-down
+&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="scale-down" /&gt;
+&lt;/div&gt;</code></pre>
+
+		<h3>圆形图片</h3>
+		<p>通过 round 属性可以设置图片变圆，注意当图片宽高不相等且 fit 为 contain 或 scale-down 时，将无法填充一个完整的圆形。</p>
+		<div class="javaex-image javaex-image-round" style="width: 80px; height: 80px;">
+			<img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" />
+		</div>
+		<pre><code class="html">&lt;div class="javaex-image javaex-image-round" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="http://webimg.javaex.cn/Fmxl5u5ybgZWUMxLtf81ZYWPP_xL" fit="cover" /&gt;
+&lt;/div&gt;</code></pre>
+		
+		<h3>加载中图片</h3>
+		<div style="background:#fff;padding:10px;">
+			<ul class="javaex-equal-5 clear">
+				<li>
+					<div class="javaex-image" style="width: 80px; height: 80px;">
+						<img class="javaex-img" src="" fit="cover" />
+						<div class="javaex-img-loading"><i class="javaex-icon icon-circular-graph" style="font-size:24px;"></i></div>
+					</div>
+					<div class="text">加载中...</div>
+				</li>
+			</ul>
+		</div>
+		<pre><code class="html">&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+&lt;img class="javaex-img" src="" fit="cover" /&gt;
+&lt;div class="javaex-img-loading"&gt;&lt;i class="javaex-icon icon-circular-graph" style="font-size:24px;"&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+		
+		<h3>加载失败</h3>
+		<div style="background:#fff;padding:10px;">
+			<ul class="javaex-equal-5 clear">
+				<li>
+					<div class="javaex-image" style="width: 80px; height: 80px;">
+						<img class="javaex-img" src="" fit="cover" />
+						<div class="javaex-img-error">加载失败</div>
+					</div>
+					<div class="text">加载失败</div>
+				</li>
+			</ul>
+		</div>
+		<pre><code class="html">&lt;div class="javaex-image" style="width: 80px; height: 80px;"&gt;
+	&lt;img class="javaex-img" src="" fit="cover" /&gt;
+	&lt;div class="javaex-img-error"&gt;加载失败&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+	</div>
+</body>
+</html>

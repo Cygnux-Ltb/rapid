@@ -1,0 +1,299 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FormValidation 表单验证</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>FormValidation 表单验证</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;style&gt;
+.javaex-select-inputval {
+    text-align: left;
+}
+&lt;/style&gt;
+
+&lt;form id="form"&gt;
+	&lt;div class="javaex-cell-group-warp"&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-title javaex-field-label"&gt;&lt;label class="required"&gt;必填项&lt;/label&gt;&lt;/div&gt;
+			&lt;div class="javaex-cell-value javaex-field-value"&gt;
+				&lt;div class="javaex-field-body"&gt;
+					&lt;input type="text" class="javaex-field-control" data-type="required" placeholder="请输入文本" autocomplete="off"/&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-title javaex-field-label"&gt;&lt;label class="required"&gt;格式校验&lt;/label&gt;&lt;/div&gt;
+			&lt;div class="javaex-cell-value javaex-field-value"&gt;
+				&lt;div class="javaex-field-body"&gt;
+					&lt;input type="text" class="javaex-field-control" data-type="phone|email" error-msg="手机号或邮箱格式错误" placeholder="请输入手机号或邮箱" autocomplete="off" /&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-title javaex-field-label"&gt;&lt;label class="required"&gt;非空时校验&lt;/label&gt;&lt;/div&gt;
+			&lt;div class="javaex-cell-value javaex-field-value"&gt;
+				&lt;div class="javaex-field-body"&gt;
+					&lt;input type="text" class="javaex-field-control" data-type="null|positive_int" error-msg="请填写正整数" placeholder="请输入正整数" autocomplete="off" /&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-title javaex-field-label"&gt;&lt;label class="required"&gt;请选择城市&lt;/label&gt;&lt;/div&gt;
+			&lt;div class="javaex-cell-value javaex-field-value"&gt;
+				&lt;div class="javaex-field-body"&gt;
+					&lt;select id="select1" data-type="required"&gt;
+						&lt;option value=""&gt;请选择&lt;/option&gt;
+						&lt;option value="1"&gt;北京市&lt;/option&gt;
+						&lt;option value="2" selected&gt;天津市&lt;/option&gt;
+						&lt;option value="3"&gt;沈阳市&lt;/option&gt;
+						&lt;option value="4"&gt;长春市&lt;/option&gt;
+						&lt;option value="5"&gt;哈尔滨市&lt;/option&gt;
+						&lt;option value="6"&gt;上海市&lt;/option&gt;
+						&lt;option value="7"&gt;南京市&lt;/option&gt;
+						&lt;option value="8"&gt;武汉市&lt;/option&gt;
+						&lt;option value="9"&gt;广州市&lt;/option&gt;
+						&lt;option value="10"&gt;重庆市&lt;/option&gt;
+					&lt;/select&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;input type="button" id="save" class="javaex-btn primary" block round value="提交" /&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+	// 监听点击提交按钮事件
+	$("#save").click(function() {
+		// 表单验证函数
+		if (javaexVerify()) {
+			javaex.toast({
+				content : "数据提交中...",
+				type : "loading"
+			});
+			
+			// ajax提交
+			// ...
+			
+			setTimeout(function() {
+				javaex.toast({
+					content : "验证通过",
+					type : "success"
+				});
+			}, 2000);
+		}
+	});
+
+	javaex.select({
+		id : "select1",
+		title : "请选择城市",
+		callback: function (rtn) {
+			console.log(rtn);
+		}
+	});
+&lt;/script&gt;</code></pre>
+				
+			<h3>表单验证说明</h3>
+		<table class="javaex-table" style="margin-bottom:20px;">
+			<thead>
+				<tr>
+					<th>属性</th>
+					<th>说明</th>
+					<th>是否必填</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>data-type</td>
+					<td>验证类型</td>
+					<td>必填</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>error-msg</td>
+					<td>错误提示</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+ 		<pre><code>示例
+&lt;input type="text" data-type="money" error-msg="金额格式错误" /&gt;
+
+满足多个验证类型中的一个即通过验证，示例
+&lt;input type="text" class="javaex-text" data-type="phone|email" error-msg="手机号或邮箱格式错误" /&gt;
+
+如果你想允许该项为空，但是一旦有值，又要验证其类型，可以这样写
+&lt;input type="text" class="javaex-text" data-type="null|nonnegative_int" error-msg="数字格式不正确" /&gt;
+
+如果仅仅是验证必填，则只需要 data-type="required" 即可，不需要 error-msg 属性，示例
+&lt;input type="text" class="javaex-text" data-type="required" /&gt;
+
+调用javaexVerify()函数进行表单验证，返回true时，代表验证通过</code></pre>
+
+		<h3>表单验证函数</h3>
+		<pre><code class="javascript">/**
+ * 校验整个页面
+ */
+if (javaexVerify()) {
+	alert("验证通过");
+}
+
+/**
+ * 校验局部区域
+ * selector ： jquery选择器，例如 #form1
+ * flag : 校验失败时，是否自动定位到第一个错误的元素（true | false）
+ */
+if (javaexVerify(selector, flag)) {
+	alert("验证通过");
+}</code></pre>
+
+		<h3>框架内置验证类型</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>验证类型名称</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>required</td>
+					<td>必填</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>money</td>
+					<td>0 + 正整数 + 最多2位小数(正数)</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>int</td>
+					<td>整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>positive_int</td>
+					<td>正整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>negative_int</td>
+					<td>负整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonnegative_int</td>
+					<td>非负整数：正整数 + 0</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonpositive_int</td>
+					<td>非正整数：负整数 + 0</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>positive_decimal</td>
+					<td>正小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>negative_decimal</td>
+					<td>负小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonnegative_decimal</td>
+					<td>非负小数：0 + 正小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nonpositive_decimal</td>
+					<td>非正小数：0 + 负小数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>email</td>
+					<td>邮箱</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>phone</td>
+					<td>手机号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>idcard</td>
+					<td>身份证号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>chinese</td>
+					<td>中文</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>english</td>
+					<td>英文字母</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>english_number</td>
+					<td>英文字母或数字</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>qq</td>
+					<td>qq号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>car_number</td>
+					<td>车牌号</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>account</td>
+					<td>账号：只能输入5-10个以字母开头，可带数字、下划线的字符串</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>password</td>
+					<td>密码：6到16位字母或数字或它们的组合</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>health</td>
+					<td>视力、身高、体重：正整数 + 最多1位小数(正数)</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+				
+				
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="FormValidation_表单验证1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

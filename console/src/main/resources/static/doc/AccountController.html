@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="smart-doc">
+    <title>console-service</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="AllInOne.css?v=1724148720847"/>
+    <link rel="stylesheet" href="xt256.min.css">
+    <style>.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
+        background: #000;
+    }
+
+    .hljs {
+        padding: 0em;
+    }</style>
+    <script src="highlight.min.js"></script>
+    <script src="jquery.min.js"></script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header"><h1>console-service</h1>
+    <div id="toc" class="toc2">
+        <div id="book-search-input"><input id="search" type="text" placeholder="Type to search"></div>
+        <div id="toctitle"><span>API Reference</span></div>
+        <ul id="accordion" class="sectlevel1">
+            <li class=""><a class="dd" href="api.html#header">37.&nbsp;[UI] - 控制台</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="api.html#60618e4740df67324243c8708dc4a859">37.1.&nbsp;控制台主页</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="InstrumentController.html#header">38.&nbsp;[REST] - 交易标的服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="InstrumentController.html#eec758043b65874a88a87b8ec6aa7f8b">38.1.&nbsp;获取交易标的</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#4930deb9be68404255ca12585de91c90">38.2.&nbsp;获取交易标的</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#87dd55261c73725b9468f620f0e60929">38.3.&nbsp;获取结算信息</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#d2109f722fa6bee51a12608061a880ce">38.4.&nbsp;获取最新价格</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#001a21036333f5333c54c1b920a2ae99">38.5.&nbsp;更新最新价格 (內部接口)</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#e6f4cf8acb8b9c08401ac377d9570de1">38.6.&nbsp;获取交易费用</a>
+                    </li>
+
+                    <li><a
+                            href="InstrumentController.html#0ca2ef8f46784f99316f4baedd6bc681">38.7.&nbsp;获取可交易标的</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="AdaptorController.html#header">39.&nbsp;[UI] - 适配器服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="AdaptorController.html#688b8d69e548fc7230dc7c42dde56ea9">39.1.&nbsp;[Adaptor]列表</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#3b5bd4921e3677d3c4a3b3092398f801">39.2.&nbsp;添加[Adaptor]中转链接</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#344a163e65b38fd11bef88387c2bdb78">39.3.&nbsp;编辑[Adaptor]中转链接</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#92502a48de4f496a021f9693feaa9d2f">39.4.&nbsp;修改[Adaptor]</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#71a7f95ce29df19756560df687223725">39.5.&nbsp;启用[Adaptor]</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#c8ff6924a21c3506507ffd72e14b313e">39.6.&nbsp;禁用[Adaptor]</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#0d8d374dfe8e40eca1e00ba87248ae1f">39.7.&nbsp;[Adaptor参数]列表</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#d12e65f65a51266154218d182ba71009">39.8.&nbsp;添加[Adaptor参数]中转链接</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#ccf82235410245659258a052936787cf">39.9.&nbsp;编辑[Adaptor参数]中转链接</a>
+                    </li>
+
+                    <li><a
+                            href="AdaptorController.html#4a3a3656abe48c4e8296428df35c6ee8">39.10.&nbsp;修改[Adaptor参数]</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="StrategyController.html#header">40.&nbsp;[REST] - 策略服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="StrategyController.html#603952d07068a3adbd46c96d675cca1f">40.1.&nbsp;获取全部策略</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#d009d998533bfcf61fb1c8ec2a6a7fca">40.2.&nbsp;获取策略</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#9a5685837b5bf3c355b18ae226f07aa6">40.3.&nbsp;根据策略名称获取策略相关参数</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#cc1a1da8c33559221c363ba62a2ee5c6">40.4.&nbsp;添加策略参数 (内部接口)</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="UserController.html#header">41.&nbsp;[REST] - 用户服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="UserController.html#a864cb3437e043cf253e927666cfd4a0">41.1.&nbsp;用户登陆</a>
+                    </li>
+
+                    <li><a
+                            href="UserController.html#e1ac5dcbb67b19e6a189bf2d3483eb5c">41.2.&nbsp;用户注册, 当前不支持新用户注册</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="SimulateController.html#header">42.&nbsp;[REST] - 模拟测试服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="SimulateController.html#11bdfaa671e36575fc3290895c1ef9ac">42.1.&nbsp;提交测试请求</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="PnlController.html#header">43.&nbsp;[REST] - PNL(盈亏)服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="PnlController.html#d19d41d25f95ba9b6517085f63ba4814">43.1.&nbsp;查询PNL (查询盈亏)</a>
+                    </li>
+
+                    <li><a
+                            href="PnlController.html#95c25075142d58f2208d8471a699442b">43.2.&nbsp;更新PNL (内部接口, 策略引擎调用)</a>
+                    </li>
+
+                    <li><a
+                            href="PnlController.html#91c9a7d134cb50718c088046740dffa1">43.3.&nbsp;查询结算PNL (查询结算盈亏)</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="PortfolioController.html#header">44.&nbsp;[REST] - 投资组合(股票池/目标池)服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="PortfolioController.html#affbd2c9fa4855b9917ccaf65e6aa625">44.1.&nbsp;添加投资标的(目标池页面中&apos;添加分组&apos;和&apos;添加股票&apos;调用)<br>(1).创建(或修改)目标池时需要提供 &apos;userid&apos;, &apos;portfolioCode&apos;, &apos;portfolioName&apos;<br>(2).添加投资标的时需要提供 &apos;userid&apos;, &apos;portfolioCode&apos;, &apos;instrumentCode&apos;<br>(3).当提供全部4个参数时, 将创建(或修改)目标池, 并将投资标的加入目标池中</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#301af01d7ede6803973a524cff36781d">44.2.&nbsp;删除指定用户投资组合<br>(1).删除投资组合(股票池), 需要提供 &apos;userid&apos;, &apos;portfolioCode&apos;<br>(2).删除投资组合(股票池)中的标的, 需要提供 &apos;userid&apos;, &apos;portfolioCode&apos;, &apos;instruments&apos;, 其中 &apos;instruments&apos; 为数组类型</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#2ab30251b2c979c6f7326b7430543120">44.3.&nbsp;获取用户投资组合(股票池/目标池)列表</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#8400cd2959f9ca63a104f8264c566761">44.4.&nbsp;获取用户投资组合(股票池/目标池)详细信息</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#8e77ea6738408deab0467b65993433f8">44.5.&nbsp;获取用户第一投资组合 (首页左侧优先股票池)</a>
+                    </li>
+
+                    <li><a
+                            href="PortfolioController.html#44404ba8ede32a8e1196e14ac9fdf12f">44.6.&nbsp;获取用户第二投资组合 (首页右侧次优股票池)</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="ProductController.html#header">45.&nbsp;[REST] - 产品服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="ProductController.html#e84df5cbfda1b336721b8261ed277191">45.1.&nbsp;获取全部产品</a>
+                    </li>
+
+                    <li><a
+                            href="ProductController.html#d985e57fc568457b4b50d3e0657d5efa">45.2.&nbsp;获取指定产品信息</a>
+                    </li>
+
+                    <li><a
+                            href="ProductController.html#582b28cfca2223a99e672900a41b8cf5">45.3.&nbsp;产品初始化</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="StatusController.html#header">46.&nbsp;[REST] - 交易系统状态服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="StatusController.html#28138fc954f4c8bac34cb7164d27b4d2">46.1.&nbsp;获取全部策略状态</a>
+                    </li>
+
+                    <li><a
+                            href="StatusController.html#b0b8eb62c75867bb9b237b8f6b84bf6e">46.2.&nbsp;发送状态指令</a>
+                    </li>
+
+                    <li><a
+                            href="StatusController.html#b860dd662afbd80369947e9152c0645c">46.3.&nbsp;更新状态</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="TradingController.html#header">47.&nbsp;[UI] - 交易服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="TradingController.html#a1979b97e680adb8dfd17ea95c3731a7">47.1.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#532745a2d5194409f20a0db8bdbcb219">47.2.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#f6682174ea4ca9750c6347c596918606">47.3.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#71976b4ba10b208a0b13d7e0e85f6cd6">47.4.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#2b1daea491bcbe81e55efdb0747f6fc9">47.5.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#2ee56c96e30c984f8ef6a25e3d7079ca">47.6.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#0ec9edfe6205d3c3477e3851fa8a4df2">47.7.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#77cde5633d8550fc5f2d2c13b01d819b">47.8.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#5b3baa28b76afdac2a834d55c05515e8">47.9.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="TradingController.html#a8e05ef1520fb1c927e689af23c4a93d">47.10.&nbsp;</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="open"><a class="dd" href="AccountController.html#header">48.&nbsp;[REST] - 历史行情服务</a>
+                <ul class="sectlevel2" style="display: block">
+                    <li><a
+                            href="AccountController.html#8d1a46f2538627bc05568034a56ca979">48.1.&nbsp;获取指定交易账户参数</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="OrderController.html#header">49.&nbsp;[REST] - 订单服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="OrderController.html#b56b0471a15c57b9ec763bd5b2fa46e0">49.1.&nbsp;查询订单</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#5173da1a06986af284bfdaf22a357f5a">49.2.&nbsp;获取订单最新状态列表</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#2af8a4df375ce1d485eb1657cea7139d">49.3.&nbsp;委托 [前端调用: 开仓, 平仓, 一键平仓, 手动单笔]</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#7e79ed75a25d7edca41be6d2781d8092">49.4.&nbsp;批量委托</a>
+                    </li>
+
+                    <li><a
+                            href="OrderController.html#8adefdfd507fc251f3de27602c366500">49.5.&nbsp;[X]新增订单 [非前端界面调用]</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="CommandController.html#header">50.&nbsp;[UI] - 系统指令服务[X]</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="CommandController.html#a8a9ed8b9d848447329f0c2fa3cf815e">50.1.&nbsp;更新参数 [内部接口]</a>
+                    </li>
+
+                    <li><a
+                            href="CommandController.html#f802b21b69a1dd0d13874b8748b4860c">50.2.&nbsp;安全更新参数</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="StrategyController.html#header">51.&nbsp;[UI] - 策略服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="StrategyController.html#f8af4139267e3504f012ac541443af7a">51.1.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#484ae5db62043701e13e65e4d69cb308">51.2.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#2912f372826065662e516f2aef091d56">51.3.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#3eaff00094aa846489abf645a0fd8fc1">51.4.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#5941ba1f05ea58e1b59863b1f09020cb">51.5.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#f96a7d00e926415eda8e3a9d15c9eab4">51.6.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#9a52cef45798d801334bef49f78d5409">51.7.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#4ac46c6b3baeff6392c29f2a88e9a0b0">51.8.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#576066b83852305324001850362046ae">51.9.&nbsp;</a>
+                    </li>
+
+                    <li><a
+                            href="StrategyController.html#1a595c870f16a5691da372209cf9bd2a">51.10.&nbsp;</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="PositionController.html#header">52.&nbsp;[REST] - 仓位服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="PositionController.html#7303fc1a07bde5bd2b659a6a570502db">52.1.&nbsp;查询当前持仓 ([page1.jpg]-持仓板块)</a>
+                    </li>
+
+                    <li><a
+                            href="PositionController.html#33541ea73eb582bc76a3ccca182ecf7f">52.2.&nbsp;持仓平仓操作<br><br>传[用户ID]时; 动作为:全部平仓, [一键平仓]功能使用<br>传[用户ID],[投资标的代码]时; 动作为:平仓所有指定投资标的的仓位<br>传[用户ID],[投资标的代码],[方向]时; 动作为:平仓指定投资标的和指定方向的仓位<br>传[用户ID],[投资标的代码],[方向],[数量]时; 动作为:平仓指定数量的指定投资标的和指定方向的仓位和</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="BarController.html#header">53.&nbsp;[REST] - 历史行情服务</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="BarController.html#3de6c4f2f721653f15966ac4ee2789a0">53.1.&nbsp;获取1分钟BAR</a>
+                    </li>
+
+                    <li><a
+                            href="BarController.html#d36a1a4f4c3a0f0157614e20c2fe4e97">53.2.&nbsp;更新BAR [內部接口]</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=""><a class="dd" href="DictionaryController.html#header">54.&nbsp;[DOC] - 辞典</a>
+                <ul class="sectlevel2" style="display: none">
+                    <li><a
+                            href="DictionaryController.html#090d277f79d859dffd17156fd7083725">54.1.&nbsp;Page1:<br>/-<br>/-1.交易执行<br>/--(1).策略下拉列表 -&gt; 策略服务:获取全部策略<br>/--(2).证券代码下拉列表 -&gt; 交易标的查询接口:获取可交易标的<br>/--(3).委托按钮 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-2.持仓<br>/--(1).列表 -&gt; 仓位查询接口:查询当前持仓<br>----------------------------------------------------------------------------<br>/-3.当日委托<br>/--(1).列表 -&gt; 订单服务接口:查询Order<br>----------------------------------------------------------------------------<br>/-4.当日成交<br>/--(1).列表 -&gt; 订单服务接口:查询Order<br>============================================================================<br>============================================================================<br>Page2:<br>/-<br>/-1.目标池<br>/--(1).策略名称 -&gt; 投资组合接口:获取用户投资组合<br>/--(2).添加股票 -&gt; 交易标的接口:<br>/--(3).股票名称代码 -&gt; 交易标的查询接口<br>/--(4).现价 -&gt; 交易标的查询接口:获取最新价格<br>/--(5).持仓 -&gt; 仓位查询接口:查询当前持仓<br>/--(6).涨幅 -&gt; 交易标的查询接口:获取结算信息<br>/--(7).操作 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-2.添加策略<br>/--(1).添加策略 -&gt; 策略服务:<br>----------------------------------------------------------------------------<br>/-3.当前订单:一键清仓 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>----------------------------------------------------------------------------<br>/-4.当前订单<br>/--(1).名称 -&gt; 订单服务接口:获取订单最新状态<br>/--(2).持仓 -&gt; 仓位查询接口:查询当前持仓<br>/--(3).盈亏 -&gt; PNL服务接口:查询结算PNL<br>/--(4).操作作 -&gt; 订单服务接口:创建订单[开仓/平仓/一键平仓接口]<br>============================================================================<br>============================================================================<br>Page3:<br>/-<br>/-1.技术指标<br>/--(1).<br>/-2.左上页面<br>/--(1).策略服务:根据策略名称获取策略相关参数<br>/-2.左下页面<br>/--(1).投资组合接口:获取用户投资组合[股票池/目标池都通过此接口]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="content">
+    <div class="sect1"><h2 id="_[REST] - 历史行情服务"><a class="anchor" href="#_[REST] - 历史行情服务"></a><a class="link" href="#_[REST] - 历史行情服务">48.&nbsp;[REST] - 历史行情服务</a>
+    </h2>
+        <div class="sectionbody">
+            <div class="sect2"><h3 id="8d1a46f2538627bc05568034a56ca979">
+                <a class="anchor" href="#8d1a46f2538627bc05568034a56ca979"></a>
+                <a class="link" href="#8d1a46f2538627bc05568034a56ca979">48.1.&nbsp;获取指定交易账户参数</a>
+            </h3>
+                <div class="paragraph"><p><strong>URL:</strong><a href="/account/v1" class="bare">&nbsp;/account/v1</a>
+                </p></div>
+                <div class="paragraph"><p><strong>Type:</strong>&nbsp;GET</p></div>
+                <div class="paragraph"><p><strong>Content-Type:</strong>&nbsp;application/x-www-form-urlencoded</p></div>
+                <div class="paragraph"><p><strong>Description:</strong>&nbsp;获取1分钟BAR</p></div>
+                <div class="paragraph"><p><strong>Query-parameters:</strong></p></div>
+                <table class="tableblock frame-all grid-all spread">
+                    <colgroup>
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Parameter</th>
+                        <th class="tableblock halign-left valign-top">Type</th>
+                        <th class="tableblock halign-left valign-top">Description</th>
+                        <th class="tableblock halign-left valign-top">Required</th>
+                        <th class="tableblock halign-left valign-top">Since</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">accountId</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易账户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="paragraph"><p><strong>Request-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="bash">curl -X GET -i '/account/v1?accountId=0' --data '&0'</code></pre>
+                    </div>
+                </div>
+                <div class="paragraph"><p><strong>Response-fields:</strong></p></div>
+                <table class="tableblock frame-all grid-all spread">
+                    <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Field</th>
+                        <th class="tableblock halign-left valign-top">Type</th>
+                        <th class="tableblock halign-left valign-top">Description</th>
+                        <th class="tableblock halign-left valign-top">Since</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">accountId</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易账户ID</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">accountParamList</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">交易账户参数列表</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─paramName</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">参数名称</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─paramValue</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">参数值</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">└─remark</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">参数备注</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="paragraph"><p><strong>Response-example:</strong></p></div>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre><code class="json">{
+  "accountId": 0,
+  "accountParamList": [
+    {
+      "paramName": "",
+      "paramValue": "",
+      "remark": ""
+    }
+  ]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer"><span class="copyright">Generated by smart-doc at 2024-08-20 19:12:00</span><span
+            class="footer-modification">Suggestions,contact,support and error reporting on<a
+            href="https://gitee.com/smart-doc-team/smart-doc" target="_blank">&nbsp;Gitee</a>&nbsp;or<a
+            href="https://github.com/smart-doc-group/smart-doc.git" target="_blank">&nbsp;Github</a></span></footer>
+</div>
+<script src="search.js?v=1724148720847"></script>
+<script>
+    $(function () {
+        const Accordion = function (el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+            const links = this.el.find('.dd');
+            links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown);
+        };
+        Accordion.prototype.dropdown = function (e) {
+            const $el = e.data.el;
+            const $this = $(this), $next = $this.next();
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+            if (!e.data.multiple) {
+                $el.find('.submenu').not($next).slideUp("20").parent().removeClass('open');
+            }
+        };
+        new Accordion($('#accordion'), false);
+        hljs.highlightAll()
+    });
+</script>
+</body>
+</html>

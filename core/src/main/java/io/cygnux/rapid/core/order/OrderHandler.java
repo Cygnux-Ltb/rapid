@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 @FunctionalInterface
 public interface OrderHandler {
 
-    void onOrder(@Nonnull final Order order);
+    void onOrder(@Nonnull final io.cygnux.rapid.core.types.order.Order order);
 
     /**
      * Logger implements OrderHandler
@@ -32,7 +32,7 @@ public interface OrderHandler {
         }
 
         @Override
-        public void onOrder(@Nonnull final Order order) {
+        public void onOrder(@Nonnull final io.cygnux.rapid.core.types.order.Order order) {
             log.info("OrderLogger record -> {}", order);
         }
 

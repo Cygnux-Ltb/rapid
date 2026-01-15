@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FormFill 表单自动填充</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>FormFill 表单自动填充</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>文本框（input、hidden、textarea...）对应的值为空时，不做覆盖处理（如果页面上有后台渲染或写死的值的话）</strong></li>
+		</ul>
+
+		<h3>标准写法</h3>
+		<pre><code class="script">javaex.form({
+	id : "form",    // 表单form的id
+	formData : {
+		"id" : data.id,
+		"projectName" : data.projectName,
+		"comment" : data.comment,
+		"radio" : 0,           // 选项框的值允许为 null 或 空字符串
+		"checkbox" : [1, 4]    // 复选框的值允许为字符串。例如： "1,2,3"，需要使用英文逗号，且不能有空格
+	},
+	callback : function() {
+		// 渲染完成了，做点什么吧
+	}
+});</code></pre>
+
+		<h3>如果formData的属性一一对应，可以使用简化写法</h3>
+		<pre><code class="script">javaex.form({
+	id : "form",    // 表单form的id
+	formData : data,
+	callback : function() {
+		// 渲染完成了，做点什么吧
+	}
+});</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>表单form的id。当然也不一定是&lt;form&gt;标签，只要规划一块区域范围的id即可</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>formData</td>
+					<td></td>
+					<td>json数据</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>defaultRadioChecked</td>
+					<td>1</td>
+					<td>单选框没有值时，默认选中第几个（0代表不默认选中）</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>数据填充完成后的回调函数</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

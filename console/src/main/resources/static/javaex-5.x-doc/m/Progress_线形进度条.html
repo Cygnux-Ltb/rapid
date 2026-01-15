@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Progress 线形进度条</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Progress 线形进度条</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;div class="javaex-progress"&gt;
+	&lt;div id="progress1" class="javaex-progress-level"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.progress({
+		id : "progress1",
+		percent : "40"
+	});
+&lt;/script&gt;</code></pre>
+				
+				<h3>百分比内显</h3>
+				<p class="mb-10">百分比不占用额外控件，适用于文件上传等场景。</p>
+				<p class="mb-10">如果要显示百分比，则需要自己为 class="javaex-progress" 设定 line-height</p>
+				<pre><code class="html">&lt;!--如果要显示百分比，则需要自己为 class="javaex-progress" 设定 line-height--&gt;
+&lt;div class="javaex-progress" style="line-height: 16px;"&gt;
+	&lt;div id="progress2" class="javaex-progress-level"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.progress({
+		id : "progress2",
+		percent : "40",
+		isShowPercent : true
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>自定义样式</h3>
+				<pre><code class="html">&lt;style&gt;
+.myclass{
+	line-height: 16px;
+}
+.myclass .javaex-progress-level &gt; span{
+    background: linear-gradient(135deg,#fa2c19 0%,#fa6419 100%);
+    border-radius: 5px;
+    padding: 3px 5px 3px 6px;
+}
+&lt;/style&gt;
+
+&lt;div class="javaex-progress myclass"&gt;
+	&lt;div id="progress3" class="javaex-progress-level"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.progress({
+		id : "progress3",
+		percent : "40",
+		isShowPercent : true
+	});
+&lt;/script&gt;</code></pre>
+				
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>指定操作哪个进度条</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>percent</td>
+					<td>0</td>
+					<td>进度条百分比，例如：40 或 "40"</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowPercent</td>
+					<td>false</td>
+					<td>是否显示百分比文字（如果要显示百分比，则需要自己为 class="progress" 设定 line-height）</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+				
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Progress_线形进度条1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

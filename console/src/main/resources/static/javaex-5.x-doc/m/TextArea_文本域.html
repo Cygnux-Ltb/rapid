@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TextArea 文本域</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>TextArea 文本域</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>高度自适应</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;留言&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;textarea id="test1" class="javaex-field-control" placeholder="请输入留言"&gt;&lt;/textarea&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.textarea({
+		id : "test1",
+		autoHeight : true
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>显示字数统计</h3>
+				<pre><code class="html">&lt;div class="javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-cell"&gt;
+		&lt;div class="javaex-cell-title javaex-field-label"&gt;留言&lt;/div&gt;
+		&lt;div class="javaex-cell-value javaex-field-value"&gt;
+			&lt;div class="javaex-field-body"&gt;
+				&lt;textarea id="test2" class="javaex-field-control" placeholder="请输入留言"&gt;&lt;/textarea&gt;
+			&lt;/div&gt;
+			&lt;div class="javaex-field-word-limit"&gt;&lt;span id="checklen"&gt;0&lt;/span&gt;/50&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.textarea({
+		id : "test2",
+		autoHeight : true,
+		checklenId : "checklen",
+		maxlength : 50,
+		callback : function() {
+			console.log("已达到最大长度");
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>textarea的ID</td>
+					<td>5.3.x</td>
+				</tr>
+				<tr>
+					<td>checklenId</td>
+					<td></td>
+					<td>数字统计的ID</td>
+					<td>5.3.x</td>
+				</tr>
+				<tr>
+					<td>autoHeight</td>
+					<td>false</td>
+					<td>是否自适应高度</td>
+					<td>5.3.x</td>
+				</tr>
+				<tr>
+					<td>maxlength</td>
+					<td></td>
+					<td>最大输入字数，为0时表示不限制</td>
+					<td>5.3.x</td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>callback : function() {
+	console.log("已达到最大长度");
+}</code></pre></td>
+					<td>5.3.x</td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="TextArea_文本域1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

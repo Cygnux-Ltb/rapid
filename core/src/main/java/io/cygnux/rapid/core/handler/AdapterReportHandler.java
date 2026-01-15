@@ -1,10 +1,10 @@
 package io.cygnux.rapid.core.handler;
 
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
 
 @FunctionalInterface
 public interface AdapterReportHandler {
 
-    void onAdapterReport(final AdapterStatusReport event);
+    void onAdapterReport(final AdapterReport event);
 
 }

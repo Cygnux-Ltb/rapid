@@ -1,11 +1,11 @@
 package io.cygnux.rapid.engine.strategy.manager;
 
-import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.queue.Queue;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
-import io.cygnux.rapid.core.order.Order;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
+import io.cygnux.rapid.core.types.order.Order;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
 import org.slf4j.Logger;
 
@@ -51,9 +51,9 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
                             strategyMap.get(order.getStrategyId()).onOrder(order);
                         }
                         case AdapterEvent -> {
-                            AdapterStatusReport adapterStatusReport = msg.getAdapterEvent();
-                            String adaptorId = adapterStatusReport.getAdaptorId();
-                            log.info("Recv AdaptorEvent -> {}", adapterStatusReport);
+                            AdapterReport adapterReport = msg.getAdapterEvent();
+                            String adaptorId = adapterReport.getAdapterId();
+                            log.info("Recv AdaptorEvent -> {}", adapterReport);
                         }
                         default -> throw new IllegalStateException("scheduler mark illegal");
                     }
@@ -77,7 +77,7 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
 
         private OrderReport orderReport;
 
-        private AdapterStatusReport adapterStatusReport;
+        private AdapterReport adapterReport;
 
         private QueueMsg(SavedMarketData marketData) {
             this.mark = MarketData;
@@ -89,9 +89,9 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
             this.orderReport = orderReport;
         }
 
-        private QueueMsg(AdapterStatusReport adapterStatusReport) {
+        private QueueMsg(AdapterReport adapterReport) {
             this.mark = AdapterEvent;
-            this.adapterStatusReport = adapterStatusReport;
+            this.adapterReport = adapterReport;
         }
 
         public int getMark() {
@@ -106,8 +106,8 @@ public final class AsyncMultiStrategyManager extends MultiStrategyManager {
             return orderReport;
         }
 
-        public AdapterStatusReport getAdapterEvent() {
-            return adapterStatusReport;
+        public AdapterReport getAdapterEvent() {
+            return adapterReport;
         }
 
     }

@@ -1,13 +1,13 @@
 package io.cygnux.rapid.adapter.ctp.component.handler;
 
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.DepthMarketData;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.DepthMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -72,7 +72,7 @@ public class IpcSharedEventHandlerImpl implements SharedEventHandler {
      * @param report AdaptorReport
      */
     @Override
-    public void fireAdapterReport(AdapterStatusReport report) {
+    public void fireAdapterReport(AdapterReport report) {
         log.info("Received AdaptorReport -> {}", report);
     }
 

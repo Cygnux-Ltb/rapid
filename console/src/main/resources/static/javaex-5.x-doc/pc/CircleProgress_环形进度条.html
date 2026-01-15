@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CircleProgress 环形进度条</title>
+<script src="../js/ui.js"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>CircleProgress 环形进度条</h2>
+		<hr>
+		
+		<h3>基础用法</h3>
+		<div id="progress1" class="javaex-circleprogress" style="height: 100px;width: 100px;"></div>
+
+		<pre><code>&lt;div id="progress1" class="javaex-circleprogress" style="height: 100px;width: 100px;"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.progress({
+		id : "progress1",
+		mode : "circle",
+		percent : 50,
+		isShowPercent : true
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>指定操作哪个进度条</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mode</td>
+					<td></td>
+					<td>环形进度条必须填写circle</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>width</td>
+					<td>5</td>
+					<td>进度条的宽度</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>percent</td>
+					<td>0</td>
+					<td>进度条百分比，例如：40 或 "40"</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowPercent</td>
+					<td>false</td>
+					<td>是否显示百分比文字（如果要显示百分比，则需要自己为 class="progress" 设定 line-height）</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.progress({
+		id : "progress1",
+		mode : "circle",
+		percent : 50,
+		isShowPercent : true
+	});
+</script>
+</html>

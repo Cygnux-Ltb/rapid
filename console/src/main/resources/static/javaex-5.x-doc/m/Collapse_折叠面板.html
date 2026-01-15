@@ -1,0 +1,195 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Collapse 折叠面板</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Collapse 折叠面板</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code>&lt;div id="collapse1" class="javaex-collapse javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题1&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;豫章故郡，洪都新府。星分翼轸，地接衡庐。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题2&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题3&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.collapse({
+		id : "collapse1",
+		open : function(rtn) {
+			console.log(rtn.index);
+		},
+		close : function(rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+				
+				<h3>只允许展开一项</h3>
+				<pre><code>&lt;div id="collapse2" class="javaex-collapse javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题1&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;豫章故郡，洪都新府。星分翼轸，地接衡庐。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题2&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题3&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.collapse({
+		id : "collapse2",
+		alone : true
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>默认展开全部</h3>
+				<pre><code>&lt;div id="collapse3" class="javaex-collapse javaex-cell-group-warp"&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题1&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;豫章故郡，洪都新府。星分翼轸，地接衡庐。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题2&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-collapse-item"&gt;
+		&lt;div class="javaex-cell javaex-cell-clickable"&gt;
+			&lt;div class="javaex-cell-title"&gt;我是标题3&lt;/div&gt;
+			&lt;i class="javaex-icon icon-angle-down"&gt;&lt;/i&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-collapse-item-wrapper" style="display: none;"&gt;
+			&lt;div class="javaex-collapse-item-content"&gt;雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.collapse({
+		id : "collapse3",
+		isShowAll : true
+	});
+&lt;/script&gt;</code></pre>
+	
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>容器ID</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>alone</td>
+					<td>false</td>
+					<td>是否只允许展开一个</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowAll</td>
+					<td>false</td>
+					<td>是否默认展开全部</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>open</td>
+					<td></td>
+					<td>点击展开后的回调函数，返回的对象中包含了当前点击的索引，从1开始计<br/><pre style="margin-bottom:0;"><code>opend : function(rtn) {
+	console.log(rtn.index);
+}</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>close</td>
+					<td></td>
+					<td>点击收起后的回调函数，返回的对象中包含了当前点击的索引，从1开始计<br/><pre style="margin-bottom:0;"><code>close : function(rtn) {
+	console.log(rtn.index);
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Collapse_折叠面板1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

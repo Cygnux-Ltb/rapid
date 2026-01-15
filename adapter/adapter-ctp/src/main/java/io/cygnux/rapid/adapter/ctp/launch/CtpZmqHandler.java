@@ -8,7 +8,7 @@ import io.mercury.common.functional.Handler;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.RunnableComponent.StartMode;
 import io.mercury.serialization.json.JsonWriter;
-import io.mercury.transport.zmq.ZmqConfigurator;
+import io.mercury.transport.zmq.ZmqCfg;
 import io.mercury.transport.zmq.ZmqPublisher;
 import org.slf4j.Logger;
 
@@ -26,7 +26,7 @@ public class CtpZmqHandler implements Closeable, Handler<FtdcRspEvent> {
     public CtpZmqHandler(Config config) {
         String topic = config.getString("zmq.topic");
         log.info("config zmq.topic == [{}]", topic);
-        this.publisher = ZmqConfigurator.config(config).createPublisherWithString(topic);
+        this.publisher = ZmqCfg.config(config).createPublisherWithString(topic);
         this.queue = SingleConsumerQueueWithJCT.mpscQueue("CtpZmqHandler-Queue").capacity(32)
                 .startMode(StartMode.auto()).process(msg -> {
                     String json = JsonWriter.toJson(msg);

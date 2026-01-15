@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>默认幻灯片结构</title>
+<script src="../js/ui.js"></script>
+<style>
+.javaex-swiper .javaex-swiper-prev, .javaex-swiper .javaex-swiper-next{top:50%;width:40px;height:70px;margin-top:-35px;border-radius:3px;text-indent:-9999px;background-repeat:no-repeat;}
+.javaex-swiper .javaex-swiper-prev{left:5px;background:url(http://webimg.javaex.cn/FiztnEQrT5EeqaOAwHn0-rP414LJ) no-repeat;}
+.javaex-swiper .javaex-swiper-next{right:5px;background:url(http://webimg.javaex.cn/FiztnEQrT5EeqaOAwHn0-rP414LJ) no-repeat;background-position : -41px 0;}
+.javaex-swiper-focus-box{left:50%;bottom:15px;}
+.javaex-swiper-focus-box ul{height:20px;padding:0 4px;border-radius:8px;background:rgba(0,0,0,.5);}
+.javaex-swiper-focus-box ul li{float:left;height:12px;margin:4px;}
+.javaex-swiper-focus-box ul li{display:block;width:12px;height:12px;border-radius:100%;background-color:#fff;opacity: 0.5;text-indent:-9999px;cursor:pointer;}
+.javaex-swiper-focus-box ul li.on, .javaex-swiper-focus-box ul li:hover{opacity: 1;}
+
+.javaex-swiper {width: 1200px; height: 360px;}
+.javaex-swiper ul.javaex-swiper-focus-bg li {width: 1200px; height: 360px;}
+.javaex-swiper ul.javaex-swiper-focus-bg img {width: 100%; height: 100%;}
+</style>
+</head>
+
+<body>
+	<div class="doc-markdown">
+		<h2>默认幻灯片结构</h2>
+		<hr>
+
+		<div style="width: 1200px; height: 360px; margin: 0 auto;">
+			<!--幻灯片-->
+			<div id="swiper" class="javaex-swiper">
+				<!--背景大图-->
+				<ul class="javaex-swiper-focus-bg">
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="http://webimg.javaex.cn/Fm9cfHj6qSt-_bNL_gaiwXeP31UU"/>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="http://webimg.javaex.cn/FgmhmBpSPRtJW4GMaYd3WUVcru7G"/>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="http://webimg.javaex.cn/FqMhQoZOtwZoEDaRXi8mvIef10h9"/>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="http://webimg.javaex.cn/FmuavZJIPlIF7Ij48s573KodO2UQ"/>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;" target="_blank">
+							<img src="http://webimg.javaex.cn/Ft8kdm0QmDyd3r1-UlfOFvTcEutx"/>
+						</a>
+					</li>
+				</ul>
+
+				<!--左右切换，如果不需要左右箭头切换的话，直接去掉这个div即可-->
+				<div class="javaex-swiper-prev-next">
+					<!--上一张-->
+					<div class="javaex-swiper-prev"><a href="javascript:;"></a></div>
+					<!--下一张-->
+					<div class="javaex-swiper-next"><a href="javascript:;"></a></div>
+				</div>
+
+				<!--标题，如果不需要，直接去掉这个div即可-->
+				<div class="javaex-swiper-focus-title">
+					<ul>
+						<li><span>标题1</span></li>
+						<li><span>标题2</span></li>
+						<li><span>标题3</span></li>
+						<li><span>标题4</span></li>
+						<li><span>标题5</span></li>
+					</ul>
+				</div>
+			
+				<!--焦点，如果不需要焦点的话，直接去掉这个div即可-->
+				<div class="javaex-swiper-focus-box">
+					<!--如果使用默认焦点样式，则下面的 ul 可以缺省-->
+					<ul>
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;style&gt;
+.javaex-swiper .javaex-swiper-prev, .javaex-swiper .javaex-swiper-next{top:50%;width:40px;height:70px;margin-top:-35px;border-radius:3px;text-indent:-9999px;background-repeat:no-repeat;}
+.javaex-swiper .javaex-swiper-prev{left:5px;background:url(http://webimg.javaex.cn/FiztnEQrT5EeqaOAwHn0-rP414LJ) no-repeat;}
+.javaex-swiper .javaex-swiper-next{right:5px;background:url(http://webimg.javaex.cn/FiztnEQrT5EeqaOAwHn0-rP414LJ) no-repeat;background-position : -41px 0;}
+.javaex-swiper-focus-box{left:50%;bottom:15px;}
+.javaex-swiper-focus-box ul{height:20px;padding:0 4px;border-radius:8px;background:rgba(0,0,0,.5);}
+.javaex-swiper-focus-box ul li{float:left;height:12px;margin:4px;}
+.javaex-swiper-focus-box ul li{display:block;width:12px;height:12px;border-radius:100%;background-color:#fff;opacity: 0.5;text-indent:-9999px;cursor:pointer;}
+.javaex-swiper-focus-box ul li.on, .javaex-swiper-focus-box ul li:hover{opacity: 1;}
+
+.javaex-swiper {width: 1200px; height: 360px;}
+.javaex-swiper ul.javaex-swiper-focus-bg li {width: 1200px; height: 360px;}
+.javaex-swiper ul.javaex-swiper-focus-bg img {width: 100%; height: 100%;}
+&lt;/style&gt;
+
+&lt;!--幻灯片--&gt;
+&lt;div id="swiper" class="javaex-swiper"&gt;
+	&lt;!--背景大图--&gt;
+	&lt;ul class="javaex-swiper-focus-bg"&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="http://i2.kanimg.kankan.com/gallery2/block/2019/01/18/e65a98d2f9a2d94a3e788bc988e27542.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="http://i9.kanimg.kankan.com/gallery2/block/2019/01/15/3e128f08e636afaf9b9eb15f9638541a.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="http://i9.kanimg.kankan.com/gallery2/block/2019/01/11/802fd2958546461d943204e014116e50.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="http://i9.kanimg.kankan.com/gallery2/block/2019/01/10/67446c88c73aab99257d32059b958b4d.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;" target="_blank"&gt;
+				&lt;img src="http://i2.kanimg.kankan.com/gallery2/block/2019/01/07/b189424be8545aea49dce3d095dab4f1.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+
+	&lt;!--左右切换，如果不需要左右箭头切换的话，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-prev-next"&gt;
+		&lt;!--上一张--&gt;
+		&lt;div class="javaex-swiper-prev"&gt;&lt;a href="javascript:;"&gt;&lt;/a&gt;&lt;/div&gt;
+		&lt;!--下一张--&gt;
+		&lt;div class="javaex-swiper-next"&gt;&lt;a href="javascript:;"&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;!--标题，如果不需要，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-focus-title"&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;span&gt;标题1&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span&gt;标题2&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span&gt;标题3&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span&gt;标题4&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span&gt;标题5&lt;/span&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+
+	&lt;!--焦点，如果不需要焦点的话，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-focus-box"&gt;
+		&lt;!--如果使用默认焦点样式，则下面的 ul 可以缺省--&gt;
+		&lt;ul&gt;
+			&lt;li&gt;1&lt;/li&gt;
+			&lt;li&gt;2&lt;/li&gt;
+			&lt;li&gt;3&lt;/li&gt;
+			&lt;li&gt;4&lt;/li&gt;
+			&lt;li&gt;5&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.swiper({
+		id : "swiper",
+		focusCenter : true,
+		effect : "slice",
+		callback : function(rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+	
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>幻灯片id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isAutoPlay</td>
+					<td>true</td>
+					<td>是否自动轮播</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>focusCenter</td>
+					<td>false</td>
+					<td>焦点区域是否自动居中</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>startSlide</td>
+					<td>1</td>
+					<td>开始切换的位置（即从第几张图开始切换），从1开始计</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>focusBoxMode</td>
+					<td>mouseover</td>
+					<td>焦点切换模式。mouseover：鼠标移动切换； click: 鼠标点击切换</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>effect</td>
+					<td></td>
+					<td>切换效果，为空默认为淡入淡出。slice：左右滑动;smooth：平滑</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>delay</td>
+					<td>2000</td>
+					<td>切换时间间隔（毫秒）</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>sliceWidth</td>
+					<td></td>
+					<td>slice 左右滑动时，可自定义滑动距离，例如 600，请填写正整数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>初始化是否调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回当前显示的索引，从1开始计</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.swiper({
+		id : "swiper",
+		focusCenter : true,
+		effect : "slice"
+	});
+</script>
+</html>

@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ImagePreview 图片预览</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>ImagePreview 图片预览</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>单图放大</h3>
+				<pre><code class="html">&lt;div class="javaex-image" style="width:100px;height:100px;"&gt;
+	&lt;img class="javaex-img" fit="cover" src="http://webimg.javaex.cn/Ft0-o8l5oCgH9dQUV67eMVODZVU_" onclick="img(this)"/&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	// obj为当前点击的元素对象
+	function img(obj) {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : obj.src	// 图片地址
+		});
+	}
+	
+	// 或者下面这种写法
+	$("img").click(function() {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : $(this).attr("src")	// 图片地址
+		});
+	});
+&lt;/script&gt;</code></pre>
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>必须是image</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>图片地址，就按照示例中的写</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="ImagePreview_图片预览1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

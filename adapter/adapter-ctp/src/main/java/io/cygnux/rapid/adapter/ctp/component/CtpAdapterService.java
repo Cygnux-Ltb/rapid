@@ -1,18 +1,18 @@
 package io.cygnux.rapid.adapter.ctp.component;
 
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.cygnux.rapid.core.adapter.AdapterRunningMode;
-import io.cygnux.rapid.core.adapter.SentEventType;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.instrument.InstrumentKeeper;
+import io.cygnux.rapid.core.types.adapter.event.SentEventType;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.enums.MarketDataType;
+import io.cygnux.rapid.core.types.mkd.enums.MarketDataType;
 import io.cygnux.rapid.adapter.ctp.CtpAdapter;
 import io.cygnux.rapid.adapter.ctp.FtdcRspHandler;
 import io.cygnux.rapid.gateway.ctp.FtdcParams;
@@ -20,7 +20,7 @@ import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.thread.Sleep;
 import io.mercury.common.thread.Threads;
 import io.mercury.transport.attr.Topics;
-import io.mercury.transport.zmq.ZmqConfigurator;
+import io.mercury.transport.zmq.ZmqCfg;
 import io.mercury.transport.zmq.ZmqSubscriber;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -38,7 +38,7 @@ public class CtpAdapterService {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CtpAdapterService.class);
 
-    @Value("${adaptor.running.mode:FULL}")
+    @Value("${adapter.running.mode:FULL}")
     private String mode;
 
     @Resource(name = "ipcInboundHandler")
@@ -63,7 +63,7 @@ public class CtpAdapterService {
                 .asyncMode()
                 .setRunningMode(AdapterRunningMode.valueOf(mode))
                 .build(inboundHandler, ftdcRspHandler);
-        this.adapterSubscriber = ZmqConfigurator.ipc(subscribePath)
+        this.adapterSubscriber = ZmqCfg.ipc(subscribePath)
                 .createSubscriber(Topics.with(adapter.subscribeTopic()),
                         this::handleSubscribeMsg);
         start();

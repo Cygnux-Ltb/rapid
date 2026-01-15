@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Table 简单结构</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Table 简单结构</h2>
+		<hr>
+
+		<h3>简单结构</h3>
+		<p class="mb-10">给指定的列设置width宽度，剩余的列宽会自动平均分配</p>
+		<table class="javaex-table td-c-1 td-c-2">
+			<thead>
+				<tr>
+					<th class="javaex-table-num-col"></th>
+					<th class="javaex-table-filter-col"><input type="checkbox" fill listen="listen-1"/> </th>
+					<th>市区</th>
+					<th>省区</th>
+					<th>国别</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td><input type="checkbox" fill listen="listen-1-2"/> </td>
+					<td>苏州</td>
+					<td>江苏省</td>
+					<td>中国</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><input type="checkbox" fill listen="listen-1-2"/> </td>
+					<td>无锡</td>
+					<td>江苏省</td>
+					<td>中国</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><input type="checkbox" fill listen="listen-1-2"/> </td>
+					<td>常州</td>
+					<td>江苏省</td>
+					<td>中国</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<pre><code>&lt;table id="table" class="javaex-table td-c-1 td-c-2"&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="javaex-table-num-col"&gt;&lt;/th&gt;
+			&lt;th class="javaex-table-filter-col"&gt;&lt;input type="checkbox" fill listen="listen-1"/&gt; &lt;/th&gt;
+			&lt;th&gt;市区&lt;/th&gt;
+			&lt;th&gt;省区&lt;/th&gt;
+			&lt;th&gt;国别&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td&gt;1&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2"/&gt; &lt;/td&gt;
+			&lt;td&gt;苏州&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;2&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2"/&gt; &lt;/td&gt;
+			&lt;td&gt;无锡&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;3&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2"/&gt; &lt;/td&gt;
+			&lt;td&gt;常州&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+		<h3>class="javaex-table"可以附加如下属性</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>属性</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>color1、color2</td>
+					<td>color1表示奇数行着色、color2表示偶数行着色，例如：class="javaex-table color2"</td>
+				</tr>
+				<tr>
+					<td>unhover</td>
+					<td>默认鼠标滑过时，当前行会变色。class加上 unhover 可以不变色</td>
+				</tr>
+				<tr>
+					<td>th-c、td-c</td>
+					<td>可以让内容居中</td>
+				</tr>
+				<tr>
+					<td>th-c-1、td-c-1、th-c-2、td-c-2</td>
+					<td>可以让内容居中（只对第1列和第2列有效）</td>
+				</tr>
+
+				<tr>
+					<td>no-vertical-line</td>
+					<td>可以去除竖线</td>
+				</tr>
+				<tr>
+					<td>no-cross-line</td>
+					<td>可以去除横线</td>
+				</tr>
+				<tr>
+					<td>no-border-line</td>
+					<td>可以去边框线</td>
+				</tr>
+				<tr>
+					<td>no-line</td>
+					<td>可以去除竖线、横线、边框线</td>
+				</tr>
+				<tr>
+					<td>vertical-line-white</td>
+					<td>可以使边框外的竖线变为白色</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
