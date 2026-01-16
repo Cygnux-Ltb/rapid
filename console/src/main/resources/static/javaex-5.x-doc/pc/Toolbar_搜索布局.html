@@ -1,0 +1,130 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Toolbar 搜索布局</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Toolbar 搜索布局</h2>
+		<hr>
+		
+		<h3>工具条</h3>
+		<div style="width:1000px;">
+			<div class="javaex-list-toolbar clear">
+				<span class="fl"><button class="javaex-btn primary">添加</button></span>
+				<span class="fr javaex-search-group">
+					<input type="text" class="javaex-text" id="keyword" placeholder="请输入搜索内容" />
+					<button class="javaex-btn primary">搜索</button>
+				</span>
+			</div>
+		</div>
+		
+		<pre><code>&lt;div class="javaex-list-toolbar clear"&gt;
+	&lt;span class="fl"&gt;&lt;button class="javaex-btn primary"&gt;添加&lt;/button&gt;&lt;/span&gt;
+	&lt;span class="fr javaex-search-group"&gt;
+		&lt;input type="text" class="javaex-text" id="keyword" placeholder="请输入搜索内容" /&gt;
+		&lt;button class="javaex-btn primary"&gt;搜索&lt;/button&gt;
+	&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+		
+		<h3>高级搜索区域</h3>
+		<div style="width:1000px;">
+			<div class="javaex-search-wrapper">
+				<div class="javaex-search-line">
+					<div class="javaex-search-control">
+						域名：<select id="select">
+								<option value="">请选择</option>
+								<option value="1">电影</option>
+								<option value="2">电视剧</option>
+								<option value="3">动漫</option>
+								<option value="4" disabled="disabled">音乐（禁用）</option>
+								<option value="5">综艺</option>
+								<option value="6">新闻</option>
+								<option value="7">搞笑</option>
+								<option value="8">萌宠</option>
+							</select>
+					</div>
+					<div class="javaex-search-control">
+						选择时间：<input type="text" id="date1" class="javaex-date" style="width: 140px;" value="" readonly/>
+					</div>
+					<!-- 确认查询按钮 -->
+					<div class="javaex-search-control javaex-search-submit">
+						<button class="javaex-btn red" onclick="reset()">重置</button>
+						<button class="javaex-btn primary" onclick="search()">确认查询</button>
+					</div>
+				</div>
+				<div class="javaex-search-line">
+					<div class="javaex-search-control">
+						域名：<select id="select2">
+								<option value="">请选择</option>
+								<option value="1">电影</option>
+								<option value="2">电视剧</option>
+								<option value="3">动漫</option>
+								<option value="4" disabled="disabled">音乐（禁用）</option>
+								<option value="5">综艺</option>
+								<option value="6">新闻</option>
+								<option value="7">搞笑</option>
+								<option value="8">萌宠</option>
+							</select>
+					</div>
+					<div class="javaex-search-control">
+						时间范围：<input type="text" id="date2" class="javaex-date" style="width: 220px;" value="" readonly/>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<pre><code>&lt;div class="javaex-search-wrapper"&gt;
+	&lt;div class="javaex-search-line"&gt;
+		&lt;div class="javaex-search-control"&gt;
+			域名：&lt;select id="select"&gt;...&lt;/select&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-search-control"&gt;
+			选择时间：&lt;input type="text" id="date1" class="javaex-date" style="width: 140px;" value="" readonly/&gt;
+		&lt;/div&gt;
+		&lt;!-- 确认查询按钮 --&gt;
+		&lt;div class="javaex-search-control javaex-search-submit"&gt;
+			&lt;button class="javaex-btn red" onclick="reset()"&gt;重置&lt;/button&gt;
+			&lt;button class="javaex-btn primary" onclick="search()"&gt;确认查询&lt;/button&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-search-line"&gt;
+		&lt;div class="javaex-search-control"&gt;
+			...
+		&lt;/div&gt;
+		&lt;div class="javaex-search-control"&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+	</div>
+</body>
+<script>
+	javaex.select({
+		id : "select"
+	});
+	javaex.select({
+		id : "select2"
+	});
+	javaex.date({
+		id : "date1",		// 承载日期组件的id
+		monthNum : 1,		// 1代表选择单日日期
+		time : "2022-01-01",	// 选择的日期
+		callback : function(rtn) {
+			
+		}
+	});
+	javaex.date({
+		id : "date2",		// 承载日期组件的id
+		monthNum : 2,		// 2代表选择范围日期
+		beginDate : "2017-08-01",	// 开始日期
+		endDate : "2017-08-20",		// 结束日期
+		callback : function(rtn) {
+			
+		}
+	});
+</script>
+</html>

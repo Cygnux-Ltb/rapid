@@ -1,14 +1,14 @@
 package io.cygnux.rapid.engine;
 
-import io.cygnux.rapid.core.adapter.SentEvent;
-import io.cygnux.rapid.core.adapter.SentEventHandler;
-import io.cygnux.rapid.core.adapter.SentEventbus;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.adapter.AdapterEvent;
+import io.cygnux.rapid.core.adapter.AdatperEventHandler;
+import io.cygnux.rapid.core.adapter.AdapterEventbus;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.manager.AdapterManager;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.Resource;
@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class CoreOutboundService implements SentEventHandler {
+public class CoreOutboundService implements AdatperEventHandler {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(CoreOutboundService.class);
 
     @Resource
     private AdapterManager adapterManager;
 
-    private final SentEventbus eventLoop = new SentEventbus() {
+    private final AdapterEventbus eventLoop = new AdapterEventbus() {
 
         @Override
-        public void onEvent(SentEvent event, long sequence, boolean endOfBatch) {
+        public void onEvent(AdapterEvent event, long sequence, boolean endOfBatch) {
             log.info("CoreOutboundService process [OutboundEvent] -> {}", event);
             switch (event.getType()) {
                 case SUBSCRIBE_MARKET_DATA -> adapterManager

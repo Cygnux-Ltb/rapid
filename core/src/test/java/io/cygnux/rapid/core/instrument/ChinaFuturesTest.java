@@ -1,6 +1,6 @@
 package io.cygnux.rapid.core.instrument;
 
-import io.cygnux.rapid.core.instrument.futures.ChinaFutures;
+import io.cygnux.rapid.core.types.instrument.futures.ChinaFutures;
 import org.junit.Test;
 
 import java.time.LocalDate;

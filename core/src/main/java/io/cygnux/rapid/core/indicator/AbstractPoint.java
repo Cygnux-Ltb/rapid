@@ -2,13 +2,17 @@ package io.cygnux.rapid.core.indicator;
 
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.lang.Validator;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 /**
  * @author yellow013
  */
 public abstract non-sealed class AbstractPoint implements Point {
 
+    @Getter
+    @Accessors(fluent = true)
     protected final int index;
 
     protected SavedMarketData preMarketData;

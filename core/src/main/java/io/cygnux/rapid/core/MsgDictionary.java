@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core;
 
 import io.mercury.common.collections.MutableMaps;
-import io.mercury.common.lang.StringConstant;
+import io.mercury.common.constant.StringConst;
 import org.eclipse.collections.api.map.MutableMap;
 
 import javax.annotation.Nonnull;
@@ -235,7 +235,7 @@ public final class MsgDictionary {
         var errorMsg = MAP.get(getKey(language, code));
         if (null != errorMsg)
             return errorMsg.message();
-        return StringConstant.NULL_STRING;
+        return StringConst.NULL_STRING;
     }
 
     @Nonnull

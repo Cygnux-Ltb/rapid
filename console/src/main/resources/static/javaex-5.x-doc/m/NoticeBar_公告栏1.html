@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+
+
+</style>
+<body style="padding:10px 0;">
+	<div class="mb-10 ml-10 mr-10">基础用法</div>
+	<div class="javaex-noticebar">
+		<div class="javaex-noticebar-left-icon">
+			<i class="javaex-icon icon-volume-medium"></i>
+		</div>
+		<div class="javaex-noticebar-wrap">
+			<div class="javaex-noticebar-content javaex-noticebar-play-infinite">Javaex 是基于jquery开发的移动端组件库，帮助研发人员提升开发效率，改善开发体验。</div>
+		</div>
+	</div>
+	
+	<div class="mt-20 mb-10 ml-10 mr-10" style="margin-top:40px;">关闭模式</div>
+	<div class="javaex-noticebar">
+		<div class="javaex-noticebar-left-icon">
+			<i class="javaex-icon icon-volume-medium"></i>
+		</div>
+		<div class="javaex-noticebar-wrap">
+			<div class="javaex-noticebar-content javaex-noticebar-play-infinite">Javaex 是基于jquery开发的移动端组件库，帮助研发人员提升开发效率，改善开发体验。</div>
+		</div>
+		<div class="javaex-noticebar-right-icon" onclick="doDel(this)"><i class="javaex-icon icon-cancel"></i></div>
+	</div>
+
+	<div class="mt-20 mb-10 ml-10 mr-10" style="margin-top:40px;">垂直滚动</div>
+	<div id="rollNotice" class="javaex-noticebar">
+		<div class="javaex-noticebar-left-icon">
+			<i class="javaex-icon icon-volume-medium"></i>
+		</div>
+		<div class="javaex-noticebar-wrap">
+			<div class="javaex-noticebar-content javaex-ellipsis">
+				<div class="javaex-notice-swipe">
+					<ul class="javaex-swipe-track">
+						<li class="javaex-swipe-item">枯藤老树昏鸦，小桥流水人家。</li>
+						<li class="javaex-swipe-item">落霞与孤鹜齐飞，秋水共长天一色。</li>
+						<li class="javaex-swipe-item">人生若只如初见，何事秋风悲画扇。</li>
+						<li class="javaex-swipe-item">金风玉露一相逢，便胜却人间无数。</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	function doDel(obj) {
+		$(obj).parent().remove();
+	}
+
+	javaex.rollNotice({
+		id : "rollNotice"
+	});
+</script>
+</html>

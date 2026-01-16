@@ -1,31 +1,33 @@
 package io.cygnux.rapid.engine;
 
-import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.adapter.SentEventHandler;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.adapter.AdatperEventHandler;
+import io.cygnux.rapid.core.event.SharedEventFeeder;
+import io.cygnux.rapid.core.event.SharedEventbus;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
 import io.cygnux.rapid.core.manager.AccountManager;
 import io.cygnux.rapid.core.manager.AdapterManager;
 import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.manager.OrderManager;
 import io.cygnux.rapid.core.manager.PositionManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
-import io.cygnux.rapid.core.order.impl.ChildOrder;
-import io.cygnux.rapid.core.order.impl.ParentOrder;
-import io.cygnux.rapid.core.event.SharedEvent;
-import io.cygnux.rapid.core.event.SharedEventFeeder;
-import io.cygnux.rapid.core.event.SharedEventbus;
-import io.cygnux.rapid.core.event.enums.MarketDataType;
-import io.cygnux.rapid.core.event.enums.OrdType;
-import io.cygnux.rapid.core.event.enums.TrdAction;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.sent.StrategySignal;
+import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
 import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
-import io.cygnux.rapid.core.trade.TradeCommand;
 import io.cygnux.rapid.core.trade.TradeCommandProducer;
+import io.cygnux.rapid.core.types.account.Account;
+import io.cygnux.rapid.core.event.SharedEvent;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.mkd.enums.MarketDataType;
+import io.cygnux.rapid.core.types.order.enums.OrdType;
+import io.cygnux.rapid.core.types.trade.enums.TrdAction;
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.sent.StrategySignal;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.order.impl.ChildOrder;
+import io.cygnux.rapid.core.types.order.impl.ParentOrder;
+import io.cygnux.rapid.core.types.trade.TradeCommand;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -71,21 +73,20 @@ public class CoreSchedulerService implements StrategySignalAggregator {
     private SharedEventFeeder eventFeeder;
 
     @Resource
-    private SentEventHandler sentEventHandler;
+    private AdatperEventHandler adatperEventHandler;
 
     private final SharedEventbus eventLoop = new SharedEventbus() {
         @Override
         public void onEvent(SharedEvent event, long sequence, boolean endOfBatch) throws Exception {
-            switch (event.getType()) {
-                case FAST_MARKET_DATA -> fireFastMarketData(event.getPayload().fastMarketData());
-                case DEPTH_MARKET_DATA -> fireDepthMarketData(event.getPayload().depthMarketData());
-                case ORDER_REPORT -> fireOrderReport(event.getPayload().orderReport());
-                case POSITIONS_REPORT -> firePositionsReport(event.getPayload().positionsReport());
-                case BALANCE_REPORT -> fireBalanceReport(event.getPayload().balanceReport());
-                case ADAPTER_STATUS_REPORT -> fireAdapterReport(event.getPayload().adapterReport());
-                case INSTRUMENT_STATUS_REPORT ->
-                        fireInstrumentStatusReport(event.getPayload().instrumentStatusReport());
-                case STRATEGY_SIGNALS -> fireStrategySignals(event.getStrategySignals());
+            switch (event.type()) {
+                case FAST_MARKET_DATA -> fireFastMarketData(event.fastMarketData());
+                case DEPTH_MARKET_DATA -> fireDepthMarketData(event.depthMarketData());
+                case ORDER_REPORT -> fireOrderReport(event.orderReport());
+                case POSITIONS_REPORT -> firePositionsReport(event.positionsReport());
+                case BALANCE_REPORT -> fireBalanceReport(event.balanceReport());
+                case ADAPTER_STATUS_REPORT -> fireAdapterReport(event.adapterReport());
+                case INSTRUMENT_STATUS_REPORT -> fireInstrumentStatusReport(event.instrumentStatusReport());
+                case STRATEGY_SIGNALS -> fireStrategySignals(event.strategySignals());
                 case INVALID -> log.error("NOTE Unknown InboundEvent -> {}", event);
                 //turning-point
             }
@@ -149,11 +150,11 @@ public class CoreSchedulerService implements StrategySignalAggregator {
      * @param report AdaptorReport
      */
     @Override
-    public void fireAdapterReport(AdapterStatusReport report) {
+    public void fireAdapterReport(AdapterReport report) {
         log.info("CoreSchedulerService::handleAdapterReport, [AdapterReport] -> {}", report);
         adapterManager.onAdapterEvent(report);
         var currentStatus = adapterManager.getCurrentStatus(report.getAccountId());
-        log.info("Adaptor current status -> [{}], adaptorId==[{}]", currentStatus, report.getAdaptorId());
+        log.info("Adapter current status -> [{}], adapterId==[{}]", currentStatus, report.getAdapterId());
         if (currentStatus.isMarketDataEnabled()) {
             var subscribeMarketData = new SubscribeMarketData()
                     .setAccountId(report.getAccountId())
@@ -165,7 +166,7 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                     // TODO 补充接收地址
                     .setReceivedAddr("");
             log.info("Publish [SubscribeMarketData] in loop -> {}", subscribeMarketData);
-            sentEventHandler.handleSubscribeMarketData(subscribeMarketData);
+            adatperEventHandler.handleSubscribeMarketData(subscribeMarketData);
         }
         if (currentStatus.isTraderEnabled()) {
             Account account = accountManager.getAccount(report.getAccountId());
@@ -175,21 +176,21 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryOrder] in loop -> {}", queryOrder);
-            sentEventHandler.handleQueryOrder(queryOrder);
+            adatperEventHandler.handleQueryOrder(queryOrder);
 
             /// 查询仓位 ///
             var queryPosition = account.newQueryPosition()
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryPosition] in loop -> {}", queryPosition);
-            sentEventHandler.handleQueryPosition(queryPosition);
+            adatperEventHandler.handleQueryPosition(queryPosition);
 
             /// 查询余额 ///
             var queryBalance = account.newQueryBalance()
                     .setReason("AdaptorReport-Response")
                     .setSource("CoreScheduler");
             log.info("Publish [QueryBalance] in loop -> {}", queryBalance);
-            sentEventHandler.handleQueryBalance(queryBalance);
+            adatperEventHandler.handleQueryBalance(queryBalance);
         }
     }
 
@@ -216,7 +217,9 @@ public class CoreSchedulerService implements StrategySignalAggregator {
             var account = subAccountMapping.getAccountMap().getAny();
 
             // 创建父订单
-            var parentOrder = new ParentOrder(signal.getStrategyId(), signal.getSubAccountId(), signal.getInstrumentCode(),
+            var parentOrder = new ParentOrder(OrdSysIdAllocatorKeeper.nextOrdSysId(signal.getStrategyId()),
+                    signal.getStrategyId(), signal.getSubAccountId(),
+                    InstrumentKeeper.getInstrumentByCode(signal.getInstrumentCode()),
                     signal.getTargetQtyAbs(), signal.getOfferPrice(), OrdType.defaultType(), direction);
 
             var position = positionManager.acquirePosition(account.getAccountId(), signal.getInstrumentCode());
@@ -235,7 +238,7 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                 // 存储子订单
                 orderManager.putOrder(longChildOrder);
                 // 发送多单
-                sentEventHandler.handleNewOrder(longChildOrder.toNewOrder());
+                adatperEventHandler.handleNewOrder(longChildOrder.toNewOrder());
             }
 
             // 空单指令处理
@@ -246,7 +249,7 @@ public class CoreSchedulerService implements StrategySignalAggregator {
                 // 存储子订单
                 orderManager.putOrder(shortChildOrder);
                 // 发送空单
-                sentEventHandler.handleNewOrder(shortChildOrder.toNewOrder());
+                adatperEventHandler.handleNewOrder(shortChildOrder.toNewOrder());
             }
         }
     }

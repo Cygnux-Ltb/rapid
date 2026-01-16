@@ -3,7 +3,7 @@ package io.cygnux.rapid.core.indicator.impl;
 import io.mercury.common.collections.window.LongRingWindow;
 import io.mercury.common.sequence.TimeWindow;
 import io.cygnux.rapid.core.indicator.FixedPeriodPoint;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 
 import java.time.Duration;
 

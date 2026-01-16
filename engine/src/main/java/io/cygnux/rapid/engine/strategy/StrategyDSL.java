@@ -1,6 +1,6 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.mercury.common.collections.ImmutableMaps;
 import io.mercury.common.collections.ImmutableSets;

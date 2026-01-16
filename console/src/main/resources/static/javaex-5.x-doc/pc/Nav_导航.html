@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nav 导航</title>
+<script src="../js/ui.js"></script>
+<style>
+.javaex-navbar {
+    position: unset;
+}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Nav 导航</h2>
+		<hr>
+
+		<h3>顶栏</h3>
+		<div class="javaex-navbar">
+			<div class="javaex-container-fluid clear">
+				<!--logo名称-->
+				<div class="javaex-logo">javaex前端框架</div>
+				
+				<!--左侧导航-->
+				<ul class="javaex-nav fl">
+					<li class="active"><a href="javascript:;">概览</a></li>
+					<li><a href="javascript:;">一级导航</a></li>
+					<li>
+						<a href="javascript:;">二级导航</a>
+						<ul class="javaex-nav-dropdown-menu">
+							<li><a href="javascript:;">菜单一</a></li>
+							<li><a href="javascript:;">菜单二</a></li>
+						</ul>
+					</li>
+				</ul>
+				
+				<!--右侧-->
+				<ul class="javaex-nav fr">
+					<li>
+						<a href="javascript:;">欢迎您，管理员</a>
+						<ul class="javaex-nav-dropdown-menu" style="right: 10px;">
+							<li><a href="javascript:;">退出当前账号</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<pre><code>&lt;div class="javaex-navbar"&gt;
+	&lt;div class="javaex-container-fluid clear"&gt;
+		&lt;!--logo名称--&gt;
+		&lt;div class="javaex-logo"&gt;javaex前端框架&lt;/div&gt;
+		
+		&lt;!--左侧导航--&gt;
+		&lt;ul class="javaex-nav fl"&gt;
+			&lt;li class="active"&gt;&lt;a href="javascript:;"&gt;概览&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="javascript:;"&gt;一级导航&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;a href="javascript:;"&gt;二级导航&lt;/a&gt;
+				&lt;ul class="javaex-nav-dropdown-menu"&gt;
+					&lt;li&gt;&lt;a href="javascript:;"&gt;菜单一&lt;/a&gt;&lt;/li&gt;
+					&lt;li&gt;&lt;a href="javascript:;"&gt;菜单二&lt;/a&gt;&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+		
+		&lt;!--右侧--&gt;
+		&lt;ul class="javaex-nav fr"&gt;
+			&lt;li&gt;
+				&lt;a href="javascript:;"&gt;欢迎您，管理员&lt;/a&gt;
+				&lt;ul class="javaex-nav-dropdown-menu" style="right: 10px;"&gt;
+					&lt;li&gt;&lt;a href="javascript:;"&gt;退出当前账号&lt;/a&gt;&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+	</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+document.write('<link href="../../javaex-5.5.1/pc/css/icomoon.css" rel="stylesheet" />');
+document.write('<link href="../../javaex-5.5.1/pc/css/icomoon.css" rel="stylesheet" />');
+document.write('<link href="../../javaex-5.5.1/pc/css/common.css" rel="stylesheet" />');
+document.write('<link href="../../javaex-5.5.1/pc/css/skin/default.css" rel="stylesheet" />');
+document.write('<script src="../../javaex-5.5.1/pc/lib/jquery-1.7.2.min.js"></script>');
+document.write('<script src="../../javaex-5.5.1/pc/js/javaex.js"></script>');
+document.write('<script src="../../javaex-5.5.1/pc/js/javaex-formVerify.js"></script>');
+document.write('<link href="../css/style.css" rel="stylesheet" />');
+document.write('<link href="../../javaex-5.5.1/pc/lib/highlight/highlight.css" rel="stylesheet" />');
+document.write('<script src="../../javaex-5.5.1/pc/lib/highlight/highlight.min.js"></script>');
+document.write('<script src="../../javaex-5.5.1/pc/lib/highlight/highlightjs-line-numbers.min.js"></script>');
+document.write('<script src="../../javaex-5.5.1/pc/lib/clipboard/clipboard.min.js"></script>');
+document.write('<script>hljs.initHighlightingOnLoad();hljs.initLineNumbersOnLoad();</script>');
+document.write('<script>$(function(){javaex.copy();});</script>');

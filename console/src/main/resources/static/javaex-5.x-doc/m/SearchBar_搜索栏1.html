@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.demo-block-title{margin-top:0.3rem;margin-bottom:0.1rem;}
+.demo-block-title2{margin-top:0.3rem;margin-bottom:0.1rem;padding:0 0.1rem;}
+</style>
+<body>
+	<div class="demo-block-title2">表单提交</div>
+	<div class="javaex-search-bar">
+		<form id="form1" action="https://m.iqiyi.com/search.html?key=" class="javaex-search-input-area">
+			<i class="javaex-icon icon-search"></i>
+			<input type="search" name="keyword1" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" />
+			<i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"></i>
+		</form>
+	</div>
+	
+	<div class="demo-block-title2">事件监听，阻止表单提交</div>
+	<div class="javaex-search-bar">
+		<form id="form2" action="" class="javaex-search-input-area" onsubmit="return false;">
+			<i class="javaex-icon icon-search"></i>
+			<input type="search" name="keyword2" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" />
+			<i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"></i>
+		</form>
+		<a href="javascript:;" class="javaex-search-action" onclick="searchKeyword()">搜索</a>
+	</div>
+	
+	<div class="demo-block-title2">自定义背景色</div>
+	<div class="javaex-search-bar" style="background: linear-gradient(90deg,#16e05a,#16e09d);">
+		<form id="form3" action="" class="javaex-search-input-area" onsubmit="return false;">
+			<i class="javaex-icon icon-search"></i>
+			<input type="search" name="keyword3" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" />
+			<i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"></i>
+		</form>
+		<a href="javascript:;" class="javaex-search-action" style="color:#fff;" onclick="searchKeyword()">搜索</a>
+	</div>
+
+	<div class="demo-block-title2">显示全部 icon</div>
+	<div class="javaex-search-bar">
+		<a href="javascript:;" onclick="history.back()" class="javaex-search-left"><i class="javaex-icon icon-angle-left"></i></a>
+		<form id="form4" action="" class="javaex-search-input-area" onsubmit="return false;">
+			<i class="javaex-icon icon-search"></i>
+			<input type="search" name="keyword4" autocomplete="off" placeholder="请输入搜索关键词，按回车键搜索" />
+			<i class="javaex-icon icon-cancel" onclick="clearKeyword(this)" style="display: none;"></i>
+		</form>
+		<a href="javascript:;" class="javaex-search-action" onclick="searchKeyword()">搜索</a>
+	</div>
+</body>
+<script>
+	$('#form1 input[type="search"]').bind("keydown",function (e) {
+		$(this).parent().find(".icon-cancel").show();
+	});
+
+	$('#form2 input[type="search"]').bind("keydown",function (e) {
+		if (13 === e.keyCode) {
+			let keyword= $('input[name="keyword2"]').val();
+			doSearch(keyword);
+		} else {
+			$(this).parent().find(".icon-cancel").show();
+		}
+	});
+	
+	$('#form3 input[type="search"]').bind("keydown",function (e) {
+		if (13 === e.keyCode) {
+			let keyword= $('input[name="keyword"]').val();
+			doSearch(keyword);
+		} else {
+			$(this).parent().find(".icon-cancel").show();
+		}
+	});
+
+	function clearKeyword(obj) {
+		$('input[name="keyword1"]').val("");
+		$('input[name="keyword2"]').val("");
+		$('input[name="keyword3"]').val("");
+		$('input[name="keyword4"]').val("");
+		$(obj).hide();
+	}
+
+	function searchKeyword() {
+		let keyword= $('input[name="keyword2"]').val();
+		doSearch(keyword);
+	}
+
+	function doSearch(keyword) {
+		console.log(keyword);
+	}
+	
+	/**
+	 * 即时搜索
+	 */
+	$('#form2 input[type="search"]').bind("input propertychange", function() {
+		instantSearch();
+	});
+	function instantSearch() {
+		let searchval = $.trim($('input[name="keyword2"]').val());
+		console.log(searchval);
+	}
+</script>
+</html>

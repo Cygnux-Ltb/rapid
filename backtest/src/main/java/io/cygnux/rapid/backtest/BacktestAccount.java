@@ -1,6 +1,6 @@
 package io.cygnux.rapid.backtest;
 
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.mercury.common.datetime.DateTimeUtil;
 
 public class BacktestAccount extends Account {

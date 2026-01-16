@@ -1,7 +1,7 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 import org.slf4j.Logger;
 
 import static io.mercury.common.log4j2.Log4j2LoggerFactory.getLogger;

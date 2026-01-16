@@ -1,16 +1,16 @@
 package io.cygnux.rapid.backtest;
 
 import io.cygnux.rapid.core.adapter.AbstractAdapter;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 import io.mercury.common.file.FileScanner;
 import io.mercury.common.lang.exception.RuntimeIOException;
 import io.mercury.common.sys.SysProperties;

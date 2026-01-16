@@ -1,0 +1,42 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PullRefresh 下拉刷新</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>PullRefresh 下拉刷新（只能在移动端使用）</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+			<pre><code>&lt;div id="refresh"&gt;
+	...
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.pullRefresh({
+		id : "refresh",
+		callback : function() {
+			// 做点什么吧
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="PullRefresh_下拉刷新1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

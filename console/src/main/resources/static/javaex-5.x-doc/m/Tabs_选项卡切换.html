@@ -1,0 +1,134 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tabs 选项卡切换</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Tabs 选项卡切换</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;div id="tab1" class="javaex-tabs"&gt;
+	&lt;div class="javaex-tabs-wrap"&gt;
+		&lt;div class="javaex-tabs-nav"&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 1&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 2&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 3&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 4&lt;/span&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-tabs-content"&gt;
+		&lt;div class="javaex-tab-panel"&gt;内容 1&lt;/div&gt;
+		&lt;div class="javaex-tab-panel"&gt;内容 2&lt;/div&gt;
+		&lt;div class="javaex-tab-panel"&gt;内容 3&lt;/div&gt;
+		&lt;div class="javaex-tab-panel"&gt;内容 4&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab1",
+		current : 1,
+		callback: function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+			
+			<h3>切换动画</h3>
+			<p>切换动画时，比基础用法多了一层 &lt;div class="javaex-swipe-track"&gt; </p>
+			<pre><code class="html">&lt;div id="tab2" class="javaex-tabs"&gt;
+	&lt;div class="javaex-tabs-wrap"&gt;
+		&lt;div class="javaex-tabs-nav"&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 1&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 2&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 3&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;标签 4&lt;/span&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class="javaex-tabs-content"&gt;
+		&lt;!--使用切换动画时，需要包裹这一层--&gt;
+		&lt;div class="javaex-swipe-track"&gt;
+			&lt;div class="javaex-tab-panel"&gt;内容 1&lt;/div&gt;
+			&lt;div class="javaex-tab-panel"&gt;内容 2&lt;/div&gt;
+			&lt;div class="javaex-tab-panel"&gt;内容 3&lt;/div&gt;
+			&lt;div class="javaex-tab-panel"&gt;内容 4&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab2",
+		mode : "slide",
+		current : 1,
+		callback: function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+			<h3>参数说明</h3>
+			<table class="javaex-table">
+				<thead>
+					<tr>
+						<th>参数</th>
+						<th>默认值</th>
+						<th>说明</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>id</td>
+						<td></td>
+						<td>选项卡的ID</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>current</td>
+						<td>1</td>
+						<td>默认选中第几个标签，从1开始计</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>isInit</td>
+						<td>false</td>
+						<td>是否初始化就自动调用回调函数</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>mode</td>
+						<td></td>
+						<td>内容切换模式，填写 slide 时，表示切换动画</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>callback</td>
+						<td></td>
+						<td>返回的对象中包含了选项卡的索引，从1开始计</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Tabs_选项卡切换1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

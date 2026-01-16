@@ -1,6 +1,6 @@
 package io.cygnux.rapid.gateway.ctp.consts;
 
-import io.cygnux.rapid.core.event.enums.TrdDirection;
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
 
 /**
  * TFtdcPosiDirectionType是一个持仓多空方向类型 <br>

@@ -1,0 +1,309 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Select 选择器</title>
+<script src="../js/ui.js"></script>
+<style>
+@-webkit-keyframes javaexSlideUpIn{0%{-webkit-transform:scaleY(.8);transform:scaleY(.8);-webkit-transform-origin:0 0;transform-origin:0 0;opacity:0}to{-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transform-origin:0 0;transform-origin:0 0;opacity:1}}
+@keyframes javaexSlideUpIn{0%{-webkit-transform:scaleY(.8);transform:scaleY(.8);-webkit-transform-origin:0 0;transform-origin:0 0;opacity:0}to{-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transform-origin:0 0;transform-origin:0 0;opacity:1}}
+.javaexSlideUpIn{-webkit-animation-name: javaexSlideUpIn; animation-name: javaexSlideUpIn;-webkit-animation-duration: 0.2s;animation-duration: 0.2s;}
+@-webkit-keyframes javaexSlideDownIn{0%{-webkit-transform:scaleY(.8);transform:scaleY(.8);-webkit-transform-origin:100% 100%;transform-origin:100% 100%;opacity:0}to{-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transform-origin:100% 100%;transform-origin:100% 100%;opacity:1}}
+@keyframes javaexSlideDownIn{0%{-webkit-transform:scaleY(.8);transform:scaleY(.8);-webkit-transform-origin:100% 100%;transform-origin:100% 100%;opacity:0}to{-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transform-origin:100% 100%;transform-origin:100% 100%;opacity:1}}
+.javaexSlideDownIn{-webkit-animation-name: javaexSlideDownIn; animation-name: javaexSlideDownIn;-webkit-animation-duration: 0.2s;animation-duration: 0.2s;}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Select 选择器</h2>
+		<hr>
+
+		<h3>基础用法</h3>
+		<select id="select">
+			<option value="">请选择</option>
+			<option value="1">电影</option>
+			<option value="2">电视剧</option>
+			<option value="3" selected>动漫</option>
+			<option value="4" disabled="disabled">音乐（禁用）</option>
+			<option value="5">综艺</option>
+			<option value="6">新闻</option>
+			<option value="7">搞笑</option>
+			<option value="8">萌宠</option>
+		</select>
+
+		<pre><code class="html">&lt;select id="select"&gt;
+	&lt;option value=""&gt;请选择&lt;/option&gt;
+	&lt;option value="1"&gt;电影&lt;/option&gt;
+	&lt;option value="2"&gt;电视剧&lt;/option&gt;
+	&lt;option value="3" selected&gt;动漫&lt;/option&gt;
+	&lt;option value="4" disabled="disabled"&gt;音乐（禁用）&lt;/option&gt;
+	&lt;option value="5"&gt;综艺&lt;/option&gt;
+	&lt;option value="6"&gt;新闻&lt;/option&gt;
+	&lt;option value="7"&gt;搞笑&lt;/option&gt;
+	&lt;option value="8"&gt;萌宠&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+	javaex.select({
+		id : "select",
+		isSearch : true,
+		// 回调函数
+		callback: function (rtn) {
+			console.log("当前select对象:" + rtn.obj);
+			console.log("val:" + rtn.val);
+			console.log("text:" + rtn.text);
+		}
+	});
+
+	// 也支持直接塞入json数据集合
+	javaex.select({
+		id : "select",
+		dataList : [
+			{"value" : "1", "text" : "电影", "selected" : false, "disabled" : false},
+			{"value" : "2", "text" : "电视剧", "selected" : true, "disabled" : false}
+		],
+		callback: function (rtn) {
+			console.log("当前select对象:" + rtn.obj);
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>数据联动</h3>
+		<p class="mb-10">亦可使用原生的onchange事件，但是填充数据后，依然需要重新调用组件</p>
+		<select id="liandong1">
+			<option value="">请选择</option>
+			<option value="1">江苏</option>
+			<option value="2">安徽</option>
+		</select>
+		<select id="liandong2">
+			
+		</select>
+
+		<pre><code class="html">&lt;select id="liandong1"&gt;
+	&lt;option value=""&gt;请选择&lt;/option&gt;
+	&lt;option value="1"&gt;江苏&lt;/option&gt;
+	&lt;option value="2"&gt;安徽&lt;/option&gt;
+&lt;/select&gt;
+&lt;select id="liandong2"&gt;
+	
+&lt;/select&gt;
+
+&lt;script&gt;
+	javaex.select({
+		id : "liandong1",
+		// 回调函数
+		callback: function (rtn) {
+			console.log("val:" + rtn.val);
+			console.log("text:" + rtn.text);
+			
+			var html = '';
+			if (rtn.val=="1") {
+				html += '&lt;option value="WX"&gt;无锡&lt;/option&gt;';
+				html += '&lt;option value="NJ"&gt;南京&lt;/option&gt;';
+			} else if (rtn.val=="2") {
+				html += '&lt;option value="HF"&gt;合肥&lt;/option&gt;';
+				html += '&lt;option value="HN"&gt;淮南&lt;/option&gt;';
+			}
+
+			$("#liandong2").empty();
+			$("#liandong2").append(html);
+			
+			javaex.select({
+				id : "liandong2",
+				// 回调函数
+				callback: function (rtn) {
+					console.log("val:" + rtn.val);
+					console.log("text:" + rtn.text);
+				}
+			});
+		}
+	});
+	
+	javaex.select({
+		id : "liandong2"
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>多选模式（设置属性 mode : "checkbox" 即可，回调函数返回的是数组）</h3>
+		<select id="duoxuan" style="width:500px;">
+			<option value="1">电影</option>
+			<option value="2" selected>电视剧</option>
+			<option value="3" selected>动漫</option>
+			<option value="4" disabled="disabled">音乐（禁用）</option>
+			<option value="5">综艺</option>
+			<option value="6">新闻</option>
+			<option value="7">搞笑</option>
+			<option value="8">萌宠</option>
+		</select>
+		
+		<pre><code class="html">&lt;select id="duoxuan" style="width:500px;"&gt;
+	&lt;option value="1"&gt;电影&lt;/option&gt;
+	&lt;option value="2" selected&gt;电视剧&lt;/option&gt;
+	&lt;option value="3" selected&gt;动漫&lt;/option&gt;
+	&lt;option value="4" disabled="disabled"&gt;音乐（禁用）&lt;/option&gt;
+	&lt;option value="5"&gt;综艺&lt;/option&gt;
+	&lt;option value="6"&gt;新闻&lt;/option&gt;
+	&lt;option value="7"&gt;搞笑&lt;/option&gt;
+	&lt;option value="8"&gt;萌宠&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+	javaex.select({
+		id : "duoxuan",
+		mode : "checkbox",
+		callback: function (rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+
+	// 也支持直接塞入json数据集合
+	javaex.select({
+		id : "duoxuan",
+		mode : "checkbox",
+		dataList : [
+			{"value" : "1", "text" : "电影", "selected" : false, "disabled" : false},
+			{"value" : "2", "text" : "电视剧", "selected" : true, "disabled" : false}
+		],
+		callback: function (rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>select选择框的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxNum</td>
+					<td>6</td>
+					<td>下拉列表最多显示多少项，超出会显示滚动条</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isSearch</td>
+					<td>false</td>
+					<td>是否允许检索。true：允许；false：不允许<br/><font color="red">（仅在mode为空，即默认模式下有效）</font></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>hasInputName</td>
+					<td>false</td>
+					<td>
+						input是否有name属性<font color="red">（仅在mode为空，即默认模式下有效）</font><br/>
+						什么时候设为true？场景参考：选择公司，下拉框有则直接选择，没有则新增
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化就自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>minWidth</td>
+					<td>140</td>
+					<td>select的最小宽度</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mode</td>
+					<td></td>
+					<td>mode为 checkbox 时，是多选模式<font color="red">（多选模式下不支持表单必填项 data-type="required" 的验证）</font></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowAllCheck</td>
+					<td>false</td>
+					<td>mode为 checkbox 时，是否显示全选</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>dataList</td>
+					<td>[]</td>
+					<td>数据</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>选择后的回调函数（返回一个对象，包含选中的值和对应的文本名称）</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.select({
+		id : "select",
+		isSearch : true,
+		callback: function (rtn) {
+			console.log("val:" + rtn.val);
+			console.log("text:" + rtn.text);
+		}
+	});
+	
+	javaex.select({
+		id : "duoxuan",
+		mode : "checkbox",
+		isShowAllCheck : true,
+		callback: function (rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+
+	javaex.select({
+		id : "liandong1",
+		// 回调函数
+		callback: function (rtn) {
+			console.log("val:" + rtn.val);
+			console.log("text:" + rtn.text);
+			
+			var html = '';
+			if (rtn.val=="1") {
+				html += '<option value="WX">无锡</option>';
+				html += '<option value="NJ">南京</option>';
+			} else if (rtn.val=="2") {
+				html += '<option value="HF">合肥</option>';
+				html += '<option value="HN">淮南</option>';
+			}
+
+			$("#liandong2").empty();
+			$("#liandong2").append(html);
+			
+			javaex.select({
+				id : "liandong2",
+				// 回调函数
+				callback: function (rtn) {
+					console.log("val:" + rtn.val);
+					console.log("text:" + rtn.text);
+				}
+			});
+		}
+	});
+	
+	javaex.select({
+		id : "liandong2"
+	});
+</script>
+</html>

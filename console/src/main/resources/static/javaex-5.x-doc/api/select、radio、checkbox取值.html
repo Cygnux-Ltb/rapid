@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>取值</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>取值</h2>
+		<hr>
+
+		<h3>select</h3>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:45%;">方法</th>
+					<th style="width:45%;">说明</th>
+					<th style="width:10%;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * selector：jquery选择器，例如 "#select"
+ */
+var val = javaex.getSelectVal(selector);</code></pre></td>
+					<td>获取select选中的值</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * selector：jquery选择器，例如 "#select"
+ */
+var text = javaex.getSelectText(selector);</code></pre></td>
+					<td>获取select选中的文本</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<h3>radio</h3>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:45%;">方法</th>
+					<th style="width:45%;">说明</th>
+					<th style="width:10%;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * name：radio的name
+ */
+var val = javaex.getRadioVal(name);</code></pre></td>
+					<td>获取选中的radio的值</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * name：radio的name
+ */
+var text = javaex.getRadioText(name);</code></pre></td>
+					<td>获取选中的radio的文本</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * name：radio的name
+ * val：radio的值
+ */
+javaex.setRadioVal(name, val);</code></pre></td>
+					<td>设置radio的选中项</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>checkbox</h3>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:45%;">方法</th>
+					<th style="width:45%;">说明</th>
+					<th style="width:10%;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * name：checkbox的name
+ * passDisabled：是否跳过禁用的（默认不跳过），改参数可缺省。可选值：true、false
+ */
+var valArr = javaex.getCheckboxVal(name, passDisabled);</code></pre></td>
+					<td>获取选中的checkbox的值，返回一个数组</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code class="script">/**
+ * name：checkbox的name
+ * passDisabled：是否跳过禁用的（默认不跳过），改参数可缺省。可选值：true、false
+ */
+var textArr = javaex.getCheckboxText(name, passDisabled);</code></pre></td>
+					<td>获取选中的checkbox的文本，返回一个数组</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

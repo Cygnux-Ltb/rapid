@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-import static io.cygnux.rapid.core.instrument.futures.ChinaFutures.parseTradingDay;
+import static io.cygnux.rapid.core.types.instrument.futures.ChinaFutures.parseTradingDay;
 import static io.cygnux.rapid.adapter.ctp.param.FtdcParamKey.ACCOUNT_ID;
 import static io.cygnux.rapid.adapter.ctp.param.FtdcParamKey.APP_ID;
 import static io.cygnux.rapid.adapter.ctp.param.FtdcParamKey.AUTH_CODE;

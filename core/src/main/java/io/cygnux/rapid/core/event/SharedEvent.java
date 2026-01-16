@@ -1,16 +1,17 @@
 package io.cygnux.rapid.core.event;
 
 import com.lmax.disruptor.EventFactory;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.DepthMarketData;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
-import io.cygnux.rapid.core.event.sent.ControlCommand;
-import io.cygnux.rapid.core.event.sent.StrategySignal;
 import io.cygnux.rapid.core.strategy.StrategySlotCounter;
+import io.cygnux.rapid.core.types.event.enums.SharedEventType;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.DepthMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.sent.ControlCommand;
+import io.cygnux.rapid.core.types.event.sent.StrategySignal;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.JsonSerializable;
@@ -71,7 +72,7 @@ public final class SharedEvent implements JsonSerializable {
      * 适配器报告
      */
     @Getter
-    private final AdapterStatusReport adapterStatusReport = new AdapterStatusReport();
+    private final AdapterReport adapterReport = new AdapterReport();
 
     /**
      * 仓位报告
@@ -147,10 +148,10 @@ public final class SharedEvent implements JsonSerializable {
      * @param event AdaptorReport
      * @return SharedEvent
      */
-    public SharedEvent updateWith(AdapterStatusReport event) {
+    public SharedEvent updateWith(AdapterReport event) {
         this.epochMicros = micros();
         this.type = SharedEventType.ADAPTER_STATUS_REPORT;
-        this.adapterStatusReport.copyOf(event);
+        this.adapterReport.copyOf(event);
         return this;
     }
 
@@ -214,17 +215,17 @@ public final class SharedEvent implements JsonSerializable {
                 .setEpochUnit(EpochUnit.MICROS)
                 .setEpochTime(epochMicros)
                 .setObject(switch (type) {
-                    case FAST_MARKET_DATA -> fastMarketData;
-                    case DEPTH_MARKET_DATA -> depthMarketData;
-                    case INSTRUMENT_STATUS_REPORT -> instrumentStatusReport;
-                    case ADAPTER_STATUS_REPORT -> adapterStatusReport;
-                    case POSITIONS_REPORT -> positionsReport;
-                    case BALANCE_REPORT -> balanceReport;
-                    case ORDER_REPORT -> orderReport;
-                    case CONTROL_COMMAND -> controlCommand;
-                    case STRATEGY_SIGNALS -> strategySignals;
-                    case SKIP -> "SKIP";
-                    case INVALID -> null;
+                    case SharedEventType.FAST_MARKET_DATA -> fastMarketData;
+                    case SharedEventType.DEPTH_MARKET_DATA -> depthMarketData;
+                    case SharedEventType.INSTRUMENT_STATUS_REPORT -> instrumentStatusReport;
+                    case SharedEventType.ADAPTER_STATUS_REPORT -> adapterReport;
+                    case SharedEventType.POSITIONS_REPORT -> positionsReport;
+                    case SharedEventType.BALANCE_REPORT -> balanceReport;
+                    case SharedEventType.ORDER_REPORT -> orderReport;
+                    case SharedEventType.CONTROL_COMMAND -> controlCommand;
+                    case SharedEventType.STRATEGY_SIGNALS -> strategySignals;
+                    case SharedEventType.SKIP -> "SKIP";
+                    case SharedEventType.INVALID -> null;
                 });
     }
 

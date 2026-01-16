@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Subscript 角标</title>
+<script src="../js/ui.js"></script>
+<style>
+.box {
+	    width: 100%;
+	    padding-top: 6%;
+	    position: relative;
+	    background-color: #efefef;
+	}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Subscript 角标</h2>
+		<hr>
+		
+		<div class="mb-10">红色角标（左上角）</div>
+		<div class="box" style="overflow:hidden;">
+			<i class="javaex-subscript red">最新</i>
+		</div>
+
+		<div class="mb-10 mt-20">橙色角标（左上角）</div>
+		<div class="box" style="overflow:hidden;">
+			<i class="javaex-subscript orange">活动</i>
+		</div>
+
+		<div class="mb-10 mt-20">绿色角标（右上角）</div>
+		<div class="box" style="overflow:hidden;">
+			<i class="javaex-subscript green right">限免</i>
+		</div>
+		
+		<div class="mb-10 mt-20">蓝色角标（右上角）</div>
+		<div class="box" style="overflow:hidden;">
+			<i class="javaex-subscript blue right">免费</i>
+		</div>
+
+		<h3 style="margin-top:50px;">左上角</h3>
+				<p>red:红色；orange:橙色；right:绿色；blue:蓝色</p>
+				<pre><code>&lt;style&gt;
+	.box {
+	    width: 100%;
+	    padding-top: 30%;
+	    position: relative;
+	    background-color: #fff;
+	}
+&lt;/style&gt;
+
+&lt;div class="box" style="overflow:hidden;"&gt;
+	&lt;i class="javaex-subscript red"&gt;最新&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>右上角</h3>
+				<p>添加 class="right" 即可</p>
+				<pre><code>&lt;style&gt;
+	.box {
+	    width: 100%;
+	    padding-top: 30%;
+	    position: relative;
+	    background-color: #fff;
+	}
+&lt;/style&gt;
+
+&lt;div class="box" style="overflow:hidden;"&gt;
+	&lt;i class="javaex-subscript green right"&gt;限免&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+	</div>
+</body>
+</html>

@@ -1,17 +1,17 @@
 package io.cygnux.rapid.engine.service;
 
-import io.cygnux.console.api.resp.SubAccountMappingRsp;
-import io.cygnux.console.api.resp.SubAccountRsp;
-import io.cygnux.console.component.ApplicationConfiguration;
-import io.cygnux.console.service.AccountService;
-import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.account.AccountException;
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.account.SubAccountException;
-import io.cygnux.rapid.core.account.SubAccountMapping;
 import io.cygnux.rapid.core.manager.AccountManager;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.account.Account;
+import io.cygnux.rapid.core.types.account.AccountException;
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.account.SubAccountException;
+import io.cygnux.rapid.core.types.account.SubAccountMapping;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.infra.component.ApplicationConfiguration;
+import io.cygnux.rapid.infra.dto.resp.SubAccountMappingRsp;
+import io.cygnux.rapid.infra.dto.resp.SubAccountRsp;
+import io.cygnux.rapid.infra.service.AccountService;
 import io.mercury.common.collections.CollectionUtil;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -108,7 +108,7 @@ public final class SimpleAccountManagerService implements AccountManager {
      * @param report AdaptorReport
      */
     @Override
-    public void onAdapterReport(AdapterStatusReport report) {
+    public void onAdapterReport(AdapterReport report) {
 
     }
 

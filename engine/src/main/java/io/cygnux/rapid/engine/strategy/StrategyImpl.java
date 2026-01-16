@@ -1,15 +1,15 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
 import io.cygnux.rapid.core.handler.AdapterReportHandler;
 import io.cygnux.rapid.core.handler.MarketDataHandler;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
-import io.cygnux.rapid.core.order.Order;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
-import io.cygnux.rapid.core.strategy.StrategyException;
+import io.cygnux.rapid.core.types.strategy.StrategyException;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
 import org.slf4j.Logger;
@@ -33,43 +33,39 @@ public class StrategyImpl extends AbstractStrategy {
 
     private final AdapterReportHandler adapterReportHandler = event -> {
         log.info("{} :: On adaptor status callback, adaptorId==[{}], channelType==[{}], available==[{}]",
-                getStrategyName(), event.getAdaptorId(), event.getAdapterType(), event.isAvailable());
+                getStrategyName(), event.getAdapterId(), event.getAdapterType(), event.isAvailable());
         switch (event.getAdapterType()) {
             case MARKET_DATA -> {
-                log.info("{} :: Handle adaptor MdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Handle adapter MdEnable, adapterId==[{}]", getStrategyName(), event.getAdapterId());
                 //adaptor.subscribeMarketData(instrument);
                 // log.info("{} :: Call subscribeMarketData, instrument -> {}", getName(), instrument);
             }
             case TRADING -> {
-                log.info("{} :: Handle adaptor TdEnable, adaptorId==[{}]", getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Handle adapter TdEnable, adapterId==[{}]", getStrategyName(), event.getAdapterId());
                 // TODO
 //			adaptor.queryOrder(null);
 //			log.info("{} :: Call queryOrder, adaptorId==[{}], account is default", getStrategyName(),
 //					event.getAdaptorId());
                 //adaptor.queryPositions(queryPositions.setExchangeCode(instrument.getExchangeCode())
                 //       .setInstrumentCode(instrument.getInstrumentCode()).setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryPositions, adaptorId==[{}], account is default",
-                        getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Call queryPositions, adapterId==[{}], account is default",
+                        getStrategyName(), event.getAdapterId());
                 // adaptor.queryBalance(queryBalance.setGenerateTime(EpochTime.getEpochMillis()));
-                log.info("{} :: Call queryBalance, adaptorId==[{}], account is default",
-                        getStrategyName(), event.getAdaptorId());
+                log.info("{} :: Call queryBalance, adapterId==[{}], account is default",
+                        getStrategyName(), event.getAdapterId());
             }
             default -> log.warn("{} unhandled event received {}", getStrategyName(), event);
         }
 
     };
 
-    public void onAdapterEvent(@Nonnull AdapterStatusReport event) {
+    public void onAdapterEvent(@Nonnull AdapterReport event) {
         adapterReportHandler.onAdapterReport(event);
     }
 
-    @Override
-    public void onOrder(@Nonnull Order order) {
-
-    }
 
     @Override
-    protected void handleOrder(Order order) {
+    protected void handleOrder(OrderReport report) {
 
     }
 

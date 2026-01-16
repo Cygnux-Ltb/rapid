@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>时间格式化</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>时间格式化</h2>
+		<hr>
+
+		<h3>时间戳格式化</h3>
+		<pre><code class="html">/**
+ * 格式化时间戳
+ *     timestamp ：时间戳，支持秒和毫秒
+ *     fmt       : 格式化。 例如：yyyy-MM-dd HH:mm:ss
+ */
+var timeText = javaex.dateFormat(timestamp, fmt);</code></pre>
+		
+		<h3>修改时间显示（返回：N天前、N小时前...）</h3>
+		<pre><code class="html">/* 
+ * 修改时间显示
+ * time : 传入的时间，格式yyyy-MM-dd HH:mm:ss
+ */
+var timeText = javaex.changeTimeText(time);</code></pre>
+
+		<h3>修改时间显示（会自动修改为：N天前、N小时前...）</h3>
+		<pre><code class="html">/* 
+ * 修改时间显示
+ * selector : jquery选择器，例如   ".change-time"
+ */
+javaex.changeTimeTexts(selector);</code></pre>
+	</div>
+</body>
+</html>

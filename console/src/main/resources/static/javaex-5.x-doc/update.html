@@ -1,0 +1,440 @@
+﻿<!--<!doctype html>-->
+<html>
+<head>
+<meta charset="utf-8">
+<title>更新日志</title>
+<link href="../javaex-5.5.1/pc/css/common.css" rel="stylesheet" />
+<link href="../javaex-5.5.1/pc/css/skin/default.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+<script src="../javaex-5.5.1/pc/lib/jquery-1.7.2.min.js"></script>
+<style>
+.sup_center{
+	margin:0 auto;
+	min-width:1000px;
+	max-width:1200px;
+	_width:1000px;
+	height:auto;
+	min-height:500px;
+	margin-bottom:50px;
+}
+
+.history { background:url(images/history_line.gif) repeat-y 187px 0; overflow:hidden; position:relative; margin-top: 50px}
+
+.history-date h2 { background:url(images/history_top.gif) #fff no-repeat 158px 0; height:59px; font-size:25px; font-weight:normal; padding-left:45px; margin-top: 60px; cursor: pointer; }
+.history-date h2.first { width:935px; z-index:99; margin-top: 0;}
+
+.history-date ul li { background:url(images/history_point.gif) no-repeat 180px 50px; padding:45px 0 0; zoom:1; }
+.history-date ul li.last { padding-bottom:0;}
+.history-date ul li:after {content:" "; display:block; height:0; clear:both; visibility:hidden;}
+.history-date ul li h3 { float:left; width:168px; text-align:right; padding-right:19px;color:#aaaaaa; font:normal 18px/16px Arial; cursor: pointer; margin-top: 4px; }
+
+.history-date ul li dl { float:left; padding-left:30px;  width: 732px}
+.history-date ul li dl dt { font-size:18px; line-height: 24px; cursor: pointer;font-size:18px; color:#666;}
+.history-date ul li dl dd { font-size:14px; padding-top: 20px; color:#666; }
+</style>
+</head>
+<body>
+	<div class="doc-header animated">
+		<h1 class="logo" style="margin-top: 0;"><a href="http://www.javaex.cn/">Javaex 文档</a></h1>
+		<div class="doc-tab">
+			<ul class="tabs">
+				<li class="tab"><a href="index.html">文档（电脑）</a></li>
+				<li class="tab"><a href="m.html">文档（手机）</a></li>
+				<li class="tab"><a href="api.html">API方法（通用）</a></li>
+				<li class="tab active"><a href="update.html">更新日志</a></li>
+				<li class="tab"><a href="https://bbs.javaex.cn/forumdisplay/4/28">论坛</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="doc-markdown" style="padding-top: 80px;">
+		<div class="sup_center">
+			<div class="history">
+				<div class="history-date">
+					<h2 class="first"></h2>
+					<ul style="display: block;">
+						<li>
+							<h3>2024-05-10</h3>
+							<dl>
+								<dt>版本：5.5.1</dt>
+								<dd>
+									<dd>
+										<p>修复 serializeToJsonString 方法的BUG</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2023-02-01</h3>
+							<dl>
+								<dt>版本：5.4.1</dt>
+								<dd>
+									<dd>
+										<p>API接口：新增 downloadFile 文件下载接口</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2022-11-30</h3>
+							<dl>
+								<dt>版本：5.5.1</dt>
+								<dd>
+									<dd>
+										<p>PC版：修复javaex.close()对tip、message无效的BUG</p>
+										<p>PC版：允许一个页面存在多个TextEditor 富文本编辑器，并修改了删除本地草稿的方法名</p>
+										<p>PC版：修复多图上传失败或校验失败时，会有置灰的div出现的BUG</p>
+										<p>PC版：新增 textarea 组件</p>
+										<p>PC版：优化部分元素样式</p>
+										<p>移动版：select选择框新增isInit属性</p>
+										<p>移动版：新增 textarea 组件</p>
+										<p>API接口：新增 serializeToJsonString 接口 </p>
+										<p>API接口：新增 serializeArrayToJsonString 接口</p>
+										<p>API接口：新增 deepReplaceKeyName 接口，用于深度替换对象中的key</p>
+										<p>API接口：新增 fileExtension 接口，用于获取文件扩展名</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2022-11-18</h3>
+							<dl>
+								<dt>版本：5.2.5</dt>
+								<dd>
+									<dd>
+										<p>PC版：Toast吐司组件添加打开后的回调函数opend</p>
+										<p>PC版：Message消息提示组件添加打开后的回调函数opend</p>
+										<p>PC版：Tip轻提示提示组件添加打开后的回调函数opend</p>
+										<p>PC版：新添加几个Animation内置动画</p>
+										<p>移动版：Toast吐司组件添加打开后的回调函数opend</p>
+										<p>修复后台管理模板中3级菜单的编写错误</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2022-11-11</h3>
+							<dl>
+								<dt>版本：5.1.6</dt>
+								<dd>
+									<dd>
+										<p>PC版：tree树形组件点击第三方超链接时，改为新窗口打开</p>
+										<p>PC版：修复page分页组件不显示跳页时，会显示“当前位置”的字样的BUG</p>
+										<p>PC版：优化flow流加载分页组件的加载方式</p>
+										<p>PC版：修复在动态表格中，动态加载日期组件时，报marginRight错误的BUG</p>
+										<p>PC版：修复在同一个页面，使用多个UploadImage单图上传组件时，样式加载错误的BUG</p>
+										<p>PC版：优化部分组件代码</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2022-10-29</h3>
+							<dl>
+								<dt>版本：5.0.0</dt>
+								<dd>
+									<dd>
+										<p>PC版部分代码重构，部分组件和属性的命名有修改，增加了部分新的组件</p>
+										<p>移动版全部重构</p>
+									</dd>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2020-08-04</h3>
+							<dl>
+								<dt>版本：4.0.0</dt>
+								<dd>
+									<p>PC版重写</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-09-15</h3>
+							<dl>
+								<dt>版本：3.2.0</dt>
+								<dd>
+									<p>修改部分默认样式</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-09-07</h3>
+							<dl>
+								<dt>版本：3.1.3</dt>
+								<dd>
+									<p>（PC）评论组件中 replyInfoList 属性名称改为 replyList</p>
+									<p>（PC）消息反馈层宽度自适应</p>
+									<p>（手机）tab选项卡切换组件允许嵌套</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-08-04</h3>
+							<dl>
+								<dt>版本：3.0.1</dt>
+								<dd>
+									<p>（PC）修复升级3.0后弹出层无法关闭的bug</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-07-30</h3>
+							<dl>
+								<dt>版本：3.0.0</dt>
+								<dd>
+									<p>（PC）菜单组件统一为一个，后台管理模板样式统一（采用iframe布局）</p>
+									<p>（PC）统一通用的class属性</p>
+									<p>（PC）日期时间的class属性添加 ex- 前缀，其他个别属性添加 ex- 前缀</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-06-05</h3>
+							<dl>
+								<dt>版本：2.12.2</dt>
+								<dd>
+									<p>修复已知bug</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-06-04</h3>
+							<dl>
+								<dt>版本：2.11.1</dt>
+								<dd>
+									<p>（PC）修复评论组件的bug</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-04-16</h3>
+							<dl>
+								<dt>版本：2.10.3</dt>
+								<dd>
+									<p>（PC）操作提示层、消息反馈层取消默认超时时间，需要手动设置</p>
+									<p>（手机）弹出层样式修改</p>
+									<p>（手机）修复分页组件，一个页面ajax加载数据，2次检索时，分页无效的bug</p>
+									<p>修复图片懒加载初始化可能需要手动滚动滚动条才能触发的bug</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-04-09</h3>
+							<dl>
+								<dt>版本：2.9.1</dt>
+								<dd>
+									<p>（PC）操作提示层、消息反馈层默认追加超时时间</p>
+									<p>（PC）消息反馈层追加提交中的提示功能</p>
+									<p>（PC）修改单图上传时的写法</p>
+									<p>（PC）表单验证追加新的使用方法</p>
+									<p>（PC）优化富文本编辑器</p>
+									<p>（PC）高级弹出层（窗口）中的属性名isBackground改为hasBackground</p>
+									<p>追加新的API接口</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-02-20</h3>
+							<dl>
+								<dt>版本：2.8.1</dt>
+								<dd>
+									<p>（PC）优化富文本编辑器</p>
+									<p>修改局部重新渲染的用法</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-01-29</h3>
+							<dl>
+								<dt>版本：2.7.0</dt>
+								<dd>
+									<p>（PC）气泡提示新增：位置在上方的提示</p>
+									<p>（手机）新增幻灯片组件</p>
+									<p>新增伪单选和伪多选组件</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2019-01-24</h3>
+							<dl>
+								<dt>版本：2.6.0</dt>
+								<dd>
+									<p>（PC）优化富文本编辑器，并修改回显使用方法</p>
+									<p>（PC）强化分页组件</p>
+									<p>（PC）修改单图上传的使用方法</p>
+									<p>（PC）多图上传支持直接上传到服务器，并支持拖动排序</p>
+									<p>（PC）新增幻灯片组件</p>
+									<p>（PC）简化气泡提示用法</p>
+									<p>新增图片懒加载组件</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-12-31</h3>
+							<dl>
+								<dt>版本：2.5.1</dt>
+								<dd>
+									<p>所有元素采用box-sizing: border-box;样式</p>
+									<p>修复局部重新渲染的bug</p>
+									<p>（PC）新增消息反馈提示层</p>
+									<p>（PC）日期组件新增最小可选日期，并修改最大最小的属性名字</p>
+									<p>（PC）日期组件修改带时分秒的写法</p>
+									<p>（PC）优化富文本编辑器</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-12-12</h3>
+							<dl>
+								<dt>版本：2.4.1</dt>
+								<dd>
+									<p>（PC）优化表格中的树形列</p>
+									<p>（PC）允许左侧菜单初始化全部展开</p>
+									<p>（PC）修改iframe布局左侧菜单的写法</p>
+									<p>（PC）优化富文本编辑器</p>
+									<p>简化清浮动的写法，旧的写法依然支持</p>
+									<p>所有初始化自动调用回调函数的组件，全部改为初始化不自动调用</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-12-02</h3>
+							<dl>
+								<dt>版本：2.3.1</dt>
+								<dd>
+									<p>（PC）树形菜单追加属性，允许初始化时默认展开</p>
+									<p>（PC）高级弹出层（窗口）追加属性，点击右上角X关闭时，可以设置回调函数，并允许设置点击遮罩关闭</p>
+									<p>（PC）定位删除弹出层样式改变，用法不变</p>
+									<p>（PC）表格允许鼠标滑过时不变色</p>
+									<p>（PC）select下拉选择框改为初始化自动调用回调函数，并允许关闭</p>
+									<p>（PC）select下拉选择框支持 必填 验证</p>
+									<p>（PC）页面预加载，允许手动开启和关闭</p>
+									<p>修复已知BUG和样式优化</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-09-29</h3>
+							<dl>
+								<dt>版本：2.2.4</dt>
+								<dd>
+									<p>（PC）分类筛选将属性名value改为val</p>
+									<p>（PC）tab切换和分类筛选允许设置初始化时，不自动回调</p>
+									<p>（PC）新增验证码倒计时组件</p>
+									<p>（PC）富文本编辑器内容过多时，自动固定工具栏</p>
+									<p>（PC）其他优化</p>
+									<p>手机版部分功能使用方法变更</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-08-25</h3>
+							<dl>
+								<dt>版本：2.1.5</dt>
+								<dd>
+									<p>（PC）修复上传BUG</p>
+									<p>（PC）修复左侧菜单超出时无滚动条的BUG</p>
+									<p>（PC）左侧菜单允许设置默认高亮菜单</p>
+									<p>（PC）树形表格允许默认为闭合状态</p>
+									<p>（PC）优化图片弹出层</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-08-22</h3>
+							<dl>
+								<dt>版本：2.0.0</dt>
+								<dd>
+									<p>电脑版、手机版统一字体图标</p>
+									<p>（PC）下拉选择框支持原生的onchange事件</p>
+									<p>（PC）alert弹出层新增最大高度属性，超出时显示滚动条</p>
+									<p>（PC）评论组件取消userId属性</p>
+									<p>（PC）新增局部渲染功能</p>
+									<p>（PC）新增树组件</p>
+									<p>（PC）强化表格功能</p>
+									<p>（PC）表格自动合并属性名称变更，从colArr变为mergeColArr</p>
+									<p>（PC）图片弹出层取消宽度设置，系统自适应</p>
+									<p>（PC）头像上传组件简化配置，不再需要另外写放大缩小事件</p>
+									<p>（PC）日期组件允许设置最大可选日期</p>
+									<p>（PC）修改外部文件highlight的存储路径（富文本编辑器专用）</p>
+									<p>其他优化</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-07-29</h3>
+							<dl>
+								<dt>版本：1.4.4</dt>
+								<dd>
+									<p>（PC）新增：进度条</p>
+									<p>栅格系统有间距时，取消下边距</p>
+									<p>修复已知BUG</p>
+									<p>其他优化</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-07-10</h3>
+							<dl>
+								<dt>版本：1.3.2</dt>
+								<dd>
+									<p>（PC）新增：气泡提示</p>
+									<p>（PC）新增：支持更为高级的复选框全选</p>
+									<p>（PC）优化富文本编辑器的功能</p>
+									<p>（PC）修复评论组件中replyInfoList拼错的BUG</p>
+									<p>其他优化</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-06-21</h3>
+							<dl>
+								<dt>版本：1.2.3</dt>
+								<dd>
+									<p>（PC）新增：文件上传</p>
+									<p>（PC）新增：api接口</p>
+									<p>修复已知BUG</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-04-15</h3>
+							<dl>
+								<dt>版本：1.1.0</dt>
+								<dd>
+									<p>（PC）新增：仅仅是时分秒的时间选择器</p>
+									<p>（PC）新增：日期选择组件的时分秒</p>
+									<p>（PC）新增：固定大小弹出层</p>
+									<p>（PC）新增：评论组件</p>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h3>2018-04-07</h3>
+							<dl>
+								<dt>版本：1.0.0</dt>
+								<dd>
+									<p>正式版发布</p>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(function() {
+		$(".history-date").find("h3").click(function() {
+			if ($(this).hasClass("activate")) {
+				$(this).next().find("dd").slideDown("fast");
+				$(this).removeClass("activate");
+			} else {
+				$(this).next().find("dd").slideUp("fast");
+				$(this).addClass("activate");
+			}
+		});
+	});
+</script>
+</html>

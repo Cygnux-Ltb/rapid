@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BackTop 返回顶部</title>
+<script src="../js/ui.js"></script>
+</head>
+<style>
+
+</style>
+<body>
+	<div class="doc-markdown">
+		<h2>BackTop 返回顶部</h2>
+		<hr>
+		
+		<h3>样式也可以自己写，只要有ID即可</h3>
+		<a id="backtop" class="javaex-back-top" href="javascript:;"><i class="icon-angle-up"></i><span>回到顶部</span></a>
+
+		<pre><code>&lt;a id="backtop" class="javaex-back-top" href="javascript:;"&gt;&lt;i class="icon-angle-up"&gt;&lt;/i&gt;&lt;span&gt;回到顶部&lt;/span&gt;&lt;/a&gt;
+
+&lt;script&gt;
+	javaex.backTop({
+		id : "backtop"
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>样式自己写，组件中指定你要点击触发回到顶部的元素的id即可</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.backTop({
+		id : "backtop"
+	});
+</script>
+</html>

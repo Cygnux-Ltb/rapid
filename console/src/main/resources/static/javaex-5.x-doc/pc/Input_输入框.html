@@ -1,0 +1,42 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Input 输入框</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Input 输入框</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>如果你不想input获取焦点时，添加蓝色边框，添加 class="original" 即可，这是为了防止和前台搜索框的input产生冲突</strong></li>
+			<li><strong>如果input是只读的，可以添加 class="readonly" 来添加样式</strong></li>
+		</ul>
+		
+		<h3>输入框（默认）</h3>
+		<input type="text" class="javaex-text" placeholder="提示信息" autocomplete="off" />
+		<pre class="mt-10"><code>&lt;input type="text" class="javaex-text" placeholder="提示信息" autocomplete="off" /&gt;</code></pre>
+		
+		<h3>输入框（获取焦点时，无边框）</h3>
+		<input type="text" class="javaex-text original" placeholder="提示信息" />
+		<pre class="mt-10"><code>&lt;input type="text" class="javaex-text original" placeholder="提示信息" /&gt;</code></pre>
+		
+		<h3>输入框（只读）</h3>
+		<input type="text" class="javaex-text readonly" value="我是只读的" readonly autocomplete="off" />
+		<pre class="mt-10"><code>&lt;input type="text" class="javaex-text readonly" value="我是只读的" readonly autocomplete="off" /&gt;</code></pre>
+
+		<h3>搜索框</h3>
+		<span class="javaex-search-group">
+			<input type="text" class="javaex-text" placeholder="提示信息" />
+			<button class="javaex-btn blue">搜索</button>
+		</span>
+		<pre class="mt-10"><code>&lt;span class="javaex-search-group"&gt;
+	&lt;input type="text" class="javaex-text" placeholder="提示信息" /&gt;
+	&lt;button class="javaex-btn blue"&gt;搜索&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+	</div>
+</body>
+</html>

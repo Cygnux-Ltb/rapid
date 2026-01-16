@@ -1,0 +1,58 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Switch 开关</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Switch 开关</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;input type="checkbox" name="checkbox1" value="1" switch checked onchange="test(this)"/&gt;
+
+&lt;script&gt;
+	function test(obj) {
+		if ($(obj).is(":checked")) {
+			console.log("选中了");
+		} else {
+			console.log("取消选中");
+		}
+	}
+&lt;/script&gt;</code></pre>
+				
+				<h3>禁用状态</h3>
+				<pre><code class="html">&lt;input type="checkbox" name="checkbox2" value="2" switch checked disabled="disabled" onchange="test(this)"/&gt;</code></pre>
+
+				<h3>尺寸 small</h3>
+				<p>设置size="mini"，就是小尺寸</p>
+				<pre><code class="html">&lt;input type="checkbox" name="checkbox3" value="3" switch size="small" checked onchange="test(this)"/&gt;</code></pre>
+				
+				<h3>支持文字</h3>
+				<p>随便添加一个 class ，然后按照示例添加样式</p>
+				<pre><code class="html">&lt;style&gt;
+	input[type="checkbox"][switch].switch-text:before {
+		content: "√×";
+	}
+&lt;/style&gt;
+
+&lt;input type="checkbox" class="switch-text" name="checkbox4" value="4" switch checked onchange="test(this)"/&gt;</code></pre>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Switch_开关1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

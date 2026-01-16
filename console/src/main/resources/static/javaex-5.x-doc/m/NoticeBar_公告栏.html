@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>NoticeBar 公告栏</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>NoticeBar 公告栏</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code>&lt;div class="javaex-noticebar"&gt;
+	&lt;div class="javaex-noticebar-left-icon"&gt;
+		&lt;i class="javaex-icon icon-volume-medium"&gt;&lt;/i&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-noticebar-wrap"&gt;
+		&lt;div class="javaex-noticebar-content javaex-noticebar-play-infinite"&gt;Javaex 是基于jquery开发的移动端组件库，帮助研发人员提升开发效率，改善开发体验。&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+				
+				<h3>关闭模式</h3>
+				<pre><code>&lt;div class="javaex-noticebar"&gt;
+	&lt;div class="javaex-noticebar-left-icon"&gt;
+		&lt;i class="javaex-icon icon-volume-medium"&gt;&lt;/i&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-noticebar-wrap"&gt;
+		&lt;div class="javaex-noticebar-content javaex-noticebar-play-infinite"&gt;Javaex 是基于jquery开发的移动端组件库，帮助研发人员提升开发效率，改善开发体验。&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-noticebar-right-icon" onclick="doDel(this)"&gt;&lt;i class="javaex-icon icon-cancel"&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	function doDel(obj) {
+		$(obj).parent().remove();
+	}
+&lt;/script&gt;</code></pre>
+				
+				<h3>垂直滚动</h3>
+				<pre><code>&lt;div id="rollNotice" class="javaex-noticebar"&gt;
+	&lt;div class="javaex-noticebar-left-icon"&gt;
+		&lt;i class="javaex-icon icon-volume-medium"&gt;&lt;/i&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-noticebar-wrap"&gt;
+		&lt;div class="javaex-noticebar-content javaex-ellipsis"&gt;
+			&lt;div class="javaex-notice-swipe"&gt;
+				&lt;ul class="javaex-swipe-track"&gt;
+					&lt;li class="javaex-swipe-item"&gt;枯藤老树昏鸦，小桥流水人家。&lt;/li&gt;
+					&lt;li class="javaex-swipe-item"&gt;落霞与孤鹜齐飞，秋水共长天一色。&lt;/li&gt;
+					&lt;li class="javaex-swipe-item"&gt;人生若只如初见，何事秋风悲画扇。&lt;/li&gt;
+					&lt;li class="javaex-swipe-item"&gt;金风玉露一相逢，便胜却人间无数。&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.rollNotice({
+		id : "rollNotice"
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>id</td>
+							<td></td>
+							<td>容器的ID</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>delay</td>
+							<td>3000</td>
+							<td>公告替换频率。单位：毫秒</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="NoticeBar_公告栏1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

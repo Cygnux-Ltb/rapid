@@ -1,14 +1,14 @@
 package io.cygnux.rapid.core.event;
 
 import com.lmax.disruptor.EventHandler;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.DepthMarketData;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
-import io.cygnux.rapid.core.event.sent.StrategySignal;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.DepthMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.sent.StrategySignal;
 import io.mercury.common.lang.exception.NotImplementedFunctionException;
 import io.mercury.common.log4j2.StaticLogger;
 
@@ -27,7 +27,7 @@ public interface SharedEventHandler extends EventHandler<SharedEvent> {
             case SKIP -> fireSkip();
             case FAST_MARKET_DATA -> fireFastMarketData(event.fastMarketData());
             case DEPTH_MARKET_DATA -> fireDepthMarketData(event.depthMarketData());
-            case ADAPTER_STATUS_REPORT -> fireAdapterReport(event.adapterStatusReport());
+            case ADAPTER_STATUS_REPORT -> fireAdapterReport(event.adapterReport());
             case INSTRUMENT_STATUS_REPORT -> fireInstrumentStatusReport(event.instrumentStatusReport());
             case ORDER_REPORT -> fireOrderReport(event.orderReport());
             case POSITIONS_REPORT -> firePositionsReport(event.positionsReport());
@@ -96,8 +96,8 @@ public interface SharedEventHandler extends EventHandler<SharedEvent> {
      *
      * @param report AdaptorReport
      */
-    default void fireAdapterReport(AdapterStatusReport report) {
-        throw new NotImplementedFunctionException(this.getClass(), "fireAdaptorReport");
+    default void fireAdapterReport(AdapterReport report) {
+        throw new NotImplementedFunctionException(this.getClass(), "fireAdapterReport");
     }
 
     /**

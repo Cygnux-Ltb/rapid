@@ -17,32 +17,32 @@ public final class OrderBookImpl implements OrderBook {
     /**
      * 存储当前OrderBook里的所有订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> orderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> orderMap;
 
     /**
      * 存储当前OrderBook里的所有long订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> longOrderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> longOrderMap;
 
     /**
      * 存储当前OrderBook里的所有short订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> shortOrderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> shortOrderMap;
 
     /**
      * 存储当前OrderBook里的所有活动状态的订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> activeOrderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> activeOrderMap;
 
     /**
      * 存储本OrderBook里的所有活动状态的long订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> activeLongOrderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> activeLongOrderMap;
 
     /**
      * 存储本OrderBook里的所有活动状态的short订单, 以ordSysId索引
      */
-    private final MutableLongObjectMap<Order> activeShortOrderMap;
+    private final MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> activeShortOrderMap;
 
     /**
      * Use default Capacity.L07_SIZE, Size == 128
@@ -63,34 +63,34 @@ public final class OrderBookImpl implements OrderBook {
         this.activeShortOrderMap = newLongObjectMap(capacity.halfSize().size());
     }
 
-    public MutableLongObjectMap<Order> getAllOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getAllOrders() {
         return orderMap;
     }
 
-    public MutableLongObjectMap<Order> getLongOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getLongOrders() {
         return longOrderMap;
     }
 
-    public MutableLongObjectMap<Order> getShortOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getShortOrders() {
         return shortOrderMap;
     }
 
-    public MutableLongObjectMap<Order> getAllActiveOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getAllActiveOrders() {
         return activeOrderMap;
     }
 
-    public MutableLongObjectMap<Order> getLongActiveOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getLongActiveOrders() {
         return activeLongOrderMap;
     }
 
-    public MutableLongObjectMap<Order> getShortActiveOrders() {
+    public MutableLongObjectMap<io.cygnux.rapid.core.types.order.Order> getShortActiveOrders() {
         return activeShortOrderMap;
     }
 
     /**
      * @param order Order
      */
-    public void putOrder(Order order) {
+    public void putOrder(io.cygnux.rapid.core.types.order.Order order) {
         switch (order.getDirection()) {
             case LONG -> {
                 longOrderMap.put(order.getOrdSysId(), order);
@@ -109,7 +109,7 @@ public final class OrderBookImpl implements OrderBook {
     }
 
     @Nullable
-    public Order getOrder(long ordSysId) {
+    public io.cygnux.rapid.core.types.order.Order getOrder(long ordSysId) {
         return orderMap.get(ordSysId);
     }
 

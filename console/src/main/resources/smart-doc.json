@@ -1,0 +1,8 @@
+{
+  "outPath": "src/main/resources/static/doc",
+  "style": "xt256",
+  "increment": false,
+  "showAuthor": false,
+  "inlineEnum": true,
+  "sortByTitle": false
+}

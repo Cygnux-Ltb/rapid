@@ -1,20 +1,20 @@
 package io.cygnux.rapid.core.adapter;
 
-import io.cygnux.rapid.core.account.Account;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.event.SharedEvent;
 import io.cygnux.rapid.core.event.SharedEventHandler;
 import io.cygnux.rapid.core.event.SharedEventbus;
-import io.cygnux.rapid.core.event.enums.AdapterType;
+import io.cygnux.rapid.core.types.account.Account;
+import io.cygnux.rapid.core.types.adapter.enums.AdapterType;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.concurrent.disruptor.RingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.AvailableComponent;
+import io.mercury.common.state.AvailableInstance;
 import io.mercury.common.state.StartupException;
 import org.slf4j.Logger;
 
@@ -29,7 +29,7 @@ import static io.mercury.common.lang.Validator.nonNull;
  * @author yellow013
  */
 @ThreadSafe
-public abstract non-sealed class AbstractAdapter extends AvailableComponent implements Adapter {
+public abstract non-sealed class AbstractAdapter extends AvailableInstance implements Adapter {
 
     protected final Logger log = Log4j2LoggerFactory.getLogger(this.getClass());
 
@@ -63,7 +63,7 @@ public abstract non-sealed class AbstractAdapter extends AvailableComponent impl
     /**
      * 接收队列
      */
-    private RingEventbus<SentEvent> receiveQueue;
+    private RingEventbus<AdapterEvent> receiveQueue;
 
     // 入站队列处理器
     protected final SharedEventHandler inboundHandler;
@@ -84,11 +84,11 @@ public abstract non-sealed class AbstractAdapter extends AvailableComponent impl
         this.account = account;
         this.isAsync = isAsync;
         this.adapterId = this.getClass().getSimpleName() +
-                "-" + account.getBrokerCode() + ":" + account.getInvestorCode();
+                         "-" + account.getBrokerCode() + ":" + account.getInvestorCode();
         this.inboundHandler = inboundHandler;
         if (isAsync) {
             receiveQueue = RingEventbus
-                    .singleProducer(SentEvent.EVENT_FACTORY)
+                    .singleProducer(AdapterEvent.EVENT_FACTORY)
                     .name(adapterId + "-receive-queue")
                     .size(32)
                     .waitStrategy(Yielding.get())
@@ -99,7 +99,7 @@ public abstract non-sealed class AbstractAdapter extends AvailableComponent impl
     /**
      * @param event SendEvent
      */
-    private void handleOutboundEvent(SentEvent event) {
+    private void handleOutboundEvent(AdapterEvent event) {
         switch (event.getType()) {
             case SUBSCRIBE_MARKET_DATA -> {
                 log.info("{} -> Call directSubscribeMarketData, event -> {} ", adapterId, event);
@@ -150,12 +150,14 @@ public abstract non-sealed class AbstractAdapter extends AvailableComponent impl
     @Override
     public void updateStatus(AdapterType adapterType, boolean isEnabled) {
         switch (adapterType) {
-            case MARKET_DATA -> status.setMarketDataEnabled(isEnabled);
-            case TRADING -> status.setTraderEnabled(isEnabled);
-            case FULL -> status.setMarketDataEnabled(isEnabled)
+            case MARKET_DATA -> status
+                    .setMarketDataEnabled(isEnabled);
+            case TRADING -> status
                     .setTraderEnabled(isEnabled);
-            case null -> status.setMarketDataEnabled(isEnabled)
+            case FULL -> status
+                    .setMarketDataEnabled(isEnabled)
                     .setTraderEnabled(isEnabled);
+            default -> throw new IllegalStateException("Unknown adapter type " + adapterType);
         }
     }
 

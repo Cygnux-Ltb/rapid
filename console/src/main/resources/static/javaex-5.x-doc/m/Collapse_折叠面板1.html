@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+
+</style>
+<body style="padding:10px;">
+	<div class="mb-10">基础用法</div>
+	<div id="collapse1" class="javaex-collapse javaex-cell-group-warp">
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题1</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">豫章故郡，洪都新府。星分翼轸，地接衡庐。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题2</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题3</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-10 mt-20">只允许展开一项</div>
+	<div id="collapse2" class="javaex-collapse javaex-cell-group-warp">
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题1</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">豫章故郡，洪都新府。星分翼轸，地接衡庐。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题2</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题3</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-10 mt-20">默认展开全部</div>
+	<div id="collapse3" class="javaex-collapse javaex-cell-group-warp">
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题1</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">豫章故郡，洪都新府。星分翼轸，地接衡庐。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题2</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。</div>
+			</div>
+		</div>
+		<div class="javaex-collapse-item">
+			<div class="javaex-cell javaex-cell-clickable">
+				<div class="javaex-cell-title">我是标题3</div>
+				<i class="javaex-icon icon-angle-down"></i>
+			</div>
+			<div class="javaex-collapse-item-wrapper" style="display: none;">
+				<div class="javaex-collapse-item-content">雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	javaex.collapse({
+		id : "collapse1",
+		open : function(rtn) {
+			console.log(rtn.index);
+		},
+		close : function(rtn) {
+			console.log(rtn.index);
+		}
+	});
+
+	javaex.collapse({
+		id : "collapse2",
+		alone : true
+	});
+
+	javaex.collapse({
+		id : "collapse3",
+		isShowAll : true
+	});
+</script>
+</html>

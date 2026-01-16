@@ -2,13 +2,13 @@ package io.cygnux.rapid.adapter.ctp.component.handler;
 
 import io.cygnux.rapid.core.adapter.Adapter;
 import io.cygnux.rapid.adapter.ctp.FtdcRspHandlerImpl;
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.cygnux.rapid.gateway.ctp.event.FtdcRspEvent;
 import io.mercury.common.character.Charsets;
 import io.mercury.common.concurrent.disruptor.RingEventbus;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import io.mercury.common.serialization.specific.BytesSerializer;
-import io.mercury.transport.zmq.ZmqConfigurator;
+import io.mercury.transport.zmq.ZmqCfg;
 import io.mercury.transport.zmq.ZmqPublisher;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -42,7 +42,7 @@ public class IpcFtdcRspHandlerImpl extends FtdcRspHandlerImpl {
 //                .name("ftdc-eventbus")
 //                .waitStrategy(Yielding.get())
 //                .process(processor);
-        this.inboundPublisher = ZmqConfigurator.ipc(Adapter.publishPath)
+        this.inboundPublisher = ZmqCfg.ipc(Adapter.publishPath)
                 .createPublisher(serializer);
         this.mdTopic = toTopicWithBytes(account.getTopicByMd());
         this.tdTopic = toTopicWithBytes(account.getTopicByTd());

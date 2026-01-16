@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.mb-10 {margin-bottom:5px;}
+</style>
+<body style="padding:10px;">
+	<div class="mb-10">单图放大</div>
+	<div class="javaex-image" style="width:100px;height:100px;">
+		<img class="javaex-img" fit="cover" src="http://webimg.javaex.cn/Ft0-o8l5oCgH9dQUV67eMVODZVU_" onclick="img(this)"/>
+	</div>
+</body>
+<script>
+	// obj为当前点击的元素对象
+	function img(obj) {
+		javaex.imagePreview({
+			type : "image",	// 弹出层类型
+			url : obj.src	// 图片地址
+		});
+	}
+</script>
+</html>

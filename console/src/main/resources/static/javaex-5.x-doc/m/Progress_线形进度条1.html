@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.myclass{
+	line-height: 16px;
+}
+.myclass .javaex-progress-level > span{
+    background: linear-gradient(135deg,#fa2c19 0%,#fa6419 100%);
+    border-radius: 5px;
+    padding: 3px 5px 3px 6px;
+}
+</style>
+<body style="padding:10px;background:#fff;">
+	<div class="mb-10">基础用法</div>
+	<div class="javaex-progress">
+		<div id="progress1" class="javaex-progress-level"></div>
+	</div>
+
+	<div class="mt-20 mb-10" style="margin-top:50px;">百分比内显</div>
+	<div class="javaex-progress" style="line-height: 16px;">
+		<div id="progress2" class="javaex-progress-level"></div>
+	</div>
+
+	<div class="mt-20 mb-10" style="margin-top:50px;">自定义样式</div>
+	<div class="javaex-progress myclass">
+		<div id="progress3" class="javaex-progress-level"></div>
+	</div>
+</body>
+<script>
+	javaex.progress({
+		id : "progress1",
+		percent : "40"
+	});
+
+	javaex.progress({
+		id : "progress2",
+		percent : "40",
+		isShowPercent : true
+	});
+
+	javaex.progress({
+		id : "progress3",
+		percent : "40",
+		isShowPercent : true
+	});
+</script>
+</html>

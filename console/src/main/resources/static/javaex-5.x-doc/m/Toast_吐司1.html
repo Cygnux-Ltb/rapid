@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+.javaex-cell {
+    cursor: pointer;
+}
+</style>
+<body>
+	<div style="padding:20px 10px;">
+		<div class="mb-10">基础用法</div>
+		<div class="javaex-cell-group-warp">
+			<div id="demo1" class="javaex-cell">
+				<div class="javaex-cell-title">加载提示（不会自动销毁）</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo2" class="javaex-cell">
+				<div class="javaex-cell-title">成功提示</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+			<div id="demo3" class="javaex-cell">
+				<div class="javaex-cell-title">失败提示</div>
+				<i class="javaex-icon icon-angle-right"></i>
+			</div>
+		</div>
+		
+		<div class="mb-10 mt-20">自定义图标</div>
+		<div id="demo4" class="javaex-cell">
+			<div class="javaex-cell-title">自定义图标</div>
+			<i class="javaex-icon icon-angle-right"></i>
+		</div>
+
+		<div class="mb-10 mt-20">纯消息内容</div>
+		<div id="demo5" class="javaex-cell">
+			<div class="javaex-cell-title">纯消息内容</div>
+			<i class="javaex-icon icon-angle-right"></i>
+		</div>
+	</div>
+
+	<script>
+		// type=loading时，弹出层不会自动消失
+		// 调用其他 javaex.toast(); 方法时会自动关闭加载层
+		// 也可以调用 javaex.close(); 方法来手动关闭加载层
+		$("#demo1").click(function() {
+			javaex.toast({
+				content : "加载中...",
+				type : "loading"
+			});
+		});
+
+		$("#demo2").click(function() {
+			javaex.toast({
+				content : "操作成功",
+				type : "success"
+			});
+		});
+
+		$("#demo3").click(function() {
+			javaex.toast({
+				content : "请求失败",
+				type : "error"
+			});
+		});
+
+		$("#demo4").click(function() {
+			javaex.toast({
+				content : "自定义图标",
+				type : "info",
+				icon : "icon-volume_up"
+			});
+		});
+
+		$("#demo5").click(function() {
+			javaex.toast({
+				content : "自定义消息内容",
+				type : "message"
+			});
+		});
+	</script>
+
+</body>
+</html>

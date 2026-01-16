@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+
+</style>
+<body>
+	<div id="tab" class="javaex-tabs">
+		<div class="javaex-tabs-wrap">
+			<div class="javaex-tabs-nav">
+				<div class="javaex-tab"><span class="javaex-tab-text">第一个分页</span></div>
+				<div class="javaex-tab"><span class="javaex-tab-text">第二个分页</span></div>
+			</div>
+		</div>
+		<div class="javaex-tabs-content">
+			<div class="javaex-tab-panel">
+				<!--第一个分页内容区域-->
+				<div id="content1">
+				
+				</div>
+			</div>
+			<div class="javaex-tab-panel">
+				<!--第二个分页内容区域-->
+				<div id="content2">
+			
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+// 第1个分页所必须的参数
+// 页数（这里就是写0）
+var pageNum1 = 0;
+// 每次请求的数据个数
+var pageSize1 = 5;
+
+// 第2个分页所必须的参数
+// 页数（这里就是写0）
+var pageNum2 = 0;
+// 每次请求的数据个数
+var pageSize2 = 5;
+
+javaex.tab({
+	id : "tab",
+	current : 1,
+	isInit : true,
+	callback: function (rtn) {
+		let index = rtn.index;
+		if (index==1) {
+			// 设置分页初始化属性
+			javaex.setPageInit();
+			// 调用上滑加载组件
+			javaex.flow({
+				id : "content1",	// 数据区域的id
+				loadDataFunction : function() {
+					pageNum1++;
+					// 拼接HTML
+					let resultHtml1 = '';
+					$.ajax({
+						url : "https://api.github.com/search/users?q=fullname:jach",
+						type : "GET",
+						dataType : "json",
+						data : {
+							"page" : pageNum1,
+							"per_page" : pageSize1
+						},
+						success: function(rtn) {
+							// 根据实际数据自行编写下列代码
+							let items = rtn.items;
+							if (items!=null && items.length>0) {
+								$.each(items, function(index, item) {
+									resultHtml1 += '<div class="javaex-cell javaex-cell-center">\
+													<div class="javaex-cell-title">\
+														<div class="javaex-avatar" circle>\
+															<img src="'+item.avatar_url+'" />\
+														</div>\
+													</div>\
+													<div class="javaex-cell-value">'+item.login+'</div>\
+												</div>';
+								});
+							} else {
+								// 如果没有数据，结束加载（需要传入数据区域的id）
+								javaex.over("content1");
+							}
+							// 建议延迟加载
+							setTimeout(function() {
+								// 载入数据
+								$("#content1").append(resultHtml1);
+								// 每次数据载入后，必须重置（需要传入数据区域的id）
+								javaex.resetLoad("content1");
+							}, 500);
+						}
+					});
+				}
+			});
+		} else if (index==2) {
+			// 设置分页初始化属性
+			javaex.setPageInit();
+			// 调用上滑加载组件
+			javaex.flow({
+				id : "content2",	// 数据区域的id
+				loadDataFunction : function() {
+					pageNum2++;
+					// 拼接HTML
+					let resultHtml2 = '';
+					$.ajax({
+						url : "https://api.github.com/search/users?q=fullname:jack",
+						type : "GET",
+						dataType : "json",
+						data : {
+							"page" : pageNum2,
+							"per_page" : pageSize2
+						},
+						success: function(rtn) {
+							// 根据实际数据自行编写下列代码
+							let items = rtn.items;
+							if (items!=null && items.length>0) {
+								$.each(items, function(index, item) {
+									resultHtml2 += '<div class="javaex-cell javaex-cell-center">\
+													<div class="javaex-cell-title">\
+														<div class="javaex-avatar" circle>\
+															<img src="'+item.avatar_url+'" />\
+														</div>\
+													</div>\
+													<div class="javaex-cell-value">'+item.login+'</div>\
+												</div>';
+								});
+							} else {
+								// 如果没有数据，结束加载（需要传入数据区域的id）
+								javaex.over("content2");
+							}
+							// 建议延迟加载
+							setTimeout(function() {
+								// 载入数据
+								$("#content2").append(resultHtml2);
+								// 每次数据载入后，必须重置（需要传入数据区域的id）
+								javaex.resetLoad("content2");
+							}, 500);
+						}
+					});
+				}
+			});
+		}
+	}
+});
+	
+</script>
+</html>

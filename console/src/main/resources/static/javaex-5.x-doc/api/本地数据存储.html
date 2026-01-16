@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>本地数据存储</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>本地数据存储</h2>
+		<hr>
+		
+		<h3>cookie</h3>
+		<p class="mb-10">本地保存的数据会发送给服务器</p>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:50%;">方法</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.setCookie(key, value, time);</code></pre></td>
+					<td>设置cookie。time表示存储多少天（单位：天），若缺省表示关闭浏览器后，cookie消失</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>var str = javaex.getCookie(key);</code></pre></td>
+					<td>获取指定cookie的值</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.deleteCookie(key);</code></pre></td>
+					<td>删除指定的cookie</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>sessionStorage</h3>
+		<p class="mb-10">生命周期为关闭浏览器窗口</p>
+		<p class="mb-10">在同一个页面下，数据可以共享</p>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:50%;">方法</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.setSessionStorage(key, value);</code></pre></td>
+					<td>设置sessionStorage</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>var str = javaex.getSessionStorage(key);</code></pre></td>
+					<td>获取指定sessionStorage的值</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.deleteSessionStorage(key);</code></pre></td>
+					<td>删除指定的sessionStorage；key为空时，清除所有</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>localStorage</h3>
+		<p class="mb-10">生命周期为永久生效，除非手动删除，否则页面关闭也会存在</p>
+		<p class="mb-10">可以多页面共享（同一浏览器可以共享）</p>
+		<table class="javaex-table unhover">
+			<thead>
+				<tr>
+					<th style="width:50%;">方法</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.setLocalStorage(key, value);</code></pre></td>
+					<td>设置localStorage</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>var str = javaex.getLocalStorage(key);</code></pre></td>
+					<td>获取指定localStorage的值</td>
+				</tr>
+				<tr>
+					<td><pre style="margin-bottom:0;"><code>javaex.deleteLocalStorage(key);</code></pre></td>
+					<td>删除指定的localStorage；key为空时，清除所有</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

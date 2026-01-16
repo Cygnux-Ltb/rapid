@@ -1,0 +1,192 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>评论</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>评论</h2>
+		<hr>
+
+		<h3>默认已经对恶意内容进行过滤，为防万一，请在后台再自行过滤一遍。</h3>
+		<img src="http://webimg.javaex.cn/FtgS5nRjqgHGrFS9Ov3FXWNzfExh" />
+
+		<pre><code>&lt;div id="comment" class="javaex-comment"&gt;&lt;/div&gt;
+ 
+&lt;script&gt;
+	// 初始化调用组件
+	javaex.comment({
+		id : "comment",
+		defaultAvatar : "/assets/images/noavatar.jpg",
+		user : {
+			"avatar" : userAvatar,
+			"isLogin" : isLogin
+		},
+		url : "http://www.javaex.cn/?uid=",
+		isChangeTimeText : true,
+		commentCount : count,
+		list : list,
+		commentMapping : {
+			"commentId" : "id",
+			"userId" : "userId",
+			"username" : "username",
+			"avatar" : "avatar",
+			"content" : "content",
+			"time" : "commentTime",
+			"replyList" : "replyList",
+			"replyNum" : "replyNum"
+		},
+		replyMapping : {
+			"userId" : "userId",
+			"username" : "username",
+			"avatar" : "avatar",
+			"toUserId" : "toUserId",
+			"toUsername" : "toUsername",
+			"content" : "content",
+			"time" : "replyTime"
+		},
+		unLogin : function() {
+			var returnUrl = window.location.href;
+			window.location.href = "http://passport.javaex.com/login?returnUrl=" + returnUrl;
+		},
+		showMoreReply : function(rtn) {
+			console.log(rtn);
+			// loadMoreReply(rtn.commentId, rtn.pageNum);
+		},
+		callback: function(rtn) {
+			if (rtn.type=="comment") {
+				// 对文章的评论
+				comment(rtn.content);
+			} else {
+				// 对评论的回复
+				reply(rtn.commentId, rtn.toUserId, rtn.toUsername, rtn.content);
+			}
+		}
+	});
+	
+	// 点击查看更多回复调用组件
+	javaex.comment({
+		id : "comment",
+		defaultAvatar : "/assets/images/noavatar.jpg",
+		url : "http://www.javaex.cn/?uid=",
+		isChangeTimeText : true,
+		commentId : commentId,
+		replyList : rtn.data.list,
+		replyMapping : {
+			"userId" : "userId",
+			"username" : "username",
+			"avatar" : "avatar",
+			"toUserId" : "toUserId",
+			"toUsername" : "toUsername",
+			"content" : "content",
+			"time" : "replyTime"
+		},
+		showMoreReply : function(rtn) {
+			console.log(rtn);
+			// loadMoreReply(rtn.commentId, rtn.pageNum);
+		},
+		callback: function(rtn) {
+			if (rtn.type=="comment") {
+				// 对文章的评论
+				comment(rtn.content);
+			} else {
+				// 对评论的回复
+				reply(rtn.commentId, rtn.toUserId, rtn.toUsername, rtn.content);
+			}
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th style="width:200px">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>评论组件div容器的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>defaultAvatar</td>
+					<td></td>
+					<td>用户没有上传头像时，默认头像地址</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>user</td>
+					<td></td>
+					<td><pre style="margin-bottom:0;"><code>user : {
+	"avatar" : "http://img.javaex.cn/bdd3fdaf20e74fb08b0ebe56495b3741", // 当前登录用户的头像地址
+	"isLogin" : 1    // 当前用户是否已登录（1表示已登录）
+}</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>url</td>
+					<td></td>
+					<td>点击用户名称时，会跳转到该用户的空间主页，请填写该请求路径，组件会自动传递用户的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>commentCount</td>
+					<td>0</td>
+					<td>评论+回复的总条数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>list</td>
+					<td></td>
+					<td>评论+回复的数据</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>commentMapping</td>
+					<td></td>
+					<td>评论字段映射，具体看示例代码</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>replyMapping</td>
+					<td></td>
+					<td>回复字段映射，具体看示例代码</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isChangeTimeText</td>
+					<td>false</td>
+					<td>修改时间显示文本</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>unLogin</td>
+					<td></td>
+					<td>用户未登录时，点击回复框时调用的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>showMoreReply</td>
+					<td></td>
+					<td>点击查看更多回复的回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>用户评论或回复后返回的回调函数，具体看示例代码</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

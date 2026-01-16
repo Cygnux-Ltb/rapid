@@ -1,0 +1,59 @@
+package io.cygnux.rapid.core.types.event.received;
+
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
+import io.mercury.common.serialization.Copyable;
+import io.mercury.serialization.json.JsonBean;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+/**
+ * 持仓回报
+ */
+@Getter
+@Setter
+@Accessors(chain = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PositionsReport extends JsonBean implements Copyable<PositionsReport> {
+
+    private long epochMillis;
+    private String brokerId;
+    private String investorId;
+    private String exchangeCode;
+    private String instrumentCode;
+    private TrdDirection direction;
+    private int yesterdayQty;
+    private int todayQty;
+    private int qty;
+    private String msg;
+
+    @Override
+    public void copyOf(PositionsReport source) {
+        // 复制事件的时间戳
+        this.epochMillis = source.epochMillis;
+        // 复制经纪商ID
+        this.brokerId = source.brokerId;
+        // 复制投资者ID
+        this.investorId = source.investorId;
+        // 复制交易所代码
+        this.exchangeCode = source.exchangeCode;
+        // 复制交易标的代码
+        this.instrumentCode = source.instrumentCode;
+        // 复制交易方向
+        this.direction = source.direction;
+        // 复制昨持仓量
+        this.yesterdayQty = source.yesterdayQty;
+        // 复制今持仓量
+        this.todayQty = source.todayQty;
+        // 复制持仓量
+        this.qty = source.qty;
+        // 复制消息
+        this.msg = source.msg;
+    }
+
+}

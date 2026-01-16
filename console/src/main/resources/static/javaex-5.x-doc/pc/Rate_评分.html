@@ -1,0 +1,144 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Rate 评分</title>
+<script src="../js/ui.js"></script>
+<style>
+	.doc-markdown{overflow:visible;}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Rate 评分</h2>
+		<hr>
+		
+		<h3>整星演示</h3>
+		<div id="score" class="javaex-rate"></div>
+		<pre><code>&lt;div id="score" class="javaex-rate"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.rate({
+		id : "score",
+		callback: function (rtn) {
+			alert("选中了第"+rtn.index+"个星星；分数为："+rtn.score);
+		}
+	});
+&lt;/script&gt;</code></pre>
+		
+		<h3>半星演示</h3>
+		<p class="mb-10">回显时，小数位 &lt;0.7 时，会显示半星，否则显示全星</p>
+		<div id="score2" class="javaex-rate"></div>
+		<pre><code>&lt;div id="score2" class="javaex-rate"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.rate({
+		id : "score2",
+		num : 5,
+		score : 4.6,
+		scoreArr : [1, 2, 3, 4, 5],    // 即便开启了半星模式，也只要整数部分
+		levelTextArr : ['0.5分', '1分', '1.5分', '2分', '2.5分', '3分', '3.5分', '4分', '4.5分', '5分'],
+		half : true,
+		clickOnce : true,
+		callback: function (rtn) {
+			alert("选中了第"+rtn.index+"个星星；分数为："+rtn.score);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>评分组件div容器的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>num</td>
+					<td>5</td>
+					<td>星星数量</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>size</td>
+					<td>24px</td>
+					<td>星星大小</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>scoreArr</td>
+					<td>[1, 2, 3, 4, 5]</td>
+					<td>每个星星代表的分数，数组形式。<br/>即便开启了半星模式，也只要整数部分</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>levelTextArr</td>
+					<td>['1分', '2分', '3分', '4分', '5分']</td>
+					<td>每个星星的文字提示，数组形式。<br/>如果开启了半星模式，则元素个数要是 scoreArr 的2倍</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>score</td>
+					<td></td>
+					<td>默认分数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isReadOnly</td>
+					<td>false</td>
+					<td>是否只读</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>half</td>
+					<td>false</td>
+					<td>是否启用半星</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>clickOnce</td>
+					<td>false</td>
+					<td>是否只允许点击一次，点击后会自动变成只读模式</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回一个评分对象，包含了第几个星星（index），和对应的分值（score）</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.rate({
+		id : "score",
+		callback: function (rtn) {
+			alert("选中了第"+rtn.index+"个星星；分数为："+rtn.score);
+		}
+	});
+
+	javaex.rate({
+		id : "score2",
+		num : 5,
+		score : 4.6,
+		scoreArr : [1, 2, 3, 4, 5],    // 即便开启了半星模式，也只要整数部分
+		levelTextArr : ['0.5分', '1分', '1.5分', '2分', '2.5分', '3分', '3.5分', '4分', '4.5分', '5分'],
+		half : true,
+		callback: function (rtn) {
+			alert("选中了第"+rtn.index+"个星星；分数为："+rtn.score);
+		}
+	});
+</script>
+</html>

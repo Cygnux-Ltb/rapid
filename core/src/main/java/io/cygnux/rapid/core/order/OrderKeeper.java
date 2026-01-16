@@ -1,7 +1,7 @@
 package io.cygnux.rapid.core.order;
 
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,14 +27,14 @@ public interface OrderKeeper {
      * @return Order
      */
     @Nullable
-    Order getOrder(long ordSysId);
+    io.cygnux.rapid.core.types.order.Order getOrder(long ordSysId);
 
     /**
      * 新增订单
      *
      * @param order Order
      */
-    void putOrder(@Nonnull Order order);
+    void putOrder(@Nonnull io.cygnux.rapid.core.types.order.Order order);
 
     /**
      * @param subAccountId int
@@ -74,6 +74,6 @@ public interface OrderKeeper {
      * @param report OrderReport
      * @return ChildOrder
      */
-    Order onOrderReport(@Nonnull OrderReport report);
+    io.cygnux.rapid.core.types.order.Order onOrderReport(@Nonnull OrderReport report);
 
 }

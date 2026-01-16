@@ -1,29 +1,29 @@
 package io.cygnux.rapid.engine.strategy;
 
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.instrument.InstrumentKeeper;
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
 import io.cygnux.rapid.core.manager.AccountManager;
 import io.cygnux.rapid.core.manager.MarketDataManager;
 import io.cygnux.rapid.core.manager.StrategyManager;
-import io.cygnux.rapid.core.mdata.MarketDataSnapshot;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import io.cygnux.rapid.core.types.mkd.MarketDataSnapshot;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.cygnux.rapid.core.order.OrdSysIdAllocator;
 import io.cygnux.rapid.core.order.OrdSysIdAllocatorKeeper;
-import io.cygnux.rapid.core.order.Order;
+import io.cygnux.rapid.core.types.order.Order;
 import io.cygnux.rapid.core.risk.CircuitBreaker;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.sent.StrategySignal;
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.sent.StrategySignal;
 import io.cygnux.rapid.core.strategy.Strategy;
 import io.cygnux.rapid.core.strategy.StrategyEvent;
-import io.cygnux.rapid.core.strategy.StrategyParam;
+import io.cygnux.rapid.core.types.strategy.StrategyParam;
 import io.cygnux.rapid.core.strategy.StrategySignalAggregator;
 import io.cygnux.rapid.engine.position.PositionKeeper;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.mercury.common.state.AvailableComponent;
+import io.mercury.common.state.AvailableInstance;
 import io.mercury.serialization.json.JsonWriter;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 import static io.mercury.common.lang.Validator.atWithinRange;
 import static io.mercury.common.lang.Validator.nonEmpty;
 
-public abstract class AbstractStrategy extends AvailableComponent
+public abstract class AbstractStrategy extends AvailableInstance
         implements Strategy, CircuitBreaker {
 
     private static final Logger log = Log4j2LoggerFactory.getLogger(AbstractStrategy.class);
@@ -156,12 +156,12 @@ public abstract class AbstractStrategy extends AvailableComponent
 
     @Override
     public void fireOrderReport(OrderReport report) {
-        order.logging(log, "Call onOrder function");
-        handleOrder(order);
+        report.logging(log, "Call onOrder function");
+        handleOrder(report);
     }
 
     @AbstractFunction
-    protected abstract void handleOrder(Order order);
+    protected abstract void handleOrder(OrderReport order);
 
     @Override
     public void onStrategyEvent(@Nonnull StrategyEvent event) {
@@ -296,7 +296,7 @@ public abstract class AbstractStrategy extends AvailableComponent
 
 
         log.info("Strategy -> {}, Created TradeSignal -> {}", strategyId, signal);
-        signalHandler.onSignal(signal);
+        signalHandler.onStrategySignals(signal);
     }
 
 

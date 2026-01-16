@@ -3,10 +3,10 @@ package io.cygnux.rapid.adapter.ctp.converter;
 import io.mercury.common.epoch.HighResolutionEpoch;
 import io.mercury.common.log4j2.Log4j2Configurator;
 import io.mercury.serialization.json.JsonWriter;
-import io.cygnux.rapid.core.event.enums.OrdStatus;
-import io.cygnux.rapid.core.event.enums.TrdAction;
-import io.cygnux.rapid.core.event.enums.TrdDirection;
-import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.types.order.enums.OrdStatus;
+import io.cygnux.rapid.core.types.trade.enums.TrdAction;
+import io.cygnux.rapid.core.types.trade.enums.TrdDirection;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
 import org.junit.Test;
 
 public class ChildOrderReportConverterTest {

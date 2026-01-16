@@ -1,0 +1,262 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Flow 上滑加载分页</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Flow 上滑加载分页</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+			<h3>单个分页</h3>
+			<pre><code>&lt;div id="content"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+	// 页数（这里就是写0）
+	var pageNum = 0;
+	// 每次请求的数据个数
+	var pageSize = 5;
+	
+	// 设置分页初始化属性
+	javaex.setPageInit();
+	// 调用上滑加载组件
+	javaex.flow({
+		id : "content",	// 数据区域的id
+		loadDataFunction : function() {
+			pageNum++;
+			// 拼接HTML
+			var resultHtml = '';
+			$.ajax({
+				url : "https://api.github.com/search/users?q=fullname:jach",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"page" : pageNum,
+					"per_page" : pageSize
+				},
+				success: function(rtn) {
+					console.log(rtn);
+					// 根据实际数据自行编写下列代码
+					let items = rtn.items;
+					if (items!=null && items.length&gt;0) {
+						$.each(items, function(index, item) {
+							resultHtml += '&lt;div class="javaex-cell javaex-cell-center"&gt;\
+											&lt;div class="javaex-cell-title"&gt;\
+												&lt;div class="javaex-avatar" circle&gt;\
+													&lt;img src="'+item.avatar_url+'" /&gt;\
+												&lt;/div&gt;\
+											&lt;/div&gt;\
+											&lt;div class="javaex-cell-value"&gt;'+item.login+'&lt;/div&gt;\
+										&lt;/div&gt;';
+						});
+					} else {
+						// 如果没有数据，结束加载（需要传入数据区域的id）
+						javaex.over("content");
+					}
+					// 建议延迟加载
+					setTimeout(function() {
+						// 载入数据
+						$("#content").append(resultHtml);
+						// 每次数据载入后，必须重置（需要传入数据区域的id）
+						javaex.resetLoad("content");
+					}, 500);
+				}
+			});
+		}
+	});
+&lt;/script&gt;</code></pre>
+			
+			<h3>多个分页</h3>
+			<pre><code>&lt;div id="tab" class="javaex-tabs"&gt;
+	&lt;div class="javaex-tabs-wrap"&gt;
+		&lt;div class="javaex-tabs-nav"&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;第一个分页&lt;/span&gt;&lt;/div&gt;
+			&lt;div class="javaex-tab"&gt;&lt;span class="javaex-tab-text"&gt;第二个分页&lt;/span&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-tabs-content"&gt;
+		&lt;div class="javaex-tab-panel"&gt;
+			&lt;!--第一个分页内容区域--&gt;
+			&lt;div id="content1"&gt;
+			
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="javaex-tab-panel"&gt;
+			&lt;!--第二个分页内容区域--&gt;
+			&lt;div id="content2"&gt;
+		
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 第1个分页所必须的参数
+// 页数（这里就是写0）
+var pageNum1 = 0;
+// 每次请求的数据个数
+var pageSize1 = 5;
+
+// 第2个分页所必须的参数
+// 页数（这里就是写0）
+var pageNum2 = 0;
+// 每次请求的数据个数
+var pageSize2 = 5;
+
+javaex.tab({
+	id : "tab",
+	current : 1,
+	isInit : true,
+	callback: function (rtn) {
+		let index = rtn.index;
+		if (index==1) {
+			// 设置分页初始化属性
+			javaex.setPageInit();
+			// 调用上滑加载组件
+			javaex.flow({
+				id : "content1",	// 数据区域的id
+				loadDataFunction : function() {
+					pageNum1++;
+					// 拼接HTML
+					let resultHtml1 = '';
+					$.ajax({
+						url : "https://api.github.com/search/users?q=fullname:jach",
+						type : "GET",
+						dataType : "json",
+						data : {
+							"page" : pageNum1,
+							"per_page" : pageSize1
+						},
+						success: function(rtn) {
+							// 根据实际数据自行编写下列代码
+							let items = rtn.items;
+							if (items!=null && items.length&gt;0) {
+								$.each(items, function(index, item) {
+									resultHtml1 += '&lt;div class="javaex-cell javaex-cell-center"&gt;\
+													&lt;div class="javaex-cell-title"&gt;\
+														&lt;div class="javaex-avatar" circle&gt;\
+															&lt;img src="'+item.avatar_url+'" /&gt;\
+														&lt;/div&gt;\
+													&lt;/div&gt;\
+													&lt;div class="javaex-cell-value"&gt;'+item.login+'&lt;/div&gt;\
+												&lt;/div&gt;';
+								});
+							} else {
+								// 如果没有数据，结束加载（需要传入数据区域的id）
+								javaex.over("content1");
+							}
+							// 建议延迟加载
+							setTimeout(function() {
+								// 载入数据
+								$("#content1").append(resultHtml1);
+								// 每次数据载入后，必须重置（需要传入数据区域的id）
+								javaex.resetLoad("content1");
+							}, 500);
+						}
+					});
+				}
+			});
+		} else if (index==2) {
+			// 设置分页初始化属性
+			javaex.setPageInit();
+			// 调用上滑加载组件
+			javaex.flow({
+				id : "content2",	// 数据区域的id
+				loadDataFunction : function() {
+					pageNum2++;
+					// 拼接HTML
+					let resultHtml2 = '';
+					$.ajax({
+						url : "https://api.github.com/search/users?q=fullname:jack",
+						type : "GET",
+						dataType : "json",
+						data : {
+							"page" : pageNum2,
+							"per_page" : pageSize2
+						},
+						success: function(rtn) {
+							// 根据实际数据自行编写下列代码
+							let items = rtn.items;
+							if (items!=null && items.length&gt;0) {
+								$.each(items, function(index, item) {
+									resultHtml2 += '&lt;div class="javaex-cell javaex-cell-center"&gt;\
+													&lt;div class="javaex-cell-title"&gt;\
+														&lt;div class="javaex-avatar" circle&gt;\
+															&lt;img src="'+item.avatar_url+'" /&gt;\
+														&lt;/div&gt;\
+													&lt;/div&gt;\
+													&lt;div class="javaex-cell-value"&gt;'+item.login+'&lt;/div&gt;\
+												&lt;/div&gt;';
+								});
+							} else {
+								// 如果没有数据，结束加载（需要传入数据区域的id）
+								javaex.over("content2");
+							}
+							// 建议延迟加载
+							setTimeout(function() {
+								// 载入数据
+								$("#content2").append(resultHtml2);
+								// 每次数据载入后，必须重置（需要传入数据区域的id）
+								javaex.resetLoad("content2");
+							}, 500);
+						}
+					});
+				}
+			});
+		}
+	}
+});
+&lt;/script&gt;</code></pre>
+
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>id</td>
+							<td></td>
+							<td>数据区域的ID</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>loadDataFunction</td>
+							<td></td>
+							<td>请求数据的函数</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="javaex-grid-3">
+				<h3>单个分页</h3>
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Flow_上滑加载分页1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+				
+				<h3 style="margin-top:40px;">多个分页</h3>
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Flow_上滑加载分页2.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

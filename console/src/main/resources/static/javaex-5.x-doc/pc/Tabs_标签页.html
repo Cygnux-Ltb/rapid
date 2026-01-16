@@ -1,0 +1,400 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tabs 标签页</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Tabs 标签页</h2>
+		<hr>
+		
+		<h3>基础用法</h3>
+		<p class="mb-10">基础的、简洁的标签页</p>
+		<div style="background-color:#f6f8fa;padding: 20px;">
+			<div class="javaex-block">
+				<div class="javaex-main">
+					<!--选项卡切换-->
+					<div id="tab" class="javaex-tab">
+						<!--选项卡标题部分-->
+						<div class="javaex-tab-title">
+							<em><a href="#" target="_blank">鼠标移动切换&nbsp;&nbsp;<i style="color:#ccc">&gt;</i></a></em>
+							<ul>
+								<li>周一更新</li>
+								<li>周二更新</li>
+								<li>周三更新</li>
+								<li>周四更新</li>
+								<li>周五更新</li>
+								<li>周六更新</li>
+								<li>周日更新</li>
+								<!--可以为选项卡右上角添加链接-->
+								<a class="javaex-tab-more" href="#" target="_blank">动漫排行</a>
+								<span class="clearfix"></span>
+							</ul>
+						</div>
+						<!--选项卡内容部分-->
+						<div class="javaex-tab-content">
+							<div>星期一</div>
+							<div>星期二</div>
+							<div>星期三</div>
+							<div>星期四</div>
+							<div>星期五</div>
+							<div>星期六</div>
+							<div>星期天</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;!--选项卡切换--&gt;
+&lt;div id="tab" class="javaex-tab"&gt;
+	&lt;!--选项卡标题部分--&gt;
+	&lt;div class="javaex-tab-title"&gt;
+		&lt;em&gt;&lt;a href="#" target="_blank"&gt;鼠标移动切换&nbsp;&nbsp;&lt;i style="color:#ccc"&gt;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/em&gt;
+		&lt;ul&gt;
+			&lt;li&gt;周一更新&lt;/li&gt;
+			&lt;li&gt;周二更新&lt;/li&gt;
+			&lt;li&gt;周三更新&lt;/li&gt;
+			&lt;li&gt;周四更新&lt;/li&gt;
+			&lt;li&gt;周五更新&lt;/li&gt;
+			&lt;li&gt;周六更新&lt;/li&gt;
+			&lt;li&gt;周日更新&lt;/li&gt;
+			&lt;!--可以为选项卡右上角添加链接--&gt;
+			&lt;a class="javaex-tab-more" href="#" target="_blank"&gt;动漫排行&lt;/a&gt;
+			&lt;span class="clearfix"&gt;&lt;/span&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;!--选项卡内容部分--&gt;
+	&lt;div class="javaex-tab-content"&gt;
+		&lt;div&gt;星期一&lt;/div&gt;
+		&lt;div&gt;星期二&lt;/div&gt;
+		&lt;div&gt;星期三&lt;/div&gt;
+		&lt;div&gt;星期四&lt;/div&gt;
+		&lt;div&gt;星期五&lt;/div&gt;
+		&lt;div&gt;星期六&lt;/div&gt;
+		&lt;div&gt;星期天&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab",     // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "mouseover",   // 鼠标移动切换选项卡
+		callback : function (rtn) {
+			// 切换选项卡后返回一个对象，包含选项卡的索引，从1开始计
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+	
+		<h3>纯导航用法（追加class="javaex-tab-nav-top"）</h3>
+		<div style="background-color:#f6f8fa;padding:20px;">
+			<div class="javaex-block">
+				<!--选项卡切换-->
+				<div id="tab2" class="javaex-tab javaex-tab-nav-top">
+					<!--选项卡标题部分-->
+					<div class="javaex-tab-title">
+						<ul class="clear">
+							<li>周一更新</li>
+							<li>周二更新</li>
+							<li>周三更新</li>
+							<li>周四更新</li>
+							<li>周五更新</li>
+							<li>周六更新</li>
+							<li>周日更新</li>
+						</ul>
+					</div>
+					<!--选项卡内容部分-->
+					<div class="javaex-tab-content">
+						<div>星期一</div>
+						<div>星期二</div>
+						<div>星期三</div>
+						<div>星期四</div>
+						<div>星期五</div>
+						<div>星期六</div>
+						<div>星期天</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<pre><code>&lt;!--选项卡切换--&gt;
+&lt;div id="tab2" class="javaex-tab javaex-tab-nav-top"&gt;
+	&lt;!--选项卡标题部分--&gt;
+	&lt;div class="javaex-tab-title"&gt;
+		&lt;ul class="clear"&gt;
+			&lt;li&gt;周一更新&lt;/li&gt;
+			&lt;li&gt;周二更新&lt;/li&gt;
+			&lt;li&gt;周三更新&lt;/li&gt;
+			&lt;li&gt;周四更新&lt;/li&gt;
+			&lt;li&gt;周五更新&lt;/li&gt;
+			&lt;li&gt;周六更新&lt;/li&gt;
+			&lt;li&gt;周日更新&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;!--选项卡内容部分--&gt;
+	&lt;div class="javaex-tab-content"&gt;
+		&lt;div&gt;星期一&lt;/div&gt;
+		&lt;div&gt;星期二&lt;/div&gt;
+		&lt;div&gt;星期三&lt;/div&gt;
+		&lt;div&gt;星期四&lt;/div&gt;
+		&lt;div&gt;星期五&lt;/div&gt;
+		&lt;div&gt;星期六&lt;/div&gt;
+		&lt;div&gt;星期天&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab2",    // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "click",    // 鼠标点击切换选项卡
+		callback : function (rtn) {
+			// 切换选项卡后返回一个对象，包含选项卡的索引，从1开始计
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>卡片样式（带尾巴）（追加class="javaex-tab-card-tail"）</h3>
+		<div style="background-color:#f5f6f7;;padding:20px;">
+			<div class="javaex-block">
+				<!--选项卡切换-->
+				<div id="tab4" class="javaex-tab javaex-tab-card-tail">
+					<!--选项卡标题部分-->
+					<div class="javaex-tab-title">
+						<ul class="clear">
+							<li>周一</li>
+							<li>周二</li>
+							<li>周三</li>
+							<li>周四</li>
+							<li>周五</li>
+							<li>周六</li>
+							<li>周日</li>
+						</ul>
+					</div>
+					<!--选项卡内容部分-->
+					<div class="javaex-tab-content">
+						<div>星期一</div>
+						<div>星期二</div>
+						<div>星期三</div>
+						<div>星期四</div>
+						<div>星期五</div>
+						<div>星期六</div>
+						<div>星期天</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;!--选项卡切换--&gt;
+&lt;div id="tab4" class="javaex-tab javaex-tab-card-tail"&gt;
+	&lt;!--选项卡标题部分--&gt;
+	&lt;div class="javaex-tab-title"&gt;
+		&lt;ul class="clear"&gt;
+			&lt;li&gt;周一&lt;/li&gt;
+			&lt;li&gt;周二&lt;/li&gt;
+			&lt;li&gt;周三&lt;/li&gt;
+			&lt;li&gt;周四&lt;/li&gt;
+			&lt;li&gt;周五&lt;/li&gt;
+			&lt;li&gt;周六&lt;/li&gt;
+			&lt;li&gt;周日&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;!--选项卡内容部分--&gt;
+	&lt;div class="javaex-tab-content"&gt;
+		&lt;div&gt;星期一&lt;/div&gt;
+		&lt;div&gt;星期二&lt;/div&gt;
+		&lt;div&gt;星期三&lt;/div&gt;
+		&lt;div&gt;星期四&lt;/div&gt;
+		&lt;div&gt;星期五&lt;/div&gt;
+		&lt;div&gt;星期六&lt;/div&gt;
+		&lt;div&gt;星期天&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab4",    // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "click",    // 鼠标点击切换选项卡
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>卡片样式（不带尾巴）（追加class="javaex-tab-card"）</h3>
+		<div style="background-color:#f5f6f7;;padding:20px;">
+			<div class="javaex-block" style="background-color: unset;">
+				<!--选项卡切换-->
+				<div id="tab5" class="javaex-tab javaex-tab-card">
+					<!--选项卡标题部分-->
+					<div class="javaex-tab-title">
+						<ul class="clear">
+							<li>周一</li>
+							<li>周二</li>
+							<li>周三</li>
+							<li>周四</li>
+							<li>周五</li>
+							<li>周六</li>
+							<li>周日</li>
+						</ul>
+					</div>
+					<!--选项卡内容部分-->
+					<div class="javaex-tab-content">
+						<div>星期一</div>
+						<div>星期二</div>
+						<div>星期三</div>
+						<div>星期四</div>
+						<div>星期五</div>
+						<div>星期六</div>
+						<div>星期天</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<pre><code>&lt;!--选项卡切换--&gt;
+&lt;div id="tab4" class="javaex-tab javaex-tab-card"&gt;
+	&lt;!--选项卡标题部分--&gt;
+	&lt;div class="javaex-tab-title"&gt;
+		&lt;ul class="clear"&gt;
+			&lt;li&gt;周一&lt;/li&gt;
+			&lt;li&gt;周二&lt;/li&gt;
+			&lt;li&gt;周三&lt;/li&gt;
+			&lt;li&gt;周四&lt;/li&gt;
+			&lt;li&gt;周五&lt;/li&gt;
+			&lt;li&gt;周六&lt;/li&gt;
+			&lt;li&gt;周日&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;!--选项卡内容部分--&gt;
+	&lt;div class="javaex-tab-content"&gt;
+		&lt;div&gt;星期一&lt;/div&gt;
+		&lt;div&gt;星期二&lt;/div&gt;
+		&lt;div&gt;星期三&lt;/div&gt;
+		&lt;div&gt;星期四&lt;/div&gt;
+		&lt;div&gt;星期五&lt;/div&gt;
+		&lt;div&gt;星期六&lt;/div&gt;
+		&lt;div&gt;星期天&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.tab({
+		id : "tab5",    // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "click",    // 鼠标点击切换选项卡
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>选项卡id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>current</td>
+					<td>1</td>
+					<td>默认显示第几个标签，从1开始计</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mode</td>
+					<td></td>
+					<td>切换模式。mouseover：鼠标移动切换； click: 鼠标点击切换</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化就自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回的对象中包含了选项卡的索引，从1开始计</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>display</td>
+					<td>block</td>
+					<td>div的display属性。常用的是block和flex，根据实际需要填写</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>delay</td>
+					<td>200</td>
+					<td>鼠标移动切换时，延迟多少毫秒</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.tab({
+		id : "tab",		// tab的id
+		current : 1,	// 默认选中第几个选项卡
+		mode : "mouseover",	// 鼠标移动切换选项卡
+		// 切换选项卡后返回一个对象，包含选项卡的索引，从1开始计
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+	
+	javaex.tab({
+		id : "tab2",		// tab的id
+		current : 1,		// 默认选中第几个选项卡
+		mode : "click",		// 鼠标点击切换选项卡
+		// 切换选项卡后返回一个对象，包含选项卡的索引，从1开始计
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+	
+	javaex.tab({
+		id : "tab3",		// tab的id
+		current : 1,		// 默认选中第几个选项卡
+		mode : "click"
+	});
+
+	javaex.tab({
+		id : "tab4",    // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "click",    // 鼠标点击切换选项卡
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+
+	javaex.tab({
+		id : "tab5",    // tab的id
+		current : 1,    // 默认选中第几个选项卡，从1开始计
+		mode : "click",    // 鼠标点击切换选项卡
+		callback : function (rtn) {
+			console.log(rtn.index);
+		}
+	});
+</script>
+</html>

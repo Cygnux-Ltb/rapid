@@ -1,19 +1,19 @@
 package io.cygnux.rapid.adapter.ctp;
 
-import io.cygnux.rapid.core.account.Account;
+import io.cygnux.rapid.core.types.account.Account;
 import io.cygnux.rapid.core.adapter.AbstractAdapter;
 import io.cygnux.rapid.core.adapter.AdapterRunningMode;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.order.OrderRefKeeper;
-import io.cygnux.rapid.core.order.OrderRefNotFoundException;
+import io.cygnux.rapid.core.types.order.OrderRefNotFoundException;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.enums.AdapterType;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.types.adapter.enums.AdapterType;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
 import io.cygnux.rapid.gateway.ctp.FtdcMdGateway;
 import io.cygnux.rapid.gateway.ctp.FtdcParams;
 import io.cygnux.rapid.gateway.ctp.FtdcTraderGateway;
@@ -187,9 +187,9 @@ public class CtpAdapter extends AbstractAdapter {
      * @param isAvailable boolean
      * @param msg         String
      */
-    public AdapterStatusReport createAdapterReportAndUpdate(EventSource source, boolean isAvailable,
-                                                            String msg) {
-        var report = AdapterStatusReport.builder();
+    public AdapterReport createAdapterReportAndUpdate(EventSource source, boolean isAvailable,
+                                                      String msg) {
+        var report = AdapterReport.builder();
         if (source == EventSource.MD) {
             this.isMdAvailable = isAvailable;
             report.adapterType(AdapterType.MARKET_DATA);
@@ -197,7 +197,7 @@ public class CtpAdapter extends AbstractAdapter {
             this.isTraderAvailable = isAvailable;
             report.adapterType(AdapterType.TRADING);
         }
-        return report.adaptorId(adapterId)
+        return report.adapterId(adapterId)
                 .accountId(account.getAccountId())
                 .epochMillis(currentTimeMillis())
                 .msg(msg == null ? "" : msg)
@@ -205,7 +205,7 @@ public class CtpAdapter extends AbstractAdapter {
     }
 
     @PostConstruct
-    private CtpAdapter initializer() {
+    private void initialize() {
         if (initialized.compareAndSet(false, true)) {
             log.info("Adaptor -> {}, Mode -> {}", getAdapterId(), runningMode);
             // 加载NativeLibrary
@@ -221,9 +221,7 @@ public class CtpAdapter extends AbstractAdapter {
             }
         } else {
             log.info("Adaptor -> {}, Mode -> {}, Already initialized", getAdapterId(), runningMode);
-            return this;
         }
-        return this;
     }
 
     /**
@@ -249,7 +247,7 @@ public class CtpAdapter extends AbstractAdapter {
      */
     @Override
     protected boolean startup0() {
-        initializer();
+        initialize();
         return switch (runningMode) {
             case MARKET_DATA -> startupMdGateway();
             case TRADE -> startupTraderGateway();

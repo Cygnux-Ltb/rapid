@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tree 树形控件</title> 
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Tree 树形控件</h2>
+		<hr>
+
+		<h3>基础用法</h3>
+		<div id="tree" class="javaex-tree"></div>
+		
+		<h3 style="margin-top:50px;">2种数据结构类型任选1种</h3>
+		<pre><code>&lt;div id="tree" class="javaex-tree"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+// 第1种数据结构
+var jsonArr1 =[
+	{
+		"id" : "zg",
+		"name": "中国",
+		"open" : true,
+//		"checked" : true,
+//		"icon" : "icon-language",
+		"children": [
+			{
+				"id" : "jss",
+				"name": "江苏省",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+				"children": [
+					{
+						"id" : "wx",
+						"name": "无锡",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+//						"url" : "http://www.javaex.cn/",
+//						"children": []
+					}, {
+						"id" : "nj",
+						"name": "南京",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+						"children": [
+							{
+								"id" : "fzm",
+								"name" : "夫子庙",
+//								"open" : true,
+//								"checked" : true,
+//								"icon" : "icon-language",
+//								"url" : "http://www.javaex.cn/",
+//								"children": []
+							}, {
+								"id" : "qhh",
+								"name": "秦淮河",
+//								"open" : true,
+//								"checked" : true,
+//								"icon" : "icon-language",
+//								"url" : "http://www.javaex.cn/",
+//								"children": []
+							}
+						]
+					}
+				]
+			}, {
+				"id" : "bjs",
+				"name": "北京市",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+				"children": [
+					{
+						"id" : "bj",
+						"name": "北京",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+//						"url" : "http://www.javaex.cn/",
+//						"children": []
+					}
+				]
+			}
+		]
+	}, {
+		"id" : "rb",
+		"name": "日本",
+//		"open" : true,
+//		"checked" : true,
+//		"icon" : "icon-language",
+		"children": [
+			{
+				"id" : "11",
+				"name": "11区",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+//				"url" : "http://www.javaex.cn/",
+//				"children": []
+			}
+		]
+	}
+];
+
+// 第2种数据结构（最顶级的parentId小于1即可）
+var jsonArr2 = [
+	{id: 1, parentId: -1, name: "中国", open: false, "checked" : false, "icon" : ""},
+		{id: 101, parentId: 1, name: "江苏省", open: false, "checked" : false, "icon" : ""},
+			{id: 115, parentId: 101, name: "无锡", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+			{id: 116, parentId: 101, name: "南京", open: false, "checked" : false, "icon" : ""},
+				{id: 1001, parentId: 116, name: "夫子庙", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+				{id: 1002, parentId: 116, name: "秦淮河", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+		{id: 102, parentId: 1, name: "北京市", open: false, "checked" : false, "icon" : ""},
+			{id: 1003, parentId: 102, name: "北京", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+	
+	{id: 2, parentId: -1, name: "日本", open: false, "checked" : false, "icon" : ""},
+		{id: 1004, parentId: 2, name: "11区", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"}
+];
+
+// 调用组件
+javaex.tree({
+	id : "tree",
+	dataList : jsonArr1,
+	type : 1,		// 数据结构类型（1或2）
+	isShowAllCheck : true,	// 是否显示全选
+	isAllowJumpUrl : false,	// 点击菜单名称时，是否允许跳转链接
+	icon : false,			// 是否显示图标
+//	checkbox : false,		// 是否显示复选框
+//	withoutNodeArr : [1, 2],	// 回调函数获取选中和半选中的复选框的值时，排除哪些节点（级别）的值
+	checkboxCallback : function(rtn) {    // 点击复选框的回调事件，可设置初始化自动调用
+		console.log("idArr:" + rtn.idArr);
+	},
+	aCallback : function(rtn) {    // 点击菜单名（a标签）的回调事件
+		console.log("node:" + rtn.node);	// 返回当前菜单的节点（第几级别）
+		console.log("id:" + rtn.id);		// 返回当前菜单的id
+		console.log("name:" + rtn.name);	// 返回当前菜单的名称
+	}
+});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>树形菜单承载元素的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>dataList</td>
+					<td></td>
+					<td>json格式的数据集合</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>数据结构类型，必填，填1或2</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowAllCheck</td>
+					<td>false</td>
+					<td>是否显示全选</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isAllowJumpUrl</td>
+					<td>false</td>
+					<td>点击菜单名称时，是否允许跳转链接</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>icon</td>
+					<td>false</td>
+					<td>是否显示图标，如果改成了true，而自己的数据里又没有icon数据，则会显示默认图标</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>checkbox</td>
+					<td>true</td>
+					<td>是否显示复选框</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>withoutNodeArr</td>
+					<td></td>
+					<td>获取复选框值时，排除的节点数组（从1开始），例如[1, 2]</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isClose</td>
+					<td>false</td>
+					<td>是否默认为闭合状态</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化就自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>加载完毕后的回调函数<br/><pre style="margin-bottom:0;"><code>callback : function() {
+	console.log("加载完毕");
+}</code></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>checkboxCallback</td>
+					<td></td>
+					<td>点击复选框的回调事件，可设置初始化自动调用<br/><pre style="margin-bottom:0;"><code>checkboxCallback : function(rtn) {
+	console.log("idArr:" + rtn.idArr);
+}</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>aCallback</td>
+					<td></td>
+					<td>点击菜单名（a标签）的回调事件<br/><pre style="margin-bottom:0;"><code>aCallback : function(rtn) {
+	console.log("node:" + rtn.node);    // 返回当前菜单的节点（第几级别）
+	console.log("id:" + rtn.id);        // 返回当前菜单的id
+	console.log("name:" + rtn.name);    // 返回当前菜单的名称
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+// 第1种数据结构
+var jsonArr1 =[
+	{
+		"id" : "zg",
+		"name": "中国",
+		"open" : true,
+//		"checked" : true,
+//		"icon" : "icon-language",
+		"children": [
+			{
+				"id" : "jss",
+				"name": "江苏省",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+				"children": [
+					{
+						"id" : "wx",
+						"name": "无锡",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+//						"url" : "http://www.javaex.cn/",
+//						"children": []
+					}, {
+						"id" : "nj",
+						"name": "南京",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+						"children": [
+							{
+								"id" : "fzm",
+								"name" : "夫子庙",
+//								"open" : true,
+//								"checked" : true,
+//								"icon" : "icon-language",
+//								"url" : "http://www.javaex.cn/",
+//								"children": []
+							}, {
+								"id" : "qhh",
+								"name": "秦淮河",
+//								"open" : true,
+//								"checked" : true,
+//								"icon" : "icon-language",
+//								"url" : "http://www.javaex.cn/",
+//								"children": []
+							}
+						]
+					}
+				]
+			}, {
+				"id" : "bjs",
+				"name": "北京市",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+				"children": [
+					{
+						"id" : "bj",
+						"name": "北京",
+//						"open" : true,
+//						"checked" : true,
+//						"icon" : "icon-language",
+//						"url" : "http://www.javaex.cn/",
+//						"children": []
+					}
+				]
+			}
+		]
+	}, {
+		"id" : "rb",
+		"name": "日本",
+//		"open" : true,
+//		"checked" : true,
+//		"icon" : "icon-language",
+		"children": [
+			{
+				"id" : "11",
+				"name": "11区",
+//				"open" : true,
+//				"checked" : true,
+//				"icon" : "icon-language",
+//				"url" : "http://www.javaex.cn/",
+//				"children": []
+			}
+		]
+	}
+];
+
+// 第2种数据结构（parentId小于1即可）
+var jsonArr2 = [
+	{id: 1, parentId: -1, name: "中国", open: false, "checked" : false, "icon" : ""},
+		{id: 101, parentId: 1, name: "江苏省", open: false, "checked" : false, "icon" : ""},
+			{id: 115, parentId: 101, name: "无锡", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+			{id: 116, parentId: 101, name: "南京", open: false, "checked" : false, "icon" : ""},
+				{id: 1001, parentId: 116, name: "夫子庙", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+				{id: 1002, parentId: 116, name: "秦淮河", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+		{id: 102, parentId: 1, name: "北京市", open: false, "checked" : false, "icon" : ""},
+			{id: 1003, parentId: 102, name: "北京", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"},
+	
+	{id: 2, parentId: -1, name: "日本", open: false, "checked" : false, "icon" : ""},
+		{id: 1004, parentId: 2, name: "11区", open: false, "checked" : false, "icon" : "", url: "http://www.javaex.cn/"}
+];
+
+// 调用组件
+javaex.tree({
+	id : "tree",
+	dataList : jsonArr1,
+	type : 1,				// 数据结构类型（1或2）
+	isShowAllCheck : true,	// 是否显示全选
+	icon : false,			// 是否显示图标
+	isAllowJumpUrl : false,	// 点击菜单名称时，是否允许跳转链接
+//	checkbox : false,		// 是否显示复选框
+//	withoutNodeArr : [1, 2],	// 回调函数获取选中和半选中的复选框的值时，排除哪些节点（级别）的值
+	checkboxCallback : function(rtn) {    // 点击复选框的回调事件，可设置初始化自动调用
+		console.log("idArr:" + rtn.idArr);
+	},
+	aCallback : function(rtn) {    // 点击菜单名（a标签）的回调事件
+		console.log("node:" + rtn.node);	// 返回当前菜单的节点（第几级别）
+		console.log("id:" + rtn.id);		// 返回当前菜单的id
+		console.log("name:" + rtn.name);	// 返回当前菜单的名称
+	}
+});
+</script>
+</html>

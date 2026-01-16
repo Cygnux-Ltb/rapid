@@ -1,7 +1,7 @@
 package io.cygnux.rapid.gateway.ctp.consts;
 
-import io.cygnux.rapid.core.event.enums.SubscribeStatus;
-import io.cygnux.rapid.core.event.enums.TradingStatus;
+import io.cygnux.rapid.core.types.adapter.enums.SubscribeStatus;
+import io.cygnux.rapid.core.types.trade.enums.TradingStatus;
 
 /**
  * ///TFtdcInstrumentStatusType是一个合约交易状态类型<br>

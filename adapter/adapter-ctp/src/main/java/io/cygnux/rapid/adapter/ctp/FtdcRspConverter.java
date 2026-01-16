@@ -1,15 +1,15 @@
 package io.cygnux.rapid.adapter.ctp;
 
-import io.cygnux.rapid.core.instrument.InstrumentKeeper;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
 import io.cygnux.rapid.core.order.OrderRefKeeper;
-import io.cygnux.rapid.core.event.enums.OrdStatus;
-import io.cygnux.rapid.core.event.enums.SubscribeStatus;
-import io.cygnux.rapid.core.event.enums.TradingStatus;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.order.enums.OrdStatus;
+import io.cygnux.rapid.core.types.adapter.enums.SubscribeStatus;
+import io.cygnux.rapid.core.types.trade.enums.TradingStatus;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 import io.cygnux.rapid.gateway.ctp.FtdcParams;
 import io.cygnux.rapid.gateway.ctp.consts.FtdcDirection;
 import io.cygnux.rapid.gateway.ctp.consts.FtdcOffsetFlag;
@@ -26,13 +26,13 @@ import io.cygnux.rapid.gateway.ctp.event.trader.FtdcOrderAction;
 import io.cygnux.rapid.gateway.ctp.event.trader.FtdcTrade;
 import io.cygnux.rapid.gateway.ctp.event.trader.FtdcTradingAccount;
 import io.mercury.common.datetime.DateTimeUtil;
-import io.mercury.common.datetime.TimeZone;
+import io.mercury.common.constant.TimeZoneConst;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
 import org.slf4j.Logger;
 
 import java.time.format.DateTimeFormatter;
 
-import static io.cygnux.rapid.core.instrument.Exchange.SHFE;
+import static io.cygnux.rapid.core.types.instrument.Exchange.SHFE;
 import static io.cygnux.rapid.gateway.ctp.consts.FtdcInstrumentStatus.getPrompt;
 import static io.cygnux.rapid.gateway.ctp.consts.FtdcInstrumentStatus.getSubscribeStatus;
 import static io.cygnux.rapid.gateway.ctp.consts.FtdcInstrumentStatus.getTradingStatus;
@@ -173,8 +173,8 @@ public final class FtdcRspConverter {
     public InstrumentStatusReport convert(FtdcSpecificInstrument specificInstrument) {
         var report = new InstrumentStatusReport()
                 .setEpochMillis(currentTimeMillis())
-                .setActualDate(YYYYMMDD.now(TimeZone.CST))
-                .setUpdateTime(HH_MM_SS.now(TimeZone.CST))
+                .setActualDate(YYYYMMDD.now(TimeZoneConst.CST))
+                .setUpdateTime(HH_MM_SS.now(TimeZoneConst.CST))
                 .setSymbolCode(null)
                 .setInstrumentCode(specificInstrument.InstrumentID)
                 .setTradingStatus(TradingStatus.NOT_PROVIDED)

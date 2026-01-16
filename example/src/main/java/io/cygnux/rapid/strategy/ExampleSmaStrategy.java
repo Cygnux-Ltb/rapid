@@ -1,16 +1,16 @@
 package io.cygnux.rapid.strategy;
 
+import io.cygnux.rapid.core.types.account.SubAccount;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.indicator.impl.SMA;
+import io.cygnux.rapid.core.indicator.impl.SmaPoint;
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
+import io.cygnux.rapid.core.strategy.Strategy;
+import io.cygnux.rapid.core.strategy.StrategyEvent;
 import io.cygnux.rapid.engine.strategy.AbstractStrategy;
 import io.mercury.common.epoch.EpochUnit;
 import io.mercury.common.param.Params;
-import io.cygnux.rapid.core.account.SubAccount;
-import io.cygnux.rapid.core.indicator.impl.SMA;
-import io.cygnux.rapid.core.indicator.impl.SmaPoint;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
-import io.cygnux.rapid.core.order.Order;
-import io.cygnux.rapid.core.strategy.Strategy;
-import io.cygnux.rapid.core.strategy.StrategyEvent;
 import jakarta.annotation.Nonnull;
 
 /**
@@ -44,7 +44,7 @@ public final class ExampleSmaStrategy extends AbstractStrategy implements SMA.Sm
     }
 
     @Override
-    protected void handleOrder(Order order) {
+    protected void handleOrder(OrderReport report) {
 
     }
 

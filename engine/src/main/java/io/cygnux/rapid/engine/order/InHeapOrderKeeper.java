@@ -1,13 +1,14 @@
 package io.cygnux.rapid.engine.order;
 
-import io.cygnux.rapid.core.order.Order;
+import io.cygnux.rapid.core.keeper.InstrumentKeeper;
 import io.cygnux.rapid.core.order.OrderBook;
 import io.cygnux.rapid.core.order.OrderBookImpl;
 import io.cygnux.rapid.core.order.OrderKeeper;
-import io.cygnux.rapid.core.order.attr.OrdPrice;
-import io.cygnux.rapid.core.order.attr.OrdQty;
-import io.cygnux.rapid.core.order.impl.ChildOrder;
-import io.cygnux.rapid.core.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.order.Order;
+import io.cygnux.rapid.core.types.order.attr.OrdPrice;
+import io.cygnux.rapid.core.types.order.attr.OrdQty;
+import io.cygnux.rapid.core.types.order.impl.ChildOrder;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.collections.MutableMaps;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
@@ -19,7 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import static io.cygnux.rapid.core.order.impl.ChildOrder.newWithExternal;
+import static io.cygnux.rapid.core.order.OrdSysIdAllocator.FOR_EXTERNAL_ORDER;
+import static io.cygnux.rapid.core.types.order.impl.ChildOrder.newWithExternal;
 import static io.cygnux.rapid.engine.order.OrderActuator.updateOrderWith;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
@@ -154,7 +156,8 @@ public final class InHeapOrderKeeper implements OrderKeeper {
             log.warn("onOrderReport received other source order, ordSysId==[{}]", report.getOrdSysId());
             // 根据成交回报创建新订单, 放入OrderBook托管
             // 用于构建外部来源的新订单, 通常是根据系统未托管的订单回报构建, 此时需要传递订单当前状态
-            var childOrder = newWithExternal(report.getAccountId(), report.getInstrumentCode(),
+            var childOrder = newWithExternal(FOR_EXTERNAL_ORDER.nextOrdSysId(),
+                    report.getAccountId(), InstrumentKeeper.getInstrumentByCode(report.getInstrumentCode()),
                     OrdQty.withOffer(report.getOfferQty()).addFilledQty(report.getFilledQty()),
                     OrdPrice.withOffer(report.getOfferPrice()), report.getDirection(), report.getAction());
             childOrder.setBrokerRef0(report.getOrderRef());

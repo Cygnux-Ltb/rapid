@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>formdata转Json字符串</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>formdata转Json字符串</h2>
+		<hr>
+		
+		<h3>将$("#form").serializeArray()数据格式化成JSON字符串</h3>
+		<pre><code class="javascript">/**
+ * 将$("#form").serializeArray()数据格式化成JSON字符串
+ * serializeArray ：$("#form").serializeArray()
+ */
+var jsonstring = javaex.serializeArrayToJsonString(serializeArray);</code></pre>
+
+		<h3>将$("#form").serialize()数据格式化成JSON字符串</h3>
+		<pre><code class="javascript">/**
+ * 将$("#form").serialize()数据格式化成JSON字符串
+ * serialize ：$("#form").serialize()
+ */
+var jsonstring = javaex.serializeToJsonString(serialize);</code></pre>
+	</div>
+</body>
+</html>
+

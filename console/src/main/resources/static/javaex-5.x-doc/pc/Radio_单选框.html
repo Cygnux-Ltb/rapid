@@ -1,0 +1,142 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Radio 单选框</title>
+<script src="../js/ui.js"></script>
+</head>
+<style>
+.doc-markdown > ul {
+    margin-bottom: 10px;
+    padding-left: 0px;
+}
+.javaex-fill-label {
+    margin-bottom: 5px;
+}
+</style>
+<body>
+	<div class="doc-markdown">
+		<h2>Radio 单选框</h2>
+		<hr>
+		
+		<h3>基础用法</h3>
+		<ul>
+			<li><strong>默认点击文字也会勾选，可以不用在外面包一层label。</strong></li>
+			<li><strong>如果没有文字，则必须写一个空格 或者 直接用label标签包起来。</strong></li>
+			<li><strong>如果是ajax获取数据后拼接的代码，需要调用 javaex.render(); 重新渲染样式。</strong></li>
+		</ul>
+		<input type="radio" fill name="radio" value="1"/>单选框未选中<br>
+		<input type="radio" fill name="radio" value="2" checked />单选框选中<br>
+		<input type="radio" fill name="radio2" value="3" disabled="disabled" />单选框未选中（只读）<br>
+		<input type="radio" fill name="radio2" value="4" checked disabled="disabled" />单选框选中（只读）<br>
+		
+		<pre><code class="html">&lt;input type="radio" fill name="radio" value="1"/&gt;单选框未选中&lt;br&gt;
+&lt;input type="radio" fill name="radio" value="2" checked /&gt;单选框选中&lt;br&gt;
+&lt;input type="radio" fill name="radio2" value="3" disabled="disabled" /&gt;单选框未选中（只读）&lt;br&gt;
+&lt;input type="radio" fill name="radio2" value="4" checked disabled="disabled" /&gt;单选框选中（只读）&lt;br&gt;</code></pre>
+
+		<h3>伪单选框</h3>
+		<p>一定要在外面包一层label，并且需要自己写一点点样式</p>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="1" checked/>入门型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="2"/>标准型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="3"/>企业型</label>
+		<label class="javaex-btn"><input type="radio" fake name="radio3" value="4"/>豪华型</label>
+
+		<pre><code class="html">&lt;style&gt;
+.javaex-btn.blue {
+    color: rgb(255, 255, 255);
+    background-color: rgb(64, 158, 255);
+}
+.javaex-btn.wathet {
+    color: rgb(16, 140, 238);
+    background-color: rgb(234, 246, 254);
+}
+&lt;/style&gt;
+
+&lt;label class="javaex-btn"&gt;&lt;input type="radio" fake name="radio3" value="1" checked/&gt;入门型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="radio" fake name="radio3" value="2"/&gt;标准型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="radio" fake name="radio3" value="3"/&gt;企业型&lt;/label&gt;
+&lt;label class="javaex-btn"&gt;&lt;input type="radio" fake name="radio3" value="4"/&gt;豪华型&lt;/label&gt;
+ 
+&lt;script&gt;
+	javaex.fakeRadio({
+		name : "radio3",
+		uncheckClass : "wathet", // 未选中时添加的class
+		checkedClass : "blue", 	// 选中时添加的class
+		isInit : true,			// 初始化是否调用回调函数
+		callback : function(rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+	
+	// 支持jquery原生方法取值
+	$(':radio[name="radio3"]').change(function() {
+		console.log($(this).val());
+	});
+&lt;/script&gt;
+</code></pre>
+	
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>name</td>
+					<td></td>
+					<td>radio的name属性</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>uncheckClass</td>
+					<td></td>
+					<td>未选中时往label标签添加的class</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>checkedClass</td>
+					<td></td>
+					<td>选中时往label标签添加的class</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>初始化是否自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回选中的值和文本</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.fakeRadio({
+		name : "radio3",
+		uncheckClass : "wathet", // 未选中时往label标签添加的class
+		checkedClass : "blue", 	// 选中时往label标签添加的class
+		isInit : true,			// 初始化是否自动调用回调函数
+		callback : function(rtn) {
+			console.log(rtn.val);
+			console.log(rtn.text);
+		}
+	});
+	
+	// jquery原生方法取值
+	$(':radio[name="radio3"]').change(function() {
+		console.log($(this).val());
+	});
+</script>
+</html>

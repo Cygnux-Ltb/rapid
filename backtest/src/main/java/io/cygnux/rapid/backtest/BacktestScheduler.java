@@ -2,13 +2,13 @@ package io.cygnux.rapid.backtest;
 
 import io.cygnux.rapid.core.CoreScheduler;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
-import io.cygnux.rapid.core.event.received.BalanceReport;
-import io.cygnux.rapid.core.event.received.DepthMarketData;
-import io.cygnux.rapid.core.event.received.FastMarketData;
-import io.cygnux.rapid.core.event.received.InstrumentStatusReport;
-import io.cygnux.rapid.core.event.received.OrderReport;
-import io.cygnux.rapid.core.event.received.PositionsReport;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
+import io.cygnux.rapid.core.types.event.received.BalanceReport;
+import io.cygnux.rapid.core.types.event.received.DepthMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.InstrumentStatusReport;
+import io.cygnux.rapid.core.types.event.received.OrderReport;
+import io.cygnux.rapid.core.types.event.received.PositionsReport;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +74,7 @@ public class BacktestScheduler implements SharedEventHandler {
      * @param report AdaptorReport
      */
     @Override
-    public void fireAdapterReport(AdapterStatusReport report) {
+    public void fireAdapterReport(AdapterReport report) {
         scheduler.fireAdapterReport(report);
     }
 

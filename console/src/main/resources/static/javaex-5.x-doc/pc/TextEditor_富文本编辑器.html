@@ -1,0 +1,209 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TextEditor 富文本编辑器</title>
+<script src="../js/ui.js"></script>
+<style>
+.javaex-edit-body .javaex-edit-body-container {
+	max-height: 600px;
+}
+</style>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>TextEditor 富文本编辑器</h2>
+		<hr>
+		
+		<h3>写在最前面</h3>
+		<ul>
+			<li><strong>富文本编辑器需要获取焦点后才能上传图片，有的人一上来就上传图片，都不知道光标在哪，它怎么知道图片应该显示在什么地方</strong></li>
+			<li><strong>每次保存数据后，需调用 javaex.deleteTextEditorDraft(editId); 方法，以清除本地缓存，否则左下角会一直提示：检测到上次页面未正常关闭。</strong></li>
+		</ul>
+
+		<h3>使用代码功能时，需要引入下列文件</h3>
+		<pre><code class="html">&lt;!--代码高亮--&gt;
+&lt;link href="javaex/pc/lib/highlight/highlight.css" rel="stylesheet" /&gt;
+&lt;script src="javaex/pc/lib/highlight/highlight.min.js"&gt;&lt;/script&gt;
+&lt;script src="javaex/pc/lib/highlight/highlightjs-line-numbers.min.js"&gt;&lt;/script&gt;
+&lt;script src="javaex/pc/lib/clipboard/clipboard.min.js"&gt;&lt;/script&gt;
+&lt;!--切记：下面这行代码只能在展示页面和无需回显编辑的页面使用--&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();hljs.initLineNumbersOnLoad();&lt;/script&gt;
+
+&lt;script&gt;
+	// 调用此方法，可以在右上角显示复制按钮
+	javaex.copy();
+&lt;/script&gt;</code></pre>
+		
+		<h3>如果是ajax渲染的代码，则需要变为如下方式使用</h3>
+		<pre><code class="html">&lt;script&gt;
+	hljs.initHighlighting();
+
+	setTimeout(function() {
+		// 显示行号
+		$("code").each(function(i, block) {
+			hljs.lineNumbersBlock(block);
+		});
+	}, 1000);
+&lt;/script&gt;</code></pre>
+
+		<div id="edit" class="javaex-edit-container">测试回显</div>
+		<input type="hidden" id="contentHtml" name="contentHtml" value="" />
+		<input type="hidden" id="contentText" name="contentText" value="" />
+
+		<h3 style="margin-top:70px;">图片为url的代码示例（图片为base64时，直接缺省image属性即可）</h3>
+		<pre><code class="html">&lt;div id="edit" class="javaex-edit-container"&gt;测试回显&lt;/div&gt;
+&lt;input type="hidden" id="contentHtml" name="contentHtml" value="" /&gt;
+&lt;input type="hidden" id="contentText" name="contentText" value="" /&gt;
+
+&lt;script&gt;
+	javaex.edit({
+		id : "edit",
+		image : {
+			url : "${pageContext.request.contextPath}/upload/upload.json",	// 请求路径
+			param : {
+				"file" : "file",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+				"projectId" : projectId,    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+				"type" : "2"
+			},
+			header : {    // 等价于 request.setRequestHeader
+				"token" : "123456",
+				"token2" : "xxxx"
+			},
+			dataType : "url",    // 返回的数据类型：base64 或 url
+			isShowTip : true,    // 是否显示上传提示，显示时，当前页面将无法点击
+			sendCookie : false,    // 是否发送cookie
+			crossDomain : true,    // 是否允许跨域
+			prefix : "",         // 前缀，如果后台返回的图片地址不是完整的链接，可以添加前缀
+			imgUrl : "image.image.url"   // 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "/1.jpg"}}
+		},
+		isInit : true,
+		callback : function(rtn) {
+			$("#contentHtml").val(rtn.html);
+			$("#contentText").val(rtn.text);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>如果想让编辑器内部出现滚动条，可以添加如下样式</h3>
+		<pre><code class="html">&lt;style&gt;
+.javaex-edit-body .javaex-edit-body-container {
+	height: 600px;
+}
+&lt;/style&gt;
+
+或
+
+&lt;style&gt;
+.javaex-edit-body .javaex-edit-body-container {
+	max-height: 600px;
+}
+&lt;/style&gt;</code></pre>
+
+		<h3>备注：</h3>
+		<h3>因为默认样式中屏蔽了<font color="red">ul</font>和<font color="red">li</font>的原生样式，所以页面展示最终内容的时候需要包裹在<font color="red">class="javaex-edit-content"</font>的元素中</h3>
+		<pre><code class="html">&lt;!--如果需要用到图片懒加载，需要替换src为data-original的话，在jsp中这么写--&gt;
+&lt;div class="javaex-edit-content"&gt;
+	${fn:replace(contentHtml, "img src", "img data-original")}
+&lt;/div&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th style="width:200px;">版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>富文本编辑器承载容器的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>image</td>
+					<td></td>
+					<td>
+						图片上传的一些属性设置<br />
+						<pre style="margin-bottom:0;"><code>image : {
+	url : "${pageContext.request.contextPath}/upload/upload.json",  // 请求路径
+	param : {
+		"file" : "file",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+		"projectId" : projectId,    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+		"type" : "2"
+	},
+	header : {    // 等价于 request.setRequestHeader
+		"token" : "123456",
+		"token2" : "xxxx"
+	},
+	dataType : "url",    // 返回的数据类型：base64 或 url
+	isShowTip : true,    // 是否显示上传提示，显示时，当前页面将无法点击
+	sendCookie : false,    // 是否发送cookie
+	crossDomain : true,    // 是否允许跨域
+	prefix : "",         // 前缀，如果后台返回的图片地址不是完整的链接，可以添加前缀
+	imgUrl : "image.image.url"   // 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "/1.jpg"}}
+}</code></pre>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>fixedTop</td>
+					<td>-1</td>
+					<td>工具栏距离顶部多少像素时，自动固定（-1表示不自动固定，可以填写：10、28...等数字）</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>
+						返回一个内容对象，包含html内容和纯文本内容。<br />
+						<pre style="margin-bottom:0;"><code>callback : function(rtn) {
+	console.log(rtn.html);    // html内容
+	console.log(rtn.text);    // 纯文本内容
+}</code></pre>
+					</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	var now = javaex.now();
+
+	javaex.edit({
+		id : "edit",
+		image : {
+			url : "https://imgbb.com/json",	// 请求路径
+			param : {
+				"file" : "source",    // 参数名称，左边的 "file" 是固定必须的。   右边的 "file"是参数名，Spring中与MultipartFile的参数名保持一致
+				"type" : "file",    // 除了file这个key，其他都是MultipartFile以外的参数（自定义）
+				"action" : "upload",
+				"timestamp" : new Date(now).getTime(),
+				"auth_token" : "f115dac7561da8078d60ffb5f943ae8e4f47b1d1"
+			},
+			dataType : "url",    // 返回的数据类型：base64 或 url
+			isShowTip : true,    // 是否显示上传提示，显示时，当前页面将无法点击
+			sendCookie : false,    // 是否发送cookie
+			crossDomain : true,    // 是否允许跨域
+			prefix : "",         // 前缀，如果后台返回的图片地址不是完整的链接，可以添加前缀
+			imgUrl : "image.image.url"   // 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "/1.jpg"}}
+		},
+		isInit : true,
+		callback : function(rtn) {
+			$("#contentHtml").val(rtn.html);
+			$("#contentText").val(rtn.text);
+		}
+	});
+</script>
+</html>

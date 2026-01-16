@@ -1,0 +1,148 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pagination 分页</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Pagination 分页</h2>
+		<hr>
+		
+		<h3>基础用法</h3>
+		<div class="javaex-page">
+			<ul id="page" class="javaex-pagination"></ul>
+		</div>
+		
+		<pre><code>&lt;div class="javaex-page"&gt;
+	&lt;ul id="page" class="javaex-pagination"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.page({
+		id : "page",    // jquery选择器，指定到ul节点
+		pageNum : 1,           // 默认选中第几页
+		pageSize : 10,         // 每页显示多少条
+		totalPages : 12,       // 总页数
+		isShowJumpPage : true, // 是否显示跳页
+		isShowSelect : true,   // 是否显示条数选择控件
+		totalNum : 125,        // 总条数，不填时，不显示
+		position : "left",
+		callback : function(rtn) {
+			console.log("当前选中的页数：" + rtn.pageNum);
+			console.log("每页显示条数：" + rtn.pageSize);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>分页id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>pageNum</td>
+					<td>1</td>
+					<td>默认选中第几页</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>pageSize</td>
+					<td></td>
+					<td>每页显示多少条</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>totalPages</td>
+					<td></td>
+					<td>总页数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>totalNum</td>
+					<td></td>
+					<td>总条数，不填时，不显示</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowJumpPage</td>
+					<td>false</td>
+					<td>是否显示跳页</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowSelect</td>
+					<td>false</td>
+					<td>是否显示条数选择控件</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isShowOnePage</td>
+					<td>true</td>
+					<td>当只有一页时，是否显示分页组件</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>lastPageText</td>
+					<td>上一页</td>
+					<td>上一页文字标识</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>nextPageText</td>
+					<td>下一页</td>
+					<td>下一页文字标识</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>position</td>
+					<td>right</td>
+					<td>分页显示位置。left:居左；center:居中；right:居右</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isReturnFirst</td>
+					<td>true</td>
+					<td>条数选择控件重新选择后，是否返回第1页</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回一个分页对象。pageNum：当前选中的页数； pageSize：每页显示条数</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.page({
+		id : "page",
+		pageNum : 1,           // 默认选中第几页
+		pageSize : 10,         // 每页显示多少条
+		totalPages : 12,       // 总页数
+		isShowJumpPage : true, // 是否显示跳页
+		isShowSelect : true,
+		totalNum : 125,        // 总条数，不填时，不显示
+		position : "left",
+		callback : function(rtn) {
+			console.log("当前选中的页数：" + rtn.pageNum);
+			console.log("每页显示条数：" + rtn.pageSize);
+		}
+	});
+</script>
+</html>

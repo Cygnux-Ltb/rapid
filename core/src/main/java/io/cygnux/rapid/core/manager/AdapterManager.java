@@ -2,14 +2,14 @@ package io.cygnux.rapid.core.manager;
 
 import io.cygnux.rapid.core.adapter.Adapter;
 import io.cygnux.rapid.core.adapter.AdapterStatus;
-import io.cygnux.rapid.core.adapter.event.CancelOrder;
-import io.cygnux.rapid.core.adapter.event.NewOrder;
-import io.cygnux.rapid.core.adapter.event.QueryBalance;
-import io.cygnux.rapid.core.adapter.event.QueryOrder;
-import io.cygnux.rapid.core.adapter.event.QueryPosition;
-import io.cygnux.rapid.core.adapter.event.SubscribeMarketData;
+import io.cygnux.rapid.core.types.adapter.event.CancelOrder;
+import io.cygnux.rapid.core.types.adapter.event.NewOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryBalance;
+import io.cygnux.rapid.core.types.adapter.event.QueryOrder;
+import io.cygnux.rapid.core.types.adapter.event.QueryPosition;
+import io.cygnux.rapid.core.types.adapter.event.SubscribeMarketData;
 import io.cygnux.rapid.core.event.SharedEventHandler;
-import io.cygnux.rapid.core.event.received.AdapterStatusReport;
+import io.cygnux.rapid.core.types.event.received.AdapterReport;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
@@ -18,33 +18,33 @@ import java.io.Closeable;
 @ThreadSafe
 public interface AdapterManager extends Closeable, SharedEventHandler {
 
-    void onAdapterReport(AdapterStatusReport report);
+    void onAdapterReport(AdapterReport report);
 
     @Override
-    default void fireAdapterReport(AdapterStatusReport report) {
+    default void fireAdapterReport(AdapterReport report) {
         onAdapterReport(report);
     }
 
     boolean isClosed();
 
-    void putAdapter(@Nonnull Adapter... adaptors);
+    void putAdapter(@Nonnull Adapter... adapters);
 
     Adapter getAdapter(int accountId);
 
-    Adapter getAdapter(String adaptorId);
+    Adapter getAdapter(String adapterId);
 
     default AdapterStatus getCurrentStatus(int accountId) {
         return getAdapter(accountId).currentStatus();
     }
 
-    default AdapterStatus getCurrentStatus(String adaptorId) {
-        return getAdapter(adaptorId).currentStatus();
+    default AdapterStatus getCurrentStatus(String adapterId) {
+        return getAdapter(adapterId).currentStatus();
     }
 
     /**
      * @param event AdaptorReport
      */
-    void onAdapterEvent(AdapterStatusReport event);
+    void onAdapterEvent(AdapterReport event);
 
     /**
      * 提交行情订阅

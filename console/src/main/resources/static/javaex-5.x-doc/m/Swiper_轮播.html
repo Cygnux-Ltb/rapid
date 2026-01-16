@@ -1,0 +1,161 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Swiper 轮播</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Swiper 轮播</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<pre><code>&lt;style&gt;
+.javaex-swiper-focus-box {left: 50%; bottom: 0.15rem;}
+.javaex-swiper-focus-box ul li{opacity: .7; height: 0.08rem; width: 0.08rem; border-radius: 0.04rem; background-color: #eee; display: inline-block; text-indent: -9999px; font-size: 0; margin: 0 0.04rem; vertical-align: middle;}
+.javaex-swiper-focus-box ul li.on{opacity: 1;background-color: #ff851b;}
+
+.javaex-swiper {max-width: 4.14rem; height: 1.8rem;}
+.javaex-swiper ul.javaex-swiper-focus-bg li {width: 4.14rem; height: 1.8rem;}
+.javaex-swiper ul.javaex-swiper-focus-bg img {width: 100%; height: 100%;}
+&lt;/style&gt;
+
+&lt;!--幻灯片--&gt;
+&lt;div id="swiper" class="javaex-swiper"&gt;
+	&lt;!--背景大图--&gt;
+	&lt;ul class="javaex-swiper-focus-bg"&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;"&gt;
+				&lt;img src="http://imgs.aixifan.com/test-douw/2019_0_26/1548478468913.png"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;"&gt;
+				&lt;img src="http://imgs.aixifan.com/test-douw/2019_0_28/1548649140987.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;"&gt;
+				&lt;img src="http://imgs.aixifan.com/test-douw/2019_0_27/1548584627763.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;"&gt;
+				&lt;img src="http://imgs.aixifan.com/test-douw/2019_0_25/1548425503502.jpg"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href="javascript:;"&gt;
+				&lt;img src="http://imgs.aixifan.com/test-douw/2019_0_26/1548478468913.png"/&gt;
+			&lt;/a&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+
+	&lt;!--标题，如果不需要，直接去掉这个div即可--&gt;
+	&lt;!--
+	&lt;div class="focus-title"&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;span class="title"&gt;标题1&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span class="title"&gt;标题2&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span class="title"&gt;标题3&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span class="title"&gt;标题4&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;span class="title"&gt;标题5&lt;/span&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	--&gt;
+ 
+	&lt;!--焦点，如果不需要焦点的话，直接去掉这个div即可--&gt;
+	&lt;div class="javaex-swiper-focus-box"&gt;
+		&lt;!--如果使用默认焦点样式，则下面的 ul 可以缺省--&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.swiper({
+		id : "swiper",
+		focusCenter : true,
+		callback : function(rtn) {
+			console.log(rtn.index);
+		}
+	});
+&lt;/script&gt;</code></pre>
+				
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>容器ID</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isAutoPlay</td>
+					<td>true</td>
+					<td>是否自动轮播</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>focusCenter</td>
+					<td>false</td>
+					<td>焦点是否自动居中</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>startSlide</td>
+					<td>1</td>
+					<td>默认显示第几张幻灯片，从1开始计</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>delay</td>
+					<td>3000</td>
+					<td>幻灯片自动轮播间隔时间，单位：毫秒</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isInit</td>
+					<td>false</td>
+					<td>是否初始化就自动调用回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>callback</td>
+					<td></td>
+					<td>返回的对象中包含了当前播放的幻灯片索引，从1开始计</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Swiper_轮播1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

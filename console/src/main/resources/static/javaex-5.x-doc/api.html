@@ -1,0 +1,79 @@
+﻿<!--<!doctype html>-->
+<html>
+<head>
+<meta charset="utf-8">
+<title>JavaEx文档（API方法）</title>
+<!--公共样式-->
+<link href="../javaex-5.5.1/pc/css/common.css" rel="stylesheet" />
+<!--皮肤-->
+<link href="../javaex-5.5.1/pc/css/skin/default.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+<!--jquery-->
+<script src="../javaex-5.5.1/pc/lib/jquery-1.7.2.min.js"></script>
+<style>
+	.menu{height: auto;min-width: 0;}
+	/*修改滚动条样式*/
+	::-webkit-scrollbar {width: 8px;height: 8px;}
+	::-webkit-scrollbar-thumb {background-color: #c2c2c2;background-clip: padding-box;min-height: 28px;}
+	::-webkit-scrollbar-track-piece {background-color: #FFF;}
+</style>
+</head>
+<body>
+	<div class="doc-header animated">
+		<h1 class="logo"><a href="https://www.javaex.cn/">Javaex 文档</a></h1>
+		<div class="doc-tab">
+			<ul class="tabs">
+				<li class="tab"><a href="index.html">文档（电脑）</a></li>
+				<li class="tab"><a href="m.html">文档（手机）</a></li>
+				<li class="tab active"><a href="api.html">API方法（通用）</a></li>
+				<li class="tab"><a href="update.html">更新日志</a></li>
+				<li class="tab"><a href="https://bbs.javaex.cn/forumdisplay/4/28">论坛</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="doc-content">
+		<div class="doc-nav">
+			<ul class="menus">
+				<li class="menu active">
+					<a href="javascript:;">纯JS版API</a>
+					<ul class="pages">
+						<li class="li-page active"><a href="javascript:;">生成随机ID</a></li>
+						<li class="li-page"><a href="javascript:;">截取字符串</a></li>
+						<li class="li-page"><a href="javascript:;">获取地址栏参数</a></li>
+						<li class="li-page"><a href="javascript:;">获取系统时间</a></li>
+						<li class="li-page"><a href="javascript:;">时间格式化</a></li>
+						<li class="li-page"><a href="javascript:;">Null值替换</a></li>
+						<li class="li-page"><a href="javascript:;">本地数据存储</a></li>
+						<li class="li-page"><a href="javascript:;">判断字符串是否是JSON</a></li>
+						<li class="li-page"><a href="javascript:;">替换对象中的key</a></li>
+						<li class="li-page"><a href="javascript:;">判断浏览器</a></li>
+						<li class="li-page"><a href="javascript:;">获取文件扩展名</a></li>
+						<li class="li-page"><a href="javascript:;">文件下载</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="menus">
+				<li class="menu active">
+					<a href="javascript:;">依赖jquery的API</a>
+					<ul class="pages">
+						<li class="li-page"><a href="javascript:;">select、radio、checkbox取值</a></li>
+						<li class="li-page"><a href="javascript:;">formdata转Json字符串</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="doc-markdown markdown-body">
+			<iframe id="page" src="api/生成随机ID.html"></iframe>
+		</div>
+	</div>
+</body>
+<script>
+	$(".li-page").click(function() {
+		$(".li-page").removeClass("active");
+		$(this).addClass("active");
+		
+		$("#page").attr("src", "api/" + $(this).text().replace(" ", "_") + ".html");
+	});
+</script>
+</html>

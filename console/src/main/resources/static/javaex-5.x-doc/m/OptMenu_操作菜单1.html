@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+
+<body>
+	<br/>
+	<div id="demo" class="javaex-cell javaex-cell-clickable">
+		<div class="javaex-cell-title">点击调用操作菜单</div>
+		<i class="javaex-icon icon-angle-right"></i>
+	</div>
+</body>
+<script>
+	$("#demo").click(function() {
+		let id = "abc";
+		javaex.optMenu({
+			title : "操作说明的标题",
+			menus : {
+				// 允许加图标等样式，但是最外层必须用单引号包裹
+				'<span class="icon-trash"></span> 删除' : 'del(\''+ id +'\')',
+				'<span class="icon-block"></span> 禁用' : 'disable(\''+ id +'\')'
+			}
+		});
+	});
+
+	function del(id) {
+		alert("点击了删除，传参：" + id);
+	}
+	
+	function disable(id) {
+		alert("点击了禁用，传参：" + id);
+	}
+</script>
+</html>

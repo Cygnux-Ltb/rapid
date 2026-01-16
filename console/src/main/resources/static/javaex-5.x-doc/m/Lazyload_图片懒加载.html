@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lazyload 图片懒加载</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Lazyload 图片懒加载</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>写在最前面</h3>
+				<ul>
+					<li><strong>该组件基于jquery.lazyload.js修改，加载过的图片不再重复加载</strong></li>
+				</ul>
+
+				<h3>基础用法</h3>
+				<pre><code class="html">&lt;style&gt;
+.demo-lazyload img {
+    box-sizing: border-box;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 12px;
+}
+&lt;/style&gt;
+
+&lt;div class="demo-lazyload" style="padding:20px 10px;"&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/210716.46788093.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/181928.45891757.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/203611.73700942.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/202556.12361455.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/202724.93232158.jpg"/&gt;
+	&lt;img data-original="http://img5.mtime.cn/mg/2019/01/23/162511.90867650.jpg"/&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.lazyload({
+		selector : "img"    // jquery选择器
+	});
+ 
+	// 如果初始化不显示图片，可以添加如下代码激活滚动条以触发
+	$(window).trigger("scroll");
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>selector</td>
+					<td></td>
+					<td>jquery选择器，最终指定到img即可。例如：".focus-bg img"</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>threshold</td>
+					<td>100</td>
+					<td>提前多少像素开始加载</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>dataOriginal</td>
+					<td>data-original</td>
+					<td>占位属性（图片延迟加载时，从该属性中获取真正的图片地址）</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>placeholder</td>
+					<td>“灰色”</td>
+					<td>占位图</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Lazyload_图片懒加载1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

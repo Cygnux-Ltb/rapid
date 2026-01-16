@@ -1,0 +1,280 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Table 表格属性</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Table 表格属性</h2>
+		<hr>
+		
+		<p class="mb-10">对于设置了具体宽度的列，其他列会自动平均分配宽度。</p>
+		<p class="mb-10">如果设置了固定列，但是未给每一列设置宽度让表格出现横向滚动条的话，当用户拖动列宽时，表格出现横向滚动条，此时设定的固定列会自动生效。</p>
+
+		<table id="table" class="javaex-table td-c-1" style="margin-bottom:20px;">
+			<thead>
+				<tr>
+					<th class="javaex-table-num-col"></th>
+					<th class="javaex-table-filter-col"><input type="checkbox" fill listen="listen-1" /> </th>
+					<th>市区</th>
+					<th>省区</th>
+					<th>国别</th>
+					<th style="width:100px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>苏州</td>
+					<td>江苏省</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>无锡</td>
+					<td>江苏省</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>常州</td>
+					<td>江苏省</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>北京</td>
+					<td>北京市</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>杭州</td>
+					<td>浙江省</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>6</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>宁波</td>
+					<td>浙江省</td>
+					<td>中国</td>
+					<td>编辑</td>
+				</tr>
+				<tr>
+					<td>7</td>
+					<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+					<td>11区</td>
+					<td>11区</td>
+					<td>日本</td>
+					<td>编辑</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<pre><code>&lt;table id="table" class="javaex-table td-c-1"&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="javaex-table-num-col"&gt;&lt;/th&gt;
+			&lt;th class="javaex-table-filter-col"&gt;&lt;input type="checkbox" fill listen="listen-1" /&gt; &lt;/th&gt;
+			&lt;th&gt;市区&lt;/th&gt;
+			&lt;th&gt;省区&lt;/th&gt;
+			&lt;th&gt;国别&lt;/th&gt;
+			&lt;th style="width:100px;"&gt;操作&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td&gt;1&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;苏州&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;2&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;无锡&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;3&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;常州&lt;/td&gt;
+			&lt;td&gt;江苏省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;4&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;北京&lt;/td&gt;
+			&lt;td&gt;北京市&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;5&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;杭州&lt;/td&gt;
+			&lt;td&gt;浙江省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;6&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;宁波&lt;/td&gt;
+			&lt;td&gt;浙江省&lt;/td&gt;
+			&lt;td&gt;中国&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;7&lt;/td&gt;
+			&lt;td&gt;&lt;input type="checkbox" fill listen="listen-1-2" /&gt; &lt;/td&gt;
+			&lt;td&gt;11区&lt;/td&gt;
+			&lt;td&gt;11区&lt;/td&gt;
+			&lt;td&gt;日本&lt;/td&gt;
+			&lt;td&gt;编辑&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+	javaex.table({
+		id : "table",
+		isDragColWidth : true,      // 是否允许拖动改变列宽
+		mode : "overflow",          // overflow表示允许使用父容器溢出来调整列的大小
+		leftFixedColNum : 2,        // 左侧固定列数
+		rightFixedColNum : 1,       // 右侧固定列数
+		mergeColArr : [4, 5],       // 第4、5列根据内容自动合并（从1开始计）
+		sort : {
+			"4" : "create_time",     // 4表示第几列（从1开始计）。create_time表示排序字段，回调函数会返回该值
+			"5" : "update_time"
+		},
+		sortCallback : function(rtn) {
+			console.log(rtn.sortArr);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>如果是ajax加载的表格数据，而你又想在搜索时，重置已点击的列排序，可以调用下面这个方法</h3>
+		<pre><code>/**
+ * 参数：table的id
+ */
+javaex.initTable(tableId);</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>表格id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>isDragColWidth</td>
+					<td>false</td>
+					<td>是否允许拖动改变列宽。只对未指定具体宽度的列有效</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mode</td>
+					<td></td>
+					<td>拖动列宽模式：overflow表示允许使用父容器溢出来调整列的大小</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>colWidth</td>
+					<td></td>
+					<td>为未设置宽度的列设置指定的宽度。格式：160  或 160px</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>leftFixedColNum</td>
+					<td>0</td>
+					<td>左侧固定列数。如果配合isDragColWidth==true使用，则mode必须是overflow</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>rightFixedColNum</td>
+					<td>0</td>
+					<td>右侧固定列数。如果配合isDragColWidth==true使用，则mode必须是overflow</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mergeColArr</td>
+					<td></td>
+					<td>根据内容自动合并（从1开始计），数组形式：[3, 4]</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>sort</td>
+					<td></td>
+					<td>排序，格式如下<br/>4表示第几列（从1开始计）。create_time表示排序字段，回调函数会返回该值<br/><pre style="margin-bottom:0;"><code>sort : {
+	"4" : "create_time",
+	"5" : "update_time"
+},</code></pre></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>sortSingle</td>
+					<td>true</td>
+					<td>是否只对单列进行排序</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>sortCallback</td>
+					<td></td>
+					<td>点击排序后的回调函数，返回一个数组（其中 asc：升序；desc：降序）<br/><pre style="margin-bottom:0;"><code>sortCallback : function(rtn) {
+	console.log(rtn.sortArr);
+	// ["create_time=desc", "update_time=asc"]
+}</code></pre></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	javaex.table({
+		id : "table",
+		isDragColWidth : true,
+		mode : "overflow",
+		leftFixedColNum : 2,
+		rightFixedColNum : 1,
+		mergeColArr : [4, 5],  // 第3、4列根据内容自动合并（从1开始计）
+		sort : {
+			"4" : "create_time",     // 4表示第几列（从1开始计）。create_time表示排序字段，回调函数会返回该值
+			"5" : "update_time"
+		},
+		sortCallback : function(rtn) {
+			console.log(rtn.sortArr);
+		}
+	});
+</script>
+</html>

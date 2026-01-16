@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Code 验证码倒计时</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Code 验证码倒计时</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>核心代码</h3>
+				<pre><code>&lt;a href="javascript:;" style="color: #0087e0;" id="get-code" onclick="getCode()"&gt;获取验证码&lt;/a&gt;
+
+&lt;script&gt;
+	function getCode() {
+		javaex.code({
+			id : "get-code"
+		});
+	}
+&lt;/script&gt;</code></pre>
+
+				<h3>示例代码</h3>
+				<pre><code>&lt;style&gt;
+.javaex-field{position: relative; margin-bottom: 0.2rem; font-size: 0.14rem; margin-bottom: 0.1rem;}
+.input-plain-wrap{display: flex; align-items: center;}
+.javaex-field .javaex-text{border: 1px solid #e9e9e9; border-radius: 0.44rem; appearance: none;height: 0.42rem; outline: none; font-size: 0.14rem; width: 100%;padding: 0 0.15rem;}
+.javaex-field-sms .send-btn{position: absolute; right: 0.1rem; bottom: 0; line-height: 0.4rem;}
+.javaex-field-sms .send-btn a{text-decoration: none;}
+&lt;/style&gt;
+
+&lt;div class="javaex-field javaex-field-sms"&gt;
+	&lt;div class="input-plain-wrap"&gt;
+		&lt;input type="text" class="javaex-text" placeholder="请输入验证码" maxlength="6" autocomplete="new-off" autocapitalize="off" &gt;&lt;/div&gt;
+	&lt;div class="send-btn"&gt;
+		&lt;a href="javascript:;" class="send-btn-link" style="color: #0087e0;" id="get-code" onclick="getCode()"&gt;获取验证码&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	function getCode() {
+		javaex.code({
+			id : "get-code"
+		});
+	}
+&lt;/script&gt;</code></pre>
+				
+				<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>点击触发的元素id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>second</td>
+					<td>45</td>
+					<td>倒计时秒数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>text</td>
+					<td>获取验证码</td>
+					<td>倒计时结束后，重新显示的文字</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>type</td>
+					<td></td>
+					<td>设为reset时，可以手动重置</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Code_验证码倒计时1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

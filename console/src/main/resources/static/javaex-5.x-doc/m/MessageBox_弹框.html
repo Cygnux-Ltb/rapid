@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MessageBox 弹框</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>MessageBox 弹框</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>确定弹框（不填 title 属性，则不带标题）</h3>
+				<pre><code class="html">&lt;button id="demo1" class="javaex-btn default" block size="large"&gt;确定弹框（带标题）&lt;/button&gt;
+
+&lt;script&gt;
+	$("#demo1").click(function() {
+		var id = "111";
+		javaex.alert({
+			title : "我是标题",
+			content : "我是来测试的",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+&lt;/script&gt;</code></pre>
+			
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>type</td>
+							<td></td>
+							<td>填写 button 时，为圆角按钮样式</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>title</td>
+							<td></td>
+							<td>标题（不填时不显示）</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>content</td>
+							<td></td>
+							<td>提示内容</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>confirmName</td>
+							<td>确定</td>
+							<td>确定按钮文字</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>confirm</td>
+							<td></td>
+							<td>点击确定按钮的回调</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>opend</td>
+							<td></td>
+							<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+			console.log("弹窗已打开");
+		}</code></pre></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3>确定取消弹框</h3>
+				<pre><code class="html">&lt;button id="demo3" class="javaex-btn default" block size="large"&gt;确定取消弹框&lt;/button&gt;
+
+&lt;script&gt;
+	$("#demo3").click(function() {
+		var id = "333";
+		javaex.confirm({
+			content : "确定要删除么？",
+			confirm : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			cancel : function() {
+				console.log("获取变量值：" + id);
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			},
+			opend : function() {
+				console.log("弹窗已打开");
+			}
+		});
+	});
+&lt;/script&gt;</code></pre>
+
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>type</td>
+							<td></td>
+							<td>填写 button 时，为圆角按钮样式</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>title</td>
+							<td></td>
+							<td>标题（不填时不显示）</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>content</td>
+							<td></td>
+							<td>提示内容</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>confirmName</td>
+							<td>确定</td>
+							<td>确定按钮文字</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>cancelName</td>
+							<td>取消</td>
+							<td>取消按钮文字</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>confirm</td>
+							<td></td>
+							<td>点击 确定 按钮的回调</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>cancel</td>
+							<td></td>
+							<td>点击 取消 按钮的回调</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>opend</td>
+							<td></td>
+							<td>打开弹窗后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+			console.log("弹窗已打开");
+		}</code></pre></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="MessageBox_弹框1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

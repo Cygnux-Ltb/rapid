@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Message 消息提示</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Message 消息提示-适用于门户</h2>
+		<hr>
+		
+		<button id="submit" class="javaex-btn primary">提交中提示</button>
+		<button id="success" class="javaex-btn success">成功提示</button>
+		<button id="error" class="javaex-btn danger">异常提示</button>
+
+		<pre><code class="html">&lt;button id="submit" class="javaex-btn primary"&gt;提交中提示&lt;/button&gt;
+&lt;button id="success" class="javaex-btn success"&gt;成功提示&lt;/button&gt;
+&lt;button id="error" class="javaex-btn danger"&gt;异常提示&lt;/button&gt;
+
+&lt;script&gt;
+	$("#submit").click(function() {
+		javaex.message({
+			content : "数据提交中，请稍候...",
+			type : "submit"
+		});
+	});
+	
+	$("#success").click(function() {
+		javaex.message({
+			content : "操作成功",
+			type : "success"
+		});
+	});
+	
+	$("#error").click(function() {
+		javaex.message({
+			content : "操作失败",
+			type : "error"
+		});
+	});
+&lt;/script&gt;</code></pre>
+		
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>hasMask</td>
+					<td>true</td>
+					<td>hasMask==true时，会有遮罩层，将无法再点击页面其他元素（防止用户重复提交）。
+					<br/>
+					type=="submit"时，遮罩层是黑色半透明的；type=="success" 或 "error" 时，遮罩层是透明的
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>content</td>
+					<td></td>
+					<td>弹出层内容</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>type</td>
+					<td>success</td>
+					<td>submit:提交中。 success:成功。 error:失败</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>live</td>
+					<td>2000</td>
+					<td>提示存在时间，单位:毫秒 <font color="red">（仅在type为 success 或 error 时有效）</font></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>timeout</td>
+					<td>0</td>
+					<td>提交超时时间（单位:毫秒），填0时，不会有超时提示</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>timeoutText</td>
+					<td>网络请求超时，请稍后重试</td>
+					<td>超时提示</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opend</td>
+					<td></td>
+					<td>打开后的回调函数<pre style="margin-bottom:0;"><code>opend : function() {
+	console.log("弹窗已打开");
+}</code></pre></td>
+					<td>5.2</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	$("#submit").click(function() {
+		javaex.message({
+			content : "数据提交中，请稍候...",
+			type : "submit"
+		});
+	});
+	
+	$("#success").click(function() {
+		javaex.message({
+			content : "操作成功",
+			type : "success"
+		});
+	});
+	
+	$("#error").click(function() {
+		javaex.message({
+			content : "操作失败",
+			type : "error"
+		});
+	});
+</script>
+</html>

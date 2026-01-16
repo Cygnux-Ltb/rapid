@@ -1,9 +1,11 @@
 package io.cygnux.rapid.core.mdata;
 
+import io.cygnux.rapid.core.types.mkd.MarketDataSnapshot;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.mercury.common.collections.MutableLists;
-import io.cygnux.rapid.core.event.received.FastMarketData;
+import io.cygnux.rapid.core.types.event.received.FastMarketData;
 import io.cygnux.rapid.core.handler.impl.AbstractMarketDataHandler;
-import io.cygnux.rapid.core.instrument.Instrument;
+import io.cygnux.rapid.core.types.instrument.Instrument;
 import lombok.Getter;
 import org.eclipse.collections.api.list.MutableList;
 

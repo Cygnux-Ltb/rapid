@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<!--字体图标-->
+<link href="../../javaex-5.5.1/pc/css/icomoon.css" rel="stylesheet" />
+<!--骨架样式-->
+<link href="../../javaex-5.5.1/pc/css/common.css" rel="stylesheet" />
+<!--皮肤-->
+<link href="../../javaex-5.5.1/pc/css/skin/default.css" rel="stylesheet" />
+<!--jquery，如果不使用jquery高版本的新功能的话，不建议修改版本-->
+<script src="../../javaex-5.5.1/pc/lib/jquery-1.7.2.min.js"></script>
+<!--核心组件-->
+<script src="../../javaex-5.5.1/pc/js/javaex.js"></script>
+<!--表单验证-->
+<script src="../../javaex-5.5.1/pc/js/javaex-formVerify.js"></script>
+
+<style>
+.content {
+    padding: 0 20px;
+}
+</style>
+</head>
+
+<body>
+	<div class="javaex-page-wrap">
+		<div class="javaex-page-content">
+			<div class="javaex-page-header">
+				<div class="javaex-breadcrumb">
+					<span>权限配置</span>
+					<span class="divider">/</span>
+					<span class="active">角色管理</span>
+				</div>
+			</div>
+			
+			<div class="javaex-page-body">
+				<div class="content">
+					<div class="javaex-list-toolbar clear">
+						<span class="fl"><button class="javaex-btn primary" onclick="edit()">添加</button></span>
+						<span class="fr javaex-search-group">
+							<input type="text" class="javaex-text" id="keyword" placeholder="请输入搜索内容" />
+							<button class="javaex-btn primary" onclick="search()">搜索</button>
+						</span>
+					</div>
+
+					<div class="javaex-block">
+						<table id="table" class="javaex-table td-c-1">
+							<thead>
+								<tr>
+									<th class="javaex-table-num-col"></th>
+									<th class="javaex-table-filter-col"><input type="checkbox" fill listen="listen-1" /> </th>
+									<th>市区</th>
+									<th>省区</th>
+									<th>国别</th>
+									<th style="width:120px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>苏州</td>
+									<td>江苏省</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>无锡</td>
+									<td>江苏省</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>常州</td>
+									<td>江苏省</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>北京</td>
+									<td>北京市</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>杭州</td>
+									<td>浙江省</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>6</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>宁波</td>
+									<td>浙江省</td>
+									<td>中国</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>7</td>
+									<td><input type="checkbox" fill listen="listen-1-2" /> </td>
+									<td>11区</td>
+									<td>11区</td>
+									<td>日本</td>
+									<td>
+										<a href="javascript:;" onclick="edit('7')" class="javaex-link primary">编辑</a>
+										<a href="javascript:;" onclick="del(this, '7')" class="javaex-link danger ml-10">删除</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="javaex-page-footer">
+				<div class="javaex-page">
+					<ul id="page" class="javaex-pagination"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	function search() {
+		
+	}
+
+	javaex.page({
+		id : "page",    // jquery选择器，指定到ul节点
+		pageNum : 1,           // 默认选中第几页
+		pageSize : 10,         // 每页显示多少条
+		totalPages : 12,       // 总页数
+		isShowJumpPage : true, // 是否显示跳页
+		isShowSelect : true,   // 是否显示条数选择控件
+		totalNum : 125,        // 总条数，不填时，不显示
+		position : "left",
+		callback : function(rtn) {
+			console.log("当前选中的页数：" + rtn.pageNum);
+			console.log("每页显示条数：" + rtn.pageSize);
+		}
+	});
+
+	/**
+	 * 添加/编辑
+	 */
+	function edit(id) {
+		var title = "编辑";
+		if (!id) {
+			id = "";
+			title = "添加";
+		}
+
+		top.javaex.dialog({
+			type : "dialog",
+			title : title,
+			url : "edit.html",	// 页面地址或网址或请求地址
+			width : "600",	// 弹出层宽度
+			height : "400",	// 弹出层高度
+			close : function() {
+				console.log("右上角点击X关闭时的回调");
+				// 如果你想阻止弹出层关闭，直接 return false; 即可
+				// return false;
+			}
+		});
+	}
+
+	/**
+	 * 删除
+	 */
+	function del(obj, id) {
+		javaex.deleteDialog(obj, {
+			content : "确定要删除么？",
+			confirm : function() {
+				delCallback(id);
+			}
+		});
+	}
+	function delCallback(id) {
+		javaex.tip({
+			content : "删除中，请稍候...",
+			type : "submit"
+		});
+
+		// ajax提交
+		// ...
+		
+		setTimeout(function() {
+			javaex.tip({
+				content : "操作成功",
+				type : "success"
+			});
+		}, 2000);
+	}
+</script>
+</html>

@@ -1,0 +1,60 @@
+
+#enable tbody td {
+    background-color: #00bf00;
+}
+
+#disable tbody td {
+    background-color: #ff5e9e;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#console thead {
+    width: 25%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #208876;
+    forced-color-adjust: none;
+    color: white;
+}
+
+#customers thead {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #208876;
+    forced-color-adjust: none;
+    color: white;
+}
+
+#customers td, #customers th {
+    border: 1px solid #313131;
+    padding: 8px;
+    text-align: center;
+}
+
+#customers tbody tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+#customers tbody tr:hover {
+    background-color: #cbcbcb;
+}
+
+#customers tbody td:hover {
+    background-color: #cea97c;
+}
+
+textarea {
+    padding: 10px;
+    max-width: 100%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}

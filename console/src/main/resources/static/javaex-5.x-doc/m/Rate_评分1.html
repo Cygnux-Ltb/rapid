@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+<style>
+	
+</style>
+<body style="padding:0.1rem;">
+	<div class="mb-10">整星用法</div>
+	<div class="javaex-cell">
+		<div id="score" class="javaex-rate"></div>
+	</div>
+	
+	<div class="mb-10 mt-20">半星用法</div>
+	<div class="javaex-cell">
+		<div id="score2" class="javaex-rate"></div>
+	</div>
+</body>
+<script>
+	javaex.rate({
+		id : "score",
+		callback: function (rtn) {
+			javaex.toast({
+				content : "选中了第"+rtn.index+"个星星；分数为："+rtn.score,
+				type : "message"
+			});
+		}
+	});
+
+	javaex.rate({
+		id : "score2",
+		num : 5,
+		score : 4.6,
+		scoreArr : [1, 2, 3, 4, 5],    // 即便开启了半星模式，也只要整数部分
+		levelTextArr : ['0.5分', '1分', '1.5分', '2分', '2.5分', '3分', '3.5分', '4分', '4.5分', '5分'],
+		half : true,
+		callback: function (rtn) {
+			javaex.toast({
+				content : "选中了第"+rtn.index+"个星星；分数为："+rtn.score,
+				type : "message"
+			});
+		}
+	});
+</script>
+</html>

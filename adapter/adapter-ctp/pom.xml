@@ -56,30 +56,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.mercury</groupId>
-            <artifactId>serialization-fory</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>transport-zmq</artifactId>
         </dependency>
         <dependency>
             <groupId>io.mercury</groupId>
             <artifactId>persistence-chronicle</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.cygnux</groupId>
-            <artifactId>console-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cygnux.rapid</groupId>
-            <artifactId>core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.cygnux.rapid</groupId>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../js/ui.m.js"></script>
+</head>
+
+<body style="padding:0.1rem;">
+	<div class="mb-10">基础用法</div>
+	<div class="javaex-cell">
+		<div class="javaex-cell-title javaex-field-label">请选择日期</div>
+		<div class="javaex-cell-value javaex-field-value">
+			<div class="javaex-field-body">
+				<input id="date" type="text" class="javaex-field-control tr" placeholder="点击选择" autocomplete="off" readonly/>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	javaex.date({
+		id : "date",
+		title : "选择日期",
+		time : "today",	// 默认选择的日期
+		// 重新选择日期之后返回一个时间对象
+		callback: function (rtn) {
+			console.log(rtn.date);
+		}
+	});
+</script>
+</html>

@@ -1,0 +1,93 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DatePicker 日期选择器</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>DatePicker 日期选择器（只能在移动端使用）</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<pre><code class="html">&lt;div class="javaex-cell"&gt;
+	&lt;div class="javaex-cell-title javaex-field-label"&gt;请选择日期&lt;/div&gt;
+	&lt;div class="javaex-cell-value javaex-field-value"&gt;
+		&lt;div class="javaex-field-body"&gt;
+			&lt;input id="date" type="text" class="javaex-field-control tr" placeholder="点击选择" autocomplete="off" readonly/&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.date({
+		id : "date",
+		title : "选择日期",
+		time : "today",	// 默认选择的日期
+		// 重新选择日期之后返回一个时间对象
+		callback: function (rtn) {
+			console.log(rtn.date);
+		}
+	});
+&lt;/script&gt;</code></pre>
+			
+			<h3>参数说明</h3>
+			<table class="javaex-table">
+				<thead>
+					<tr>
+						<th>参数</th>
+						<th>默认值</th>
+						<th>说明</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>id</td>
+						<td></td>
+						<td>date容器的ID</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>title</td>
+						<td></td>
+						<td>不为空时，会显示标题</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>time</td>
+						<td></td>
+						<td>默认时间（格式：yyyy-MM-dd），也可以填写 today，表示当天日期</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>closeOnClickMask</td>
+						<td>true</td>
+						<td>是否点击遮罩关闭</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>callback</td>
+						<td></td>
+						<td>返回的对象中包含了选中的值和选中的文本</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="DatePicker_日期选择器1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

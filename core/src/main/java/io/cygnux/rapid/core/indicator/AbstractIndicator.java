@@ -1,10 +1,11 @@
 package io.cygnux.rapid.core.indicator;
 
+import io.cygnux.rapid.core.types.instrument.Instrument;
+import io.cygnux.rapid.core.types.mkd.SavedMarketData;
 import io.mercury.common.annotation.AbstractFunction;
 import io.mercury.common.collections.Capacity;
 import io.mercury.common.log4j2.Log4j2LoggerFactory;
-import io.cygnux.rapid.core.instrument.Instrument;
-import io.cygnux.rapid.core.mdata.SavedMarketData;
+import lombok.Getter;
 import org.eclipse.collections.api.list.MutableList;
 import org.slf4j.Logger;
 
@@ -18,6 +19,7 @@ public abstract sealed class AbstractIndicator<P extends AbstractPoint & Point, 
     /**
      * 指标对应的标的
      */
+    @Getter
     protected final Instrument instrument;
 
     /**
@@ -38,6 +40,7 @@ public abstract sealed class AbstractIndicator<P extends AbstractPoint & Point, 
     /**
      * 前一笔行情
      */
+    @Getter
     protected SavedMarketData preMarketData;
 
     /**
@@ -52,14 +55,6 @@ public abstract sealed class AbstractIndicator<P extends AbstractPoint & Point, 
     protected AbstractIndicator(Instrument instrument, Capacity capacity) {
         this.instrument = instrument;
         this.pointSet = PointSet.newEmpty(capacity);
-    }
-
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public SavedMarketData getPreMarketData() {
-        return preMarketData;
     }
 
     @Override

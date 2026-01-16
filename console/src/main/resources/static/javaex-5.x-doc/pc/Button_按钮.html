@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Button 按钮</title>
+<script src="../js/ui.js"></script>
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Button 按钮</h2>
+		<hr>
+		
+		<h3>按钮类型</h3>
+		<p>按钮支持 default、primary、success、warning、danger、info 6种类型</p>
+		<button class="javaex-btn default">默认按钮</button>
+		<button class="javaex-btn primary">主要按钮</button>
+		<button class="javaex-btn success">成功按钮</button>
+		<button class="javaex-btn warning">警告按钮</button>
+		<button class="javaex-btn danger">危险按钮</button>
+		<button class="javaex-btn info">信息按钮</button>
+
+		<pre><code class="html">&lt;button class="javaex-btn default"&gt;默认按钮&lt;/button&gt;
+&lt;button class="javaex-btn primary"&gt;主要按钮&lt;/button&gt;
+&lt;button class="javaex-btn success"&gt;成功按钮&lt;/button&gt;
+&lt;button class="javaex-btn warning"&gt;警告按钮&lt;/button&gt;
+&lt;button class="javaex-btn danger"&gt;危险按钮&lt;/button&gt;
+&lt;button class="javaex-btn info"&gt;信息按钮&lt;/button&gt;</code></pre>
+		
+		<h3>朴素按钮</h3>
+		<p>通过 plain 属性将按钮设置为朴素按钮，朴素按钮的文字为按钮颜色，背景为白色（不支持default类型按钮）</p>
+		<button class="javaex-btn primary" plain>朴素按钮</button>
+		<button class="javaex-btn success" plain>朴素按钮</button>
+
+		<pre><code class="html">&lt;button class="javaex-btn primary" plain&gt;朴素按钮&lt;/button&gt;
+&lt;button class="javaex-btn success" plain&gt;朴素按钮&lt;/button&gt;</code></pre>
+
+		<h3>按钮形状</h3>
+		<p>通过 shape 属性设置按钮形状，支持圆形、方形按钮</p>
+		<button class="javaex-btn primary" square>方形按钮</button>
+<button class="javaex-btn primary" round>圆角按钮</button>
+
+		<pre><code class="html">&lt;button class="javaex-btn primary" square&gt;方形按钮&lt;/button&gt;
+&lt;button class="javaex-btn primary" round&gt;圆角按钮&lt;/button&gt;</code></pre>
+		
+		<h3>禁用状态</h3>
+		<p>通过 disabled 属性来禁用按钮，禁用状态下按钮不可点击</p>
+		<button class="javaex-btn primary" disabled>禁用状态</button>
+<button class="javaex-btn success" round disabled>禁用状态</button>
+<button class="javaex-btn danger" plain disabled>禁用状态</button>
+
+		<pre><code class="html">&lt;button class="javaex-btn primary" disabled&gt;禁用状态&lt;/button&gt;
+&lt;button class="javaex-btn success" round disabled&gt;禁用状态&lt;/button&gt;
+&lt;button class="javaex-btn danger" plain disabled&gt;禁用状态&lt;/button&gt;</code></pre>
+		
+		<h3>图标按钮</h3>
+		<button class="javaex-btn danger" plain><span><i class="icon-star"></i></span></button>
+<button class="javaex-btn danger"><span><i class="icon-star_border"></i> 收藏</span></button>
+
+		<pre><code class="html">&lt;button class="javaex-btn danger" plain&gt;&lt;span&gt;&lt;i class="icon-star"&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;
+&lt;button class="javaex-btn danger"&gt;&lt;span&gt;&lt;i class="icon-star_border"&gt;&lt;/i&gt; 收藏&lt;/span&gt;&lt;/button&gt;</code></pre>
+		
+		<h3>按钮尺寸</h3>
+		<p>支持 large、normal、small、mini 四种尺寸，默认为 normal</p>
+		<button class="javaex-btn primary" size="large">大号按钮</button>
+<button class="javaex-btn primary">默认大小</button>
+<button class="javaex-btn primary" size="small">小号按钮</button>
+<button class="javaex-btn primary" size="mini">迷你按钮</button>
+
+		<pre><code class="html">&lt;button class="javaex-btn primary" size="large"&gt;大号按钮&lt;/button&gt;
+&lt;button class="javaex-btn primary"&gt;默认大小&lt;/button&gt;
+&lt;button class="javaex-btn primary" size="small"&gt;小号按钮&lt;/button&gt;
+&lt;button class="javaex-btn primary" size="mini"&gt;迷你按钮&lt;/button&gt;</code></pre>
+	</div>
+</body>
+</html>

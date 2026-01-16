@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SwipeCell 滑动单元格</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>SwipeCell 滑动单元格（只能在移动端使用）</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<pre><code>&lt;div class="javaex-swipe"&gt;
+	&lt;div class="javaex-swipe-content"&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-value"&gt;左滑删除1&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-swipe-right"&gt;
+		&lt;div class="javaex-btn danger" square onclick="doDel()"&gt;
+			&lt;div class="javaex-button-warp"&gt;删除&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="javaex-swipe"&gt;
+	&lt;div class="javaex-swipe-content"&gt;
+		&lt;div class="javaex-cell"&gt;
+			&lt;div class="javaex-cell-value"&gt;左滑删除2&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="javaex-swipe-right"&gt;
+		&lt;div class="javaex-btn danger" square onclick="doDel()"&gt;
+			&lt;div class="javaex-button-warp"&gt;删除&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+	javaex.swipe({
+		el : ".javaex-swipe"
+	});
+
+	function doDel() {
+		javaex.toast({
+			content : "点击了删除",
+			type : "message"
+		});
+	}
+&lt;/script&gt;</code></pre>
+
+				<h3>参数说明</h3>
+				<table class="javaex-table">
+					<thead>
+						<tr>
+							<th>参数</th>
+							<th>默认值</th>
+							<th>说明</th>
+							<th>版本</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>el</td>
+							<td></td>
+							<td>jquery选择器</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="SwipeCell_滑动单元格1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

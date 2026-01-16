@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Slider 滑块</title>
+<script src="../js/ui.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="../css/mobile.image.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="doc-markdown">
+		<h2>Slider 滑块</h2>
+		<hr>
+		
+		<div class="javaex-grid spacing-20">
+			<div class="javaex-grid-9">
+				<h3>基础用法</h3>
+				<p>可以直接给 input 设置值</p>
+		<pre><code>&lt;!--可以直接给 input 设置值，也可以在组件中设置--&gt;
+&lt;input id="inputNumber" class="javaex-inputNumber" value="1" readonly /&gt;
+
+&lt;script&gt;
+	javaex.inputNumber({
+		id : "inputNumber",
+		decrCallback : function(rtn) {
+			console.log(rtn);
+		},
+		incrCallback : function(rtn) {
+			console.log(rtn);
+		}
+	});
+&lt;/script&gt;</code></pre>
+
+		<h3>参数说明</h3>
+		<table class="javaex-table">
+			<thead>
+				<tr>
+					<th>参数</th>
+					<th>默认值</th>
+					<th>说明</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>id</td>
+					<td></td>
+					<td>数字选择器组件的id</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>initValue</td>
+					<td></td>
+					<td>初始化显示的数字，也可以直接给 input 设置值</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>step</td>
+					<td>1</td>
+					<td>步长</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>minValue</td>
+					<td>1</td>
+					<td>最小值</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>maxValue</td>
+					<td>100</td>
+					<td>最大值</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>decrCallback</td>
+					<td></td>
+					<td>递减回调函数</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>incrCallback</td>
+					<td></td>
+					<td>递增回调函数</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+			<div class="javaex-grid-3">
+				<div class="device device-fixed">
+					<div class="device-content">
+						<iframe src="Slider_滑块1.html" width="320" height="569" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
